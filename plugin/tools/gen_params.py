@@ -10,7 +10,7 @@ from __future__ import annotations
 import json
 import sys
 from pathlib import Path
-from typing import NotRequired, TypedDict, cast
+from typing import TypedDict, cast
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
@@ -31,12 +31,12 @@ class ParamDoc(TypedDict):
     display: str
 
 
-class ParamsDoc(TypedDict):
+class ParamsDoc(TypedDict, total=False):
     """The generated params.json document."""
 
     params: list[ParamDoc]
-    base_param_count: NotRequired[int]
-    routing_base: NotRequired[int]
+    base_param_count: int
+    routing_base: int
 
 
 def display_name(name: str) -> str:
