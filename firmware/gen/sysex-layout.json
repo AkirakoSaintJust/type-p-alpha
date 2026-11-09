@@ -1,0 +1,10 @@
+{
+  "model": 64,
+  "n_params": 141,
+  "n_parts": 2,
+  "part_patch_size": 585,
+  "multi_patch_size": 63,
+  "settings_size": 13,
+  "part_patch_bank_size": 74880,
+  "multi_patch_bank_size": 4032
+}

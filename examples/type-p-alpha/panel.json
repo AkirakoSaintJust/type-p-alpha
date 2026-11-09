@@ -1,0 +1,445 @@
+{
+  "name": "type-p-alpha",
+  "home": "home",
+  "alg": "algorithm",
+  "parts": 2,
+  "legend": "~SEL+EDIT~ copy  ~SEL+SELECT~ ops\\n~2xSEL~ pts  ~SEL+ARP-REC~ mute pt\\n~SEL~ ops  ~ARP-REC~ mute op",
+  "operators": ["op1", "op2", "op3", "op4"],
+  "mute": ["op1_mute", "op2_mute", "op3_mute", "op4_mute"],
+  "global": [
+    { "source": "KEY", "action": "note_on" },
+    { "source": "ENC_ALGORITHM", "target": "algorithm", "behavior": "relative", "part": true },
+    { "source": "BTN_EDIT", "action": "switch", "arg": "edit" },
+    { "source": "BTN_ENV", "action": "switch", "arg": "env" },
+    { "source": "BTN_LFO", "action": "switch", "arg": "lfo" },
+    { "source": "BTN_FX", "action": "switch", "arg": "fx" },
+    { "source": "BTN_GLO", "action": "switch", "arg": "glo" },
+    { "source": "BTN_HOME", "action": "pop_home" },
+    { "source": "BTN_SEL", "action": "op_next" },
+    { "source": "ENC_SELECT", "action": "page" },
+    { "source": "BTN_SAVE", "action": "save" },
+    { "source": "BTN_ARP", "action": "op_mute_n", "arg": "0" },
+    { "source": "BTN_SEQ", "action": "op_mute_n", "arg": "1" },
+    { "source": "BTN_PLAY", "action": "op_mute_n", "arg": "2" },
+    { "source": "BTN_REC", "action": "op_mute_n", "arg": "3" }
+  ],
+  "contexts": {
+    "home": {
+      "pages": [
+        {
+          "id": "perform",
+          "widgets": [
+            { "type": "subheader", "row": 2, "text": "PERFORMANCE", "plain": true },
+            { "type": "param_row", "row": 3, "param": "cutoff", "text": "CUTOFF" },
+            { "type": "param_row", "row": 4, "param": "res", "text": "RES" },
+            { "type": "param_row", "row": 5, "param": "op1_feedback", "text": "OP1 FB" }
+          ]
+        },
+        {
+          "id": "algo",
+          "widgets": [
+            { "type": "subheader", "row": 2, "text": "ALGORITHM", "part": true },
+            { "type": "algo", "row": 3, "span": 10, "param": "algorithm" }
+          ]
+        },
+        {
+          "id": "env",
+          "widgets": [
+            { "type": "subheader", "row": 2, "text": "A-ENVS", "partop": true },
+            { "type": "envelope", "row": 3, "span": 2, "op": 0,
+              "params": ["op1.eg.r1", "op1.eg.r2", "op1.eg.r3", "op1.eg.r4", "op1.eg.l1", "op1.eg.l2", "op1.eg.l3"] },
+            { "type": "envelope", "row": 5, "span": 2, "op": 1,
+              "params": ["op2.eg.r1", "op2.eg.r2", "op2.eg.r3", "op2.eg.r4", "op2.eg.l1", "op2.eg.l2", "op2.eg.l3"] },
+            { "type": "envelope", "row": 7, "span": 2, "op": 2,
+              "params": ["op3.eg.r1", "op3.eg.r2", "op3.eg.r3", "op3.eg.r4", "op3.eg.l1", "op3.eg.l2", "op3.eg.l3"] },
+            { "type": "envelope", "row": 9, "span": 2, "op": 3,
+              "params": ["op4.eg.r1", "op4.eg.r2", "op4.eg.r3", "op4.eg.r4", "op4.eg.l1", "op4.eg.l2", "op4.eg.l3"] }
+          ]
+        },
+        {
+          "id": "scope",
+          "widgets": [
+            { "type": "subheader", "row": 2, "text": "SCOPES", "partop": true },
+            { "type": "scope", "row": 3, "span": 2, "channel": 0 },
+            { "type": "scope", "row": 5, "span": 2, "channel": 1 },
+            { "type": "scope", "row": 7, "span": 2, "channel": 2 },
+            { "type": "scope", "row": 9, "span": 2, "channel": 3 }
+          ]
+        },
+        {
+          "id": "spectro",
+          "widgets": [
+            { "type": "subheader", "row": 2, "text": "SPECTROS", "partop": true },
+            { "type": "spectro", "row": 3, "span": 2, "channel": 0 },
+            { "type": "spectro", "row": 5, "span": 2, "channel": 1 },
+            { "type": "spectro", "row": 7, "span": 2, "channel": 2 },
+            { "type": "spectro", "row": 9, "span": 2, "channel": 3 }
+          ]
+        },
+        {
+          "id": "part-scope",
+          "widgets": [
+            { "type": "subheader", "row": 2, "text": "SCOPES", "part": true, "plural": true },
+            { "type": "scope", "row": 4, "span": 4, "mix_part": 0 },
+            { "type": "scope", "row": 9, "span": 4, "mix_part": 1 }
+          ]
+        },
+        {
+          "id": "part-spectro",
+          "widgets": [
+            { "type": "subheader", "row": 2, "text": "SPECTROS", "part": true, "plural": true },
+            { "type": "spectro", "row": 4, "span": 4, "mix_part": 0 },
+            { "type": "spectro", "row": 9, "span": 4, "mix_part": 1 }
+          ]
+        },
+        {
+          "id": "post-fx-scope",
+          "widgets": [
+            { "type": "subheader", "row": 2, "text": "POST-FX MULTI-PATCH SCOPE", "plain": true },
+            { "type": "scope", "row": 4, "span": 8, "final": true }
+          ]
+        },
+        {
+          "id": "post-fx-spectro",
+          "widgets": [
+            { "type": "subheader", "row": 2, "text": "POST-FX MULTI-PATCH SPECTRO", "plain": true },
+            { "type": "spectro", "row": 4, "span": 8, "final": true }
+          ]
+        }
+      ],
+      "bindings": [
+        { "source": "ENC_KNOB1", "slot": 0, "behavior": "relative" },
+        { "source": "ENC_KNOB2", "slot": 1, "behavior": "relative" },
+        { "source": "ENC_KNOB3", "slot": 2, "behavior": "relative" },
+        { "source": "ENC_KNOB4", "slot": 3, "behavior": "relative" }
+      ]
+    },
+    "edit": {
+      "pages": [
+        {
+          "id": "op",
+          "widgets": [
+            { "type": "subheader", "row": 2, "text": "OSCILLATOR" },
+            { "type": "param_row", "row": 3, "param": "op1.ph.inc_ratio", "text": "RATIO" },
+            { "type": "param_row", "row": 4, "param": "op1.tl.level", "text": "LEVEL" },
+            { "type": "param_row", "row": 5, "param": "op1.fb.level", "text": "FEEDBACK" },
+            { "type": "param_row", "row": 6, "param": "op1.osc.waveform", "text": "WAVE" },
+            { "type": "band", "row": 7, "span": 6, "kind": "scope" }
+          ]
+        },
+        {
+          "id": "detunes",
+          "widgets": [
+            { "type": "subheader", "row": 2, "text": "OP DETUNES", "part": true },
+            { "type": "param_row", "row": 3, "param": "op1_detune", "part": true, "text": "OP1" },
+            { "type": "param_row", "row": 4, "param": "op2_detune", "part": true, "text": "OP2" },
+            { "type": "param_row", "row": 5, "param": "op3_detune", "part": true, "text": "OP3" },
+            { "type": "param_row", "row": 6, "param": "op4_detune", "part": true, "text": "OP4" }
+          ]
+        },
+        {
+          "id": "op-key-follow",
+          "widgets": [
+            { "type": "subheader", "row": 2, "text": "OP KEY FOLLOW" },
+            { "type": "param_row", "row": 3, "param": "op1.level_ks.lo", "text": "OP LEVEL KS LO" },
+            { "type": "param_row", "row": 4, "param": "op1.level_ks.hi", "text": "OP LEVEL KS HI" },
+            { "type": "param_row", "row": 5, "param": "op1.fb_ks.lo", "text": "OP FB KS LO" },
+            { "type": "param_row", "row": 6, "param": "op1.fb_ks.hi", "text": "OP FB KS HI" }
+          ]
+        },
+        {
+          "id": "op-vel-sens",
+          "widgets": [
+            { "type": "subheader", "row": 2, "text": "OP VEL SENS" },
+            { "type": "param_row", "row": 3, "param": "op1.level_vs.amount", "text": "OP LEVEL VS" },
+            { "type": "param_row", "row": 4, "param": "op1.fb_vs.amount", "text": "OP FB VS" }
+          ]
+        }
+      ],
+      "bindings": [
+        { "source": "ENC_KNOB1", "slot": 0, "behavior": "relative" },
+        { "source": "ENC_KNOB2", "slot": 1, "behavior": "relative" },
+        { "source": "ENC_KNOB3", "slot": 2, "behavior": "relative" },
+        { "source": "ENC_KNOB4", "slot": 3, "behavior": "relative" }
+      ]
+    },
+    "env": {
+      "pages": [
+        {
+          "id": "a-env-rates",
+          "widgets": [
+            { "type": "subheader", "row": 2, "text": "A-ENV" },
+            { "type": "param_row", "row": 3, "param": "op1.eg.r1", "text": "ATTACK RATE" },
+            { "type": "param_row", "row": 4, "param": "op1.eg.r2", "text": "DECAY1 RATE" },
+            { "type": "param_row", "row": 5, "param": "op1.eg.r3", "text": "DECAY2 RATE" },
+            { "type": "param_row", "row": 6, "param": "op1.eg.r4", "text": "RELEASE RATE" },
+            { "type": "band", "row": 7, "span": 6, "kind": "env" }
+          ]
+        },
+        {
+          "id": "a-env-levels",
+          "widgets": [
+            { "type": "subheader", "row": 2, "text": "A-ENV" },
+            { "type": "param_row", "row": 3, "param": "op1.eg.l1", "text": "LEVEL 1" },
+            { "type": "param_row", "row": 4, "param": "op1.eg.l2", "text": "LEVEL 2" },
+            { "type": "param_row", "row": 5, "param": "op1.eg.l3", "text": "SUSTAIN" },
+            { "type": "band", "row": 7, "span": 6, "kind": "env" }
+          ]
+        },
+        {
+          "id": "p-env-rates",
+          "widgets": [
+            { "type": "subheader", "row": 2, "text": "P-ENV", "plain": true },
+            { "type": "param_row", "row": 3, "param": "penv_on", "text": "ON" },
+            { "type": "param_row", "row": 4, "param": "penv_r1", "text": "ATTACK RATE" },
+            { "type": "param_row", "row": 5, "param": "penv_r2", "text": "DECAY1 RATE" },
+            { "type": "param_row", "row": 6, "param": "penv_r3", "text": "DECAY2 RATE" },
+            { "type": "genv", "row": 7, "span": 5,
+              "params": ["penv_r1", "penv_r2", "penv_r3", "penv_r4", "penv_l1", "penv_l2", "penv_l3"] }
+          ]
+        },
+        {
+          "id": "p-env-levels",
+          "widgets": [
+            { "type": "subheader", "row": 2, "text": "P-ENV", "plain": true },
+            { "type": "param_row", "row": 3, "param": "penv_r4", "text": "RELEASE RATE" },
+            { "type": "param_row", "row": 4, "param": "penv_l1", "text": "LEVEL 1" },
+            { "type": "param_row", "row": 5, "param": "penv_l2", "text": "LEVEL 2" },
+            { "type": "param_row", "row": 6, "param": "penv_l3", "text": "SUSTAIN" },
+            { "type": "genv", "row": 7, "span": 5,
+              "params": ["penv_r1", "penv_r2", "penv_r3", "penv_r4", "penv_l1", "penv_l2", "penv_l3"] }
+          ]
+        },
+        {
+          "id": "op-env-ks",
+          "widgets": [
+            { "type": "subheader", "row": 2, "text": "ENV KEY SCALE" },
+            { "type": "param_row", "row": 3, "param": "op1.eg_ks.lo", "text": "A-ENV RATE KS LO" },
+            { "type": "param_row", "row": 4, "param": "op1.eg_ks.hi", "text": "A-ENV RATE KS HI" },
+            { "type": "param_row", "row": 5, "param": "penv_ks_lo", "part": true, "text": "P-ENV RATE KS LO" },
+            { "type": "param_row", "row": 6, "param": "penv_ks_hi", "part": true, "text": "P-ENV RATE KS HI" }
+          ]
+        },
+        {
+          "id": "env-vel-sens",
+          "widgets": [
+            { "type": "subheader", "row": 2, "text": "VEL SENS" },
+            { "type": "param_row", "row": 3, "param": "op1.eg_vs.amount", "text": "A-ENV RATE VS" },
+            { "type": "param_row", "row": 4, "param": "penv_vs", "part": true, "text": "P-ENV RATE VS" }
+          ]
+        }
+      ],
+      "bindings": [
+        { "source": "ENC_KNOB1", "slot": 0, "behavior": "relative" },
+        { "source": "ENC_KNOB2", "slot": 1, "behavior": "relative" },
+        { "source": "ENC_KNOB3", "slot": 2, "behavior": "relative" },
+        { "source": "ENC_KNOB4", "slot": 3, "behavior": "relative" }
+      ]
+    },
+    "lfo": {
+      "pages": [
+        {
+          "id": "a-lfo",
+          "widgets": [
+            { "type": "subheader", "row": 2, "text": "A-LFO" },
+            { "type": "param_row", "row": 3, "param": "op1.lfo.rate", "text": "RATE" },
+            { "type": "param_row", "row": 4, "param": "op1.lfo.depth", "text": "DEPTH" },
+            { "type": "param_row", "row": 5, "param": "op1.lfo.wave", "text": "WAVE" },
+            { "type": "param_row", "row": 6, "param": "op1.lfo.mode", "text": "BIPOLAR" }
+          ]
+        },
+        {
+          "id": "p-lfo",
+          "widgets": [
+            { "type": "subheader", "row": 2, "text": "P-LFO", "part": true },
+            { "type": "param_row", "row": 3, "param": "pitch_rate", "part": true, "text": "RATE" },
+            { "type": "param_row", "row": 4, "param": "pitch_depth", "part": true, "text": "DEPTH" },
+            { "type": "param_row", "row": 5, "param": "pitch_wave", "part": true, "text": "WAVE" },
+            { "type": "param_row", "row": 6, "param": "pitch_mode", "part": true, "text": "BIPOLAR" }
+          ]
+        }
+      ],
+      "bindings": [
+        { "source": "ENC_KNOB1", "slot": 0, "behavior": "relative" },
+        { "source": "ENC_KNOB2", "slot": 1, "behavior": "relative" },
+        { "source": "ENC_KNOB3", "slot": 2, "behavior": "relative" },
+        { "source": "ENC_KNOB4", "slot": 3, "behavior": "relative" }
+      ]
+    },
+    "fx": {
+      "pages": [
+        {
+          "id": "filter",
+          "widgets": [
+            { "type": "subheader", "row": 2, "text": "FILTER", "plain": true },
+            { "type": "param_row", "row": 3, "param": "filter_on", "text": "ON" },
+            { "type": "param_row", "row": 4, "param": "cutoff", "text": "CUTOFF" },
+            { "type": "param_row", "row": 5, "param": "res", "text": "RES" },
+            { "type": "param_row", "row": 6, "param": "filter_type", "text": "TYPE" }
+          ]
+        },
+        {
+          "id": "f-env-rates",
+          "widgets": [
+            { "type": "subheader", "row": 2, "text": "F-ENV", "plain": true },
+            { "type": "param_row", "row": 3, "param": "fenv_r1", "text": "ATTACK RATE" },
+            { "type": "param_row", "row": 4, "param": "fenv_r2", "text": "DECAY1 RATE" },
+            { "type": "param_row", "row": 5, "param": "fenv_r3", "text": "DECAY2 RATE" },
+            { "type": "param_row", "row": 6, "param": "fenv_r4", "text": "RELEASE RATE" },
+            { "type": "genv", "row": 7, "span": 5,
+              "params": ["fenv_r1", "fenv_r2", "fenv_r3", "fenv_r4", "fenv_l1", "fenv_l2", "fenv_l3"] }
+          ]
+        },
+        {
+          "id": "f-env-levels",
+          "widgets": [
+            { "type": "subheader", "row": 2, "text": "F-ENV", "plain": true },
+            { "type": "param_row", "row": 3, "param": "fenv_l1", "text": "LEVEL 1" },
+            { "type": "param_row", "row": 4, "param": "fenv_l2", "text": "LEVEL 2" },
+            { "type": "param_row", "row": 5, "param": "fenv_l3", "text": "SUSTAIN" },
+            { "type": "param_row", "row": 6, "param": "fenv_depth", "text": "DEPTH" },
+            { "type": "genv", "row": 7, "span": 5,
+              "params": ["fenv_r1", "fenv_r2", "fenv_r3", "fenv_r4", "fenv_l1", "fenv_l2", "fenv_l3"] }
+          ]
+        },
+        {
+          "id": "f1-key-follow",
+          "widgets": [
+            { "type": "subheader", "row": 2, "text": "F1 KEY FOLLOW", "plain": true },
+            { "type": "param_row", "row": 3, "param": "f1_cutoff_ks_lo", "text": "F1 CUTOFF KS LO" },
+            { "type": "param_row", "row": 4, "param": "f1_cutoff_ks_hi", "text": "F1 CUTOFF KS HI" },
+            { "type": "param_row", "row": 5, "param": "fenv_ks_lo", "text": "F-ENV RATE KS LO" },
+            { "type": "param_row", "row": 6, "param": "fenv_ks_hi", "text": "F-ENV RATE KS HI" }
+          ]
+        },
+        {
+          "id": "f1-vel-sens",
+          "widgets": [
+            { "type": "subheader", "row": 2, "text": "FILTER VEL SENS", "plain": true },
+            { "type": "param_row", "row": 3, "param": "f1_cutoff_vs", "text": "F1 CUTOFF VS" },
+            { "type": "param_row", "row": 4, "param": "fenv_vs", "text": "F-ENV RATE VS" }
+          ]
+        }
+      ],
+      "bindings": [
+        { "source": "ENC_KNOB1", "slot": 0, "behavior": "relative" },
+        { "source": "ENC_KNOB2", "slot": 1, "behavior": "relative" },
+        { "source": "ENC_KNOB3", "slot": 2, "behavior": "relative" },
+        { "source": "ENC_KNOB4", "slot": 3, "behavior": "relative" }
+      ]
+    },
+    "glo": {
+      "pages": [
+        {
+          "id": "layering",
+          "widgets": [
+            { "type": "subheader", "row": 2, "text": "SINGLE PART LAYERING", "plain": true },
+            { "type": "param_row", "row": 3, "param": "level.p0", "text": "PART 1 LEVEL" },
+            { "type": "param_row", "row": 4, "param": "delay.p0", "text": "PART 1 DELAY" },
+            { "type": "param_row", "row": 5, "param": "level.p1", "text": "PART 2 LEVEL" },
+            { "type": "param_row", "row": 6, "param": "delay.p1", "text": "PART 2 DELAY" }
+          ]
+        },
+        {
+          "id": "tuning",
+          "widgets": [
+            { "type": "subheader", "row": 2, "text": "SINGLE PART TUNING", "plain": true },
+            { "type": "param_row", "row": 3, "param": "detune.p0", "text": "PART 1 DETUNE" },
+            { "type": "param_row", "row": 4, "param": "transpose.p0", "text": "PART 1 TRANSPOSE" },
+            { "type": "param_row", "row": 5, "param": "detune.p1", "text": "PART 2 DETUNE" },
+            { "type": "param_row", "row": 6, "param": "transpose.p1", "text": "PART 2 TRANSPOSE" }
+          ]
+        },
+        {
+          "id": "split",
+          "widgets": [
+            { "type": "label", "row": 2, "span": 2, "text": "KEY SPLIT" },
+            { "type": "param_row", "row": 4, "param": "low.p0", "text": "P1 LOW" },
+            { "type": "param_row", "row": 5, "param": "high.p0", "text": "P1 HIGH" },
+            { "type": "param_row", "row": 6, "param": "low.p1", "text": "P2 LOW" },
+            { "type": "param_row", "row": 7, "param": "high.p1", "text": "P2 HIGH" }
+          ]
+        },
+        {
+          "id": "channel",
+          "widgets": [
+            { "type": "label", "row": 2, "span": 2, "text": "MIDI CH" },
+            { "type": "param_row", "row": 4, "param": "channel.p0", "text": "P1 CH" },
+            { "type": "param_row", "row": 5, "param": "channel.p1", "text": "P2 CH" }
+          ]
+        },
+        {
+          "id": "key-scaling",
+          "widgets": [
+            { "type": "label", "row": 2, "span": 2, "text": "KEY SCALING" },
+            { "type": "param_row", "row": 4, "param": "breakpoint", "text": "BREAKPOINT" },
+            { "type": "param_row", "row": 5, "param": "key_sens_on", "text": "KEY SENS ON" },
+            { "type": "label", "row": 7, "text": "targets are in EDIT/FX/ENV" }
+          ]
+        },
+        {
+          "id": "vel-sens",
+          "widgets": [
+            { "type": "label", "row": 2, "span": 2, "text": "VEL SENS" },
+            { "type": "param_row", "row": 4, "param": "vel_sens_on", "text": "VEL SENS ON" },
+            { "type": "label", "row": 7, "text": "targets are in EDIT/FX/ENV" }
+          ]
+        },
+        {
+          "id": "voice-mode",
+          "widgets": [
+            { "type": "subheader", "row": 2, "text": "VOICE MODE", "part": true },
+            { "type": "param_row", "row": 3, "param": "mode", "part": true, "text": "MODE" },
+            { "type": "param_row", "row": 4, "param": "note_priority", "part": true, "text": "PRIORITY" },
+            { "type": "param_row", "row": 5, "param": "legato", "part": true, "text": "LEGATO" },
+            { "type": "param_row", "row": 6, "param": "portamento", "part": true, "text": "PORTA" }
+          ]
+        },
+        {
+          "id": "unison",
+          "widgets": [
+            { "type": "subheader", "row": 2, "text": "MONO STACK", "part": true },
+            { "type": "param_row", "row": 3, "param": "unison_count", "part": true, "text": "VOICES" },
+            { "type": "param_row", "row": 4, "param": "unison_detune", "part": true, "text": "DETUNE" }
+          ]
+        },
+        {
+          "id": "names",
+          "widgets": [
+            { "type": "label", "row": 2, "span": 2, "text": "NAMES" },
+            { "type": "name", "row": 3, "text": "single part 1 name", "name": 0 },
+            { "type": "name", "row": 4, "text": "single part 2 name", "name": 1 },
+            { "type": "name", "row": 5, "text": "multi-patch name", "name": 2 },
+            { "type": "label", "row": 7, "text": "PRESETS = load part" },
+            { "type": "label", "row": 8, "text": "SAVE = save part" },
+            { "type": "label", "row": 9, "text": "SEL+SAVE = init part" }
+          ]
+        },
+        {
+          "id": "backup",
+          "widgets": [
+            { "type": "label", "row": 2, "span": 2, "text": "BACKUP / LOAD" },
+            { "type": "label", "row": 4, "text": "host-side, USB-MIDI SysEx" },
+            { "type": "label", "row": 6, "text": "umetate preset export" },
+            { "type": "label", "row": 7, "text": "umetate preset import" },
+            { "type": "label", "row": 9, "text": "model byte 64" },
+            { "type": "label", "row": 10, "text": "no MIDI CH needed" }
+          ]
+        },
+        {
+          "id": "credits",
+          "widgets": [
+            { "type": "subheader", "row": 2, "text": "VERSION + CREDITS", "plain": true },
+            { "type": "custom", "row": 3, "span": 12 }
+          ]
+        }
+      ],
+      "bindings": [
+        { "source": "ENC_KNOB1", "slot": 0, "behavior": "relative" },
+        { "source": "ENC_KNOB2", "slot": 1, "behavior": "relative" },
+        { "source": "ENC_KNOB3", "slot": 2, "behavior": "relative" },
+        { "source": "ENC_KNOB4", "slot": 3, "behavior": "relative" }
+      ]
+    }
+  }
+}

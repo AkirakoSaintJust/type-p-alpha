@@ -1,0 +1,111 @@
+/* p1onken interface language, v1.1, 2026-11-03.
+   Extracted from mockups/type-p-alpha-plugin.html.
+   Keep this file and design/tokens.json in sync. */
+
+:root {
+  /* colour */
+  --p1-bg: #000000;
+  --p1-panel: #070707;
+  --p1-popup: #1b1b1b;
+  --p1-line: #1c1c1c;
+  --p1-line-strong: #2e2e2e;
+  --p1-text: #d2d2d2;
+  --p1-dim: #7d7d7d;
+  --p1-faint: #4a4a4a;
+  --p1-white: #ffffff;
+  --p1-pink: #ff2e7e;
+  --p1-pink-bright: #ff4d94;
+  --p1-purple: #c780ff;
+  --p1-green: #3dff9e;
+  --p1-brand-ink: #d6d6d6;
+  --p1-brand-shadow: #c2ad00;
+
+  /* families */
+  --p1-font-ui: "DotGothic16", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans JP", "Cascadia Mono", ui-monospace, monospace;
+  --p1-font-display: "Zen Dots", "DotGothic16", "Hiragino Kaku Gothic ProN", "Yu Gothic", ui-monospace, monospace;
+  --p1-font-brand: "Digital Desolation Plus", "Arial Black", Impact, sans-serif;
+  --p1-font-brand-fallback: "Arial Black";
+
+  /* type */
+  --p1-text-base: 16px;
+  --p1-text-knob-name: 13px;
+  --p1-text-knob-value: 16px;
+  --p1-text-inline-label: 13px;
+  --p1-text-button: 12px;
+  --p1-text-button-key: 11px;
+  --p1-text-mini: 12px;
+  --p1-text-legend: 11px;
+  --p1-text-legend-glyph: 12px;
+  --p1-text-mute-label: 13px;
+  --p1-text-note: 13px;
+  --p1-text-dialog-body: 14px;
+  --p1-text-slot: 15px;
+  --p1-text-select: 12px;
+  --p1-text-brand-line: 12px;
+  --p1-text-section-title: 11px;
+  --p1-text-tab: 12px;
+  --p1-text-operator-name: 14px;
+  --p1-text-part-name: 12px;
+  --p1-text-dialog-title: 11px;
+  --p1-text-toolbar-label: 9px;
+  --p1-text-status: 11px;
+  --p1-text-algorithm-label: 10px;
+  --p1-text-algorithm-number: 30px;
+  --p1-text-wordmark: 30px;
+
+  /* layout */
+  --p1-window-width: 1240px;
+  --p1-window-height: 985px;
+  --p1-header-height: 159px;
+  --p1-toolbar-height: 44px;
+  --p1-tabs-height: 37px;
+  --p1-body-height: 715px;
+  --p1-status-height: 28px;
+  --p1-page-padding-top: 14px;
+  --p1-page-padding-x: 16px;
+  --p1-page-padding-bottom: 16px;
+  --p1-grid-gap: 10px;
+  --p1-card-padding: 9px;
+  --p1-opcol-padding: 8px;
+  --p1-opcol-gap: 6px;
+  --p1-opcard-padding: 8px;
+  --p1-header-padding-y: 14px;
+  --p1-header-padding-x: 16px;
+  --p1-header-gap: 28px;
+  --p1-toolbar-padding-y: 7px;
+  --p1-toolbar-padding-x: 16px;
+  --p1-toolbar-gap: 10px;
+  --p1-tab-padding-y: 11px;
+  --p1-tab-padding-x: 16px;
+  --p1-status-padding-y: 7px;
+  --p1-status-padding-x: 16px;
+
+  /* controls */
+  --p1-knob-cell: 52px;
+  --p1-knob-dial: 42px;
+  --p1-op-env-knob-cell: 37px;
+  --p1-op-env-knob-dial: 34px;
+  --p1-op-osc-knob-cell: 56px;
+  --p1-op-osc-knob-dial: 34px;
+  --p1-part-knob-cell: 62px;
+  --p1-part-knob-dial: 38px;
+  --p1-penv-knob-cell: 52px;
+  --p1-penv-knob-dial: 38px;
+  --p1-kv-knob-cell: 64px;
+  --p1-kv-knob-dial: 42px;
+  --p1-mute-tile-width: 36px;
+  --p1-mute-tile-height: 22px;
+  --p1-legend-square: 15px;
+  --p1-level-track-height: 14px;
+  --p1-toggle-width: 26px;
+  --p1-toggle-height: 12px;
+  --p1-scroller-max-patch: 260px;
+  --p1-scroller-max-part: 240px;
+
+  /* borders and shape */
+  --p1-border-width: 1px;
+  --p1-accent-width: 2px;
+  --p1-radius: 0;
+  --p1-accent-corner: 11px;
+  --p1-tab-clip: polygon(5px 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 7px) 100%, 0 100%, 5px 50%);
+}

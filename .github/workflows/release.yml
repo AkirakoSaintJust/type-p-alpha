@@ -1,0 +1,96 @@
+name: release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Release version, for example 0.1.0"
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  linux:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install JUCE build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build xvfb libasound2-dev libfreetype6-dev \
+            libx11-dev libxext-dev libxinerama-dev libxrandr-dev libxcursor-dev \
+            libxcomposite-dev libxrender-dev
+      - name: Configure
+        run: cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+      - name: Build
+        run: cmake --build build
+      - name: Test
+        run: ctest --test-dir build --output-on-failure -E "linux_daws|plugin_editor_snapshot_diff"
+      - name: Package
+        run: |
+          mkdir -p dist/licences
+          cp -r "build/plugin/juce/type_p_alpha_artefacts/Release/VST3/Type P.alpha.vst3" dist/
+          cp "build/plugin/juce/type_p_alpha_artefacts/Release/CLAP/Type P.alpha.clap" dist/
+          cp "build/plugin/juce/type_p_alpha_artefacts/Release/Standalone/Type P.alpha" dist/
+          cp LICENSE LICENSING.md dist/
+          cp third-party-licenses/*.txt dist/licences/
+          cd dist
+          zip -r "../Type-P.alpha-linux-x86_64.zip" .
+      - uses: actions/upload-artifact@v4
+        with:
+          name: linux
+          path: Type-P.alpha-linux-x86_64.zip
+
+  windows:
+    runs-on: windows-2022
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
+      - name: Configure
+        run: cmake -S . -B build -G "Visual Studio 17 2022" -A x64
+      - name: Build
+        run: cmake --build build --config Release
+      - name: Test
+        run: ctest --test-dir build -C Release --output-on-failure
+      - name: Package
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force dist\licences | Out-Null
+          Copy-Item "build/plugin/juce/type_p_alpha_artefacts/Release/VST3/Type P.alpha.vst3" dist -Recurse
+          Copy-Item "build/plugin/juce/type_p_alpha_artefacts/Release/CLAP/Type P.alpha.clap" dist
+          Copy-Item "build/plugin/juce/type_p_alpha_artefacts/Release/Standalone/Type P.alpha.exe" dist
+          Copy-Item LICENSE,LICENSING.md dist
+          Copy-Item third-party-licenses\*.txt dist\licences
+          Compress-Archive -Path dist\* -DestinationPath Type-P.alpha-windows-x86_64.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows
+          path: Type-P.alpha-windows-x86_64.zip
+
+  release:
+    needs: [linux, windows]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+      - name: Source archive
+        env:
+          TAG: ${{ github.event_name == 'workflow_dispatch' && format('v{0}', inputs.version) || github.ref_name }}
+        run: |
+          git archive --format=tar.gz --prefix=type-p-alpha-${TAG}/ \
+            -o type-p-alpha-${TAG}-source.tar.gz HEAD
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event_name == 'workflow_dispatch' && format('v{0}', inputs.version) || github.ref_name }}
+          files: |
+            artifacts/**/*.zip
+            type-p-alpha-*-source.tar.gz
