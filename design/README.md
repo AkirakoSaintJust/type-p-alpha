@@ -319,8 +319,8 @@ the current patch.` and offers `cancel` and `init`. The save chooser is titled
 
 ## Working method
 
-The process lessons from making this mockup are in `agent-workflow.md`, so read it
-before changing the interface.
+The interface is designed before it is written. Read the visual language and the
+panel before changing the editor.
 
 ## Open items
 

@@ -70,8 +70,4 @@ The `.github/workflows/release.yml` builds the Linux and Windows artefacts on a
 tag and attaches the VST3, CLAP, standalone and source archives. Each archive
 carries the `licences/` folder. Read `../LICENSING.md` before publishing.
 
-## History
 
-The `feature-contract-*.md` files record the Type P.fm1 build path that this
-plugin grew from. They are provenance for the engine and the editor, not a current
-product plan.
