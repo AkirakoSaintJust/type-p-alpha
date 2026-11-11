@@ -20,8 +20,8 @@ Results so far seem to be fit for intent. I've been able to easily make rudiment
 
 ## Lines of research
 
-1. Feedback envelopes. Are they worth it and where to place them to avoid overcomplicating patch design?
-2. Is negative feedback (i.e. feedback producing only, or mostly, odd harmonics from a sine wave) viable?
+1. Feedback envelopes. Are they worth it and where to place them to avoid overcomplicating patch design? See the [feedback design note](design/research-feedback.md).
+2. Is negative feedback (i.e. feedback producing only, or mostly, odd harmonics from a sine wave) viable? See the [design note](design/research-feedback.md) and the [polarity contract](plugin/feature-contract-feedback-polarity.md).
 3. Phase distortion/Vector phaseshaping. Where to place the transfer function's breakpoint? How to implement it without adding extra machinery (i.e. phase distortion and phase modulation implemented using the same phase transfer function instead of complicating the DSP unnecessarily). Does _d_-axis phase distortion offer anything substantial over operator feedback? Timbrally and conceptually, what would one use phase distortion for in this synth?
 4. Envelope design. Curves, stages, interface.
 5. Phase granulation as a layer added on top of the PM/PD one. What do I want it to do, exactly? How much does it cost? What are its parameters?
