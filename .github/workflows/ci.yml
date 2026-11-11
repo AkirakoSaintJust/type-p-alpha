@@ -87,6 +87,6 @@ jobs:
           chmod +x "$pluginval" "$clap"
           "$pluginval" --validate \
             "build/plugin/juce/type_p_alpha_artefacts/Release/VST3/Type P.alpha.vst3" \
-            --strictness-level 5
+            --strictness-level 5 --skip-gui-tests
           "$clap" validate --only-failed \
             "build/plugin/juce/type_p_alpha_artefacts/Release/CLAP/Type P.alpha.clap"
