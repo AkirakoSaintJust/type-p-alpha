@@ -17,6 +17,12 @@
 #define UMETATE_DSP_API
 #endif
 
+#if defined(__APPLE__)
+#define UMETATE_POOL_SECTION
+#else
+#define UMETATE_POOL_SECTION __attribute__((section(".pool")))
+#endif
+
 #define NVOICE 20
 #define N_PART 2
 #define CONTROL_BLOCK 32
@@ -1121,7 +1127,7 @@ UMETATE_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 
 #ifndef UMETATE_INSTANCE_ONLY
 static type_p_alpha_state type_p_alpha_legacy_state UMETATE_CPU1
-    __attribute__((section(".pool")));
+    UMETATE_POOL_SECTION;
 static uint8_t type_p_alpha_legacy_ready;
 static UMETATE_DSP_API type_p_alpha_state *type_p_alpha_legacy(void) {
     if (!type_p_alpha_legacy_ready) {
