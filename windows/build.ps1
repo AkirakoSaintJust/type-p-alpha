@@ -43,14 +43,20 @@ $clangDir = Split-Path -Parent $clang
 $env:PATH = "$clangDir;$env:PATH"
 
 $linkerName = if ($Linker -eq "lld") { "lld-link.exe" } else { "link.exe" }
-$linker = (Get-Command $linkerName -ErrorAction SilentlyContinue).Source
-if (-not $linker) { $linker = Join-Path $clangDir $linkerName }
-if (-not (Test-Path $linker)) {
+$linkerPath = (Get-Command $linkerName -ErrorAction SilentlyContinue).Source
+if (-not $linkerPath) { $linkerPath = Join-Path $clangDir $linkerName }
+if (-not (Test-Path $linkerPath)) {
     throw "$linkerName not found. Install lld or the MSVC linker."
 }
 $linkerFlag = if ($Linker -eq "lld") { "lld" } else { "link" }
 
 $root = Split-Path -Parent $PSScriptRoot
+if ($root -match '[^\x00-\x7F]') {
+    $short = cmd /c "for %I in (`"$root`") do @echo %~sI"
+    if ($LASTEXITCODE -eq 0 -and $short) {
+        $root = $short.Trim()
+    }
+}
 $build = "build/windows-clangcl-$Linker"
 if ($Sanitizers) { $build += "-sanitize" }
 
@@ -61,7 +67,7 @@ $cmakeArgs = @(
     "-DCMAKE_BUILD_TYPE=Release",
     "-DCMAKE_C_COMPILER=$clang",
     "-DCMAKE_CXX_COMPILER=$clang",
-    "-DCMAKE_LINKER=$linker",
+    "-DCMAKE_LINKER=$linkerPath",
     "-DCMAKE_EXE_LINKER_FLAGS=-fuse-ld=$linkerFlag",
     "-DCMAKE_SHARED_LINKER_FLAGS=-fuse-ld=$linkerFlag"
 )
