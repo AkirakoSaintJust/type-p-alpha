@@ -1,11 +1,11 @@
 # Plugin capabilities
 
 A capability is a build-time package for the JUCE app. It carries its own design
-note, parameters, DSP and UI. The firmware build never reads this folder, so a
-capability costs no device RAM, flash or package size.
+note, parameters, DSP and UI. The plugin build reads this folder, and the engine
+package is unchanged.
 
 The first slice is output-stage and global-param only. Per-part capabilities and
-capabilities that retarget a firmware parameter are a later extension. The
+capabilities that retarget a project parameter are a later extension. The
 contract is in `../feature-contract-capabilities.md`.
 
 ## Package shape
@@ -59,15 +59,14 @@ and DSP always exist, so the plugin code has one shape.
 ```
 
 Parameter names must be unique against the base manifest. They receive ids after
-the 303 base parameters, so every firmware id and the 135-param device part
-record stay unchanged. The plugin state carries the values. The `.p1lib` bank
-format does not change.
+the base parameters, so every engine id and the part record stay unchanged. The
+plugin state carries the values. The `.p1lib` bank format does not change.
 
-`migrations` is the translation map for a known firmware parameter that changed
-meaning in a capability. Each entry names the parameter and the old and new
-values. The plugin applies the map after a state load and after a part or patch
-load. The firmware does not know the capability, so a migration must only change
-values the firmware can still read.
+`migrations` is the translation map for a known parameter that changed meaning in
+a capability. Each entry names the parameter and the old and new values. The
+plugin applies the map after a state load and after a part or patch load. The
+engine does not know the capability, so a migration must only change values the
+engine can still read.
 
 ## DSP
 
@@ -84,8 +83,8 @@ state and resets it with the engine. The default parameter values must leave the
 render bit-exact with the base engine. The demo achieves that with an off switch
 that returns before the filter.
 
-The DSP is plugin-only, so it may use float. The firmware engine stays integer
-and is not rebuilt.
+The DSP is plugin-only, so it may use float. The engine core stays integer and is
+not rebuilt.
 
 ## UI
 
@@ -119,5 +118,5 @@ base `engine/gen/params.json`, the enabled list and the package manifests. It wr
 the merged params, the capability DSP chain, the page table, the C++ registry and
 the migration table into the plugin build's generated folder.
 
-The firmware build does not run the script. Its package and its host render are
+The engine generator does not run the script. Its package and its host render are
 unchanged.

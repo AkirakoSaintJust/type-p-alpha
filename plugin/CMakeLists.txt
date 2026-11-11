@@ -118,6 +118,7 @@ target_include_directories(p1_engine PUBLIC
 )
 
 target_compile_definitions(p1_engine PRIVATE
+    P1_INSTANCE_ONLY
     P1_MIDI_EXTERNAL
     "P1_STATE_PTR=${P1_STATE_PTR}"
 )

@@ -117,6 +117,7 @@ failures and one warning, because its random-state test loads garbage without a
 crash. The filter runs per voice and per part now, so each part has its own cutoff,
 resonance, mode and envelope, and its own key and velocity follow.
 
-The Linux suite runs in CTest. The macOS build and the AU target are still
-unvalidated, and the Windows clang-cl build waits for the next CI run. The Linux
-DAW matrix runs when Ardour, Carla and JACK are installed.
+The Linux suite runs in CTest. The Windows clang-cl build and the macOS universal
+VST3, CLAP and standalone build pass in CI. The AU target and the macOS DAW
+validation are still open. The Linux DAW matrix runs when Ardour, Carla and JACK
+are installed.

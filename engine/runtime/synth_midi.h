@@ -1,10 +1,10 @@
 /* SPDX-License-Identifier: GPL-3.0-only */
 /* Copyright (C) 2026 P1Onken */
-/* The device-side MIDI handler (docs/roadmap.md §6.11.4, F7): note on/off -> the
- * seam's `note_on_ch`/`note_off`, CC -> the fixed cc-map's param (a 7-bit value
- * scaled to the param's full [min, max] range), CC 64 sustain (note-offs deferred
- * until the pedal lifts), CC 123 panic, and 14-bit pitch bend (±2 semitones) ->
- * `set_bend_q16`. Clock/transport (F8 FA FB FC) are left to the app. */
+/* The MIDI handler: note on/off -> the seam's `note_on_ch`/`note_off`, CC -> the
+ * fixed cc-map's param (a 7-bit value scaled to the param's full [min, max]
+ * range), CC 64 sustain (note-offs deferred until the pedal lifts), CC 123 panic,
+ * and 14-bit pitch bend (±2 semitones) -> `set_bend_q16`. Clock/transport
+ * (F8 FA FB FC) are left to the host. */
 #pragma once
 #include <stdint.h>
 

@@ -213,5 +213,5 @@ output to the host rate. Leave the input and the core rate untouched.
 - The brand font licence is no longer a blocker. The wordmark is all Zen Dots, and
   Digital Desolation Plus is not used or bundled.
 - Decide whether AU joins VST3 and CLAP in the first macOS build.
-- The in-plugin 64 multi and 128 part banks are in. Device SysEx import is not part
+- The in-plugin 64 multi and 128 part banks are in. SysEx import is not part
   of this product.

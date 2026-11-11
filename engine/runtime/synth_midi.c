@@ -1,8 +1,8 @@
 /* SPDX-License-Identifier: GPL-3.0-only */
 /* Copyright (C) 2026 P1Onken */
-/* The device-side MIDI handler implementation (synth_midi.h). `midi_get` is the
- * platform's (provided by the includer: platform.c on device, a stub in tests).
- * The sustain state is held in the context, so two engines can run in one process. */
+/* The MIDI handler implementation (synth_midi.h). `midi_get` is the host's (a
+ * stub in the tests). The sustain state is held in the context, so two engines can
+ * run in one process. */
 #include "synth_midi.h"
 
 #ifdef P1_MIDI_EXTERNAL

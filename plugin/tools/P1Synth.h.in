@@ -15,8 +15,4 @@
 #define P1_LIT @P1_SYNTH_CNAME@_dsp_lit_s
 #define P1_QUIET @P1_SYNTH_CNAME@_dsp_quiet_s
 #define P1_TAP @P1_SYNTH_CNAME@_dsp_tap_s
-#define P1_LEGACY_RESET @P1_SYNTH_CNAME@_dsp_reset
-#define P1_LEGACY_NOTE_ON @P1_SYNTH_CNAME@_dsp_note_on
-#define P1_LEGACY_NOTE_OFF @P1_SYNTH_CNAME@_dsp_note_off
-#define P1_LEGACY_RENDER @P1_SYNTH_CNAME@_dsp_render
 #define P1_PARAM_COUNT @P1_SYNTH_CNAME@_dsp_param_count

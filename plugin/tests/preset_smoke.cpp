@@ -1,5 +1,5 @@
 /* SPDX-License-Identifier: GPL-3.0-only */
-/* Milestone 4: the in-memory preset bank uses the device record code. */
+/* Milestone 4: the in-memory preset bank uses the engine record code. */
 #include <algorithm>
 #include <array>
 #include <cmath>

@@ -4,8 +4,8 @@
 
 Tone is a plugin-only output control. It softens the top end after the shared
 engine, so a patch can sit in a mix without changing the patch that runs on the
-device. The default state is off, and the plugin render is bit-exact with the
-firmware until the player turns it on.
+engine. The default state is off, and the plugin render is bit-exact with the
+base engine until the player turns it on.
 
 ## Controls
 
@@ -33,7 +33,7 @@ one state per channel. A reset clears the state and returns to off.
 | `cap_tone_on` | 0 to 1 | 0 | Bypass when 0. |
 | `cap_tone` | 0 to 100% | 100 | Cutoff, 200 Hz to 20 kHz. |
 
-The ids are appended after the 303 base parameters. The device part record and
+The ids are appended after the base parameters. The engine part record and
 the `.p1lib` bank do not change.
 
 ## Bounds

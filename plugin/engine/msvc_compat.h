@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: GPL-3.0-only */
-/* The generated firmware C uses GCC attributes for section placement and
+/* The generated engine C uses GCC attributes for section placement and
  * always-inline control, which have no meaning in an MSVC Windows build, so the
- * plugin build makes them empty there. The firmware build keeps the real
+ * plugin build makes them empty there. The target build keeps the real
  * attributes. */
 #pragma once
 
