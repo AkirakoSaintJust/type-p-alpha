@@ -11,7 +11,6 @@
 
 #include <juce_audio_processors/juce_audio_processors.h>
 
-#include "CapabilityDSP.h"
 #include "Engine.hpp"
 #include "Params.h"
 #include "PluginProcessor.h"
@@ -69,8 +68,6 @@ int main()
 {
     TypePAlphaAudioProcessor processor;
 
-    check(kP1ParamCount == kP1BaseParamCount + P1_CAPABILITY_PARAM_COUNT,
-          "the manifest exposes the base and capability parameters");
     check(processor.getParameters().size() == kP1ParamCount,
           "the APVTS exposes every manifest parameter");
     check(processor.acceptsMidi() && !processor.producesMidi(),
@@ -105,43 +102,6 @@ int main()
     int32_t reference[kFrames * 2] = {};
     renderReference(reference, kFrames, 0, 4);
     check(matches(block, reference, kFrames), "44.1 kHz output is bit-exact with the engine");
-
-    {
-        auto set = [&processor](const char* id, float value) {
-            if (auto* parameter = processor.parameters().getParameter(id))
-                parameter->setValueNotifyingHost(
-                    parameter->convertTo0to1(value));
-        };
-        set("cap_tone_on", 0.0f);
-        set("cap_tone", 100.0f);
-        processor.prepareToPlay(44100.0, kFrames);
-        juce::AudioBuffer<float> off(2, kFrames);
-        juce::MidiBuffer offMidi;
-        offMidi.addEvent(
-            juce::MidiMessage::noteOn(1, 84, static_cast<juce::uint8>(100)), 0);
-        processor.processBlock(off, offMidi);
-
-        set("cap_tone_on", 1.0f);
-        set("cap_tone", 0.0f);
-        processor.prepareToPlay(44100.0, kFrames);
-        juce::AudioBuffer<float> on(2, kFrames);
-        juce::MidiBuffer onMidi;
-        onMidi.addEvent(
-            juce::MidiMessage::noteOn(1, 84, static_cast<juce::uint8>(100)), 0);
-        processor.processBlock(on, onMidi);
-
-        double offDiff = 0.0;
-        double onDiff = 0.0;
-        for (int i = 1; i < kFrames; ++i) {
-            offDiff += std::abs(off.getSample(0, i) - off.getSample(0, i - 1));
-            onDiff += std::abs(on.getSample(0, i) - on.getSample(0, i - 1));
-        }
-        check(onDiff < offDiff * 0.9,
-              "the tone capability reduces the high end");
-
-        set("cap_tone_on", 0.0f);
-        set("cap_tone", 100.0f);
-    }
 
     juce::MemoryBlock state;
     processor.getStateInformation(state);

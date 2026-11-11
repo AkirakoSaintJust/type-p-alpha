@@ -4,9 +4,6 @@
 #include <algorithm>
 #include <cmath>
 
-#include "CapabilityPage.h"
-#include "CapabilityPages.h"
-#include "CapabilityRegistry.h"
 #include "Pages.h"
 #include "ParamIDs.h"
 #include "PluginProcessor.h"
@@ -779,13 +776,11 @@ void PluginEditor::buildUi()
     canvas_.addAndMakeVisible(*toolbar_);
     toolbar_->setBounds(1, 160, 1238, 44);
     tabs_.setBounds(1, 204, 1238, 37);
-    activeTab_ = juce::jlimit(0, 2 + kP1CapabilityPageCount, activeTab_);
+    activeTab_ = juce::jlimit(0, 2, activeTab_);
     juce::StringArray labels;
     labels.add("patch settings");
     labels.add("operators");
     labels.add("fx / mod");
-    for (int i = 0; i < kP1CapabilityPageCount; ++i)
-        labels.add(kP1CapabilityPages[i].title);
     tabs_.setLabels(labels);
     switchingTab_ = true;
     tabs_.setActive(activeTab_);
@@ -804,26 +799,16 @@ void PluginEditor::buildPage()
         canvas_.removeChildComponent(page_.get());
         page_.reset();
     }
-    if (activeTab_ >= 3 && activeTab_ < 3 + kP1CapabilityPageCount) {
-        const int index = activeTab_ - 3;
-        if (kP1CapabilityPages[index].kind == 0)
-            page_ = p1::ui::makeCapabilitySchemaPage(index, *this);
-        else
-            page_ = p1::ui::makeCapabilityPage(index, *this);
-        if (page_ == nullptr)
-            page_ = p1::ui::makePatchPage(*this);
-    } else {
-        switch (activeTab_) {
-        case 1:
-            page_ = p1::ui::makeOperatorsPage(*this);
-            break;
-        case 2:
-            page_ = p1::ui::makeFxModPage(*this);
-            break;
-        default:
-            page_ = p1::ui::makePatchPage(*this);
-            break;
-        }
+    switch (activeTab_) {
+    case 1:
+        page_ = p1::ui::makeOperatorsPage(*this);
+        break;
+    case 2:
+        page_ = p1::ui::makeFxModPage(*this);
+        break;
+    default:
+        page_ = p1::ui::makePatchPage(*this);
+        break;
     }
     page_->setBounds(17, 255, 1206, 685);
     canvas_.addAndMakeVisible(*page_);
@@ -841,7 +826,7 @@ void PluginEditor::setActivePart(int part)
 
 void PluginEditor::showTab(int tab)
 {
-    tab = juce::jlimit(0, 2 + kP1CapabilityPageCount, tab);
+    tab = juce::jlimit(0, 2, tab);
     if (tab == activeTab_)
         return;
     activeTab_ = tab;
@@ -1137,7 +1122,6 @@ void PluginEditor::loadPartFromSlot(int slot)
     if (!store.loadPart(slot, name, params))
         return;
     applyPartParams(activePart_, params);
-    processor_.applyParamMigrations();
     processor_.setPartName(activePart_, juce::String(name));
     store.setPartSource(activePart_, slot);
     refreshNames();
@@ -1212,7 +1196,6 @@ void PluginEditor::loadPatchFromSlot(int slot)
         applyRouting(4, part, multi.delay[static_cast<std::size_t>(part)]);
     }
     store.setCurrentMulti(slot);
-    processor_.applyParamMigrations();
     refreshNames();
 }
 

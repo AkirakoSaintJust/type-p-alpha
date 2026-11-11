@@ -41,31 +41,7 @@ configure_file(
     @ONLY
 )
 
-set(P1_CAPABILITIES_DIR "${CMAKE_CURRENT_SOURCE_DIR}/capabilities"
-    CACHE PATH "the plugin-only capability packages")
-set(P1_CAPABILITIES_ENABLED "${P1_CAPABILITIES_DIR}/enabled.json"
-    CACHE FILEPATH "the enabled capability list")
-set(P1_PLUGIN_PARAMS "${P1_GENERATED_DIR}/plugin-params.json")
-execute_process(
-    COMMAND "${Python3_EXECUTABLE}"
-            "${CMAKE_CURRENT_SOURCE_DIR}/tools/gen_capabilities.py"
-            --params "${P1_SYNTH_GEN}/params.json"
-            --dir "${P1_CAPABILITIES_DIR}"
-            --enabled "${P1_CAPABILITIES_ENABLED}"
-            --out "${P1_GENERATED_DIR}"
-    RESULT_VARIABLE P1_CAPABILITY_RESULT
-    OUTPUT_VARIABLE P1_CAPABILITY_OUTPUT
-    ERROR_VARIABLE P1_CAPABILITY_ERROR
-)
-if(P1_CAPABILITY_RESULT)
-    message(FATAL_ERROR "capabilities: ${P1_CAPABILITY_ERROR}")
-endif()
-message(STATUS "${P1_CAPABILITY_OUTPUT}")
-include("${P1_GENERATED_DIR}/CapabilitySources.cmake")
-file(GLOB_RECURSE P1_CAPABILITY_FILES CONFIGURE_DEPENDS
-    "${P1_CAPABILITIES_DIR}/*")
-set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS
-    "${CMAKE_CURRENT_SOURCE_DIR}/tools/gen_capabilities.py")
+set(P1_PLUGIN_PARAMS "${P1_SYNTH_GEN}/params.json")
 
 set(P1_PARAMS_HEADER "${P1_GENERATED_DIR}/Params.h")
 add_custom_command(
@@ -102,7 +78,6 @@ add_library(p1_engine STATIC
     "${P1_SYNTH_GEN}/${P1_SYNTH_CNAME}_dsp.c"
     "${P1_SYNTH_GEN}/tables.c"
     "${P1_ENGINE}/runtime/synth_midi.c"
-    "${P1_CAPABILITY_DSP_SOURCE}"
 )
 set_target_properties(p1_engine PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
@@ -114,7 +89,6 @@ target_include_directories(p1_engine PUBLIC
     ${P1_ENGINE}/gen
     ${P1_ENGINE}/hal
     ${P1_ENGINE}/runtime
-    ${P1_CAPABILITY_INCLUDE_DIRS}
 )
 
 target_compile_definitions(p1_engine PRIVATE

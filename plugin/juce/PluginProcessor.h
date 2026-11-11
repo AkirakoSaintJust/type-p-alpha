@@ -13,7 +13,6 @@
 #include "MidiBridge.hpp"
 #include "P1Product.h"
 #include "Params.h"
-#include "CapabilityPages.h"
 #include "PresetStore.hpp"
 #include "RateBridge.hpp"
 #include "part_migration.h"
@@ -59,7 +58,6 @@ public:
 
     void getStateInformation(juce::MemoryBlock& destData) override;
     void setStateInformation(const void* data, int sizeInBytes) override;
-    void applyParamMigrations();
 
     void ensureLibraryLoaded();
     void saveLibrary();
@@ -85,7 +83,7 @@ public:
     int getUiPage() const { return uiPage_; }
     void setUiPage(int page)
     {
-        uiPage_ = juce::jlimit(0, 2 + kP1CapabilityPageCount, page);
+        uiPage_ = juce::jlimit(0, 2, page);
     }
 
 private:

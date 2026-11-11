@@ -51,9 +51,6 @@ set(P1_UI_SOURCES
     Pages.cpp
     PagesOperators.cpp
     PagesFxMod.cpp
-    CapabilityPage.cpp
-    ${P1_GENERATED_DIR}/CapabilityRegistry.cpp
-    ${P1_CAPABILITY_UI_SOURCES}
     ${CMAKE_CURRENT_SOURCE_DIR}/../ui/Theme.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../ui/Widgets.cpp
 )
@@ -65,7 +62,6 @@ target_include_directories(p1_editor PUBLIC
     "${CMAKE_CURRENT_SOURCE_DIR}/../ui"
     "${P1_GENERATED_DIR}"
     "${CMAKE_CURRENT_BINARY_DIR}"
-    ${P1_CAPABILITY_INCLUDE_DIRS}
 )
 target_link_libraries(p1_editor PUBLIC
     p1_engine

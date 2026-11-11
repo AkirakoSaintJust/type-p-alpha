@@ -7,7 +7,6 @@
 
 #include <juce_gui_basics/juce_gui_basics.h>
 
-#include "CapabilityPages.h"
 #include "PluginEditor.h"
 #include "PluginProcessor.h"
 
@@ -223,28 +222,6 @@ int main(int argc, char** argv)
         processor.presets().partParams(discarded.partSlot[1])[0] != 229376) {
         std::printf("editor snapshot: discard edits to parts changed a part slot\n");
         ok = false;
-    }
-
-    if (kP1CapabilityPageCount >= 2) {
-        auto setCap = [&processor](const char* id, int value) {
-            if (auto* parameter = processor.parameters().getParameter(id))
-                parameter->setValueNotifyingHost(
-                    parameter->convertTo0to1(static_cast<float>(value)));
-        };
-        editor->setSize(1240, 985);
-        p1editor->setActivePart(0);
-        setCap("cap_tone_on", 1);
-        setCap("cap_tone", 35);
-        p1editor->showTab(3);
-        fill();
-        ok = saveSnapshot(*editor, directory.getChildFile("editor-tone.png")) && ok;
-        p1editor->showTab(4);
-        fill();
-        ok = saveSnapshot(*editor, directory.getChildFile("editor-tone-curve.png")) &&
-             ok;
-        setCap("cap_tone_on", 0);
-        setCap("cap_tone", 100);
-        p1editor->showTab(0);
     }
 
     library.deleteFile();

@@ -25,8 +25,7 @@ ctest --test-dir build --output-on-failure
 - `engine_parity` compiles the engine and checks the MIDI path.
 - `rate_bridge` checks the output-rate adaptation and the exact core-rate bypass.
 - `preset_smoke` checks the preset records.
-- `plugin_smoke` checks the APVTS, the state, the automation and the capability
-  audio path.
+- `plugin_smoke` checks the APVTS, the state and the automation.
 - `plugin_stability` checks repeated load and render.
 - `plugin_editor_snapshot` renders every page, and `plugin_editor_snapshot_diff`
   compares the goldens.
@@ -35,22 +34,11 @@ ctest --test-dir build --output-on-failure
 
 ## Parameters
 
-`plugin/tools/gen_capabilities.py` merges the base manifest with the enabled
-packages in `capabilities/`, then writes the merged parameters, the capability DSP
-chain, the page table, the page registry and the migration table. The plugin build
-compiles the generated files. `plugin/tools/gen_params.py` turns the merged
-manifest into the C++ table, and `gen_tokens.py` turns `design/tokens.json` into
-`UiTokens.h`.
+`plugin/tools/gen_params.py` turns `engine/gen/params.json` into the C++ table, and
+`gen_tokens.py` turns `design/tokens.json` into `UiTokens.h`.
 
 Every manifest parameter must reach the APVTS and the editor. The generator is the
 only reference, so add a parameter to the manifest rather than typing it twice.
-
-## Capabilities
-
-A capability is a build-time package in `capabilities/` with a manifest, a design
-note, DSP, and an optional schema page or C++ page. `capabilities/enabled.json`
-lists the packages the build includes. The `tone` package is the worked example.
-Capabilities are plugin-only.
 
 ## Snapshots
 

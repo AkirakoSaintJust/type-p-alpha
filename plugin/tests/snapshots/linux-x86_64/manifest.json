@@ -2,67 +2,57 @@
   "images": {
     "editor-algorithm.png": {
       "height": 985,
-      "sha256": "ab9e0e4ce5aa1beac71af5089e8a2fb7487552fbc5acc2da3d75992645130bad",
+      "sha256": "7c2ccc4ac1da9ffa5b9953a82184284baeee22b807633c969f5c0d082d86a36e",
       "width": 1240
     },
     "editor-confirm.png": {
       "height": 985,
-      "sha256": "e4ba480f6f570d0a8889a2802b7db7620dcc0b1b620dcca81803de04b26d6fb6",
+      "sha256": "0409111ddad5eb99c91833507c29e453f1a2e904026cc49a250fb68d9dbe69bf",
       "width": 1240
     },
     "editor-fxmod.png": {
       "height": 985,
-      "sha256": "8f18505bc84517c0229beaef8972af9ac99bd8d538189cbb4592a5cf49580d88",
+      "sha256": "8a8a97dc8ee18bf6ab8757eaed19b14f1f2bff50996192c2827f850707689e19",
       "width": 1240
     },
     "editor-half.png": {
       "height": 493,
-      "sha256": "a945bbe132e7da38f2926bd42d20d2ee6ac7ccbee4be93549ff20ce8e9b3abd4",
+      "sha256": "c986795abc7fa42af83838df21cc65dd55e92ff6bf3c5ce9da8405976eff7e25",
       "width": 620
     },
     "editor-operators.png": {
       "height": 985,
-      "sha256": "6a3fe29799df3d0bf48c0ced891c214ccb512a93193d45649dc8a2caf1368400",
+      "sha256": "75a27f303bc39bc880d456e661091c5498119b0d55ca51db8a5ee9cd647cd8e5",
       "width": 1240
     },
     "editor-part2.png": {
       "height": 985,
-      "sha256": "51b28d24c30d3850a9ad29a45c899cb333a5c312ec0a38843fb2030237c9f198",
+      "sha256": "eb3960b9f811cef4e77ced769ddb67b80f559673b82d8319a109365f2bbc4675",
       "width": 1240
     },
     "editor-parts.png": {
       "height": 985,
-      "sha256": "527a233f8bcf11911473e89bd638e7fd800437191aa6685ba0d87ffcc7525a29",
+      "sha256": "3ad30439c0157f3d70b40b1624ae7f0756b022e8345af07401e161f8db3e7ab0",
       "width": 1240
     },
     "editor-patch.png": {
       "height": 985,
-      "sha256": "5c2e383bd56a5e3052f019f2b8e7e46a666a016ddb8b46dfb26c0babaae9b4ce",
+      "sha256": "6d081bc49f53d576153c9a9c387cb2acab7723eedac53e79805e297c22643e77",
       "width": 1240
     },
     "editor-patches.png": {
       "height": 985,
-      "sha256": "d428dc2febb08b84e84a5b83df781e8a4db89a4cad97bf0f79bc19b036e225cc",
+      "sha256": "2f0e521c75dbd65087e89635a4e430f810d626d4bd4ffd2fa4679f7eda126a2e",
       "width": 1240
     },
     "editor-rename.png": {
       "height": 985,
-      "sha256": "9e3af9ba90b603f727785eabf4a5b875ddb3bc669f5d026a9983a2fe1ce7822b",
+      "sha256": "767f8978faa76bf574907a1ccf80c159776331e9c7d3c4c61491e45fd1399701",
       "width": 1240
     },
     "editor-save-mode.png": {
       "height": 985,
-      "sha256": "d8e8692b719039a0be24651f58ba85f612f14573c2f1d584be8b2d403e8f16c7",
-      "width": 1240
-    },
-    "editor-tone-curve.png": {
-      "height": 985,
-      "sha256": "402c668bb28174f9b5d7bd60c435aff414d7418df71ff95c08902aaf51ca1e4f",
-      "width": 1240
-    },
-    "editor-tone.png": {
-      "height": 985,
-      "sha256": "3e46142373e8de73983649faf4a4e016b7fb692382792763a443769080cd0b27",
+      "sha256": "68577d754446af9c2fa387072f0580636feaf6052acf2888376ccdaadc6e4c4c",
       "width": 1240
     }
   },

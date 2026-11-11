@@ -1,8 +1,6 @@
 /* SPDX-License-Identifier: GPL-3.0-only */
 #include "Engine.hpp"
 
-#include "CapabilityDSP.h"
-
 namespace p1 {
 
 Engine::Engine() : state_(std::make_unique<P1_STATE>())
@@ -15,13 +13,10 @@ Engine::~Engine() = default;
 void Engine::reset()
 {
     P1_RESET(state_.get());
-    p1_capabilities_reset();
 }
 
 int Engine::setParam(uint32_t id, int32_t value)
 {
-    if (id >= P1_BASE_PARAM_COUNT)
-        return p1_capabilities_set_param(id - P1_BASE_PARAM_COUNT, value) ? 0 : 1;
     return P1_SET_PARAM(state_.get(), id, value);
 }
 
@@ -53,7 +48,6 @@ void Engine::setBend(uint32_t q16)
 void Engine::render(int32_t* out, uint32_t frames)
 {
     P1_RENDER(state_.get(), out, frames);
-    p1_capabilities_process(out, frames);
 }
 
 uint32_t Engine::lit(uint32_t base)

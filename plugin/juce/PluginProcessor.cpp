@@ -7,7 +7,6 @@
 
 #include <juce_audio_utils/juce_audio_utils.h>
 
-#include "CapabilityMigrations.h"
 #include "PluginEditor.h"
 
 namespace {
@@ -356,7 +355,7 @@ void TypePAlphaAudioProcessor::setStateInformation(const void* data, int sizeInB
     partNames_[0] = state.getProperty("part1Name", "init").toString();
     partNames_[1] = state.getProperty("part2Name", "init").toString();
     uiActivePart_ = juce::jlimit(0, 1, static_cast<int>(state.getProperty("uiActivePart", 0)));
-    uiPage_ = juce::jlimit(0, 2 + kP1CapabilityPageCount,
+    uiPage_ = juce::jlimit(0, 2,
                            static_cast<int>(state.getProperty("uiPage", 0)));
     presets_.setCurrentMulti(static_cast<int>(state.getProperty("currentMulti", -1)));
     for (int part = 0; part < kP1PartCount; ++part) {
@@ -375,24 +374,8 @@ void TypePAlphaAudioProcessor::setStateInformation(const void* data, int sizeInB
         presets_.loadMultiBank(static_cast<const uint8_t*>(multiBank.getData()),
                                multiBank.getSize());
     apvts_.replaceState(state);
-    applyParamMigrations();
     paramsDirty_.store(true, std::memory_order_relaxed);
     updateHostDisplay(juce::AudioProcessor::ChangeDetails().withProgramChanged(true));
-}
-
-void TypePAlphaAudioProcessor::applyParamMigrations()
-{
-    for (int i = 0; i < kP1CapabilityMigrationCount; ++i) {
-        const auto& migration = kP1CapabilityMigrations[i];
-        auto* parameter = apvts_.getParameter(migration.param);
-        auto* value = apvts_.getRawParameterValue(migration.param);
-        if (parameter == nullptr || value == nullptr)
-            continue;
-        if (static_cast<int32_t>(std::lround(value->load())) == migration.from) {
-            parameter->setValueNotifyingHost(
-                parameter->convertTo0to1(static_cast<float>(migration.to)));
-        }
-    }
 }
 
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
