@@ -16,10 +16,19 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install JUCE build dependencies
         run: |
-          sudo apt-get update
-          sudo apt-get install -y ninja-build xvfb clang lld libasound2-dev libfreetype6-dev \
-            libx11-dev libxext-dev libxinerama-dev libxrandr-dev libxcursor-dev \
-            libxcomposite-dev libxrender-dev
+          set -e
+          for attempt in 1 2 3; do
+            if sudo apt-get update -o Acquire::Retries=5 -o Acquire::ForceIPv4=true &&
+               sudo apt-get install -y -o Acquire::Retries=5 -o Acquire::ForceIPv4=true \
+                 ninja-build xvfb clang lld libasound2-dev libfreetype6-dev \
+                 libx11-dev libxext-dev libxinerama-dev libxrandr-dev libxcursor-dev \
+                 libxcomposite-dev libxrender-dev; then
+              exit 0
+            fi
+            echo "apt attempt ${attempt} failed, retrying"
+            sleep 20
+          done
+          exit 1
       - name: Configure
         run: >
           cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
@@ -83,7 +92,7 @@ jobs:
           }
           for bin in \
             "build/plugin/juce/type_p_alpha_artefacts/Release/VST3/Type P.alpha.vst3/Contents/MacOS/Type P.alpha" \
-            "build/plugin/juce/type_p_alpha_artefacts/Release/Standalone/Type P.alpha"; do
+            "build/plugin/juce/type_p_alpha_artefacts/Release/Standalone/Type P.alpha.app/Contents/MacOS/Type P.alpha"; do
             if [ ! -f "$bin" ]; then echo "ci: missing $bin"; exit 1; fi
             check "$bin"
           done
