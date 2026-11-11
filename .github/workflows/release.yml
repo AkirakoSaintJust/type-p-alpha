@@ -25,35 +25,20 @@ jobs:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 90
     steps:
-      - uses: actions/checkout@v4
-      - name: Install JUCE build dependencies
+      - uses: actions/checkout@v7
+      - name: Build the Debian trixie image
+        run: docker build -f docker/Dockerfile -t type-p-alpha-build:release .
+      - name: Configure, build and test
         run: |
-          set -e
-          for attempt in 1 2 3; do
-            if sudo apt-get update -o Acquire::Retries=5 -o Acquire::ForceIPv4=true &&
-               sudo apt-get install -y -o Acquire::Retries=5 -o Acquire::ForceIPv4=true \
-                 ninja-build zip clang lld libasound2-dev libfreetype6-dev \
-                 libx11-dev libxext-dev libxinerama-dev libxrandr-dev libxcursor-dev \
-                 libxcomposite-dev libxrender-dev; then
-              exit 0
-            fi
-            echo "apt attempt ${attempt} failed, retrying"
-            sleep 20
-          done
-          exit 1
-      - name: Configure
-        run: >
-          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
-          -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++
-          -DCMAKE_EXE_LINKER_FLAGS=-fuse-ld=lld
-          -DCMAKE_SHARED_LINKER_FLAGS=-fuse-ld=lld
-          -DCMAKE_MODULE_LINKER_FLAGS=-fuse-ld=lld
-      - name: Build
-        run: cmake --build build
-      - name: Test
-        run: >
-          ctest --test-dir build --output-on-failure
-          -E "linux_daws|plugin_editor_snapshot|plugin_editor_snapshot_diff"
+          docker run --rm -v "$PWD:/work" -w /work type-p-alpha-build:release sh -c '
+            cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release \
+              -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ \
+              -DCMAKE_EXE_LINKER_FLAGS=-fuse-ld=lld \
+              -DCMAKE_SHARED_LINKER_FLAGS=-fuse-ld=lld \
+              -DCMAKE_MODULE_LINKER_FLAGS=-fuse-ld=lld &&
+            cmake --build build &&
+            ctest --test-dir build --output-on-failure \
+              -E "linux_daws|plugin_editor_snapshot|plugin_editor_snapshot_diff"'
       - name: Package
         run: |
           mkdir -p dist/licences
@@ -64,7 +49,7 @@ jobs:
           cp third-party-licenses/*.txt dist/licences/
           cd dist
           zip -r "../Type-P.alpha-${{ matrix.platform }}.zip" .
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: ${{ matrix.platform }}
           path: Type-P.alpha-${{ matrix.platform }}.zip
@@ -73,34 +58,20 @@ jobs:
     runs-on: windows-2022
     timeout-minutes: 90
     steps:
-      - uses: actions/checkout@v4
-      - uses: ilammy/msvc-dev-cmd@v1
-        with:
-          arch: x64
-      - name: Add LLVM to PATH
-        run: echo "C:\Program Files\LLVM\bin" >> $env:GITHUB_PATH
-      - name: Configure
-        run: >
-          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
-          -DCMAKE_C_COMPILER=clang-cl -DCMAKE_CXX_COMPILER=clang-cl
-          -DCMAKE_LINKER=lld-link
-          -DCMAKE_EXE_LINKER_FLAGS=-fuse-ld=lld
-          -DCMAKE_SHARED_LINKER_FLAGS=-fuse-ld=lld
-      - name: Build
-        run: cmake --build build
-      - name: Test
-        run: ctest --test-dir build --output-on-failure
+      - uses: actions/checkout@v7
+      - name: Build and test
+        run: .\windows\build.ps1
       - name: Package
         shell: pwsh
         run: |
           New-Item -ItemType Directory -Force dist\licences | Out-Null
-          Copy-Item "build/plugin/juce/type_p_alpha_artefacts/Release/VST3/Type P.alpha.vst3" dist -Recurse
-          Copy-Item "build/plugin/juce/type_p_alpha_artefacts/Release/CLAP/Type P.alpha.clap" dist
-          Copy-Item "build/plugin/juce/type_p_alpha_artefacts/Release/Standalone/Type P.alpha.exe" dist
+          Copy-Item "build/windows-clangcl-lld/plugin/juce/type_p_alpha_artefacts/Release/VST3/Type P.alpha.vst3" dist -Recurse
+          Copy-Item "build/windows-clangcl-lld/plugin/juce/type_p_alpha_artefacts/Release/CLAP/Type P.alpha.clap" dist
+          Copy-Item "build/windows-clangcl-lld/plugin/juce/type_p_alpha_artefacts/Release/Standalone/Type P.alpha.exe" dist
           Copy-Item LICENSE,LICENSING.md dist
           Copy-Item third-party-licenses\*.txt dist\licences
           Compress-Archive -Path dist\* -DestinationPath Type-P.alpha-windows-x86_64.zip
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: windows-x86_64
           path: Type-P.alpha-windows-x86_64.zip
@@ -109,7 +80,7 @@ jobs:
     runs-on: macos-15-intel
     timeout-minutes: 90
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Configure
         run: >
           cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
@@ -152,7 +123,7 @@ jobs:
           cp third-party-licenses/*.txt dist/licences/
           cd dist
           zip -r "../Type-P.alpha-macos-universal.zip" .
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: macos-universal
           path: Type-P.alpha-macos-universal.zip
@@ -161,8 +132,8 @@ jobs:
     needs: [linux, windows, macos-universal]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/download-artifact@v4
+      - uses: actions/checkout@v7
+      - uses: actions/download-artifact@v8
         with:
           path: artifacts
       - name: Source archive
@@ -171,7 +142,7 @@ jobs:
         run: |
           git archive --format=tar.gz --prefix=type-p-alpha-${TAG}/ \
             -o type-p-alpha-${TAG}-source.tar.gz HEAD
-      - uses: softprops/action-gh-release@v2
+      - uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ github.event_name == 'workflow_dispatch' && format('v{0}', inputs.version) || github.ref_name }}
           files: |
