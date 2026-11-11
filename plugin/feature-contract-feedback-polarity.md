@@ -10,9 +10,9 @@
 - **Brief section:** README lines of research 1 and 2,
   [`../design/research-feedback.md`](../design/research-feedback.md).
 - **Owner / date:** P1Onken, 2026-11-11.
-- **Disposition:** deferred by measurement. The stop criterion failed at 25 percent
-  feedback, so the parameter, the editor control and the migration were not shipped.
-  The measured table is in `../plugin/evidence/feedback-polarity.md`.
+- **Disposition:** deferred by measurement. The stop criterion failed at 25 and 50
+  percent feedback, so the parameter, the editor control and the migration were not
+  shipped. The measured table is in `../plugin/evidence/feedback-polarity.md`.
 
 ## Player outcome
 
@@ -133,12 +133,14 @@ access or display enters the audio path.
   table, the build hash and the pass/fail decision. The test output is the primary
   record and the artefact is the edited summary. The file exists and carries the
   result.
-- **Measured result:** the stop fired at 25 percent. The negative third-to-second
-  ratio was 0.749 against 0.783 positive (4 percent lower), and the
-  fifth-to-second ratio was 0.422 against 0.391 (8 percent higher). The 50 and 75
-  percent rows passed the 25 percent rise, and the 100 percent negative peak was 2
-  percent lower. The 0 percent renders were bit-identical and `engine_parity` stayed
-  bit-exact. The sign flip is not a reliable odd-harmonic control.
+- **Measured result:** the stop fired at 25 and 50 percent. At 25 percent the
+  negative third-to-second ratio was 0.487 against 0.483 positive (1 percent
+  higher), and the fifth-to-second ratio was 0.213 against 0.216 (1 percent lower).
+  At 50 percent both ratios fell, to 0.184 from 0.239 and to 0.076 from 0.125. The
+  75 percent row rose, but the positive second harmonic was nearly zero, so the row
+  is not a stable control. The 100 percent negative peak was 3 percent lower. The 0
+  percent renders were bit-identical and `engine_parity` stayed bit-exact. The sign
+  flip is not a reliable odd-harmonic control.
 
 ## Risks and fallback
 

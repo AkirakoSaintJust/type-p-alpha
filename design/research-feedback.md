@@ -10,8 +10,8 @@ The first plan was to answer line 2 with one polarity bit per operator and then
 design the envelope. A preliminary check and the engine measurement change the
 expectation. The sign flip does not give a reliable odd-harmonic rise in the useful
 feedback range, so the polarity is a bounded experiment rather than a promised
-feature. The experiment failed its stop criterion at 25 percent feedback, so the
-toggle is not shipped. The envelope modulates the feedback magnitude, which the
+feature. The experiment failed its stop criterion at 25 and 50 percent feedback, so
+the toggle is not shipped. The envelope modulates the feedback magnitude, which the
 spectrum does follow, so it is the next feature. The contract is
 [`../plugin/feature-contract-feedback-polarity.md`](../plugin/feature-contract-feedback-polarity.md)
 and the measured table is
@@ -143,21 +143,22 @@ measurement is kept as the answer to line 2.
 
 ### The engine measurement
 
-The engine measurement confirms the model's direction and adds a regime change the
-model did not show. At 25 percent the negative third harmonic is 4 percent lower and
-the fifth is 8 percent higher, so the stop fires. At 35 percent both odd ratios
-fall. At 50 and 75 percent both rise strongly, and at 100 percent the third falls
-again. The full table is in
+The engine measurement confirms the model's direction. At 20 and 25 percent the two
+signs are the same within 2 percent. At 35 and 50 percent the negative feedback
+lowers the odd ratios. At 75 percent the negative ratios rise, but the positive
+second harmonic is nearly zero, so the ratio is unstable and the row is a regime
+artefact. At 100 percent the negative ratios fall again. The stop fires at 25 and
+50 percent. The full table is in
 [`../plugin/evidence/feedback-polarity.md`](../plugin/evidence/feedback-polarity.md).
 
 The positive path stayed bit-exact. `engine_parity` matched the captured reference,
 and the 0 percent positive and negative renders were bit-identical. The 100 percent
-negative peak was 2 percent lower than the positive peak, so there is no
+negative peak was 3 percent lower than the positive peak, so there is no
 instability.
 
-The sign flip is therefore not a reliable odd-harmonic control. The 25 percent
-failure stops the feature. The parameter, the toggle and the 160-to-164 migration
-are not shipped. The 160 layout stays current.
+The sign flip is therefore not a reliable odd-harmonic control. The 25 and 50
+percent failures stop the feature. The parameter, the toggle and the 160-to-164
+migration are not shipped. The 160 layout stays current.
 
 ### Parameter and UI, not shipped
 
@@ -283,8 +284,8 @@ confirms the positive path against the captured reference.
 
 ## Decision
 
-The sign flip failed at 25 percent feedback. It is not shipped, and the 160-to-164
-migration was not used. The measured table is in
+The sign flip failed at 25 and 50 percent feedback. It is not shipped, and the
+160-to-164 migration was not used. The measured table is in
 [`../plugin/evidence/feedback-polarity.md`](../plugin/evidence/feedback-polarity.md).
 The shared feedback envelope with a per-operator depth is the next feedback feature,
 because it modulates the feedback magnitude. A different tap, such as a one-pole
