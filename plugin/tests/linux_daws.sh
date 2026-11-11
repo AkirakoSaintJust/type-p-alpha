@@ -109,7 +109,7 @@ PY
 }
 
 SESSION_DIR="$WORK/ardour/session"
-SESSION_NAME="TypePFm1"
+SESSION_NAME="TypePAlpha"
 rm -rf "$SESSION_DIR"
 ardour8-new_session -s 44100 "$SESSION_DIR" "$SESSION_NAME" \
     >"$WORK/ardour-new.log" 2>&1 || true

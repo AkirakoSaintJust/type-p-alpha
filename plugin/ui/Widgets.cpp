@@ -694,7 +694,7 @@ void P1Envelope::paint(juce::Graphics& g)
             levels[static_cast<size_t>(i)] = static_cast<double>(v->load());
     }
 
-    /* The firmware graph shows the log2 of the one-pole time constant, so a faster
+    /* The panel graph shows the log2 of the one-pole time constant, so a faster
      * rate is a shorter stage, and the sustain is a short flat hold. */
     const auto stageLen = [](int32_t rate) -> uint32_t {
         const int32_t r = juce::jlimit(0, 99, rate);

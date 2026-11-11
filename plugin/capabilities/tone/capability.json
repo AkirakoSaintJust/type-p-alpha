@@ -2,7 +2,7 @@
   "id": "tone",
   "name": "Tone",
   "version": "1.0.0",
-  "description": "An optional output tone control. The firmware keeps the dry output.",
+  "description": "An optional output tone control. The engine keeps the dry output.",
   "design": "design.md",
   "params": [
     {
@@ -37,7 +37,7 @@
       {
         "id": "tone",
         "title": "tone",
-        "note": "plugin-only output tone. the firmware keeps the dry output.",
+        "note": "plugin-only output tone. the engine keeps the dry output.",
         "kind": "schema",
         "controls": [
           { "kind": "knob", "param": "cap_tone_on", "label": "ON" },

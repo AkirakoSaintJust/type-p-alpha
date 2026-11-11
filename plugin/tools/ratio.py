@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-only
 # Copyright (C) 2026 P1Onken
-"""Coarse ratio detents shared by the firmware panel and the plugin editor."""
+"""Coarse ratio detents shared by the panel and the plugin editor."""
 
 from __future__ import annotations
 

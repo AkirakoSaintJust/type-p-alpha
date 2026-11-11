@@ -8,7 +8,7 @@
 
 namespace p1 {
 
-/* The in-memory device preset bank. The byte layout comes from the firmware's
+/* The in-memory preset bank. The byte layout comes from the engine's
  * presets.c record functions, so a plugin bank round-trips with the device. */
 class PresetStore {
 public:

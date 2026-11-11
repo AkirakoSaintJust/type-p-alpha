@@ -1,7 +1,7 @@
 """Generate the plugin-only capability files from the enabled packages.
 
-The base manifest is the firmware's `params.json`. Capability parameters append
-after the base parameters, so every firmware id and the device part record stay
+The base manifest is the project's `params.json`. Capability parameters append
+after the base parameters, so every engine id and the part record stay
 unchanged. The generated files are the merged manifest, the output DSP chain,
 the page table, the C++ page registry, the migration table and the CMake source
 list.
