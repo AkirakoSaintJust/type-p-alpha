@@ -1,17 +1,10 @@
 /* SPDX-License-Identifier: GPL-3.0-only
  * Copyright (C) 2026 P1Onken
  *
- * Fixed-point math contract + hardware acceleration (docs/roadmap.md P2-3).
- * Integer-first, "Q in the name" (dsp-study §6). Two parts:
- *
- *   1. Saturating Q arithmetic + the transcendental tables. Integer only, safe
- *      to include anywhere (no float, no heap).
- *   2. The FFT (kiss_fft, float), opt-in. Define P1_MATH_FFT in the one TU that
- *      needs it (the DSP TU, and the generator's live `ifft` node). Float stays out
- *      of every other object (the "no FP leaks" rule).
- *
- * The plugin uses the portable integer path and the generated tables. The
- * target-only hardware mapping and the JieLi ROM routines are archive-only.
+ * Fixed-point math contract (docs/roadmap.md P2-3). Integer-first, "Q in the
+ * name" (dsp-study §6). The saturating Q arithmetic and the generated tables are
+ * integer only. The FFT (kiss_fft, float) is opt-in: define P1_MATH_FFT in the
+ * one TU that needs it. The plugin uses the portable integer path.
  */
 #pragma once
 #include <stdint.h>
@@ -285,18 +278,6 @@ P1_MATH_INLINE int32_t p1_poly_blep(uint32_t p, uint32_t inc, uint32_t inv_inc)
     return 0;
 }
 
-
-/* ------------------------------------------------------ ROM transcendentals */
-/* Target-only ROM math. The plugin uses the LUT path above. The Q-notation is
- * `aQ` for the input format and `rQ` for the output format. */
-#if defined(P1_TARGET)
-#include "jieli/math.h"
-#define p1_cos_sin(a, aQ, rsin, rcos, rQ)  math_cos_sin(a, aQ, rsin, rcos, rQ)
-#define p1_atan2(y, x, r, rQ)              math_atan2(y, x, r, rQ)
-#define p1_exp(a, aQ, r, rQ)               math_exp(a, aQ, r, rQ)
-#define p1_log(a, aQ, r, rQ)               math_log(a, aQ, r, rQ)
-#define p1_sqrt(a, aQ, r, rQ)              math_sqrt(a, aQ, r, rQ)
-#endif
 
 /* ------------------------------------------------------- FFT (float, opt-in) */
 #ifdef P1_MATH_FFT

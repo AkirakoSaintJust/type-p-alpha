@@ -3,24 +3,7 @@
 #include "tables.h"
 #include <stddef.h>
 
-#ifndef P1_CPU1
-#define P1_CPU1
-#endif
-#ifndef P1_POOL
-#define P1_POOL
-#endif
-
-#if defined(P1_TARGET_DSP)
-#define P1_DSP_API __attribute__((section(".dsp_text"), noinline, used))
-#else
 #define P1_DSP_API
-#endif
-
-#if defined(__APPLE__)
-#define P1_POOL_SECTION
-#else
-#define P1_POOL_SECTION __attribute__((section(".pool")))
-#endif
 
 #define NVOICE 20
 #define N_PART 2
@@ -1121,19 +1104,6 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
     for (uint32_t i = 0; i < PARAM_COUNT; i++)
         *type_p_alpha_param_slot(s, i) = type_p_alpha_dsp_params[i].def;
 }
-
-#ifndef P1_INSTANCE_ONLY
-static type_p_alpha_state type_p_alpha_legacy_state P1_CPU1
-    P1_POOL_SECTION;
-static uint8_t type_p_alpha_legacy_ready;
-static P1_DSP_API type_p_alpha_state *type_p_alpha_legacy(void) {
-    if (!type_p_alpha_legacy_ready) {
-        type_p_alpha_dsp_state_init(&type_p_alpha_legacy_state);
-        type_p_alpha_legacy_ready = 1;
-    }
-    return &type_p_alpha_legacy_state;
-}
-#endif
 
 #define op1_ph_inc (S->op1_ph_inc)
 #define op1_ph_phase (S->op1_ph_phase)
@@ -2699,49 +2669,6 @@ P1_DSP_API void type_p_alpha_dsp_render_s(type_p_alpha_state *state, int32_t *ou
     }
 }
 
-#if P1_CPU1_USED
-typedef struct { int32_t *bus; int32_t *bus0; int32_t *out; int32_t (*taps)[DSP_TAP_FRAMES]; uint32_t v0, v1, b, frames; } type_p_alpha_render_job_t;
-static type_p_alpha_render_job_t type_p_alpha_render_job;
-static volatile uint32_t type_p_alpha_render_bus0_ready;
-static void type_p_alpha_render_post_job(uint32_t arg) {
-    (void)arg;
-    type_p_alpha_render_voices_block(type_p_alpha_render_job.bus, type_p_alpha_render_job.taps, type_p_alpha_render_job.v0,
-        type_p_alpha_render_job.v1, type_p_alpha_render_job.b, type_p_alpha_render_job.frames);
-    while (!type_p_alpha_render_bus0_ready) { }
-    P1_CSYNC();
-    for (uint32_t f = type_p_alpha_render_job.b; f < type_p_alpha_render_job.b + 32u && f < type_p_alpha_render_job.frames; f++)
-        type_p_alpha_render_job.bus0[f - type_p_alpha_render_job.b] = p1_sat_add32(type_p_alpha_render_job.bus0[f - type_p_alpha_render_job.b], type_p_alpha_render_job.bus[f - type_p_alpha_render_job.b]);
-    type_p_alpha_render_post_block(type_p_alpha_render_job.out, type_p_alpha_render_job.bus0, type_p_alpha_render_job.b, type_p_alpha_render_job.frames);
-}
-void type_p_alpha_render_split(int32_t *out, uint32_t frames) {
-    type_p_alpha_taps_clear(type_p_alpha_tap0);
-    type_p_alpha_taps_clear(type_p_alpha_tap1);
-    for (uint32_t b = 0; b < frames; b += 32u) {
-        int dispatched;
-        type_p_alpha_render_pre_block();
-        type_p_alpha_render_bus0_ready = 0;
-        type_p_alpha_render_job.bus = type_p_alpha_render_bus1;
-        type_p_alpha_render_job.bus0 = type_p_alpha_render_bus0;
-        type_p_alpha_render_job.out = out;
-        type_p_alpha_render_job.taps = type_p_alpha_tap1;
-        type_p_alpha_render_job.v0 = 12u; type_p_alpha_render_job.v1 = NVOICE;
-        type_p_alpha_render_job.b = b; type_p_alpha_render_job.frames = frames;
-        dispatched = p1_cpu1_dispatch(type_p_alpha_render_post_job, 0u);
-        type_p_alpha_render_voices_block(type_p_alpha_render_bus0, type_p_alpha_tap0, 0u, 12u, b, frames);
-        P1_CSYNC(); type_p_alpha_render_bus0_ready = 1;
-        if (!dispatched || p1_cpu1_join() != 0) {
-            type_p_alpha_render_voices_block(type_p_alpha_render_bus1, type_p_alpha_tap1, 12u, NVOICE, b, frames);
-            for (uint32_t f = b; f < b + 32u && f < frames; f++)
-                type_p_alpha_render_bus0[f - b] = p1_sat_add32(type_p_alpha_render_bus0[f - b], type_p_alpha_render_bus1[f - b]);
-            type_p_alpha_render_post_block(out, type_p_alpha_render_bus0, b, frames);
-        }
-        for (uint32_t f = b; f < b + 32u && f < frames && f < DSP_TAP_FRAMES; f++)
-            for (uint32_t k = 0; k < N_TAP_CH; k++)
-                type_p_alpha_tap0[k][f] = p1_sat_add32(type_p_alpha_tap0[k][f], type_p_alpha_tap1[k][f]);
-    }
-}
-#endif
-
 P1_DSP_API void type_p_alpha_dsp_reset_s(type_p_alpha_state *state) {
     S = state;
     for (uint32_t v = 0; v < NVOICE; v++) { voice_gate[v] = 0; voice_rel[v] = 0; }
@@ -2944,48 +2871,8 @@ P1_DSP_API int32_t type_p_alpha_dsp_get_param_s(type_p_alpha_state *state, uint3
 
 P1_DSP_API uint32_t type_p_alpha_dsp_param_count(void) { return PARAM_COUNT; }
 
-#if P1_CPU1_USED
-void type_p_alpha_render_block(uint32_t arg) {
-    type_p_alpha_state *state = type_p_alpha_legacy();
-    int32_t *out = (int32_t *)(uintptr_t)arg;
-    dsp_cmd c;
-    S = state;
-    if (dsp_all_off_pending) {
-        type_p_alpha_dsp_all_notes_off_s(state);
-        dsp_all_off_pending = 0;
-    }
-    while (dsp_cmd_pop(&c)) {
-        if (c.kind == P1_DSP_CMD_NOTE_ON)
-            type_p_alpha_dsp_note_on_ch_s(state, c.note, c.vel, c.ch == 0xFFu ? 0xFFFFFFFFu : c.ch);
-        else if (c.kind == P1_DSP_CMD_NOTE_OFF)
-            type_p_alpha_dsp_note_off_s(state, c.note);
-        else
-            type_p_alpha_dsp_all_notes_off_s(state);
-    }
-    type_p_alpha_render_split(out, DSP_TAP_FRAMES);
-    dsp_status.lit = type_p_alpha_dsp_lit_s(state, lit_base);
-    dsp_status.quiet = (uint32_t)type_p_alpha_dsp_quiet_s(state);
-    P1_CSYNC();
-}
-#endif
-
 P1_DSP_API const int32_t *type_p_alpha_dsp_tap_s(type_p_alpha_state *state, uint32_t ch) {
     S = state;
     return ch < N_TAP_CH ? type_p_alpha_tap0[ch] : type_p_alpha_tap0[0];
 }
-
-#ifndef P1_INSTANCE_ONLY
-P1_DSP_API void type_p_alpha_dsp_reset(void) { type_p_alpha_dsp_reset_s(type_p_alpha_legacy()); }
-P1_DSP_API void type_p_alpha_dsp_note_on(uint32_t note, uint32_t velocity) { type_p_alpha_dsp_note_on_s(type_p_alpha_legacy(), note, velocity); }
-P1_DSP_API void type_p_alpha_dsp_note_on_ch(uint32_t note, uint32_t velocity, uint32_t channel) { type_p_alpha_dsp_note_on_ch_s(type_p_alpha_legacy(), note, velocity, channel); }
-P1_DSP_API void type_p_alpha_dsp_note_off(uint32_t note) { type_p_alpha_dsp_note_off_s(type_p_alpha_legacy(), note); }
-P1_DSP_API void type_p_alpha_dsp_all_notes_off(void) { type_p_alpha_dsp_all_notes_off_s(type_p_alpha_legacy()); }
-P1_DSP_API void type_p_alpha_dsp_set_bend_q16(uint32_t bend) { type_p_alpha_dsp_set_bend_q16_s(type_p_alpha_legacy(), bend); }
-P1_DSP_API uint32_t type_p_alpha_dsp_lit(uint32_t base) { return type_p_alpha_dsp_lit_s(type_p_alpha_legacy(), base); }
-P1_DSP_API int type_p_alpha_dsp_quiet(void) { return type_p_alpha_dsp_quiet_s(type_p_alpha_legacy()); }
-P1_DSP_API int type_p_alpha_dsp_set_param(uint32_t id, int32_t value) { return type_p_alpha_dsp_set_param_s(type_p_alpha_legacy(), id, value); }
-P1_DSP_API int32_t type_p_alpha_dsp_get_param(uint32_t id) { return type_p_alpha_dsp_get_param_s(type_p_alpha_legacy(), id); }
-P1_DSP_API void type_p_alpha_dsp_render(int32_t *out, uint32_t frames) { type_p_alpha_dsp_render_s(type_p_alpha_legacy(), out, frames); }
-P1_DSP_API const int32_t *type_p_alpha_dsp_tap(uint32_t ch) { return type_p_alpha_dsp_tap_s(type_p_alpha_legacy(), ch); }
-#endif
 

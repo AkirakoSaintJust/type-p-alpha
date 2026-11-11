@@ -416,21 +416,8 @@ int type_p_alpha_dsp_set_param_s(type_p_alpha_state *state, uint32_t id, int32_t
 int32_t type_p_alpha_dsp_get_param_s(type_p_alpha_state *state, uint32_t id);
 void type_p_alpha_dsp_render_s(type_p_alpha_state *state, int32_t *out, uint32_t frames);
 
-void type_p_alpha_dsp_reset(void);
-void type_p_alpha_dsp_note_on(uint32_t note, uint32_t velocity);
-void type_p_alpha_dsp_note_on_ch(uint32_t note, uint32_t velocity, uint32_t channel);
-void type_p_alpha_dsp_note_off(uint32_t note);
-void type_p_alpha_dsp_all_notes_off(void);
-void type_p_alpha_dsp_set_bend_q16(uint32_t bend);
-uint32_t type_p_alpha_dsp_lit(uint32_t base);
-int type_p_alpha_dsp_quiet(void);
-int type_p_alpha_dsp_set_param(uint32_t id, int32_t value);
-int32_t type_p_alpha_dsp_get_param(uint32_t id);
 uint32_t type_p_alpha_dsp_param_count(void);
-void type_p_alpha_dsp_render(int32_t *out, uint32_t frames);
-void type_p_alpha_render_block(uint32_t arg);
 const int32_t *type_p_alpha_dsp_tap_s(type_p_alpha_state *state, uint32_t ch);
-const int32_t *type_p_alpha_dsp_tap(uint32_t ch);
 typedef struct { uint16_t id; int32_t value; } type_p_alpha_init_entry;
 static const type_p_alpha_init_entry type_p_alpha_init[] = {
     { 116u, 7 },
