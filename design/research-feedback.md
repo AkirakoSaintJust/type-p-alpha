@@ -7,12 +7,15 @@ This is the design note for lines 1 and 2 of the research list:
 2. Is negative feedback viable?
 
 The first plan was to answer line 2 with one polarity bit per operator and then
-design the envelope. A preliminary check changes the expectation. The sign flip
-does not change the magnitude spectrum of a sine operator in the useful feedback
-range, so the polarity is a bounded experiment rather than a promised feature. The
-envelope modulates the feedback magnitude, which the spectrum does follow, so it is
-the likely first ship. The contract for the polarity experiment is
-[`../plugin/feature-contract-feedback-polarity.md`](../plugin/feature-contract-feedback-polarity.md).
+design the envelope. A preliminary check and the engine measurement change the
+expectation. The sign flip does not give a reliable odd-harmonic rise in the useful
+feedback range, so the polarity is a bounded experiment rather than a promised
+feature. The experiment failed its stop criterion at 25 percent feedback, so the
+toggle is not shipped. The envelope modulates the feedback magnitude, which the
+spectrum does follow, so it is the next feature. The contract is
+[`../plugin/feature-contract-feedback-polarity.md`](../plugin/feature-contract-feedback-polarity.md)
+and the measured table is
+[`../plugin/evidence/feedback-polarity.md`](../plugin/evidence/feedback-polarity.md).
 
 ## What the engine does now
 
@@ -49,18 +52,44 @@ feedback amount, but the feedback amount itself is static for the note.
 
 ## Negative feedback
 
-A negative feedback amount is a phase inversion of the same feedback signal. The
-hypothesis was that the positive loop reinforces the saw-like family and the
+The term covers three different things, and the difference matters here.
+
+In an amplifier, negative feedback subtracts a fraction of the output from the
+input. It lowers the gain and the distortion, and the residual distortion is often
+odd-order because a symmetric push-pull or differential stage cancels the even-order
+terms. That loop is error correction around a gain stage.
+
+In a self-oscillating loop, the sign sets the phase of the loop. An odd-symmetric
+nonlinearity with an inverting loop can settle into a square-like limit cycle with
+odd harmonics, whilst a non-inverting loop with an asymmetric nonlinearity can
+produce even harmonics. The waveform symmetry, rather than the sign alone, decides
+the harmonic series.
+
+This synth's feedback is neither of those. The operator output is added to its own
+phase, with no error amplifier and no separate nonlinearity. The sign is the sign of
+the modulation index `b`. For a sine carrier the sideband amplitudes are `|J_n(b)|`,
+and `J_n(-b) = (-1)^n J_n(b)`. The sign flips the phases of the odd sidebands and
+leaves the magnitudes. It does not turn a sine into an odd-harmonic series.
+
+A sign flip can still be audible through the one-sample delay and the two-sample
+average, which make the loop causal and slightly asymmetric in time. The model below
+measures how much. A different tap, such as a one-pole lowpass, would break the
+symmetry more and make the sign a real timbre control, but that is a different
+feedback character. The same is true of an odd-symmetric nonlinearity in the loop,
+such as a hard clip or a wavefolder. Those are separate experiments, and they are
+where the odd-harmonic association actually comes from.
+
+The README notes that the Reface DX and the Seqtrak use a different feedback from
+the traditional Yamaha one. Without their implementation, a sign flip of this tap is
+the smallest test of the research question, not a claim about those instruments.
+
+The hypothesis was that the positive loop reinforces the saw-like family and the
 negative loop reinforces the square-like family, so the third and fifth harmonics
 would rise relative to the second.
 
-That hypothesis does not survive the arithmetic of phase modulation. For a sine
-carrier, the feedback term is a modulation index `b`, and the sideband amplitudes
-are `|J_n(b)|`. The Bessel functions satisfy `J_n(-b) = (-1)^n J_n(b)`, so the
-magnitudes are unchanged and only the phases of the sidebands flip. A steady sine
-with a sign-flipped feedback signal has the same magnitude spectrum as the positive
-loop. The one-sample delay and the two-sample average break the symmetry slightly,
-because the loop is causal, but the break is small where the feedback is useful.
+That hypothesis does not survive for the reason above. The one-sample delay and the
+two-sample average break the symmetry slightly, because the loop is causal, but the
+break is small where the feedback is useful.
 
 A floating-point model of the tap and the phasor puts numbers on this. The `tl`
 level 99 output is about 8191 in Q15 after the `>>2` headroom, and the tap at 100
@@ -85,8 +114,9 @@ third, so the ratios move apart and the third harmonic is about 1.4 times the
 second for both signs. At 50 percent the negative third harmonic is half the
 positive one. At 75 percent and 100 percent the waveform is chaotic, and the ratios
 do not form a clean odd-harmonic rise. The model is a preliminary check, not the
-product evidence, but it points one way: a single sign bit is inaudible where the
-feedback is musical and unpredictable where it is not.
+product evidence, but it points one way: a single sign bit does not give a
+consistent odd-harmonic rise. The engine measurement below confirms the
+inconsistency and adds a regime change the model does not show.
 
 The safe seam, if the experiment proceeds, is the `fb_tap` output:
 
@@ -111,7 +141,28 @@ fifth-to-second ratios rise by at least 25 percent relative to the positive loop
 is not shipped. The parameter, the toggle and the migration are not added, and the
 measurement is kept as the answer to line 2.
 
-### Parameter and UI, if the experiment passes
+### The engine measurement
+
+The engine measurement confirms the model's direction and adds a regime change the
+model did not show. At 25 percent the negative third harmonic is 4 percent lower and
+the fifth is 8 percent higher, so the stop fires. At 35 percent both odd ratios
+fall. At 50 and 75 percent both rise strongly, and at 100 percent the third falls
+again. The full table is in
+[`../plugin/evidence/feedback-polarity.md`](../plugin/evidence/feedback-polarity.md).
+
+The positive path stayed bit-exact. `engine_parity` matched the captured reference,
+and the 0 percent positive and negative renders were bit-identical. The 100 percent
+negative peak was 2 percent lower than the positive peak, so there is no
+instability.
+
+The sign flip is therefore not a reliable odd-harmonic control. The 25 percent
+failure stops the feature. The parameter, the toggle and the 160-to-164 migration
+are not shipped. The 160 layout stays current.
+
+### Parameter and UI, not shipped
+
+The experiment failed, so none of this was added. The details remain as the record
+of what the ship phase would have needed.
 
 One switch per operator:
 
@@ -119,12 +170,15 @@ One switch per operator:
 | --- | --- | --- | --- |
 | `op1_fb_neg.p0` ... `op4_fb_neg.p1` | `opN.fb.neg` | 0 = positive, 1 = negative | 0 |
 
-The operator card already has the feedback knob. The switch sits next to the
+The operator card already has the feedback knob. The switch would sit next to the
 waveform choice as a small `neg` toggle, with the `polarity` display showing `pos`
-or `neg`. The parameter count grows by 4 per part, 160 to 164, and the total from
-334 to 342.
+or `neg`. The parameter count would grow by 4 per part, 160 to 164, and the total
+from 334 to 342.
 
-### Persistence, if the experiment passes
+### Persistence, not shipped
+
+The experiment failed, so the migration was not used. The details remain as the
+record of what the ship phase would have needed.
 
 The new parameters are inserted by the `fm_op` macro after each operator's
 `feedback` parameter, so the part record grows from 160 to 164 parameters. The
@@ -205,7 +259,7 @@ FX/MOD. The new page is the cleaner option: the envelope shape is easier to read
 full width, and the operator cards only gain one depth knob. The control map and
 the mockup are part of the second contract, not this note.
 
-## Measurement plan
+## Measurement method
 
 The polarity experiment uses one sine operator at ratio 1, level 99, note 60,
 44.1 kHz, with a flat DX envelope (`r1..r4` and `l1..l3` at 99), the other three
@@ -222,16 +276,17 @@ third-to-second and fifth-to-second ratios at 25, 50 and 75 percent, with no pea
 growth beyond 10 percent at 100 percent. A failure at any of the three amounts stops
 the feature.
 
-The same test runs in the normal suite, so the result is part of CTest. If the
-experiment passes, the plugin state test covers the new parameters, the editor
-snapshot covers the toggle, and the `.p1lib` test covers the 146 and 160
-migrations. If it fails, the parameter and the test are removed, and the evidence
-artefact keeps the measured table and the stop decision for line 2.
+The test ran once as the experiment, not as a permanent suite entry. The parameter
+and the test were removed after the stop. The evidence artefact keeps the measured
+table and the stop decision for line 2. `engine_parity` stays in the suite and
+confirms the positive path against the captured reference.
 
 ## Decision
 
-Run the polarity experiment first, because it is one bit and it answers the
-odd-harmonic question. If it passes, ship the toggle and then the envelope. If it
-fails, do not ship the toggle, record the table, and make the shared feedback
-envelope with a per-operator depth the first feedback feature. The envelope
-contract follows the measurement.
+The sign flip failed at 25 percent feedback. It is not shipped, and the 160-to-164
+migration was not used. The measured table is in
+[`../plugin/evidence/feedback-polarity.md`](../plugin/evidence/feedback-polarity.md).
+The shared feedback envelope with a per-operator depth is the next feedback feature,
+because it modulates the feedback magnitude. A different tap, such as a one-pole
+lowpass, or an odd-symmetric nonlinearity in the loop is the follow-up if the
+negative-feedback line continues, and it needs its own contract.

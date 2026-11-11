@@ -10,13 +10,14 @@
 - **Brief section:** README lines of research 1 and 2,
   [`../design/research-feedback.md`](../design/research-feedback.md).
 - **Owner / date:** P1Onken, 2026-11-11.
-- **Disposition:** accepted as a bounded experiment. The ship decision is deferred
-  to the measurement.
+- **Disposition:** deferred by measurement. The stop criterion failed at 25 percent
+  feedback, so the parameter, the editor control and the migration were not shipped.
+  The measured table is in `../plugin/evidence/feedback-polarity.md`.
 
 ## Player outcome
 
-- **New player action:** flip `neg` on an operator card. This action exists only
-  if the experiment passes.
+- **New player action:** flip `neg` on an operator card. The experiment did not
+  pass, so this action is not exposed.
 - **Sound and behaviour:** at the same feedback amount, the loop inverts. The third
   and fifth harmonics must rise by at least 25 percent relative to the second at
   25, 50 and 75 percent feedback. At 0 feedback there is no audible or numerical
@@ -31,16 +32,18 @@
   output DC blocker, `PresetStore`, and the operator page.
 - **Platform/API/HAL changes:** none. The engine is C and the sign is one
   conditional negate.
-- **Persistence/version impact:** conditional. The part block grows from 160 to 164
-  parameters and the total from 334 to 342. The `.p1lib` reader accepts the 146 and
-  160 layouts in addition to the current 164. The APVTS state is name-keyed, so an
-  old state loads with the four polarity parameters at 0.
+- **Persistence/version impact:** not executed. The experiment failed, so the part
+  block stays at 160 and the total at 334. The ship phase would have grown the part
+  block to 164 and the total to 342, and the `.p1lib` reader would have accepted the
+  146 and 160 layouts in addition to the current 164. The APVTS state is name-keyed,
+  so the ship phase would have loaded an old state with the four polarity parameters
+  at 0.
 - **MIDI/clock impact:** none. The parameters are host-automatable and stay out of
   the default CC map.
 
 ## Parameter and event semantics
 
-The final parameters, if the experiment passes:
+The parameters that the ship phase would have added:
 
 | Parameter | Target | Kind | Range | Default | Rate | Display |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -48,10 +51,11 @@ The final parameters, if the experiment passes:
 | `op1_fb_neg.p1` ... `op4_fb_neg.p1` | `opN.fb.neg.p1` | `uint32` | 0..1 | 0 | block | `polarity` |
 
 Zero is positive and one is negative. The parameters are linear and not
-modulatable. The new part-zero engine ids are 19, 49, 79 and 109, one slot after
-each `opN_feedback.p0`. The part-one ids are 183, 213, 243 and 273. The `polarity`
-display prints `pos` or `neg`, and the editor control is a `neg` toggle next to the
-waveform choice.
+modulatable. The new part-zero engine ids would have been 19, 49, 79 and 109, one
+slot after each `opN_feedback.p0`. The part-one ids would have been 183, 213, 243
+and 273. The `polarity` display prints `pos` or `neg`, and the editor control is a
+`neg` toggle next to the waveform choice. The experiment failed, so none of these
+parameters are in the manifest.
 
 The experiment phase adds the manifest entry and the node sign to a test build. It
 does not add the editor control or the `.p1lib` migration. If the experiment
@@ -90,7 +94,7 @@ Experiment phase:
 - `engine/gen/*` and the build-time `Params.h`, regenerated from the manifest.
 - `plugin/tests/feedback_polarity.cpp`, registered in `plugin/CMakeLists.txt`.
 
-Ship phase, only if the experiment passes:
+Ship phase, not executed:
 
 - `plugin/preset/part_migration.h`, for the 160 map and the 146 composition.
 - `plugin/preset/PresetStore.hpp` and `PresetStore.cpp`, for a list of legacy
@@ -127,8 +131,14 @@ access or display enters the audio path.
   160 layouts, a current save, and a round-trip.
 - **Evidence artefact:** `plugin/evidence/feedback-polarity.md`, with the measured
   table, the build hash and the pass/fail decision. The test output is the primary
-  record and the artefact is the edited summary. The file is created by the
-  experiment, so the contract names it before it exists.
+  record and the artefact is the edited summary. The file exists and carries the
+  result.
+- **Measured result:** the stop fired at 25 percent. The negative third-to-second
+  ratio was 0.749 against 0.783 positive (4 percent lower), and the
+  fifth-to-second ratio was 0.422 against 0.391 (8 percent higher). The 50 and 75
+  percent rows passed the 25 percent rise, and the 100 percent negative peak was 2
+  percent lower. The 0 percent renders were bit-identical and `engine_parity` stayed
+  bit-exact. The sign flip is not a reliable odd-harmonic control.
 
 ## Risks and fallback
 
@@ -143,6 +153,6 @@ access or display enters the audio path.
 - **Smaller alternative:** the shared feedback envelope with a per-operator depth.
   It modulates the feedback magnitude, which the spectrum follows, and it does not
   depend on the sign. It costs 11 parameters per part and needs its own contract.
-- **Rollback:** remove the manifest entries, the node parameter and the test,
-  regenerate the engine, rebuild, and keep the measured table as the answer to
-  research line 2.
+- **Rollback:** the experiment code was removed. The manifest entries, the node
+  parameter and the test are gone, the engine was regenerated, and the measured
+  table stays in the evidence as the answer to research line 2.
