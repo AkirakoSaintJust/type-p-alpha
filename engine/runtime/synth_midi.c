@@ -5,7 +5,7 @@
  * The sustain state is held in the context, so two engines can run in one process. */
 #include "synth_midi.h"
 
-#ifdef UMETATE_MIDI_EXTERNAL
+#ifdef P1_MIDI_EXTERNAL
 int midi_get(uint8_t *st, uint8_t *d1, uint8_t *d2); /* the host supplies it */
 #endif
 

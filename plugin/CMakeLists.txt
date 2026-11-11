@@ -86,9 +86,9 @@ else()
 endif()
 
 if(P1_MSVC_ABI)
-    set(UMETATE_STATE_PTR "__declspec(thread)")
+    set(P1_STATE_PTR "__declspec(thread)")
 else()
-    set(UMETATE_STATE_PTR "_Thread_local")
+    set(P1_STATE_PTR "_Thread_local")
 endif()
 
 enable_testing()
@@ -118,8 +118,8 @@ target_include_directories(p1_engine PUBLIC
 )
 
 target_compile_definitions(p1_engine PRIVATE
-    UMETATE_MIDI_EXTERNAL
-    "UMETATE_STATE_PTR=${UMETATE_STATE_PTR}"
+    P1_MIDI_EXTERNAL
+    "P1_STATE_PTR=${P1_STATE_PTR}"
 )
 
 if(P1_MSVC_ABI)

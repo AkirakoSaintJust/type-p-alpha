@@ -4,14 +4,14 @@
  * The 12-waveform OPZ (YM2414) + OPL (YM3812) union, Q15.
  * Waves 0-8 are one 1024-sample table each; waves 9 (pulse), 10 (square),
  * 11 (saw) are MIP=9 band-limited tables (harmonic counts 256..1) for the
- * anti-aliasing. `fm1_wave_base[ws]` is ws's mip-0 offset in
+ * anti-aliasing. `p1_wave_base[ws]` is ws's mip-0 offset in
  * 1024-sample units; the per-sample index is
- *   fm1_wave[(fm1_wave_base[ws] + mip) << 10 | (phase >> 22)].
+ *   p1_wave[(p1_wave_base[ws] + mip) << 10 | (phase >> 22)].
  */
 #pragma once
 #include <stdint.h>
 
-static const int16_t fm1_wave[36864] = {
+static const int16_t p1_wave[36864] = {
          0,    201,    402,    603,    804,   1005,   1206,   1407,   1608,   1809,   2009,   2210,   2411,   2611,   2811,   3012,
       3212,   3412,   3612,   3812,   4011,   4211,   4410,   4609,   4808,   5007,   5205,   5404,   5602,   5800,   5998,   6195,
       6393,   6590,   6787,   6983,   7180,   7376,   7571,   7767,   7962,   8157,   8351,   8546,   8740,   8933,   9127,   9319,
@@ -2318,6 +2318,6 @@ static const int16_t fm1_wave[36864] = {
       1949,   1822,   1694,   1566,   1439,   1311,   1183,   1056,    928,    800,    672,    544,    416,    288,    160,     32,
 };
 
-static const uint8_t fm1_wave_base[12] = {
+static const uint8_t p1_wave_base[12] = {
          0,      1,      2,      3,      4,      5,      6,      7,      8,      9,     18,     27,
 };

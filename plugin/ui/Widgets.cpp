@@ -698,7 +698,7 @@ void P1Envelope::paint(juce::Graphics& g)
      * rate is a shorter stage, and the sustain is a short flat hold. */
     const auto stageLen = [](int32_t rate) -> uint32_t {
         const int32_t r = juce::jlimit(0, 99, rate);
-        int32_t c = fm1_rate_coeff[r];
+        int32_t c = p1_rate_coeff[r];
         uint32_t lg = 0;
         while (c > 1) {
             c >>= 1;

@@ -4,14 +4,14 @@
  * The classic oscillator shapes, Q15.
  * Shapes 1 (sine) and 2 (triangle) are one 1024-sample table each; shapes
  * 0 (saw) and 3 (square) are MIP=6 band-limited tables (harmonic counts
- * 32..1) for top-octave anti-aliasing. `fm1_naive_base[shape]` is shape's
+ * 32..1) for top-octave anti-aliasing. `p1_naive_base[shape]` is shape's
  * mip-0 offset in 1024-sample units; the per-sample index is
- *   fm1_naive_wave[(fm1_naive_base[shape] + mip) << 10 | (phase >> 22)].
+ *   p1_naive_wave[(p1_naive_base[shape] + mip) << 10 | (phase >> 22)].
  * Pulse width is phase_dist's `d` bend (PWM) before this read. */
 #pragma once
 #include <stdint.h>
 
-static const int16_t fm1_naive_wave[14336] = {
+static const int16_t p1_naive_wave[14336] = {
      -2080,  -6148, -10135, -13987, -17656, -21096, -24269, -27140, -29683, -31879, -32768, -32768, -32768, -32768, -32768, -32768,
     -32768, -32768, -32768, -32768, -32768, -32768, -32768, -32194, -31262, -30394, -29614, -28945, -28401, -27991, -27721, -27589,
     -27589, -27711, -27940, -28259, -28648, -29087, -29552, -30022, -30477, -30897, -31265, -31567, -31791, -31929, -31978, -31938,
@@ -910,6 +910,6 @@ static const int16_t fm1_naive_wave[14336] = {
      -3962,  -3707,  -3452,  -3197,  -2941,  -2686,  -2431,  -2175,  -1919,  -1664,  -1408,  -1152,   -896,   -640,   -384,   -128,
 };
 
-static const uint8_t fm1_naive_base[4] = {
+static const uint8_t p1_naive_base[4] = {
          0,      6,      7,      8,
 };
