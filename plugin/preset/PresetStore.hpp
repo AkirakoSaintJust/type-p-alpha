@@ -33,7 +33,9 @@ public:
         std::vector<int32_t> high;
     };
 
-    PresetStore(int partParamCount, int partCount);
+    PresetStore(int partParamCount, int partCount,
+                std::vector<int32_t> defaults = {},
+                std::vector<int> legacyPartMap = {});
 
     int partParamCount() const { return partParamCount_; }
     int partCount() const { return partCount_; }
@@ -76,9 +78,12 @@ public:
 
 private:
     static std::string shortName(const std::string& name);
+    bool loadLegacyPartBank(const uint8_t* data, std::size_t size);
 
     int partParamCount_ = 0;
     int partCount_ = 0;
+    std::vector<int32_t> defaults_;
+    std::vector<int> legacyPartMap_;
     std::vector<Part> parts_;
     std::vector<Multi> multis_;
     int currentMulti_ = -1;

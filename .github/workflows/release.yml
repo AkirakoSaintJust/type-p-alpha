@@ -14,22 +14,37 @@ permissions:
 
 jobs:
   linux:
-    runs-on: ubuntu-22.04
-    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: linux-x86_64
+            os: ubuntu-22.04
+          - platform: linux-aarch64
+            os: ubuntu-24.04-arm
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
       - name: Install JUCE build dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y ninja-build xvfb libasound2-dev libfreetype6-dev \
+          sudo apt-get install -y ninja-build zip clang lld libasound2-dev libfreetype6-dev \
             libx11-dev libxext-dev libxinerama-dev libxrandr-dev libxcursor-dev \
             libxcomposite-dev libxrender-dev
       - name: Configure
-        run: cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+        run: >
+          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+          -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++
+          -DCMAKE_EXE_LINKER_FLAGS=-fuse-ld=lld
+          -DCMAKE_SHARED_LINKER_FLAGS=-fuse-ld=lld
+          -DCMAKE_MODULE_LINKER_FLAGS=-fuse-ld=lld
       - name: Build
         run: cmake --build build
       - name: Test
-        run: ctest --test-dir build --output-on-failure -E "linux_daws|plugin_editor_snapshot_diff"
+        run: >
+          ctest --test-dir build --output-on-failure
+          -E "linux_daws|plugin_editor_snapshot|plugin_editor_snapshot_diff"
       - name: Package
         run: |
           mkdir -p dist/licences
@@ -39,26 +54,33 @@ jobs:
           cp LICENSE LICENSING.md dist/
           cp third-party-licenses/*.txt dist/licences/
           cd dist
-          zip -r "../Type-P.alpha-linux-x86_64.zip" .
+          zip -r "../Type-P.alpha-${{ matrix.platform }}.zip" .
       - uses: actions/upload-artifact@v4
         with:
-          name: linux
-          path: Type-P.alpha-linux-x86_64.zip
+          name: ${{ matrix.platform }}
+          path: Type-P.alpha-${{ matrix.platform }}.zip
 
   windows:
     runs-on: windows-2022
-    timeout-minutes: 60
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
       - uses: ilammy/msvc-dev-cmd@v1
         with:
           arch: x64
+      - name: Add LLVM to PATH
+        run: echo "C:\Program Files\LLVM\bin" >> $env:GITHUB_PATH
       - name: Configure
-        run: cmake -S . -B build -G "Visual Studio 17 2022" -A x64
+        run: >
+          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+          -DCMAKE_C_COMPILER=clang-cl -DCMAKE_CXX_COMPILER=clang-cl
+          -DCMAKE_LINKER=lld-link
+          -DCMAKE_EXE_LINKER_FLAGS=-fuse-ld=lld
+          -DCMAKE_SHARED_LINKER_FLAGS=-fuse-ld=lld
       - name: Build
-        run: cmake --build build --config Release
+        run: cmake --build build
       - name: Test
-        run: ctest --test-dir build -C Release --output-on-failure
+        run: ctest --test-dir build --output-on-failure
       - name: Package
         shell: pwsh
         run: |
@@ -71,11 +93,63 @@ jobs:
           Compress-Archive -Path dist\* -DestinationPath Type-P.alpha-windows-x86_64.zip
       - uses: actions/upload-artifact@v4
         with:
-          name: windows
+          name: windows-x86_64
           path: Type-P.alpha-windows-x86_64.zip
 
+  macos-universal:
+    runs-on: macos-14
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: >
+          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+          -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64"
+          -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0
+      - name: Build
+        run: cmake --build build
+      - name: Test
+        run: >
+          ctest --test-dir build --output-on-failure
+          -E "linux_daws|plugin_editor_snapshot|plugin_editor_snapshot_diff"
+      - name: Check the universal slices
+        run: |
+          set -e
+          check() {
+            archs=$(lipo -archs "$1")
+            echo "$1: $archs"
+            case "$archs" in
+              *arm64*x86_64*|*x86_64*arm64*) ;;
+              *) echo "release: $1 is not universal"; exit 1 ;;
+            esac
+          }
+          for bin in \
+            "build/plugin/juce/type_p_alpha_artefacts/Release/VST3/Type P.alpha.vst3/Contents/MacOS/Type P.alpha" \
+            "build/plugin/juce/type_p_alpha_artefacts/Release/Standalone/Type P.alpha"; do
+            if [ ! -f "$bin" ]; then echo "release: missing $bin"; exit 1; fi
+            check "$bin"
+          done
+          clap=$(find "build/plugin/juce/type_p_alpha_artefacts/Release/CLAP" \
+            -type f -name "Type P.alpha*" -print -quit)
+          if [ -z "$clap" ]; then echo "release: missing CLAP"; exit 1; fi
+          check "$clap"
+      - name: Package
+        run: |
+          mkdir -p dist/licences
+          cp -R "build/plugin/juce/type_p_alpha_artefacts/Release/VST3/Type P.alpha.vst3" dist/
+          cp -R "build/plugin/juce/type_p_alpha_artefacts/Release/CLAP/Type P.alpha.clap" dist/
+          cp "build/plugin/juce/type_p_alpha_artefacts/Release/Standalone/Type P.alpha" dist/
+          cp LICENSE LICENSING.md dist/
+          cp third-party-licenses/*.txt dist/licences/
+          cd dist
+          zip -r "../Type-P.alpha-macos-universal.zip" .
+      - uses: actions/upload-artifact@v4
+        with:
+          name: macos-universal
+          path: Type-P.alpha-macos-universal.zip
+
   release:
-    needs: [linux, windows]
+    needs: [linux, windows, macos-universal]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

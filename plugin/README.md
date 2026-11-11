@@ -1,8 +1,8 @@
 # Type P.alpha plugin
 
 This folder is the desktop plugin. The voice engine is generated into
-`../firmware/gen`, the editor is in `juce/` and `ui/`, and the shared parameter
-table is generated from `firmware/gen/params.json`.
+`../engine/gen`, the editor is in `juce/` and `ui/`, and the shared parameter
+table is generated from `engine/gen/params.json`.
 
 ## Build
 
@@ -50,7 +50,7 @@ only reference, so add a parameter to the manifest rather than typing it twice.
 A capability is a build-time package in `capabilities/` with a manifest, a design
 note, DSP, and an optional schema page or C++ page. `capabilities/enabled.json`
 lists the packages the build includes. The `tone` package is the worked example.
-The firmware does not read this folder.
+Capabilities are plugin-only.
 
 ## Snapshots
 

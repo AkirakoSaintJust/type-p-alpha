@@ -1,5 +1,6 @@
 build/
 publish/
+.dev/
 __pycache__/
 *.pyc
 .DS_Store

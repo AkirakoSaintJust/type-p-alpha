@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: GPL-3.0-only */
-/* Host build of the firmware preset record code. The plugin keeps its banks in
+/* Host build of the engine preset record code. The plugin keeps its banks in
  * memory, so the flash bank services are stubs. The pack and unpack functions are
- * the firmware's own code. */
+ * the engine's own code. */
 #include <stdint.h>
 #include <string.h>
 
@@ -35,4 +35,4 @@ int settings_load(void *p, uint32_t n)
     return -1;
 }
 
-#include "../../firmware/src/presets.c"
+#include "../../engine/runtime/presets.c"

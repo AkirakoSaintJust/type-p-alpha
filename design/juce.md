@@ -1,7 +1,7 @@
 # JUCE mapping
 
 This maps the p1onken interface language to a JUCE editor. The visual reference is
-`mockups/type-p-alpha-plugin.html`, the source values are `tokens.json`, and the
+`design/mockup.html`, the source values are `tokens.json`, and the
 product rules are in `README.md`.
 
 Scope: the Type P.alpha plugin host and its generated project. The first targets
@@ -180,7 +180,7 @@ the host disables them.
 
 ## Parameters
 
-`examples/type-p-alpha/patch.json` is the only reference. The plugin exposes the same
+`synth/patch.json` is the only reference. The plugin exposes the same
 parameter set and the same ranges, grouped to match the pages rather than the JSON
 order.
 
@@ -200,13 +200,13 @@ output to the host rate. Leave the input and the core rate untouched.
 
 ## Licensing
 
-- Plugin code: GPL-3.0-only, matching umetate.
+- Plugin code: GPL-3.0-only, the same licence as my personal framework tooling.
 - Fonts: DotGothic16 and Zen Dots under the SIL Open Font License. Include the
   licence text with the binaries.
 - Brand font: not bundled until the licence is verified.
 - JUCE: use the AGPLv3 path or a commercial JUCE licence, and record the JUCE
-  version in the build manifest, because JUCE 8 is not GPLv3, and the umetate
-  source stays GPL-3.0-only, where GPLv3 section 13 permits the combined binary.
+  version in the build manifest, because JUCE 8 is not GPLv3, and the source
+  stays GPL-3.0-only, where GPLv3 section 13 permits the combined binary.
 
 ## Open items
 

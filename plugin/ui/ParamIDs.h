@@ -108,8 +108,19 @@ inline juce::String pitchEnvLevel(int index, int part)
     return withPart("penv_l" + juce::String(index + 1), part);
 }
 
-inline juce::String filterRate(int index) { return "fenv_r" + juce::String(index + 1); }
-inline juce::String filterLevel(int index) { return "fenv_l" + juce::String(index + 1); }
+inline juce::String filterCutoff(int part) { return withPart("cutoff", part); }
+inline juce::String filterRes(int part) { return withPart("res", part); }
+inline juce::String filterType(int part) { return withPart("filter_type", part); }
+inline juce::String filterOn(int part) { return withPart("filter_on", part); }
+inline juce::String filterEnvDepth(int part) { return withPart("fenv_depth", part); }
+inline juce::String filterRate(int index, int part)
+{
+    return withPart("fenv_r" + juce::String(index + 1), part);
+}
+inline juce::String filterLevel(int index, int part)
+{
+    return withPart("fenv_l" + juce::String(index + 1), part);
+}
 
 struct FollowTarget {
     const char* name;
@@ -147,8 +158,10 @@ inline std::array<FollowTarget, 15> followTargets(int part)
          withPart("op4_aenv_ks_hi", part), withPart("op4_aenv_vs", part)},
         {"pitch env", withPart("penv_ks_lo", part),
          withPart("penv_ks_hi", part), withPart("penv_vs", part)},
-        {"filter 1 cutoff", "f1_cutoff_ks_lo", "f1_cutoff_ks_hi", "f1_cutoff_vs"},
-        {"filter env", "fenv_ks_lo", "fenv_ks_hi", "fenv_vs"},
+        {"filter 1 cutoff", withPart("f1_cutoff_ks_lo", part),
+         withPart("f1_cutoff_ks_hi", part), withPart("f1_cutoff_vs", part)},
+        {"filter env", withPart("fenv_ks_lo", part), withPart("fenv_ks_hi", part),
+         withPart("fenv_vs", part)},
     }};
 }
 

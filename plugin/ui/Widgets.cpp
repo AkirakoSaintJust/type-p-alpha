@@ -19,9 +19,6 @@ const char* const waveNames[12] = {
     "sine",      "triangle", "half sine", "half tri", "2x sine", "2x tri",
     "2x half sine", "2x half tri", "rect sine", "pulse", "square", "saw"};
 
-const char* const lfoWaveNames[6] = {"sine", "triangle", "saw",
-                                     "inverse saw", "square", "random"};
-
 juce::String signedNumber(int value)
 {
     return (value > 0 ? "+" : "") + juce::String(value);
@@ -421,8 +418,8 @@ P1Toggle::P1Toggle(APVTS& state, const juce::String& paramID,
 void P1Toggle::paintButton(juce::Graphics& g, bool highlighted, bool)
 {
     const bool on = getToggleState();
-    const auto track = juce::Rectangle<float>(0.0f, (getHeight() - 12.0f) * 0.5f,
-                                              26.0f, 12.0f);
+    const auto track = juce::Rectangle<float>(
+        0.0f, (static_cast<float>(getHeight()) - 12.0f) * 0.5f, 26.0f, 12.0f);
     g.setColour(colour(tokens::bg));
     g.fillRect(track);
     g.setColour(on ? colour(tokens::green)
@@ -599,7 +596,9 @@ void P1Scope::paint(juce::Graphics& g)
         path.lineTo(area.getRight(), area.getCentreY());
     } else {
         for (int i = 0; i < n; ++i) {
-            const float x = area.getX() + area.getWidth() * i / (n - 1);
+            const float x = area.getX() +
+                            area.getWidth() * static_cast<float>(i) /
+                                static_cast<float>(n - 1);
             const float y = area.getCentreY() -
                             std::tanh(samples_[static_cast<size_t>(i)] * gain) *
                                 area.getHeight() * 0.46f;
@@ -631,7 +630,7 @@ void P1Spectro::paint(juce::Graphics& g)
     const int n = juce::jmin(512, static_cast<int>(samples_.size()));
     for (int i = 0; i < n; ++i) {
         const float window = 0.5f - 0.5f * std::cos(
-            juce::MathConstants<float>::twoPi * i / 511.0f);
+            juce::MathConstants<float>::twoPi * static_cast<float>(i) / 511.0f);
         fftData_[static_cast<size_t>(i)] = samples_[static_cast<size_t>(i)] * window;
     }
     fft_.performFrequencyOnlyForwardTransform(fftData_.data());
@@ -649,9 +648,12 @@ void P1Spectro::paint(juce::Graphics& g)
            the bars readable. The clamp keeps a loud spectrum at full height. */
         const float level = juce::jlimit(
             0.04f, 1.0f, std::log10(1.0f + magnitude * 360.0f));
-        const float height = level * (getHeight() - 2.0f);
+        const float height =
+            level * (static_cast<float>(getHeight()) - 2.0f);
         g.setColour(colour(i % 5 == 0 ? tokens::purple : tokens::pink));
-        g.fillRect(i * barWidth + 1.0f, getHeight() - height, barWidth - 2.0f, height);
+        g.fillRect(static_cast<float>(i) * barWidth + 1.0f,
+                   static_cast<float>(getHeight()) - height, barWidth - 2.0f,
+                   height);
     }
 }
 
@@ -826,8 +828,8 @@ void P1LevelSlider::paint(juce::Graphics& g)
                                          (value_ - static_cast<float>(spec_->min)) / range)
                            : 0.0f;
     g.setColour(colour(tokens::purple));
-    g.fillRect(track_.reduced(1).withWidth(
-        static_cast<int>(std::round((track_.getWidth() - 2) * norm))));
+    g.fillRect(track_.reduced(1).withWidth(static_cast<int>(
+        std::round(static_cast<float>(track_.getWidth() - 2) * norm))));
 }
 
 void P1LevelSlider::mouseDown(const juce::MouseEvent& event)
@@ -845,7 +847,9 @@ void P1LevelSlider::setFromMouse(const juce::MouseEvent& event)
     if (attach_ == nullptr || spec_ == nullptr || track_.getWidth() <= 0)
         return;
     const float norm = juce::jlimit(
-        0.0f, 1.0f, (static_cast<float>(event.x) - track_.getX()) / track_.getWidth());
+        0.0f, 1.0f,
+        (static_cast<float>(event.x) - static_cast<float>(track_.getX())) /
+            static_cast<float>(track_.getWidth()));
     const float value = static_cast<float>(spec_->min) +
                         norm * static_cast<float>(spec_->max - spec_->min);
     attach_->setValueAsCompleteGesture(value);

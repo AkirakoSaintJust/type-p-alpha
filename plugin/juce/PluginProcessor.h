@@ -16,6 +16,7 @@
 #include "CapabilityPages.h"
 #include "PresetStore.hpp"
 #include "RateBridge.hpp"
+#include "part_migration.h"
 
 class ScopeRing {
 public:
@@ -111,5 +112,6 @@ private:
     int uiPage_ = 0;
     bool libraryLoaded_ = false;
     juce::File libraryFileOverride_;
-    p1::PresetStore presets_{kP1PartParamCount, kP1PartCount};
+    p1::PresetStore presets_{kP1PartParamCount, kP1PartCount,
+                             p1::partParamDefaults(), p1::legacyPartParamMap()};
 };

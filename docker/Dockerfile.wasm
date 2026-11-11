@@ -1,0 +1,21 @@
+# Type P.alpha WebAssembly build image. The Emscripten version matches the engine
+# parity pin, so the host and WASM outputs use the same compiler.
+
+FROM debian:trixie-slim
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        build-essential cmake ninja-build git python3 curl ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+ARG EMSDK_VERSION=6.0.13
+RUN git clone --depth 1 --branch "${EMSDK_VERSION}" \
+        https://github.com/emscripten-core/emsdk.git /opt/emsdk \
+    && /opt/emsdk/emsdk install "${EMSDK_VERSION}" \
+    && /opt/emsdk/emsdk activate "${EMSDK_VERSION}"
+
+ENV PATH="/opt/emsdk:/opt/emsdk/upstream/emscripten:/opt/emsdk/node/24.19.0_64bit/bin:${PATH}"
+
+WORKDIR /work
+CMD ["/bin/bash"]

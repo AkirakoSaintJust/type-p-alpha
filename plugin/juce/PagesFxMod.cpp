@@ -62,23 +62,25 @@ private:
 
 class FilterEnvelopeCard : public P1Card {
 public:
-    explicit FilterEnvelopeCard(PluginEditor& editor)
+    FilterEnvelopeCard(PluginEditor& editor, int part)
         : P1Card("filter envelope"),
           envView_(editor.state(),
-                   {"fenv_r1", "fenv_r2", "fenv_r3", "fenv_r4"},
-                   {"fenv_l1", "fenv_l2", "fenv_l3"}, colour(tokens::green), 0.0,
-                   99.0, false)
+                   {params::filterRate(0, part), params::filterRate(1, part),
+                    params::filterRate(2, part), params::filterRate(3, part)},
+                   {params::filterLevel(0, part), params::filterLevel(1, part),
+                    params::filterLevel(2, part)},
+                   colour(tokens::green), 0.0, 99.0, false)
     {
         addAndMakeVisible(envView_);
         for (int i = 0; i < 4; ++i) {
             rates_[static_cast<size_t>(i)] = std::make_unique<ParamKnob>(
-                editor.state(), "fenv_r" + juce::String(i + 1),
+                editor.state(), params::filterRate(i, part),
                 "r" + juce::String(i + 1), 42.0f);
             addAndMakeVisible(*rates_[static_cast<size_t>(i)]);
         }
         for (int i = 0; i < 3; ++i) {
             levels_[static_cast<size_t>(i)] = std::make_unique<ParamKnob>(
-                editor.state(), "fenv_l" + juce::String(i + 1),
+                editor.state(), params::filterLevel(i, part),
                 "l" + juce::String(i + 1), 42.0f);
             addAndMakeVisible(*levels_[static_cast<size_t>(i)]);
         }
@@ -337,12 +339,14 @@ private:
 
 class FxModPage : public PageBase {
 public:
-    explicit FxModPage(PluginEditor& editor) : editor_(editor)
+    explicit FxModPage(PluginEditor& editor)
     {
+        const int part = editor.activePart();
         filter1_ = std::make_unique<FilterCard>(
-            editor, "filter 1", "cutoff", "res", "fenv_depth", "filter_type",
-            "filter_on");
-        filterEnv_ = std::make_unique<FilterEnvelopeCard>(editor);
+            editor, "filter 1", params::filterCutoff(part), params::filterRes(part),
+            params::filterEnvDepth(part), params::filterType(part),
+            params::filterOn(part));
+        filterEnv_ = std::make_unique<FilterEnvelopeCard>(editor, part);
         pitchLfo_ = std::make_unique<PitchLfoCard>(editor);
         pitchEnv_ = std::make_unique<PitchEnvelopeCard>(editor);
         keyFollow_ = std::make_unique<FollowCard>(editor, true, "key follow");
@@ -381,7 +385,6 @@ public:
     }
 
 private:
-    PluginEditor& editor_;
     std::unique_ptr<FilterCard> filter1_;
     std::unique_ptr<FilterEnvelopeCard> filterEnv_;
     std::unique_ptr<PitchLfoCard> pitchLfo_;

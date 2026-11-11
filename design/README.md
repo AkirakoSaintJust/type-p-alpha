@@ -1,7 +1,7 @@
 # p1onken interface language
 
 The shared visual language for the Type P.alpha editor. The clickable mockup at
-`mockups/type-p-alpha-plugin.html` is the reference implementation, and
+`design/mockup.html` is the reference implementation, and
 `tokens.json` is the machine-readable source. The CSS projection is `tokens.css`,
 and the platform notes are in `juce.md`.
 
@@ -11,7 +11,7 @@ card action spacing, the voice-mode knob group and the multi-patch library.
 
 ## Principles
 
-1. Black is the room. Surfaces do not need outlines to exist.
+1. Black environment. Surfaces do not need outlines.
 2. Pink is identity and the primary value, green is live signal and active state,
    and purple is selection and modulation. No other hues.
 3. Controls are outlined and content surfaces are not, so if it cannot be clicked
@@ -231,14 +231,15 @@ One page, a three by two grid that fills the window. Filter 1, the filter envelo
 and the pitch LFO fill the first row. Pitch envelope, key follow and velocity follow
 fill the second row. The filter card has cutoff, resonance and env amount, whilst
 key and velocity tracking sit in the two follow cards rather than on the filter
-card.
+card. The filter, its envelope and its two follow targets address the active part,
+because each part has its own filter and its own envelope.
 
 Key follow and velocity follow are separate cards. Each has an on switch, a
 `wipe all` button and its own target selector. Key follow has a breakpoint and below
 and above amounts, whilst velocity follow has one amount. The wipe button sets every
 target amount to 0%, so the card can be cleared without visiting each target. The
 same target set is used for both cards: operator level, feedback and amp envelope,
-pitch envelope, filter 1 and 2 cutoff, and filter envelope.
+pitch envelope, filter cutoff, and filter envelope.
 
 ### Dialogs
 

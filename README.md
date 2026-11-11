@@ -1,61 +1,104 @@
-# Type P.alpha
+# Type P.α
 
-Type P.alpha is a four-operator FM instrument for the desktop. It runs as a VST3,
-CLAP or standalone build on Linux and Windows. The engine is the Type P.fm1 voice
-engine, kept at its 44.1 kHz core with the rate adapted at the output boundary.
+Hey, it's Akirako Saint-Just from the パンク派第１音響合成研究班, or Punk Faction, Sound Synthesis Research Unit Number 1 (P1Onken for short.) Through my commitment to punk, post-punk, techno and industrial politics and aesthetics, I've come to be a fanatic of DX-style phase modulation synths, so over the years I've been accumulating ideas about things I wish I had in a PM synth, which features from which DX-style synths are best, and how to balance ease of use with synthesis power. I've also been curious about how other techniques compose with PM, whether they offer anything of interest, and how to implement them without overcomplicating patch design.
 
-The instrument has two independent parts, 20 voices, four operators per voice, the
-eight FM algorithms, a per-operator amplitude LFO, a part pitch LFO and pitch
-envelope, a filter and filter envelope, and a 64 multi-patch and 128 part library.
-The editor is the p1onken panel language in [`design/README.md`](design/README.md),
-and the wordmark is `TYPE P.` in Zen Dots with a lowercase `a` in Unbounded.
+_Type P_, where _P_ stands for _phase_, is the name I've given to the general project of developing this kind of expanded DX-style++ synth. I've tried several experimental implementations, like _Type P.a_, which was implemented in allocation-free C# and had a complex modular architecture, _Type P.b_, which was radically simplified following lessons taken from _Type P.a_; and _Type P.fm1_, which was constrained by the CPU, memory and UI limits of the M-VAVE FM1. **Type P.α** (_α_ as in _alpha_, distinct from the _a_ in _Type P.a_) is the current iteration, presented as a VST3 plugin, a CLAP plugin and a standalone app, made with JUCE and using my personal framework tooling.
 
-This repository carries the plugin, the shared engine, the generated DSP, the design
-tokens and the patches. Type P.fm1 remains in the umetate repository and receives
-bug fixes only. The device firmware lives there, so this tree builds the desktop
-instrument and nothing else.
+The reasons for abandoning Type P.fm1 are that I've decided to disengage from the custom firmware community for highly personal and slightly political reasons, and that being free of the FM1's limited screen, controls and CPU allows for a kind of research into synthesis techniques that I really want to try.
 
-## Build
+## Starting point
+
+At the start of development, **Type P.α** has 20 voices split amongst two four-operator parts, where all of the operators have feedback, a set of 12 waveforms more or less modelled after the OPL3 and the OPZ/TX81z/DX11/V50, and an independent amplitude LFO. It also has a pitch envelope, a pitch LFO and a multi-mode filter with an envelope of its own, all per voice and per part, plus key scaling and velocity sensitivity for a lot of parameters. Parts can be stacked, assigned to different MIDI channels or split into keyboard zones, and each has a delay stage so they can be sequential in time.
+
+I believe two 4-operator parts is the sweet spot for usability and power. Compared to 6-operator synths, the number of algorithms is smaller, and I feel like dividing patches into two 4-op blocks makes programming way less overwhelming than simply presenting one huge 8-op part. I also believe offering feedback on every operator, along with additional waveforms, most of the time makes up for the kind of 6-op algorithms Type P.α lacks. Most importantly, it's an architecture that lends itself well to assembling patches out of stacked or sequential partials, which to me is the ideal patch design approach for phase modulation.
+
+I've also tried to make sound design easier by restraining components to a small maximum parameter count, making sure the state of every operator can be compared and edited from a single page, ensuring mutes are accessible from any page, and providing visual guidance through envelope graphs, spectrograms and oscilloscopes.
+
+Phase modulation indices are calibrated to be similar to Yamaha's OPN, OPM, OPL and OPZ families, rather than the softer sound of synths like the DX7, DX9 and Reface DX. The implementation of feedback is, as of the starting point, similar to Yamaha's traditional one as opposed to the one used by the Reface DX or the Seqtrak, meaning there's no negative feedback, and feedback scales with the operator's amplitude.
+
+Results so far seem to be fit for intent. I've been able to easily make rudimentary additive patches that sound a bit like the PPG sounds Tangerine Dream used circa Exit, or pseudo-PWM pads and leads by pairing saw operators with sine operators whose 20-35% feedback gives them a ramp waveform. Conversion of OPM patches to Type P ranges produces spectrally similar results to the originals, and they are easy to edit.
+
+## Lines of research
+
+1. Feedback envelopes. Are they worth it and where to place them to avoid overcomplicating patch design?
+2. Is negative feedback (i.e. feedback producing only, or mostly, odd harmonics from a sine wave) viable?
+3. Phase distortion/Vector phaseshaping. Where to place the transfer function's breakpoint? How to implement it without adding extra machinery (i.e. phase distortion and phase modulation implemented using the same phase transfer function instead of complicating the DSP unnecessarily). Does _d_-axis phase distortion offer anything substantial over operator feedback? Timbrally and conceptually, what would one use phase distortion for in this synth?
+4. Envelope design. Curves, stages, interface.
+5. Phase granulation as a layer added on top of the PM/PD one. What do I want it to do, exactly? How much does it cost? What are its parameters?
+6. Additive synthesis. How to allow for finer, but accessible, spectral design? How to enable precise control of each harmonic's amplitude over time without overwhelming the user? Is a 16-band graphic formant filter per operator, maybe at the cost of some polyphony if enabled, viable? What are the alternatives? Would it help to add waveforms with very specific harmonic spectra to the waveform list? How to balance flexibility, ease of use, and CPU/memory consumption?
+7. Is the rate bridge adequate?
+8. Any extra waves that would be worth it?
+9. Per-operator detune LFOs?
+10. Ring modulation algorithms?
+
+## Decided steps
+
+1. More precise spectrograms, with clear differentiation of odd and even harmonics, and maybe some numbers for easier reading. Being able to reliably see the spectra is essential for additive-style synthesis.
+2. Exploiting parallelism if possible!
+3. Extending patch and part names to a maximum of 32 characters instead of 15.
+4. A web app made from the same engine and a panel from the editor design.
+
+## Experiments I'd like to try
+
+1. Replicating DX7 patches to find the limitations of Type P.α's architecture in comparison to 6-op architectures.
+2. Having other people try the synth and provide feedback on UX and sound.
+3. Trying wild PM techniques from chiptune composers like blobnote.
+4. Learning about additive synthesis techniques and trying to use them in Type P.
+5. Documenting the pseudo-virtual analogue experience.
+
+## Compiling
 
 The build fetches JUCE 8.0.9 and the pinned `clap-juce-extensions` commit at
-configure time. It needs CMake 3.22, a C++20 compiler, Ninja, and the platform JUCE
+configure time. It needs CMake 3.22, Ninja, clang, and the platform JUCE
 dependencies.
 
 ```sh
-cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ \
+  -DCMAKE_EXE_LINKER_FLAGS=-fuse-ld=lld \
+  -DCMAKE_SHARED_LINKER_FLAGS=-fuse-ld=lld \
+  -DCMAKE_MODULE_LINKER_FLAGS=-fuse-ld=lld
 cmake --build build
 ctest --test-dir build --output-on-failure
 ```
 
-On Debian or Ubuntu, install the build packages first:
+On Debian or Ubuntu, install the toolchain and the build packages first:
 
 ```sh
-sudo apt install build-essential cmake ninja-build libasound2-dev libfreetype6-dev \
+sudo apt install clang lld cmake ninja-build libasound2-dev libfreetype6-dev \
   libx11-dev libxext-dev libxinerama-dev libxrandr-dev libxcursor-dev \
   libxcomposite-dev libxrender-dev
 ```
 
-The build writes the plugin into `build/plugin/juce/type_p_alpha_artefacts/Release/`:
+The Docker image and the Windows script wrap the same steps:
+
+```sh
+docker/build.sh linux/amd64
+```
+
+```powershell
+.\windows\build.ps1
+```
+
+The compiler is clang on every platform, so the Windows script uses clang-cl with
+lld-link and macOS uses AppleClang. [`docker/README.md`](docker/README.md) carries
+the platform matrix, the sanitizer build and the clang tooling.
+
+The plugin compiles into `build/plugin/juce/type_p_alpha_artefacts/Release/`:
 
 - `VST3/Type P.alpha.vst3`
 - `CLAP/Type P.alpha.clap`
 - `Standalone/Type P.alpha`
 
-The tests cover engine parity, the rate bridge, the preset store, the processor
-smoke, the stability pass, the editor snapshots, and the Linux DAW matrix. The
+The tests cover engine parity, the rate bridge, preset storage, processor
+smoke, stability pass, editor snapshots, and the Linux DAW matrix. The
 `linux_daws` test needs Ardour, Carla, JACK and Xvfb. Use `ctest -E linux_daws` when
 those hosts are not installed.
 
-## Editor and sound
+## Installation
 
-The editor follows the shared visual language. Pink is identity and the primary
-value, green is live signal and active state, and purple is selection and
-modulation. The scope, spectro, envelopes and routing graph are signals rather than
-decoration. Every page keeps the same 1240 by 985 canvas and scales as one image.
-
-The engine is the Type P.fm1 graph: four operators, eight algorithms, the part pitch
-envelope, the filter, and the two-part multi-timbral layout. The rate bridge adapts
-the 44.1 kHz core to the host rate at the output.
+The release archives hold the VST3, the CLAP, the standalone app, and the licences. Copy
+the VST3 or CLAP into your plugin folder, or just run the standalone app.
 
 ## Licensing
 
@@ -67,6 +110,13 @@ in `licences/`.
 
 ## Status
 
-VST3 and CLAP pass `pluginval` at strictness 5 and the CLAP validator on Linux and
-Windows. REAPER, Renoise, Ardour and Carla load the builds, and the Linux DAW
-matrix runs in CTest. The macOS build and the AU target remain open.
+The Type P.α engine and editor grew out of the abandoned Type P.fm1 build. The
+plugin passes pluginval at strictness 5 on Linux x86_64, with the editor open and
+the audio, state and automation checks included. The CLAP validator reports no
+failures and one warning, because its random-state test loads garbage without a
+crash. The filter runs per voice and per part now, so each part has its own cutoff,
+resonance, mode and envelope, and its own key and velocity follow.
+
+The Linux suite runs in CTest. The macOS build and the AU target are still
+unvalidated, and the Windows clang-cl build waits for the next CI run. The Linux
+DAW matrix runs when Ardour, Carla and JACK are installed.

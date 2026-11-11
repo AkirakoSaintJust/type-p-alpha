@@ -11,9 +11,6 @@
 namespace p1::ui {
 namespace {
 
-constexpr int kPageWidth = 1206;
-constexpr int kPageHeight = 685;
-
 void setParam(PluginEditor& editor, const juce::String& id, double value)
 {
     if (auto* parameter = editor.state().getParameter(id))
@@ -249,7 +246,7 @@ private:
 
 class PatchPage : public PageBase {
 public:
-    explicit PatchPage(PluginEditor& editor) : editor_(editor)
+    explicit PatchPage(PluginEditor& editor)
     {
         for (int i = 0; i < 2; ++i) {
             parts_[static_cast<size_t>(i)] = std::make_unique<PartCard>(
@@ -280,7 +277,6 @@ public:
     }
 
 private:
-    PluginEditor& editor_;
     std::array<std::unique_ptr<PartCard>, 2> parts_{};
     std::unique_ptr<VoiceMode> voice_;
 };

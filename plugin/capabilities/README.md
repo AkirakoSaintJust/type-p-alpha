@@ -109,14 +109,13 @@ A capability is accepted when `design.md` carries:
 - the CPU, state and memory bounds,
 - the tests and the measured evidence.
 
-The UI gate from `skills/umetate-development/SKILL.md` applies. Design the page,
-write the control map, then write the UI.
+The page is designed before it is written. Write the control map, then write the
+UI.
 
 ## Build
 
-`umetate plugin-generate` and the direct plugin CMake build both run
-`plugin/tools/gen_capabilities.py`. The script reads the base
-`firmware/gen/params.json`, the enabled list and the package manifests. It writes
+The plugin CMake build runs `plugin/tools/gen_capabilities.py`. The script reads the
+base `engine/gen/params.json`, the enabled list and the package manifests. It writes
 the merged params, the capability DSP chain, the page table, the C++ registry and
 the migration table into the plugin build's generated folder.
 

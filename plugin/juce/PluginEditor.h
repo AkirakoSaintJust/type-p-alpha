@@ -33,7 +33,7 @@ public:
 
 class PluginEditor : public juce::AudioProcessorEditor, private juce::Timer {
 public:
-    explicit PluginEditor(TypePFm1AudioProcessor& processor);
+    explicit PluginEditor(TypePFm1AudioProcessor& audioProcessor);
     ~PluginEditor() override;
 
     void paint(juce::Graphics& g) override;

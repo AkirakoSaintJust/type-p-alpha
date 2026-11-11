@@ -27,6 +27,8 @@ bool isEngineMessage(const juce::MidiMessage& message)
 
 } // namespace
 
+extern "C" int midi_get(uint8_t* status, uint8_t* data1, uint8_t* data2);
+
 extern "C" int midi_get(uint8_t*, uint8_t*, uint8_t*)
 {
     return 0; /* the plugin feeds MidiBridge directly */

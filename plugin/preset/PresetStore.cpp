@@ -3,6 +3,7 @@
 
 #include <algorithm>
 #include <cstring>
+#include <utility>
 
 extern "C" {
 #include "presets.h"
@@ -10,13 +11,19 @@ extern "C" {
 
 namespace p1 {
 
-PresetStore::PresetStore(int partParamCount, int partCount)
+PresetStore::PresetStore(int partParamCount, int partCount,
+                         std::vector<int32_t> defaults,
+                         std::vector<int> legacyPartMap)
     : partParamCount_(std::max(0, partParamCount)),
       partCount_(std::max(0, partCount)),
+      defaults_(std::move(defaults)),
+      legacyPartMap_(std::move(legacyPartMap)),
       parts_(static_cast<std::size_t>(kPartSlots)),
       multis_(static_cast<std::size_t>(kMultiSlots)),
       partSource_(static_cast<std::size_t>(partCount_), -1)
 {
+    if (defaults_.size() != static_cast<std::size_t>(partParamCount_))
+        defaults_.assign(static_cast<std::size_t>(partParamCount_), 0);
 }
 
 std::size_t PresetStore::partRecordSize() const
@@ -144,7 +151,7 @@ bool PresetStore::loadPartBank(const uint8_t* data, std::size_t size)
         auto& part = parts_[static_cast<std::size_t>(slot)];
         part.used = false;
         part.name.clear();
-        part.params.assign(static_cast<std::size_t>(partParamCount_), 0);
+        part.params = defaults_;
         const auto* raw = data + static_cast<std::size_t>(slot) * recordSize;
         if (raw[0] == PRESET_EMPTY)
             continue;
@@ -155,6 +162,35 @@ bool PresetStore::loadPartBank(const uint8_t* data, std::size_t size)
             part.used = true;
             part.name = shortName(name);
             part.params = std::move(params);
+        }
+    }
+    return true;
+}
+
+bool PresetStore::loadLegacyPartBank(const uint8_t* data, std::size_t size)
+{
+    const auto legacyCount = static_cast<uint32_t>(legacyPartMap_.size());
+    const auto recordSize = PP_RECORD(legacyCount);
+    if (legacyCount == 0 || data == nullptr || size != recordSize * kPartSlots)
+        return false;
+    for (int slot = 0; slot < kPartSlots; ++slot) {
+        auto& part = parts_[static_cast<std::size_t>(slot)];
+        part.used = false;
+        part.name.clear();
+        part.params = defaults_;
+        const auto* raw = data + static_cast<std::size_t>(slot) * recordSize;
+        if (raw[0] == PRESET_EMPTY)
+            continue;
+        char name[PRESET_NAME_LEN] = {};
+        std::vector<int32_t> legacy(legacyCount);
+        if (!preset_part_unpack(raw, legacyCount, name, legacy.data()))
+            continue;
+        part.used = true;
+        part.name = shortName(name);
+        for (std::size_t i = 0; i < legacyPartMap_.size(); ++i) {
+            const int destination = legacyPartMap_[i];
+            if (destination >= 0 && destination < partParamCount_)
+                part.params[static_cast<std::size_t>(destination)] = legacy[i];
         }
     }
     return true;
@@ -259,9 +295,15 @@ bool PresetStore::loadLibrary(const uint8_t* data, std::size_t size)
     };
     uint32_t partSize = 0;
     uint32_t multiSize = 0;
-    if (!get32(partSize) ||
-        static_cast<std::size_t>(partSize) !=
-            partRecordSize() * static_cast<std::size_t>(kPartSlots))
+    const auto currentPartSize =
+        partRecordSize() * static_cast<std::size_t>(kPartSlots);
+    const auto legacyPartSize =
+        legacyPartMap_.empty()
+            ? 0u
+            : PP_RECORD(static_cast<uint32_t>(legacyPartMap_.size())) *
+                  static_cast<std::size_t>(kPartSlots);
+    if (!get32(partSize) || (static_cast<std::size_t>(partSize) != currentPartSize &&
+                             static_cast<std::size_t>(partSize) != legacyPartSize))
         return false;
     if (offset + partSize + 4u > size)
         return false;
@@ -274,7 +316,11 @@ bool PresetStore::loadLibrary(const uint8_t* data, std::size_t size)
     if (offset + multiSize != size)
         return false;
     const auto* multiData = data + offset;
-    if (!loadPartBank(partData, partSize) || !loadMultiBank(multiData, multiSize))
+    const bool partsOk =
+        static_cast<std::size_t>(partSize) == currentPartSize
+            ? loadPartBank(partData, partSize)
+            : loadLegacyPartBank(partData, partSize);
+    if (!partsOk || !loadMultiBank(multiData, multiSize))
         return false;
     currentMulti_ = -1;
     std::fill(partSource_.begin(), partSource_.end(), -1);

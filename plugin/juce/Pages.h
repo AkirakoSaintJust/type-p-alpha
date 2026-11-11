@@ -37,8 +37,9 @@ public:
         g.setColour(colour(muted ? tokens::faint : tokens::pink));
         g.drawText("active", 0, 0, 34, getHeight(),
                    juce::Justification::centredLeft, false);
-        const auto track = juce::Rectangle<float>(37.0f, (getHeight() - 12.0f) * 0.5f,
-                                                  26.0f, 12.0f);
+        const auto track = juce::Rectangle<float>(
+            37.0f, (static_cast<float>(getHeight()) - 12.0f) * 0.5f, 26.0f,
+            12.0f);
         g.setColour(colour(tokens::bg));
         g.fillRect(track);
         g.setColour(colour(tokens::lineStrong));

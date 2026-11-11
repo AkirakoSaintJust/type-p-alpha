@@ -43,8 +43,8 @@ three embedded fonts. Keep that folder with the binary when you redistribute it.
 This repository contains the desktop plugin, the shared voice engine, the generated
 DSP, the design tokens and the patches. It does not contain the FM-1 firmware, the
 loader, the emulator, the web build, the M-VAVE assets, or the JieLi toolchain. The
-umetate framework remains GPL-3.0-only in its own repository, and Type P.fm1 stays
-there for bug fixes.
+My personal framework tooling remains GPL-3.0-only in its own repository. Type P.fm1
+is abandoned and stays there.
 
 The wordmark uses Zen Dots for `TYPE P.` and Unbounded Regular for the lowercase
 `a`. Digital Desolation Plus is not bundled or used.

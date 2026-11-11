@@ -78,6 +78,7 @@ target_link_libraries(p1_editor PUBLIC
 target_compile_definitions(p1_editor PUBLIC ${P1_JUCE_DEFINITIONS})
 add_dependencies(p1_editor p1_params p1_tokens)
 
+if(NOT P1_SANITIZERS)
 juce_add_plugin(${P1_PLUGIN_TARGET}
     COMPANY_NAME "P1Onken"
     BUNDLE_ID "${P1_BUNDLE_ID}"
@@ -109,6 +110,7 @@ if(P1_BUILD_CLAP)
         CLAP_FEATURES instrument
     )
     target_compile_definitions(${P1_PLUGIN_TARGET}_CLAP PRIVATE ${P1_JUCE_DEFINITIONS})
+endif()
 endif()
 
 juce_add_console_app(p1_smoke PRODUCT_NAME "p1_smoke")
@@ -176,7 +178,8 @@ endif()
 find_program(ARDOUR8_EXPORT ardour8-export)
 find_program(CARLA_JACK_SINGLE carla-jack-single HINTS /opt/carla/bin)
 find_program(JACK_REC jack_rec)
-if(UNIX AND NOT APPLE AND XVFB_RUN AND ARDOUR8_EXPORT AND CARLA_JACK_SINGLE AND JACK_REC)
+if(UNIX AND NOT APPLE AND NOT P1_SANITIZERS AND XVFB_RUN AND ARDOUR8_EXPORT
+   AND CARLA_JACK_SINGLE AND JACK_REC)
     set(P1_ARTEFACTS
         "${CMAKE_CURRENT_BINARY_DIR}/${P1_PLUGIN_TARGET}_artefacts/$<CONFIG>")
     set(P1_LINUX_DAWS_CLAP)

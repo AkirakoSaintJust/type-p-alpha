@@ -12,11 +12,10 @@ endif()
 
 option(P1_BUILD_JUCE "Build the JUCE VST3 and standalone host" OFF)
 
-# A generated project includes its P1Project.cmake before adding this directory,
-# so those normal variables are already in scope. The cache values below are the
-# checked-in Type P.alpha defaults for a plain `cmake -S plugin` build.
-set(P1_FIRMWARE "${CMAKE_CURRENT_SOURCE_DIR}/../firmware" CACHE PATH "firmware root")
-set(P1_SYNTH_GEN "${P1_FIRMWARE}/gen" CACHE PATH "generated synth directory")
+# The checked-in Type P.alpha engine and product identity for a plain
+# `cmake -S plugin` build or the root `cmake -S .` build.
+set(P1_ENGINE "${CMAKE_CURRENT_SOURCE_DIR}/../engine" CACHE PATH "engine root")
+set(P1_SYNTH_GEN "${P1_ENGINE}/gen")
 set(P1_SYNTH_CNAME "type_p_alpha" CACHE STRING "the synth's generated C identifier")
 set(P1_PRODUCT_NAME "Type P.alpha" CACHE STRING "the plugin display name")
 set(P1_PLUGIN_TARGET "${P1_SYNTH_CNAME}" CACHE STRING "the CMake plugin target")
@@ -80,7 +79,13 @@ add_custom_command(
 )
 add_custom_target(p1_params DEPENDS "${P1_PARAMS_HEADER}")
 
-if(MSVC)
+if(MSVC OR (WIN32 AND CMAKE_CXX_COMPILER_ID MATCHES "Clang"))
+    set(P1_MSVC_ABI ON)
+else()
+    set(P1_MSVC_ABI OFF)
+endif()
+
+if(P1_MSVC_ABI)
     set(UMETATE_STATE_PTR "__declspec(thread)")
 else()
     set(UMETATE_STATE_PTR "_Thread_local")
@@ -96,7 +101,7 @@ add_library(p1_engine STATIC
     preset/presets_host.c
     "${P1_SYNTH_GEN}/${P1_SYNTH_CNAME}_dsp.c"
     "${P1_SYNTH_GEN}/tables.c"
-    "${P1_FIRMWARE}/src/synth_midi.c"
+    "${P1_ENGINE}/runtime/synth_midi.c"
     "${P1_CAPABILITY_DSP_SOURCE}"
 )
 set_target_properties(p1_engine PROPERTIES POSITION_INDEPENDENT_CODE ON)
@@ -106,9 +111,9 @@ target_include_directories(p1_engine PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/preset
     ${P1_SYNTH_GEN}
     ${P1_GENERATED_DIR}
-    ${P1_FIRMWARE}/gen
-    ${P1_FIRMWARE}/hal
-    ${P1_FIRMWARE}/src
+    ${P1_ENGINE}/gen
+    ${P1_ENGINE}/hal
+    ${P1_ENGINE}/runtime
     ${P1_CAPABILITY_INCLUDE_DIRS}
 )
 
@@ -117,13 +122,15 @@ target_compile_definitions(p1_engine PRIVATE
     "UMETATE_STATE_PTR=${UMETATE_STATE_PTR}"
 )
 
-if(MSVC)
+if(P1_MSVC_ABI)
     target_compile_options(p1_engine PRIVATE
         "/FI${CMAKE_CURRENT_SOURCE_DIR}/engine/msvc_compat.h")
 endif()
 
 add_executable(engine_parity tests/engine_parity.cpp)
 target_link_libraries(engine_parity PRIVATE p1_engine)
+target_include_directories(engine_parity PRIVATE "${P1_GENERATED_DIR}")
+add_dependencies(engine_parity p1_params)
 add_test(NAME engine_parity COMMAND engine_parity)
 
 add_executable(rate_bridge_test tests/rate_bridge_test.cpp)

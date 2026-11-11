@@ -28,7 +28,7 @@ public:
         setMouseCursor(juce::MouseCursor::PointingHandCursor);
     }
 
-    void setName(const juce::String& name)
+    void setName(const juce::String& name) override
     {
         if (name_ == name)
             return;
@@ -634,8 +634,8 @@ private:
 
 } // namespace
 
-PluginEditor::PluginEditor(TypePFm1AudioProcessor& processor)
-    : AudioProcessorEditor(&processor), processor_(processor)
+PluginEditor::PluginEditor(TypePFm1AudioProcessor& audioProcessor)
+    : AudioProcessorEditor(&audioProcessor), processor_(audioProcessor)
 {
     activePart_ = processor_.getUiActivePart();
     activeTab_ = processor_.getUiPage();
@@ -677,10 +677,15 @@ void PluginEditor::paint(juce::Graphics& g)
 
 void PluginEditor::resized()
 {
-    const float scale = juce::jmin(static_cast<float>(getWidth()) / kWidth,
-                                   static_cast<float>(getHeight()) / kHeight);
-    const float x = (getWidth() - kWidth * scale) * 0.5f;
-    const float y = (getHeight() - kHeight * scale) * 0.5f;
+    const float scale =
+        juce::jmin(static_cast<float>(getWidth()) / static_cast<float>(kWidth),
+                   static_cast<float>(getHeight()) / static_cast<float>(kHeight));
+    const float x =
+        (static_cast<float>(getWidth()) - static_cast<float>(kWidth) * scale) *
+        0.5f;
+    const float y =
+        (static_cast<float>(getHeight()) - static_cast<float>(kHeight) * scale) *
+        0.5f;
     canvas_.setBounds(0, 0, kWidth, kHeight);
     canvas_.setTransform(juce::AffineTransform::scale(scale).translated(x, y));
 }
@@ -1224,9 +1229,9 @@ void PluginEditor::showConfirm(const juce::String& message,
     dialog_ = std::make_unique<p1::ui::P1Dialog>(
         title, std::move(body), 420, 160,
         juce::StringArray{"cancel", confirm},
-        [this, onConfirm = std::move(onConfirm)](int button) {
+        [this, confirmAction = std::move(onConfirm)](int button) {
             if (button == 1)
-                onConfirm();
+                confirmAction();
             closeDialog();
         },
         [this] { closeDialog(); });

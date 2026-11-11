@@ -1,4 +1,4 @@
-"""Generate the C++ parameter table from firmware/gen/params.json.
+"""Generate the C++ parameter table from engine/gen/params.json.
 
 The manifest is the only reference. This keeps the JUCE APVTS, the engine ids
 and the editor names in one place, because the APVTS key is the stable manifest

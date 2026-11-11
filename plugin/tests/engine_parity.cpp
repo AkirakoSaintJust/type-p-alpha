@@ -8,6 +8,7 @@
 #include "Engine.hpp"
 #include "MidiBridge.hpp"
 #include "P1Synth.h"
+#include "Params.h"
 #include "cc_map.h"
 #include "synth_midi.h"
 
@@ -33,6 +34,15 @@ void check(bool ok, const char* what)
 bool same(const int32_t* a, const int32_t* b, std::size_t n)
 {
     return std::memcmp(a, b, n * sizeof a[0]) == 0;
+}
+
+uint32_t param_id(const char* name)
+{
+    for (const auto& spec : kP1ParamSpecs) {
+        if (std::strcmp(spec.id, name) == 0)
+            return static_cast<uint32_t>(spec.engineId);
+    }
+    return ~0u;
 }
 
 } // namespace
@@ -149,6 +159,69 @@ void test_state_isolation()
     check(true, "two engine states stay isolated");
 }
 
+void test_filter_is_per_part()
+{
+    const uint32_t on0 = param_id("filter_on.p0");
+    const uint32_t on1 = param_id("filter_on.p1");
+    const uint32_t cut0 = param_id("cutoff.p0");
+    const uint32_t cut1 = param_id("cutoff.p1");
+    check(on0 != ~0u && on1 != ~0u && cut0 != ~0u && cut1 != ~0u,
+          "the filter parameters are per part");
+    if (on0 == ~0u || on1 == ~0u || cut0 == ~0u || cut1 == ~0u)
+        return;
+
+    p1::Engine bypass;
+    p1::Engine filtered;
+    int32_t r_bypass[512] = {};
+    int32_t r_filtered[512] = {};
+    bypass.reset();
+    filtered.reset();
+    filtered.setParam(on0, 1);
+    filtered.setParam(cut0, 1500);
+    bypass.noteOn(60, 100, 0);
+    filtered.noteOn(60, 100, 0);
+    bypass.render(r_bypass, 256);
+    filtered.render(r_filtered, 256);
+    check(!same(r_bypass, r_filtered, 512),
+          "the filter changes the part 0 render");
+
+    p1::Engine a;
+    p1::Engine b;
+    int32_t ra[512] = {};
+    int32_t rb[512] = {};
+    a.reset();
+    b.reset();
+    a.setParam(on0, 1);
+    a.setParam(on1, 1);
+    b.setParam(on0, 1);
+    b.setParam(on1, 1);
+    a.setParam(cut0, 1500);
+    a.setParam(cut1, 50000);
+    b.setParam(cut0, 50000);
+    b.setParam(cut1, 1500);
+    a.noteOn(60, 100, 0);
+    b.noteOn(60, 100, 0);
+    a.render(ra, 256);
+    b.render(rb, 256);
+    check(!same(ra, rb, 512), "part 0 uses its own cutoff");
+
+    a.reset();
+    b.reset();
+    a.setParam(on0, 1);
+    a.setParam(on1, 1);
+    b.setParam(on0, 1);
+    b.setParam(on1, 1);
+    a.setParam(cut0, 1500);
+    a.setParam(cut1, 50000);
+    b.setParam(cut0, 50000);
+    b.setParam(cut1, 1500);
+    a.noteOn(60, 100, 1);
+    b.noteOn(60, 100, 1);
+    a.render(ra, 256);
+    b.render(rb, 256);
+    check(!same(ra, rb, 512), "part 1 uses its own cutoff");
+}
+
 void test_midi_parity()
 {
     p1::Engine engine;
@@ -233,6 +306,7 @@ int main()
     std::printf("engine bridge parity\n");
     test_engine_render();
     test_state_isolation();
+    test_filter_is_per_part();
     test_midi_parity();
     test_sustain_isolation();
     std::printf("engine: %s\n", failures ? "FAILED" : "passed");

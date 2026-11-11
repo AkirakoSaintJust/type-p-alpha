@@ -11,6 +11,7 @@
 
 #include "Params.h"
 #include "PresetStore.hpp"
+#include "part_migration.h"
 
 extern "C" {
 #include "presets.h"
@@ -33,6 +34,54 @@ std::vector<int32_t> pattern(int seed)
     for (int i = 0; i < kP1PartParamCount; ++i)
         values[static_cast<std::size_t>(i)] = (i * 37 + seed) % 4096 - 2048;
     return values;
+}
+
+void append32(std::vector<uint8_t>& out, uint32_t value)
+{
+    out.push_back(static_cast<uint8_t>(value & 0xFFu));
+    out.push_back(static_cast<uint8_t>((value >> 8) & 0xFFu));
+    out.push_back(static_cast<uint8_t>((value >> 16) & 0xFFu));
+    out.push_back(static_cast<uint8_t>((value >> 24) & 0xFFu));
+}
+
+void test_legacy_library()
+{
+    constexpr int kLegacyCount = 146;
+    const auto legacyRecordSize = static_cast<std::size_t>(PP_RECORD(kLegacyCount));
+    std::vector<uint8_t> legacyBank(legacyRecordSize * 128u, 0xFF);
+    std::vector<int32_t> legacyParams(static_cast<std::size_t>(kLegacyCount));
+    for (int i = 0; i < kLegacyCount; ++i)
+        legacyParams[static_cast<std::size_t>(i)] = 1000 + i;
+    preset_part_pack(legacyBank.data(), "old lead", legacyParams.data(),
+                     kLegacyCount);
+
+    p1::PresetStore store{kP1PartParamCount, kP1PartCount,
+                          p1::partParamDefaults(), p1::legacyPartParamMap()};
+    const auto multiBank = store.packMultiBank();
+    static const uint8_t magic[7] = {'P', '1', 'L', 'I', 'B', '1', '\n'};
+    std::vector<uint8_t> library(magic, magic + 7);
+    append32(library, static_cast<uint32_t>(legacyBank.size()));
+    library.insert(library.end(), legacyBank.begin(), legacyBank.end());
+    append32(library, static_cast<uint32_t>(multiBank.size()));
+    library.insert(library.end(), multiBank.begin(), multiBank.end());
+
+    check(store.loadLibrary(library.data(), library.size()),
+          "load a library from the old part layout");
+    check(store.partUsed(0) && store.partName(0) == "old lead",
+          "the old part name survives the migration");
+    const auto& loaded = store.partParams(0);
+    check(loaded[0] == legacyParams[0] && loaded[132] == legacyParams[132],
+          "the unchanged head keeps its index");
+    check(loaded[152] == legacyParams[133] && loaded[159] == legacyParams[140],
+          "the moved tail lands at 152..159");
+    const auto defaults = p1::partParamDefaults();
+    bool filterDefaulted = true;
+    for (int i = 133; i < 152; ++i) {
+        if (loaded[static_cast<std::size_t>(i)] !=
+            defaults[static_cast<std::size_t>(i)])
+            filterDefaulted = false;
+    }
+    check(filterDefaulted, "the new filter block takes its defaults");
 }
 
 } // namespace
@@ -130,6 +179,8 @@ int main()
           "reject a truncated library file");
     check(!libraryLoaded.loadLibrary(library.data(), library.size() - 1),
           "reject a library file with a short tail");
+
+    test_legacy_library();
 
     std::printf("preset: %s\n", failures ? "FAILED" : "passed");
     return failures ? 1 : 0;

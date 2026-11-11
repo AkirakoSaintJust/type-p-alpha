@@ -1,0 +1,10 @@
+Checks: >
+  -*,
+  bugprone-*,
+  performance-*,
+  modernize-*,
+  readability-*
+WarningsAsErrors: ''
+HeaderFilterRegex: '(plugin|engine)/.*'
+ExcludeHeaderFilterRegex: '(_deps|build)/.*'
+FormatStyle: file
