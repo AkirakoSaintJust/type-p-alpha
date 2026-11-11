@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: GPL-3.0-only */
 /* Host build of the engine preset record code. The plugin keeps its banks in
- * memory, so the flash bank services are stubs. The pack and unpack functions are
- * the engine's own code. */
+ * memory, so the storage services are stubs. The pack and unpack functions are the
+ * engine's own code. */
 #include <stdint.h>
 #include <string.h>
 

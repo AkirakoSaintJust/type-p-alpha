@@ -33,14 +33,14 @@ public:
 
 class PluginEditor : public juce::AudioProcessorEditor, private juce::Timer {
 public:
-    explicit PluginEditor(TypePFm1AudioProcessor& audioProcessor);
+    explicit PluginEditor(TypePAlphaAudioProcessor& audioProcessor);
     ~PluginEditor() override;
 
     void paint(juce::Graphics& g) override;
     void resized() override;
     void timerCallback() override;
 
-    TypePFm1AudioProcessor& processor() { return processor_; }
+    TypePAlphaAudioProcessor& processor() { return processor_; }
     juce::AudioProcessorValueTreeState& state() { return processor_.parameters(); }
     int activePart() const { return activePart_; }
     int activeTab() const { return activeTab_; }
@@ -85,7 +85,7 @@ private:
     int currentRouting(int field, int part);
     void applyRouting(int field, int part, int value);
 
-    TypePFm1AudioProcessor& processor_;
+    TypePAlphaAudioProcessor& processor_;
     p1::ui::P1LookAndFeel lookAndFeel_;
     p1::ui::P1Canvas canvas_;
     std::unique_ptr<Header> header_;

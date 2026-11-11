@@ -4,7 +4,7 @@ include(FetchContent)
 FetchContent_Declare(
     JUCE
     GIT_REPOSITORY https://github.com/juce-framework/JUCE.git
-    GIT_TAG 8.0.9
+    GIT_TAG 9.0.5
     GIT_SHALLOW TRUE
 )
 FetchContent_MakeAvailable(JUCE)
@@ -14,7 +14,7 @@ if(P1_BUILD_CLAP)
     FetchContent_Declare(
         clap-juce-extensions
         GIT_REPOSITORY https://github.com/free-audio/clap-juce-extensions.git
-        GIT_TAG 7adee3a1bd4684d4caa5601100e364abccff4b4d
+        GIT_TAG 6bde108329ff9fc24404b79b8b397261a75cf6a8
         GIT_SUBMODULES "clap-libs/clap" "clap-libs/clap-helpers"
     )
     FetchContent_MakeAvailable(clap-juce-extensions)

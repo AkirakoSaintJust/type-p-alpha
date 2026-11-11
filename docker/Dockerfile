@@ -13,7 +13,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         cmake ninja-build git python3 pkg-config zip ca-certificates \
         xvfb xauth libgl1-mesa-dri \
         libasound2-dev libfreetype-dev libfontconfig1-dev \
-        libgl1-mesa-dev libx11-dev libxext-dev libxrandr-dev \
+        libgl1-mesa-dev libegl-dev libgles2 libxi-dev \
+        libx11-dev libxext-dev libxrandr-dev \
         libxinerama-dev libxcursor-dev libxcomposite-dev libxrender-dev \
         libxfixes-dev libxkbcommon-dev \
     && rm -rf /var/lib/apt/lists/*

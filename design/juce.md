@@ -205,7 +205,7 @@ output to the host rate. Leave the input and the core rate untouched.
   licence text with the binaries.
 - Brand font: not bundled until the licence is verified.
 - JUCE: use the AGPLv3 path or a commercial JUCE licence, and record the JUCE
-  version in the build manifest, because JUCE 8 is not GPLv3, and the source
+  version in the build manifest, because JUCE 9 is not GPLv3, and the source
   stays GPL-3.0-only, where GPLv3 section 13 permits the combined binary.
 
 ## Open items

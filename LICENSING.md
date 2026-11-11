@@ -3,7 +3,7 @@
 Type P.alpha is **GPL-3.0-only** for the plugin source, the generated engine, the
 design tokens and the documentation in this repository.
 
-The VST3, CLAP and standalone binaries also link **JUCE 8.0.9**, which is
+The VST3, CLAP and standalone binaries also link **JUCE 9.0.5**, which is
 dual-licensed under **AGPL-3.0-only** or a commercial JUCE licence. A distributed
 plugin binary is therefore conveyed under the AGPL-3.0-only terms for the JUCE
 part. The Type P.alpha source in the same binary keeps its GPL-3.0-only terms, and
@@ -14,10 +14,10 @@ needs a commercial JUCE licence before shipping the plugin.
 
 | Material | Version | Licence |
 | --- | --- | --- |
-| JUCE | 8.0.9 | AGPL-3.0-only or commercial |
-| VST3 SDK, bundled by JUCE | as shipped in JUCE 8.0.9 | GPL-3.0-only or Steinberg VST3 licence |
+| JUCE | 9.0.5 | AGPL-3.0-only or commercial |
+| VST3 SDK, bundled by JUCE | as shipped in JUCE 9.0.5 | GPL-3.0-only or Steinberg VST3 licence |
 | CLAP | 1.2.7 | MIT |
-| clap-juce-extensions | `7adee3a1bd4684d4caa5601100e364abccff4b4d` | MIT |
+| clap-juce-extensions | `6bde108329ff9fc24404b79b8b397261a75cf6a8` | MIT |
 | DotGothic16 | Google Fonts | SIL OFL 1.1 |
 | Zen Dots | Google Fonts | SIL OFL 1.1 |
 | Unbounded | Google Fonts | SIL OFL 1.1 |
@@ -30,7 +30,7 @@ The licence texts are in `third-party-licenses/`. The JUCE AGPL text is
 ## Source and binaries
 
 The source is this repository, and every release tag is the corresponding source
-for the binaries built from it. The plugin builds fetch JUCE 8.0.9 and the pinned
+for the binaries built from it. The plugin builds fetch JUCE 9.0.5 and the pinned
 `clap-juce-extensions` commit with CMake `FetchContent`, so the release workflow
 records the upstream commits in the release notes.
 

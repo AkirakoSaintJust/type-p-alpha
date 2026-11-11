@@ -1,12 +1,10 @@
 /* SPDX-License-Identifier: GPL-3.0-only */
 /* Copyright (C) 2026 P1Onken */
 /* The preset store implementation (presets.h): byte-exact little-endian layouts that
- * match the framework `_records.py`, over a bank save/load that calls the platform's storage
- * services (`slot_load/slot_save/settings_load/settings_save`). The includer provides
- * those (platform.c on device, stubs in the host test). */
+ * match the framework `_records.py`, over the bank save/load hooks
+ * (`slot_load/slot_save/settings_load/settings_save`). The host build stubs them. */
 #include "presets.h"
-/* no <string.h> here: the device TU gets memset/memcpy/memcmp from the platform's
- * libc.c (included before this file). The standalone host tests include it first. */
+/* The host build includes <string.h> before this file. */
 
 static void wr32(uint8_t *p, uint32_t u)
 {
@@ -179,18 +177,13 @@ int preset_settings_unpack(const uint8_t *raw, int32_t *base_channel, int32_t *m
     return 1;
 }
 
-/* A bank is a contiguous byte array of records, chunked across consecutive flash
+/* A bank is a contiguous byte array of records, chunked across consecutive storage
  * slots at record boundaries, so a record never straddles a slot and a corrupt slot
- * never splits a record. `PRESET_SLOT_MAX` (the byte ceiling, mirroring store.h
- * `SLOT_MAX`) gives the records-per-slot, and the device build asserts the two agree
- * below. */
-#ifdef SLOT_MAX
-_Static_assert(PRESET_SLOT_MAX == SLOT_MAX, "PRESET_SLOT_MAX must equal store.h SLOT_MAX");
-#endif
+ * never splits a record. `PRESET_SLOT_MAX` gives the records-per-slot byte ceiling. */
 
 static uint32_t bank_per(uint32_t rec) { return PRESET_SLOT_MAX / rec; }
 
-/* the number of flash slots a bank of `count` records of `rec` bytes spans */
+/* the number of storage slots a bank of `count` records of `rec` bytes spans */
 static uint32_t bank_slots(uint32_t count, uint32_t rec)
 {
     uint32_t per = bank_per(rec);

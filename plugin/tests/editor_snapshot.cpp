@@ -37,7 +37,7 @@ int main(int argc, char** argv)
                  : juce::File::getCurrentWorkingDirectory().getChildFile("snapshots");
     directory.createDirectory();
 
-    TypePFm1AudioProcessor processor;
+    TypePAlphaAudioProcessor processor;
     const auto library =
         juce::File::getSpecialLocation(juce::File::tempDirectory)
             .getNonexistentChildFile("p1-editor-snapshot", ".p1lib", false);

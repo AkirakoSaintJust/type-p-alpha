@@ -634,7 +634,7 @@ private:
 
 } // namespace
 
-PluginEditor::PluginEditor(TypePFm1AudioProcessor& audioProcessor)
+PluginEditor::PluginEditor(TypePAlphaAudioProcessor& audioProcessor)
     : AudioProcessorEditor(&audioProcessor), processor_(audioProcessor)
 {
     activePart_ = processor_.getUiActivePart();
@@ -651,7 +651,7 @@ PluginEditor::PluginEditor(TypePFm1AudioProcessor& audioProcessor)
     int initialHeight = kHeight;
     if (auto* display =
             juce::Desktop::getInstance().getDisplays().getPrimaryDisplay()) {
-        const auto area = display->userArea.reduced(48, 80);
+        const auto area = display->userBounds.toNearestInt().reduced(48, 80);
         const float scale = juce::jmin(
             1.0f,
             static_cast<float>(area.getWidth()) / static_cast<float>(kWidth),
@@ -724,7 +724,7 @@ void PluginEditor::fitToHostWindow()
        with a band for the host chrome and the desktop furniture. A maximised host
        window is smaller than the display work area, and the old 64px only covered
        a title bar. */
-    const auto area = display->userArea.reduced(48, 80);
+    const auto area = display->userBounds.toNearestInt().reduced(48, 80);
     if (area.getWidth() <= 0 || area.getHeight() <= 0)
         return;
     int maxWidth = area.getWidth();

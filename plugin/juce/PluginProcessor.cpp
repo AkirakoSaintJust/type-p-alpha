@@ -69,22 +69,22 @@ void ScopeRing::read(float* destination, int count)
     }
 }
 
-juce::String TypePFm1AudioProcessor::getPartName(int part) const
+juce::String TypePAlphaAudioProcessor::getPartName(int part) const
 {
     return partNames_[static_cast<size_t>(juce::jlimit(0, 1, part))];
 }
 
-void TypePFm1AudioProcessor::setPartName(int part, const juce::String& name)
+void TypePAlphaAudioProcessor::setPartName(int part, const juce::String& name)
 {
     partNames_[static_cast<size_t>(juce::jlimit(0, 1, part))] = name;
 }
 
-void TypePFm1AudioProcessor::readOutputScope(float* destination, int count)
+void TypePAlphaAudioProcessor::readOutputScope(float* destination, int count)
 {
     outputScope_.read(destination, count);
 }
 
-void TypePFm1AudioProcessor::readTapScope(int channel, float* destination, int count)
+void TypePAlphaAudioProcessor::readTapScope(int channel, float* destination, int count)
 {
     if (channel < 0 || channel >= static_cast<int>(tapScopes_.size())) {
         std::fill(destination, destination + count, 0.0f);
@@ -93,7 +93,7 @@ void TypePFm1AudioProcessor::readTapScope(int channel, float* destination, int c
     tapScopes_[static_cast<size_t>(channel)].read(destination, count);
 }
 
-TypePFm1AudioProcessor::TypePFm1AudioProcessor()
+TypePAlphaAudioProcessor::TypePAlphaAudioProcessor()
     : AudioProcessor(BusesProperties().withOutput(
           "Output", juce::AudioChannelSet::stereo(), true)),
       midi_(engine_),
@@ -106,7 +106,7 @@ TypePFm1AudioProcessor::TypePFm1AudioProcessor()
 }
 
 juce::AudioProcessorValueTreeState::ParameterLayout
-TypePFm1AudioProcessor::createLayout()
+TypePAlphaAudioProcessor::createLayout()
 {
     juce::AudioProcessorValueTreeState::ParameterLayout layout;
     for (const auto& spec : kP1ParamSpecs) {
@@ -119,7 +119,7 @@ TypePFm1AudioProcessor::createLayout()
     return layout;
 }
 
-void TypePFm1AudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
+void TypePAlphaAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
 {
     hostRate_ = sampleRate;
     engine_.reset();
@@ -137,12 +137,12 @@ void TypePFm1AudioProcessor::prepareToPlay(double sampleRate, int samplesPerBloc
     syncParams();
 }
 
-void TypePFm1AudioProcessor::releaseResources()
+void TypePAlphaAudioProcessor::releaseResources()
 {
     engine_.allNotesOff();
 }
 
-bool TypePFm1AudioProcessor::isBusesLayoutSupported(const BusesLayout& layouts) const
+bool TypePAlphaAudioProcessor::isBusesLayoutSupported(const BusesLayout& layouts) const
 {
     if (layouts.getMainInputChannelSet() != juce::AudioChannelSet::disabled())
         return false;
@@ -151,7 +151,7 @@ bool TypePFm1AudioProcessor::isBusesLayoutSupported(const BusesLayout& layouts) 
            out == juce::AudioChannelSet::mono();
 }
 
-void TypePFm1AudioProcessor::syncParams()
+void TypePAlphaAudioProcessor::syncParams()
 {
     for (int i = 0; i < kP1ParamCount; ++i) {
         const auto* value = paramValues_[static_cast<std::size_t>(i)];
@@ -172,19 +172,19 @@ void TypePFm1AudioProcessor::syncParams()
     }
 }
 
-void TypePFm1AudioProcessor::feedMessage(p1::MidiBridge& midi,
+void TypePAlphaAudioProcessor::feedMessage(p1::MidiBridge& midi,
                                          const juce::MidiMessage& message)
 {
     const auto* data = message.getRawData();
     midi.feed(data[0], data[1], data[2]);
 }
 
-void TypePFm1AudioProcessor::renderCore(int32_t* out, int frames)
+void TypePAlphaAudioProcessor::renderCore(int32_t* out, int frames)
 {
     engine_.render(out, static_cast<uint32_t>(frames));
 }
 
-void TypePFm1AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
+void TypePAlphaAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
                                           juce::MidiBuffer& midi)
 {
     juce::ScopedNoDenormals noDenormals;
@@ -267,7 +267,7 @@ void TypePFm1AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
     midi.clear();
 }
 
-juce::File TypePFm1AudioProcessor::libraryFile() const
+juce::File TypePAlphaAudioProcessor::libraryFile() const
 {
     if (libraryFileOverride_ != juce::File{})
         return libraryFileOverride_;
@@ -278,7 +278,7 @@ juce::File TypePFm1AudioProcessor::libraryFile() const
         .getChildFile("library.p1lib");
 }
 
-void TypePFm1AudioProcessor::ensureLibraryLoaded()
+void TypePAlphaAudioProcessor::ensureLibraryLoaded()
 {
     if (libraryLoaded_)
         return;
@@ -300,7 +300,7 @@ void TypePFm1AudioProcessor::ensureLibraryLoaded()
     }
 }
 
-void TypePFm1AudioProcessor::saveLibrary()
+void TypePAlphaAudioProcessor::saveLibrary()
 {
     const auto file = libraryFile();
     file.getParentDirectory().createDirectory();
@@ -310,13 +310,13 @@ void TypePFm1AudioProcessor::saveLibrary()
     }
 }
 
-juce::AudioProcessorEditor* TypePFm1AudioProcessor::createEditor()
+juce::AudioProcessorEditor* TypePAlphaAudioProcessor::createEditor()
 {
     ensureLibraryLoaded();
     return new PluginEditor(*this);
 }
 
-void TypePFm1AudioProcessor::getStateInformation(juce::MemoryBlock& destData)
+void TypePAlphaAudioProcessor::getStateInformation(juce::MemoryBlock& destData)
 {
     auto state = apvts_.copyState();
     state.setProperty("stateVersion", kStateVersion, nullptr);
@@ -344,7 +344,7 @@ void TypePFm1AudioProcessor::getStateInformation(juce::MemoryBlock& destData)
         copyXmlToBinary(*xml, destData);
 }
 
-void TypePFm1AudioProcessor::setStateInformation(const void* data, int sizeInBytes)
+void TypePAlphaAudioProcessor::setStateInformation(const void* data, int sizeInBytes)
 {
     std::unique_ptr<juce::XmlElement> xml(getXmlFromBinary(data, sizeInBytes));
     if (xml == nullptr)
@@ -380,7 +380,7 @@ void TypePFm1AudioProcessor::setStateInformation(const void* data, int sizeInByt
     updateHostDisplay(juce::AudioProcessor::ChangeDetails().withProgramChanged(true));
 }
 
-void TypePFm1AudioProcessor::applyParamMigrations()
+void TypePAlphaAudioProcessor::applyParamMigrations()
 {
     for (int i = 0; i < kP1CapabilityMigrationCount; ++i) {
         const auto& migration = kP1CapabilityMigrations[i];
@@ -397,5 +397,5 @@ void TypePFm1AudioProcessor::applyParamMigrations()
 
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
-    return new TypePFm1AudioProcessor();
+    return new TypePAlphaAudioProcessor();
 }

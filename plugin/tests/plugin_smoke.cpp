@@ -67,7 +67,7 @@ bool matches(const juce::AudioBuffer<float>& buffer, const int32_t* reference, i
 
 int main()
 {
-    TypePFm1AudioProcessor processor;
+    TypePAlphaAudioProcessor processor;
 
     check(kP1ParamCount == kP1BaseParamCount + P1_CAPABILITY_PARAM_COUNT,
           "the manifest exposes the base and capability parameters");
@@ -197,14 +197,14 @@ int main()
         auto library = juce::File::getSpecialLocation(
                            juce::File::tempDirectory)
                            .getNonexistentChildFile("p1-library", ".p1lib", false);
-        TypePFm1AudioProcessor writer;
+        TypePAlphaAudioProcessor writer;
         writer.setLibraryFileForTesting(library);
         writer.presets().savePart(
             9, "persisted", std::vector<int32_t>(
                                static_cast<std::size_t>(kP1PartParamCount), 5));
         writer.saveLibrary();
 
-        TypePFm1AudioProcessor reader;
+        TypePAlphaAudioProcessor reader;
         reader.setLibraryFileForTesting(library);
         reader.ensureLibraryLoaded();
         check(reader.presets().partUsed(9) &&
@@ -213,7 +213,7 @@ int main()
         library.deleteFile();
     }
 
-    TypePFm1AudioProcessor automated;
+    TypePAlphaAudioProcessor automated;
     automated.setRateAndBufferSizeDetails(44100.0, kFrames);
     automated.prepareToPlay(44100.0, kFrames);
     auto* automatedParameter = automated.parameters().getParameter("algorithm.p0");
@@ -229,7 +229,7 @@ int main()
     check(matches(automatedBlock, reference, kFrames),
           "automation applies at the 32-sample control block");
 
-    TypePFm1AudioProcessor offset;
+    TypePAlphaAudioProcessor offset;
     offset.setRateAndBufferSizeDetails(44100.0, kFrames);
     offset.prepareToPlay(44100.0, kFrames);
     juce::AudioBuffer<float> offsetBlock(2, kFrames);
@@ -260,8 +260,8 @@ int main()
     check(finite && sounding, "the 48 kHz placeholder path renders audio");
 
     {
-        TypePFm1AudioProcessor source;
-        TypePFm1AudioProcessor restored;
+        TypePAlphaAudioProcessor source;
+        TypePAlphaAudioProcessor restored;
         for (int i = 0; i < kP1ParamCount; ++i) {
             const auto& spec = kP1ParamSpecs[static_cast<std::size_t>(i)];
             auto* sourceParameter = source.parameters().getParameter(spec.id);

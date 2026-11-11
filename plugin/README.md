@@ -12,7 +12,7 @@ cmake --build build
 ```
 
 The top-level `CMakeLists.txt` turns on the JUCE and CLAP builds and adds this
-folder. The build fetches JUCE 8.0.9 and the pinned `clap-juce-extensions` commit.
+folder. The build fetches JUCE 9.0.5 and the pinned `clap-juce-extensions` commit.
 The artefacts are `VST3/Type P.alpha.vst3`, `CLAP/Type P.alpha.clap` and
 `Standalone/Type P.alpha` under `build/plugin/juce/type_p_alpha_artefacts/Release/`.
 

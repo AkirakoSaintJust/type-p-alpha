@@ -5,31 +5,26 @@
  * little-endian and must match the framework `_records.py` (proven by the parity test).
  *
  * A record is a self-validating unit: a version byte (0xFF = empty), a body, and
- * a CRC-32 (poly 0xEDB88320, the platform's crc32) over version+body. The banks
- * are chunked across the flash slots (the part bank from slot 0, the multi bank
- * straight after it) at record boundaries. A record never straddles a slot, so the
- * settings record is stored in the settings sector. Save only when silent (the
- * platform's area_save erases with interrupts off). */
+ * a CRC-32 (poly 0xEDB88320, the engine's crc32) over version+body. The banks are
+ * chunked across storage slots at record boundaries. A record never straddles a
+ * slot. The host build keeps the records in memory and stubs the storage hooks. */
 #pragma once
 #include <stdint.h>
 
 #define PRESET_NAME_LEN 16u
 #define PRESET_VERSION 1u
 #define PRESET_EMPTY 0xFFu
-/* The logical slot counts: 128 single-part slots + 64 multi-patch slots. Each bank
- * is a contiguous byte array chunked across one or more flash slots (a record never
- * straddles a slot boundary). The flash slot byte ceiling is store.h `SLOT_MAX`,
- * mirrored here as `PRESET_SLOT_MAX` so the host tests can build presets.c with
- * `-Isrc` only, and the device build asserts the two agree. The type-p-fm1 317 B part
- * record spans the 128 parts over 3 flash slots (51 per slot). The 63 B multi
- * record fits all 64 in one (roadmap §6.11.4). */
+/* The logical slot counts: 128 single-part slots + 64 multi-patch slots. Each bank is
+ * a contiguous byte array chunked across storage slots (a record never straddles a
+ * slot boundary). `PRESET_SLOT_MAX` is the storage slot byte ceiling, mirrored here
+ * so the host build can compile presets.c. The part record is sized from the part
+ * parameter count, and the multi record fits all 64 slots in one. */
 #define PRESET_PART_SLOTS 128u
 #define PRESET_MULTI_SLOTS 64u
 #define PRESET_SLOT_MAX 16372u
 
-/* The per-part timbre param cap: the preset apply + SysEx dump buffers are sized to
- * this, so a synth's `SYNTH_N_PARAMS` must stay under it. (Raised from 128 when the
- * type-p-fm1 key/velocity follow + per-part algorithm pushed it past 128.) */
+/* The per-part timbre param cap: the preset apply buffers are sized to this, so a
+ * synth's `SYNTH_N_PARAMS` must stay under it. */
 #define SYNTH_PARAM_MAX 256u
 
 #define PP_RECORD(N) (1u + PRESET_NAME_LEN + (N) * 4u + 4u)

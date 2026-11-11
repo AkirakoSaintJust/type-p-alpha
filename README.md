@@ -4,19 +4,19 @@ Hey, it's Akirako Saint-Just from the パンク派第１音響合成研究班, o
 
 _Type P_, where _P_ stands for _phase_, is the name I've given to the general project of developing this kind of expanded DX-style++ synth. I've tried several experimental implementations, like _Type P.a_, which was implemented in allocation-free C# and had a complex modular architecture, _Type P.b_, which was radically simplified following lessons taken from _Type P.a_; and _Type P.fm1_, which was constrained by the CPU, memory and UI limits of the M-VAVE FM1. **Type P.α** (_α_ as in _alpha_, distinct from the _a_ in _Type P.a_) is the current iteration, presented as a VST3 plugin, a CLAP plugin and a standalone app, made with JUCE and using my personal framework tooling.
 
-The reasons for abandoning Type P.fm1 are that I've decided to disengage from the custom firmware community for highly personal and slightly political reasons, and that being free of the FM1's limited screen, controls and CPU allows for a kind of research into synthesis techniques that I really want to try.
+The reasons for abandoning Type P.fm1 are that I've decided to disengage from the custom firmware community for highly personal and slightly political reasons, and that being free from the FM1's limited screen, controls and CPU allows for a kind of research into synthesis techniques that I really want to try.
 
 ## Starting point
 
 At the start of development, **Type P.α** has 20 voices split amongst two four-operator parts, where all of the operators have feedback, a set of 12 waveforms more or less modelled after the OPL3 and the OPZ/TX81z/DX11/V50, and an independent amplitude LFO. It also has a pitch envelope, a pitch LFO and a multi-mode filter with an envelope of its own, all per voice and per part, plus key scaling and velocity sensitivity for a lot of parameters. Parts can be stacked, assigned to different MIDI channels or split into keyboard zones, and each has a delay stage so they can be sequential in time.
 
-I believe two 4-operator parts is the sweet spot for usability and power. Compared to 6-operator synths, the number of algorithms is smaller, and I feel like dividing patches into two 4-op blocks makes programming way less overwhelming than simply presenting one huge 8-op part. I also believe offering feedback on every operator, along with additional waveforms, most of the time makes up for the kind of 6-op algorithms Type P.α lacks. Most importantly, it's an architecture that lends itself well to assembling patches out of stacked or sequential partials, which to me is the ideal patch design approach for phase modulation.
+I believe two 4-operator parts is the sweet spot for usability and power. Compared to 6-operator synths, the number of algorithms is smaller, and I feel like dividing patches into two 4-op blocks makes programming way less overwhelming than presenting users with one 8-op part. I also believe offering feedback on every operator, along with additional waveforms, most of the time makes up for the kind of 6-op algorithms Type P.α lacks. Most importantly, it's an architecture that lends itself well to assembling patches out of stacked or sequential partials, which to me is the ideal patch design approach for phase modulation.
 
 I've also tried to make sound design easier by restraining components to a small maximum parameter count, making sure the state of every operator can be compared and edited from a single page, ensuring mutes are accessible from any page, and providing visual guidance through envelope graphs, spectrograms and oscilloscopes.
 
 Phase modulation indices are calibrated to be similar to Yamaha's OPN, OPM, OPL and OPZ families, rather than the softer sound of synths like the DX7, DX9 and Reface DX. The implementation of feedback is, as of the starting point, similar to Yamaha's traditional one as opposed to the one used by the Reface DX or the Seqtrak, meaning there's no negative feedback, and feedback scales with the operator's amplitude.
 
-Results so far seem to be fit for intent. I've been able to easily make rudimentary additive patches that sound a bit like the PPG sounds Tangerine Dream used circa Exit, or pseudo-PWM pads and leads by pairing saw operators with sine operators whose 20-35% feedback gives them a ramp waveform. Conversion of OPM patches to Type P ranges produces spectrally similar results to the originals, and they are easy to edit.
+Results so far seem to be fit for intent. I've been able to easily make rudimentary additive patches that sound a bit like the PPG sounds Tangerine Dream used circa Exit, additive brass, woodwinds and strings; and pseudo-PWM pads and leads by pairing saw operators with sine operators at 20-35% feedback, which gives them a ramp waveform. Conversion of OPM patches to Type P ranges produces spectrally similar results to the originals, and they are easy to edit.
 
 ## Lines of research
 
@@ -48,7 +48,7 @@ Results so far seem to be fit for intent. I've been able to easily make rudiment
 
 ## Compiling
 
-The build fetches JUCE 8.0.9 and the pinned `clap-juce-extensions` commit at
+The build fetches JUCE 9.0.5 and the pinned `clap-juce-extensions` commit at
 configure time. It needs CMake 3.22, Ninja, clang, and the platform JUCE
 dependencies.
 
@@ -102,7 +102,7 @@ the VST3 or CLAP into your plugin folder, or just run the standalone app.
 
 ## Licensing
 
-The source is GPL-3.0-only. The plugin binary also links JUCE 8 under the
+The source is GPL-3.0-only. The plugin binary also links JUCE 9 under the
 AGPL-3.0-only terms, and the bundled fonts are SIL Open Font License 1.1. Read
 [`LICENSING.md`](LICENSING.md) before packaging a binary. The repository is the
 corresponding source for every release, and the release archives carry the notices

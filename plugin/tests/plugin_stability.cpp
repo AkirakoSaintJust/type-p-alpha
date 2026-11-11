@@ -29,7 +29,7 @@ struct Peak {
     float peak = 0.0f;
 };
 
-Peak render(TypePFm1AudioProcessor& processor, juce::MidiBuffer& midi, int blocks)
+Peak render(TypePAlphaAudioProcessor& processor, juce::MidiBuffer& midi, int blocks)
 {
     Peak result;
     juce::AudioBuffer<float> buffer(2, kFrames);
@@ -48,7 +48,7 @@ Peak render(TypePFm1AudioProcessor& processor, juce::MidiBuffer& midi, int block
     return result;
 }
 
-void setAll(TypePFm1AudioProcessor& processor, bool maximum)
+void setAll(TypePAlphaAudioProcessor& processor, bool maximum)
 {
     for (const auto& spec : kP1ParamSpecs) {
         auto* parameter = processor.parameters().getParameter(spec.id);
@@ -65,7 +65,7 @@ void setAll(TypePFm1AudioProcessor& processor, bool maximum)
 int main()
 {
     {
-        TypePFm1AudioProcessor processor;
+        TypePAlphaAudioProcessor processor;
         processor.setRateAndBufferSizeDetails(44100.0, kFrames);
         processor.prepareToPlay(44100.0, kFrames);
 
@@ -83,7 +83,7 @@ int main()
     }
 
     {
-        TypePFm1AudioProcessor processor;
+        TypePAlphaAudioProcessor processor;
         processor.setRateAndBufferSizeDetails(44100.0, kFrames);
         processor.prepareToPlay(44100.0, kFrames);
         juce::MidiBuffer midi;
@@ -105,7 +105,7 @@ int main()
     }
 
     {
-        TypePFm1AudioProcessor processor;
+        TypePAlphaAudioProcessor processor;
         processor.setRateAndBufferSizeDetails(44100.0, kFrames);
         processor.prepareToPlay(44100.0, kFrames);
         std::uint32_t seed = 0x5eed1234u;
@@ -163,7 +163,7 @@ int main()
     }
 
     {
-        TypePFm1AudioProcessor processor;
+        TypePAlphaAudioProcessor processor;
         processor.setRateAndBufferSizeDetails(44100.0, kFrames);
         processor.prepareToPlay(44100.0, kFrames);
         juce::AudioBuffer<float> empty(2, 0);
@@ -183,7 +183,7 @@ int main()
     {
         const double rates[] = {44100.0, 48000.0, 96000.0, 192000.0, 44100.0};
         const int latency[] = {0, 17, 34, 67, 0};
-        TypePFm1AudioProcessor processor;
+        TypePAlphaAudioProcessor processor;
         bool ok = true;
         for (int i = 0; i < 5; ++i) {
             processor.setRateAndBufferSizeDetails(rates[i], kFrames);
@@ -199,7 +199,7 @@ int main()
     }
 
     {
-        TypePFm1AudioProcessor processor;
+        TypePAlphaAudioProcessor processor;
         processor.setRateAndBufferSizeDetails(44100.0, kFrames);
         processor.prepareToPlay(44100.0, kFrames);
         juce::MidiBuffer midi;
@@ -237,7 +237,7 @@ int main()
     }
 
     {
-        TypePFm1AudioProcessor processor;
+        TypePAlphaAudioProcessor processor;
         processor.setRateAndBufferSizeDetails(44100.0, kFrames);
         processor.prepareToPlay(44100.0, kFrames);
         juce::MidiBuffer midi;

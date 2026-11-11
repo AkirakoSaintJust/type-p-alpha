@@ -26,7 +26,7 @@ function Import-VsEnvironment {
 
 function Find-ClangCl {
     $candidates = @(
-        (Join-Path $env:VCToolsInstallDir "..\..\..\VC\Tools\Llvm\x64\bin\clang-cl.exe"),
+        (Join-Path $env:VCToolsInstallDir "..\..\Llvm\x64\bin\clang-cl.exe"),
         (Join-Path ${env:ProgramFiles} "LLVM\bin\clang-cl.exe"),
         ((Get-Command clang-cl -ErrorAction SilentlyContinue).Source)
     )
@@ -52,9 +52,11 @@ $linkerFlag = if ($Linker -eq "lld") { "lld" } else { "link" }
 
 $root = Split-Path -Parent $PSScriptRoot
 if ($root -match '[^\x00-\x7F]') {
-    $short = cmd /c "for %I in (`"$root`") do @echo %~sI"
-    if ($LASTEXITCODE -eq 0 -and $short) {
-        $root = $short.Trim()
+    $short = (cmd /c "for %I in (`"$root`") do @echo %~sI" | Out-String).Trim()
+    if ($LASTEXITCODE -eq 0 -and $short -and (Test-Path $short)) {
+        $root = $short
+    } else {
+        Write-Warning "JUCE's juceaide needs an ASCII path. Build through a junction, for example C:\Users\Public\p1-alpha."
     }
 }
 $build = "build/windows-clangcl-$Linker"

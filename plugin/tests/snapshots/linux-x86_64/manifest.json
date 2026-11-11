@@ -2,12 +2,12 @@
   "images": {
     "editor-algorithm.png": {
       "height": 985,
-      "sha256": "2446149fdb39797b4b0fc82ddfb258e21a0069ef8cfda2818cd262b6303b522e",
+      "sha256": "ab9e0e4ce5aa1beac71af5089e8a2fb7487552fbc5acc2da3d75992645130bad",
       "width": 1240
     },
     "editor-confirm.png": {
       "height": 985,
-      "sha256": "ec84125ded8e63a00a068741182d0a190427a2e457f9fd2f52f210e7dd84158c",
+      "sha256": "e4ba480f6f570d0a8889a2802b7db7620dcc0b1b620dcca81803de04b26d6fb6",
       "width": 1240
     },
     "editor-fxmod.png": {
@@ -17,7 +17,7 @@
     },
     "editor-half.png": {
       "height": 493,
-      "sha256": "e404301a220444aa8fca225a3c79e3e074ed1eac76b49dc81e663fca940a810e",
+      "sha256": "a945bbe132e7da38f2926bd42d20d2ee6ac7ccbee4be93549ff20ce8e9b3abd4",
       "width": 620
     },
     "editor-operators.png": {
@@ -27,32 +27,32 @@
     },
     "editor-part2.png": {
       "height": 985,
-      "sha256": "e27efe4ffb1caa06e9174f2a935dda5b0611f9197322e2de1420daaf14250288",
+      "sha256": "51b28d24c30d3850a9ad29a45c899cb333a5c312ec0a38843fb2030237c9f198",
       "width": 1240
     },
     "editor-parts.png": {
       "height": 985,
-      "sha256": "dd12be51034ac07c5f907dbabd69bcc51d4e24ce7a69c7b2bbb03cfd83d552ff",
+      "sha256": "527a233f8bcf11911473e89bd638e7fd800437191aa6685ba0d87ffcc7525a29",
       "width": 1240
     },
     "editor-patch.png": {
       "height": 985,
-      "sha256": "34aa60a6e33264bea08a973849cce4f9a838d30e292a0508fac556f9d1746f3d",
+      "sha256": "5c2e383bd56a5e3052f019f2b8e7e46a666a016ddb8b46dfb26c0babaae9b4ce",
       "width": 1240
     },
     "editor-patches.png": {
       "height": 985,
-      "sha256": "d3d89362463f8b4edf41faf7438788687ac1a67c56729ed69c9a61171306db84",
+      "sha256": "d428dc2febb08b84e84a5b83df781e8a4db89a4cad97bf0f79bc19b036e225cc",
       "width": 1240
     },
     "editor-rename.png": {
       "height": 985,
-      "sha256": "5829b9e17fec29270ce5804a14a31e753cda49c816e024de9ae82e8bab837f3f",
+      "sha256": "9e3af9ba90b603f727785eabf4a5b875ddb3bc669f5d026a9983a2fe1ce7822b",
       "width": 1240
     },
     "editor-save-mode.png": {
       "height": 985,
-      "sha256": "c1181d4c51cccf198fcf204c8ada708d4b603189d362ffcebc66c9e50295f728",
+      "sha256": "d8e8692b719039a0be24651f58ba85f612f14573c2f1d584be8b2d403e8f16c7",
       "width": 1240
     },
     "editor-tone-curve.png": {

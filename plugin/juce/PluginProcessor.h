@@ -31,10 +31,10 @@ private:
     std::array<float, kCapacity> scratch_{};
 };
 
-class TypePFm1AudioProcessor : public juce::AudioProcessor {
+class TypePAlphaAudioProcessor : public juce::AudioProcessor {
 public:
-    TypePFm1AudioProcessor();
-    ~TypePFm1AudioProcessor() override = default;
+    TypePAlphaAudioProcessor();
+    ~TypePAlphaAudioProcessor() override = default;
 
     void prepareToPlay(double sampleRate, int samplesPerBlock) override;
     void releaseResources() override;
