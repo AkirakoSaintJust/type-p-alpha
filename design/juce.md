@@ -168,9 +168,9 @@ current state in pink and the other word faint.
 The level slider is a 14px track with a purple fill and a `level` caption.
 
 List dialogs fill the dialog body with 24px slot rows. Use a thin scrollbar, and
-keep names at the preset record limit of 32 characters. The multi-patch and part
-slot lists both carry `save` and `load` beside the scroller, so the slot is chosen
-before the action.
+keep names at the preset record limit of 32 characters. The multi-patch library
+carries `save` and `load` beside the scroller, and the single parts library carries
+a save and a load button for each part, so the slot is chosen before the action.
 
 ## Visualisers
 

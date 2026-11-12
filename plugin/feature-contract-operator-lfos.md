@@ -127,7 +127,7 @@ existing render stays exact.
 - **Target package check:** the Linux and Windows builds link the editor, the
   engine and the tests.
 - **Host timing and platform check:** Linux `ctest` passes 10 of 10, including the
-  14-image snapshot diff.
+  13-image snapshot diff.
 - **Tolerance/metric:** the flat and off envelope renders and the depth-0 LFO
   renders are bit-exact. The nonzero LFO and envelope renders differ. The envelope
   direction and peak bound keep their existing tolerances. The snapshot diff is

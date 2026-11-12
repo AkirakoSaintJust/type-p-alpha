@@ -102,9 +102,6 @@ int main(int argc, char** argv)
     p1editor->showPatchBrowser();
     ok = saveSnapshot(*editor, directory.getChildFile("editor-patches.png")) && ok;
     p1editor->closeDialog();
-    p1editor->showPartBrowser(0);
-    ok = saveSnapshot(*editor, directory.getChildFile("editor-parts.png")) && ok;
-    p1editor->closeDialog();
 
     {
         auto& params = processor.parameters();
@@ -144,6 +141,20 @@ int main(int argc, char** argv)
         }
         setRaw("op1_dlfo_depth.p0", srcLfo);
         setRaw("op2_dlfo_depth.p0", dstLfo);
+
+        const float srcOsc = readRaw("op1_level.p0");
+        const float dstOsc = readRaw("op2_level.p0");
+        setRaw("op1_level.p0", 42.0f);
+        p1editor->copyOperatorSection(
+            0, 0, PluginEditor::OperatorSection::oscillator);
+        p1editor->pasteOperatorSection(
+            1, 0, PluginEditor::OperatorSection::oscillator);
+        if (std::lround(readRaw("op2_level.p0")) != 42) {
+            std::printf("editor snapshot: oscillator section paste failed\n");
+            ok = false;
+        }
+        setRaw("op1_level.p0", srcOsc);
+        setRaw("op2_level.p0", dstOsc);
     }
 
     p1editor->showSinglePartsBrowser();

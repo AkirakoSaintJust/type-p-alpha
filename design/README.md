@@ -274,13 +274,13 @@ the current patch.` and offers `init` and `cancel`. The save chooser is titled
 `save multi-patch` and carries `discard edits to parts`, `save as new parts` and
 `mutate parts in place`.
 
-The single parts popup is titled `single parts` and lists part 1 and part 2 with
-their names and source slots. It carries `export bank`, `import bank`, `init single
-part 1`, `init single part 2`, `part 1 slots`, `part 2 slots` and `cancel`. The part
-slots list is titled `part n slots` and holds 128 sounds, with the part's source slot
-selected on open, and it carries `save`, `load` and `cancel` so the slot is chosen
-first and the action second, as in the multi-patch library. Dialogs put `cancel` at
-the right edge of the last button row.
+The single parts library is titled `single parts`. It opens on the 128-slot
+scroller, with the active part's source slot selected, and its buttons choose both
+the part and the action: `export bank`, `import bank`, `init single part 1`, `init
+single part 2`, `save single part 1`, `save single part 2`, `load single part 1`,
+`load single part 2` and `cancel`. A save writes the chosen part into the selected
+slot, and a load applies the selected slot to the chosen part. Dialogs put `cancel`
+at the right edge of the last button row.
 
 ### Status
 

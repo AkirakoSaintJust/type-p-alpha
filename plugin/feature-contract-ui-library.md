@@ -16,14 +16,15 @@
 - **Sound and behaviour:** the on/off switches and the mute switch read their
   state in DotGothic. The bipolar switch reads `bipolar on` or `bipolar off`, and
   the mute switch reads `active` or `mute` to the right of the track. The single
-  parts popup lists part 1 and part 2 with their names and source slots, and it
-  carries export, import, init, and one slots entry per part. The part slots browser
-  shows the 128-slot scroller first and carries `save`, `load` and `cancel`, so the
-  slot is chosen before the action, as in the multi-patch library. `cancel` is the
-  rightmost button in every dialog.
+  parts library opens on the 128-slot scroller and carries `export bank`, `import
+  bank`, `init single part 1`, `init single part 2`, `save single part 1`, `save
+  single part 2`, `load single part 1`, `load single part 2` and `cancel`. The
+  buttons choose the part and the action, so the slot is selected first, as in the
+  multi-patch library. `cancel` is the rightmost button in every dialog.
 - **Failure mode:** a switch clips its text, a name stops at 15 characters, the
-  context menu returns, `cancel` sits on the left, the part browser opens in a fixed
-  save or load mode, or a saved 32-character name comes back truncated.
+  context menu returns, `cancel` sits on the left, the part library hides the
+  scroller behind a part summary, or a saved 32-character name comes back
+  truncated.
 
 ## Dependencies and interactions
 
@@ -83,12 +84,12 @@
   current `P1LIB2` library. `plugin_smoke` covers the state and the global
   library. `p1_stability` is unchanged.
 - **Browser vector (if applicable):** the mockup browser check covers the single
-  parts popup, the part slots dialog with save and load over 128 slots, the cancel
-  order, the 32-character rename field, the LFO modes and the library flow.
+  parts library with the slot scroller and the nine actions, the cancel order, the
+  32-character rename field, the LFO modes and the library flow.
 - **Target package check:** the Linux build and the Windows build both link the
   editor, the smoke tests and the stability test.
 - **Host timing and platform check:** Linux `ctest` passes 10 of 10, and the Linux
-  snapshot diff passes with 14 images.
+  snapshot diff passes with 13 images.
 - **Tolerance/metric:** the snapshot diff is exact. The name field stores 32
   characters. The current `P1LIB2` library loads with the same names and
   parameters.

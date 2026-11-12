@@ -1216,6 +1216,7 @@
     graph.className = "envbox";
     graph.innerHTML = penvSvg(o.fbenvR, o.fbenvL, 100);
     const on = makeToggle("on", o.fbOn, function (v) { o.fbOn = v; rerender(); });
+    on.style.marginLeft = "8px";
     const rates = [
       ba(o, "fbenvR", 0, "R1", 0, 99, function (v) { return v; }, 1),
       ba(o, "fbenvR", 1, "R2", 0, 99, function (v) { return v; }, 1),
@@ -1239,8 +1240,10 @@
     const row = document.createElement("div");
     row.className = "inline";
     const l = document.createElement("span"); l.className = "lbl"; l.textContent = "WAVE";
+    const toggle = makeToggle("bipolar", o[modeKey], function (v) { o[modeKey] = v; });
+    toggle.style.marginLeft = "6px";
     row.append(l, makeSelect(LFO_WAVES, o[waveKey], function (v) { o[waveKey] = v; }),
-      makeToggle("bipolar", o[modeKey], function (v) { o[modeKey] = v; }));
+      toggle);
     return row;
   }
 
@@ -1549,28 +1552,49 @@
   }
 
   function openSingleParts() {
+    const partIdx = activePart - 1;
+    let sel = partSource[partIdx] >= 0 ? partSource[partIdx] : 0;
     const bodyEl = document.createElement("div");
     const list = document.createElement("div");
     list.className = "partlist bank";
-    for (let i = 0; i < 2; i++) {
-      const source = partSource[i];
-      const row = document.createElement("div");
-      row.className = "preset-row";
-      row.innerHTML = '<span class="pno">' + (i + 1) + "</span>" +
-        '<span class="pname">part ' + (i + 1) + ": " + PARTS[i].name + "</span>" +
-        '<span class="meta">' +
-        (source >= 0 ? "slot " + String(source + 1).padStart(2, "0") : "no slot") +
-        "</span>";
-      list.appendChild(row);
+    const cells = [];
+    for (let i = 0; i < PART_SLOTS.length; i++) {
+      const s = PART_SLOTS[i];
+      const c = document.createElement("button");
+      c.className = "slotrow" + (i === sel ? " sel" : "") + (!s ? " dead" : "");
+      c.innerHTML = '<span class="pno">' + String(i + 1).padStart(2, "0") + "</span>" +
+        '<span class="sname">' + (s ? s.name : "empty") + "</span>";
+      c.addEventListener("click", function () {
+        sel = i;
+        cells.forEach(function (x, j) { x.classList.toggle("sel", j === sel); });
+      });
+      list.appendChild(c);
+      cells.push(c);
     }
     bodyEl.appendChild(list);
+    function save(which) {
+      if (PART_SLOTS[sel]) {
+        confirmOverwritePart(sel, which);
+      } else {
+        savePartToSlot(sel, which);
+        rerender();
+      }
+    }
     openDialog("single parts", bodyEl, [
       { label: "export bank", onClick: function (close) { close(); exportLibrary(); } },
       { label: "import bank", onClick: function (close) { close(); importLibrary(); } },
       { label: "init single part 1", onClick: function (close) { close(); openInitConfirm(1); } },
       { label: "init single part 2", onClick: function (close) { close(); openInitConfirm(2); } },
-      { label: "part 1 slots", onClick: function (close) { close(); openPartSlots(1); } },
-      { label: "part 2 slots", onClick: function (close) { close(); openPartSlots(2); } },
+      { label: "save single part 1", onClick: function (close) { close(); save(1); } },
+      { label: "save single part 2", onClick: function (close) { close(); save(2); } },
+      { label: "load single part 1", onClick: function (close) {
+        close();
+        if (PART_SLOTS[sel]) loadPartFromSlot(sel, 1);
+      } },
+      { label: "load single part 2", onClick: function (close) {
+        close();
+        if (PART_SLOTS[sel]) loadPartFromSlot(sel, 2);
+      } },
       { label: "cancel", onClick: function (close) { close(); } }
     ], true);
   }
@@ -1699,41 +1723,6 @@
     renderAlg();
   }
 
-  function openPartSlots(part) {
-    const partIdx = (part === undefined ? activePart : part) - 1;
-    let sel = partSource[partIdx] >= 0 ? partSource[partIdx] : 0;
-    const bodyEl = document.createElement("div");
-    const list = document.createElement("div");
-    list.className = "partlist bank";
-    const cells = [];
-    for (let i = 0; i < PART_SLOTS.length; i++) {
-      const s = PART_SLOTS[i];
-      const c = document.createElement("button");
-      c.className = "slotrow" + (i === sel ? " sel" : "") + (!s ? " dead" : "");
-      c.innerHTML = '<span class="pno">' + String(i + 1).padStart(2, "0") + "</span>" +
-        '<span class="sname">' + (s ? s.name : "empty") + "</span>";
-      c.addEventListener("click", function () {
-        sel = i;
-        cells.forEach(function (x, j) { x.classList.toggle("sel", j === sel); });
-      });
-      list.appendChild(c);
-      cells.push(c);
-    }
-    bodyEl.appendChild(list);
-    openDialog("part " + (partIdx + 1) + " slots", bodyEl, [
-      { label: "save", primary: true, onClick: function (close) {
-        close();
-        if (PART_SLOTS[sel]) confirmOverwritePart(sel, partIdx + 1);
-        else savePartToSlot(sel, partIdx + 1);
-      } },
-      { label: "load", onClick: function (close) {
-        close();
-        if (PART_SLOTS[sel]) loadPartFromSlot(sel, partIdx + 1);
-      } },
-      { label: "cancel", onClick: function (close) { close(); } }
-    ]);
-  }
-
   function confirmOverwritePart(idx, part) {
     const bodyEl = document.createElement("div");
     bodyEl.innerHTML = "overwrite part slot <b>" + String(idx + 1).padStart(2, "0") + "</b>?";
@@ -1741,6 +1730,7 @@
       { label: "save", primary: true, onClick: function (close) {
         close();
         savePartToSlot(idx, part);
+        rerender();
       } },
       { label: "cancel", onClick: function (close) { close(); } }
     ]);
@@ -2122,8 +2112,7 @@
     if (h === "presets") { showTab("patch"); document.getElementById("patchBtn").click(); return; }
     if (h === "multisave") { showTab("patch"); openPatchSaveMode(currentMulti >= 0 ? currentMulti : 0); return; }
     if (h === "multiinit") { showTab("patch"); openMultiInitConfirm(); return; }
-    if (h === "save") { showTab("patch"); openPartSlots("save"); return; }
-    if (h === "load") { showTab("patch"); openPartSlots("load"); return; }
+    if (h === "save" || h === "load") { showTab("patch"); openSingleParts(); return; }
     if (h === "init") { showTab("patch"); openInitConfirm(activePart); return; }
     if (h === "menu") { showTab("patch"); openSingleParts(); return; }
     if (h === "alg") { showTab("patch"); openAlgPicker(); return; }

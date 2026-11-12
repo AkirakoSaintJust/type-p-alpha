@@ -479,39 +479,6 @@ private:
     juce::StringArray modes_;
 };
 
-class SinglePartListBody : public juce::Component {
-public:
-    explicit SinglePartListBody(PluginEditor& editor) : editor_(editor) {}
-
-    void paint(juce::Graphics& g) override
-    {
-        g.fillAll(colour(tokens::popup));
-        auto area = getLocalBounds();
-        for (int part = 0; part < kP1PartCount; ++part) {
-            auto row = area.removeFromTop(30);
-            g.setColour(colour(tokens::line));
-            g.fillRect(row.getX() + 8, row.getBottom() - 1,
-                       row.getWidth() - 16, 1);
-            g.setFont(uiFont(tokens::textSlotRow));
-            g.setColour(colour(tokens::text));
-            g.drawText("part " + juce::String(part + 1) + ": " +
-                           editor_.processor().getPartName(part),
-                       row.reduced(8, 0).withTrimmedRight(90),
-                       juce::Justification::centredLeft, true);
-            const int source = editor_.processor().presets().partSource(part);
-            g.setColour(colour(source >= 0 ? tokens::purple : tokens::faint));
-            g.drawText(source >= 0
-                           ? "slot " + juce::String(source + 1).paddedLeft('0', 2)
-                           : "no slot",
-                       row.reduced(8, 0), juce::Justification::centredRight,
-                       false);
-        }
-    }
-
-private:
-    PluginEditor& editor_;
-};
-
 class AlgTile : public juce::Button {
 public:
     AlgTile(int index, std::function<void(int)> onSelect)
@@ -917,16 +884,48 @@ void PluginEditor::showRenameDialog(bool part, int index)
 
 void PluginEditor::showSinglePartsBrowser()
 {
+    auto& store = processor_.presets();
+    const int part = activePart();
+    const int source = store.partSource(part);
+    auto body = std::make_unique<SlotListBody>(
+        p1::PresetStore::kPartSlots,
+        [this](int slot) {
+            return juce::String(processor_.presets().partName(slot));
+        },
+        [this](int slot) { return processor_.presets().partUsed(slot); },
+        source >= 0 ? source : 0);
+    auto* bodyPtr = body.get();
+    auto save = [this, bodyPtr](int which) {
+        const int slot = bodyPtr->selected();
+        const bool used = processor_.presets().partUsed(slot);
+        closeDialog();
+        if (used) {
+            showConfirm(
+                "overwrite part slot " +
+                    juce::String(slot + 1).paddedLeft('0', 2) + "?",
+                [this, which, slot] { savePartToSlot(which, slot); });
+        } else {
+            savePartToSlot(which, slot);
+        }
+    };
+    auto load = [this, bodyPtr](int which) {
+        const int slot = bodyPtr->selected();
+        closeDialog();
+        if (processor_.presets().partUsed(slot))
+            loadPartFromSlot(which, slot);
+    };
     dialog_ = std::make_unique<p1::ui::P1Dialog>(
-        "single parts", std::make_unique<SinglePartListBody>(*this), 980, 200,
+        "single parts", std::move(body), 640, 500,
         juce::StringArray{"export bank",
                           "import bank",
                           "init single part 1",
                           "init single part 2",
-                          "part 1 slots",
-                          "part 2 slots",
+                          "save single part 1",
+                          "save single part 2",
+                          "load single part 1",
+                          "load single part 2",
                           "cancel"},
-        [this](int button) {
+        [this, save, load](int button) {
             if (button == 0) {
                 closeDialog();
                 exportLibrary();
@@ -944,11 +943,13 @@ void PluginEditor::showSinglePartsBrowser()
                             [this] { initPart(1); }, "init single part 2",
                             "init");
             } else if (button == 4) {
-                closeDialog();
-                showPartBrowser(0);
+                save(0);
             } else if (button == 5) {
-                closeDialog();
-                showPartBrowser(1);
+                save(1);
+            } else if (button == 6) {
+                load(0);
+            } else if (button == 7) {
+                load(1);
             } else {
                 closeDialog();
             }
@@ -1091,6 +1092,13 @@ void PluginEditor::copyOperatorSection(int op, int part,
         const auto base = id.dropLastCharacters(3);
         bool matches = false;
         switch (section) {
+        case OperatorSection::oscillator:
+            matches = base == prefix + "_ratio" ||
+                      base == prefix + "_detune" ||
+                      base == prefix + "_waveform" ||
+                      base == prefix + "_level" ||
+                      base == prefix + "_feedback";
+            break;
         case OperatorSection::amplitudeEnvelope:
             matches = base.startsWith(prefix + ".eg.");
             break;
@@ -1416,51 +1424,6 @@ void PluginEditor::showPatchSaveMode(int slot)
                 } else {
                     savePatchToSlot(slot, mode);
                 }
-            } else {
-                closeDialog();
-            }
-        },
-        [this] { closeDialog(); });
-    canvas_.addAndMakeVisible(*dialog_);
-    dialog_->setBounds(0, 0, kWidth, kHeight);
-    dialog_->toFront(true);
-}
-
-void PluginEditor::showPartBrowser(int part)
-{
-    auto& store = processor_.presets();
-    part = juce::jlimit(0, kP1PartCount - 1, part);
-    auto body = std::make_unique<SlotListBody>(
-        p1::PresetStore::kPartSlots,
-        [this](int slot) {
-            return juce::String(processor_.presets().partName(slot));
-        },
-        [this](int slot) { return processor_.presets().partUsed(slot); },
-        store.partSource(part));
-    auto* bodyPtr = body.get();
-    const juce::String title =
-        "part " + juce::String(part + 1) + " slots";
-    dialog_ = std::make_unique<p1::ui::P1Dialog>(
-        title, std::move(body), 420, 500,
-        juce::StringArray{"save", "load", "cancel"},
-        [this, bodyPtr, part](int button) {
-            if (button == 0) {
-                const int slot = bodyPtr->selected();
-                const bool used = processor_.presets().partUsed(slot);
-                closeDialog();
-                if (used) {
-                    showConfirm(
-                        "overwrite part slot " +
-                            juce::String(slot + 1).paddedLeft('0', 2) + "?",
-                        [this, part, slot] { savePartToSlot(part, slot); });
-                } else {
-                    savePartToSlot(part, slot);
-                }
-            } else if (button == 1) {
-                const int slot = bodyPtr->selected();
-                closeDialog();
-                if (processor_.presets().partUsed(slot))
-                    loadPartFromSlot(part, slot);
             } else {
                 closeDialog();
             }

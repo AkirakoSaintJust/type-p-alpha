@@ -116,7 +116,15 @@ private:
 class OscillatorCard : public P1Card {
 public:
     OscillatorCard(PluginEditor& editor, int op, int part)
-        : P1Card("oscillator"),
+        : P1Card("oscillator",
+                 [&ed = editor, op, part] {
+                     ed.copyOperatorSection(
+                         op, part, PluginEditor::OperatorSection::oscillator);
+                 },
+                 [&ed = editor, op, part] {
+                     ed.pasteOperatorSection(
+                         op, part, PluginEditor::OperatorSection::oscillator);
+                 }),
           ratio_(editor.state(), params::opRatio(op, part), "ratio", 28.0f),
           detune_(editor.state(), params::opDetune(op, part), "detune", 28.0f),
           level_(editor.state(), params::opLevel(op, part), "level", 28.0f),
@@ -136,6 +144,7 @@ public:
     {
         P1Card::resized();
         auto area = contentArea();
+        area.removeFromTop(8);
         auto row = area.removeFromTop(70);
         const int cell = row.getWidth() / 4;
         ratio_.setBounds(row.removeFromLeft(cell));
@@ -270,7 +279,6 @@ public:
         const int levelCell = levels.getWidth() / 4;
         for (auto& knob : levels_)
             knob->setBounds(levels.removeFromLeft(levelCell));
-        on_.setBounds(getWidth() - 56, 0, 48, 18);
     }
 
     void tick() { envView_.repaint(); }
@@ -309,11 +317,13 @@ public:
     {
         P1Card::resized();
         auto area = contentArea();
+        area.removeFromTop(8);
         auto row = area.removeFromTop(70);
         rate_.setBounds(row.removeFromLeft(row.getWidth() / 2));
         depth_.setBounds(row);
         auto bottom = area.removeFromTop(18).withTrimmedTop(2);
-        wave_.setBounds(bottom.removeFromLeft(150));
+        wave_.setBounds(bottom.removeFromLeft(140));
+        bottom.removeFromLeft(10);
         mode_.setBounds(bottom.removeFromLeft(110));
     }
 

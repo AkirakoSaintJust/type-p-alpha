@@ -34,6 +34,7 @@ public:
 class PluginEditor : public juce::AudioProcessorEditor, private juce::Timer {
 public:
     enum class OperatorSection {
+        oscillator,
         amplitudeEnvelope,
         feedbackEnvelope,
         amplitudeLfo,
@@ -64,7 +65,6 @@ public:
     void importLibrary();
     void showPatchBrowser();
     void showPatchSaveMode(int slot);
-    void showPartBrowser(int part);
     void copyPart(int part);
     void pastePart(int part);
     void copyOperator(int op);

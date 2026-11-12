@@ -402,7 +402,6 @@ engine, the MIDI bridge, the rate bridge, the preset bank and the UI state.
 | `SlotListBody` | Slot list built on the shared `ListBody`. |
 | `ModeListBody` | Mode list built on the shared `ListBody`. |
 | `ListBody` | Shared list surface, background, separator, selection and row click. |
-| `SinglePartListBody` | Two-row part summary for the single parts popup. |
 | `AlgTile` | One algorithm tile. |
 | `AlgPickerBody` | Eight-tile algorithm picker. |
 | `RenameBody` | Name field and 32-character note. |
@@ -419,7 +418,7 @@ engine, the MIDI bridge, the rate bridge, the preset bank and the UI state.
 | Part and page state | `setActivePart`, `showTab`, `refreshNames`, `setSpectroMode`, `setStatusMessage` |
 | Algorithm | `showAlgorithmPicker`, `applyAlgorithm` |
 | Names | `showRenameDialog` |
-| Library | `showSinglePartsBrowser`, `exportLibrary`, `importLibrary`, `showPatchBrowser`, `showPatchSaveMode`, `showPartBrowser` |
+| Library | `showSinglePartsBrowser`, `exportLibrary`, `importLibrary`, `showPatchBrowser`, `showPatchSaveMode` |
 | Part actions | `copyPart`, `pastePart`, `initPart`, `initMultiPatch`, `togglePartMute`, `savePartToSlot`, `loadPartFromSlot`, `copyOperator`, `pasteOperator`, `copyOperatorSection`, `pasteOperatorSection` |
 | Multi actions | `savePatchToSlot`, `loadPatchFromSlot` |
 | Parameter bridge | `currentPartParams`, `applyPartParams`, `currentRouting`, `applyRouting` |
@@ -489,7 +488,7 @@ grouped into data, controls, views, library and dialogs:
 | Sections and views | `knobRow`, `knobFor`, `makeSection`, `fxCard`, `opShell`, `oscSection`, `ampEnvSection`, `fbEnvSection`, `lfoSection`, `viewPatch`, `viewOps`, `viewOperatorLfos`, `viewFxMod`, `showTab`, `rerender` |
 | Operator and part state | `findOp`, `setOpMute`, `setPartMute`, `bindPart`, `setActivePart`, `copyOp`, `pasteOp`, `copyPart`, `pastePart` |
 | Toolbar and dialogs | `buildToolbar`, `openSingleParts`, `openDialog`, `toast`, `openRename`, `renamePart`, `openAlgPicker`, `setAlg` |
-| Part slots | `partSnapshot`, `applyPartSnapshot`, `openPartSlots`, `confirmOverwritePart`, `savePartToSlot`, `loadPartFromSlot`, `initPart` |
+| Part slots | `partSnapshot`, `applyPartSnapshot`, `openSingleParts`, `confirmOverwritePart`, `savePartToSlot`, `loadPartFromSlot`, `initPart` |
 | Multi slots | `initMultiPatch`, `openMultiInitConfirm`, `multiSnapshot`, `findFreePartSlot`, `savePatchToSlot`, `loadPatchFromSlot`, `openPatchBrowser`, `openPatchSaveMode`, `confirmOverwriteMulti` |
 | Library | `exportLibrary`, `importLibrary`, `importLibraryData`, `normalisePart`, `normaliseMulti`, `showPatchName` |
 | Navigation | `fromHash` |
@@ -551,6 +550,6 @@ The record format is now a single `P1LIB2` layout with a 33-byte name field and 
 
 - `preset_smoke` passes with the current record and the 32-character name.
 - `plugin_smoke` and `plugin_stability` pass on the current state and library.
-- Linux `ctest` passes 10 of 10, including the 14-image snapshot diff.
+- Linux `ctest` passes 10 of 10, including the 13-image snapshot diff.
 - The Windows clang-cl build links without the MSVC shim.
 - The umbrella `deep-check --all` is green.
