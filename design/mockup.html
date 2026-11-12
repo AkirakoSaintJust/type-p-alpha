@@ -1126,7 +1126,7 @@
   }
   function pastePart(n) {
     if (!clipboard || clipboard.kind !== "part") return;
-    applyPartSnapshot(n - 1, clipboard.data);
+    applyPartSnapshot(n - 1, clipboard.data, true);
     toast("part pasted");
   }
 
@@ -1642,9 +1642,9 @@
     };
   }
 
-  function applyPartSnapshot(i, s) {
+  function applyPartSnapshot(i, s, keepName) {
     const p = PARTS[i];
-    p.name = s.name;
+    if (!keepName) p.name = s.name;
     p.tune = s.tune;
     const d = PART_DATA[i];
     d.alg = s.alg;
@@ -1732,7 +1732,6 @@
     t.tune = 0;
     t.midi = i + 1; t.low = 0; t.high = 127;
     t.level = 99; t.delay = 0;
-    partSource[i] = -1;
     if (i === activePart - 1) bindPart(i);
     buildToolbar();
     rerender();
