@@ -196,6 +196,47 @@ moves to 137..155. The reader picks the layout by the bank's record size. The te
 covers the 146 and 160 layouts, a current save, and a round-trip after the
 migration.
 
+## The nonlinear feedback path
+
+The sign-flip result closes the plain sign flip, not negative feedback as a whole.
+The primary source points to a different mechanism. The kunstmusik Csound example
+that makes a sine into a square does not use a negative sign. It squares the
+feedback signal before the phase input:
+
+```text
+acar = tablei(aphs + acar*acar*kfb, 1, 1, 0, 1)
+```
+
+The 2024 comment on that article adds the important distinction. With the normal,
+unshaped PM feedback, a negative beta only reverses the phase. With an absolute
+value or another odd phaseshaper, the negative beta selects a different part of the
+shaped wave, so positive and negative produce different shapes. The article's
+author also says the Reface's smoothing filter is more aggressive than the DX7
+two-sample average.
+
+That gives a real experiment. The feedback path can carry a shaper, and the sign
+becomes meaningful inside the shaper. The candidate shapers are:
+
+| Shaper | Formula | Character |
+| --- | --- | --- |
+| off | `x` | The current path |
+| square | `x*x` | Even, adds DC, the article's square |
+| abs | `abs(x)` | Even, adds DC, the comment's guess for the Reface |
+| signed square | `x*abs(x)` | Odd, no DC, a symmetric alternative |
+
+The filter is the second half. The current tap averages two samples. A one-pole
+lowpass with a coefficient around 0.5 is more aggressive and should tame the noisy
+top of the feedback range. The experiment can use a compile-time one-pole first, so
+the shaper is the only new parameter until the filter earns one.
+
+The parameter cost is one shape choice per operator, four per part. The part block
+would grow from 171 to 175 and the manifest from 356 to 360, with a 171-to-175
+migration. The shape choice fits on the feedback page beside the depth knob, in the
+same four-column operator card. The test is a bounded experiment like the polarity
+one: the shaper and the one-pole are measured before the parameter and the UI are
+shipped. The contract is
+[`../plugin/feature-contract-feedback-shaper.md`](../plugin/feature-contract-feedback-shaper.md).
+
 ## Feedback envelopes
 
 The question is where a feedback envelope belongs. Three placements fit the
@@ -305,4 +346,5 @@ side and measured in
 [`../plugin/evidence/feedback-envelope.md`](../plugin/evidence/feedback-envelope.md).
 The page, the mockup and the snapshots are in. A different tap, such
 as a one-pole lowpass, or an odd-symmetric nonlinearity in the loop is the follow-up
-if the negative-feedback line continues, and it needs its own contract.
+if the negative-feedback line continues, and its contract is
+[`../plugin/feature-contract-feedback-shaper.md`](../plugin/feature-contract-feedback-shaper.md).
