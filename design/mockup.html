@@ -360,23 +360,29 @@
   .slots .slot:hover:not(:disabled) { border-color: var(--purple); }
   .slots .slot.sel { border-color: var(--purple); color: var(--purple); background: rgba(199,128,255,.08); }
   .patchlist {
-    max-height: 260px; overflow-y: auto; scrollbar-width: thin;
+    max-height: 370px; overflow-y: auto; scrollbar-width: thin;
     scrollbar-color: var(--pink) #000;
   }
   .partlist {
     display: flex; flex-direction: column; max-height: 240px; overflow-y: auto;
     scrollbar-width: thin; scrollbar-color: var(--pink) #000;
   }
+  .partlist.bank { max-height: 370px; }
+  .patchlist .preset-row { height: 24px; padding: 0 10px; box-sizing: border-box; }
+  .partlist.bank .slotrow {
+    height: 24px; padding: 0 10px; box-sizing: border-box; font-size: 14px;
+  }
+  .slotrow:focus, .preset-row:focus { outline: none; }
   .slotrow {
     display: flex; align-items: center; gap: 12px; width: 100%; text-align: left;
     background: #000; border: 1px solid transparent; border-bottom: 1px dashed #222;
     color: var(--text); font-size: 15px; padding: 8px 10px; cursor: pointer;
   }
   .slotrow:hover:not(:disabled) { border-color: var(--purple); color: var(--purple); }
-  .slotrow.sel { border-color: var(--purple); color: var(--purple); background: rgba(199,128,255,.08); }
+  .slotrow.sel { border-color: var(--purple); border-style: solid; color: var(--purple); background: rgba(199,128,255,.08); }
   .slotrow .pno { color: var(--faint); min-width: 26px; }
+  .slotrow.sel .pno, .slotrow.sel .sname { color: var(--purple); }
   .slotrow .sname { flex: 1; }
-  .slotrow.sel .sname { color: var(--purple); }
   .slotrow.dead { opacity: .35; }
   .patchlist::-webkit-scrollbar, .partlist::-webkit-scrollbar { width: 8px; }
   .patchlist::-webkit-scrollbar-track, .partlist::-webkit-scrollbar-track { background: #000; }
@@ -399,7 +405,8 @@
 
   .preset-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 7px 10px; cursor: pointer; border-left: 2px solid transparent; }
   .preset-row:hover { background: #262626; }
-  .preset-row.sel { background: rgba(199,128,255,.14); border-left-color: var(--purple); }
+  .preset-row.sel { background: rgba(199,128,255,.14); border: 1px solid var(--purple); }
+  .preset-row.sel .pno, .preset-row.sel .pname { color: var(--purple); }
   .preset-row .pno { color: var(--faint); font-size: 13px; min-width: 24px; }
   .preset-row .pname { flex: 1; color: var(--white); }
   .preset-row.empty .pname { color: var(--faint); }
@@ -1039,7 +1046,7 @@
       ren.addEventListener("click", function () { renamePart(i); });
       const cpy = document.createElement("button");
       cpy.className = "mini"; cpy.textContent = "copy";
-      cpy.addEventListener("click", function () { copyPart(); });
+      cpy.addEventListener("click", function () { copyPart(i + 1); });
       const pst = document.createElement("button");
       pst.className = "mini"; pst.textContent = "paste";
       pst.disabled = !(clipboard && clipboard.kind === "part");
@@ -1120,8 +1127,9 @@
     rerender();
   }
 
-  function copyPart() {
-    clipboard = { kind: "part", data: partSnapshot(activePart - 1) };
+  function copyPart(part) {
+    const i = part === undefined ? activePart - 1 : part - 1;
+    clipboard = { kind: "part", data: partSnapshot(i) };
     rerender();
   }
   function pastePart(n) {
@@ -1669,7 +1677,7 @@
     let sel = partSource[partIdx] >= 0 ? partSource[partIdx] : 0;
     const bodyEl = document.createElement("div");
     const list = document.createElement("div");
-    list.className = "partlist";
+    list.className = "partlist bank";
     const cells = [];
     for (let i = 0; i < PART_SLOTS.length; i++) {
       const s = PART_SLOTS[i];

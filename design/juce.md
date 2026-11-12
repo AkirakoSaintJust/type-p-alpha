@@ -160,9 +160,8 @@ current state in pink and the other word faint.
 
 The level slider is a 14px track with a purple fill and a `level` caption.
 
-List dialogs scroll, with patch browser rows at 260px maximum and part slots at
-240px maximum. Use a thin scrollbar, and keep names at the preset record limit of
-15 characters.
+List dialogs fill the dialog body with 24px slot rows. Use a thin scrollbar, and
+keep names at the preset record limit of 15 characters.
 
 ## Visualisers
 
