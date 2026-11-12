@@ -238,7 +238,8 @@ lfo`, and `detune lfo`. The oscillator card repeats the operator oscillator
 controls so the operator stays recognisable on this page. Each LFO card holds rate,
 depth, the wave select and the `bipolar` switch, and carries `copy` and `paste` in
 its header. The amplitude LFO depth is in level steps, the feedback LFO depth is a
-percentage of the feedback range, and the detune LFO depth is in semitones.
+percentage of the feedback range, and the detune LFO depth is in semitones. A
+negative depth in bipolar mode inverts the LFO phase.
 
 ### FX / MOD
 

@@ -2221,11 +2221,12 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
            (`rate * CONTROL_BLOCK` per control tick, where CONTROL_BLOCK is the emitted
            macro), and the output is a `p1_wave` waveform scaled by `depth` in the target
            parameter's units. `mode` 1 is bipolar (+/- depth around the target), and mode 0
-           is unipolar (0..1 from the target value toward `depth`). */
+           is unipolar (0..1 from the target value toward `depth`). A negative depth in
+           bipolar mode inverts the phase. */
         plfo_phase[v] += plfo_rate[voice_part[v]] * CONTROL_BLOCK;
         plfo_w[v] = p1_wave[plfo_base[v] + (plfo_phase[v] >> 22)];
         plfo_cv_x[v] = plfo_mode[voice_part[v]]
-            ? p1_q15_mul(plfo_w[v], plfo_depth[voice_part[v]] < 0 ? -plfo_depth[voice_part[v]] : plfo_depth[voice_part[v]])
+            ? p1_q15_mul(plfo_w[v], plfo_depth[voice_part[v]])
             : p1_q15_mul((plfo_w[v] + 32768) >> 1, plfo_depth[voice_part[v]]);
         /* Velocity-follow factor: block-derived from the voice's velocity and the amount,
            gated by the global velocity-sensitivity switch. The output copies it. */
@@ -2361,11 +2362,12 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
            (`rate * CONTROL_BLOCK` per control tick, where CONTROL_BLOCK is the emitted
            macro), and the output is a `p1_wave` waveform scaled by `depth` in the target
            parameter's units. `mode` 1 is bipolar (+/- depth around the target), and mode 0
-           is unipolar (0..1 from the target value toward `depth`). */
+           is unipolar (0..1 from the target value toward `depth`). A negative depth in
+           bipolar mode inverts the phase. */
         op4_dlfo_phase[v] += op4_dlfo_rate[voice_part[v]] * CONTROL_BLOCK;
         op4_dlfo_w[v] = p1_wave[op4_dlfo_base[v] + (op4_dlfo_phase[v] >> 22)];
         op4_dlfo_cv_x[v] = op4_dlfo_mode[voice_part[v]]
-            ? p1_q15_mul(op4_dlfo_w[v], op4_dlfo_depth[voice_part[v]] < 0 ? -op4_dlfo_depth[voice_part[v]] : op4_dlfo_depth[voice_part[v]])
+            ? p1_q15_mul(op4_dlfo_w[v], op4_dlfo_depth[voice_part[v]])
             : p1_q15_mul((op4_dlfo_w[v] + 32768) >> 1, op4_dlfo_depth[voice_part[v]]);
         /* control-rate summer: add the two control inputs. */
         op4_dsum_cv_x[v] = psum_cv_x[v] + op4_dlfo_cv_x[v];
@@ -2373,11 +2375,12 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
            (`rate * CONTROL_BLOCK` per control tick, where CONTROL_BLOCK is the emitted
            macro), and the output is a `p1_wave` waveform scaled by `depth` in the target
            parameter's units. `mode` 1 is bipolar (+/- depth around the target), and mode 0
-           is unipolar (0..1 from the target value toward `depth`). */
+           is unipolar (0..1 from the target value toward `depth`). A negative depth in
+           bipolar mode inverts the phase. */
         op4_fblfo_phase[v] += op4_fblfo_rate[voice_part[v]] * CONTROL_BLOCK;
         op4_fblfo_w[v] = p1_wave[op4_fblfo_base[v] + (op4_fblfo_phase[v] >> 22)];
         op4_fblfo_cv_x[v] = op4_fblfo_mode[voice_part[v]]
-            ? p1_q15_mul(op4_fblfo_w[v], op4_fblfo_depth[voice_part[v]] < 0 ? -op4_fblfo_depth[voice_part[v]] : op4_fblfo_depth[voice_part[v]])
+            ? p1_q15_mul(op4_fblfo_w[v], op4_fblfo_depth[voice_part[v]])
             : p1_q15_mul((op4_fblfo_w[v] + 32768) >> 1, op4_fblfo_depth[voice_part[v]]);
         /* Per-note pitch envelope (control rate). on/off + 4 rates (0..99) + 3 stage
            levels (Q15 pitch offset, bipolar) + l4, the level the release segment ends at.
@@ -2414,11 +2417,12 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
            (`rate * CONTROL_BLOCK` per control tick, where CONTROL_BLOCK is the emitted
            macro), and the output is a `p1_wave` waveform scaled by `depth` in the target
            parameter's units. `mode` 1 is bipolar (+/- depth around the target), and mode 0
-           is unipolar (0..1 from the target value toward `depth`). */
+           is unipolar (0..1 from the target value toward `depth`). A negative depth in
+           bipolar mode inverts the phase. */
         op4_lfo_phase[v] += op4_lfo_rate[voice_part[v]] * CONTROL_BLOCK;
         op4_lfo_w[v] = p1_wave[op4_lfo_base[v] + (op4_lfo_phase[v] >> 22)];
         op4_lfo_cv_x[v] = op4_lfo_mode[voice_part[v]]
-            ? p1_q15_mul(op4_lfo_w[v], op4_lfo_depth[voice_part[v]] < 0 ? -op4_lfo_depth[voice_part[v]] : op4_lfo_depth[voice_part[v]])
+            ? p1_q15_mul(op4_lfo_w[v], op4_lfo_depth[voice_part[v]])
             : p1_q15_mul((op4_lfo_w[v] + 32768) >> 1, op4_lfo_depth[voice_part[v]]);
         /* Velocity-follow factor: block-derived from the voice's velocity and the amount,
            gated by the global velocity-sensitivity switch. The output copies it. */
@@ -2510,11 +2514,12 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
            (`rate * CONTROL_BLOCK` per control tick, where CONTROL_BLOCK is the emitted
            macro), and the output is a `p1_wave` waveform scaled by `depth` in the target
            parameter's units. `mode` 1 is bipolar (+/- depth around the target), and mode 0
-           is unipolar (0..1 from the target value toward `depth`). */
+           is unipolar (0..1 from the target value toward `depth`). A negative depth in
+           bipolar mode inverts the phase. */
         op3_dlfo_phase[v] += op3_dlfo_rate[voice_part[v]] * CONTROL_BLOCK;
         op3_dlfo_w[v] = p1_wave[op3_dlfo_base[v] + (op3_dlfo_phase[v] >> 22)];
         op3_dlfo_cv_x[v] = op3_dlfo_mode[voice_part[v]]
-            ? p1_q15_mul(op3_dlfo_w[v], op3_dlfo_depth[voice_part[v]] < 0 ? -op3_dlfo_depth[voice_part[v]] : op3_dlfo_depth[voice_part[v]])
+            ? p1_q15_mul(op3_dlfo_w[v], op3_dlfo_depth[voice_part[v]])
             : p1_q15_mul((op3_dlfo_w[v] + 32768) >> 1, op3_dlfo_depth[voice_part[v]]);
         /* control-rate summer: add the two control inputs. */
         op3_dsum_cv_x[v] = psum_cv_x[v] + op3_dlfo_cv_x[v];
@@ -2522,11 +2527,12 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
            (`rate * CONTROL_BLOCK` per control tick, where CONTROL_BLOCK is the emitted
            macro), and the output is a `p1_wave` waveform scaled by `depth` in the target
            parameter's units. `mode` 1 is bipolar (+/- depth around the target), and mode 0
-           is unipolar (0..1 from the target value toward `depth`). */
+           is unipolar (0..1 from the target value toward `depth`). A negative depth in
+           bipolar mode inverts the phase. */
         op3_fblfo_phase[v] += op3_fblfo_rate[voice_part[v]] * CONTROL_BLOCK;
         op3_fblfo_w[v] = p1_wave[op3_fblfo_base[v] + (op3_fblfo_phase[v] >> 22)];
         op3_fblfo_cv_x[v] = op3_fblfo_mode[voice_part[v]]
-            ? p1_q15_mul(op3_fblfo_w[v], op3_fblfo_depth[voice_part[v]] < 0 ? -op3_fblfo_depth[voice_part[v]] : op3_fblfo_depth[voice_part[v]])
+            ? p1_q15_mul(op3_fblfo_w[v], op3_fblfo_depth[voice_part[v]])
             : p1_q15_mul((op3_fblfo_w[v] + 32768) >> 1, op3_fblfo_depth[voice_part[v]]);
         /* Per-note pitch envelope (control rate). on/off + 4 rates (0..99) + 3 stage
            levels (Q15 pitch offset, bipolar) + l4, the level the release segment ends at.
@@ -2563,11 +2569,12 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
            (`rate * CONTROL_BLOCK` per control tick, where CONTROL_BLOCK is the emitted
            macro), and the output is a `p1_wave` waveform scaled by `depth` in the target
            parameter's units. `mode` 1 is bipolar (+/- depth around the target), and mode 0
-           is unipolar (0..1 from the target value toward `depth`). */
+           is unipolar (0..1 from the target value toward `depth`). A negative depth in
+           bipolar mode inverts the phase. */
         op3_lfo_phase[v] += op3_lfo_rate[voice_part[v]] * CONTROL_BLOCK;
         op3_lfo_w[v] = p1_wave[op3_lfo_base[v] + (op3_lfo_phase[v] >> 22)];
         op3_lfo_cv_x[v] = op3_lfo_mode[voice_part[v]]
-            ? p1_q15_mul(op3_lfo_w[v], op3_lfo_depth[voice_part[v]] < 0 ? -op3_lfo_depth[voice_part[v]] : op3_lfo_depth[voice_part[v]])
+            ? p1_q15_mul(op3_lfo_w[v], op3_lfo_depth[voice_part[v]])
             : p1_q15_mul((op3_lfo_w[v] + 32768) >> 1, op3_lfo_depth[voice_part[v]]);
         /* Velocity-follow factor: block-derived from the voice's velocity and the amount,
            gated by the global velocity-sensitivity switch. The output copies it. */
@@ -2659,11 +2666,12 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
            (`rate * CONTROL_BLOCK` per control tick, where CONTROL_BLOCK is the emitted
            macro), and the output is a `p1_wave` waveform scaled by `depth` in the target
            parameter's units. `mode` 1 is bipolar (+/- depth around the target), and mode 0
-           is unipolar (0..1 from the target value toward `depth`). */
+           is unipolar (0..1 from the target value toward `depth`). A negative depth in
+           bipolar mode inverts the phase. */
         op2_dlfo_phase[v] += op2_dlfo_rate[voice_part[v]] * CONTROL_BLOCK;
         op2_dlfo_w[v] = p1_wave[op2_dlfo_base[v] + (op2_dlfo_phase[v] >> 22)];
         op2_dlfo_cv_x[v] = op2_dlfo_mode[voice_part[v]]
-            ? p1_q15_mul(op2_dlfo_w[v], op2_dlfo_depth[voice_part[v]] < 0 ? -op2_dlfo_depth[voice_part[v]] : op2_dlfo_depth[voice_part[v]])
+            ? p1_q15_mul(op2_dlfo_w[v], op2_dlfo_depth[voice_part[v]])
             : p1_q15_mul((op2_dlfo_w[v] + 32768) >> 1, op2_dlfo_depth[voice_part[v]]);
         /* control-rate summer: add the two control inputs. */
         op2_dsum_cv_x[v] = psum_cv_x[v] + op2_dlfo_cv_x[v];
@@ -2671,11 +2679,12 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
            (`rate * CONTROL_BLOCK` per control tick, where CONTROL_BLOCK is the emitted
            macro), and the output is a `p1_wave` waveform scaled by `depth` in the target
            parameter's units. `mode` 1 is bipolar (+/- depth around the target), and mode 0
-           is unipolar (0..1 from the target value toward `depth`). */
+           is unipolar (0..1 from the target value toward `depth`). A negative depth in
+           bipolar mode inverts the phase. */
         op2_fblfo_phase[v] += op2_fblfo_rate[voice_part[v]] * CONTROL_BLOCK;
         op2_fblfo_w[v] = p1_wave[op2_fblfo_base[v] + (op2_fblfo_phase[v] >> 22)];
         op2_fblfo_cv_x[v] = op2_fblfo_mode[voice_part[v]]
-            ? p1_q15_mul(op2_fblfo_w[v], op2_fblfo_depth[voice_part[v]] < 0 ? -op2_fblfo_depth[voice_part[v]] : op2_fblfo_depth[voice_part[v]])
+            ? p1_q15_mul(op2_fblfo_w[v], op2_fblfo_depth[voice_part[v]])
             : p1_q15_mul((op2_fblfo_w[v] + 32768) >> 1, op2_fblfo_depth[voice_part[v]]);
         /* Per-note pitch envelope (control rate). on/off + 4 rates (0..99) + 3 stage
            levels (Q15 pitch offset, bipolar) + l4, the level the release segment ends at.
@@ -2712,11 +2721,12 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
            (`rate * CONTROL_BLOCK` per control tick, where CONTROL_BLOCK is the emitted
            macro), and the output is a `p1_wave` waveform scaled by `depth` in the target
            parameter's units. `mode` 1 is bipolar (+/- depth around the target), and mode 0
-           is unipolar (0..1 from the target value toward `depth`). */
+           is unipolar (0..1 from the target value toward `depth`). A negative depth in
+           bipolar mode inverts the phase. */
         op2_lfo_phase[v] += op2_lfo_rate[voice_part[v]] * CONTROL_BLOCK;
         op2_lfo_w[v] = p1_wave[op2_lfo_base[v] + (op2_lfo_phase[v] >> 22)];
         op2_lfo_cv_x[v] = op2_lfo_mode[voice_part[v]]
-            ? p1_q15_mul(op2_lfo_w[v], op2_lfo_depth[voice_part[v]] < 0 ? -op2_lfo_depth[voice_part[v]] : op2_lfo_depth[voice_part[v]])
+            ? p1_q15_mul(op2_lfo_w[v], op2_lfo_depth[voice_part[v]])
             : p1_q15_mul((op2_lfo_w[v] + 32768) >> 1, op2_lfo_depth[voice_part[v]]);
         /* Velocity-follow factor: block-derived from the voice's velocity and the amount,
            gated by the global velocity-sensitivity switch. The output copies it. */
@@ -2808,11 +2818,12 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
            (`rate * CONTROL_BLOCK` per control tick, where CONTROL_BLOCK is the emitted
            macro), and the output is a `p1_wave` waveform scaled by `depth` in the target
            parameter's units. `mode` 1 is bipolar (+/- depth around the target), and mode 0
-           is unipolar (0..1 from the target value toward `depth`). */
+           is unipolar (0..1 from the target value toward `depth`). A negative depth in
+           bipolar mode inverts the phase. */
         op1_dlfo_phase[v] += op1_dlfo_rate[voice_part[v]] * CONTROL_BLOCK;
         op1_dlfo_w[v] = p1_wave[op1_dlfo_base[v] + (op1_dlfo_phase[v] >> 22)];
         op1_dlfo_cv_x[v] = op1_dlfo_mode[voice_part[v]]
-            ? p1_q15_mul(op1_dlfo_w[v], op1_dlfo_depth[voice_part[v]] < 0 ? -op1_dlfo_depth[voice_part[v]] : op1_dlfo_depth[voice_part[v]])
+            ? p1_q15_mul(op1_dlfo_w[v], op1_dlfo_depth[voice_part[v]])
             : p1_q15_mul((op1_dlfo_w[v] + 32768) >> 1, op1_dlfo_depth[voice_part[v]]);
         /* control-rate summer: add the two control inputs. */
         op1_dsum_cv_x[v] = psum_cv_x[v] + op1_dlfo_cv_x[v];
@@ -2820,11 +2831,12 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
            (`rate * CONTROL_BLOCK` per control tick, where CONTROL_BLOCK is the emitted
            macro), and the output is a `p1_wave` waveform scaled by `depth` in the target
            parameter's units. `mode` 1 is bipolar (+/- depth around the target), and mode 0
-           is unipolar (0..1 from the target value toward `depth`). */
+           is unipolar (0..1 from the target value toward `depth`). A negative depth in
+           bipolar mode inverts the phase. */
         op1_fblfo_phase[v] += op1_fblfo_rate[voice_part[v]] * CONTROL_BLOCK;
         op1_fblfo_w[v] = p1_wave[op1_fblfo_base[v] + (op1_fblfo_phase[v] >> 22)];
         op1_fblfo_cv_x[v] = op1_fblfo_mode[voice_part[v]]
-            ? p1_q15_mul(op1_fblfo_w[v], op1_fblfo_depth[voice_part[v]] < 0 ? -op1_fblfo_depth[voice_part[v]] : op1_fblfo_depth[voice_part[v]])
+            ? p1_q15_mul(op1_fblfo_w[v], op1_fblfo_depth[voice_part[v]])
             : p1_q15_mul((op1_fblfo_w[v] + 32768) >> 1, op1_fblfo_depth[voice_part[v]]);
         /* Per-note pitch envelope (control rate). on/off + 4 rates (0..99) + 3 stage
            levels (Q15 pitch offset, bipolar) + l4, the level the release segment ends at.
@@ -2861,11 +2873,12 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
            (`rate * CONTROL_BLOCK` per control tick, where CONTROL_BLOCK is the emitted
            macro), and the output is a `p1_wave` waveform scaled by `depth` in the target
            parameter's units. `mode` 1 is bipolar (+/- depth around the target), and mode 0
-           is unipolar (0..1 from the target value toward `depth`). */
+           is unipolar (0..1 from the target value toward `depth`). A negative depth in
+           bipolar mode inverts the phase. */
         op1_lfo_phase[v] += op1_lfo_rate[voice_part[v]] * CONTROL_BLOCK;
         op1_lfo_w[v] = p1_wave[op1_lfo_base[v] + (op1_lfo_phase[v] >> 22)];
         op1_lfo_cv_x[v] = op1_lfo_mode[voice_part[v]]
-            ? p1_q15_mul(op1_lfo_w[v], op1_lfo_depth[voice_part[v]] < 0 ? -op1_lfo_depth[voice_part[v]] : op1_lfo_depth[voice_part[v]])
+            ? p1_q15_mul(op1_lfo_w[v], op1_lfo_depth[voice_part[v]])
             : p1_q15_mul((op1_lfo_w[v] + 32768) >> 1, op1_lfo_depth[voice_part[v]]);
         voice_trig[v] = 0; /* one-shot note-on edge, consumed above */
     }

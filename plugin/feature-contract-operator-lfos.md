@@ -19,9 +19,12 @@
 - **Sound and behaviour:** each operator owns its feedback envelope. The envelope
   levels are signed, so a positive level opens the feedback and a negative level
   closes it, with the envelope added straight to the feedback level and no depth
-  control. The feedback LFO adds another signed offset, and the detune LFO adds a
-  signed pitch offset to that operator. A flat envelope, the envelope off switch and
-  both LFOs at depth 0 keep the render bit-exact.
+  control. A negative level reduces the amount and clamps at zero, so raise the
+  feedback knob to hear a negative level from a zero base. The feedback LFO adds
+  another signed offset, and the detune LFO adds a signed pitch offset to that
+  operator. A negative LFO depth in bipolar mode inverts the LFO phase. A flat
+  envelope, the envelope off switch and both LFOs at depth 0 keep the render
+  bit-exact.
 - **Failure mode:** the operator envelope leaks between operators, the flat or off
   path changes the render, the detune LFO shifts another operator, or a full-level
   envelope or LFO runs away.
@@ -76,7 +79,8 @@ The `fm_op` macro owns one `pitch_env` for the feedback envelope, one `lfo` for 
 new family, and a `csum` for the pitch pair. The feedback envelope keeps the pitch
 envelope's signed Q15 levels, four rates and on switch, with its release level fixed
 at zero. The `fb_tap` node gains the `lfo` input and adds both control inputs
-directly. At depth 0 each LFO outputs 0, and a flat envelope outputs 0, so the
+directly. The bipolar `lfo` mode uses the signed depth, so a negative depth inverts
+the phase. At depth 0 each LFO outputs 0, and a flat envelope outputs 0, so the
 existing render stays exact.
 
 ## Bounds and resources
@@ -113,10 +117,12 @@ existing render stays exact.
 
 ## Verification
 
-- **Host vector(s):** `operator_lfos` checks the bit-exact depth-0 path and the
-  changed render for both LFOs. `feedback_envelope` checks the flat and off
-  bit-exact path, the positive and negative level direction, and the peak bound.
-  `feedback_bipolar` checks that the envelope level moves the negative magnitude.
+- **Host vector(s):** `operator_lfos` checks the bit-exact depth-0 path, the changed
+  render for both LFOs, and the phase inversion from a negative depth.
+  `feedback_envelope` checks the flat and off bit-exact path, the positive and
+  negative level direction, a partial negative level against an existing feedback
+  amount, and the peak bound. `feedback_bipolar` checks that the envelope level
+  moves the negative magnitude.
   `plugin_smoke` restores every manifest parameter and the global library.
   `plugin_stability` drives every parameter to its bounds. `editor_snapshot`
   checks that the amp envelope and detune LFO section clips paste to another

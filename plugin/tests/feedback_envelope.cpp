@@ -170,6 +170,21 @@ int main()
                           sizeof(int32_t)) == 0,
           "a flat envelope and the off switch are bit-exact");
 
+    std::vector<int32_t> partialNegative;
+    std::vector<int32_t> steadyBase;
+    if (!render(16384, -8192, 50, 1, partialNegative) ||
+        !render(16384, 0, 50, 1, steadyBase)) {
+        std::printf("envelope: setup failed\n");
+        return 1;
+    }
+    const Window partialLast =
+        analyseWindow(partialNegative, kSamples - kWindow);
+    const Window steadyLast = analyseWindow(steadyBase, kSamples - kWindow);
+    check(std::abs(partialLast.centroid - steadyLast.centroid) > 0.02 ||
+              std::abs(partialLast.a[3] / partialLast.a[1] -
+                       steadyLast.a[3] / steadyLast.a[1]) > 0.02,
+          "a partial negative level changes an existing feedback amount");
+
     std::vector<int32_t> plus;
     std::vector<int32_t> minus;
     std::vector<int32_t> staticFull;

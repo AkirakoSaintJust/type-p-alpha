@@ -110,11 +110,15 @@ int main()
     std::vector<int32_t> base;
     std::vector<int32_t> baseOther;
     std::vector<int32_t> feedbackLfo;
+    std::vector<int32_t> feedbackLfoNegative;
     std::vector<int32_t> detuneLfo;
+    std::vector<int32_t> detuneLfoNegative;
     if (!render(0, 0, 100000, 100000, base) ||
         !render(0, 0, 200000, 50000, baseOther) ||
         !render(20000, 0, 100000, 100000, feedbackLfo) ||
-        !render(0, 2000, 100000, 100000, detuneLfo)) {
+        !render(-20000, 0, 100000, 100000, feedbackLfoNegative) ||
+        !render(0, 2000, 100000, 100000, detuneLfo) ||
+        !render(0, -2000, 100000, 100000, detuneLfoNegative)) {
         std::printf("lfos: setup failed\n");
         return 1;
     }
@@ -125,6 +129,10 @@ int main()
           "the feedback LFO changes the render");
     check(!same(base, detuneLfo),
           "the detune LFO changes the render");
+    check(!same(feedbackLfo, feedbackLfoNegative),
+          "a negative feedback LFO depth inverts the LFO");
+    check(!same(detuneLfo, detuneLfoNegative),
+          "a negative detune LFO depth inverts the LFO");
 
     std::printf("lfos: %s\n", failures ? "FAILED" : "passed");
     return failures ? 1 : 0;

@@ -455,9 +455,9 @@ engine, the MIDI bridge, the rate bridge, the preset bank and the UI state.
 | File | Purpose |
 | --- | --- |
 | `engine_parity.cpp` | Compare the generated engine against the independent reference for filters, key follow and render parity. |
-| `feedback_envelope.cpp` | Measure the per-operator envelope direction, the flat path and the peak bound. |
+| `feedback_envelope.cpp` | Measure the per-operator envelope direction, the flat path, the partial negative level and the peak bound. |
 | `feedback_bipolar.cpp` | Measure the positive path, the abs negative half, the signed envelope level and the peak bound. |
-| `operator_lfos.cpp` | Check the feedback and detune LFO paths at depth 0 and above. |
+| `operator_lfos.cpp` | Check the feedback and detune LFO paths at depth 0, above, and with a negative depth. |
 | `rate_bridge_test.cpp` | Check the resampler latency and spectral behaviour. |
 | `preset_smoke.cpp` | Check the current record, the 32-character name and the `P1LIB2` library. |
 | `plugin_smoke.cpp` | Check state restore, the global library, automation and the 48 kHz bridge. |
