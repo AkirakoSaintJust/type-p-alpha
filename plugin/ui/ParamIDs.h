@@ -61,6 +61,14 @@ inline juce::String opFeedbackDepth(int op, int part)
 {
     return withPart(opBase(op, "_fb_depth"), part);
 }
+inline juce::String opFeedbackShape(int op, int part)
+{
+    return withPart(opBase(op, "_fb_shape"), part);
+}
+inline juce::String opFeedbackFilter(int op, int part)
+{
+    return withPart(opBase(op, "_fb_filter"), part);
+}
 inline juce::String opTremRate(int op, int part)
 {
     return withPart(opBase(op, "_trem_rate"), part);
@@ -186,6 +194,15 @@ inline juce::StringArray waveNames()
 inline juce::StringArray lfoWaveNames()
 {
     return {"sine", "triangle", "saw", "inverse saw", "square", "random"};
+}
+inline juce::StringArray feedbackShapeNames()
+{
+    return {"off", "square", "square neg", "abs", "abs neg", "signed",
+            "signed neg"};
+}
+inline juce::StringArray feedbackFilterNames()
+{
+    return {"average", "one-pole"};
 }
 
 } // namespace p1::params

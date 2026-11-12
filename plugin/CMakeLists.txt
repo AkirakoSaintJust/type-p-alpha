@@ -113,6 +113,12 @@ target_include_directories(feedback_envelope PRIVATE "${P1_GENERATED_DIR}")
 add_dependencies(feedback_envelope p1_params)
 add_test(NAME feedback_envelope COMMAND feedback_envelope)
 
+add_executable(feedback_shaper tests/feedback_shaper.cpp)
+target_link_libraries(feedback_shaper PRIVATE p1_engine)
+target_include_directories(feedback_shaper PRIVATE "${P1_GENERATED_DIR}")
+add_dependencies(feedback_shaper p1_params)
+add_test(NAME feedback_shaper COMMAND feedback_shaper)
+
 add_executable(rate_bridge_test tests/rate_bridge_test.cpp)
 target_link_libraries(rate_bridge_test PRIVATE p1_engine)
 add_test(NAME rate_bridge COMMAND rate_bridge_test)

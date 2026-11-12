@@ -620,7 +620,15 @@
   const PITCH_ENV = { on: false, r: [80, 60, 50, 80], l: [2, -1, 0] };
   const FILTER_ENV = { r: [99, 50, 40, 60], l: [99, 40, 0] };
   const FEEDBACK_ENV = { r: [80, 60, 50, 80], l: [99, 93, 87] };
-  const FB_DEPTH = [{ v: 0 }, { v: 0 }, { v: 0 }, { v: 0 }];
+  const FB_DEPTH = [
+    { v: 0, shape: "off", filter: "average" },
+    { v: 0, shape: "off", filter: "average" },
+    { v: 0, shape: "off", filter: "average" },
+    { v: 0, shape: "off", filter: "average" }
+  ];
+  const FEEDBACK_SHAPES = ["off", "square", "square neg", "abs", "abs neg",
+                           "signed", "signed neg"];
+  const FEEDBACK_FILTERS = ["average", "one-pole"];
   const FILTER1 = { cutoff: 60, res: 20, env: 0, type: "lpf", on: true };
   const KEY_FOLLOW = {
     on: true,
@@ -1351,12 +1359,26 @@
     envCard.classList.add("fbenvcard");
     wrap.appendChild(envCard);
 
+    const shapeRow = document.createElement("div");
+    shapeRow.className = "inline";
+    const filterRow = document.createElement("div");
+    filterRow.className = "inline";
+    for (let i = 0; i < 4; ++i) {
+      shapeRow.append(makeSelect(FEEDBACK_SHAPES, FB_DEPTH[i].shape, function (v) {
+        FB_DEPTH[i].shape = v;
+        rerender();
+      }));
+      filterRow.append(makeSelect(FEEDBACK_FILTERS, FB_DEPTH[i].filter, function (v) {
+        FB_DEPTH[i].filter = v;
+        rerender();
+      }));
+    }
     const depthCard = makeSection("OPERATOR DEPTH", "fbdepth", [
       b(FB_DEPTH[0], "v", "OP1", -100, 100, bipFmt, 1),
       b(FB_DEPTH[1], "v", "OP2", -100, 100, bipFmt, 1),
       b(FB_DEPTH[2], "v", "OP3", -100, 100, bipFmt, 1),
       b(FB_DEPTH[3], "v", "OP4", -100, 100, bipFmt, 1)
-    ], { copy: false });
+    ], { copy: false, after: [shapeRow, filterRow] });
     depthCard.classList.add("fbdcard");
     wrap.appendChild(depthCard);
     return wrap;

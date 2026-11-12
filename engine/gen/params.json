@@ -262,6 +262,32 @@
     },
     {
       "id": 20,
+      "name": "op1_fb_shape.p0",
+      "target": "op1.fb.shape.p0",
+      "min": 0,
+      "max": 6,
+      "default": 0,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "shape"
+    },
+    {
+      "id": 21,
+      "name": "op1_fb_filter.p0",
+      "target": "op1.fb.filter.p0",
+      "min": 0,
+      "max": 1,
+      "default": 0,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "onoff"
+    },
+    {
+      "id": 22,
       "name": "op1_level_ks_lo.p0",
       "target": "op1.level_ks.lo.p0",
       "min": -100,
@@ -274,7 +300,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 21,
+      "id": 23,
       "name": "op1_level_ks_hi.p0",
       "target": "op1.level_ks.hi.p0",
       "min": -100,
@@ -287,7 +313,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 22,
+      "id": 24,
       "name": "op1_fb_ks_lo.p0",
       "target": "op1.fb_ks.lo.p0",
       "min": -100,
@@ -300,7 +326,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 23,
+      "id": 25,
       "name": "op1_fb_ks_hi.p0",
       "target": "op1.fb_ks.hi.p0",
       "min": -100,
@@ -313,7 +339,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 24,
+      "id": 26,
       "name": "op1_aenv_ks_lo.p0",
       "target": "op1.eg_ks.lo.p0",
       "min": -100,
@@ -326,7 +352,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 25,
+      "id": 27,
       "name": "op1_aenv_ks_hi.p0",
       "target": "op1.eg_ks.hi.p0",
       "min": -100,
@@ -339,7 +365,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 26,
+      "id": 28,
       "name": "op1_level_vs.p0",
       "target": "op1.level_vs.amount.p0",
       "min": -100,
@@ -352,7 +378,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 27,
+      "id": 29,
       "name": "op1_fb_vs.p0",
       "target": "op1.fb_vs.amount.p0",
       "min": -100,
@@ -365,7 +391,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 28,
+      "id": 30,
       "name": "op1_aenv_vs.p0",
       "target": "op1.eg_vs.amount.p0",
       "min": -100,
@@ -378,7 +404,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 29,
+      "id": 31,
       "name": "op1_mute.p0",
       "target": "op1.mute.mute.p0",
       "min": 0,
@@ -391,7 +417,7 @@
       "display": "onoff_inv"
     },
     {
-      "id": 30,
+      "id": 32,
       "name": "op2_ratio.p0",
       "target": "op2.ph.inc_ratio.p0",
       "min": 32768,
@@ -404,7 +430,7 @@
       "display": "ratio"
     },
     {
-      "id": 31,
+      "id": 33,
       "name": "op2_detune.p0",
       "target": "op2.ph.detune.p0",
       "min": -50,
@@ -417,7 +443,7 @@
       "display": "cent"
     },
     {
-      "id": 32,
+      "id": 34,
       "name": "op2_waveform.p0",
       "target": "op2.osc.waveform.p0",
       "min": 0,
@@ -430,7 +456,7 @@
       "display": "wave"
     },
     {
-      "id": 33,
+      "id": 35,
       "name": "op2.eg.r1.p0",
       "target": "op2.eg.r1.p0",
       "min": 0,
@@ -443,7 +469,7 @@
       "display": "raw"
     },
     {
-      "id": 34,
+      "id": 36,
       "name": "op2.eg.r2.p0",
       "target": "op2.eg.r2.p0",
       "min": 0,
@@ -456,7 +482,7 @@
       "display": "raw"
     },
     {
-      "id": 35,
+      "id": 37,
       "name": "op2.eg.r3.p0",
       "target": "op2.eg.r3.p0",
       "min": 0,
@@ -469,7 +495,7 @@
       "display": "raw"
     },
     {
-      "id": 36,
+      "id": 38,
       "name": "op2.eg.r4.p0",
       "target": "op2.eg.r4.p0",
       "min": 0,
@@ -482,7 +508,7 @@
       "display": "raw"
     },
     {
-      "id": 37,
+      "id": 39,
       "name": "op2.eg.l1.p0",
       "target": "op2.eg.l1.p0",
       "min": 0,
@@ -495,7 +521,7 @@
       "display": "raw"
     },
     {
-      "id": 38,
+      "id": 40,
       "name": "op2.eg.l2.p0",
       "target": "op2.eg.l2.p0",
       "min": 0,
@@ -508,7 +534,7 @@
       "display": "raw"
     },
     {
-      "id": 39,
+      "id": 41,
       "name": "op2.eg.l3.p0",
       "target": "op2.eg.l3.p0",
       "min": 0,
@@ -521,7 +547,7 @@
       "display": "raw"
     },
     {
-      "id": 40,
+      "id": 42,
       "name": "op2_trem_rate.p0",
       "target": "op2.lfo.rate.p0",
       "min": 0,
@@ -534,7 +560,7 @@
       "display": "hz"
     },
     {
-      "id": 41,
+      "id": 43,
       "name": "op2_trem_depth.p0",
       "target": "op2.lfo.depth.p0",
       "min": -99,
@@ -547,7 +573,7 @@
       "display": "raw"
     },
     {
-      "id": 42,
+      "id": 44,
       "name": "op2_trem_wave.p0",
       "target": "op2.lfo.wave.p0",
       "min": 0,
@@ -560,7 +586,7 @@
       "display": "wave"
     },
     {
-      "id": 43,
+      "id": 45,
       "name": "op2_trem_mode.p0",
       "target": "op2.lfo.mode.p0",
       "min": 0,
@@ -573,7 +599,7 @@
       "display": "onoff"
     },
     {
-      "id": 44,
+      "id": 46,
       "name": "op2.velamp.depth.p0",
       "target": "op2.velamp.depth.p0",
       "min": -32768,
@@ -586,7 +612,7 @@
       "display": "raw"
     },
     {
-      "id": 45,
+      "id": 47,
       "name": "op2.velfm.depth.p0",
       "target": "op2.velfm.depth.p0",
       "min": -32768,
@@ -599,7 +625,7 @@
       "display": "raw"
     },
     {
-      "id": 46,
+      "id": 48,
       "name": "op2.velrate.depth.p0",
       "target": "op2.velrate.depth.p0",
       "min": -32768,
@@ -612,7 +638,7 @@
       "display": "raw"
     },
     {
-      "id": 47,
+      "id": 49,
       "name": "op2_level.p0",
       "target": "op2.tl.level.p0",
       "min": 0,
@@ -625,7 +651,7 @@
       "display": "raw"
     },
     {
-      "id": 48,
+      "id": 50,
       "name": "op2_feedback.p0",
       "target": "op2.fb.level.p0",
       "min": 0,
@@ -638,7 +664,7 @@
       "display": "pct"
     },
     {
-      "id": 49,
+      "id": 51,
       "name": "op2_fb_depth.p0",
       "target": "op2.fb.depth.p0",
       "min": -32767,
@@ -651,7 +677,33 @@
       "display": "pct_bip"
     },
     {
-      "id": 50,
+      "id": 52,
+      "name": "op2_fb_shape.p0",
+      "target": "op2.fb.shape.p0",
+      "min": 0,
+      "max": 6,
+      "default": 0,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "shape"
+    },
+    {
+      "id": 53,
+      "name": "op2_fb_filter.p0",
+      "target": "op2.fb.filter.p0",
+      "min": 0,
+      "max": 1,
+      "default": 0,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "onoff"
+    },
+    {
+      "id": 54,
       "name": "op2_level_ks_lo.p0",
       "target": "op2.level_ks.lo.p0",
       "min": -100,
@@ -664,7 +716,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 51,
+      "id": 55,
       "name": "op2_level_ks_hi.p0",
       "target": "op2.level_ks.hi.p0",
       "min": -100,
@@ -677,7 +729,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 52,
+      "id": 56,
       "name": "op2_fb_ks_lo.p0",
       "target": "op2.fb_ks.lo.p0",
       "min": -100,
@@ -690,7 +742,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 53,
+      "id": 57,
       "name": "op2_fb_ks_hi.p0",
       "target": "op2.fb_ks.hi.p0",
       "min": -100,
@@ -703,7 +755,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 54,
+      "id": 58,
       "name": "op2_aenv_ks_lo.p0",
       "target": "op2.eg_ks.lo.p0",
       "min": -100,
@@ -716,7 +768,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 55,
+      "id": 59,
       "name": "op2_aenv_ks_hi.p0",
       "target": "op2.eg_ks.hi.p0",
       "min": -100,
@@ -729,7 +781,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 56,
+      "id": 60,
       "name": "op2_level_vs.p0",
       "target": "op2.level_vs.amount.p0",
       "min": -100,
@@ -742,7 +794,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 57,
+      "id": 61,
       "name": "op2_fb_vs.p0",
       "target": "op2.fb_vs.amount.p0",
       "min": -100,
@@ -755,7 +807,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 58,
+      "id": 62,
       "name": "op2_aenv_vs.p0",
       "target": "op2.eg_vs.amount.p0",
       "min": -100,
@@ -768,7 +820,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 59,
+      "id": 63,
       "name": "op2_mute.p0",
       "target": "op2.mute.mute.p0",
       "min": 0,
@@ -781,7 +833,7 @@
       "display": "onoff_inv"
     },
     {
-      "id": 60,
+      "id": 64,
       "name": "op3_ratio.p0",
       "target": "op3.ph.inc_ratio.p0",
       "min": 32768,
@@ -794,7 +846,7 @@
       "display": "ratio"
     },
     {
-      "id": 61,
+      "id": 65,
       "name": "op3_detune.p0",
       "target": "op3.ph.detune.p0",
       "min": -50,
@@ -807,7 +859,7 @@
       "display": "cent"
     },
     {
-      "id": 62,
+      "id": 66,
       "name": "op3_waveform.p0",
       "target": "op3.osc.waveform.p0",
       "min": 0,
@@ -820,7 +872,7 @@
       "display": "wave"
     },
     {
-      "id": 63,
+      "id": 67,
       "name": "op3.eg.r1.p0",
       "target": "op3.eg.r1.p0",
       "min": 0,
@@ -833,7 +885,7 @@
       "display": "raw"
     },
     {
-      "id": 64,
+      "id": 68,
       "name": "op3.eg.r2.p0",
       "target": "op3.eg.r2.p0",
       "min": 0,
@@ -846,7 +898,7 @@
       "display": "raw"
     },
     {
-      "id": 65,
+      "id": 69,
       "name": "op3.eg.r3.p0",
       "target": "op3.eg.r3.p0",
       "min": 0,
@@ -859,7 +911,7 @@
       "display": "raw"
     },
     {
-      "id": 66,
+      "id": 70,
       "name": "op3.eg.r4.p0",
       "target": "op3.eg.r4.p0",
       "min": 0,
@@ -872,7 +924,7 @@
       "display": "raw"
     },
     {
-      "id": 67,
+      "id": 71,
       "name": "op3.eg.l1.p0",
       "target": "op3.eg.l1.p0",
       "min": 0,
@@ -885,7 +937,7 @@
       "display": "raw"
     },
     {
-      "id": 68,
+      "id": 72,
       "name": "op3.eg.l2.p0",
       "target": "op3.eg.l2.p0",
       "min": 0,
@@ -898,7 +950,7 @@
       "display": "raw"
     },
     {
-      "id": 69,
+      "id": 73,
       "name": "op3.eg.l3.p0",
       "target": "op3.eg.l3.p0",
       "min": 0,
@@ -911,7 +963,7 @@
       "display": "raw"
     },
     {
-      "id": 70,
+      "id": 74,
       "name": "op3_trem_rate.p0",
       "target": "op3.lfo.rate.p0",
       "min": 0,
@@ -924,7 +976,7 @@
       "display": "hz"
     },
     {
-      "id": 71,
+      "id": 75,
       "name": "op3_trem_depth.p0",
       "target": "op3.lfo.depth.p0",
       "min": -99,
@@ -937,7 +989,7 @@
       "display": "raw"
     },
     {
-      "id": 72,
+      "id": 76,
       "name": "op3_trem_wave.p0",
       "target": "op3.lfo.wave.p0",
       "min": 0,
@@ -950,7 +1002,7 @@
       "display": "wave"
     },
     {
-      "id": 73,
+      "id": 77,
       "name": "op3_trem_mode.p0",
       "target": "op3.lfo.mode.p0",
       "min": 0,
@@ -963,7 +1015,7 @@
       "display": "onoff"
     },
     {
-      "id": 74,
+      "id": 78,
       "name": "op3.velamp.depth.p0",
       "target": "op3.velamp.depth.p0",
       "min": -32768,
@@ -976,7 +1028,7 @@
       "display": "raw"
     },
     {
-      "id": 75,
+      "id": 79,
       "name": "op3.velfm.depth.p0",
       "target": "op3.velfm.depth.p0",
       "min": -32768,
@@ -989,7 +1041,7 @@
       "display": "raw"
     },
     {
-      "id": 76,
+      "id": 80,
       "name": "op3.velrate.depth.p0",
       "target": "op3.velrate.depth.p0",
       "min": -32768,
@@ -1002,7 +1054,7 @@
       "display": "raw"
     },
     {
-      "id": 77,
+      "id": 81,
       "name": "op3_level.p0",
       "target": "op3.tl.level.p0",
       "min": 0,
@@ -1015,7 +1067,7 @@
       "display": "raw"
     },
     {
-      "id": 78,
+      "id": 82,
       "name": "op3_feedback.p0",
       "target": "op3.fb.level.p0",
       "min": 0,
@@ -1028,7 +1080,7 @@
       "display": "pct"
     },
     {
-      "id": 79,
+      "id": 83,
       "name": "op3_fb_depth.p0",
       "target": "op3.fb.depth.p0",
       "min": -32767,
@@ -1041,7 +1093,33 @@
       "display": "pct_bip"
     },
     {
-      "id": 80,
+      "id": 84,
+      "name": "op3_fb_shape.p0",
+      "target": "op3.fb.shape.p0",
+      "min": 0,
+      "max": 6,
+      "default": 0,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "shape"
+    },
+    {
+      "id": 85,
+      "name": "op3_fb_filter.p0",
+      "target": "op3.fb.filter.p0",
+      "min": 0,
+      "max": 1,
+      "default": 0,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "onoff"
+    },
+    {
+      "id": 86,
       "name": "op3_level_ks_lo.p0",
       "target": "op3.level_ks.lo.p0",
       "min": -100,
@@ -1054,7 +1132,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 81,
+      "id": 87,
       "name": "op3_level_ks_hi.p0",
       "target": "op3.level_ks.hi.p0",
       "min": -100,
@@ -1067,7 +1145,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 82,
+      "id": 88,
       "name": "op3_fb_ks_lo.p0",
       "target": "op3.fb_ks.lo.p0",
       "min": -100,
@@ -1080,7 +1158,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 83,
+      "id": 89,
       "name": "op3_fb_ks_hi.p0",
       "target": "op3.fb_ks.hi.p0",
       "min": -100,
@@ -1093,7 +1171,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 84,
+      "id": 90,
       "name": "op3_aenv_ks_lo.p0",
       "target": "op3.eg_ks.lo.p0",
       "min": -100,
@@ -1106,7 +1184,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 85,
+      "id": 91,
       "name": "op3_aenv_ks_hi.p0",
       "target": "op3.eg_ks.hi.p0",
       "min": -100,
@@ -1119,7 +1197,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 86,
+      "id": 92,
       "name": "op3_level_vs.p0",
       "target": "op3.level_vs.amount.p0",
       "min": -100,
@@ -1132,7 +1210,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 87,
+      "id": 93,
       "name": "op3_fb_vs.p0",
       "target": "op3.fb_vs.amount.p0",
       "min": -100,
@@ -1145,7 +1223,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 88,
+      "id": 94,
       "name": "op3_aenv_vs.p0",
       "target": "op3.eg_vs.amount.p0",
       "min": -100,
@@ -1158,7 +1236,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 89,
+      "id": 95,
       "name": "op3_mute.p0",
       "target": "op3.mute.mute.p0",
       "min": 0,
@@ -1171,7 +1249,7 @@
       "display": "onoff_inv"
     },
     {
-      "id": 90,
+      "id": 96,
       "name": "op4_ratio.p0",
       "target": "op4.ph.inc_ratio.p0",
       "min": 32768,
@@ -1184,7 +1262,7 @@
       "display": "ratio"
     },
     {
-      "id": 91,
+      "id": 97,
       "name": "op4_detune.p0",
       "target": "op4.ph.detune.p0",
       "min": -50,
@@ -1197,7 +1275,7 @@
       "display": "cent"
     },
     {
-      "id": 92,
+      "id": 98,
       "name": "op4_waveform.p0",
       "target": "op4.osc.waveform.p0",
       "min": 0,
@@ -1210,7 +1288,7 @@
       "display": "wave"
     },
     {
-      "id": 93,
+      "id": 99,
       "name": "op4.eg.r1.p0",
       "target": "op4.eg.r1.p0",
       "min": 0,
@@ -1223,7 +1301,7 @@
       "display": "raw"
     },
     {
-      "id": 94,
+      "id": 100,
       "name": "op4.eg.r2.p0",
       "target": "op4.eg.r2.p0",
       "min": 0,
@@ -1236,7 +1314,7 @@
       "display": "raw"
     },
     {
-      "id": 95,
+      "id": 101,
       "name": "op4.eg.r3.p0",
       "target": "op4.eg.r3.p0",
       "min": 0,
@@ -1249,7 +1327,7 @@
       "display": "raw"
     },
     {
-      "id": 96,
+      "id": 102,
       "name": "op4.eg.r4.p0",
       "target": "op4.eg.r4.p0",
       "min": 0,
@@ -1262,7 +1340,7 @@
       "display": "raw"
     },
     {
-      "id": 97,
+      "id": 103,
       "name": "op4.eg.l1.p0",
       "target": "op4.eg.l1.p0",
       "min": 0,
@@ -1275,7 +1353,7 @@
       "display": "raw"
     },
     {
-      "id": 98,
+      "id": 104,
       "name": "op4.eg.l2.p0",
       "target": "op4.eg.l2.p0",
       "min": 0,
@@ -1288,7 +1366,7 @@
       "display": "raw"
     },
     {
-      "id": 99,
+      "id": 105,
       "name": "op4.eg.l3.p0",
       "target": "op4.eg.l3.p0",
       "min": 0,
@@ -1301,7 +1379,7 @@
       "display": "raw"
     },
     {
-      "id": 100,
+      "id": 106,
       "name": "op4_trem_rate.p0",
       "target": "op4.lfo.rate.p0",
       "min": 0,
@@ -1314,7 +1392,7 @@
       "display": "hz"
     },
     {
-      "id": 101,
+      "id": 107,
       "name": "op4_trem_depth.p0",
       "target": "op4.lfo.depth.p0",
       "min": -99,
@@ -1327,7 +1405,7 @@
       "display": "raw"
     },
     {
-      "id": 102,
+      "id": 108,
       "name": "op4_trem_wave.p0",
       "target": "op4.lfo.wave.p0",
       "min": 0,
@@ -1340,7 +1418,7 @@
       "display": "wave"
     },
     {
-      "id": 103,
+      "id": 109,
       "name": "op4_trem_mode.p0",
       "target": "op4.lfo.mode.p0",
       "min": 0,
@@ -1353,7 +1431,7 @@
       "display": "onoff"
     },
     {
-      "id": 104,
+      "id": 110,
       "name": "op4.velamp.depth.p0",
       "target": "op4.velamp.depth.p0",
       "min": -32768,
@@ -1366,7 +1444,7 @@
       "display": "raw"
     },
     {
-      "id": 105,
+      "id": 111,
       "name": "op4.velfm.depth.p0",
       "target": "op4.velfm.depth.p0",
       "min": -32768,
@@ -1379,7 +1457,7 @@
       "display": "raw"
     },
     {
-      "id": 106,
+      "id": 112,
       "name": "op4.velrate.depth.p0",
       "target": "op4.velrate.depth.p0",
       "min": -32768,
@@ -1392,7 +1470,7 @@
       "display": "raw"
     },
     {
-      "id": 107,
+      "id": 113,
       "name": "op4_level.p0",
       "target": "op4.tl.level.p0",
       "min": 0,
@@ -1405,7 +1483,7 @@
       "display": "raw"
     },
     {
-      "id": 108,
+      "id": 114,
       "name": "op4_feedback.p0",
       "target": "op4.fb.level.p0",
       "min": 0,
@@ -1418,7 +1496,7 @@
       "display": "pct"
     },
     {
-      "id": 109,
+      "id": 115,
       "name": "op4_fb_depth.p0",
       "target": "op4.fb.depth.p0",
       "min": -32767,
@@ -1431,7 +1509,33 @@
       "display": "pct_bip"
     },
     {
-      "id": 110,
+      "id": 116,
+      "name": "op4_fb_shape.p0",
+      "target": "op4.fb.shape.p0",
+      "min": 0,
+      "max": 6,
+      "default": 0,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "shape"
+    },
+    {
+      "id": 117,
+      "name": "op4_fb_filter.p0",
+      "target": "op4.fb.filter.p0",
+      "min": 0,
+      "max": 1,
+      "default": 0,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "onoff"
+    },
+    {
+      "id": 118,
       "name": "op4_level_ks_lo.p0",
       "target": "op4.level_ks.lo.p0",
       "min": -100,
@@ -1444,7 +1548,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 111,
+      "id": 119,
       "name": "op4_level_ks_hi.p0",
       "target": "op4.level_ks.hi.p0",
       "min": -100,
@@ -1457,7 +1561,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 112,
+      "id": 120,
       "name": "op4_fb_ks_lo.p0",
       "target": "op4.fb_ks.lo.p0",
       "min": -100,
@@ -1470,7 +1574,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 113,
+      "id": 121,
       "name": "op4_fb_ks_hi.p0",
       "target": "op4.fb_ks.hi.p0",
       "min": -100,
@@ -1483,7 +1587,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 114,
+      "id": 122,
       "name": "op4_aenv_ks_lo.p0",
       "target": "op4.eg_ks.lo.p0",
       "min": -100,
@@ -1496,7 +1600,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 115,
+      "id": 123,
       "name": "op4_aenv_ks_hi.p0",
       "target": "op4.eg_ks.hi.p0",
       "min": -100,
@@ -1509,7 +1613,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 116,
+      "id": 124,
       "name": "op4_level_vs.p0",
       "target": "op4.level_vs.amount.p0",
       "min": -100,
@@ -1522,7 +1626,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 117,
+      "id": 125,
       "name": "op4_fb_vs.p0",
       "target": "op4.fb_vs.amount.p0",
       "min": -100,
@@ -1535,7 +1639,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 118,
+      "id": 126,
       "name": "op4_aenv_vs.p0",
       "target": "op4.eg_vs.amount.p0",
       "min": -100,
@@ -1548,7 +1652,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 119,
+      "id": 127,
       "name": "op4_mute.p0",
       "target": "op4.mute.mute.p0",
       "min": 0,
@@ -1561,7 +1665,7 @@
       "display": "onoff_inv"
     },
     {
-      "id": 120,
+      "id": 128,
       "name": "algorithm.p0",
       "target": "algo.algorithm.p0",
       "min": 0,
@@ -1574,7 +1678,7 @@
       "display": "raw"
     },
     {
-      "id": 121,
+      "id": 129,
       "name": "penv_on.p0",
       "target": "penv.on.p0",
       "min": 0,
@@ -1587,7 +1691,7 @@
       "display": "onoff"
     },
     {
-      "id": 122,
+      "id": 130,
       "name": "penv_r1.p0",
       "target": "penv.r1.p0",
       "min": 0,
@@ -1600,7 +1704,7 @@
       "display": "raw"
     },
     {
-      "id": 123,
+      "id": 131,
       "name": "penv_r2.p0",
       "target": "penv.r2.p0",
       "min": 0,
@@ -1613,7 +1717,7 @@
       "display": "raw"
     },
     {
-      "id": 124,
+      "id": 132,
       "name": "penv_r3.p0",
       "target": "penv.r3.p0",
       "min": 0,
@@ -1626,7 +1730,7 @@
       "display": "raw"
     },
     {
-      "id": 125,
+      "id": 133,
       "name": "penv_r4.p0",
       "target": "penv.r4.p0",
       "min": 0,
@@ -1639,7 +1743,7 @@
       "display": "raw"
     },
     {
-      "id": 126,
+      "id": 134,
       "name": "penv_l1.p0",
       "target": "penv.l1.p0",
       "min": -32768,
@@ -1652,7 +1756,7 @@
       "display": "semi_fine"
     },
     {
-      "id": 127,
+      "id": 135,
       "name": "penv_l2.p0",
       "target": "penv.l2.p0",
       "min": -32768,
@@ -1665,7 +1769,7 @@
       "display": "semi_fine"
     },
     {
-      "id": 128,
+      "id": 136,
       "name": "penv_l3.p0",
       "target": "penv.l3.p0",
       "min": -32768,
@@ -1678,7 +1782,7 @@
       "display": "semi_fine"
     },
     {
-      "id": 129,
+      "id": 137,
       "name": "penv_l4.p0",
       "target": "penv.l4.p0",
       "min": -32768,
@@ -1691,7 +1795,7 @@
       "display": "semi_fine"
     },
     {
-      "id": 130,
+      "id": 138,
       "name": "penv_ks_lo.p0",
       "target": "penv_ks.lo.p0",
       "min": -100,
@@ -1704,7 +1808,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 131,
+      "id": 139,
       "name": "penv_ks_hi.p0",
       "target": "penv_ks.hi.p0",
       "min": -100,
@@ -1717,7 +1821,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 132,
+      "id": 140,
       "name": "penv_vs.p0",
       "target": "penv_vs.amount.p0",
       "min": -100,
@@ -1730,7 +1834,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 133,
+      "id": 141,
       "name": "pitch_rate.p0",
       "target": "plfo.rate.p0",
       "min": 0,
@@ -1743,7 +1847,7 @@
       "display": "hz"
     },
     {
-      "id": 134,
+      "id": 142,
       "name": "pitch_depth.p0",
       "target": "plfo.depth.p0",
       "min": -32768,
@@ -1756,7 +1860,7 @@
       "display": "semi_lfo"
     },
     {
-      "id": 135,
+      "id": 143,
       "name": "pitch_wave.p0",
       "target": "plfo.wave.p0",
       "min": 0,
@@ -1769,7 +1873,7 @@
       "display": "wave"
     },
     {
-      "id": 136,
+      "id": 144,
       "name": "pitch_mode.p0",
       "target": "plfo.mode.p0",
       "min": 0,
@@ -1782,7 +1886,7 @@
       "display": "onoff"
     },
     {
-      "id": 137,
+      "id": 145,
       "name": "f1_cutoff_ks_lo.p0",
       "target": "f1_ks.lo.p0",
       "min": -100,
@@ -1795,7 +1899,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 138,
+      "id": 146,
       "name": "f1_cutoff_ks_hi.p0",
       "target": "f1_ks.hi.p0",
       "min": -100,
@@ -1808,7 +1912,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 139,
+      "id": 147,
       "name": "fenv_ks_lo.p0",
       "target": "fenv_ks.lo.p0",
       "min": -100,
@@ -1821,7 +1925,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 140,
+      "id": 148,
       "name": "fenv_ks_hi.p0",
       "target": "fenv_ks.hi.p0",
       "min": -100,
@@ -1834,7 +1938,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 141,
+      "id": 149,
       "name": "f1_cutoff_vs.p0",
       "target": "f1_vs.amount.p0",
       "min": -100,
@@ -1847,7 +1951,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 142,
+      "id": 150,
       "name": "fenv_vs.p0",
       "target": "fenv_vs.amount.p0",
       "min": -100,
@@ -1860,7 +1964,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 143,
+      "id": 151,
       "name": "cutoff.p0",
       "target": "lp.f.p0",
       "min": 0,
@@ -1873,7 +1977,7 @@
       "display": "off_pct"
     },
     {
-      "id": 144,
+      "id": 152,
       "name": "res.p0",
       "target": "lp.res.p0",
       "min": 0,
@@ -1886,7 +1990,7 @@
       "display": "pct_exp"
     },
     {
-      "id": 145,
+      "id": 153,
       "name": "lp.comp.p0",
       "target": "lp.comp.p0",
       "min": -32768,
@@ -1899,7 +2003,7 @@
       "display": "raw"
     },
     {
-      "id": 146,
+      "id": 154,
       "name": "filter_type.p0",
       "target": "lp.mode.p0",
       "min": 0,
@@ -1912,7 +2016,7 @@
       "display": "filter"
     },
     {
-      "id": 147,
+      "id": 155,
       "name": "filter_on.p0",
       "target": "lp.on.p0",
       "min": 0,
@@ -1925,7 +2029,7 @@
       "display": "onoff"
     },
     {
-      "id": 148,
+      "id": 156,
       "name": "fenv_depth.p0",
       "target": "lp.fenv_depth.p0",
       "min": 0,
@@ -1938,7 +2042,7 @@
       "display": "pct"
     },
     {
-      "id": 149,
+      "id": 157,
       "name": "fenv_r1.p0",
       "target": "fenv.r1.p0",
       "min": 0,
@@ -1951,7 +2055,7 @@
       "display": "raw"
     },
     {
-      "id": 150,
+      "id": 158,
       "name": "fenv_r2.p0",
       "target": "fenv.r2.p0",
       "min": 0,
@@ -1964,7 +2068,7 @@
       "display": "raw"
     },
     {
-      "id": 151,
+      "id": 159,
       "name": "fenv_r3.p0",
       "target": "fenv.r3.p0",
       "min": 0,
@@ -1977,7 +2081,7 @@
       "display": "raw"
     },
     {
-      "id": 152,
+      "id": 160,
       "name": "fenv_r4.p0",
       "target": "fenv.r4.p0",
       "min": 0,
@@ -1990,7 +2094,7 @@
       "display": "raw"
     },
     {
-      "id": 153,
+      "id": 161,
       "name": "fenv_l1.p0",
       "target": "fenv.l1.p0",
       "min": 0,
@@ -2003,7 +2107,7 @@
       "display": "raw"
     },
     {
-      "id": 154,
+      "id": 162,
       "name": "fenv_l2.p0",
       "target": "fenv.l2.p0",
       "min": 0,
@@ -2016,7 +2120,7 @@
       "display": "raw"
     },
     {
-      "id": 155,
+      "id": 163,
       "name": "fenv_l3.p0",
       "target": "fenv.l3.p0",
       "min": 0,
@@ -2029,7 +2133,7 @@
       "display": "raw"
     },
     {
-      "id": 156,
+      "id": 164,
       "name": "fbenv_r1.p0",
       "target": "fbenv.r1.p0",
       "min": 0,
@@ -2042,7 +2146,7 @@
       "display": "raw"
     },
     {
-      "id": 157,
+      "id": 165,
       "name": "fbenv_r2.p0",
       "target": "fbenv.r2.p0",
       "min": 0,
@@ -2055,7 +2159,7 @@
       "display": "raw"
     },
     {
-      "id": 158,
+      "id": 166,
       "name": "fbenv_r3.p0",
       "target": "fbenv.r3.p0",
       "min": 0,
@@ -2068,7 +2172,7 @@
       "display": "raw"
     },
     {
-      "id": 159,
+      "id": 167,
       "name": "fbenv_r4.p0",
       "target": "fbenv.r4.p0",
       "min": 0,
@@ -2081,7 +2185,7 @@
       "display": "raw"
     },
     {
-      "id": 160,
+      "id": 168,
       "name": "fbenv_l1.p0",
       "target": "fbenv.l1.p0",
       "min": 0,
@@ -2094,7 +2198,7 @@
       "display": "raw"
     },
     {
-      "id": 161,
+      "id": 169,
       "name": "fbenv_l2.p0",
       "target": "fbenv.l2.p0",
       "min": 0,
@@ -2107,7 +2211,7 @@
       "display": "raw"
     },
     {
-      "id": 162,
+      "id": 170,
       "name": "fbenv_l3.p0",
       "target": "fbenv.l3.p0",
       "min": 0,
@@ -2120,7 +2224,7 @@
       "display": "raw"
     },
     {
-      "id": 163,
+      "id": 171,
       "name": "mode.p0",
       "target": "vm_mode",
       "min": 0,
@@ -2133,7 +2237,7 @@
       "display": "mode"
     },
     {
-      "id": 164,
+      "id": 172,
       "name": "unison_count.p0",
       "target": "vm_unison_count",
       "min": 1,
@@ -2146,7 +2250,7 @@
       "display": "raw"
     },
     {
-      "id": 165,
+      "id": 173,
       "name": "unison_detune.p0",
       "target": "vm_unison_detune",
       "min": 0,
@@ -2159,7 +2263,7 @@
       "display": "raw"
     },
     {
-      "id": 166,
+      "id": 174,
       "name": "detune.p0",
       "target": "vm_detune",
       "min": -50,
@@ -2172,7 +2276,7 @@
       "display": "cent"
     },
     {
-      "id": 167,
+      "id": 175,
       "name": "transpose.p0",
       "target": "vm_transpose",
       "min": -24,
@@ -2185,7 +2289,7 @@
       "display": "semitones"
     },
     {
-      "id": 168,
+      "id": 176,
       "name": "legato.p0",
       "target": "vm_legato",
       "min": 0,
@@ -2198,7 +2302,7 @@
       "display": "onoff"
     },
     {
-      "id": 169,
+      "id": 177,
       "name": "portamento.p0",
       "target": "vm_portamento",
       "min": 0,
@@ -2211,7 +2315,7 @@
       "display": "porta"
     },
     {
-      "id": 170,
+      "id": 178,
       "name": "note_priority.p0",
       "target": "vm_note_priority",
       "min": 0,
@@ -2224,7 +2328,7 @@
       "display": "priority"
     },
     {
-      "id": 171,
+      "id": 179,
       "name": "op1_ratio.p1",
       "target": "op1.ph.inc_ratio.p1",
       "min": 32768,
@@ -2237,7 +2341,7 @@
       "display": "ratio"
     },
     {
-      "id": 172,
+      "id": 180,
       "name": "op1_detune.p1",
       "target": "op1.ph.detune.p1",
       "min": -50,
@@ -2250,7 +2354,7 @@
       "display": "cent"
     },
     {
-      "id": 173,
+      "id": 181,
       "name": "op1_waveform.p1",
       "target": "op1.osc.waveform.p1",
       "min": 0,
@@ -2263,7 +2367,7 @@
       "display": "wave"
     },
     {
-      "id": 174,
+      "id": 182,
       "name": "attack.p1",
       "target": "op1.eg.r1.p1",
       "min": 0,
@@ -2276,7 +2380,7 @@
       "display": "raw"
     },
     {
-      "id": 175,
+      "id": 183,
       "name": "op1.eg.r2.p1",
       "target": "op1.eg.r2.p1",
       "min": 0,
@@ -2289,7 +2393,7 @@
       "display": "raw"
     },
     {
-      "id": 176,
+      "id": 184,
       "name": "op1.eg.r3.p1",
       "target": "op1.eg.r3.p1",
       "min": 0,
@@ -2302,7 +2406,7 @@
       "display": "raw"
     },
     {
-      "id": 177,
+      "id": 185,
       "name": "release.p1",
       "target": "op1.eg.r4.p1",
       "min": 0,
@@ -2315,7 +2419,7 @@
       "display": "raw"
     },
     {
-      "id": 178,
+      "id": 186,
       "name": "op1.eg.l1.p1",
       "target": "op1.eg.l1.p1",
       "min": 0,
@@ -2328,7 +2432,7 @@
       "display": "raw"
     },
     {
-      "id": 179,
+      "id": 187,
       "name": "op1.eg.l2.p1",
       "target": "op1.eg.l2.p1",
       "min": 0,
@@ -2341,7 +2445,7 @@
       "display": "raw"
     },
     {
-      "id": 180,
+      "id": 188,
       "name": "op1.eg.l3.p1",
       "target": "op1.eg.l3.p1",
       "min": 0,
@@ -2354,7 +2458,7 @@
       "display": "raw"
     },
     {
-      "id": 181,
+      "id": 189,
       "name": "op1_trem_rate.p1",
       "target": "op1.lfo.rate.p1",
       "min": 0,
@@ -2367,7 +2471,7 @@
       "display": "hz"
     },
     {
-      "id": 182,
+      "id": 190,
       "name": "op1_trem_depth.p1",
       "target": "op1.lfo.depth.p1",
       "min": -99,
@@ -2380,7 +2484,7 @@
       "display": "raw"
     },
     {
-      "id": 183,
+      "id": 191,
       "name": "op1_trem_wave.p1",
       "target": "op1.lfo.wave.p1",
       "min": 0,
@@ -2393,7 +2497,7 @@
       "display": "wave"
     },
     {
-      "id": 184,
+      "id": 192,
       "name": "op1_trem_mode.p1",
       "target": "op1.lfo.mode.p1",
       "min": 0,
@@ -2406,7 +2510,7 @@
       "display": "onoff"
     },
     {
-      "id": 185,
+      "id": 193,
       "name": "op1.velamp.depth.p1",
       "target": "op1.velamp.depth.p1",
       "min": -32768,
@@ -2419,7 +2523,7 @@
       "display": "raw"
     },
     {
-      "id": 186,
+      "id": 194,
       "name": "op1.velfm.depth.p1",
       "target": "op1.velfm.depth.p1",
       "min": -32768,
@@ -2432,7 +2536,7 @@
       "display": "raw"
     },
     {
-      "id": 187,
+      "id": 195,
       "name": "op1.velrate.depth.p1",
       "target": "op1.velrate.depth.p1",
       "min": -32768,
@@ -2445,7 +2549,7 @@
       "display": "raw"
     },
     {
-      "id": 188,
+      "id": 196,
       "name": "op1_level.p1",
       "target": "op1.tl.level.p1",
       "min": 0,
@@ -2458,7 +2562,7 @@
       "display": "raw"
     },
     {
-      "id": 189,
+      "id": 197,
       "name": "op1_feedback.p1",
       "target": "op1.fb.level.p1",
       "min": 0,
@@ -2471,7 +2575,7 @@
       "display": "pct"
     },
     {
-      "id": 190,
+      "id": 198,
       "name": "op1_fb_depth.p1",
       "target": "op1.fb.depth.p1",
       "min": -32767,
@@ -2484,7 +2588,33 @@
       "display": "pct_bip"
     },
     {
-      "id": 191,
+      "id": 199,
+      "name": "op1_fb_shape.p1",
+      "target": "op1.fb.shape.p1",
+      "min": 0,
+      "max": 6,
+      "default": 0,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "shape"
+    },
+    {
+      "id": 200,
+      "name": "op1_fb_filter.p1",
+      "target": "op1.fb.filter.p1",
+      "min": 0,
+      "max": 1,
+      "default": 0,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "onoff"
+    },
+    {
+      "id": 201,
       "name": "op1_level_ks_lo.p1",
       "target": "op1.level_ks.lo.p1",
       "min": -100,
@@ -2497,7 +2627,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 192,
+      "id": 202,
       "name": "op1_level_ks_hi.p1",
       "target": "op1.level_ks.hi.p1",
       "min": -100,
@@ -2510,7 +2640,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 193,
+      "id": 203,
       "name": "op1_fb_ks_lo.p1",
       "target": "op1.fb_ks.lo.p1",
       "min": -100,
@@ -2523,7 +2653,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 194,
+      "id": 204,
       "name": "op1_fb_ks_hi.p1",
       "target": "op1.fb_ks.hi.p1",
       "min": -100,
@@ -2536,7 +2666,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 195,
+      "id": 205,
       "name": "op1_aenv_ks_lo.p1",
       "target": "op1.eg_ks.lo.p1",
       "min": -100,
@@ -2549,7 +2679,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 196,
+      "id": 206,
       "name": "op1_aenv_ks_hi.p1",
       "target": "op1.eg_ks.hi.p1",
       "min": -100,
@@ -2562,7 +2692,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 197,
+      "id": 207,
       "name": "op1_level_vs.p1",
       "target": "op1.level_vs.amount.p1",
       "min": -100,
@@ -2575,7 +2705,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 198,
+      "id": 208,
       "name": "op1_fb_vs.p1",
       "target": "op1.fb_vs.amount.p1",
       "min": -100,
@@ -2588,7 +2718,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 199,
+      "id": 209,
       "name": "op1_aenv_vs.p1",
       "target": "op1.eg_vs.amount.p1",
       "min": -100,
@@ -2601,7 +2731,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 200,
+      "id": 210,
       "name": "op1_mute.p1",
       "target": "op1.mute.mute.p1",
       "min": 0,
@@ -2614,7 +2744,7 @@
       "display": "onoff_inv"
     },
     {
-      "id": 201,
+      "id": 211,
       "name": "op2_ratio.p1",
       "target": "op2.ph.inc_ratio.p1",
       "min": 32768,
@@ -2627,7 +2757,7 @@
       "display": "ratio"
     },
     {
-      "id": 202,
+      "id": 212,
       "name": "op2_detune.p1",
       "target": "op2.ph.detune.p1",
       "min": -50,
@@ -2640,7 +2770,7 @@
       "display": "cent"
     },
     {
-      "id": 203,
+      "id": 213,
       "name": "op2_waveform.p1",
       "target": "op2.osc.waveform.p1",
       "min": 0,
@@ -2653,7 +2783,7 @@
       "display": "wave"
     },
     {
-      "id": 204,
+      "id": 214,
       "name": "op2.eg.r1.p1",
       "target": "op2.eg.r1.p1",
       "min": 0,
@@ -2666,7 +2796,7 @@
       "display": "raw"
     },
     {
-      "id": 205,
+      "id": 215,
       "name": "op2.eg.r2.p1",
       "target": "op2.eg.r2.p1",
       "min": 0,
@@ -2679,7 +2809,7 @@
       "display": "raw"
     },
     {
-      "id": 206,
+      "id": 216,
       "name": "op2.eg.r3.p1",
       "target": "op2.eg.r3.p1",
       "min": 0,
@@ -2692,7 +2822,7 @@
       "display": "raw"
     },
     {
-      "id": 207,
+      "id": 217,
       "name": "op2.eg.r4.p1",
       "target": "op2.eg.r4.p1",
       "min": 0,
@@ -2705,7 +2835,7 @@
       "display": "raw"
     },
     {
-      "id": 208,
+      "id": 218,
       "name": "op2.eg.l1.p1",
       "target": "op2.eg.l1.p1",
       "min": 0,
@@ -2718,7 +2848,7 @@
       "display": "raw"
     },
     {
-      "id": 209,
+      "id": 219,
       "name": "op2.eg.l2.p1",
       "target": "op2.eg.l2.p1",
       "min": 0,
@@ -2731,7 +2861,7 @@
       "display": "raw"
     },
     {
-      "id": 210,
+      "id": 220,
       "name": "op2.eg.l3.p1",
       "target": "op2.eg.l3.p1",
       "min": 0,
@@ -2744,7 +2874,7 @@
       "display": "raw"
     },
     {
-      "id": 211,
+      "id": 221,
       "name": "op2_trem_rate.p1",
       "target": "op2.lfo.rate.p1",
       "min": 0,
@@ -2757,7 +2887,7 @@
       "display": "hz"
     },
     {
-      "id": 212,
+      "id": 222,
       "name": "op2_trem_depth.p1",
       "target": "op2.lfo.depth.p1",
       "min": -99,
@@ -2770,7 +2900,7 @@
       "display": "raw"
     },
     {
-      "id": 213,
+      "id": 223,
       "name": "op2_trem_wave.p1",
       "target": "op2.lfo.wave.p1",
       "min": 0,
@@ -2783,7 +2913,7 @@
       "display": "wave"
     },
     {
-      "id": 214,
+      "id": 224,
       "name": "op2_trem_mode.p1",
       "target": "op2.lfo.mode.p1",
       "min": 0,
@@ -2796,7 +2926,7 @@
       "display": "onoff"
     },
     {
-      "id": 215,
+      "id": 225,
       "name": "op2.velamp.depth.p1",
       "target": "op2.velamp.depth.p1",
       "min": -32768,
@@ -2809,7 +2939,7 @@
       "display": "raw"
     },
     {
-      "id": 216,
+      "id": 226,
       "name": "op2.velfm.depth.p1",
       "target": "op2.velfm.depth.p1",
       "min": -32768,
@@ -2822,7 +2952,7 @@
       "display": "raw"
     },
     {
-      "id": 217,
+      "id": 227,
       "name": "op2.velrate.depth.p1",
       "target": "op2.velrate.depth.p1",
       "min": -32768,
@@ -2835,7 +2965,7 @@
       "display": "raw"
     },
     {
-      "id": 218,
+      "id": 228,
       "name": "op2_level.p1",
       "target": "op2.tl.level.p1",
       "min": 0,
@@ -2848,7 +2978,7 @@
       "display": "raw"
     },
     {
-      "id": 219,
+      "id": 229,
       "name": "op2_feedback.p1",
       "target": "op2.fb.level.p1",
       "min": 0,
@@ -2861,7 +2991,7 @@
       "display": "pct"
     },
     {
-      "id": 220,
+      "id": 230,
       "name": "op2_fb_depth.p1",
       "target": "op2.fb.depth.p1",
       "min": -32767,
@@ -2874,7 +3004,33 @@
       "display": "pct_bip"
     },
     {
-      "id": 221,
+      "id": 231,
+      "name": "op2_fb_shape.p1",
+      "target": "op2.fb.shape.p1",
+      "min": 0,
+      "max": 6,
+      "default": 0,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "shape"
+    },
+    {
+      "id": 232,
+      "name": "op2_fb_filter.p1",
+      "target": "op2.fb.filter.p1",
+      "min": 0,
+      "max": 1,
+      "default": 0,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "onoff"
+    },
+    {
+      "id": 233,
       "name": "op2_level_ks_lo.p1",
       "target": "op2.level_ks.lo.p1",
       "min": -100,
@@ -2887,7 +3043,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 222,
+      "id": 234,
       "name": "op2_level_ks_hi.p1",
       "target": "op2.level_ks.hi.p1",
       "min": -100,
@@ -2900,7 +3056,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 223,
+      "id": 235,
       "name": "op2_fb_ks_lo.p1",
       "target": "op2.fb_ks.lo.p1",
       "min": -100,
@@ -2913,7 +3069,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 224,
+      "id": 236,
       "name": "op2_fb_ks_hi.p1",
       "target": "op2.fb_ks.hi.p1",
       "min": -100,
@@ -2926,7 +3082,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 225,
+      "id": 237,
       "name": "op2_aenv_ks_lo.p1",
       "target": "op2.eg_ks.lo.p1",
       "min": -100,
@@ -2939,7 +3095,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 226,
+      "id": 238,
       "name": "op2_aenv_ks_hi.p1",
       "target": "op2.eg_ks.hi.p1",
       "min": -100,
@@ -2952,7 +3108,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 227,
+      "id": 239,
       "name": "op2_level_vs.p1",
       "target": "op2.level_vs.amount.p1",
       "min": -100,
@@ -2965,7 +3121,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 228,
+      "id": 240,
       "name": "op2_fb_vs.p1",
       "target": "op2.fb_vs.amount.p1",
       "min": -100,
@@ -2978,7 +3134,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 229,
+      "id": 241,
       "name": "op2_aenv_vs.p1",
       "target": "op2.eg_vs.amount.p1",
       "min": -100,
@@ -2991,7 +3147,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 230,
+      "id": 242,
       "name": "op2_mute.p1",
       "target": "op2.mute.mute.p1",
       "min": 0,
@@ -3004,7 +3160,7 @@
       "display": "onoff_inv"
     },
     {
-      "id": 231,
+      "id": 243,
       "name": "op3_ratio.p1",
       "target": "op3.ph.inc_ratio.p1",
       "min": 32768,
@@ -3017,7 +3173,7 @@
       "display": "ratio"
     },
     {
-      "id": 232,
+      "id": 244,
       "name": "op3_detune.p1",
       "target": "op3.ph.detune.p1",
       "min": -50,
@@ -3030,7 +3186,7 @@
       "display": "cent"
     },
     {
-      "id": 233,
+      "id": 245,
       "name": "op3_waveform.p1",
       "target": "op3.osc.waveform.p1",
       "min": 0,
@@ -3043,7 +3199,7 @@
       "display": "wave"
     },
     {
-      "id": 234,
+      "id": 246,
       "name": "op3.eg.r1.p1",
       "target": "op3.eg.r1.p1",
       "min": 0,
@@ -3056,7 +3212,7 @@
       "display": "raw"
     },
     {
-      "id": 235,
+      "id": 247,
       "name": "op3.eg.r2.p1",
       "target": "op3.eg.r2.p1",
       "min": 0,
@@ -3069,7 +3225,7 @@
       "display": "raw"
     },
     {
-      "id": 236,
+      "id": 248,
       "name": "op3.eg.r3.p1",
       "target": "op3.eg.r3.p1",
       "min": 0,
@@ -3082,7 +3238,7 @@
       "display": "raw"
     },
     {
-      "id": 237,
+      "id": 249,
       "name": "op3.eg.r4.p1",
       "target": "op3.eg.r4.p1",
       "min": 0,
@@ -3095,7 +3251,7 @@
       "display": "raw"
     },
     {
-      "id": 238,
+      "id": 250,
       "name": "op3.eg.l1.p1",
       "target": "op3.eg.l1.p1",
       "min": 0,
@@ -3108,7 +3264,7 @@
       "display": "raw"
     },
     {
-      "id": 239,
+      "id": 251,
       "name": "op3.eg.l2.p1",
       "target": "op3.eg.l2.p1",
       "min": 0,
@@ -3121,7 +3277,7 @@
       "display": "raw"
     },
     {
-      "id": 240,
+      "id": 252,
       "name": "op3.eg.l3.p1",
       "target": "op3.eg.l3.p1",
       "min": 0,
@@ -3134,7 +3290,7 @@
       "display": "raw"
     },
     {
-      "id": 241,
+      "id": 253,
       "name": "op3_trem_rate.p1",
       "target": "op3.lfo.rate.p1",
       "min": 0,
@@ -3147,7 +3303,7 @@
       "display": "hz"
     },
     {
-      "id": 242,
+      "id": 254,
       "name": "op3_trem_depth.p1",
       "target": "op3.lfo.depth.p1",
       "min": -99,
@@ -3160,7 +3316,7 @@
       "display": "raw"
     },
     {
-      "id": 243,
+      "id": 255,
       "name": "op3_trem_wave.p1",
       "target": "op3.lfo.wave.p1",
       "min": 0,
@@ -3173,7 +3329,7 @@
       "display": "wave"
     },
     {
-      "id": 244,
+      "id": 256,
       "name": "op3_trem_mode.p1",
       "target": "op3.lfo.mode.p1",
       "min": 0,
@@ -3186,7 +3342,7 @@
       "display": "onoff"
     },
     {
-      "id": 245,
+      "id": 257,
       "name": "op3.velamp.depth.p1",
       "target": "op3.velamp.depth.p1",
       "min": -32768,
@@ -3199,7 +3355,7 @@
       "display": "raw"
     },
     {
-      "id": 246,
+      "id": 258,
       "name": "op3.velfm.depth.p1",
       "target": "op3.velfm.depth.p1",
       "min": -32768,
@@ -3212,7 +3368,7 @@
       "display": "raw"
     },
     {
-      "id": 247,
+      "id": 259,
       "name": "op3.velrate.depth.p1",
       "target": "op3.velrate.depth.p1",
       "min": -32768,
@@ -3225,7 +3381,7 @@
       "display": "raw"
     },
     {
-      "id": 248,
+      "id": 260,
       "name": "op3_level.p1",
       "target": "op3.tl.level.p1",
       "min": 0,
@@ -3238,7 +3394,7 @@
       "display": "raw"
     },
     {
-      "id": 249,
+      "id": 261,
       "name": "op3_feedback.p1",
       "target": "op3.fb.level.p1",
       "min": 0,
@@ -3251,7 +3407,7 @@
       "display": "pct"
     },
     {
-      "id": 250,
+      "id": 262,
       "name": "op3_fb_depth.p1",
       "target": "op3.fb.depth.p1",
       "min": -32767,
@@ -3264,7 +3420,33 @@
       "display": "pct_bip"
     },
     {
-      "id": 251,
+      "id": 263,
+      "name": "op3_fb_shape.p1",
+      "target": "op3.fb.shape.p1",
+      "min": 0,
+      "max": 6,
+      "default": 0,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "shape"
+    },
+    {
+      "id": 264,
+      "name": "op3_fb_filter.p1",
+      "target": "op3.fb.filter.p1",
+      "min": 0,
+      "max": 1,
+      "default": 0,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "onoff"
+    },
+    {
+      "id": 265,
       "name": "op3_level_ks_lo.p1",
       "target": "op3.level_ks.lo.p1",
       "min": -100,
@@ -3277,7 +3459,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 252,
+      "id": 266,
       "name": "op3_level_ks_hi.p1",
       "target": "op3.level_ks.hi.p1",
       "min": -100,
@@ -3290,7 +3472,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 253,
+      "id": 267,
       "name": "op3_fb_ks_lo.p1",
       "target": "op3.fb_ks.lo.p1",
       "min": -100,
@@ -3303,7 +3485,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 254,
+      "id": 268,
       "name": "op3_fb_ks_hi.p1",
       "target": "op3.fb_ks.hi.p1",
       "min": -100,
@@ -3316,7 +3498,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 255,
+      "id": 269,
       "name": "op3_aenv_ks_lo.p1",
       "target": "op3.eg_ks.lo.p1",
       "min": -100,
@@ -3329,7 +3511,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 256,
+      "id": 270,
       "name": "op3_aenv_ks_hi.p1",
       "target": "op3.eg_ks.hi.p1",
       "min": -100,
@@ -3342,7 +3524,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 257,
+      "id": 271,
       "name": "op3_level_vs.p1",
       "target": "op3.level_vs.amount.p1",
       "min": -100,
@@ -3355,7 +3537,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 258,
+      "id": 272,
       "name": "op3_fb_vs.p1",
       "target": "op3.fb_vs.amount.p1",
       "min": -100,
@@ -3368,7 +3550,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 259,
+      "id": 273,
       "name": "op3_aenv_vs.p1",
       "target": "op3.eg_vs.amount.p1",
       "min": -100,
@@ -3381,7 +3563,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 260,
+      "id": 274,
       "name": "op3_mute.p1",
       "target": "op3.mute.mute.p1",
       "min": 0,
@@ -3394,7 +3576,7 @@
       "display": "onoff_inv"
     },
     {
-      "id": 261,
+      "id": 275,
       "name": "op4_ratio.p1",
       "target": "op4.ph.inc_ratio.p1",
       "min": 32768,
@@ -3407,7 +3589,7 @@
       "display": "ratio"
     },
     {
-      "id": 262,
+      "id": 276,
       "name": "op4_detune.p1",
       "target": "op4.ph.detune.p1",
       "min": -50,
@@ -3420,7 +3602,7 @@
       "display": "cent"
     },
     {
-      "id": 263,
+      "id": 277,
       "name": "op4_waveform.p1",
       "target": "op4.osc.waveform.p1",
       "min": 0,
@@ -3433,7 +3615,7 @@
       "display": "wave"
     },
     {
-      "id": 264,
+      "id": 278,
       "name": "op4.eg.r1.p1",
       "target": "op4.eg.r1.p1",
       "min": 0,
@@ -3446,7 +3628,7 @@
       "display": "raw"
     },
     {
-      "id": 265,
+      "id": 279,
       "name": "op4.eg.r2.p1",
       "target": "op4.eg.r2.p1",
       "min": 0,
@@ -3459,7 +3641,7 @@
       "display": "raw"
     },
     {
-      "id": 266,
+      "id": 280,
       "name": "op4.eg.r3.p1",
       "target": "op4.eg.r3.p1",
       "min": 0,
@@ -3472,7 +3654,7 @@
       "display": "raw"
     },
     {
-      "id": 267,
+      "id": 281,
       "name": "op4.eg.r4.p1",
       "target": "op4.eg.r4.p1",
       "min": 0,
@@ -3485,7 +3667,7 @@
       "display": "raw"
     },
     {
-      "id": 268,
+      "id": 282,
       "name": "op4.eg.l1.p1",
       "target": "op4.eg.l1.p1",
       "min": 0,
@@ -3498,7 +3680,7 @@
       "display": "raw"
     },
     {
-      "id": 269,
+      "id": 283,
       "name": "op4.eg.l2.p1",
       "target": "op4.eg.l2.p1",
       "min": 0,
@@ -3511,7 +3693,7 @@
       "display": "raw"
     },
     {
-      "id": 270,
+      "id": 284,
       "name": "op4.eg.l3.p1",
       "target": "op4.eg.l3.p1",
       "min": 0,
@@ -3524,7 +3706,7 @@
       "display": "raw"
     },
     {
-      "id": 271,
+      "id": 285,
       "name": "op4_trem_rate.p1",
       "target": "op4.lfo.rate.p1",
       "min": 0,
@@ -3537,7 +3719,7 @@
       "display": "hz"
     },
     {
-      "id": 272,
+      "id": 286,
       "name": "op4_trem_depth.p1",
       "target": "op4.lfo.depth.p1",
       "min": -99,
@@ -3550,7 +3732,7 @@
       "display": "raw"
     },
     {
-      "id": 273,
+      "id": 287,
       "name": "op4_trem_wave.p1",
       "target": "op4.lfo.wave.p1",
       "min": 0,
@@ -3563,7 +3745,7 @@
       "display": "wave"
     },
     {
-      "id": 274,
+      "id": 288,
       "name": "op4_trem_mode.p1",
       "target": "op4.lfo.mode.p1",
       "min": 0,
@@ -3576,7 +3758,7 @@
       "display": "onoff"
     },
     {
-      "id": 275,
+      "id": 289,
       "name": "op4.velamp.depth.p1",
       "target": "op4.velamp.depth.p1",
       "min": -32768,
@@ -3589,7 +3771,7 @@
       "display": "raw"
     },
     {
-      "id": 276,
+      "id": 290,
       "name": "op4.velfm.depth.p1",
       "target": "op4.velfm.depth.p1",
       "min": -32768,
@@ -3602,7 +3784,7 @@
       "display": "raw"
     },
     {
-      "id": 277,
+      "id": 291,
       "name": "op4.velrate.depth.p1",
       "target": "op4.velrate.depth.p1",
       "min": -32768,
@@ -3615,7 +3797,7 @@
       "display": "raw"
     },
     {
-      "id": 278,
+      "id": 292,
       "name": "op4_level.p1",
       "target": "op4.tl.level.p1",
       "min": 0,
@@ -3628,7 +3810,7 @@
       "display": "raw"
     },
     {
-      "id": 279,
+      "id": 293,
       "name": "op4_feedback.p1",
       "target": "op4.fb.level.p1",
       "min": 0,
@@ -3641,7 +3823,7 @@
       "display": "pct"
     },
     {
-      "id": 280,
+      "id": 294,
       "name": "op4_fb_depth.p1",
       "target": "op4.fb.depth.p1",
       "min": -32767,
@@ -3654,7 +3836,33 @@
       "display": "pct_bip"
     },
     {
-      "id": 281,
+      "id": 295,
+      "name": "op4_fb_shape.p1",
+      "target": "op4.fb.shape.p1",
+      "min": 0,
+      "max": 6,
+      "default": 0,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "shape"
+    },
+    {
+      "id": 296,
+      "name": "op4_fb_filter.p1",
+      "target": "op4.fb.filter.p1",
+      "min": 0,
+      "max": 1,
+      "default": 0,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "onoff"
+    },
+    {
+      "id": 297,
       "name": "op4_level_ks_lo.p1",
       "target": "op4.level_ks.lo.p1",
       "min": -100,
@@ -3667,7 +3875,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 282,
+      "id": 298,
       "name": "op4_level_ks_hi.p1",
       "target": "op4.level_ks.hi.p1",
       "min": -100,
@@ -3680,7 +3888,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 283,
+      "id": 299,
       "name": "op4_fb_ks_lo.p1",
       "target": "op4.fb_ks.lo.p1",
       "min": -100,
@@ -3693,7 +3901,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 284,
+      "id": 300,
       "name": "op4_fb_ks_hi.p1",
       "target": "op4.fb_ks.hi.p1",
       "min": -100,
@@ -3706,7 +3914,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 285,
+      "id": 301,
       "name": "op4_aenv_ks_lo.p1",
       "target": "op4.eg_ks.lo.p1",
       "min": -100,
@@ -3719,7 +3927,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 286,
+      "id": 302,
       "name": "op4_aenv_ks_hi.p1",
       "target": "op4.eg_ks.hi.p1",
       "min": -100,
@@ -3732,7 +3940,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 287,
+      "id": 303,
       "name": "op4_level_vs.p1",
       "target": "op4.level_vs.amount.p1",
       "min": -100,
@@ -3745,7 +3953,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 288,
+      "id": 304,
       "name": "op4_fb_vs.p1",
       "target": "op4.fb_vs.amount.p1",
       "min": -100,
@@ -3758,7 +3966,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 289,
+      "id": 305,
       "name": "op4_aenv_vs.p1",
       "target": "op4.eg_vs.amount.p1",
       "min": -100,
@@ -3771,7 +3979,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 290,
+      "id": 306,
       "name": "op4_mute.p1",
       "target": "op4.mute.mute.p1",
       "min": 0,
@@ -3784,7 +3992,7 @@
       "display": "onoff_inv"
     },
     {
-      "id": 291,
+      "id": 307,
       "name": "algorithm.p1",
       "target": "algo.algorithm.p1",
       "min": 0,
@@ -3797,7 +4005,7 @@
       "display": "raw"
     },
     {
-      "id": 292,
+      "id": 308,
       "name": "penv_on.p1",
       "target": "penv.on.p1",
       "min": 0,
@@ -3810,7 +4018,7 @@
       "display": "onoff"
     },
     {
-      "id": 293,
+      "id": 309,
       "name": "penv_r1.p1",
       "target": "penv.r1.p1",
       "min": 0,
@@ -3823,7 +4031,7 @@
       "display": "raw"
     },
     {
-      "id": 294,
+      "id": 310,
       "name": "penv_r2.p1",
       "target": "penv.r2.p1",
       "min": 0,
@@ -3836,7 +4044,7 @@
       "display": "raw"
     },
     {
-      "id": 295,
+      "id": 311,
       "name": "penv_r3.p1",
       "target": "penv.r3.p1",
       "min": 0,
@@ -3849,7 +4057,7 @@
       "display": "raw"
     },
     {
-      "id": 296,
+      "id": 312,
       "name": "penv_r4.p1",
       "target": "penv.r4.p1",
       "min": 0,
@@ -3862,7 +4070,7 @@
       "display": "raw"
     },
     {
-      "id": 297,
+      "id": 313,
       "name": "penv_l1.p1",
       "target": "penv.l1.p1",
       "min": -32768,
@@ -3875,7 +4083,7 @@
       "display": "semi_fine"
     },
     {
-      "id": 298,
+      "id": 314,
       "name": "penv_l2.p1",
       "target": "penv.l2.p1",
       "min": -32768,
@@ -3888,7 +4096,7 @@
       "display": "semi_fine"
     },
     {
-      "id": 299,
+      "id": 315,
       "name": "penv_l3.p1",
       "target": "penv.l3.p1",
       "min": -32768,
@@ -3901,7 +4109,7 @@
       "display": "semi_fine"
     },
     {
-      "id": 300,
+      "id": 316,
       "name": "penv_l4.p1",
       "target": "penv.l4.p1",
       "min": -32768,
@@ -3914,7 +4122,7 @@
       "display": "semi_fine"
     },
     {
-      "id": 301,
+      "id": 317,
       "name": "penv_ks_lo.p1",
       "target": "penv_ks.lo.p1",
       "min": -100,
@@ -3927,7 +4135,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 302,
+      "id": 318,
       "name": "penv_ks_hi.p1",
       "target": "penv_ks.hi.p1",
       "min": -100,
@@ -3940,7 +4148,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 303,
+      "id": 319,
       "name": "penv_vs.p1",
       "target": "penv_vs.amount.p1",
       "min": -100,
@@ -3953,7 +4161,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 304,
+      "id": 320,
       "name": "pitch_rate.p1",
       "target": "plfo.rate.p1",
       "min": 0,
@@ -3966,7 +4174,7 @@
       "display": "hz"
     },
     {
-      "id": 305,
+      "id": 321,
       "name": "pitch_depth.p1",
       "target": "plfo.depth.p1",
       "min": -32768,
@@ -3979,7 +4187,7 @@
       "display": "semi_lfo"
     },
     {
-      "id": 306,
+      "id": 322,
       "name": "pitch_wave.p1",
       "target": "plfo.wave.p1",
       "min": 0,
@@ -3992,7 +4200,7 @@
       "display": "wave"
     },
     {
-      "id": 307,
+      "id": 323,
       "name": "pitch_mode.p1",
       "target": "plfo.mode.p1",
       "min": 0,
@@ -4005,7 +4213,7 @@
       "display": "onoff"
     },
     {
-      "id": 308,
+      "id": 324,
       "name": "f1_cutoff_ks_lo.p1",
       "target": "f1_ks.lo.p1",
       "min": -100,
@@ -4018,7 +4226,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 309,
+      "id": 325,
       "name": "f1_cutoff_ks_hi.p1",
       "target": "f1_ks.hi.p1",
       "min": -100,
@@ -4031,7 +4239,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 310,
+      "id": 326,
       "name": "fenv_ks_lo.p1",
       "target": "fenv_ks.lo.p1",
       "min": -100,
@@ -4044,7 +4252,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 311,
+      "id": 327,
       "name": "fenv_ks_hi.p1",
       "target": "fenv_ks.hi.p1",
       "min": -100,
@@ -4057,7 +4265,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 312,
+      "id": 328,
       "name": "f1_cutoff_vs.p1",
       "target": "f1_vs.amount.p1",
       "min": -100,
@@ -4070,7 +4278,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 313,
+      "id": 329,
       "name": "fenv_vs.p1",
       "target": "fenv_vs.amount.p1",
       "min": -100,
@@ -4083,7 +4291,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 314,
+      "id": 330,
       "name": "cutoff.p1",
       "target": "lp.f.p1",
       "min": 0,
@@ -4096,7 +4304,7 @@
       "display": "off_pct"
     },
     {
-      "id": 315,
+      "id": 331,
       "name": "res.p1",
       "target": "lp.res.p1",
       "min": 0,
@@ -4109,7 +4317,7 @@
       "display": "pct_exp"
     },
     {
-      "id": 316,
+      "id": 332,
       "name": "lp.comp.p1",
       "target": "lp.comp.p1",
       "min": -32768,
@@ -4122,7 +4330,7 @@
       "display": "raw"
     },
     {
-      "id": 317,
+      "id": 333,
       "name": "filter_type.p1",
       "target": "lp.mode.p1",
       "min": 0,
@@ -4135,7 +4343,7 @@
       "display": "filter"
     },
     {
-      "id": 318,
+      "id": 334,
       "name": "filter_on.p1",
       "target": "lp.on.p1",
       "min": 0,
@@ -4148,7 +4356,7 @@
       "display": "onoff"
     },
     {
-      "id": 319,
+      "id": 335,
       "name": "fenv_depth.p1",
       "target": "lp.fenv_depth.p1",
       "min": 0,
@@ -4161,7 +4369,7 @@
       "display": "pct"
     },
     {
-      "id": 320,
+      "id": 336,
       "name": "fenv_r1.p1",
       "target": "fenv.r1.p1",
       "min": 0,
@@ -4174,7 +4382,7 @@
       "display": "raw"
     },
     {
-      "id": 321,
+      "id": 337,
       "name": "fenv_r2.p1",
       "target": "fenv.r2.p1",
       "min": 0,
@@ -4187,7 +4395,7 @@
       "display": "raw"
     },
     {
-      "id": 322,
+      "id": 338,
       "name": "fenv_r3.p1",
       "target": "fenv.r3.p1",
       "min": 0,
@@ -4200,7 +4408,7 @@
       "display": "raw"
     },
     {
-      "id": 323,
+      "id": 339,
       "name": "fenv_r4.p1",
       "target": "fenv.r4.p1",
       "min": 0,
@@ -4213,7 +4421,7 @@
       "display": "raw"
     },
     {
-      "id": 324,
+      "id": 340,
       "name": "fenv_l1.p1",
       "target": "fenv.l1.p1",
       "min": 0,
@@ -4226,7 +4434,7 @@
       "display": "raw"
     },
     {
-      "id": 325,
+      "id": 341,
       "name": "fenv_l2.p1",
       "target": "fenv.l2.p1",
       "min": 0,
@@ -4239,7 +4447,7 @@
       "display": "raw"
     },
     {
-      "id": 326,
+      "id": 342,
       "name": "fenv_l3.p1",
       "target": "fenv.l3.p1",
       "min": 0,
@@ -4252,7 +4460,7 @@
       "display": "raw"
     },
     {
-      "id": 327,
+      "id": 343,
       "name": "fbenv_r1.p1",
       "target": "fbenv.r1.p1",
       "min": 0,
@@ -4265,7 +4473,7 @@
       "display": "raw"
     },
     {
-      "id": 328,
+      "id": 344,
       "name": "fbenv_r2.p1",
       "target": "fbenv.r2.p1",
       "min": 0,
@@ -4278,7 +4486,7 @@
       "display": "raw"
     },
     {
-      "id": 329,
+      "id": 345,
       "name": "fbenv_r3.p1",
       "target": "fbenv.r3.p1",
       "min": 0,
@@ -4291,7 +4499,7 @@
       "display": "raw"
     },
     {
-      "id": 330,
+      "id": 346,
       "name": "fbenv_r4.p1",
       "target": "fbenv.r4.p1",
       "min": 0,
@@ -4304,7 +4512,7 @@
       "display": "raw"
     },
     {
-      "id": 331,
+      "id": 347,
       "name": "fbenv_l1.p1",
       "target": "fbenv.l1.p1",
       "min": 0,
@@ -4317,7 +4525,7 @@
       "display": "raw"
     },
     {
-      "id": 332,
+      "id": 348,
       "name": "fbenv_l2.p1",
       "target": "fbenv.l2.p1",
       "min": 0,
@@ -4330,7 +4538,7 @@
       "display": "raw"
     },
     {
-      "id": 333,
+      "id": 349,
       "name": "fbenv_l3.p1",
       "target": "fbenv.l3.p1",
       "min": 0,
@@ -4343,7 +4551,7 @@
       "display": "raw"
     },
     {
-      "id": 334,
+      "id": 350,
       "name": "mode.p1",
       "target": "vm_mode",
       "min": 0,
@@ -4356,7 +4564,7 @@
       "display": "mode"
     },
     {
-      "id": 335,
+      "id": 351,
       "name": "unison_count.p1",
       "target": "vm_unison_count",
       "min": 1,
@@ -4369,7 +4577,7 @@
       "display": "raw"
     },
     {
-      "id": 336,
+      "id": 352,
       "name": "unison_detune.p1",
       "target": "vm_unison_detune",
       "min": 0,
@@ -4382,7 +4590,7 @@
       "display": "raw"
     },
     {
-      "id": 337,
+      "id": 353,
       "name": "detune.p1",
       "target": "vm_detune",
       "min": -50,
@@ -4395,7 +4603,7 @@
       "display": "cent"
     },
     {
-      "id": 338,
+      "id": 354,
       "name": "transpose.p1",
       "target": "vm_transpose",
       "min": -24,
@@ -4408,7 +4616,7 @@
       "display": "semitones"
     },
     {
-      "id": 339,
+      "id": 355,
       "name": "legato.p1",
       "target": "vm_legato",
       "min": 0,
@@ -4421,7 +4629,7 @@
       "display": "onoff"
     },
     {
-      "id": 340,
+      "id": 356,
       "name": "portamento.p1",
       "target": "vm_portamento",
       "min": 0,
@@ -4434,7 +4642,7 @@
       "display": "porta"
     },
     {
-      "id": 341,
+      "id": 357,
       "name": "note_priority.p1",
       "target": "vm_note_priority",
       "min": 0,
@@ -4447,7 +4655,7 @@
       "display": "priority"
     },
     {
-      "id": 342,
+      "id": 358,
       "name": "breakpoint",
       "target": "key_bp.bp",
       "min": 0,
@@ -4460,7 +4668,7 @@
       "display": "note"
     },
     {
-      "id": 343,
+      "id": 359,
       "name": "key_sens_on",
       "target": "key_on.on",
       "min": 0,
@@ -4473,7 +4681,7 @@
       "display": "onoff"
     },
     {
-      "id": 344,
+      "id": 360,
       "name": "vel_sens_on",
       "target": "vel_on.on",
       "min": 0,
@@ -4486,7 +4694,7 @@
       "display": "onoff"
     },
     {
-      "id": 345,
+      "id": 361,
       "name": "dc.r",
       "target": "dc.r",
       "min": -32768,
@@ -4499,7 +4707,7 @@
       "display": "raw"
     },
     {
-      "id": 346,
+      "id": 362,
       "name": "channel.p0",
       "target": "part.channel.p0",
       "min": -1,
@@ -4512,7 +4720,7 @@
       "display": "raw"
     },
     {
-      "id": 347,
+      "id": 363,
       "name": "channel.p1",
       "target": "part.channel.p1",
       "min": -1,
@@ -4525,7 +4733,7 @@
       "display": "raw"
     },
     {
-      "id": 348,
+      "id": 364,
       "name": "low.p0",
       "target": "part.low.p0",
       "min": 0,
@@ -4538,7 +4746,7 @@
       "display": "note"
     },
     {
-      "id": 349,
+      "id": 365,
       "name": "low.p1",
       "target": "part.low.p1",
       "min": 0,
@@ -4551,7 +4759,7 @@
       "display": "note"
     },
     {
-      "id": 350,
+      "id": 366,
       "name": "high.p0",
       "target": "part.high.p0",
       "min": 0,
@@ -4564,7 +4772,7 @@
       "display": "note"
     },
     {
-      "id": 351,
+      "id": 367,
       "name": "high.p1",
       "target": "part.high.p1",
       "min": 0,
@@ -4577,7 +4785,7 @@
       "display": "note"
     },
     {
-      "id": 352,
+      "id": 368,
       "name": "level.p0",
       "target": "part.level.p0",
       "min": 0,
@@ -4590,7 +4798,7 @@
       "display": "raw"
     },
     {
-      "id": 353,
+      "id": 369,
       "name": "level.p1",
       "target": "part.level.p1",
       "min": 0,
@@ -4603,7 +4811,7 @@
       "display": "raw"
     },
     {
-      "id": 354,
+      "id": 370,
       "name": "delay.p0",
       "target": "part.delay.p0",
       "min": 0,
@@ -4616,7 +4824,7 @@
       "display": "raw"
     },
     {
-      "id": 355,
+      "id": 371,
       "name": "delay.p1",
       "target": "part.delay.p1",
       "min": 0,

@@ -37,7 +37,7 @@ public:
     void resized() override
     {
         auto area = contentArea();
-        envView_.setBounds(area.removeFromTop(190));
+        envView_.setBounds(area.removeFromTop(150));
         area.removeFromTop(6);
         auto row = area.removeFromTop(84);
         const int cell = row.getWidth() / 4;
@@ -66,21 +66,38 @@ public:
             depths_[static_cast<size_t>(i)] = std::make_unique<ParamKnob>(
                 editor.state(), params::opFeedbackDepth(i, part),
                 "op" + juce::String(i + 1), 42.0f);
+            shapes_[static_cast<size_t>(i)] = std::make_unique<ParamChoice>(
+                editor.state(), params::opFeedbackShape(i, part),
+                params::feedbackShapeNames());
+            filters_[static_cast<size_t>(i)] = std::make_unique<ParamChoice>(
+                editor.state(), params::opFeedbackFilter(i, part),
+                params::feedbackFilterNames());
             addAndMakeVisible(*depths_[static_cast<size_t>(i)]);
+            addAndMakeVisible(*shapes_[static_cast<size_t>(i)]);
+            addAndMakeVisible(*filters_[static_cast<size_t>(i)]);
         }
     }
 
     void resized() override
     {
         auto area = contentArea();
-        auto row = area.removeFromTop(108);
-        const int cell = row.getWidth() / 4;
-        for (auto& knob : depths_)
-            knob->setBounds(row.removeFromLeft(cell));
+        const int width = area.getWidth() / 4;
+        for (int i = 0; i < 4; ++i) {
+            auto column = area.removeFromLeft(width);
+            auto knob = column.removeFromTop(76);
+            depths_[static_cast<size_t>(i)]->setBounds(
+                knob.withSizeKeepingCentre(80, 76));
+            shapes_[static_cast<size_t>(i)]->setBounds(
+                column.removeFromTop(20).withTrimmedTop(4).withWidth(200));
+            filters_[static_cast<size_t>(i)]->setBounds(
+                column.removeFromTop(20).withTrimmedTop(4).withWidth(140));
+        }
     }
 
 private:
     std::array<std::unique_ptr<ParamKnob>, 4> depths_{};
+    std::array<std::unique_ptr<ParamChoice>, 4> shapes_{};
+    std::array<std::unique_ptr<ParamChoice>, 4> filters_{};
 };
 
 class FeedbackPage : public PageBase {
@@ -97,7 +114,7 @@ public:
     void resized() override
     {
         auto area = getLocalBounds();
-        env_->setBounds(area.removeFromTop(430));
+        env_->setBounds(area.removeFromTop(380));
         area.removeFromTop(10);
         depth_->setBounds(area);
     }

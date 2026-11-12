@@ -7,8 +7,9 @@
 - **Brief section:** README line of research 2, and the nonlinear path in
   [`../design/research-feedback.md`](../design/research-feedback.md).
 - **Owner / date:** P1Onken, 2026-11-12.
-- **Disposition:** accepted as a bounded experiment. The parameter and the UI ship
-  only if the measurement passes.
+- **Disposition:** complete. The shape and filter choices are shipped on the
+  feedback page, the 171, 160 and 146 libraries migrate, and the measurement is in
+  `plugin/evidence/feedback-shaper.md`.
 
 ## Player outcome
 
@@ -28,57 +29,57 @@
 - **Other features:** `fb_tap`, `fm_op`, the feedback envelope and the feedback
   page.
 - **Platform/API/HAL changes:** none. The engine stays integer C.
-- **Persistence/version impact:** if the shaper ships, the part block grows from 171
-  to 175 and the manifest from 356 to 360. The `.p1lib` reader accepts the 146, 160,
-  171 and 175 layouts. The APVTS state is name-keyed.
+- **Persistence/version impact:** the part block grows from 171 to 179 and the
+  manifest from 356 to 372. The `.p1lib` reader accepts the 146, 160, 171 and 179
+  layouts. The APVTS state is name-keyed.
 - **MIDI/clock impact:** none. The shape choice is host-automatable and stays out of
   the default CC map.
 
 ## Parameter and event semantics
 
-The ship phase parameter, per operator and part:
+The shipped parameters, per operator and part:
 
 | Parameter | Target | Range | Default | Display |
 | --- | --- | --- | --- | --- |
 | `op1_fb_shape` ... `op4_fb_shape` | `opN.fb.shape` | 0..6 | 0 | shape names |
+| `op1_fb_filter` ... `op4_fb_filter` | `opN.fb.filter` | 0..1 | 0 | average or one-pole |
 
-The choices are `off`, `square`, `square neg`, `abs`, `abs neg`, `signed square`,
-`signed square neg`. The shape is inserted after the depth parameter in each
-operator. The part block grows from 171 to 175. The four shapes land at 20, 51, 82
-and 113 in part zero, the depths move to 19, 50, 81 and 112, the envelope moves to
-160..166 and the mode block to 167..174. Part one starts at 175, its depths are
-194, 225, 256 and 287, its shapes are 195, 226, 257 and 288, and its envelope is
-335..341. The total is 360 and the routing base is 350.
+The shape choices are `off`, `square`, `square neg`, `abs`, `abs neg`, `signed`,
+`signed neg`. The filter choices are `average` and `one-pole`. The shape and filter
+are inserted after the depth parameter in each operator. The part block grows from
+171 to 179. In part zero the depths are 19, 51, 83 and 115, the shapes are 20, 52,
+84 and 116, the filters are 21, 53, 85 and 117, the envelope is 164..170 and the
+mode block is 171..178. Part one starts at 179, its depths are 198, 230, 262 and
+294, its shapes are 199, 231, 263 and 295, its filters are 200, 232, 264 and 296,
+and its envelope is 343..349. The total is 372 and the routing base is 362.
 
-The `fb_tap` gains a `shape` parameter. The shaped sample is
+The `fb_tap` gains `shape` and `filter` parameters. The shaped sample is
 
 ```text
 off:            x
 square:         (x*x) >> 15
 abs:            abs(x)
-signed square:  (x*abs(x)) >> 15
+signed:         (x*abs(x)) >> 15
 ```
 
 and the negative choices invert the shaped sample. The shaped sample is what the
-two-sample average stores in `prev`, so the filter sees the shaped signal. The
-`signed square` is odd and carries no DC. The `square` and `abs` are even and carry
-a DC component, which the output blocker removes but which can shift the loop. The
-experiment measures that.
+average stores in `prev`, and what the one-pole accumulates. The `signed` square is
+odd and carries no magnitude change under the sign, so its negative form is a phase
+variant. The `square` and `abs` are even and carry a DC component.
 
-The filter experiment uses a compile-time one-pole with `y += a*(x-y)` and `a` at
-0.5 in one build, against the current two-sample average. A filter parameter is
-added only if the measurement and the listening test show that it earns one.
+The filter is the one-pole `lp += (shaped - lp) >> 1`, a 0.5 coefficient. The
+average remains the default, so the existing feedback path stays bit-exact.
 
 ## Bounds and resources
 
 - **Maximum voices/events/effects:** 20 voices and two parts, unchanged.
 - **Per-sample and per-block operations:** one branch and at most one multiply per
-  operator per sample for the shape, plus the existing average. The one-pole adds
-  one multiply and one add per operator per sample in the experiment build.
-- **Instance memory, CPU, preset size:** four `int32_t` parameters, 16 bytes, in the
-  ship phase. The shape reuses the `prev` state, so there is no new voice state. The
-  one-pole adds one `int32_t` state per operator per voice if it ships. Each part
-  record grows by 16 bytes, so a 128-slot part bank grows by 2,048 bytes.
+  operator per sample for the shape, plus the average or the one-pole. The one-pole
+  adds one shift and one add per operator per sample.
+- **Instance memory, CPU, preset size:** eight `int32_t` parameters, 32 bytes. The
+  shape reuses the `prev` state. The `shaped`, `magnitude` and `lp` state fields add
+  12 bytes per operator per voice, so 20 voices add 960 bytes. Each part record grows
+  by 32 bytes, so a 128-slot part bank grows by 4,096 bytes.
 - **Overflow/overload policy:** `x` is Q15, so `x*x` is below `2^30` and `>> 15`
   returns Q15. `abs(-32768)` is clamped to 32767. The shaped value feeds the
   existing level multiply and shift. The sign is applied after the shape, so the
@@ -89,13 +90,13 @@ added only if the measurement and the listening test show that it earns one.
 
 ## Files and interfaces
 
-- `modules/nodes/fb_tap/node.json` and `node.c`, for the shape parameter and the
-  shaped feedback.
-- `modules/macros/fm_op/macro.json`, for the `fb_shape` parameter.
+- `modules/nodes/fb_tap/node.json` and `node.c`, for the shape and filter
+  parameters and the shaped feedback.
+- `modules/macros/fm_op/macro.json`, for the `fb_shape` and `fb_filter` parameters.
 - `synth/patch.json`, for the manifest entries and the init values.
 - `engine/gen/*`, regenerated.
 - `plugin/preset/part_migration.h`, `PresetStore.hpp`, `PresetStore.cpp` and
-  `PluginProcessor.h`, for the 171 legacy map.
+  `PluginProcessor.h`, for the 171, 160 and 146 legacy layouts.
 - `plugin/tests/preset_smoke.cpp`, and a new `plugin/tests/feedback_shaper.cpp`.
 - `plugin/ui/ParamIDs.h`, `PagesFeedback.cpp`, and the `ParamChoice` names.
 - `plugin/ui/Widgets.cpp`, for the shape display names.
@@ -108,36 +109,38 @@ float, file access or display enters the audio path.
 
 ## Editor control map
 
-The feedback page's operator depth card gets a shape choice under each depth knob:
+The feedback page's operator depth card carries three controls per operator: the
+depth knob, the shape choice and the filter choice.
 
 ```text
 operator depth
 op1 [depth]        op2 [depth]        op3 [depth]        op4 [depth]
     [off v]            [square v]         [abs v]            [signed v]
+    [average v]        [one-pole v]       [average v]        [one-pole v]
 ```
 
 The depth knob keeps the `pct_bip` display. The shape is a `ParamChoice` with the
-seven names. The card height grows to fit the choice row.
+seven names, and the filter is a `ParamChoice` with the two names.
 
 ## Verification
 
 - **Host vector:** a new CTest, `feedback_shaper`, uses one sine operator at note
   60, ratio 1, level 99, a flat operator envelope, the filter off and a fresh
   engine. It renders 16,384 frames into a 2 x 16,384 buffer and analyses the left
-  channel. It measures the shape choices at 25, 50 and 75 percent feedback, with the
-  current average and the one-pole build.
-- **Tolerance/metric:** the `off` shape must be bit-identical to the current path.
-  `square` and `abs` must change the spectrum relative to `off`, and their negative
-  forms must differ from the positive forms. The one-pole must lower the energy
-  above 8 kHz at 75 percent feedback without moving the fundamental. The peak must
-  stay inside a 50 percent margin of the static endpoint. No sample may reach
-  `INT32_MIN` or `INT32_MAX`.
+  channel. It measures the shape choices at 50 and 75 percent feedback, with the
+  average and the one-pole.
+- **Tolerance/metric:** the `off` shape and the `average` filter must be bit-exact
+  with the current path. `square` and `abs` must change the spectrum relative to
+  `off`, and their negative forms must differ from the positive forms. The one-pole
+  must lower the energy above 8 kHz at 75 percent feedback. The signed square must
+  carry less output DC than the even shapes. The peak must stay bounded and no
+  sample may reach `INT32_MIN` or `INT32_MAX`.
 - **Host timing and platform check:** the Linux, Windows and macOS CTest runs.
   pluginval and the CLAP validator cover the host path.
-- **Target package check:** the VST3, CLAP and standalone builds expose 360
-  parameters. The `preset_smoke` test covers the 146, 160, 171 and 175 layouts.
-- **Editor check:** the snapshot renders the shape choices and the new card height.
-  The goldens are regenerated on the Linux container.
+- **Target package check:** the VST3, CLAP and standalone builds expose 372
+  parameters. The `preset_smoke` test covers the 146, 160, 171 and 179 layouts.
+- **Editor check:** the snapshot renders the shape and filter choices and the new
+  card height. The goldens are regenerated on the Linux container with 12 images.
 - **Evidence artefact:** `plugin/evidence/feedback-shaper.md`, with the spectral
   table, the sign comparison, the high-frequency energy and the build hash.
 
@@ -145,11 +148,13 @@ seven names. The card height grows to fit the choice row.
 
 - **Assumptions/open research:** the source is a Csound experiment and a reader
   comment, not a Reface teardown. The `abs` shape is a hypothesis. The square and
-  the signed square cover the neighboring possibilities.
-- **Safe experiment and stop criterion:** if the shaper is not sign-dependent, if
-  the one-pole does not reduce the high-frequency energy, or if the even shapes
-  detune the voice enough to hear, stop and do not ship the parameter.
-- **Smaller alternative:** a fixed shaper or a fixed lowpass with no parameter, or
-  a per-part shape instead of per operator.
-- **Rollback:** remove the shape parameter, the manifest entries and the migration,
-  restore the 171 layout, and keep the measured table.
+  the signed square cover the neighboring possibilities. The signed square is a
+  phase variant in the magnitude spectrum, so its negative form is mostly a phase
+  flip.
+- **Safe experiment and stop criterion:** the measurement passed. The square and
+  abs shapes change the spectrum, their negative forms differ, the one-pole lowers
+  the high-frequency energy, and the peaks stay bounded.
+- **Smaller alternative:** a per-part shape or filter instead of per operator. The
+  per-operator controls are kept because the feedback amount is per operator.
+- **Rollback:** remove the shape and filter parameters, the manifest entries and the
+  migration, restore the 171 layout, and keep the measured table.

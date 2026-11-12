@@ -102,6 +102,12 @@ juce::String formatParamValue(const P1ParamSpec& spec, double value)
             return waveNames[v];
         return juce::String(v);
     }
+    if (display == "shape") {
+        static const char* const names[7] = {"off",      "square", "square neg",
+                                             "abs",      "abs neg", "signed",
+                                             "signed neg"};
+        return v >= 0 && v < 7 ? names[v] : juce::String(v);
+    }
     if (display == "off_pct")
         return v <= 0 ? "off" : percentage(spec, value, false);
     if (display == "pct_inv")

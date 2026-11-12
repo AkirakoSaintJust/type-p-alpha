@@ -229,12 +229,20 @@ lowpass with a coefficient around 0.5 is more aggressive and should tame the noi
 top of the feedback range. The experiment can use a compile-time one-pole first, so
 the shaper is the only new parameter until the filter earns one.
 
-The parameter cost is one shape choice per operator, four per part. The part block
-would grow from 171 to 175 and the manifest from 356 to 360, with a 171-to-175
-migration. The shape choice fits on the feedback page beside the depth knob, in the
-same four-column operator card. The test is a bounded experiment like the polarity
-one: the shaper and the one-pole are measured before the parameter and the UI are
-shipped. The contract is
+The parameter cost is a shape choice and a filter choice per operator, eight per
+part. The part block grows from 171 to 179 and the manifest from 356 to 372, with a
+171-to-179 migration. The three controls, depth, shape and filter, fit on the
+feedback page's four-column operator card.
+
+The measurement passed. At 50 percent feedback the square moves the
+high-frequency energy from 858 to 5.6 and the abs moves the third harmonic from
+0.132 to 0.263, while their negative forms differ. The one-pole lowers the 75
+percent high-frequency energy from 975.7 to 578.9 for the abs and from 113.2 to 11.3
+for the square. The signed square keeps the same magnitude for both signs, so it is
+a phase variant rather than a tone control. The peaks stay bounded. The shaper and
+the filter are shipped, and the evidence is in
+[`../plugin/evidence/feedback-shaper.md`](../plugin/evidence/feedback-shaper.md).
+The contract is
 [`../plugin/feature-contract-feedback-shaper.md`](../plugin/feature-contract-feedback-shaper.md).
 
 ## Feedback envelopes
@@ -344,7 +352,9 @@ The sign flip failed at 25 and 50 percent feedback. It is not shipped, and the
 The shared feedback envelope with a per-operator depth is implemented on the engine
 side and measured in
 [`../plugin/evidence/feedback-envelope.md`](../plugin/evidence/feedback-envelope.md).
-The page, the mockup and the snapshots are in. A different tap, such
-as a one-pole lowpass, or an odd-symmetric nonlinearity in the loop is the follow-up
-if the negative-feedback line continues, and its contract is
-[`../plugin/feature-contract-feedback-shaper.md`](../plugin/feature-contract-feedback-shaper.md).
+The page, the mockup and the snapshots are in. The Reface-style nonlinear shaper and
+the one-pole filter are shipped too, with the evidence in
+[`../plugin/evidence/feedback-shaper.md`](../plugin/evidence/feedback-shaper.md).
+The negative-feedback line now has the shape and filter controls. A different tap
+topology or a listening comparison with the Reface remains open, and it needs its
+own contract.
