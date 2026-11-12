@@ -225,7 +225,7 @@ and spectro pair, and three cards: `oscillator`, `amp env`, `fb env`. The
 oscillator card holds ratio, detune, level, feedback and the wave select. The `amp
 env` card holds R1 to R4 on the first row and L1 to L3 on the second row. The `fb
 env` card holds its own R1 to R4 and L1 to L4 rows, with signed levels in feedback
-units and an `on` switch beside its graph. Every envelope and LFO card carries
+units and an `on` switch in the card header. Every envelope and LFO card carries
 `copy` and `paste` in its header, so a shape or an LFO moves between operators
 without touching the rest of the operator. The four oscillator knobs spread across
 the card. The envelope rates and levels each get their own row.

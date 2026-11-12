@@ -65,7 +65,7 @@ public:
         area.removeFromTop(4);
         amp_.setBounds(area.removeFromTop(200));
         area.removeFromTop(4);
-        fb_.setBounds(area.removeFromTop(214));
+        fb_.setBounds(area.removeFromTop(222));
     }
 
     void paint(juce::Graphics& g) override

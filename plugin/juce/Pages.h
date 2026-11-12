@@ -202,6 +202,7 @@ public:
     {
         P1Card::resized();
         auto area = contentArea();
+        area.removeFromTop(8);
         envView_.setBounds(area.removeFromTop(40));
         auto rates = area.removeFromTop(64);
         const int rateCell = rates.getWidth() / 4;
@@ -267,9 +268,8 @@ public:
     {
         P1Card::resized();
         auto area = contentArea();
+        area.removeFromTop(8);
         auto top = area.removeFromTop(64);
-        auto onArea = top.removeFromRight(56);
-        on_.setBounds(onArea.removeFromTop(18).reduced(4, 0));
         envView_.setBounds(top);
         auto rates = area.removeFromTop(64);
         const int rateCell = rates.getWidth() / 4;
@@ -279,6 +279,7 @@ public:
         const int levelCell = levels.getWidth() / 4;
         for (auto& knob : levels_)
             knob->setBounds(levels.removeFromLeft(levelCell));
+        on_.setBounds(getWidth() - 166, 1, 48, 18);
     }
 
     void tick() { envView_.repaint(); }
