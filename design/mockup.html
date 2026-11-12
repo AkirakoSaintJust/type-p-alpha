@@ -1847,7 +1847,7 @@
   }
 
   function openPatchBrowser() {
-    let sel = currentMulti;
+    let sel = currentMulti >= 0 ? currentMulti : 0;
     const bodyEl = document.createElement("div");
     const list = document.createElement("div");
     list.className = "patchlist";
@@ -1943,9 +1943,7 @@
       format: "type-p-alpha-library",
       version: 1,
       partSlots: PART_SLOTS,
-      multis: PATCHES,
-      partSource: partSource,
-      currentMulti: currentMulti
+      multis: PATCHES
     };
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
     const a = document.createElement("a");
@@ -1980,7 +1978,9 @@
   }
 
   function importLibraryData(d) {
-    if (!d || !Array.isArray(d.partSlots) || !Array.isArray(d.multis))
+    if (!d || d.format !== "type-p-alpha-library" || d.version !== 1)
+      throw new Error("bad library");
+    if (!Array.isArray(d.partSlots) || !Array.isArray(d.multis))
       throw new Error("bad library");
     if (d.partSlots.length !== 128 || d.multis.length !== 64)
       throw new Error("bad slot count");
@@ -1990,13 +1990,8 @@
     });
     PATCHES.splice(0, PATCHES.length);
     d.multis.forEach(function (m) { PATCHES.push(normaliseMulti(m)); });
-    partSource = Array.isArray(d.partSource) && d.partSource.length === 2
-      ? d.partSource.map(function (s) {
-        return Number.isInteger(s) && s >= 0 && s < PART_SLOTS.length ? s : -1;
-      })
-      : [-1, -1];
-    currentMulti = Number.isInteger(d.currentMulti) &&
-      d.currentMulti >= 0 && d.currentMulti < PATCHES.length ? d.currentMulti : 0;
+    partSource = [-1, -1];
+    currentMulti = -1;
     bindPart(activePart - 1);
     showPatchName();
     renderAlg();
@@ -2082,7 +2077,7 @@
     const h = (location.hash || "").replace("#", "");
     if (h === "home") { showTab("patch"); return; }
     if (h === "presets") { showTab("patch"); document.getElementById("patchBtn").click(); return; }
-    if (h === "multisave") { showTab("patch"); openPatchSaveMode(currentMulti); return; }
+    if (h === "multisave") { showTab("patch"); openPatchSaveMode(currentMulti >= 0 ? currentMulti : 0); return; }
     if (h === "multiinit") { showTab("patch"); openMultiInitConfirm(); return; }
     if (h === "save") { showTab("patch"); openPartSlots("save"); return; }
     if (h === "load") { showTab("patch"); openPartSlots("load"); return; }
