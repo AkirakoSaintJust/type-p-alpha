@@ -40,7 +40,9 @@ typedef struct type_p_alpha_state {
     uint32_t op1_dlfo_base[NVOICE];
     int32_t op1_dlfo_w[NVOICE];
     uint32_t op1_tl_level_eff[NVOICE];
+    int32_t op1_fb_signed[NVOICE];
     int32_t op1_fb_level_eff[NVOICE];
+    uint32_t op1_fb_negative[NVOICE];
     int32_t op1_fb_prev[NVOICE];
     int32_t op1_fb_shaped[NVOICE];
     int32_t op1_level_ks_k[NVOICE];
@@ -79,7 +81,9 @@ typedef struct type_p_alpha_state {
     uint32_t op2_dlfo_base[NVOICE];
     int32_t op2_dlfo_w[NVOICE];
     uint32_t op2_tl_level_eff[NVOICE];
+    int32_t op2_fb_signed[NVOICE];
     int32_t op2_fb_level_eff[NVOICE];
+    uint32_t op2_fb_negative[NVOICE];
     int32_t op2_fb_prev[NVOICE];
     int32_t op2_fb_shaped[NVOICE];
     int32_t op2_level_ks_k[NVOICE];
@@ -118,7 +122,9 @@ typedef struct type_p_alpha_state {
     uint32_t op3_dlfo_base[NVOICE];
     int32_t op3_dlfo_w[NVOICE];
     uint32_t op3_tl_level_eff[NVOICE];
+    int32_t op3_fb_signed[NVOICE];
     int32_t op3_fb_level_eff[NVOICE];
+    uint32_t op3_fb_negative[NVOICE];
     int32_t op3_fb_prev[NVOICE];
     int32_t op3_fb_shaped[NVOICE];
     int32_t op3_level_ks_k[NVOICE];
@@ -157,7 +163,9 @@ typedef struct type_p_alpha_state {
     uint32_t op4_dlfo_base[NVOICE];
     int32_t op4_dlfo_w[NVOICE];
     uint32_t op4_tl_level_eff[NVOICE];
+    int32_t op4_fb_signed[NVOICE];
     int32_t op4_fb_level_eff[NVOICE];
+    uint32_t op4_fb_negative[NVOICE];
     int32_t op4_fb_prev[NVOICE];
     int32_t op4_fb_shaped[NVOICE];
     int32_t op4_level_ks_k[NVOICE];
@@ -1542,7 +1550,9 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op1_dlfo_base (S->op1_dlfo_base)
 #define op1_dlfo_w (S->op1_dlfo_w)
 #define op1_tl_level_eff (S->op1_tl_level_eff)
+#define op1_fb_signed (S->op1_fb_signed)
 #define op1_fb_level_eff (S->op1_fb_level_eff)
+#define op1_fb_negative (S->op1_fb_negative)
 #define op1_fb_prev (S->op1_fb_prev)
 #define op1_fb_shaped (S->op1_fb_shaped)
 #define op1_level_ks_k (S->op1_level_ks_k)
@@ -1581,7 +1591,9 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op2_dlfo_base (S->op2_dlfo_base)
 #define op2_dlfo_w (S->op2_dlfo_w)
 #define op2_tl_level_eff (S->op2_tl_level_eff)
+#define op2_fb_signed (S->op2_fb_signed)
 #define op2_fb_level_eff (S->op2_fb_level_eff)
+#define op2_fb_negative (S->op2_fb_negative)
 #define op2_fb_prev (S->op2_fb_prev)
 #define op2_fb_shaped (S->op2_fb_shaped)
 #define op2_level_ks_k (S->op2_level_ks_k)
@@ -1620,7 +1632,9 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op3_dlfo_base (S->op3_dlfo_base)
 #define op3_dlfo_w (S->op3_dlfo_w)
 #define op3_tl_level_eff (S->op3_tl_level_eff)
+#define op3_fb_signed (S->op3_fb_signed)
 #define op3_fb_level_eff (S->op3_fb_level_eff)
+#define op3_fb_negative (S->op3_fb_negative)
 #define op3_fb_prev (S->op3_fb_prev)
 #define op3_fb_shaped (S->op3_fb_shaped)
 #define op3_level_ks_k (S->op3_level_ks_k)
@@ -1659,7 +1673,9 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op4_dlfo_base (S->op4_dlfo_base)
 #define op4_dlfo_w (S->op4_dlfo_w)
 #define op4_tl_level_eff (S->op4_tl_level_eff)
+#define op4_fb_signed (S->op4_fb_signed)
 #define op4_fb_level_eff (S->op4_fb_level_eff)
+#define op4_fb_negative (S->op4_fb_negative)
 #define op4_fb_prev (S->op4_fb_prev)
 #define op4_fb_shaped (S->op4_fb_shaped)
 #define op4_level_ks_k (S->op4_level_ks_k)
@@ -2924,7 +2940,9 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
         op4_fbenv_r4_eff[v] = (uint32_t)p1_key_apply(op4_fbenv_r4[voice_part[v]], p1_key_add(0, 0), 0, 99);
         op4_lfo_base[v] = ((uint32_t)p1_wave_base[((op4_lfo_wave[voice_part[v]] > 11u) ? 0u : op4_lfo_wave[voice_part[v]])] << 10);
         op4_tl_level_eff[v] = (uint32_t)p1_key_apply(p1_clamp((int32_t)op4_tl_level[voice_part[v]] + op4_lfo_cv_x[v], 0, 99), p1_key_add(op4_level_ks_k_x[v], op4_level_vs_k_x[v]), 0, 99);
-        op4_fb_level_eff[v] = p1_clamp(p1_key_apply(op4_fb_level[voice_part[v]] < 0 ? -op4_fb_level[voice_part[v]] : op4_fb_level[voice_part[v]], p1_key_add(op4_fb_ks_k_x[v], op4_fb_vs_k_x[v]), 0, 32767) + op4_fbenv_cv_x[v] + op4_fblfo_cv_x[v], 0, 32767);
+        op4_fb_signed[v] = ((op4_fb_level[voice_part[v]] < 0 ? -1 : 1) * p1_key_apply(op4_fb_level[voice_part[v]] < 0 ? -op4_fb_level[voice_part[v]] : op4_fb_level[voice_part[v]], p1_key_add(op4_fb_ks_k_x[v], op4_fb_vs_k_x[v]), 0, 32767)) + op4_fbenv_cv_x[v] + op4_fblfo_cv_x[v];
+        op4_fb_level_eff[v] = p1_clamp(op4_fb_signed[v] < 0 ? -op4_fb_signed[v] : op4_fb_signed[v], 0, 32767);
+        op4_fb_negative[v] = (op4_fb_signed[v] < 0) ? 1u : 0u;
         op3_eg_vs_k[v] = vel_on_on_x ? p1_vel_scale((int32_t)voice_velocity[v], op3_eg_vs_amount[voice_part[v]]) : 0;
         op3_fb_vs_k[v] = 1 ? p1_vel_scale((int32_t)voice_velocity[v], op3_fb_vs_amount[voice_part[v]]) : 0;
         op3_level_vs_k[v] = 1 ? p1_vel_scale((int32_t)voice_velocity[v], op3_level_vs_amount[voice_part[v]]) : 0;
@@ -2948,7 +2966,9 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
         op3_fbenv_r4_eff[v] = (uint32_t)p1_key_apply(op3_fbenv_r4[voice_part[v]], p1_key_add(0, 0), 0, 99);
         op3_lfo_base[v] = ((uint32_t)p1_wave_base[((op3_lfo_wave[voice_part[v]] > 11u) ? 0u : op3_lfo_wave[voice_part[v]])] << 10);
         op3_tl_level_eff[v] = (uint32_t)p1_key_apply(p1_clamp((int32_t)op3_tl_level[voice_part[v]] + op3_lfo_cv_x[v], 0, 99), p1_key_add(op3_level_ks_k_x[v], op3_level_vs_k_x[v]), 0, 99);
-        op3_fb_level_eff[v] = p1_clamp(p1_key_apply(op3_fb_level[voice_part[v]] < 0 ? -op3_fb_level[voice_part[v]] : op3_fb_level[voice_part[v]], p1_key_add(op3_fb_ks_k_x[v], op3_fb_vs_k_x[v]), 0, 32767) + op3_fbenv_cv_x[v] + op3_fblfo_cv_x[v], 0, 32767);
+        op3_fb_signed[v] = ((op3_fb_level[voice_part[v]] < 0 ? -1 : 1) * p1_key_apply(op3_fb_level[voice_part[v]] < 0 ? -op3_fb_level[voice_part[v]] : op3_fb_level[voice_part[v]], p1_key_add(op3_fb_ks_k_x[v], op3_fb_vs_k_x[v]), 0, 32767)) + op3_fbenv_cv_x[v] + op3_fblfo_cv_x[v];
+        op3_fb_level_eff[v] = p1_clamp(op3_fb_signed[v] < 0 ? -op3_fb_signed[v] : op3_fb_signed[v], 0, 32767);
+        op3_fb_negative[v] = (op3_fb_signed[v] < 0) ? 1u : 0u;
         op2_eg_vs_k[v] = vel_on_on_x ? p1_vel_scale((int32_t)voice_velocity[v], op2_eg_vs_amount[voice_part[v]]) : 0;
         op2_fb_vs_k[v] = 1 ? p1_vel_scale((int32_t)voice_velocity[v], op2_fb_vs_amount[voice_part[v]]) : 0;
         op2_level_vs_k[v] = 1 ? p1_vel_scale((int32_t)voice_velocity[v], op2_level_vs_amount[voice_part[v]]) : 0;
@@ -2972,7 +2992,9 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
         op2_fbenv_r4_eff[v] = (uint32_t)p1_key_apply(op2_fbenv_r4[voice_part[v]], p1_key_add(0, 0), 0, 99);
         op2_lfo_base[v] = ((uint32_t)p1_wave_base[((op2_lfo_wave[voice_part[v]] > 11u) ? 0u : op2_lfo_wave[voice_part[v]])] << 10);
         op2_tl_level_eff[v] = (uint32_t)p1_key_apply(p1_clamp((int32_t)op2_tl_level[voice_part[v]] + op2_lfo_cv_x[v], 0, 99), p1_key_add(op2_level_ks_k_x[v], op2_level_vs_k_x[v]), 0, 99);
-        op2_fb_level_eff[v] = p1_clamp(p1_key_apply(op2_fb_level[voice_part[v]] < 0 ? -op2_fb_level[voice_part[v]] : op2_fb_level[voice_part[v]], p1_key_add(op2_fb_ks_k_x[v], op2_fb_vs_k_x[v]), 0, 32767) + op2_fbenv_cv_x[v] + op2_fblfo_cv_x[v], 0, 32767);
+        op2_fb_signed[v] = ((op2_fb_level[voice_part[v]] < 0 ? -1 : 1) * p1_key_apply(op2_fb_level[voice_part[v]] < 0 ? -op2_fb_level[voice_part[v]] : op2_fb_level[voice_part[v]], p1_key_add(op2_fb_ks_k_x[v], op2_fb_vs_k_x[v]), 0, 32767)) + op2_fbenv_cv_x[v] + op2_fblfo_cv_x[v];
+        op2_fb_level_eff[v] = p1_clamp(op2_fb_signed[v] < 0 ? -op2_fb_signed[v] : op2_fb_signed[v], 0, 32767);
+        op2_fb_negative[v] = (op2_fb_signed[v] < 0) ? 1u : 0u;
         op1_eg_vs_k[v] = vel_on_on_x ? p1_vel_scale((int32_t)voice_velocity[v], op1_eg_vs_amount[voice_part[v]]) : 0;
         op1_fb_vs_k[v] = 1 ? p1_vel_scale((int32_t)voice_velocity[v], op1_fb_vs_amount[voice_part[v]]) : 0;
         op1_level_vs_k[v] = 1 ? p1_vel_scale((int32_t)voice_velocity[v], op1_level_vs_amount[voice_part[v]]) : 0;
@@ -2996,7 +3018,9 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
         op1_fbenv_r4_eff[v] = (uint32_t)p1_key_apply(op1_fbenv_r4[voice_part[v]], p1_key_add(0, 0), 0, 99);
         op1_lfo_base[v] = ((uint32_t)p1_wave_base[((op1_lfo_wave[voice_part[v]] > 11u) ? 0u : op1_lfo_wave[voice_part[v]])] << 10);
         op1_tl_level_eff[v] = (uint32_t)p1_key_apply(p1_clamp((int32_t)op1_tl_level[voice_part[v]] + op1_lfo_cv_x[v], 0, 99), p1_key_add(op1_level_ks_k_x[v], op1_level_vs_k_x[v]), 0, 99);
-        op1_fb_level_eff[v] = p1_clamp(p1_key_apply(op1_fb_level[voice_part[v]] < 0 ? -op1_fb_level[voice_part[v]] : op1_fb_level[voice_part[v]], p1_key_add(op1_fb_ks_k_x[v], op1_fb_vs_k_x[v]), 0, 32767) + op1_fbenv_cv_x[v] + op1_fblfo_cv_x[v], 0, 32767);
+        op1_fb_signed[v] = ((op1_fb_level[voice_part[v]] < 0 ? -1 : 1) * p1_key_apply(op1_fb_level[voice_part[v]] < 0 ? -op1_fb_level[voice_part[v]] : op1_fb_level[voice_part[v]], p1_key_add(op1_fb_ks_k_x[v], op1_fb_vs_k_x[v]), 0, 32767)) + op1_fbenv_cv_x[v] + op1_fblfo_cv_x[v];
+        op1_fb_level_eff[v] = p1_clamp(op1_fb_signed[v] < 0 ? -op1_fb_signed[v] : op1_fb_signed[v], 0, 32767);
+        op1_fb_negative[v] = (op1_fb_signed[v] < 0) ? 1u : 0u;
     }
     for (uint32_t i = 0; i < 32u; i++) bus[i] = 0;
     for (uint32_t v = v0; v < v1; v++) {
@@ -3204,11 +3228,11 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
                 : 0;
             /* Output gate: 0 when `mute` is set, else the input passes through. */
             int32_t op4_mute_audio_x = op4_mute_mute[voice_part[v]] ? 0 : op4_tl_audio_x;
-            /* Self-feedback tap. The level is signed and block-derived, so it carries the key,
-               velocity, envelope and LFO offsets on the magnitude. The positive half is the
-               current path: the level-gained output averaged over this sample and the previous
-               one. The negative half takes the absolute value, negates it and uses the same
-               average, the Reface-style pulse family. The two-sample average is the OPM's
+            /* Self-feedback tap. The level is signed and block-derived from the base level
+               plus the envelope and LFO offsets. A non-negative sum is the current path; a
+               negative sum takes the absolute value, negates it and uses the same average,
+               the Reface-style pulse family. The level-gained output is averaged over this
+               sample and the previous one. The two-sample average is the OPM's
                `(o + Inp_last) >> Fl`; its zero at Nyquist damps the one-sample loop at the top
                of the band. The state stores the previous shaped sample. The body is inlined
                four times into the same voice scope, so the intermediate lives in the state.
@@ -3216,7 +3240,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
                turning feedback up fade in from the previous setting. */
             int32_t op4_fb_audio_x = 0;
             if (op4_fb_level_eff[v]) {
-                if (op4_fb_level[voice_part[v]] < 0) {
+                if (op4_fb_negative[v]) {
                     op4_fb_shaped[v] = op4_tl_audio_x < 0 ? -op4_tl_audio_x : op4_tl_audio_x;
                     op4_fb_shaped[v] = -op4_fb_shaped[v];
                     op4_fb_audio_x =
@@ -3279,11 +3303,11 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
                 : 0;
             /* Output gate: 0 when `mute` is set, else the input passes through. */
             int32_t op3_mute_audio_x = op3_mute_mute[voice_part[v]] ? 0 : op3_tl_audio_x;
-            /* Self-feedback tap. The level is signed and block-derived, so it carries the key,
-               velocity, envelope and LFO offsets on the magnitude. The positive half is the
-               current path: the level-gained output averaged over this sample and the previous
-               one. The negative half takes the absolute value, negates it and uses the same
-               average, the Reface-style pulse family. The two-sample average is the OPM's
+            /* Self-feedback tap. The level is signed and block-derived from the base level
+               plus the envelope and LFO offsets. A non-negative sum is the current path; a
+               negative sum takes the absolute value, negates it and uses the same average,
+               the Reface-style pulse family. The level-gained output is averaged over this
+               sample and the previous one. The two-sample average is the OPM's
                `(o + Inp_last) >> Fl`; its zero at Nyquist damps the one-sample loop at the top
                of the band. The state stores the previous shaped sample. The body is inlined
                four times into the same voice scope, so the intermediate lives in the state.
@@ -3291,7 +3315,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
                turning feedback up fade in from the previous setting. */
             int32_t op3_fb_audio_x = 0;
             if (op3_fb_level_eff[v]) {
-                if (op3_fb_level[voice_part[v]] < 0) {
+                if (op3_fb_negative[v]) {
                     op3_fb_shaped[v] = op3_tl_audio_x < 0 ? -op3_tl_audio_x : op3_tl_audio_x;
                     op3_fb_shaped[v] = -op3_fb_shaped[v];
                     op3_fb_audio_x =
@@ -3354,11 +3378,11 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
                 : 0;
             /* Output gate: 0 when `mute` is set, else the input passes through. */
             int32_t op2_mute_audio_x = op2_mute_mute[voice_part[v]] ? 0 : op2_tl_audio_x;
-            /* Self-feedback tap. The level is signed and block-derived, so it carries the key,
-               velocity, envelope and LFO offsets on the magnitude. The positive half is the
-               current path: the level-gained output averaged over this sample and the previous
-               one. The negative half takes the absolute value, negates it and uses the same
-               average, the Reface-style pulse family. The two-sample average is the OPM's
+            /* Self-feedback tap. The level is signed and block-derived from the base level
+               plus the envelope and LFO offsets. A non-negative sum is the current path; a
+               negative sum takes the absolute value, negates it and uses the same average,
+               the Reface-style pulse family. The level-gained output is averaged over this
+               sample and the previous one. The two-sample average is the OPM's
                `(o + Inp_last) >> Fl`; its zero at Nyquist damps the one-sample loop at the top
                of the band. The state stores the previous shaped sample. The body is inlined
                four times into the same voice scope, so the intermediate lives in the state.
@@ -3366,7 +3390,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
                turning feedback up fade in from the previous setting. */
             int32_t op2_fb_audio_x = 0;
             if (op2_fb_level_eff[v]) {
-                if (op2_fb_level[voice_part[v]] < 0) {
+                if (op2_fb_negative[v]) {
                     op2_fb_shaped[v] = op2_tl_audio_x < 0 ? -op2_tl_audio_x : op2_tl_audio_x;
                     op2_fb_shaped[v] = -op2_fb_shaped[v];
                     op2_fb_audio_x =
@@ -3429,11 +3453,11 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
                 : 0;
             /* Output gate: 0 when `mute` is set, else the input passes through. */
             int32_t op1_mute_audio_x = op1_mute_mute[voice_part[v]] ? 0 : op1_tl_audio_x;
-            /* Self-feedback tap. The level is signed and block-derived, so it carries the key,
-               velocity, envelope and LFO offsets on the magnitude. The positive half is the
-               current path: the level-gained output averaged over this sample and the previous
-               one. The negative half takes the absolute value, negates it and uses the same
-               average, the Reface-style pulse family. The two-sample average is the OPM's
+            /* Self-feedback tap. The level is signed and block-derived from the base level
+               plus the envelope and LFO offsets. A non-negative sum is the current path; a
+               negative sum takes the absolute value, negates it and uses the same average,
+               the Reface-style pulse family. The level-gained output is averaged over this
+               sample and the previous one. The two-sample average is the OPM's
                `(o + Inp_last) >> Fl`; its zero at Nyquist damps the one-sample loop at the top
                of the band. The state stores the previous shaped sample. The body is inlined
                four times into the same voice scope, so the intermediate lives in the state.
@@ -3441,7 +3465,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
                turning feedback up fade in from the previous setting. */
             int32_t op1_fb_audio_x = 0;
             if (op1_fb_level_eff[v]) {
-                if (op1_fb_level[voice_part[v]] < 0) {
+                if (op1_fb_negative[v]) {
                     op1_fb_shaped[v] = op1_tl_audio_x < 0 ? -op1_tl_audio_x : op1_tl_audio_x;
                     op1_fb_shaped[v] = -op1_fb_shaped[v];
                     op1_fb_audio_x =

@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: GPL-3.0-only */
 /* Bipolar feedback: the positive half is the current path, the negative half is the
- * square family with the same average, and the envelope level offsets the
- * magnitude without changing the sign. */
+ * square family with the same average, and the envelope level moves the signed
+ * feedback level toward or across zero. */
 #include <array>
 #include <cmath>
 #include <cstdint>

@@ -1,7 +1,8 @@
 /* SPDX-License-Identifier: GPL-3.0-only */
-/* Feedback envelope: each operator's internal fbenv node offsets that operator's
- * feedback amount directly. A flat envelope is bit-exact; positive levels open
- * the feedback as the envelope rises, negative levels close it. */
+/* Feedback envelope: each operator's internal fbenv node adds a signed offset to
+ * that operator's signed feedback level. A flat envelope is bit-exact; positive
+ * levels open the positive feedback family, and negative levels reduce the level
+ * and cross into the negative family when the sum goes below zero. */
 #include <array>
 #include <cmath>
 #include <cstdint>
@@ -140,7 +141,7 @@ double peakOf(const std::vector<int32_t>& samples)
 }
 
 bool render(int32_t feedback, int32_t envL1, int32_t envR1, int32_t on,
-            std::vector<int32_t>& samples)
+            std::vector<int32_t>& samples, bool* negative = nullptr)
 {
     p1::Engine engine;
     engine.reset();
@@ -149,6 +150,8 @@ bool render(int32_t feedback, int32_t envL1, int32_t envR1, int32_t on,
     engine.noteOn(60, 100, 0);
     samples.assign(2u * static_cast<std::size_t>(kSamples), 0);
     engine.render(samples.data(), static_cast<uint32_t>(kSamples));
+    if (negative != nullptr)
+        *negative = engine.state()->op1_fb_negative[0] != 0;
     return true;
 }
 
@@ -185,12 +188,31 @@ int main()
                        steadyLast.a[3] / steadyLast.a[1]) > 0.02,
           "a partial negative level changes an existing feedback amount");
 
+    std::vector<int32_t> zeroNegative;
+    std::vector<int32_t> zeroPositive;
+    bool zeroNegativeFamily = false;
+    bool zeroPositiveFamily = false;
+    if (!render(0, -8192, 99, 1, zeroNegative, &zeroNegativeFamily) ||
+        !render(0, 8192, 99, 1, zeroPositive, &zeroPositiveFamily)) {
+        std::printf("envelope: setup failed\n");
+        return 1;
+    }
+    check(zeroNegativeFamily && !zeroPositiveFamily,
+          "the envelope sign chooses the feedback family from a zero base");
+    check(peakOf(zeroNegative) > 0.0,
+          "a negative envelope from a zero base is audible");
+    check(std::memcmp(zeroNegative.data(), zeroPositive.data(),
+                      2u * static_cast<std::size_t>(kSamples) *
+                          sizeof(int32_t)) != 0,
+          "the negative and positive envelopes differ");
+
     std::vector<int32_t> plus;
     std::vector<int32_t> minus;
     std::vector<int32_t> staticFull;
     std::vector<int32_t> staticHalf;
+    bool minusFamily = false;
     if (!render(0, 8192, 80, 1, plus) ||
-        !render(16384, -32767, 50, 1, minus) ||
+        !render(16384, -32767, 50, 1, minus, &minusFamily) ||
         !render(32767, 0, 50, 1, staticFull) ||
         !render(16384, 0, 50, 1, staticHalf)) {
         std::printf("envelope: setup failed\n");
@@ -215,10 +237,8 @@ int main()
               plusLast.a[3] / plusLast.a[1] >
                   plusFirst.a[3] / plusFirst.a[1] * 1.10,
           "positive levels brighten the last window");
-    check(minusLast.centroid < minusFirst.centroid * 0.90 ||
-              minusLast.a[3] / minusLast.a[1] <
-                  minusFirst.a[3] / minusFirst.a[1] * 0.90,
-          "negative levels darken the last window");
+    check(minusFamily,
+          "a negative level crosses the positive base into the negative family");
 
     const double plusPeak = peakOf(plus);
     const double minusPeak = peakOf(minus);

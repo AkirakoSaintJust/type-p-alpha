@@ -246,6 +246,52 @@ int main()
         check(allRestored, "the state restores every manifest parameter");
     }
 
+    {
+        TypePAlphaAudioProcessor chord;
+        chord.setRateAndBufferSizeDetails(44100.0, kFrames);
+        chord.prepareToPlay(44100.0, kFrames);
+        juce::AudioBuffer<float> chordBlock(2, kFrames);
+        juce::MidiBuffer chordMidi;
+        chordMidi.addEvent(
+            juce::MidiMessage::noteOn(1, 60, static_cast<juce::uint8>(100)), 0);
+        chordMidi.addEvent(
+            juce::MidiMessage::noteOn(1, 64, static_cast<juce::uint8>(100)), 0);
+        chordMidi.addEvent(
+            juce::MidiMessage::noteOn(1, 67, static_cast<juce::uint8>(100)), 0);
+        std::vector<float> capture;
+        for (int i = 0; i < 24; ++i) {
+            chordBlock.clear();
+            chord.processBlock(chordBlock, chordMidi);
+            chordMidi.clear();
+            for (int frame = 0; frame < kFrames; ++frame)
+                capture.push_back(chordBlock.getSample(0, frame));
+        }
+        const int window = 4096;
+        const int start = static_cast<int>(capture.size()) - window;
+        auto tone = [&capture, start](double frequency) {
+            constexpr double pi = 3.14159265358979323846;
+            double sum = 0.0;
+            double weighted = 0.0;
+            for (int i = 0; i < window; ++i) {
+                const double w = 0.5 - 0.5 * std::cos(2.0 * pi * i / (window - 1));
+                const double phase = 2.0 * pi * frequency * i / 44100.0;
+                const auto sample =
+                    static_cast<double>(capture[static_cast<std::size_t>(start + i)]);
+                sum += w;
+                weighted += sample * w * std::cos(phase);
+            }
+            return std::abs(weighted) / sum;
+        };
+        const double c4 = tone(261.625565);
+        const double e4 = tone(329.627557);
+        const double g4 = tone(391.995436);
+        const double strongest = std::max(c4, std::max(e4, g4));
+        check(strongest > 1e-5 && c4 > strongest * 0.15 &&
+                  e4 > strongest * 0.15 && g4 > strongest * 0.15,
+              "a three-note chord renders all three notes");
+        chord.releaseResources();
+    }
+
     processor.releaseResources();
     std::printf("plugin: %s\n", failures ? "FAILED" : "passed");
     return failures ? 1 : 0;

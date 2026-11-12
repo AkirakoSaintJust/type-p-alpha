@@ -16,15 +16,14 @@
   and feedback envelope, or open `operator lfos` for the oscillator and the three
   per-operator LFOs. Each envelope and LFO card carries `copy` and `paste` in its
   header, so a shape or an LFO moves between operators on its own.
-- **Sound and behaviour:** each operator owns its feedback envelope. The envelope
-  levels are signed, so a positive level opens the feedback and a negative level
-  closes it, with the envelope added straight to the feedback level and no depth
-  control. A negative level reduces the amount and clamps at zero, so raise the
-  feedback knob to hear a negative level from a zero base. The feedback LFO adds
-  another signed offset, and the detune LFO adds a signed pitch offset to that
-  operator. A negative LFO depth in bipolar mode inverts the LFO phase. A flat
-  envelope, the envelope off switch and both LFOs at depth 0 keep the render
-  bit-exact.
+- **Sound and behaviour:** each operator owns its feedback envelope. The feedback
+  knob, the envelope and the LFO are summed as a signed feedback level, and the sign
+  chooses the family: a non-negative sum uses the current path, and a negative sum
+  uses the negative feedback family. A negative envelope or LFO level can therefore
+  cross zero and is audible from a zero feedback knob. The detune LFO adds a signed
+  pitch offset to that operator. A negative LFO depth in bipolar mode inverts the LFO
+  phase. A flat envelope, the envelope off switch and both LFOs at depth 0 keep the
+  render bit-exact.
 - **Failure mode:** the operator envelope leaks between operators, the flat or off
   path changes the render, the detune LFO shifts another operator, or a full-level
   envelope or LFO runs away.
@@ -59,17 +58,21 @@ The envelope, feedback LFO and detune LFO are per operator and per part.
 | `opN_dlfo_wave` | `opN.dlfo.wave` | 0..11 | 0 | `wave` |
 | `opN_dlfo_mode` | `opN.dlfo.mode` | 0..1 | 1 | `onoff` |
 
-The envelope is signed and added before the feedback LFO:
+The feedback level is signed. The base level keeps its sign after the key and
+velocity scaling, the envelope and LFO offsets are added, and the sign of the sum
+chooses the family:
 
 ```c
-level_eff = p1_clamp(
-    p1_key_apply(abs(level), p1_key_add(k, vk), 0, 32767)
-    + fbenv
-    + fblfo,
-    0, 32767)
+signed = (level < 0 ? -1 : 1) * p1_key_apply(abs(level), k + vk, 0, 32767)
+         + fbenv
+         + fblfo;
+negative = signed < 0;
+level_eff = p1_clamp(abs(signed), 0, 32767);
 ```
 
-The detune LFO is added to the operator pitch input:
+The `fb_tap` node uses `negative` for the family, so a negative envelope or LFO can
+cross zero even when the feedback knob is at zero. The detune LFO is added to the
+operator pitch input:
 
 ```c
 pitch = p1_clamp(pitch_shared + dlfo, -32768, 32767)
@@ -78,10 +81,10 @@ pitch = p1_clamp(pitch_shared + dlfo, -32768, 32767)
 The `fm_op` macro owns one `pitch_env` for the feedback envelope, one `lfo` for each
 new family, and a `csum` for the pitch pair. The feedback envelope keeps the pitch
 envelope's signed Q15 levels, four rates and on switch, with its release level fixed
-at zero. The `fb_tap` node gains the `lfo` input and adds both control inputs
-directly. The bipolar `lfo` mode uses the signed depth, so a negative depth inverts
-the phase. At depth 0 each LFO outputs 0, and a flat envelope outputs 0, so the
-existing render stays exact.
+at zero. The `fb_tap` node gains the `lfo` input, sums both control inputs with the
+signed base, and uses the sign of that sum for the family. The bipolar `lfo` mode
+uses the signed depth, so a negative depth inverts the phase. At depth 0 each LFO
+outputs 0, and a flat envelope outputs 0, so the existing render stays exact.
 
 ## Bounds and resources
 
@@ -120,27 +123,29 @@ existing render stays exact.
 - **Host vector(s):** `operator_lfos` checks the bit-exact depth-0 path, the changed
   render for both LFOs, and the phase inversion from a negative depth.
   `feedback_envelope` checks the flat and off bit-exact path, the positive and
-  negative level direction, a partial negative level against an existing feedback
-  amount, and the peak bound. `feedback_bipolar` checks that the envelope level
-  moves the negative magnitude.
-  `plugin_smoke` restores every manifest parameter and the global library.
-  `plugin_stability` drives every parameter to its bounds. `editor_snapshot`
-  checks that the amp envelope and detune LFO section clips paste to another
-  operator.
+  negative family selection from a zero base, a partial negative level against an
+  existing feedback amount, a negative level crossing a positive base, and the peak
+  bound. `feedback_bipolar` checks the negative family and the envelope level.
+  `voice_alloc` checks a three-note chord, one note's release, both part channels
+  and recycled voices. `plugin_smoke` checks a three-note chord through the host
+  block and restores every manifest parameter. `plugin_stability` drives every
+  parameter to its bounds. `editor_snapshot` checks that the oscillator, amp
+  envelope and detune LFO sections paste to another operator.
 - **Browser vector (if applicable):** the mockup check covers the operators tab,
   the operator lfos tab, the four feedback envelopes with four signed levels, and
   the two new LFO cards.
 - **Target package check:** the Linux and Windows builds link the editor, the
   engine and the tests.
-- **Host timing and platform check:** Linux `ctest` passes 10 of 10, including the
-  13-image snapshot diff.
+- **Host timing and platform check:** Linux `ctest` passes 11 of 11, including the
+  13-image snapshot diff, and the Windows suite passes 10 of 10.
 - **Tolerance/metric:** the flat and off envelope renders and the depth-0 LFO
-  renders are bit-exact. The nonzero LFO and envelope renders differ. The envelope
-  direction and peak bound keep their existing tolerances. The snapshot diff is
+  renders are bit-exact. The nonzero LFO and envelope renders differ. The family
+  selection and the peak bound keep their existing tolerances. The snapshot diff is
   exact.
 - **Evidence artefact:** `plugin/tests/operator_lfos.cpp`,
-  `plugin/tests/feedback_envelope.cpp`, the Linux snapshots
-  `editor-operators.png` and `editor-operator-lfos.png`, and the mockup check.
+  `plugin/tests/feedback_envelope.cpp`, `plugin/tests/voice_alloc.cpp`, the Linux
+  snapshots `editor-operators.png` and `editor-operator-lfos.png`, and the mockup
+  check.
 
 ## Risks and fallback
 

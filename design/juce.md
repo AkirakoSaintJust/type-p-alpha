@@ -97,7 +97,8 @@ Every page fills the same height:
 - operators: four columns with oscillator, `amp env` and `fb env`. The amplitude
   envelope uses one row for R1 to R4 and a second row for L1 to L3. The feedback
   envelope uses R1 to R4 and L1 to L4, with signed levels and an on switch in the
-  card header. The two envelope cards carry copy and paste in their headers.
+  card header. The signed sum of the feedback knob, the envelope and the LFO picks
+  the feedback family, so a negative level can cross zero from any knob setting. The two envelope cards carry copy and paste in their headers.
 - operator lfos: four operator columns with the oscillator, then the `amp lfo`,
   `fb lfo` and `detune lfo` cards. Each LFO card carries copy and paste in its
   header, and its `bipolar` switch beside the wave select.

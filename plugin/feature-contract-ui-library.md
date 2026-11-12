@@ -88,7 +88,7 @@
   32-character rename field, the LFO modes and the library flow.
 - **Target package check:** the Linux build and the Windows build both link the
   editor, the smoke tests and the stability test.
-- **Host timing and platform check:** Linux `ctest` passes 10 of 10, and the Linux
+- **Host timing and platform check:** Linux `ctest` passes 11 of 11, and the Linux
   snapshot diff passes with 13 images.
 - **Tolerance/metric:** the snapshot diff is exact. The name field stores 32
   characters. The current `P1LIB2` library loads with the same names and

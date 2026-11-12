@@ -120,6 +120,12 @@ target_include_directories(operator_lfos PRIVATE "${P1_GENERATED_DIR}")
 add_dependencies(operator_lfos p1_params)
 add_test(NAME operator_lfos COMMAND operator_lfos)
 
+add_executable(voice_alloc tests/voice_alloc.cpp)
+target_link_libraries(voice_alloc PRIVATE p1_engine)
+target_include_directories(voice_alloc PRIVATE "${P1_GENERATED_DIR}")
+add_dependencies(voice_alloc p1_params)
+add_test(NAME voice_alloc COMMAND voice_alloc)
+
 add_executable(rate_bridge_test tests/rate_bridge_test.cpp)
 target_link_libraries(rate_bridge_test PRIVATE p1_engine)
 add_test(NAME rate_bridge COMMAND rate_bridge_test)

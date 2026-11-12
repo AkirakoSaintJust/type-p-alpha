@@ -1,5 +1,9 @@
 # Feature contract: bipolar feedback
 
+> The envelope and depth rows below are the 171 shared-envelope design. The
+> current per-operator signed envelope and LFOs are in
+> [`feature-contract-operator-lfos.md`](feature-contract-operator-lfos.md).
+
 ## Identity
 
 - **Feature:** One bipolar feedback knob per operator, with the Reface-style
