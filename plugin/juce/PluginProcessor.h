@@ -83,7 +83,7 @@ public:
     int getUiPage() const { return uiPage_; }
     void setUiPage(int page)
     {
-        uiPage_ = juce::jlimit(0, 2, page);
+        uiPage_ = juce::jlimit(0, 3, page);
     }
 
 private:

@@ -6,9 +6,10 @@ The page and its snapshots are the next milestone.
 
 ## Verdict
 
-The engine side passes. The depth 0 render is bit-exact, the positive depth
+The engine and the page pass. The depth 0 render is bit-exact, the positive depth
 brightens the spectrum, the negative depth darkens it, and the dynamic peaks stay
-inside the stability margin. The 146 and 160 libraries still load.
+inside the stability margin. The 146 and 160 libraries still load, and the Linux
+snapshot shows the new `feedback` tab with the envelope and the four depth knobs.
 
 ## Build and setup
 
@@ -65,6 +66,7 @@ dynamic peak exceeds the endpoint static render by 27 to 35 percent, which is wh
 the contract uses a 50 percent stability margin rather than a 10 percent one. The
 engine is integer and the level is clamped, so the render cannot run away.
 
-The page follows the control map in the contract. It needs the envelope graph, the
-seven shape knobs and the four depth knobs, and it needs the Linux snapshot
-refresh.
+The page follows the control map. The `feedback` tab carries a full-width envelope
+card with the seven shape knobs and a four-knob operator depth card. The Linux
+snapshot is `plugin/tests/snapshots/linux-x86_64/editor-feedback.png`, and the
+snapshot diff passes with the 12-image set.

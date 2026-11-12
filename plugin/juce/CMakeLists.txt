@@ -51,6 +51,7 @@ set(P1_UI_SOURCES
     Pages.cpp
     PagesOperators.cpp
     PagesFxMod.cpp
+    PagesFeedback.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../ui/Theme.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../ui/Widgets.cpp
 )

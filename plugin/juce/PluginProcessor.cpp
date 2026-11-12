@@ -355,7 +355,7 @@ void TypePAlphaAudioProcessor::setStateInformation(const void* data, int sizeInB
     partNames_[0] = state.getProperty("part1Name", "init").toString();
     partNames_[1] = state.getProperty("part2Name", "init").toString();
     uiActivePart_ = juce::jlimit(0, 1, static_cast<int>(state.getProperty("uiActivePart", 0)));
-    uiPage_ = juce::jlimit(0, 2,
+    uiPage_ = juce::jlimit(0, 3,
                            static_cast<int>(state.getProperty("uiPage", 0)));
     presets_.setCurrentMulti(static_cast<int>(state.getProperty("currentMulti", -1)));
     for (int part = 0; part < kP1PartCount; ++part) {

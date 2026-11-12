@@ -87,6 +87,9 @@ int main(int argc, char** argv)
     p1editor->showTab(2);
     fill();
     ok = saveSnapshot(*editor, directory.getChildFile("editor-fxmod.png")) && ok;
+    p1editor->showTab(3);
+    fill();
+    ok = saveSnapshot(*editor, directory.getChildFile("editor-feedback.png")) && ok;
     p1editor->showTab(0);
     fill();
     p1editor->showAlgorithmPicker();

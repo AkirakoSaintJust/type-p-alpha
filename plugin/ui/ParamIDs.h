@@ -57,6 +57,10 @@ inline juce::String opFeedback(int op, int part)
 {
     return withPart(opBase(op, "_feedback"), part);
 }
+inline juce::String opFeedbackDepth(int op, int part)
+{
+    return withPart(opBase(op, "_fb_depth"), part);
+}
 inline juce::String opTremRate(int op, int part)
 {
     return withPart(opBase(op, "_trem_rate"), part);
@@ -120,6 +124,14 @@ inline juce::String filterRate(int index, int part)
 inline juce::String filterLevel(int index, int part)
 {
     return withPart("fenv_l" + juce::String(index + 1), part);
+}
+inline juce::String feedbackRate(int index, int part)
+{
+    return withPart("fbenv_r" + juce::String(index + 1), part);
+}
+inline juce::String feedbackLevel(int index, int part)
+{
+    return withPart("fbenv_l" + juce::String(index + 1), part);
 }
 
 struct FollowTarget {

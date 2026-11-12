@@ -776,11 +776,12 @@ void PluginEditor::buildUi()
     canvas_.addAndMakeVisible(*toolbar_);
     toolbar_->setBounds(1, 160, 1238, 44);
     tabs_.setBounds(1, 204, 1238, 37);
-    activeTab_ = juce::jlimit(0, 2, activeTab_);
+    activeTab_ = juce::jlimit(0, 3, activeTab_);
     juce::StringArray labels;
     labels.add("patch settings");
     labels.add("operators");
     labels.add("fx / mod");
+    labels.add("feedback");
     tabs_.setLabels(labels);
     switchingTab_ = true;
     tabs_.setActive(activeTab_);
@@ -806,6 +807,9 @@ void PluginEditor::buildPage()
     case 2:
         page_ = p1::ui::makeFxModPage(*this);
         break;
+    case 3:
+        page_ = p1::ui::makeFeedbackPage(*this);
+        break;
     default:
         page_ = p1::ui::makePatchPage(*this);
         break;
@@ -826,7 +830,7 @@ void PluginEditor::setActivePart(int part)
 
 void PluginEditor::showTab(int tab)
 {
-    tab = juce::jlimit(0, 2, tab);
+    tab = juce::jlimit(0, 3, tab);
     if (tab == activeTab_)
         return;
     activeTab_ = tab;

@@ -6,9 +6,8 @@
 - **Brief section:** README line of research 1, and the envelope decision in
   [`../design/research-feedback.md`](../design/research-feedback.md).
 - **Owner / date:** P1Onken, 2026-11-12.
-- **Disposition:** accepted for the engine and editor milestone. The engine and the
-  146 and 160 migrations are complete and measured. The page and its snapshots are
-  the next milestone.
+- **Disposition:** complete. The engine, the 146 and 160 migrations, the page and
+  the Linux snapshots are in and measured.
 
 ## Player outcome
 
@@ -173,10 +172,11 @@ four-knob depth card. The tab labels become `patch settings`, `operators`,
   parameters. The `preset_smoke` test covers the 146, 160 and 171 layouts, the
   current round-trip and the depth and envelope defaults.
 - **Editor check:** the snapshot renders the feedback page and the depth knobs.
-  The goldens are regenerated on the Linux container and the diff passes.
+  The goldens are regenerated on the Linux container and the diff passes with the
+  12-image set.
 - **Evidence artefact:** `plugin/evidence/feedback-envelope.md`, with the
-  spectral sweep table, the depth 0 bit-exact check and the build hash. The engine
-  measurement is there. The page snapshot is added with the UI milestone.
+  spectral sweep table, the depth 0 bit-exact check and the build hash. The page
+  snapshot is committed in the 12-image golden set.
 
 ## Risks and fallback
 

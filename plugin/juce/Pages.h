@@ -68,5 +68,6 @@ private:
 std::unique_ptr<PageBase> makePatchPage(PluginEditor& editor);
 std::unique_ptr<PageBase> makeOperatorsPage(PluginEditor& editor);
 std::unique_ptr<PageBase> makeFxModPage(PluginEditor& editor);
+std::unique_ptr<PageBase> makeFeedbackPage(PluginEditor& editor);
 
 } // namespace p1::ui

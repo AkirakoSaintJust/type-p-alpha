@@ -231,7 +231,10 @@
 
   /* ---------------- operators ---------------- */
   .ops-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
-  .opcol { background: #000; padding: 8px; display: flex; flex-direction: column; gap: 6px; }
+  .feedback-grid { display: flex; flex-direction: column; gap: 10px; height: 100%; }
+  .feedback-grid .fbenvcard { flex: 0 0 420px; }
+  .feedback-grid .fbdcard { flex: 1; }
+  .feedback-grid .fbenvcard .envbox { height: 190px; }  .opcol { background: #000; padding: 8px; display: flex; flex-direction: column; gap: 6px; }
   .opcol .card { padding: 8px; }
   .opcol .knobs { gap: 5px 0; }
   .opcol .knob { width: 36px; }
@@ -616,6 +619,8 @@
   const PITCH_LFO = { rate: 0, depth: 0, wave: "sine" };
   const PITCH_ENV = { on: false, r: [80, 60, 50, 80], l: [2, -1, 0] };
   const FILTER_ENV = { r: [99, 50, 40, 60], l: [99, 40, 0] };
+  const FEEDBACK_ENV = { r: [80, 60, 50, 80], l: [99, 93, 87] };
+  const FB_DEPTH = [{ v: 0 }, { v: 0 }, { v: 0 }, { v: 0 }];
   const FILTER1 = { cutoff: 60, res: 20, env: 0, type: "lpf", on: true };
   const KEY_FOLLOW = {
     on: true,
@@ -1327,10 +1332,41 @@
   }
 
   /* ---------------- tabs ---------------- */
+  function viewFeedback() {
+    const wrap = document.createElement("div");
+    wrap.className = "feedback-grid";
+
+    const envBox = document.createElement("div");
+    envBox.className = "envbox";
+    envBox.innerHTML = penvSvg(FEEDBACK_ENV.r, FEEDBACK_ENV.l);
+    const envCard = makeSection("FEEDBACK ENVELOPE", "fbenv", [
+      ba(FEEDBACK_ENV, "r", 0, "R1", 0, 99, function (v) { return v; }, 1),
+      ba(FEEDBACK_ENV, "r", 1, "R2", 0, 99, function (v) { return v; }, 1),
+      ba(FEEDBACK_ENV, "r", 2, "R3", 0, 99, function (v) { return v; }, 1),
+      ba(FEEDBACK_ENV, "r", 3, "R4", 0, 99, function (v) { return v; }, 1),
+      ba(FEEDBACK_ENV, "l", 0, "L1", 0, 99, function (v) { return v; }, 1),
+      ba(FEEDBACK_ENV, "l", 1, "L2", 0, 99, function (v) { return v; }, 1),
+      ba(FEEDBACK_ENV, "l", 2, "L3", 0, 99, function (v) { return v; }, 1)
+    ], { before: envBox, copy: false });
+    envCard.classList.add("fbenvcard");
+    wrap.appendChild(envCard);
+
+    const depthCard = makeSection("OPERATOR DEPTH", "fbdepth", [
+      b(FB_DEPTH[0], "v", "OP1", -100, 100, bipFmt, 1),
+      b(FB_DEPTH[1], "v", "OP2", -100, 100, bipFmt, 1),
+      b(FB_DEPTH[2], "v", "OP3", -100, 100, bipFmt, 1),
+      b(FB_DEPTH[3], "v", "OP4", -100, 100, bipFmt, 1)
+    ], { copy: false });
+    depthCard.classList.add("fbdcard");
+    wrap.appendChild(depthCard);
+    return wrap;
+  }
+
   const TABS = [
     { id: "patch", label: "patch settings", view: viewPatch },
     { id: "ops", label: "operators", view: viewOps },
-    { id: "fxmod", label: "fx / mod", view: viewFxMod }
+    { id: "fxmod", label: "fx / mod", view: viewFxMod },
+    { id: "feedback", label: "feedback", view: viewFeedback }
   ];
   const body = document.getElementById("body");
   const tabsEl = document.getElementById("tabs");

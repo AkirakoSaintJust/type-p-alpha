@@ -269,8 +269,8 @@ third-to-fundamental ratio by 22 percent. A -100 percent depth with a base of 50
 percent lowers the spectral centroid by 65 percent. The dynamic peaks are 35 and 27
 percent above the endpoint statics, inside the 50 percent margin. The 146 and 160
 libraries load, the current layout round-trips, and the 356 parameters reach the
-APVTS. The engine side is done. The page, the mockup and the snapshots are the next
-milestone, and the evidence is in
+APVTS. The engine side is done. The page, the mockup and the snapshots are in, and
+the evidence is in
 [`../plugin/evidence/feedback-envelope.md`](../plugin/evidence/feedback-envelope.md).
 
 ## Measurement method
@@ -303,6 +303,6 @@ The sign flip failed at 25 and 50 percent feedback. It is not shipped, and the
 The shared feedback envelope with a per-operator depth is implemented on the engine
 side and measured in
 [`../plugin/evidence/feedback-envelope.md`](../plugin/evidence/feedback-envelope.md).
-The page, the mockup and the snapshots are the next milestone. A different tap, such
+The page, the mockup and the snapshots are in. A different tap, such
 as a one-pole lowpass, or an odd-symmetric nonlinearity in the loop is the follow-up
 if the negative-feedback line continues, and it needs its own contract.
