@@ -62,6 +62,56 @@ private:
     std::function<void(bool)> setMuted_;
 };
 
+class CardHeader : public juce::Component {
+public:
+    CardHeader(bool partLayout, bool withRename,
+               std::function<void()> onRename, std::function<void()> onCopy,
+               std::function<void()> onPaste,
+               std::function<bool()> getMuted,
+               std::function<void(bool)> setMuted)
+        : partLayout_(partLayout), withRename_(withRename)
+    {
+        rename_.onClick = std::move(onRename);
+        copy_.onClick = std::move(onCopy);
+        paste_.onClick = std::move(onPaste);
+        addAndMakeVisible(rename_);
+        addAndMakeVisible(copy_);
+        addAndMakeVisible(paste_);
+        rename_.setVisible(withRename_);
+        mute_ = std::make_unique<InlineMuteSwitch>(std::move(getMuted),
+                                                   std::move(setMuted));
+        addAndMakeVisible(*mute_);
+    }
+
+    void resized() override
+    {
+        auto bar = getLocalBounds();
+        if (partLayout_) {
+            mute_->setBounds(bar.removeFromRight(108).reduced(0, 3));
+            auto actions = bar.removeFromRight(172);
+            actions.removeFromRight(16);
+            rename_.setBounds(actions.removeFromLeft(52).reduced(2, 3));
+            copy_.setBounds(actions.removeFromLeft(52).reduced(2, 3));
+            paste_.setBounds(actions.removeFromLeft(52).reduced(2, 3));
+        } else {
+            bar.removeFromLeft(56);
+            copy_.setBounds(bar.removeFromLeft(52).reduced(2, 3));
+            paste_.setBounds(bar.removeFromLeft(52).reduced(2, 3));
+            mute_->setBounds(bar.removeFromRight(104).reduced(0, 3));
+        }
+    }
+
+    void tick() { mute_->repaint(); }
+
+private:
+    bool partLayout_ = true;
+    bool withRename_ = true;
+    P1Button rename_{"rename", true};
+    P1Button copy_{"copy", true};
+    P1Button paste_{"paste", true};
+    std::unique_ptr<InlineMuteSwitch> mute_;
+};
+
 std::unique_ptr<PageBase> makePatchPage(PluginEditor& editor);
 std::unique_ptr<PageBase> makeOperatorsPage(PluginEditor& editor);
 std::unique_ptr<PageBase> makeFxModPage(PluginEditor& editor);

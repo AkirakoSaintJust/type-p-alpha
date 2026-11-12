@@ -29,18 +29,19 @@ public:
              std::function<void(int)> onPaste)
         : editor_(editor),
           op_(op),
-          part_(editor.activePart())
+          part_(editor.activePart()),
+          header_(false, false, {},
+                  [this, onCopy] { onCopy(op_); },
+                  [this, onPaste] { onPaste(op_); },
+                  [this] {
+                      return getParam(editor_, params::opMute(op_, part_)) > 0.5;
+                  },
+                  [this](bool muted) {
+                      setParam(editor_, params::opMute(op_, part_),
+                               muted ? 1 : 0);
+                  })
     {
-        copy_.onClick = [this, onCopy] { onCopy(op_); };
-        paste_.onClick = [this, onPaste] { onPaste(op_); };
-        addAndMakeVisible(copy_);
-        addAndMakeVisible(paste_);
-        mute_ = std::make_unique<InlineMuteSwitch>(
-            [this] { return getParam(editor_, params::opMute(op_, part_)) > 0.5; },
-            [this](bool muted) {
-                setParam(editor_, params::opMute(op_, part_), muted ? 1 : 0);
-            });
-        addAndMakeVisible(*mute_);
+        addAndMakeVisible(header_);
         addAndMakeVisible(scope_);
         addAndMakeVisible(spectro_);
 
@@ -104,11 +105,7 @@ public:
     void resized() override
     {
         auto area = getLocalBounds().reduced(8);
-        auto header = area.removeFromTop(24);
-        header.removeFromLeft(56);
-        copy_.setBounds(header.removeFromLeft(52).reduced(2, 3));
-        paste_.setBounds(header.removeFromLeft(52).reduced(2, 3));
-        mute_->setBounds(header.removeFromRight(104).reduced(0, 3));
+        header_.setBounds(area.removeFromTop(24));
         auto visual = area.removeFromTop(40);
         const int half = (visual.getWidth() - 6) / 2;
         scope_.setBounds(visual.removeFromLeft(half));
@@ -166,7 +163,7 @@ public:
         scope_.setSamples(scratch_.data(), static_cast<int>(scratch_.size()));
         spectro_.setSamples(scratch_.data(), static_cast<int>(scratch_.size()));
         envView_->repaint();
-        mute_->repaint();
+        header_.tick();
         repaint();
     }
 
@@ -174,9 +171,7 @@ private:
     PluginEditor& editor_;
     int op_ = 0;
     int part_ = 0;
-    P1Button copy_{"copy", true};
-    P1Button paste_{"paste", true};
-    std::unique_ptr<InlineMuteSwitch> mute_;
+    CardHeader header_;
     P1Scope scope_;
     P1Spectro spectro_;
     P1Card osc_{"oscillator"};

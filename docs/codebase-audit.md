@@ -395,12 +395,14 @@ engine, the MIDI bridge, the rate bridge, the preset bank and the UI state.
 | `PartChoiceButton` | Toolbar part selector. |
 | `Header` | Wordmark, algorithm block, output scope and patch control. |
 | `Toolbar` | Mute tiles, part selector and library action. |
-| `SlotListBody` | 64 or 128 slot list with a selected row. |
-| `ModeListBody` | Three-mode list for the save chooser. |
+| `SlotListBody` | Slot list built on the shared `ListBody`. |
+| `ModeListBody` | Mode list built on the shared `ListBody`. |
+| `ListBody` | Shared list surface, background, separator, selection and row click. |
 | `SinglePartListBody` | Two-row part summary for the single parts popup. |
 | `AlgTile` | One algorithm tile. |
 | `AlgPickerBody` | Eight-tile algorithm picker. |
 | `RenameBody` | Name field and 32-character note. |
+| `CardHeader` | Shared rename, copy, paste and mute controls for part and operator cards. |
 | `P1Canvas` | Paints the editor frame and accents. |
 | `PageBase` | Page interface with `tick`. |
 | `PluginEditor` | Owns the pages, dialogs, active part and timer. |
@@ -497,6 +499,12 @@ The CSS is a token mirror of `design/tokens.css`; it is not duplicated logic.
 | `P1AlgorithmGraph` | No caller; `P1AlgorithmBlock` and `drawAlgorithmGraph` cover the header. |
 | `drawLabel` | No caller. |
 | `plugin/engine/msvc_compat.h` | It was a no-op for the clang-cl build and only served a pure-MSVC path the project does not use. |
+| `P1Card` panel-background flag | Every card uses the panel background; the false branch had no caller. |
+| Duplicated `SlotListBody` and `ModeListBody` list machinery | A shared `ListBody` owns the list, row paint, separator, selection and click. |
+| Repeated part and operator header setup | A shared `CardHeader` owns rename, copy, paste and the mute switch. |
+| `PluginEditor::setStatusMessage` and `statusMessage_` | The string was never painted; the status strip shows only the MIDI and sync LEDs. |
+| `P1Choice` string constructor | No caller; the default combo is the only use. |
+| The `.slots` mockup CSS | It had no markup after the library rewrite. |
 | `plugin/preset/part_migration.h` | Held the 146, 160 and 179 maps. The current tree has one part layout. |
 | `legacy146PartMap`, `legacy160PartMap`, `legacy179PartMap`, `feedbackInsertionShift`, `shaperDropShift` | FM-1 and old Type P.alpha migration code with no current caller. |
 | `PresetStore::legacyPartMaps_` and the legacy branch in the loaders | The store now accepts one record layout. |
@@ -512,8 +520,6 @@ The record format is now a single `P1LIB2` layout with a 33-byte name field and 
 
 | Area | Observation | Decision |
 | --- | --- | --- |
-| `SlotListBody`, `ModeListBody`, `SinglePartListBody` | Each paints a popup row and a separator. The row contents differ. | Keep until a fourth list needs the same row painter; a shared base would add indirection for three small classes. |
-| `PartCard` and `OpColumn` headers | Both build copy, paste and mute controls and a scope pair. | A `CardHeader` helper is possible, but the part and operator headers differ in labels and state. Revisit when the header changes again. |
 | `ParamIDs.h` accessors | Many one-line functions return `withPart` strings. | They are the readable parameter map. A macro would hide typos and gain little. |
 | `pages` card layouts | Cards repeat `removeFromTop` and `removeFromLeft` arithmetic. | The layout is local to each card and the snapshots depend on it. Keep. |
 | Mockup and JUCE | The mockup mirrors the editor layout. | The mockup is the design reference, so the duplication is deliberate. |
@@ -529,12 +535,9 @@ The record format is now a single `P1LIB2` layout with a 33-byte name field and 
 
 ### Follow-ups
 
-1. A shared list-row painter would remove the duplicate paint code in the three
-   list bodies.
-2. A `CardHeader` helper would remove the part and operator header duplication.
-3. A separate offline converter can read `P1LIB1` if old user banks need to move
+1. A separate offline converter can read `P1LIB1` if old user banks need to move
    to `P1LIB2`. The plugin deliberately carries no legacy reader.
-4. The macOS AU and the real DAW pass remain platform work.
+2. The macOS AU and the real DAW pass remain platform work.
 
 ## Verification for the cleanup
 

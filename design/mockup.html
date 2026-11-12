@@ -339,16 +339,6 @@
   .dialog-foot button.primary { border-color: var(--pink); color: var(--pink); background: #000; }
   .dialog-foot button:hover { filter: brightness(1.2); }
 
-  .slots { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
-  .slots .slot {
-    background: #000; border: 1px solid #3a3a3a; color: var(--white);
-    font-size: 15px; padding: 10px 0 8px; cursor: pointer; letter-spacing: .08em;
-  }
-  .slots .slot .sname { display: block; margin-top: 4px; font-size: 12px; letter-spacing: 0; color: var(--dim); }
-  .slots .slot.sel .sname { color: var(--purple); }
-  .slots .slot.dead { opacity: .3; cursor: default; }
-  .slots .slot:hover:not(:disabled) { border-color: var(--purple); }
-  .slots .slot.sel { border-color: var(--purple); color: var(--purple); background: rgba(199,128,255,.08); }
   .patchlist {
     max-height: 370px; overflow-y: auto; scrollbar-width: thin;
     scrollbar-color: var(--pink) #000;

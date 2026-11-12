@@ -96,7 +96,6 @@ private:
 class P1Choice : public juce::ComboBox {
 public:
     P1Choice() = default;
-    P1Choice(juce::StringArray items, int selected = 0);
 };
 
 class ParamChoice : public juce::Component {
@@ -210,14 +209,13 @@ private:
 
 class P1Card : public juce::Component {
 public:
-    P1Card(juce::String title, bool panelBackground = true);
+    explicit P1Card(juce::String title);
     void paint(juce::Graphics& g) override;
 
     juce::Rectangle<int> contentArea() const;
 
 private:
     juce::String title_;
-    bool panel_ = true;
 };
 
 class P1AlgorithmBlock : public juce::Component {

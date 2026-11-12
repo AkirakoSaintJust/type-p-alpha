@@ -49,20 +49,19 @@ private:
 class PartCard : public juce::Component {
 public:
     PartCard(PluginEditor& editor, int part, bool active)
-        : editor_(editor), part_(part), active_(active)
+        : editor_(editor),
+          part_(part),
+          active_(active),
+          header_(true, true,
+                  [this] { editor_.showRenameDialog(true, part_); },
+                  [this] { editor_.copyPart(part_); },
+                  [this] { editor_.pastePart(part_); },
+                  [this] {
+                      return getParam(editor_, params::level(part_)) <= 0.0;
+                  },
+                  [this](bool muted) { editor_.togglePartMute(part_, muted); })
     {
-        addAndMakeVisible(rename_);
-        addAndMakeVisible(copy_);
-        addAndMakeVisible(paste_);
-        rename_.onClick = [this] { editor_.showRenameDialog(true, part_); };
-        copy_.onClick = [this] { editor_.copyPart(part_); };
-        paste_.onClick = [this] { editor_.pastePart(part_); };
-        mute_ = std::make_unique<InlineMuteSwitch>(
-            [this] {
-                return getParam(editor_, params::level(part_)) <= 0.0;
-            },
-            [this](bool muted) { editor_.togglePartMute(part_, muted); });
-        addAndMakeVisible(*mute_);
+        addAndMakeVisible(header_);
 
         const std::array<juce::String, 6> labels = {
             "midi channel", "keyzone start", "keyzone end", "tune", "transpose",
@@ -85,13 +84,7 @@ public:
     void resized() override
     {
         auto area = getLocalBounds().reduced(10);
-        auto header = area.removeFromTop(24);
-        mute_->setBounds(header.removeFromRight(108).reduced(0, 3));
-        auto actions = header.removeFromRight(172);
-        actions.removeFromRight(16);
-        rename_.setBounds(actions.removeFromLeft(52).reduced(2, 3));
-        copy_.setBounds(actions.removeFromLeft(52).reduced(2, 3));
-        paste_.setBounds(actions.removeFromLeft(52).reduced(2, 3));
+        header_.setBounds(area.removeFromTop(24));
         auto knobRow = area.removeFromTop(92);
         const int cell = knobRow.getWidth() / static_cast<int>(knobs_.size());
         for (auto& knob : knobs_)
@@ -125,7 +118,7 @@ public:
                                          static_cast<int>(scratch_.size()));
         scope_.setSamples(scratch_.data(), static_cast<int>(scratch_.size()));
         spectro_.setSamples(scratch_.data(), static_cast<int>(scratch_.size()));
-        mute_->repaint();
+        header_.tick();
         repaint();
     }
 
@@ -133,10 +126,7 @@ private:
     PluginEditor& editor_;
     int part_ = 0;
     bool active_ = false;
-    P1Button rename_{"rename", true};
-    P1Button copy_{"copy", true};
-    P1Button paste_{"paste", true};
-    std::unique_ptr<InlineMuteSwitch> mute_;
+    CardHeader header_;
     std::array<std::unique_ptr<ParamKnob>, 6> knobs_{};
     std::unique_ptr<P1LevelSlider> level_;
     P1Scope scope_;

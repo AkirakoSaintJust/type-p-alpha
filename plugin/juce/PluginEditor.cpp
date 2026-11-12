@@ -359,18 +359,15 @@ namespace {
 using namespace p1;
 using namespace p1::ui;
 
-class SlotListBody : public juce::Component, private juce::ListBoxModel {
+class ListBody : public juce::Component, private juce::ListBoxModel {
 public:
-    SlotListBody(int count, std::function<juce::String(int)> nameFor,
-                 std::function<bool(int)> usedFor, int selected)
-        : count_(count),
-          nameFor_(std::move(nameFor)),
-          usedFor_(std::move(usedFor)),
-          selected_(juce::jlimit(0, juce::jmax(0, count - 1), selected)),
-          list_("slots", this)
+    ListBody(int count, int rowHeight, int selected, const juce::String& name)
+        : count_(juce::jmax(0, count)),
+          selected_(juce::jlimit(0, juce::jmax(0, count_ - 1), selected)),
+          list_(name, this)
     {
         addAndMakeVisible(list_);
-        list_.setRowHeight(24);
+        list_.setRowHeight(rowHeight);
         list_.setColour(juce::ListBox::backgroundColourId,
                         colour(tokens::popup));
         list_.setColour(juce::ListBox::outlineColourId,
@@ -393,7 +390,6 @@ public:
                           bool selected) override
     {
         const auto area = juce::Rectangle<int>(0, 0, width, height);
-        const bool used = usedFor_ && usedFor_(row);
         if (selected) {
             g.setColour(colour(tokens::purple).withAlpha(0.08f));
             g.fillRect(area);
@@ -405,6 +401,41 @@ public:
         }
         g.setColour(colour(tokens::line));
         g.fillRect(8, height - 1, width - 16, 1);
+        paintRow(g, row, area, selected);
+    }
+
+    void listBoxItemClicked(int row, const juce::MouseEvent&) override
+    {
+        selected_ = juce::jlimit(0, juce::jmax(0, count_ - 1), row);
+        list_.selectRow(selected_, true, true);
+        repaint();
+    }
+
+protected:
+    virtual void paintRow(juce::Graphics& g, int row,
+                          juce::Rectangle<int> area, bool selected) = 0;
+
+private:
+    int count_ = 0;
+    int selected_ = 0;
+    juce::ListBox list_;
+};
+
+class SlotListBody : public ListBody {
+public:
+    SlotListBody(int count, std::function<juce::String(int)> nameFor,
+                 std::function<bool(int)> usedFor, int selected)
+        : ListBody(count, 24, selected, "slots"),
+          nameFor_(std::move(nameFor)),
+          usedFor_(std::move(usedFor))
+    {
+    }
+
+protected:
+    void paintRow(juce::Graphics& g, int row, juce::Rectangle<int> area,
+                  bool selected) override
+    {
+        const bool used = usedFor_ && usedFor_(row);
         g.setFont(uiFont(tokens::textSlotRow));
         g.setColour(colour(selected ? tokens::purple
                                     : used ? tokens::dim : tokens::faint));
@@ -419,80 +450,31 @@ public:
                    juce::Justification::centredLeft, true);
     }
 
-    void listBoxItemClicked(int row, const juce::MouseEvent&) override
-    {
-        selected_ = juce::jlimit(0, juce::jmax(0, count_ - 1), row);
-        list_.selectRow(selected_, true, true);
-        repaint();
-    }
-
 private:
-    int count_ = 0;
     std::function<juce::String(int)> nameFor_;
     std::function<bool(int)> usedFor_;
-    int selected_ = 0;
-    juce::ListBox list_;
 };
 
-class ModeListBody : public juce::Component, private juce::ListBoxModel {
+class ModeListBody : public ListBody {
 public:
     ModeListBody(juce::StringArray modes, int selected)
-        : modes_(std::move(modes)),
-          selected_(juce::jlimit(0, juce::jmax(0, modes_.size() - 1), selected)),
-          list_("modes", this)
+        : ListBody(modes.size(), 28, selected, "modes"),
+          modes_(std::move(modes))
     {
-        addAndMakeVisible(list_);
-        list_.setRowHeight(28);
-        list_.setColour(juce::ListBox::backgroundColourId,
-                        colour(tokens::popup));
-        list_.setColour(juce::ListBox::outlineColourId,
-                        juce::Colours::transparentBlack);
-        list_.setColour(juce::ListBox::textColourId, colour(tokens::text));
-        list_.selectRow(selected_, true, true);
     }
 
-    int selected() const { return selected_; }
-
-    void resized() override
+protected:
+    void paintRow(juce::Graphics& g, int row, juce::Rectangle<int> area,
+                  bool selected) override
     {
-        list_.setBounds(getLocalBounds());
-        list_.scrollToEnsureRowIsOnscreen(selected_);
-    }
-
-    int getNumRows() override { return modes_.size(); }
-
-    void paintListBoxItem(int row, juce::Graphics& g, int width, int height,
-                          bool selected) override
-    {
-        const auto area = juce::Rectangle<int>(0, 0, width, height);
-        if (selected) {
-            g.setColour(colour(tokens::purple).withAlpha(0.08f));
-            g.fillRect(area);
-            g.setColour(colour(tokens::purple));
-            g.drawRect(area, 1);
-        } else {
-            g.setColour(colour(tokens::popup));
-            g.fillRect(area);
-        }
-        g.setColour(colour(tokens::line));
-        g.fillRect(8, height - 1, width - 16, 1);
         g.setFont(uiFont(tokens::textSlotRow));
         g.setColour(colour(selected ? tokens::purple : tokens::text));
         g.drawText(modes_[row], area.reduced(8, 0),
                    juce::Justification::centredLeft, true);
     }
 
-    void listBoxItemClicked(int row, const juce::MouseEvent&) override
-    {
-        selected_ = juce::jlimit(0, juce::jmax(0, modes_.size() - 1), row);
-        list_.selectRow(selected_, true, true);
-        repaint();
-    }
-
 private:
     juce::StringArray modes_;
-    int selected_ = 0;
-    juce::ListBox list_;
 };
 
 class SinglePartListBody : public juce::Component {
@@ -999,10 +981,7 @@ void PluginEditor::exportLibrary()
             if (file == juce::File{})
                 return;
             const auto bytes = processor_.presets().packLibrary();
-            if (file.replaceWithData(bytes.data(), bytes.size()))
-                setStatusMessage("library exported");
-            else
-                setStatusMessage("could not write the library file");
+            file.replaceWithData(bytes.data(), bytes.size());
         });
 }
 
@@ -1020,17 +999,12 @@ void PluginEditor::importLibrary()
             if (file == juce::File{})
                 return;
             juce::MemoryBlock data;
-            if (!file.loadFileAsData(data)) {
-                setStatusMessage("could not read the library file");
+            if (!file.loadFileAsData(data))
                 return;
-            }
             if (processor_.presets().loadLibrary(
                     static_cast<const uint8_t*>(data.getData()), data.getSize())) {
                 processor_.saveLibrary();
                 refreshNames();
-                setStatusMessage("library imported");
-            } else {
-                setStatusMessage("not a Type P.alpha library file");
             }
         });
 }
@@ -1396,12 +1370,6 @@ void PluginEditor::closeDialog()
         canvas_.removeChildComponent(dialog_.get());
         dialog_.reset();
     }
-}
-
-void PluginEditor::setStatusMessage(const juce::String& message)
-{
-    statusMessage_ = message;
-    canvas_.repaint();
 }
 
 void p1::ui::P1Canvas::paint(juce::Graphics& g)

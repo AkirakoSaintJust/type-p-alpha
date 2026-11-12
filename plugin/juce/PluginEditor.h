@@ -78,7 +78,6 @@ private:
     void buildToolbar();
     void buildPage();
     void setSpectroMode(bool spectro);
-    void setStatusMessage(const juce::String& message);
     void fitToHostWindow();
     std::vector<int32_t> currentPartParams(int part);
     void applyPartParams(int part, const std::vector<int32_t>& params);
@@ -101,7 +100,6 @@ private:
     bool startupFitPending_ = true;
     int startupFitTicks_ = 4;
     int startupFitAttempts_ = 90;
-    juce::String statusMessage_;
     std::array<int, 2> mutedLevel_{99, 99};
     std::map<juce::String, double> partClipboard_;
 };

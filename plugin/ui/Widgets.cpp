@@ -449,13 +449,6 @@ void P1Toggle::paintButton(juce::Graphics& g, bool highlighted, bool)
                juce::Justification::centredLeft, true);
 }
 
-P1Choice::P1Choice(juce::StringArray items, int selected)
-{
-    addItemList(items, 1);
-    setSelectedItemIndex(selected, juce::dontSendNotification);
-    setMouseCursor(juce::MouseCursor::PointingHandCursor);
-}
-
 ParamChoice::ParamChoice(APVTS& state, const juce::String& paramID,
                          juce::StringArray items)
 {
@@ -866,16 +859,14 @@ void P1LevelSlider::setFromMouse(const juce::MouseEvent& event)
     attach_->setValueAsCompleteGesture(value);
 }
 
-P1Card::P1Card(juce::String title, bool panelBackground)
-    : title_(std::move(title)), panel_(panelBackground)
+P1Card::P1Card(juce::String title) : title_(std::move(title))
 {
     setInterceptsMouseClicks(false, true);
 }
 
 void P1Card::paint(juce::Graphics& g)
 {
-    if (panel_)
-        g.fillAll(colour(tokens::panel));
+    g.fillAll(colour(tokens::panel));
     drawSectionTitle(g, getLocalBounds().removeFromTop(20).reduced(8, 0), title_);
 }
 
