@@ -195,8 +195,8 @@ tiles, `op1` to `op4` and `p1`, `p2`, at 36 by 22. An active tile is solid pink 
 a black label, and a muted tile is black with a pink outline and a pink label. The
 猫 is only a legend glyph, never a button label.
 
-Right is `now editing part:` with `part 1`, `part 2` and `edit`, and the selected
-part button has a green border and green text.
+Right is `now editing part:` with `part 1`, `part 2` and `part library actions...`,
+and the selected part button has a green border and green text.
 
 ### Tabs
 
@@ -254,7 +254,13 @@ The multi-patch library lists the 64 multi patches and carries `export bank`,
 `import bank`, `init multi-patch`, `save` and `load`. Export and import use the
 operating system file dialogs. Init multi-patch asks `init multi-patch? this wipes
 the current patch.` and offers `cancel` and `init`. The save chooser is titled
-`save multi-patch`.
+`save multi-patch` and carries `discard edits to parts`, `save as new parts` and
+`mutate parts in place`.
+
+The part slots list is titled `part n slots` and holds 128 sounds, with the part's
+source slot selected on open. The part menu carries rename, copy, paste, init, save,
+load, export library and import library in that order, with a separator before the
+save pair and another before the library pair.
 
 ### Status
 
