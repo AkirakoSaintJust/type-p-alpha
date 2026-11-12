@@ -95,11 +95,12 @@ Every page fills the same height:
   scope and spectro, which grow to fill the remaining card height, followed by the
   voice mode block.
 - operators: four columns with oscillator, envelope and amplitude LFO, where the
-  envelope uses one row for R1 to R4 and a second row for L1 to L3.
+  envelope uses one row for R1 to R4 and a second row for L1 to L3. The amplitude
+  LFO carries its `bipolar` switch beside the wave select.
 - fx / mod: a three by two grid. Filter 1, the filter envelope and the pitch LFO
   fill the first row. Pitch envelope, key follow and velocity follow fill the second
   row. The two follow cards are separate, and each has its own on switch and wipe
-  button.
+  button. The pitch LFO carries its `bipolar` switch beside the wave select.
 
 ## Header
 

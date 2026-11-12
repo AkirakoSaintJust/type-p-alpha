@@ -596,9 +596,16 @@
   function makeToggle(name, on, onchange) {
     const el = document.createElement("div");
     el.className = "toggle" + (on ? " on" : "");
-    el.innerHTML = '<div class="trk"><div class="thb"></div></div><div class="tname">' + name + "</div>";
+    el.innerHTML = '<div class="trk"><div class="thb"></div></div><div class="tname"></div>';
+    const caption = el.querySelector(".tname");
+    function paint() {
+      const isOn = el.classList.contains("on");
+      caption.textContent = (name === "on" ? "" : name + " ") + (isOn ? "on" : "off");
+    }
+    paint();
     el.addEventListener("click", function () {
       el.classList.toggle("on");
+      paint();
       if (onchange) onchange(el.classList.contains("on"));
     });
     return el;
@@ -618,10 +625,10 @@
 
   /* ---------------- data ---------------- */
   const INIT_OPS = [
-    { name: "op1", role: "car", ratio: 1.0, detune: 0, level: 99, fb: 0, wave: "sine", r: [99, 40, 30, 60], l: [99, 70, 0], lfoRate: 5.0, lfoDepth: 0, lfoWave: "sine", mute: false },
-    { name: "op2", role: "mod", ratio: 2.0, detune: 0, level: 0, fb: 0, wave: "sine", r: [99, 45, 35, 60], l: [0, 0, 0], lfoRate: 5.0, lfoDepth: 0, lfoWave: "sine", mute: false },
-    { name: "op3", role: "car", ratio: 1.0, detune: 0, level: 0, fb: 0, wave: "sine", r: [99, 40, 30, 60], l: [0, 0, 0], lfoRate: 5.0, lfoDepth: 0, lfoWave: "sine", mute: false },
-    { name: "op4", role: "mod", ratio: 3.0, detune: 0, level: 0, fb: 0, wave: "sine", r: [99, 40, 30, 60], l: [0, 0, 0], lfoRate: 5.0, lfoDepth: 0, lfoWave: "sine", mute: false }
+    { name: "op1", role: "car", ratio: 1.0, detune: 0, level: 99, fb: 0, wave: "sine", r: [99, 40, 30, 60], l: [99, 70, 0], lfoRate: 5.0, lfoDepth: 0, lfoWave: "sine", lfoMode: true, mute: false },
+    { name: "op2", role: "mod", ratio: 2.0, detune: 0, level: 0, fb: 0, wave: "sine", r: [99, 45, 35, 60], l: [0, 0, 0], lfoRate: 5.0, lfoDepth: 0, lfoWave: "sine", lfoMode: true, mute: false },
+    { name: "op3", role: "car", ratio: 1.0, detune: 0, level: 0, fb: 0, wave: "sine", r: [99, 40, 30, 60], l: [0, 0, 0], lfoRate: 5.0, lfoDepth: 0, lfoWave: "sine", lfoMode: true, mute: false },
+    { name: "op4", role: "mod", ratio: 3.0, detune: 0, level: 0, fb: 0, wave: "sine", r: [99, 40, 30, 60], l: [0, 0, 0], lfoRate: 5.0, lfoDepth: 0, lfoWave: "sine", lfoMode: true, mute: false }
   ];
   const WAVES = ["sine", "triangle", "half sine", "half tri", "2x sine", "2x tri",
     "2x half sine", "2x half tri", "rect sine", "pulse", "square", "saw"];
@@ -632,7 +639,7 @@
   ];
   const PART_SLOTS = new Array(128).fill(null);
   let partSource = [-1, -1];
-  const INIT_PITCH_LFO = { rate: 0, depth: 0, wave: "sine" };
+  const INIT_PITCH_LFO = { rate: 0, depth: 0, wave: "sine", mode: true };
   const INIT_PITCH_ENV = { on: false, r: [80, 60, 50, 80], l: [2, -1, 0] };
   const INIT_FILTER_ENV = { r: [99, 50, 40, 60], l: [99, 40, 0] };
   const INIT_FEEDBACK_ENV = { r: [80, 60, 50, 80], l: [99, 93, 87] };
@@ -1115,7 +1122,8 @@
   function copyOp(o) {
     clipboard = { kind: "op", data: {
       ratio: o.ratio, detune: o.detune, level: o.level, fb: o.fb, wave: o.wave,
-      r: o.r.slice(), l: o.l.slice(), lfoRate: o.lfoRate, lfoDepth: o.lfoDepth, lfoWave: o.lfoWave
+      r: o.r.slice(), l: o.l.slice(), lfoRate: o.lfoRate, lfoDepth: o.lfoDepth,
+      lfoWave: o.lfoWave, lfoMode: o.lfoMode
     } };
     rerender();
   }
@@ -1123,7 +1131,8 @@
     if (!clipboard || clipboard.kind !== "op") return;
     const d = clipboard.data;
     o.ratio = d.ratio; o.detune = d.detune; o.level = d.level; o.fb = d.fb; o.wave = d.wave;
-    o.r = d.r.slice(); o.l = d.l.slice(); o.lfoRate = d.lfoRate; o.lfoDepth = d.lfoDepth; o.lfoWave = d.lfoWave;
+    o.r = d.r.slice(); o.l = d.l.slice(); o.lfoRate = d.lfoRate; o.lfoDepth = d.lfoDepth;
+    o.lfoWave = d.lfoWave; o.lfoMode = d.lfoMode;
     rerender();
   }
 
@@ -1183,7 +1192,8 @@
       const lfoRow = document.createElement("div");
       lfoRow.className = "inline";
       const ll = document.createElement("span"); ll.className = "lbl"; ll.textContent = "WAVE";
-      lfoRow.append(ll, makeSelect(LFO_WAVES, o.lfoWave, function (v) { o.lfoWave = v; }));
+      lfoRow.append(ll, makeSelect(LFO_WAVES, o.lfoWave, function (v) { o.lfoWave = v; }),
+        makeToggle("bipolar", o.lfoMode, function (v) { o.lfoMode = v; }));
 
       col.appendChild(makeSection("OSCILLATOR", "osc", [
         b(o, "ratio", "RATIO", 0.5, 8, function (v) { return v.toFixed(2); }, 0.01),
@@ -1213,7 +1223,7 @@
 
       col.appendChild(makeSection("AMPLITUDE LFO", "amplfo", [
         b(o, "lfoRate", "RATE", 0, 20, function (v) { return v.toFixed(1) + "Hz"; }, 0.1),
-        b(o, "lfoDepth", "DEPTH", 0, 100, function (v) { return v + "%"; }, 1)
+        b(o, "lfoDepth", "DEPTH", -99, 99, function (v) { return (v > 0 ? "+" : "") + v; }, 1)
       ], { after: lfoRow }));
 
       wrap.appendChild(col);
@@ -1279,10 +1289,11 @@
     const lfoRow = document.createElement("div");
     lfoRow.className = "inline";
     const ll = document.createElement("span"); ll.className = "lbl"; ll.textContent = "WAVE";
-    lfoRow.append(ll, makeSelect(LFO_WAVES, PITCH_LFO.wave, function (v) { PITCH_LFO.wave = v; rerender(); }));
+    lfoRow.append(ll, makeSelect(LFO_WAVES, PITCH_LFO.wave, function (v) { PITCH_LFO.wave = v; rerender(); }),
+      makeToggle("bipolar", PITCH_LFO.mode, function (v) { PITCH_LFO.mode = v; rerender(); }));
     wrap.appendChild(makeSection("PITCH LFO", "plfo", [
       b(PITCH_LFO, "rate", "RATE", 0, 20, function (x) { return x.toFixed(1) + "Hz"; }, 0.1),
-      b(PITCH_LFO, "depth", "DEPTH", 0, 100, function (x) { return x + "%"; }, 1)
+      b(PITCH_LFO, "depth", "DEPTH", -12, 12, function (x) { return (x > 0 ? "+" : "") + x.toFixed(2) + "st"; }, 0.01)
     ], { before: lfoBox, after: lfoRow, copy: false }));
 
     const penvBox = document.createElement("div");
@@ -1666,6 +1677,10 @@
     d.filter1 = JSON.parse(JSON.stringify(s.filter1));
     d.keyFollow = JSON.parse(JSON.stringify(s.keyFollow));
     d.velFollow = JSON.parse(JSON.stringify(s.velFollow));
+    d.ops.forEach(function (o) {
+      if (o.lfoMode === undefined) o.lfoMode = true;
+    });
+    if (d.pitchLfo.mode === undefined) d.pitchLfo.mode = true;
     if (i === activePart - 1) bindPart(i);
     buildToolbar();
     rerender();
@@ -2007,9 +2022,12 @@
       name: typeof s.name === "string" && s.name ? s.name : "init",
       tune: Number.isFinite(s.tune) ? s.tune : 0,
       alg: Number.isInteger(s.alg) ? s.alg : base.alg,
-      ops: s.ops.length === 4 ? s.ops : base.ops,
+      ops: (s.ops.length === 4 ? s.ops : base.ops).map(function (o) {
+        return Object.assign({ lfoMode: true }, o);
+      }),
       voice: s.voice,
-      pitchLfo: s.pitchLfo || base.pitchLfo,
+      pitchLfo: Object.assign({ mode: true },
+        s.pitchLfo && typeof s.pitchLfo === "object" ? s.pitchLfo : base.pitchLfo),
       pitchEnv: s.pitchEnv || base.pitchEnv,
       filterEnv: s.filterEnv || base.filterEnv,
       feedbackEnv: s.feedbackEnv || base.feedbackEnv,

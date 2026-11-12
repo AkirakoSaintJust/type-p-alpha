@@ -221,9 +221,9 @@ Four borderless columns, each with the operator name at the left, copy and paste
 after it, and the mute switch at the right with a 16px gap before it, then a scope
 and spectro pair, and three cards: `oscillator`, `envelope`, `amplitude lfo`. The oscillator card holds ratio, detune, level, feedback and the
 wave select. The envelope holds R1 to R4 on the first row and L1 to L3 on the second
-row, and the amplitude LFO holds rate, depth and the wave select. The four
-oscillator knobs spread across the card, and the two LFO knobs sit apart. The
-envelope rates and levels each get their own row.
+row, and the amplitude LFO holds rate, depth, the wave select and the `bipolar`
+switch. The four oscillator knobs spread across the card, and the two LFO knobs sit
+apart. The envelope rates and levels each get their own row.
 
 ### FX / MOD
 
@@ -233,6 +233,8 @@ fill the second row. The filter card has cutoff, resonance and env amount, whils
 key and velocity tracking sit in the two follow cards rather than on the filter
 card. The filter, its envelope and its two follow targets address the active part,
 because each part has its own filter and its own envelope.
+
+The pitch LFO card carries rate, depth, the wave select and the `bipolar` switch.
 
 Key follow and velocity follow are separate cards. Each has an on switch, a
 `wipe all` button and its own target selector. Key follow has a breakpoint and below
