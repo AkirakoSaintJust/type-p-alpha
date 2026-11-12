@@ -1,7 +1,7 @@
 # Feedback envelope: measured result
 
 This is the engine evidence for
-[`../feature-contract-feedback-envelope.md`](../feature-contract-feedback-envelope.md).
+[`../feature-contract-feedback-envelope.md`](../../plugin/feature-contract-feedback-envelope.md).
 The page and its snapshots are the next milestone.
 
 ## Verdict

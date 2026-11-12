@@ -1,5 +1,13 @@
 # Feedback research: envelopes and negative feedback
 
+The experiments are recorded one per file:
+
+- [Feedback polarity](feedback-polarity.md)
+- [Feedback envelope](feedback-envelope.md)
+- [Feedback shaper](feedback-shaper.md), with the WAVs and scope images in
+  `feedback-shaper/`
+- [Bipolar feedback](feedback-bipolar.md)
+
 This is the design note for lines 1 and 2 of the research list:
 
 1. Feedback envelopes. Are they worth it, and where do they belong without
@@ -13,9 +21,9 @@ feedback range, so the polarity is a bounded experiment rather than a promised
 feature. The experiment failed its stop criterion at 25 and 50 percent feedback, so
 the toggle is not shipped. The envelope modulates the feedback magnitude, which the
 spectrum does follow, so it is the next feature. The contract is
-[`../plugin/feature-contract-feedback-polarity.md`](../plugin/feature-contract-feedback-polarity.md)
+[`../../plugin/feature-contract-feedback-polarity.md`](../../plugin/feature-contract-feedback-polarity.md)
 and the measured table is
-[`../plugin/evidence/feedback-polarity.md`](../plugin/evidence/feedback-polarity.md).
+[`feedback-polarity.md`](feedback-polarity.md).
 
 ## What the engine does now
 
@@ -149,7 +157,7 @@ lowers the odd ratios. At 75 percent the negative ratios rise, but the positive
 second harmonic is nearly zero, so the ratio is unstable and the row is a regime
 artefact. At 100 percent the negative ratios fall again. The stop fires at 25 and
 50 percent. The full table is in
-[`../plugin/evidence/feedback-polarity.md`](../plugin/evidence/feedback-polarity.md).
+[`feedback-polarity.md`](feedback-polarity.md).
 
 The positive path stayed bit-exact. `engine_parity` matched the captured reference,
 and the 0 percent positive and negative renders were bit-identical. The 100 percent
@@ -229,21 +237,23 @@ lowpass with a coefficient around 0.5 is more aggressive and should tame the noi
 top of the feedback range. The experiment can use a compile-time one-pole first, so
 the shaper is the only new parameter until the filter earns one.
 
-The parameter cost is a shape choice and a filter choice per operator, eight per
-part. The part block grows from 171 to 179 and the manifest from 356 to 372, with a
-171-to-179 migration. The three controls, depth, shape and filter, fit on the
-feedback page's four-column operator card.
+The parameter cost was a shape choice and a filter choice per operator, eight per
+part. The experiment part block was 179 and the manifest 372, with a 171-to-179
+migration. The three controls, depth, shape and filter, fit on the feedback page's
+four-column operator card.
 
 The measurement passed. At 50 percent feedback the square moves the
 high-frequency energy from 858 to 5.6 and the abs moves the third harmonic from
 0.132 to 0.263, while their negative forms differ. The one-pole lowers the 75
 percent high-frequency energy from 975.7 to 578.9 for the abs and from 113.2 to 11.3
 for the square. The signed square keeps the same magnitude for both signs, so it is
-a phase variant rather than a tone control. The peaks stay bounded. The shaper and
-the filter are shipped, and the evidence is in
-[`../plugin/evidence/feedback-shaper.md`](../plugin/evidence/feedback-shaper.md).
-The contract is
-[`../plugin/feature-contract-feedback-shaper.md`](../plugin/feature-contract-feedback-shaper.md).
+a phase variant rather than a tone control. The peaks stay bounded.
+
+The player-facing control is the bipolar feedback knob in
+[`feedback-bipolar.md`](feedback-bipolar.md): the positive half is the current path,
+the negative half is the square with the average, and the one-pole and the abs stay
+as research alternatives. The experiment record and the WAVs are in
+[`feedback-shaper.md`](feedback-shaper.md).
 
 ## Feedback envelopes
 
@@ -320,7 +330,7 @@ percent above the endpoint statics, inside the 50 percent margin. The 146 and 16
 libraries load, the current layout round-trips, and the 356 parameters reach the
 APVTS. The engine side is done. The page, the mockup and the snapshots are in, and
 the evidence is in
-[`../plugin/evidence/feedback-envelope.md`](../plugin/evidence/feedback-envelope.md).
+[`feedback-envelope.md`](feedback-envelope.md).
 
 ## Measurement method
 
@@ -348,13 +358,13 @@ confirms the positive path against the captured reference.
 
 The sign flip failed at 25 and 50 percent feedback. It is not shipped, and the
 160-to-164 migration was not used. The measured table is in
-[`../plugin/evidence/feedback-polarity.md`](../plugin/evidence/feedback-polarity.md).
+[`feedback-polarity.md`](feedback-polarity.md).
 The shared feedback envelope with a per-operator depth is implemented on the engine
 side and measured in
-[`../plugin/evidence/feedback-envelope.md`](../plugin/evidence/feedback-envelope.md).
+[`feedback-envelope.md`](feedback-envelope.md).
 The page, the mockup and the snapshots are in. The Reface-style nonlinear shaper and
 the one-pole filter are shipped too, with the evidence in
-[`../plugin/evidence/feedback-shaper.md`](../plugin/evidence/feedback-shaper.md).
+[`feedback-shaper.md`](feedback-shaper.md).
 The negative-feedback line now has the shape and filter controls. A different tap
 topology or a listening comparison with the Reface remains open, and it needs its
 own contract.

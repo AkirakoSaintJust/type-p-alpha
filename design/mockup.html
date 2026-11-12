@@ -7,8 +7,8 @@
 <!-- Zen Dots and DotGothic16, SIL Open Font License. Bundle the woff2 files in the real plugin build. -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Zen+Dots&display=swap">
-<noscript><link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Zen+Dots&display=swap" rel="stylesheet"></noscript>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Unbounded&family=Zen+Dots&display=swap">
+<noscript><link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Unbounded&family=Zen+Dots&display=swap" rel="stylesheet"></noscript>
 <!-- Visual reference for design/README.md. Tokens live in design/tokens.json. -->
 <style>
   :root {
@@ -31,6 +31,7 @@
     --popup: #1b1b1b;
     --font-ui: "DotGothic16", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans JP", "Cascadia Mono", ui-monospace, monospace;
     --font-head: "Zen Dots", "DotGothic16", "Hiragino Kaku Gothic ProN", "Yu Gothic", ui-monospace, monospace;
+    --font-brand: "Unbounded", "Zen Dots", "DotGothic16", ui-monospace, monospace;
   }
   * { box-sizing: border-box; border-radius: 0; }
   html, body { margin: 0; min-height: 100%; }
@@ -74,8 +75,8 @@
     text-shadow: 4px 4px 0 #c2ad00;
   }
   .logo .dot { color: var(--pink); text-shadow: 4px 4px 0 #c2ad00; }
-  .logo .fm {
-    font-family: var(--font-head);
+  .logo .alpha {
+    font-family: var(--font-brand);
     font-weight: 400;
     font-size: 30px;
     letter-spacing: .02em;
@@ -104,7 +105,9 @@
   .seg button.active { color: var(--purple); border-color: var(--purple); }
   .out canvas { width: 100%; height: 50px; display: block; background: #000; }
 
-  .actions { display: flex; gap: 8px; flex: 0 0 auto; align-items: stretch; }
+  .actions { display: flex; flex-direction: column; gap: 4px; flex: 0 0 auto; align-items: stretch; }
+  .patch-buttons { display: flex; gap: 8px; align-items: stretch; }
+  .patch-hint { font-size: 10px; color: var(--faint); text-align: center; white-space: nowrap; }
   .btn {
     background: #000; border: 1px solid var(--line2); color: var(--text);
     font-size: 12px; letter-spacing: .02em; padding: 8px 10px; cursor: pointer;
@@ -411,7 +414,7 @@
 <body>
 <div class="plugin" id="plugin">
   <header class="hdr">
-    <div class="brand"><div class="logo">type P<span class="dot">.</span><span class="fm">fm1</span></div><div class="brand-sub">p1onken // パンク派第１音響合成研究班</div></div>
+    <div class="brand"><div class="logo">type P<span class="dot">.</span><span class="alpha">a</span></div><div class="brand-sub">p1onken // パンク派第１音響合成研究班</div></div>
 
     <div class="alg" id="algPick" title="Change algorithm">
       <div class="alg-meta">
@@ -433,8 +436,11 @@
     </div>
 
     <div class="actions">
-      <button class="btn patch" id="patchBtn"><span class="k">patch</span><span id="patchName">init patch</span></button>
-      <button class="btn renamer" id="patchRename" title="Rename patch">rename</button>
+      <div class="patch-buttons">
+        <button class="btn patch" id="patchBtn"><span class="k">patch</span><span id="patchName">init patch</span></button>
+        <button class="btn renamer" id="patchRename" title="Rename patch">rename</button>
+      </div>
+      <div class="patch-hint">click above for multi-patch library actions</div>
     </div>
   </header>
 
@@ -620,15 +626,7 @@
   const PITCH_ENV = { on: false, r: [80, 60, 50, 80], l: [2, -1, 0] };
   const FILTER_ENV = { r: [99, 50, 40, 60], l: [99, 40, 0] };
   const FEEDBACK_ENV = { r: [80, 60, 50, 80], l: [99, 93, 87] };
-  const FB_DEPTH = [
-    { v: 0, shape: "off", filter: "average" },
-    { v: 0, shape: "off", filter: "average" },
-    { v: 0, shape: "off", filter: "average" },
-    { v: 0, shape: "off", filter: "average" }
-  ];
-  const FEEDBACK_SHAPES = ["off", "square", "square neg", "abs", "abs neg",
-                           "signed", "signed neg"];
-  const FEEDBACK_FILTERS = ["average", "one-pole"];
+  const FB_DEPTH = [{ v: 0 }, { v: 0 }, { v: 0 }, { v: 0 }];
   const FILTER1 = { cutoff: 60, res: 20, env: 0, type: "lpf", on: true };
   const KEY_FOLLOW = {
     on: true,
@@ -936,7 +934,7 @@
     bodyEl.appendChild(grid);
     const note = document.createElement("div");
     note.className = "note";
-    note.textContent = "Pink operators are carriers. Click a routing, then LOAD.";
+    note.textContent = "Pink operators are carriers.";
     bodyEl.appendChild(note);
     openDialog("ALGORITHM", bodyEl, [
       { label: "CANCEL", onClick: function (close) { close(); } },
@@ -1165,7 +1163,7 @@
         b(o, "ratio", "RATIO", 0.5, 8, function (v) { return v.toFixed(2); }, 0.01),
         b(o, "detune", "DETUNE", -50, 50, function (v) { return (v > 0 ? "+" : "") + v + "c"; }, 1),
         b(o, "level", "LEVEL", 0, 99, function (v) { return v; }, 1),
-        b(o, "fb", "FB", 0, 99, function (v) { return v; }, 1)
+        b(o, "fb", "feedback", -100, 100, bipFmt, 1)
       ], { after: waveRow }));
 
       const envBox = document.createElement("div");
@@ -1359,26 +1357,12 @@
     envCard.classList.add("fbenvcard");
     wrap.appendChild(envCard);
 
-    const shapeRow = document.createElement("div");
-    shapeRow.className = "inline";
-    const filterRow = document.createElement("div");
-    filterRow.className = "inline";
-    for (let i = 0; i < 4; ++i) {
-      shapeRow.append(makeSelect(FEEDBACK_SHAPES, FB_DEPTH[i].shape, function (v) {
-        FB_DEPTH[i].shape = v;
-        rerender();
-      }));
-      filterRow.append(makeSelect(FEEDBACK_FILTERS, FB_DEPTH[i].filter, function (v) {
-        FB_DEPTH[i].filter = v;
-        rerender();
-      }));
-    }
     const depthCard = makeSection("OPERATOR DEPTH", "fbdepth", [
       b(FB_DEPTH[0], "v", "OP1", -100, 100, bipFmt, 1),
       b(FB_DEPTH[1], "v", "OP2", -100, 100, bipFmt, 1),
       b(FB_DEPTH[2], "v", "OP3", -100, 100, bipFmt, 1),
       b(FB_DEPTH[3], "v", "OP4", -100, 100, bipFmt, 1)
-    ], { copy: false, after: [shapeRow, filterRow] });
+    ], { copy: false });
     depthCard.classList.add("fbdcard");
     wrap.appendChild(depthCard);
     return wrap;
@@ -1483,7 +1467,7 @@
     });
     const edit = document.createElement("button");
     edit.className = "tbtn pmenu";
-    edit.textContent = "edit \u25BE";
+    edit.textContent = "part library actions... \u25BE";
     edit.title = "Part save, init, copy, paste";
     edit.addEventListener("click", function (e) { e.stopPropagation(); openPartMenu(edit); });
     g2.appendChild(edit);
@@ -1649,12 +1633,6 @@
       cells.push(c);
     }
     bodyEl.appendChild(list);
-    const note = document.createElement("div");
-    note.className = "note";
-    note.textContent = mode === "save"
-      ? "pick a slot for " + PARTS[partIdx].name + ", then save."
-      : "pick a stored part, then load.";
-    bodyEl.appendChild(note);
     openDialog(mode === "save" ? "save part" : "load part", bodyEl, [
       { label: "cancel", onClick: function (close) { close(); } },
       { label: mode, primary: true, onClick: function (close) {
@@ -1815,7 +1793,7 @@
   (function () {
     const link = document.createElement("link");
     link.rel = "stylesheet";
-    link.href = "https://fonts.googleapis.com/css2?family=DotGothic16&family=Zen+Dots&display=swap";
+    link.href = "https://fonts.googleapis.com/css2?family=DotGothic16&family=Unbounded&family=Zen+Dots&display=swap";
     document.head.appendChild(link);
   })();
 </script>

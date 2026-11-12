@@ -71,28 +71,27 @@ void test_legacy_library()
           "the old part name survives the migration");
     const auto& loaded = store.partParams(0);
     check(loaded[0] == legacyParams[0] && loaded[18] == legacyParams[18] &&
-              loaded[22] == legacyParams[19] && loaded[50] == legacyParams[47] &&
-              loaded[114] == legacyParams[105] &&
-              loaded[144] == legacyParams[132],
+              loaded[20] == legacyParams[19] && loaded[48] == legacyParams[47] &&
+              loaded[108] == legacyParams[105] &&
+              loaded[136] == legacyParams[132],
           "the old head migrates across the feedback depths");
-    check(loaded[171] == legacyParams[133] && loaded[178] == legacyParams[140],
-          "the moved tail lands at 171..178");
+    check(loaded[163] == legacyParams[133] && loaded[170] == legacyParams[140],
+          "the moved tail lands at 163..170");
     const auto defaults = p1::partParamDefaults();
     bool filterDefaulted = true;
-    for (int i = 145; i < 164; ++i) {
+    for (int i = 137; i < 156; ++i) {
         if (loaded[static_cast<std::size_t>(i)] !=
             defaults[static_cast<std::size_t>(i)])
             filterDefaulted = false;
     }
     check(filterDefaulted, "the filter block takes its defaults");
     bool newDefaulted = true;
-    for (int i : {20, 21, 52, 53, 84, 85, 116, 117, 164, 165, 166, 167, 168, 169,
-                  170}) {
+    for (int i : {19, 49, 79, 109, 156, 157, 158, 159, 160, 161, 162}) {
         if (loaded[static_cast<std::size_t>(i)] !=
             defaults[static_cast<std::size_t>(i)])
             newDefaulted = false;
     }
-    check(newDefaulted, "the feedback depth, shape, filter and envelope take their defaults");
+    check(newDefaulted, "the feedback depth and envelope take their defaults");
 }
 
 void test_legacy_160_library()
@@ -121,31 +120,30 @@ void test_legacy_160_library()
           "the 160 part name survives the migration");
     const auto& loaded = store.partParams(0);
     check(loaded[0] == oldParams[0] && loaded[18] == oldParams[18] &&
-              loaded[22] == oldParams[19] && loaded[50] == oldParams[47] &&
-              loaded[82] == oldParams[76] && loaded[114] == oldParams[105] &&
-              loaded[163] == oldParams[151] && loaded[171] == oldParams[152] &&
-              loaded[178] == oldParams[159],
+              loaded[20] == oldParams[19] && loaded[48] == oldParams[47] &&
+              loaded[78] == oldParams[76] && loaded[108] == oldParams[105] &&
+              loaded[155] == oldParams[151] && loaded[163] == oldParams[152] &&
+              loaded[170] == oldParams[159],
           "the 160 head and tail migrate");
     const auto defaults = p1::partParamDefaults();
     bool newDefaulted = true;
-    for (int i : {20, 21, 52, 53, 84, 85, 116, 117, 164, 165, 166, 167, 168, 169,
-                  170}) {
+    for (int i : {19, 49, 79, 109, 156, 157, 158, 159, 160, 161, 162}) {
         if (loaded[static_cast<std::size_t>(i)] !=
             defaults[static_cast<std::size_t>(i)])
             newDefaulted = false;
     }
-    check(newDefaulted, "the 160 feedback depth, shape, filter and envelope take their defaults");
+    check(newDefaulted, "the 160 feedback depth and envelope take their defaults");
 }
 
-void test_legacy_171_library()
+void test_legacy_179_library()
 {
-    constexpr int kOldCount = 171;
+    constexpr int kOldCount = 179;
     const auto recordSize = static_cast<std::size_t>(PP_RECORD(kOldCount));
     std::vector<uint8_t> oldBank(recordSize * 128u, 0xFF);
     std::vector<int32_t> oldParams(static_cast<std::size_t>(kOldCount));
     for (int i = 0; i < kOldCount; ++i)
         oldParams[static_cast<std::size_t>(i)] = 3000 + i;
-    preset_part_pack(oldBank.data(), "old 171", oldParams.data(), kOldCount);
+    preset_part_pack(oldBank.data(), "old 179", oldParams.data(), kOldCount);
 
     p1::PresetStore store{kP1PartParamCount, kP1PartCount,
                           p1::partParamDefaults(), p1::legacyPartParamMaps()};
@@ -158,26 +156,18 @@ void test_legacy_171_library()
     library.insert(library.end(), multiBank.begin(), multiBank.end());
 
     check(store.loadLibrary(library.data(), library.size()),
-          "load a library from the 171 layout");
-    check(store.partUsed(0) && store.partName(0) == "old 171",
-          "the 171 part name survives the migration");
+          "load a library from the 179 layout");
+    check(store.partUsed(0) && store.partName(0) == "old 179",
+          "the 179 part name survives the migration");
     const auto& loaded = store.partParams(0);
     check(loaded[0] == oldParams[0] && loaded[19] == oldParams[19] &&
-              loaded[22] == oldParams[20] && loaded[51] == oldParams[49] &&
-              loaded[54] == oldParams[50] && loaded[83] == oldParams[79] &&
-              loaded[86] == oldParams[80] && loaded[115] == oldParams[109] &&
-              loaded[118] == oldParams[110] && loaded[164] == oldParams[156] &&
-              loaded[170] == oldParams[162] && loaded[171] == oldParams[163] &&
-              loaded[178] == oldParams[170],
-          "the 171 head, envelope and mode block migrate");
-    const auto defaults = p1::partParamDefaults();
-    bool newDefaulted = true;
-    for (int i : {20, 21, 52, 53, 84, 85, 116, 117}) {
-        if (loaded[static_cast<std::size_t>(i)] !=
-            defaults[static_cast<std::size_t>(i)])
-            newDefaulted = false;
-    }
-    check(newDefaulted, "the 171 shape and filter take their defaults");
+              loaded[20] == oldParams[22] && loaded[49] == oldParams[51] &&
+              loaded[50] == oldParams[54] && loaded[79] == oldParams[83] &&
+              loaded[80] == oldParams[86] && loaded[109] == oldParams[115] &&
+              loaded[110] == oldParams[118] && loaded[156] == oldParams[164] &&
+              loaded[162] == oldParams[170] && loaded[163] == oldParams[171] &&
+              loaded[170] == oldParams[178],
+          "the 179 head, envelope and mode block migrate");
 }
 
 } // namespace
@@ -278,7 +268,7 @@ int main()
 
     test_legacy_library();
     test_legacy_160_library();
-    test_legacy_171_library();
+    test_legacy_179_library();
 
     std::printf("preset: %s\n", failures ? "FAILED" : "passed");
     return failures ? 1 : 0;

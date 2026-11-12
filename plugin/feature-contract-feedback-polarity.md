@@ -8,11 +8,11 @@
 
 - **Feature:** Per-operator negative feedback polarity.
 - **Brief section:** README lines of research 1 and 2,
-  [`../design/research-feedback.md`](../design/research-feedback.md).
+  [`../docs/research/README.md`](../docs/research/README.md).
 - **Owner / date:** P1Onken, 2026-11-11.
 - **Disposition:** deferred by measurement. The stop criterion failed at 25 and 50
   percent feedback, so the parameter, the editor control and the migration were not
-  shipped. The measured table is in `../plugin/evidence/feedback-polarity.md`.
+  shipped. The measured table is in `../docs/research/feedback-polarity.md`.
 
 ## Player outcome
 
@@ -129,7 +129,7 @@ access or display enters the audio path.
 - **Target package check:** the VST3, CLAP and standalone builds carry the new
   parameters through the generated manifest. The `.p1lib` test covers the 146 and
   160 layouts, a current save, and a round-trip.
-- **Evidence artefact:** `plugin/evidence/feedback-polarity.md`, with the measured
+- **Evidence artefact:** `docs/research/feedback-polarity.md`, with the measured
   table, the build hash and the pass/fail decision. The test output is the primary
   record and the artefact is the edited summary. The file exists and carries the
   result.

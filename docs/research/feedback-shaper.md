@@ -1,7 +1,7 @@
 # Feedback shaper: measured result
 
 This is the evidence for
-[`../feature-contract-feedback-shaper.md`](../feature-contract-feedback-shaper.md).
+[`../feature-contract-feedback-shaper.md`](../../plugin/feature-contract-feedback-shaper.md).
 The shape and filter choices shipped on the feedback page.
 
 ## Verdict
@@ -13,9 +13,9 @@ bounded. The signed square is a phase variant in the magnitude spectrum.
 ## Build and setup
 
 The measurement ran on Windows with clang-cl and lld-link, against product commit
-`cda8d3b` plus the shaper changes. The test is
-`build/windows-clangcl-lld/plugin/feedback_shaper.exe`. The Linux container runs the
-same test in the 7-test suite.
+`cda8d3b` plus the shaper changes. The experiment test wrote the WAVs and the scope
+renderer read them; the files are committed in `feedback-shaper/`. The shipped
+control is the bipolar feedback knob, and the `feedback_bipolar` test covers it.
 
 The test uses one sine operator: note 60, velocity 100, ratio 1.0, level 99,
 algorithm 7, the other three operators muted, a flat operator envelope, the filter
@@ -79,6 +79,52 @@ The one-pole filter earns its place. It lowers the noisy top of the feedback ran
 without changing the default path, because the average is still the default. The
 filter is per operator, like the shape and the feedback amount.
 
-The page carries the three controls per operator: the depth knob, the shape choice
-and the filter choice. The Linux snapshot is the 12-image set with the updated
-`editor-feedback.png`.
+The experiment page carried the three controls per operator: the depth knob, the
+shape choice and the filter choice. The shipped page keeps the envelope and the
+four depths, and the bipolar feedback knob lives on the operator card.
+
+## Waveforms and listening files
+
+The scope images show the last 2,048 samples of a two-second note at 25, 50, 75 and
+100 percent, from top to bottom. The four traces are the four amounts.
+
+- Positive reference: [scope](feedback-shaper/scope-positive.png), WAVs at
+  [25](feedback-shaper/positive-25.wav),
+  [50](feedback-shaper/positive-50.wav),
+  [75](feedback-shaper/positive-75.wav) and
+  [100](feedback-shaper/positive-100.wav).
+- Square, two-sample average: [scope](feedback-shaper/scope-square-avg.png), WAVs
+  at [25](feedback-shaper/square-avg-25.wav),
+  [50](feedback-shaper/square-avg-50.wav),
+  [75](feedback-shaper/square-avg-75.wav) and
+  [100](feedback-shaper/square-avg-100.wav).
+- Square, one-pole: [scope](feedback-shaper/scope-square-lp.png), WAVs at
+  [25](feedback-shaper/square-lp-25.wav),
+  [50](feedback-shaper/square-lp-50.wav),
+  [75](feedback-shaper/square-lp-75.wav) and
+  [100](feedback-shaper/square-lp-100.wav).
+- Abs, two-sample average: [scope](feedback-shaper/scope-abs-avg.png), WAVs at
+  [25](feedback-shaper/abs-avg-25.wav),
+  [50](feedback-shaper/abs-avg-50.wav),
+  [75](feedback-shaper/abs-avg-75.wav) and
+  [100](feedback-shaper/abs-avg-100.wav).
+- Abs, one-pole: [scope](feedback-shaper/scope-abs-lp.png), WAVs at
+  [25](feedback-shaper/abs-lp-25.wav),
+  [50](feedback-shaper/abs-lp-50.wav),
+  [75](feedback-shaper/abs-lp-75.wav) and
+  [100](feedback-shaper/abs-lp-100.wav).
+
+The traces make the choice clear. The square with the average keeps a clean square
+through the middle and turns noisy at the top, which is the useful snare and noise
+territory. The one-pole cleans that top end. The abs turns noisy earlier and stays
+less square. The shipped bipolar control uses the square and the average, so the
+negative half keeps the top-end noise. The one-pole and the abs stay as research
+alternatives, and this directory keeps their measurements.
+
+The experiment test wrote the WAVs when it was run with an output directory. The
+files are committed here. The figure script rereads them with the standard library
+only:
+
+```sh
+python plugin/tools/feedback_figures.py docs/research/feedback-shaper
+```

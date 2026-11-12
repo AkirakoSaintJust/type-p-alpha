@@ -213,7 +213,7 @@ private:
         const auto pink = p1::ui::colour(p1::tokens::pink);
 
         const float baseY = 42.0f;
-        const juce::String name = "TYPE P";
+        const juce::String name = "type P";
         const float wordWidth = p1::ui::textWidth(display, name);
         const float dotWidth = p1::ui::textWidth(display, ".");
         const float x = 16.0f;

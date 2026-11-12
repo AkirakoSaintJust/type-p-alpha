@@ -102,12 +102,6 @@ juce::String formatParamValue(const P1ParamSpec& spec, double value)
             return waveNames[v];
         return juce::String(v);
     }
-    if (display == "shape") {
-        static const char* const names[7] = {"off",      "square", "square neg",
-                                             "abs",      "abs neg", "signed",
-                                             "signed neg"};
-        return v >= 0 && v < 7 ? names[v] : juce::String(v);
-    }
     if (display == "off_pct")
         return v <= 0 ? "off" : percentage(spec, value, false);
     if (display == "pct_inv")
@@ -908,16 +902,18 @@ void P1AlgorithmBlock::setAlgorithm(int algorithm)
 
 void P1AlgorithmBlock::paint(juce::Graphics& g)
 {
+    const int textTop = (getHeight() - 50) / 2;
     g.setFont(displayFont(tokens::textAlgorithmLabel));
     g.setColour(colour(tokens::dim));
-    g.drawText("algorithm", 0, 0, 90, 12, juce::Justification::centredLeft, false);
+    g.drawText("algorithm", 0, textTop, 90, 12, juce::Justification::centredLeft,
+               false);
     g.setFont(displayFont(tokens::textAlgorithmNumber));
     g.setColour(colour(hover_ ? tokens::pinkBright : tokens::pink));
-    g.drawText(juce::String(algorithm_), 0, 16, 54, 34,
+    g.drawText(juce::String(algorithm_), 0, textTop + 16, 54, 34,
                juce::Justification::centredLeft, false);
     g.setFont(uiFont(tokens::textButton));
     g.setColour(colour(tokens::faint));
-    g.drawText(juce::String::charToString(0x25be), 50, 28, 16, 16,
+    g.drawText(juce::String::charToString(0x25be), 50, textTop + 28, 16, 16,
                juce::Justification::centredLeft, false);
     drawAlgorithmGraph(g, juce::Rectangle<float>(78.0f, 0.0f,
                                                  static_cast<float>(getWidth() - 78),

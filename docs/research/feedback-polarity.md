@@ -1,7 +1,7 @@
 # Feedback polarity: measured result
 
 This is the evidence for the bounded experiment in
-[`../feature-contract-feedback-polarity.md`](../feature-contract-feedback-polarity.md).
+[`../feature-contract-feedback-polarity.md`](../../plugin/feature-contract-feedback-polarity.md).
 The experiment asked whether a sign flip of the current self-feedback tap raises
 the odd harmonics of a sine operator.
 

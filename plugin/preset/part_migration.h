@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: GPL-3.0-only */
-/* The feedback shaper changed the per-part parameter block. This header carries
- * the bridge for libraries saved before that change, and for the envelope and
- * filter layouts before it. */
+/* The bipolar feedback change widened the feedback range and removed the shaper
+ * and filter parameters. This header carries the bridges for the layout with those
+ * controls and for the envelope, 160 and FM-1 layouts. */
 #pragma once
 
 #include <cstdint>
@@ -35,25 +35,29 @@ inline int feedbackInsertionShift(int old160Index)
     return dest;
 }
 
-/* The shaper moved two parameters, shape and filter, after each operator depth.
- * This is the 171 to 179 step. */
-inline int shaperInsertionShift(int old171Index)
+/* The shaper layout inserted a shape and a filter after each depth, at 20 and 21,
+ * 52 and 53, 84 and 85, and 116 and 117. Dropping them maps 179 back to 171. */
+inline int shaperDropShift(int old179Index)
 {
-    int dest = old171Index;
-    for (int point : {19, 49, 79, 109}) {
-        if (old171Index > point)
-            dest += 2;
+    if (old179Index == 20 || old179Index == 21 || old179Index == 52 ||
+        old179Index == 53 || old179Index == 84 || old179Index == 85 ||
+        old179Index == 116 || old179Index == 117)
+        return -1;
+    int dest = old179Index;
+    for (int point : {21, 53, 85, 117}) {
+        if (old179Index > point)
+            dest -= 2;
     }
     return dest;
 }
 
-/* The Type P.alpha layout with the envelope and without the shaper. */
-inline std::vector<int> legacy171PartMap()
+/* The shaper layout, with the separate shape and filter controls. */
+inline std::vector<int> legacy179PartMap()
 {
-    constexpr int kOldPartCount = 171;
+    constexpr int kOldPartCount = 179;
     std::vector<int> map(static_cast<std::size_t>(kOldPartCount), -1);
     for (int i = 0; i < kOldPartCount; ++i)
-        map[static_cast<std::size_t>(i)] = shaperInsertionShift(i);
+        map[static_cast<std::size_t>(i)] = shaperDropShift(i);
     return map;
 }
 
@@ -63,8 +67,7 @@ inline std::vector<int> legacy160PartMap()
     constexpr int kOldPartCount = 160;
     std::vector<int> map(static_cast<std::size_t>(kOldPartCount), -1);
     for (int i = 0; i < kOldPartCount; ++i)
-        map[static_cast<std::size_t>(i)] =
-            shaperInsertionShift(feedbackInsertionShift(i));
+        map[static_cast<std::size_t>(i)] = feedbackInsertionShift(i);
     return map;
 }
 
@@ -79,18 +82,17 @@ inline std::vector<int> legacy146PartMap()
     constexpr int kOld160Tail = 152;
     std::vector<int> map(static_cast<std::size_t>(kOldPartCount), -1);
     for (int i = 0; i < kOldHead; ++i)
-        map[static_cast<std::size_t>(i)] =
-            shaperInsertionShift(feedbackInsertionShift(i));
+        map[static_cast<std::size_t>(i)] = feedbackInsertionShift(i);
     for (int i = 0; i < kOldTail; ++i)
         map[static_cast<std::size_t>(kOldHead + i)] =
-            shaperInsertionShift(feedbackInsertionShift(kOld160Tail + i));
+            feedbackInsertionShift(kOld160Tail + i);
     return map;
 }
 
 /* The legacy layouts, newest first. The store matches a bank by record size. */
 inline std::vector<std::vector<int>> legacyPartParamMaps()
 {
-    return {legacy171PartMap(), legacy160PartMap(), legacy146PartMap()};
+    return {legacy179PartMap(), legacy160PartMap(), legacy146PartMap()};
 }
 
 } // namespace p1

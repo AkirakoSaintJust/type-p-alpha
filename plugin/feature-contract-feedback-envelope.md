@@ -4,7 +4,7 @@
 
 - **Feature:** A shared per-part feedback envelope with a per-operator depth.
 - **Brief section:** README line of research 1, and the envelope decision in
-  [`../design/research-feedback.md`](../design/research-feedback.md).
+  [`../docs/research/README.md`](../docs/research/README.md).
 - **Owner / date:** P1Onken, 2026-11-12.
 - **Disposition:** complete. The engine, the 146 and 160 migrations, the page and
   the Linux snapshots are in and measured.
@@ -174,7 +174,7 @@ four-knob depth card. The tab labels become `patch settings`, `operators`,
 - **Editor check:** the snapshot renders the feedback page and the depth knobs.
   The goldens are regenerated on the Linux container and the diff passes with the
   12-image set.
-- **Evidence artefact:** `plugin/evidence/feedback-envelope.md`, with the
+- **Evidence artefact:** `docs/research/feedback-envelope.md`, with the
   spectral sweep table, the depth 0 bit-exact check and the build hash. The page
   snapshot is committed in the 12-image golden set.
 

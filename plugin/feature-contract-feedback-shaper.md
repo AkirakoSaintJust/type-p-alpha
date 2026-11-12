@@ -5,11 +5,13 @@
 - **Feature:** A per-operator nonlinear feedback shaper and a stronger feedback
   filter.
 - **Brief section:** README line of research 2, and the nonlinear path in
-  [`../design/research-feedback.md`](../design/research-feedback.md).
+  [`../docs/research/README.md`](../docs/research/README.md).
 - **Owner / date:** P1Onken, 2026-11-12.
-- **Disposition:** complete. The shape and filter choices are shipped on the
-  feedback page, the 171, 160 and 146 libraries migrate, and the measurement is in
-  `plugin/evidence/feedback-shaper.md`.
+- **Disposition:** research. The shape and filter controls were the experiment. The
+  shipped control is the bipolar feedback knob in
+  [`feature-contract-feedback-bipolar.md`](feature-contract-feedback-bipolar.md);
+  its negative half uses the square and the average. The measurements are in
+  [`../docs/research/feedback-shaper.md`](../docs/research/feedback-shaper.md).
 
 ## Player outcome
 
@@ -37,7 +39,7 @@
 
 ## Parameter and event semantics
 
-The shipped parameters, per operator and part:
+The experiment parameters, per operator and part:
 
 | Parameter | Target | Range | Default | Display |
 | --- | --- | --- | --- | --- |
@@ -97,11 +99,12 @@ average remains the default, so the existing feedback path stays bit-exact.
 - `engine/gen/*`, regenerated.
 - `plugin/preset/part_migration.h`, `PresetStore.hpp`, `PresetStore.cpp` and
   `PluginProcessor.h`, for the 171, 160 and 146 legacy layouts.
-- `plugin/tests/preset_smoke.cpp`, and a new `plugin/tests/feedback_shaper.cpp`.
+- `plugin/tests/preset_smoke.cpp`, and the experiment test that wrote the WAVs
+  (removed after the files were committed).
 - `plugin/ui/ParamIDs.h`, `PagesFeedback.cpp`, and the `ParamChoice` names.
 - `plugin/ui/Widgets.cpp`, for the shape display names.
 - `plugin/tests/editor_snapshot.cpp` and the Linux goldens.
-- `plugin/evidence/feedback-shaper.md` and the README links.
+- `docs/research/feedback-shaper.md` and the README links.
 
 The public contract is the `fb_tap` node manifest and `kP1ParamSpecs`. The engine
 owns the shaped feedback state. The APVTS is the host-facing owner. No malloc,
@@ -109,8 +112,9 @@ float, file access or display enters the audio path.
 
 ## Editor control map
 
-The feedback page's operator depth card carries three controls per operator: the
-depth knob, the shape choice and the filter choice.
+The experiment page carried three controls per operator: the depth knob, the shape
+choice and the filter choice. The shipped page keeps the envelope and the depths,
+and the bipolar feedback knob is on the operator card.
 
 ```text
 operator depth
@@ -124,11 +128,11 @@ seven names, and the filter is a `ParamChoice` with the two names.
 
 ## Verification
 
-- **Host vector:** a new CTest, `feedback_shaper`, uses one sine operator at note
-  60, ratio 1, level 99, a flat operator envelope, the filter off and a fresh
-  engine. It renders 16,384 frames into a 2 x 16,384 buffer and analyses the left
-  channel. It measures the shape choices at 50 and 75 percent feedback, with the
-  average and the one-pole.
+- **Host vector:** the experiment test, `feedback_shaper`, used one sine operator at
+  note 60, ratio 1, level 99, a flat operator envelope, the filter off and a fresh
+  engine. It rendered 16,384 frames into a 2 x 16,384 buffer and analysed the left
+  channel. The WAVs and scope images are committed. The shipped `feedback_bipolar`
+  test covers the bipolar control.
 - **Tolerance/metric:** the `off` shape and the `average` filter must be bit-exact
   with the current path. `square` and `abs` must change the spectrum relative to
   `off`, and their negative forms must differ from the positive forms. The one-pole
@@ -137,11 +141,12 @@ seven names, and the filter is a `ParamChoice` with the two names.
   sample may reach `INT32_MIN` or `INT32_MAX`.
 - **Host timing and platform check:** the Linux, Windows and macOS CTest runs.
   pluginval and the CLAP validator cover the host path.
-- **Target package check:** the VST3, CLAP and standalone builds expose 372
-  parameters. The `preset_smoke` test covers the 146, 160, 171 and 179 layouts.
+- **Target package check:** the experiment build exposed 372 parameters. The
+  `preset_smoke` test covers the 146, 160, 171 and 179 layouts. The shipped build
+  returns to 356 parameters with the bipolar feedback.
 - **Editor check:** the snapshot renders the shape and filter choices and the new
   card height. The goldens are regenerated on the Linux container with 12 images.
-- **Evidence artefact:** `plugin/evidence/feedback-shaper.md`, with the spectral
+- **Evidence artefact:** `docs/research/feedback-shaper.md`, with the spectral
   table, the sign comparison, the high-frequency energy and the build hash.
 
 ## Risks and fallback
