@@ -192,12 +192,12 @@ int main()
     check(std::abs(ratio(positive[1], 3, 1) - 0.132) < 0.01 &&
               positive[1].hf > 700.0 && positive[1].hf < 1000.0,
           "the positive 50 percent half matches the current path");
-    check(negative[1].hf < positive[1].hf * 0.10,
-          "the negative half is the square family");
+    check(negative[1].hf > 400.0 && negative[1].hf < positive[1].hf,
+          "the negative half is the unruly abs family");
     check(negative[3].hf > negative[1].hf,
           "the negative top end keeps the noise");
-    check(std::abs(ratio(negative[1], 3, 1) - 0.215) < 0.03,
-          "the negative 50 percent third harmonic matches the square neg");
+    check(std::abs(ratio(negative[1], 3, 1) - 0.391) < 0.03,
+          "the negative 50 percent third harmonic matches the abs neg");
 
     std::vector<int32_t> depthOff;
     std::vector<int32_t> depthOn;

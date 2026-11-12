@@ -114,12 +114,13 @@ The scope images show the last 2,048 samples of a two-second note at 25, 50, 75 
   [75](feedback-shaper/abs-lp-75.wav) and
   [100](feedback-shaper/abs-lp-100.wav).
 
-The traces make the choice clear. The square with the average keeps a clean square
-through the middle and turns noisy at the top, which is the useful snare and noise
-territory. The one-pole cleans that top end. The abs turns noisy earlier and stays
-less square. The shipped bipolar control uses the square and the average, so the
-negative half keeps the top-end noise. The one-pole and the abs stay as research
-alternatives, and this directory keeps their measurements.
+The traces show the choice. The square with the average keeps a clean square through
+the middle and turns noisy at the top. The one-pole cleans that top end. The abs is
+unruly from the low end and stays close to the positive path's character. The
+shipped bipolar control uses the abs and the average, because the instrument's
+positive feedback is already unruly and the per-part filter can shape the top. The
+square and the one-pole stay as research alternatives, and this directory keeps
+their measurements.
 
 The experiment test wrote the WAVs when it was run with an output directory. The
 files are committed here. The figure script rereads them with the standard library

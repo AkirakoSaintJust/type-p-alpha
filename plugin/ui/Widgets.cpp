@@ -116,8 +116,12 @@ juce::String formatParamValue(const P1ParamSpec& spec, double value)
         const double p = 100.0 * (1.0 - std::exp(-k * x)) / den;
         return juce::String(p, 2) + "%";
     }
-    if (display == "pct_bip")
-        return signedNumber(v) + "%";
+    if (display == "pct_bip") {
+        const double range = static_cast<double>(spec.max - spec.min);
+        const double percent =
+            range > 0.0 ? 200.0 * (value - spec.min) / range - 100.0 : 0.0;
+        return signedNumber(static_cast<int>(std::lround(percent))) + "%";
+    }
     if (display == "filter") {
         static const char* const names[3] = {"lpf", "bpf", "hpf"};
         return v >= 0 && v < 3 ? names[v] : juce::String(v);
@@ -195,6 +199,12 @@ double parseParamValue(const P1ParamSpec& spec, const juce::String& text)
         return juce::jlimit(static_cast<double>(spec.min),
                             static_cast<double>(spec.max),
                             spec.max - v * range / 100.0);
+    }
+    if (display == "pct_bip") {
+        const double range = static_cast<double>(spec.max - spec.min);
+        return juce::jlimit(static_cast<double>(spec.min),
+                            static_cast<double>(spec.max),
+                            spec.min + (v + 100.0) * range / 200.0);
     }
     return juce::jlimit(static_cast<double>(spec.min),
                         static_cast<double>(spec.max), v);

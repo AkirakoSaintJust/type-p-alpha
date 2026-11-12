@@ -2,8 +2,8 @@
 
 ## Identity
 
-- **Feature:** One bipolar feedback knob per operator, with the Reface-style square
-  on the negative half.
+- **Feature:** One bipolar feedback knob per operator, with the Reface-style
+  absolute-value pulse on the negative half.
 - **Brief section:** README line of research 2, and the bipolar design in
   [`../docs/research/feedback-bipolar.md`](../docs/research/feedback-bipolar.md).
 - **Owner / date:** P1Onken, 2026-11-12.
@@ -14,10 +14,12 @@
 
 - **New player action:** turn an operator's feedback knob from -100 to +100 percent.
 - **Sound and behaviour:** the positive half is the current feedback path. The
-  negative half is the square shaper with the two-sample average, so it moves from
-  a rounded square through a harder square to the noisy top of the range. The
-  shared envelope offsets the magnitude. The zero crossing is silent.
-- **Failure mode:** the positive path changes, the negative half is not the square
+  negative half takes the absolute value, negates it and uses the two-sample
+  average, so it is unruly from the low end and close to the positive character.
+  The top is noisy. The shared envelope offsets the magnitude and the zero crossing
+  is silent. Players can shape the top with the per-part filter after the
+  operators.
+- **Failure mode:** the positive path changes, the negative half is not the abs
   family, the zero crossing clicks, or the top of the range runs away.
 
 ## Dependencies and interactions
@@ -53,7 +55,7 @@ The signal path is selected by the sign:
 
 ```text
 level >= 0:  out = ((x + prev) * level_eff) >> 16;  prev = x
-level <  0:  shaped = -(x*x >> 15)
+level <  0:  shaped = -abs(x)
              out = ((shaped + prev) * level_eff) >> 16;  prev = shaped
 ```
 
@@ -65,23 +67,23 @@ path is chosen.
 ## Bounds and resources
 
 - **Maximum voices/events/effects:** 20 voices and two parts, unchanged.
-- **Per-sample and per-block operations:** the existing average, plus one square
-  multiply and one negation per operator per sample on the negative half. The
-  positive half is the current path.
+- **Per-sample and per-block operations:** the existing average, plus one absolute
+  value and one negation per operator per sample on the negative half. The positive
+  half is the current path.
 - **Instance memory, CPU, preset size:** the feedback and depth parameters are
   already in the 171 block. The shape and filter parameters free 32 bytes per part.
   The `shaped` state is one `int32_t` per operator per voice; the `lp` state is
   removed. Each part record loses 32 bytes.
-- **Overflow/overload policy:** `x` is Q15, so `x*x` is below `2^30` and `>> 15`
-  returns Q15. The negation is within the Q15 range. The magnitude of -32767 is
-  32767. The level is clamped to 0..32767 and the existing tap shift applies.
-- **Division, shift, and range analysis:** the square uses a 32-bit multiply and a
-  shift of a non-negative product. The sign is applied after the square.
+- **Overflow/overload policy:** `x` is Q15, and `abs(x)` is 0..32767. The negation
+  is within the Q15 range. The magnitude of -32767 is 32767. The level is clamped to
+  0..32767 and the existing tap shift applies.
+- **Division, shift, and range analysis:** the abs has no multiply. The sign is
+  applied after the abs, and the average follows.
 
 ## Files and interfaces
 
-- `modules/nodes/fb_tap/node.json` and `node.c`, for the signed level and the
-  square path.
+- `modules/nodes/fb_tap/node.json` and `node.c`, for the signed level and the abs
+  path.
 - `modules/macros/fm_op/macro.json`, for the bipolar feedback parameter.
 - `synth/patch.json`, for the range, the display and the init values.
 - `engine/gen/*`, regenerated.
@@ -109,11 +111,10 @@ rows are removed.
   engine. It renders the positive and negative feedback at 25, 50, 75 and 100
   percent, and the envelope depth at the negative half.
 - **Tolerance/metric:** the positive path must stay bit-exact with the current
-  capture. The negative half must be the square family, with the lower
-  high-frequency energy of the square and the top-end noise at 100 percent. The
-  zero crossing must be silent. The envelope depth must move the magnitude, not the
-  sign. The peak must stay bounded and no sample may reach `INT32_MIN` or
-  `INT32_MAX`.
+  capture. The negative half must be the abs family, with the high-frequency energy
+  close to the positive half and the top-end noise at 100 percent. The zero crossing
+  must be silent. The envelope depth must move the magnitude, not the sign. The peak
+  must stay bounded and no sample may reach `INT32_MIN` or `INT32_MAX`.
 - **Host timing and platform check:** the Linux, Windows and macOS CTest runs.
   pluginval and the CLAP validator cover the host path.
 - **Target package check:** the VST3, CLAP and standalone builds expose 356
@@ -126,12 +127,12 @@ rows are removed.
 
 ## Risks and fallback
 
-- **Assumptions/open research:** the square and the average are the chosen negative
-  character. The abs and the one-pole remain research variants. The top-end noise
+- **Assumptions/open research:** the abs and the average are the chosen negative
+  character. The square and the one-pole remain research variants. The top-end noise
   is intentional.
 - **Safe experiment and stop criterion:** if the positive path changes, if the
-  negative half is not the square family, or if the zero crossing clicks, stop and
-  fix the path before the UI.
+  negative half is not the abs family, or if the zero crossing clicks, stop and fix
+  the path before the UI.
 - **Smaller alternative:** keep the positive half only and leave the negative half
   as the research shaper.
 - **Rollback:** restore the 179 shape and filter layout and the shaper page, and

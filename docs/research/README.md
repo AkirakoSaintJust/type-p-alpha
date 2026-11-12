@@ -251,7 +251,7 @@ a phase variant rather than a tone control. The peaks stay bounded.
 
 The player-facing control is the bipolar feedback knob in
 [`feedback-bipolar.md`](feedback-bipolar.md): the positive half is the current path,
-the negative half is the square with the average, and the one-pole and the abs stay
+the negative half is the abs with the average, and the square and the one-pole stay
 as research alternatives. The experiment record and the WAVs are in
 [`feedback-shaper.md`](feedback-shaper.md).
 
@@ -362,9 +362,10 @@ The sign flip failed at 25 and 50 percent feedback. It is not shipped, and the
 The shared feedback envelope with a per-operator depth is implemented on the engine
 side and measured in
 [`feedback-envelope.md`](feedback-envelope.md).
-The page, the mockup and the snapshots are in. The Reface-style nonlinear shaper and
-the one-pole filter are shipped too, with the evidence in
+The page, the mockup and the snapshots are in. The bipolar feedback knob ships the
+abs on its negative half; the square and the one-pole remain research variants, with
+the evidence in
 [`feedback-shaper.md`](feedback-shaper.md).
-The negative-feedback line now has the shape and filter controls. A different tap
+The negative-feedback line now has the bipolar knob and the envelope. A different tap
 topology or a listening comparison with the Reface remains open, and it needs its
 own contract.

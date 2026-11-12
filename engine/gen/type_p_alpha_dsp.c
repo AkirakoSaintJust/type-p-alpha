@@ -2563,19 +2563,18 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
             /* Self-feedback tap. The level is signed and block-derived, so it carries the key,
                velocity and envelope offsets on the magnitude. The positive half is the current
                path: the level-gained output averaged over this sample and the previous one.
-               The negative half squares and negates the sample and uses the same average, the
-               Reface-style square family. The two-sample average is the OPM's
+               The negative half takes the absolute value, negates it and uses the same average,
+               the Reface-style pulse family. The two-sample average is the OPM's
                `(o + Inp_last) >> Fl`; its zero at Nyquist damps the one-sample loop at the top
-               of the band. The state stores the previous shaped sample, so the negative form
-               is the next square. The body is inlined four times into the same voice scope, so
-               the intermediate lives in the state. While the tap is gated the state holds its
-               last value, so the first samples after turning feedback up fade in from the
-               previous setting. */
+               of the band. The state stores the previous shaped sample. The body is inlined
+               four times into the same voice scope, so the intermediate lives in the state.
+               While the tap is gated the state holds its last value, so the first samples after
+               turning feedback up fade in from the previous setting. */
             int32_t op4_fb_audio_x = 0;
             if (op4_fb_level_eff[v]) {
                 if (op4_fb_level[voice_part[v]] < 0) {
-                    op4_fb_shaped[v] =
-                        -(int32_t)(((int64_t)op4_tl_audio_x * op4_tl_audio_x) >> 15);
+                    op4_fb_shaped[v] = op4_tl_audio_x < 0 ? -op4_tl_audio_x : op4_tl_audio_x;
+                    op4_fb_shaped[v] = -op4_fb_shaped[v];
                     op4_fb_audio_x =
                         ((op4_fb_shaped[v] + op4_fb_prev[v]) * op4_fb_level_eff[v]) >> 16;
                     op4_fb_prev[v] = op4_fb_shaped[v];
@@ -2639,19 +2638,18 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
             /* Self-feedback tap. The level is signed and block-derived, so it carries the key,
                velocity and envelope offsets on the magnitude. The positive half is the current
                path: the level-gained output averaged over this sample and the previous one.
-               The negative half squares and negates the sample and uses the same average, the
-               Reface-style square family. The two-sample average is the OPM's
+               The negative half takes the absolute value, negates it and uses the same average,
+               the Reface-style pulse family. The two-sample average is the OPM's
                `(o + Inp_last) >> Fl`; its zero at Nyquist damps the one-sample loop at the top
-               of the band. The state stores the previous shaped sample, so the negative form
-               is the next square. The body is inlined four times into the same voice scope, so
-               the intermediate lives in the state. While the tap is gated the state holds its
-               last value, so the first samples after turning feedback up fade in from the
-               previous setting. */
+               of the band. The state stores the previous shaped sample. The body is inlined
+               four times into the same voice scope, so the intermediate lives in the state.
+               While the tap is gated the state holds its last value, so the first samples after
+               turning feedback up fade in from the previous setting. */
             int32_t op3_fb_audio_x = 0;
             if (op3_fb_level_eff[v]) {
                 if (op3_fb_level[voice_part[v]] < 0) {
-                    op3_fb_shaped[v] =
-                        -(int32_t)(((int64_t)op3_tl_audio_x * op3_tl_audio_x) >> 15);
+                    op3_fb_shaped[v] = op3_tl_audio_x < 0 ? -op3_tl_audio_x : op3_tl_audio_x;
+                    op3_fb_shaped[v] = -op3_fb_shaped[v];
                     op3_fb_audio_x =
                         ((op3_fb_shaped[v] + op3_fb_prev[v]) * op3_fb_level_eff[v]) >> 16;
                     op3_fb_prev[v] = op3_fb_shaped[v];
@@ -2715,19 +2713,18 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
             /* Self-feedback tap. The level is signed and block-derived, so it carries the key,
                velocity and envelope offsets on the magnitude. The positive half is the current
                path: the level-gained output averaged over this sample and the previous one.
-               The negative half squares and negates the sample and uses the same average, the
-               Reface-style square family. The two-sample average is the OPM's
+               The negative half takes the absolute value, negates it and uses the same average,
+               the Reface-style pulse family. The two-sample average is the OPM's
                `(o + Inp_last) >> Fl`; its zero at Nyquist damps the one-sample loop at the top
-               of the band. The state stores the previous shaped sample, so the negative form
-               is the next square. The body is inlined four times into the same voice scope, so
-               the intermediate lives in the state. While the tap is gated the state holds its
-               last value, so the first samples after turning feedback up fade in from the
-               previous setting. */
+               of the band. The state stores the previous shaped sample. The body is inlined
+               four times into the same voice scope, so the intermediate lives in the state.
+               While the tap is gated the state holds its last value, so the first samples after
+               turning feedback up fade in from the previous setting. */
             int32_t op2_fb_audio_x = 0;
             if (op2_fb_level_eff[v]) {
                 if (op2_fb_level[voice_part[v]] < 0) {
-                    op2_fb_shaped[v] =
-                        -(int32_t)(((int64_t)op2_tl_audio_x * op2_tl_audio_x) >> 15);
+                    op2_fb_shaped[v] = op2_tl_audio_x < 0 ? -op2_tl_audio_x : op2_tl_audio_x;
+                    op2_fb_shaped[v] = -op2_fb_shaped[v];
                     op2_fb_audio_x =
                         ((op2_fb_shaped[v] + op2_fb_prev[v]) * op2_fb_level_eff[v]) >> 16;
                     op2_fb_prev[v] = op2_fb_shaped[v];
@@ -2791,19 +2788,18 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
             /* Self-feedback tap. The level is signed and block-derived, so it carries the key,
                velocity and envelope offsets on the magnitude. The positive half is the current
                path: the level-gained output averaged over this sample and the previous one.
-               The negative half squares and negates the sample and uses the same average, the
-               Reface-style square family. The two-sample average is the OPM's
+               The negative half takes the absolute value, negates it and uses the same average,
+               the Reface-style pulse family. The two-sample average is the OPM's
                `(o + Inp_last) >> Fl`; its zero at Nyquist damps the one-sample loop at the top
-               of the band. The state stores the previous shaped sample, so the negative form
-               is the next square. The body is inlined four times into the same voice scope, so
-               the intermediate lives in the state. While the tap is gated the state holds its
-               last value, so the first samples after turning feedback up fade in from the
-               previous setting. */
+               of the band. The state stores the previous shaped sample. The body is inlined
+               four times into the same voice scope, so the intermediate lives in the state.
+               While the tap is gated the state holds its last value, so the first samples after
+               turning feedback up fade in from the previous setting. */
             int32_t op1_fb_audio_x = 0;
             if (op1_fb_level_eff[v]) {
                 if (op1_fb_level[voice_part[v]] < 0) {
-                    op1_fb_shaped[v] =
-                        -(int32_t)(((int64_t)op1_tl_audio_x * op1_tl_audio_x) >> 15);
+                    op1_fb_shaped[v] = op1_tl_audio_x < 0 ? -op1_tl_audio_x : op1_tl_audio_x;
+                    op1_fb_shaped[v] = -op1_fb_shaped[v];
                     op1_fb_audio_x =
                         ((op1_fb_shaped[v] + op1_fb_prev[v]) * op1_fb_level_eff[v]) >> 16;
                     op1_fb_prev[v] = op1_fb_shaped[v];
