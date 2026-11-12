@@ -257,6 +257,11 @@ as research alternatives. The experiment record and the WAVs are in
 
 ## Feedback envelopes
 
+> Superseded by
+> [`feature-contract-operator-lfos.md`](../../plugin/feature-contract-operator-lfos.md).
+> The shipped design gives each operator its own envelope, and the envelope lives
+> in the operator card. The comparison below records the decision path.
+
 The question is where a feedback envelope belongs. Three placements fit the
 current architecture:
 

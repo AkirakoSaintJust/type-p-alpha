@@ -1,5 +1,10 @@
 # Feature contract: feedback envelope
 
+> Superseded by
+> [`feature-contract-operator-lfos.md`](feature-contract-operator-lfos.md). The
+> feedback envelope is now per operator; this contract keeps the shared-envelope
+> design and measurement as history.
+
 ## Identity
 
 - **Feature:** A shared per-part feedback envelope with a per-operator depth.

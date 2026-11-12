@@ -201,8 +201,9 @@ and the selected part button has a green border and green text.
 
 ### Tabs
 
-`patch settings`, `operators`, `fx / mod`, with no vertical dividers. The active tab
-is a pink cut polygon rather than a rectangle. Inactive tabs are dim text on black.
+`patch settings`, `operators`, `fx / mod`, `operator lfos`, with no vertical dividers.
+The active tab is a pink cut polygon rather than a rectangle. Inactive tabs are dim
+text on black.
 
 ### Patch settings
 
@@ -220,11 +221,22 @@ sit next to the mode buttons with a 32px gap rather than at the card edge.
 
 Four borderless columns, each with the operator name at the left, copy and paste
 after it, and the mute switch at the right with a 16px gap before it, then a scope
-and spectro pair, and three cards: `oscillator`, `envelope`, `amplitude lfo`. The oscillator card holds ratio, detune, level, feedback and the
-wave select. The envelope holds R1 to R4 on the first row and L1 to L3 on the second
-row, and the amplitude LFO holds rate, depth, the wave select and the `bipolar`
-switch. The four oscillator knobs spread across the card, and the two LFO knobs sit
-apart. The envelope rates and levels each get their own row.
+and spectro pair, and three cards: `oscillator`, `amplitude envelope`,
+`feedback envelope`. The oscillator card holds ratio, detune, level, feedback and
+the wave select. The amplitude envelope holds R1 to R4 on the first row and L1 to L3
+on the second row. The feedback envelope holds its own R1 to R4 and L1 to L3 rows,
+and the operator's `depth` knob sits beside its graph. The four oscillator knobs
+spread across the card. The envelope rates and levels each get their own row.
+
+### Operator LFOs
+
+Four borderless columns, each with the operator name, copy and paste, the mute
+switch, a scope and spectro pair, then four cards: `oscillator`, `amplitude lfo`,
+`feedback lfo`, and `detune lfo`. The oscillator card repeats the operator
+oscillator controls so the operator stays recognisable on this page. Each LFO card
+holds rate, depth, the wave select and the `bipolar` switch. The amplitude LFO depth
+is in level steps, the feedback LFO depth is a percentage of the feedback range, and
+the detune LFO depth is in semitones.
 
 ### FX / MOD
 

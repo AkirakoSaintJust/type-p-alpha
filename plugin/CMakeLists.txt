@@ -114,6 +114,12 @@ target_include_directories(feedback_bipolar PRIVATE "${P1_GENERATED_DIR}")
 add_dependencies(feedback_bipolar p1_params)
 add_test(NAME feedback_bipolar COMMAND feedback_bipolar)
 
+add_executable(operator_lfos tests/operator_lfos.cpp)
+target_link_libraries(operator_lfos PRIVATE p1_engine)
+target_include_directories(operator_lfos PRIVATE "${P1_GENERATED_DIR}")
+add_dependencies(operator_lfos p1_params)
+add_test(NAME operator_lfos COMMAND operator_lfos)
+
 add_executable(rate_bridge_test tests/rate_bridge_test.cpp)
 target_link_libraries(rate_bridge_test PRIVATE p1_engine)
 add_test(NAME rate_bridge COMMAND rate_bridge_test)

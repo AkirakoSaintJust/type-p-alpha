@@ -343,10 +343,12 @@ mechanical, so the table lists each family and its target.
 | `opBase` | `opN_` prefix. |
 | `opRatio`, `opDetune`, `opWaveform`, `opLevel`, `opFeedback`, `opFeedbackDepth` | operator oscillator ids. |
 | `opTremRate`, `opTremDepth`, `opTremWave`, `opTremMode`, `opMute` | operator amplitude LFO and mute ids. |
-| `opEnvRate`, `opEnvLevel` | operator envelope ids. |
+| `opEnvRate`, `opEnvLevel` | operator amplitude envelope ids. |
+| `opFeedbackRate`, `opFeedbackLevel`, `opFeedbackDepth` | per-operator feedback envelope and depth ids. |
+| `opFeedbackLfoRate`, `opFeedbackLfoDepth`, `opFeedbackLfoWave`, `opFeedbackLfoMode` | feedback LFO ids. |
+| `opDetuneLfoRate`, `opDetuneLfoDepth`, `opDetuneLfoWave`, `opDetuneLfoMode` | detune LFO ids. |
 | `pitchRate`, `pitchDepth`, `pitchWave`, `pitchMode`, `pitchEnvOn`, `pitchEnvRate`, `pitchEnvLevel` | pitch LFO and pitch envelope ids. |
 | `filterCutoff`, `filterRes`, `filterType`, `filterOn`, `filterEnvDepth`, `filterRate`, `filterLevel` | filter and filter envelope ids. |
-| `feedbackRate`, `feedbackLevel` | shared feedback envelope ids. |
 | `FollowTarget`, `followTargets` | key and velocity follow target table. |
 | `waveNames`, `lfoWaveNames` | wave display names. |
 
@@ -429,28 +431,32 @@ engine, the MIDI bridge, the rate bridge, the preset bank and the UI state.
 | `PartCard` | One part card with name, actions, knobs, level, scope and spectro. |
 | `VoiceMode` | Voice mode buttons and unison, detune and portamento knobs. |
 | `PatchPage` | Two part cards and the voice mode block. |
-| `OpColumn` | One operator column: oscillator, envelope, amplitude LFO. |
+| `OpColumn` | One operator column: oscillator, amplitude envelope, feedback envelope. |
 | `OperatorsPage` | Four operator columns. |
+| `OscillatorCard` | Shared operator oscillator card. |
+| `AmplitudeEnvelopeCard` | Shared per-operator amplitude envelope card. |
+| `FeedbackEnvelopeCard` | Per-operator feedback envelope graph, rates, levels and depth. |
+| `LfoCard` | Shared rate, depth, wave and bipolar card for the three LFO families. |
+| `OpLfoColumn` | One operator LFO column: oscillator, amplitude LFO, feedback LFO, detune LFO. |
+| `OperatorLfosPage` | Four operator LFO columns. |
 | `FilterCard` | Filter cutoff, resonance, env amount, type and on switch. |
 | `FilterEnvelopeCard` | Four-rate, three-level filter envelope. |
 | `PitchLfoCard` | Pitch LFO wave, rate, depth, wave select and bipolar switch. |
 | `PitchEnvelopeCard` | Pitch envelope graph, four rates, four levels and on switch. |
 | `FollowCard` | Key or velocity follow card with target selector and wipe. |
 | `FxModPage` | Filter, filter envelope, pitch LFO, pitch envelope and follow cards. |
-| `FeedbackEnvelopeCard` | Shared feedback envelope graph and knobs. |
-| `FeedbackDepthCard` | Four operator feedback depth knobs. |
-| `FeedbackPage` | Feedback envelope and depth cards. |
 | `setParam` / `getParam` | Inline helpers in `Pages.h`, used by every page. |
 | `isCarrier` | Carrier test used for the operator name colour. |
-| `makePatchPage`, `makeOperatorsPage`, `makeFxModPage`, `makeFeedbackPage` | Page factories. |
+| `makePatchPage`, `makeOperatorsPage`, `makeFxModPage`, `makeOperatorLfosPage` | Page factories. |
 
 ## Tests
 
 | File | Purpose |
 | --- | --- |
 | `engine_parity.cpp` | Compare the generated engine against the independent reference for filters, key follow and render parity. |
-| `feedback_envelope.cpp` | Measure the shared feedback envelope and the depth offsets. |
+| `feedback_envelope.cpp` | Measure the per-operator feedback envelope and the depth offsets. |
 | `feedback_bipolar.cpp` | Measure the positive path, the abs negative half, the envelope and the peak bound. |
+| `operator_lfos.cpp` | Check the feedback and detune LFO paths at depth 0 and above. |
 | `rate_bridge_test.cpp` | Check the resampler latency and spectral behaviour. |
 | `preset_smoke.cpp` | Check the current record, the 32-character name and the `P1LIB2` library. |
 | `plugin_smoke.cpp` | Check state restore, the global library, automation and the 48 kHz bridge. |
@@ -478,7 +484,7 @@ grouped into data, controls, views, library and dialogs:
 | Data | `initPartState`, `b`, `ba`, `defaultRouting` |
 | Knobs and controls | `makeKnob`, `stepFor`, `editValue`, `finish`, `move`, `up`, `refreshKnob`, `makeSelect`, `makeToggle`, `makeMuteSwitch`, `makeLevelSlider`, `draw`, `setFromEvent` |
 | Visuals | `drawScope`, `drawSpectro`, `tick`, `envSvg`, `penvSvg`, `lfoSvg`, `algSvg`, `wire`, `arrowDown`, `fit`, `renderAlg` |
-| Sections and views | `knobRow`, `makeSection`, `fxCard`, `viewPatch`, `viewOps`, `viewFxMod`, `viewFeedback`, `showTab`, `rerender` |
+| Sections and views | `knobRow`, `knobFor`, `makeSection`, `fxCard`, `opShell`, `oscSection`, `ampEnvSection`, `fbEnvSection`, `lfoSection`, `viewPatch`, `viewOps`, `viewOperatorLfos`, `viewFxMod`, `showTab`, `rerender` |
 | Operator and part state | `findOp`, `setOpMute`, `setPartMute`, `bindPart`, `setActivePart`, `copyOp`, `pasteOp`, `copyPart`, `pastePart` |
 | Toolbar and dialogs | `buildToolbar`, `openSingleParts`, `openDialog`, `toast`, `openRename`, `renamePart`, `openAlgPicker`, `setAlg` |
 | Part slots | `partSnapshot`, `applyPartSnapshot`, `openPartSlots`, `confirmOverwritePart`, `savePartToSlot`, `loadPartFromSlot`, `initPart` |
@@ -543,6 +549,6 @@ The record format is now a single `P1LIB2` layout with a 33-byte name field and 
 
 - `preset_smoke` passes with the current record and the 32-character name.
 - `plugin_smoke` and `plugin_stability` pass on the current state and library.
-- Linux `ctest` passes 9 of 9, including the 14-image snapshot diff.
+- Linux `ctest` passes 10 of 10, including the 14-image snapshot diff.
 - The Windows clang-cl build links without the MSVC shim.
 - The umbrella `deep-check --all` is green.

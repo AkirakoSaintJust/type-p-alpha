@@ -59,6 +59,8 @@ public:
     void showPartBrowser(int part, bool saveMode);
     void copyPart(int part);
     void pastePart(int part);
+    void copyOperator(int op);
+    void pasteOperator(int op);
     void initPart(int part);
     void initMultiPatch();
     void togglePartMute(int part, bool muted);
@@ -102,4 +104,6 @@ private:
     int startupFitAttempts_ = 90;
     std::array<int, 2> mutedLevel_{99, 99};
     std::map<juce::String, double> partClipboard_;
+    std::map<juce::String, double> operatorClipboard_;
+    int operatorClipboardOp_ = -1;
 };

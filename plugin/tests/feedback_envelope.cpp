@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: GPL-3.0-only */
-/* Feedback envelope: the shared fbenv node offsets each operator's feedback
- * amount by its depth. Depth 0 is bit-exact; a positive depth opens the feedback
- * as the envelope rises, a negative depth closes it. */
+/* Feedback envelope: each operator's internal fbenv node offsets that operator's
+ * feedback amount by its depth. Depth 0 is bit-exact; a positive depth opens the
+ * feedback as the envelope rises, a negative depth closes it. */
 #include <array>
 #include <cmath>
 #include <cstdint>
@@ -76,13 +76,13 @@ bool setup(p1::Engine& engine, int32_t feedback, int32_t depth,
     ok &= set_param(engine, "op1.eg.l3.p0", 99);
     ok &= set_param(engine, "op1_trem_depth.p0", 0);
     ok &= set_param(engine, "filter_on.p0", 0);
-    ok &= set_param(engine, "fbenv_r1.p0", envR1);
-    ok &= set_param(engine, "fbenv_r2.p0", 99);
-    ok &= set_param(engine, "fbenv_r3.p0", 99);
-    ok &= set_param(engine, "fbenv_r4.p0", 99);
-    ok &= set_param(engine, "fbenv_l1.p0", envL1);
-    ok &= set_param(engine, "fbenv_l2.p0", envL1);
-    ok &= set_param(engine, "fbenv_l3.p0", envL1);
+    ok &= set_param(engine, "op1_fbenv_r1.p0", envR1);
+    ok &= set_param(engine, "op1_fbenv_r2.p0", 99);
+    ok &= set_param(engine, "op1_fbenv_r3.p0", 99);
+    ok &= set_param(engine, "op1_fbenv_r4.p0", 99);
+    ok &= set_param(engine, "op1_fbenv_l1.p0", envL1);
+    ok &= set_param(engine, "op1_fbenv_l2.p0", envL1);
+    ok &= set_param(engine, "op1_fbenv_l3.p0", envL1);
     return ok;
 }
 

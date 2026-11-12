@@ -94,13 +94,15 @@ Every page fills the same height:
 - patch settings: two part cards, each with five knobs, a level slider and a
   scope and spectro, which grow to fill the remaining card height, followed by the
   voice mode block.
-- operators: four columns with oscillator, envelope and amplitude LFO, where the
-  envelope uses one row for R1 to R4 and a second row for L1 to L3. The amplitude
-  LFO carries its `bipolar` switch beside the wave select.
+- operators: four columns with oscillator, amplitude envelope and feedback envelope,
+  where the envelopes use one row for R1 to R4 and a second row for L1 to L3.
 - fx / mod: a three by two grid. Filter 1, the filter envelope and the pitch LFO
   fill the first row. Pitch envelope, key follow and velocity follow fill the second
   row. The two follow cards are separate, and each has its own on switch and wipe
   button. The pitch LFO carries its `bipolar` switch beside the wave select.
+- operator lfos: four operator columns with the oscillator, then the amplitude LFO,
+  feedback LFO and detune LFO cards. Each LFO card carries its `bipolar` switch
+  beside the wave select.
 
 ## Header
 
@@ -147,8 +149,9 @@ for a level or a rate.
 Context sizes:
 
 - default 52 cell, 42 dial
-- operator envelope 37 cell, 34 dial
-- operator oscillator and amplitude LFO 56 cell, 34 dial
+- operator envelope 34 cell, 28 dial
+- operator oscillator and LFO 50 cell, 28 dial
+- operator feedback envelope 34 cell, 28 dial
 - part settings 62 cell, 38 dial
 - pitch envelope 52 cell, 38 dial
 - key follow and velocity follow 64 cell, 42 dial

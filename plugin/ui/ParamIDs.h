@@ -61,6 +61,38 @@ inline juce::String opFeedbackDepth(int op, int part)
 {
     return withPart(opBase(op, "_fb_depth"), part);
 }
+inline juce::String opFeedbackLfoRate(int op, int part)
+{
+    return withPart(opBase(op, "_fblfo_rate"), part);
+}
+inline juce::String opFeedbackLfoDepth(int op, int part)
+{
+    return withPart(opBase(op, "_fblfo_depth"), part);
+}
+inline juce::String opFeedbackLfoWave(int op, int part)
+{
+    return withPart(opBase(op, "_fblfo_wave"), part);
+}
+inline juce::String opFeedbackLfoMode(int op, int part)
+{
+    return withPart(opBase(op, "_fblfo_mode"), part);
+}
+inline juce::String opDetuneLfoRate(int op, int part)
+{
+    return withPart(opBase(op, "_dlfo_rate"), part);
+}
+inline juce::String opDetuneLfoDepth(int op, int part)
+{
+    return withPart(opBase(op, "_dlfo_depth"), part);
+}
+inline juce::String opDetuneLfoWave(int op, int part)
+{
+    return withPart(opBase(op, "_dlfo_wave"), part);
+}
+inline juce::String opDetuneLfoMode(int op, int part)
+{
+    return withPart(opBase(op, "_dlfo_mode"), part);
+}
 inline juce::String opTremRate(int op, int part)
 {
     return withPart(opBase(op, "_trem_rate"), part);
@@ -98,6 +130,17 @@ inline juce::String opEnvLevel(int op, int index, int part)
            partSuffix(part);
 }
 
+inline juce::String opFeedbackRate(int op, int index, int part)
+{
+    return "op" + juce::String(op + 1) + "_fbenv_r" +
+           juce::String(index + 1) + partSuffix(part);
+}
+inline juce::String opFeedbackLevel(int op, int index, int part)
+{
+    return "op" + juce::String(op + 1) + "_fbenv_l" +
+           juce::String(index + 1) + partSuffix(part);
+}
+
 inline juce::String pitchRate(int part) { return withPart("pitch_rate", part); }
 inline juce::String pitchDepth(int part) { return withPart("pitch_depth", part); }
 inline juce::String pitchWave(int part) { return withPart("pitch_wave", part); }
@@ -124,14 +167,6 @@ inline juce::String filterRate(int index, int part)
 inline juce::String filterLevel(int index, int part)
 {
     return withPart("fenv_l" + juce::String(index + 1), part);
-}
-inline juce::String feedbackRate(int index, int part)
-{
-    return withPart("fbenv_r" + juce::String(index + 1), part);
-}
-inline juce::String feedbackLevel(int index, int part)
-{
-    return withPart("fbenv_l" + juce::String(index + 1), part);
 }
 
 struct FollowTarget {

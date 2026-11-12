@@ -791,7 +791,7 @@ void PluginEditor::buildUi()
     labels.add("patch settings");
     labels.add("operators");
     labels.add("fx / mod");
-    labels.add("feedback");
+    labels.add("operator lfos");
     tabs_.setLabels(labels);
     switchingTab_ = true;
     tabs_.setActive(activeTab_);
@@ -818,7 +818,7 @@ void PluginEditor::buildPage()
         page_ = p1::ui::makeFxModPage(*this);
         break;
     case 3:
-        page_ = p1::ui::makeFeedbackPage(*this);
+        page_ = p1::ui::makeOperatorLfosPage(*this);
         break;
     default:
         page_ = p1::ui::makePatchPage(*this);
@@ -1026,6 +1026,54 @@ void PluginEditor::pastePart(int part)
 {
     const auto suffix = ".p" + juce::String(juce::jlimit(0, 1, part));
     for (const auto& [base, value] : partClipboard_) {
+        if (auto* parameter = state().getParameter(base + suffix))
+            parameter->setValueNotifyingHost(
+                parameter->convertTo0to1(static_cast<float>(value)));
+    }
+    buildPage();
+}
+
+void PluginEditor::copyOperator(int op)
+{
+    operatorClipboard_.clear();
+    operatorClipboardOp_ = op;
+    const int part = activePart();
+    const juce::String suffix = ".p" + juce::String(part);
+    for (const auto& spec : kP1ParamSpecs) {
+        const juce::String id(spec.id);
+        if (!id.endsWith(suffix))
+            continue;
+        const juce::String prefix = "op" + juce::String(op + 1);
+        const bool opMatch = id.startsWith(prefix + "_") ||
+                             id.startsWith(prefix + ".");
+        const bool op1Edge =
+            op == 0 && (id.startsWith("attack.") || id.startsWith("release."));
+        if (!opMatch && !op1Edge)
+            continue;
+        if (auto* value = state().getRawParameterValue(id))
+            operatorClipboard_[id.dropLastCharacters(3)] = value->load();
+    }
+}
+
+void PluginEditor::pasteOperator(int op)
+{
+    if (operatorClipboard_.empty())
+        return;
+    const auto suffix = ".p" + juce::String(activePart());
+    const juce::String source = "op" + juce::String(operatorClipboardOp_ + 1);
+    const juce::String destination = "op" + juce::String(op + 1);
+    for (const auto& [storedBase, value] : operatorClipboard_) {
+        juce::String base = storedBase;
+        if (base.startsWith(source + "_") || base.startsWith(source + "."))
+            base = destination + base.substring(source.length());
+        if (op == 0 && base == "op1.eg.r1")
+            base = "attack";
+        else if (op == 0 && base == "op1.eg.r4")
+            base = "release";
+        else if (op != 0 && base == "attack")
+            base = destination + ".eg.r1";
+        else if (op != 0 && base == "release")
+            base = destination + ".eg.r4";
         if (auto* parameter = state().getParameter(base + suffix))
             parameter->setValueNotifyingHost(
                 parameter->convertTo0to1(static_cast<float>(value)));

@@ -3,6 +3,7 @@
 
 #include <memory>
 
+#include "ParamIDs.h"
 #include "PluginEditor.h"
 
 namespace p1::ui {
@@ -112,9 +113,187 @@ private:
     std::unique_ptr<InlineMuteSwitch> mute_;
 };
 
+class OscillatorCard : public P1Card {
+public:
+    OscillatorCard(PluginEditor& editor, int op, int part)
+        : P1Card("oscillator"),
+          ratio_(editor.state(), params::opRatio(op, part), "ratio", 28.0f),
+          detune_(editor.state(), params::opDetune(op, part), "detune", 28.0f),
+          level_(editor.state(), params::opLevel(op, part), "level", 28.0f),
+          feedback_(editor.state(), params::opFeedback(op, part), "feedback",
+                    28.0f),
+          wave_(editor.state(), params::opWaveform(op, part),
+                params::waveNames())
+    {
+        addAndMakeVisible(ratio_);
+        addAndMakeVisible(detune_);
+        addAndMakeVisible(level_);
+        addAndMakeVisible(feedback_);
+        addAndMakeVisible(wave_);
+    }
+
+    void resized() override
+    {
+        auto area = contentArea();
+        auto row = area.removeFromTop(70);
+        const int cell = row.getWidth() / 4;
+        ratio_.setBounds(row.removeFromLeft(cell));
+        detune_.setBounds(row.removeFromLeft(cell));
+        level_.setBounds(row.removeFromLeft(cell));
+        feedback_.setBounds(row);
+        wave_.setBounds(area.removeFromTop(18).withTrimmedTop(2).withWidth(150));
+    }
+
+private:
+    ParamKnob ratio_;
+    ParamKnob detune_;
+    ParamKnob level_;
+    ParamKnob feedback_;
+    ParamChoice wave_;
+};
+
+class AmplitudeEnvelopeCard : public P1Card {
+public:
+    AmplitudeEnvelopeCard(PluginEditor& editor, int op, int part)
+        : P1Card("amplitude envelope"),
+          envView_(editor.state(),
+                   {params::opEnvRate(op, 0, part), params::opEnvRate(op, 1, part),
+                    params::opEnvRate(op, 2, part), params::opEnvRate(op, 3, part)},
+                   {params::opEnvLevel(op, 0, part), params::opEnvLevel(op, 1, part),
+                    params::opEnvLevel(op, 2, part)},
+                   colour(tokens::purple), 0.0, 99.0, false)
+    {
+        addAndMakeVisible(envView_);
+        for (int i = 0; i < 4; ++i) {
+            rates_[static_cast<std::size_t>(i)] = std::make_unique<ParamKnob>(
+                editor.state(), params::opEnvRate(op, i, part),
+                "r" + juce::String(i + 1), 28.0f);
+            addAndMakeVisible(*rates_[static_cast<std::size_t>(i)]);
+        }
+        for (int i = 0; i < 3; ++i) {
+            levels_[static_cast<std::size_t>(i)] = std::make_unique<ParamKnob>(
+                editor.state(), params::opEnvLevel(op, i, part),
+                "l" + juce::String(i + 1), 28.0f);
+            addAndMakeVisible(*levels_[static_cast<std::size_t>(i)]);
+        }
+    }
+
+    void resized() override
+    {
+        auto area = contentArea();
+        envView_.setBounds(area.removeFromTop(40));
+        auto rates = area.removeFromTop(64);
+        const int rateCell = rates.getWidth() / 4;
+        for (auto& knob : rates_)
+            knob->setBounds(rates.removeFromLeft(rateCell));
+        auto levels = area.removeFromTop(64);
+        const int levelCell = levels.getWidth() / 3;
+        for (auto& knob : levels_)
+            knob->setBounds(levels.removeFromLeft(levelCell));
+    }
+
+    void tick() { envView_.repaint(); }
+
+private:
+    P1Envelope envView_;
+    std::array<std::unique_ptr<ParamKnob>, 4> rates_{};
+    std::array<std::unique_ptr<ParamKnob>, 3> levels_{};
+};
+
+class FeedbackEnvelopeCard : public P1Card {
+public:
+    FeedbackEnvelopeCard(PluginEditor& editor, int op, int part)
+        : P1Card("feedback envelope"),
+          envView_(editor.state(),
+                   {params::opFeedbackRate(op, 0, part),
+                    params::opFeedbackRate(op, 1, part),
+                    params::opFeedbackRate(op, 2, part),
+                    params::opFeedbackRate(op, 3, part)},
+                   {params::opFeedbackLevel(op, 0, part),
+                    params::opFeedbackLevel(op, 1, part),
+                    params::opFeedbackLevel(op, 2, part)},
+                   colour(tokens::purple), 0.0, 99.0, false),
+          depth_(editor.state(), params::opFeedbackDepth(op, part), "depth",
+                 28.0f)
+    {
+        addAndMakeVisible(envView_);
+        addAndMakeVisible(depth_);
+        for (int i = 0; i < 4; ++i) {
+            rates_[static_cast<std::size_t>(i)] = std::make_unique<ParamKnob>(
+                editor.state(), params::opFeedbackRate(op, i, part),
+                "r" + juce::String(i + 1), 28.0f);
+            addAndMakeVisible(*rates_[static_cast<std::size_t>(i)]);
+        }
+        for (int i = 0; i < 3; ++i) {
+            levels_[static_cast<std::size_t>(i)] = std::make_unique<ParamKnob>(
+                editor.state(), params::opFeedbackLevel(op, i, part),
+                "l" + juce::String(i + 1), 28.0f);
+            addAndMakeVisible(*levels_[static_cast<std::size_t>(i)]);
+        }
+    }
+
+    void resized() override
+    {
+        auto area = contentArea();
+        auto top = area.removeFromTop(64);
+        depth_.setBounds(top.removeFromRight(80));
+        envView_.setBounds(top);
+        auto rates = area.removeFromTop(64);
+        const int rateCell = rates.getWidth() / 4;
+        for (auto& knob : rates_)
+            knob->setBounds(rates.removeFromLeft(rateCell));
+        auto levels = area.removeFromTop(64);
+        const int levelCell = levels.getWidth() / 3;
+        for (auto& knob : levels_)
+            knob->setBounds(levels.removeFromLeft(levelCell));
+    }
+
+    void tick() { envView_.repaint(); }
+
+private:
+    P1Envelope envView_;
+    ParamKnob depth_;
+    std::array<std::unique_ptr<ParamKnob>, 4> rates_{};
+    std::array<std::unique_ptr<ParamKnob>, 3> levels_{};
+};
+
+class LfoCard : public P1Card {
+public:
+    LfoCard(PluginEditor& editor, juce::String title, juce::String rateID,
+            juce::String depthID, juce::String waveID, juce::String modeID)
+        : P1Card(std::move(title)),
+          rate_(editor.state(), std::move(rateID), "rate", 28.0f),
+          depth_(editor.state(), std::move(depthID), "depth", 28.0f),
+          wave_(editor.state(), std::move(waveID), params::lfoWaveNames()),
+          mode_(editor.state(), std::move(modeID), "bipolar")
+    {
+        addAndMakeVisible(rate_);
+        addAndMakeVisible(depth_);
+        addAndMakeVisible(wave_);
+        addAndMakeVisible(mode_);
+    }
+
+    void resized() override
+    {
+        auto area = contentArea();
+        auto row = area.removeFromTop(70);
+        rate_.setBounds(row.removeFromLeft(row.getWidth() / 2));
+        depth_.setBounds(row);
+        auto bottom = area.removeFromTop(18).withTrimmedTop(2);
+        wave_.setBounds(bottom.removeFromLeft(150));
+        mode_.setBounds(bottom.removeFromLeft(110));
+    }
+
+private:
+    ParamKnob rate_;
+    ParamKnob depth_;
+    ParamChoice wave_;
+    P1Toggle mode_;
+};
+
 std::unique_ptr<PageBase> makePatchPage(PluginEditor& editor);
 std::unique_ptr<PageBase> makeOperatorsPage(PluginEditor& editor);
 std::unique_ptr<PageBase> makeFxModPage(PluginEditor& editor);
-std::unique_ptr<PageBase> makeFeedbackPage(PluginEditor& editor);
+std::unique_ptr<PageBase> makeOperatorLfosPage(PluginEditor& editor);
 
 } // namespace p1::ui

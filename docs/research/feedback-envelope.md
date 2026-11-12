@@ -1,5 +1,11 @@
 # Feedback envelope: measured result
 
+> Superseded in part by
+> [`../feature-contract-operator-lfos.md`](../../plugin/feature-contract-operator-lfos.md).
+> The envelope is now per operator and sits in the operator card. The measurement
+> below stays as the shared-envelope evidence, and its depth-0 bit-exact result,
+> direction, and peak bounds still hold for each operator envelope.
+
 This is the engine evidence for
 [`../feature-contract-feedback-envelope.md`](../../plugin/feature-contract-feedback-envelope.md).
 The page and its snapshots are the next milestone.

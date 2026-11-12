@@ -20,7 +20,7 @@ Results so far seem to be fit for intent. I've been able to easily make rudiment
 
 ## Lines of research
 
-1. Feedback envelopes. Are they worth it and where to place them to avoid overcomplicating patch design? See the [feedback design note](docs/research/README.md), the [envelope contract](plugin/feature-contract-feedback-envelope.md), and the [engine measurement](docs/research/feedback-envelope.md).
+1. Feedback envelopes. Are they worth it and where to place them to avoid overcomplicating patch design? See the [feedback design note](docs/research/README.md), the [operator LFO and envelope contract](plugin/feature-contract-operator-lfos.md), and the [engine measurement](docs/research/feedback-envelope.md).
 2. Is negative feedback (i.e. feedback producing only, or mostly, odd harmonics from a sine wave) viable? See the [design note](docs/research/README.md), the [polarity contract](plugin/feature-contract-feedback-polarity.md), and the [measured result](docs/research/feedback-polarity.md). The plain sign flip is not a reliable odd-harmonic control, so that toggle is not shipped. The bipolar feedback knob ships the Reface-style absolute-value pulse on its negative half: [bipolar contract](plugin/feature-contract-feedback-bipolar.md), [design](docs/research/feedback-bipolar.md). The shaper WAVs and scopes are in [the shaper experiment](docs/research/feedback-shaper.md).
 3. Phase distortion/Vector phaseshaping. Where to place the transfer function's breakpoint? How to implement it without adding extra machinery (i.e. phase distortion and phase modulation implemented using the same phase transfer function instead of complicating the DSP unnecessarily). Does _d_-axis phase distortion offer anything substantial over operator feedback? Timbrally and conceptually, what would one use phase distortion for in this synth?
 4. Envelope design. Curves, stages, interface.
@@ -28,8 +28,7 @@ Results so far seem to be fit for intent. I've been able to easily make rudiment
 6. Additive synthesis. How to allow for finer, but accessible, spectral design? How to enable precise control of each harmonic's amplitude over time without overwhelming the user? Is a 16-band graphic formant filter per operator, maybe at the cost of some polyphony if enabled, viable? What are the alternatives? Would it help to add waveforms with very specific harmonic spectra to the waveform list? How to balance flexibility, ease of use, and CPU/memory consumption?
 7. Is the rate bridge adequate?
 8. Any extra waves that would be worth it?
-9. Per-operator detune LFOs?
-10. Ring modulation algorithms?
+9. Ring modulation algorithms?
 
 ## Decided steps
 
@@ -116,10 +115,12 @@ in `licences/`.
 
 The Type P.α engine and editor grew out of the abandoned Type P.fm1 build. Patch
 and part names carry 32 characters, and the library uses the `P1LIB2` record
-layout. The plugin passes pluginval at strictness 5 on Linux x86_64, with the
-editor open and
-the audio, state and automation checks included. The CLAP validator reports no
-failures and one warning, because its random-state test loads garbage without a
+layout. Each operator carries its own amplitude and feedback envelope and its
+amplitude, feedback and detune LFOs, with the three LFO families on the
+`operator lfos` tab. The plugin passes pluginval at strictness 5 on Linux x86_64,
+with the editor open and the audio, state and automation checks included. The CLAP
+validator reports no failures and one warning, because its random-state test loads
+garbage without a
 crash. The filter runs per voice and per part now, so each part has its own cutoff,
 resonance, mode and envelope, and its own key and velocity follow.
 
