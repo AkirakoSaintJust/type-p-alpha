@@ -96,11 +96,6 @@ target_compile_definitions(p1_engine PRIVATE
     "P1_STATE_PTR=${P1_STATE_PTR}"
 )
 
-if(P1_MSVC_ABI)
-    target_compile_options(p1_engine PRIVATE
-        "/FI${CMAKE_CURRENT_SOURCE_DIR}/engine/msvc_compat.h")
-endif()
-
 add_executable(engine_parity tests/engine_parity.cpp)
 target_link_libraries(engine_parity PRIVATE p1_engine)
 target_include_directories(engine_parity PRIVATE "${P1_GENERATED_DIR}")

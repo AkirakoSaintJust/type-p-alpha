@@ -34,8 +34,7 @@ public:
     };
 
     PresetStore(int partParamCount, int partCount,
-                std::vector<int32_t> defaults = {},
-                std::vector<std::vector<int>> legacyPartMaps = {});
+                std::vector<int32_t> defaults = {});
 
     int partParamCount() const { return partParamCount_; }
     int partCount() const { return partCount_; }
@@ -78,14 +77,10 @@ public:
 
 private:
     static std::string shortName(const std::string& name);
-    bool loadPartBankWith(const uint8_t* data, std::size_t size, uint32_t nameLen,
-                          const std::vector<int>* legacyMap);
-    bool loadMultiBankWith(const uint8_t* data, std::size_t size, uint32_t nameLen);
 
     int partParamCount_ = 0;
     int partCount_ = 0;
     std::vector<int32_t> defaults_;
-    std::vector<std::vector<int>> legacyPartMaps_;
     std::vector<Part> parts_;
     std::vector<Multi> multis_;
     int currentMulti_ = -1;

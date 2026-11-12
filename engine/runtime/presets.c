@@ -42,13 +42,13 @@ uint16_t preset_crc16(const uint8_t *p, uint32_t n)
     return c;
 }
 
-static void name_put(uint8_t *out, const char *name, uint32_t nameLen)
+static void name_put(uint8_t *out, const char *name)
 {
     uint32_t i;
-    memset(out, 0, nameLen);
+    memset(out, 0, PRESET_NAME_LEN);
     if (!name)
         return;
-    for (i = 0; i < nameLen - 1u && name[i]; i++)
+    for (i = 0; i < PRESET_NAME_LEN - 1u && name[i]; i++)
         out[i] = (uint8_t)name[i];
 }
 
@@ -57,27 +57,24 @@ static void seal(uint8_t *out, uint32_t body)
     wr32(out + body, preset_crc32(out, body));
 }
 
-static uint32_t part_pack_len(uint8_t *out, const char *name, const int32_t *params,
-                              uint32_t n, uint32_t nameLen, uint32_t version)
+uint32_t preset_part_pack(uint8_t *out, const char *name, const int32_t *params, uint32_t n)
 {
-    uint32_t body = 1u + nameLen + n * 4u, i;
-    out[0] = version;
-    name_put(out + 1u, name, nameLen);
+    uint32_t body = 1u + PRESET_NAME_LEN + n * 4u, i;
+    out[0] = PRESET_VERSION;
+    name_put(out + 1u, name);
     for (i = 0; i < n; i++)
-        wr32(out + 1u + nameLen + i * 4u, (uint32_t)params[i]);
+        wr32(out + 1u + PRESET_NAME_LEN + i * 4u, (uint32_t)params[i]);
     seal(out, body);
     return body + 4u;
 }
 
-static uint32_t multi_pack_len(uint8_t *out, const char *name, const uint8_t *part_slot,
-                               const int32_t *level, const int32_t *delay,
-                               const int32_t *channel, const int32_t *low,
-                               const int32_t *high, uint32_t p, uint32_t nameLen,
-                               uint32_t version)
+uint32_t preset_multi_pack(uint8_t *out, const char *name, const uint8_t *part_slot,
+                           const int32_t *level, const int32_t *delay, const int32_t *channel,
+                           const int32_t *low, const int32_t *high, uint32_t p)
 {
-    uint32_t body = 1u + nameLen + p + p * 5u * 4u, i, off = 1u + nameLen;
-    out[0] = version;
-    name_put(out + 1u, name, nameLen);
+    uint32_t body = 1u + PRESET_NAME_LEN + p + p * 5u * 4u, i, off = 1u + PRESET_NAME_LEN;
+    out[0] = PRESET_VERSION;
+    name_put(out + 1u, name);
     for (i = 0; i < p; i++)
         out[off + i] = part_slot[i];
     off += p;
@@ -105,35 +102,6 @@ static uint32_t multi_pack_len(uint8_t *out, const char *name, const uint8_t *pa
     return body + 4u;
 }
 
-uint32_t preset_part_pack(uint8_t *out, const char *name, const int32_t *params, uint32_t n)
-{
-    return part_pack_len(out, name, params, n, PRESET_NAME_LEN, PRESET_VERSION);
-}
-
-uint32_t preset_part_pack_v1(uint8_t *out, const char *name, const int32_t *params,
-                             uint32_t n)
-{
-    return part_pack_len(out, name, params, n, PRESET_LEGACY_NAME_LEN,
-                         PRESET_VERSION_V1);
-}
-
-uint32_t preset_multi_pack(uint8_t *out, const char *name, const uint8_t *part_slot,
-                           const int32_t *level, const int32_t *delay, const int32_t *channel,
-                           const int32_t *low, const int32_t *high, uint32_t p)
-{
-    return multi_pack_len(out, name, part_slot, level, delay, channel, low, high, p,
-                          PRESET_NAME_LEN, PRESET_VERSION);
-}
-
-uint32_t preset_multi_pack_v1(uint8_t *out, const char *name, const uint8_t *part_slot,
-                              const int32_t *level, const int32_t *delay,
-                              const int32_t *channel, const int32_t *low,
-                              const int32_t *high, uint32_t p)
-{
-    return multi_pack_len(out, name, part_slot, level, delay, channel, low, high, p,
-                          PRESET_LEGACY_NAME_LEN, PRESET_VERSION_V1);
-}
-
 uint32_t preset_settings_pack(uint8_t *out, int32_t base_channel, int32_t master_tune)
 {
     out[0] = PRESET_VERSION;
@@ -143,36 +111,34 @@ uint32_t preset_settings_pack(uint8_t *out, int32_t base_channel, int32_t master
     return ST_RECORD;
 }
 
-static int part_unpack_len(const uint8_t *raw, uint32_t n, char *name, int32_t *params,
-                           uint32_t nameLen)
+int preset_part_unpack(const uint8_t *raw, uint32_t n, char *name, int32_t *params)
 {
-    uint32_t body = 1u + nameLen + n * 4u, i;
+    uint32_t body = 1u + PRESET_NAME_LEN + n * 4u, i;
     if (raw[0] == PRESET_EMPTY)
         return 0;
     if (preset_crc32(raw, body) != rd32(raw + body))
         return 0;
     if (name) {
-        memcpy(name, raw + 1u, nameLen - 1u);
-        name[nameLen - 1u] = 0;
+        memcpy(name, raw + 1u, PRESET_NAME_LEN - 1u);
+        name[PRESET_NAME_LEN - 1u] = 0;
     }
     for (i = 0; i < n; i++)
-        params[i] = (int32_t)rd32(raw + 1u + nameLen + i * 4u);
+        params[i] = (int32_t)rd32(raw + 1u + PRESET_NAME_LEN + i * 4u);
     return 1;
 }
 
-static int multi_unpack_len(const uint8_t *raw, uint32_t p, char *name,
-                            uint8_t *part_slot, int32_t *level, int32_t *delay,
-                            int32_t *channel, int32_t *low, int32_t *high,
-                            uint32_t nameLen)
+int preset_multi_unpack(const uint8_t *raw, uint32_t p, char *name, uint8_t *part_slot,
+                        int32_t *level, int32_t *delay, int32_t *channel, int32_t *low,
+                        int32_t *high)
 {
-    uint32_t body = 1u + nameLen + p + p * 5u * 4u, i, off = 1u + nameLen;
+    uint32_t body = 1u + PRESET_NAME_LEN + p + p * 5u * 4u, i, off = 1u + PRESET_NAME_LEN;
     if (raw[0] == PRESET_EMPTY)
         return 0;
     if (preset_crc32(raw, body) != rd32(raw + body))
         return 0;
     if (name) {
-        memcpy(name, raw + 1u, nameLen - 1u);
-        name[nameLen - 1u] = 0;
+        memcpy(name, raw + 1u, PRESET_NAME_LEN - 1u);
+        name[PRESET_NAME_LEN - 1u] = 0;
     }
     for (i = 0; i < p; i++)
         part_slot[i] = raw[off + i];
@@ -198,32 +164,6 @@ static int multi_unpack_len(const uint8_t *raw, uint32_t p, char *name,
         off += 4u;
     }
     return 1;
-}
-
-int preset_part_unpack(const uint8_t *raw, uint32_t n, char *name, int32_t *params)
-{
-    return part_unpack_len(raw, n, name, params, PRESET_NAME_LEN);
-}
-
-int preset_part_unpack_v1(const uint8_t *raw, uint32_t n, char *name, int32_t *params)
-{
-    return part_unpack_len(raw, n, name, params, PRESET_LEGACY_NAME_LEN);
-}
-
-int preset_multi_unpack(const uint8_t *raw, uint32_t p, char *name, uint8_t *part_slot,
-                        int32_t *level, int32_t *delay, int32_t *channel, int32_t *low,
-                        int32_t *high)
-{
-    return multi_unpack_len(raw, p, name, part_slot, level, delay, channel, low, high,
-                            PRESET_NAME_LEN);
-}
-
-int preset_multi_unpack_v1(const uint8_t *raw, uint32_t p, char *name,
-                           uint8_t *part_slot, int32_t *level, int32_t *delay,
-                           int32_t *channel, int32_t *low, int32_t *high)
-{
-    return multi_unpack_len(raw, p, name, part_slot, level, delay, channel, low, high,
-                            PRESET_LEGACY_NAME_LEN);
 }
 
 int preset_settings_unpack(const uint8_t *raw, int32_t *base_channel, int32_t *master_tune)

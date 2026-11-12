@@ -220,16 +220,6 @@ private:
     bool panel_ = true;
 };
 
-class P1AlgorithmGraph : public juce::Component {
-public:
-    explicit P1AlgorithmGraph(int algorithm = 4);
-    void setAlgorithm(int algorithm);
-    void paint(juce::Graphics& g) override;
-
-private:
-    int algorithm_ = 4;
-};
-
 class P1AlgorithmBlock : public juce::Component {
 public:
     P1AlgorithmBlock();

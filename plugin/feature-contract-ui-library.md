@@ -6,8 +6,8 @@
   parts popup.
 - **Brief section:** `design/README.md` Dialogs, State language and Copy.
 - **Owner / date:** P1Onken, 2026-11-12.
-- **Disposition:** complete. The record migration, the editor text, the popup,
-  the mockup, the Linux goldens and the host tests are in.
+- **Disposition:** complete. The record format, the editor text, the popup, the
+  mockup, the Linux goldens and the host tests are in.
 
 ## Player outcome
 
@@ -31,8 +31,9 @@
   helpers.
 - **Persistence/version impact:** the name field grows from 16 to 33 bytes,
   `PRESET_VERSION` becomes 2 and the library magic becomes `P1LIB2`. The reader
-  accepts `P1LIB1` with the 16-byte name field, including the 146, 160 and 179
-  part layouts. Each part and multi record grows by 17 bytes.
+  accepts the current `P1LIB2` layout only; the 146, 160 and 179 layouts and the
+  16-byte `P1LIB1` name field are removed. Each part and multi record grows by
+  17 bytes. A library made before `P1LIB2` needs conversion outside the plugin.
 - **MIDI/clock impact:** none.
 
 ## Parameter and event semantics
@@ -63,22 +64,22 @@
 
 - **Candidate files:** `engine/runtime/presets.h`, `engine/runtime/presets.c`,
   `plugin/preset/PresetStore.hpp`, `plugin/preset/PresetStore.cpp`,
-  `plugin/juce/PluginEditor.cpp`, `plugin/juce/PluginEditor.h`,
-  `plugin/juce/Pages.cpp`, `plugin/juce/Pages.h`, `plugin/ui/Widgets.cpp`,
-  `plugin/tests/preset_smoke.cpp`, `plugin/tests/editor_snapshot.cpp`,
-  `design/mockup.html`, `design/README.md` and `design/juce.md`.
+  `plugin/preset/part_defaults.h`, `plugin/juce/PluginEditor.cpp`,
+  `plugin/juce/PluginEditor.h`, `plugin/juce/Pages.cpp`, `plugin/juce/Pages.h`,
+  `plugin/ui/Widgets.cpp`, `plugin/tests/preset_smoke.cpp`,
+  `plugin/tests/editor_snapshot.cpp`, `design/mockup.html`, `design/README.md`
+  and `design/juce.md`.
 - **Public contract/header:** `PresetStore` and the record helpers keep their
-  public names. The v1 record helpers are added for the old name field.
+  public names. There is one current record layout.
 - **State owner and publication rule:** `PresetStore` owns the bank. The editor
   saves the library after a part or multi change, as before.
 - **Forbidden dependencies:** unchanged.
 
 ## Verification
 
-- **Host vector(s):** `preset_smoke` covers the 32-character round trip, the
-  current v2 library, the v1-name current part layout and the 146, 160 and 179
-  layouts. `plugin_smoke` covers the state and the global library. `p1_stability`
-  is unchanged.
+- **Host vector(s):** `preset_smoke` covers the 32-character round trip and the
+  current `P1LIB2` library. `plugin_smoke` covers the state and the global
+  library. `p1_stability` is unchanged.
 - **Browser vector (if applicable):** the mockup browser check covers the single
   parts popup, its two rows, the cancel order, the 32-character rename field, the
   LFO modes and the library flow.
@@ -87,7 +88,8 @@
 - **Host timing and platform check:** Linux `ctest` passes 9 of 9, and the Linux
   snapshot diff passes with 14 images.
 - **Tolerance/metric:** the snapshot diff is exact. The name field stores 32
-  characters. The v1 libraries load with the same names and parameters.
+  characters. The current `P1LIB2` library loads with the same names and
+  parameters.
 - **Evidence artefact:** the Linux snapshots `editor-single-parts.png`,
   `editor-long-name.png`, `editor-operators.png`, `editor-patch.png`,
   `editor-confirm.png`, `editor-save-mode.png` and `editor-rename.png`, and the
@@ -95,12 +97,13 @@
 
 ## Risks and fallback
 
-- **Assumptions/open research:** the P1LIB1 reader keeps the old user libraries
-  usable. A real macOS DAW and manual pass remains separate platform work.
-- **Safe experiment and stop criterion:** if a v1 or v2 library fails to load, or
+- **Assumptions/open research:** the current `P1LIB2` format is the only one the
+  plugin reads. A pre-`P1LIB2` library needs conversion outside the plugin. A
+  real macOS DAW and manual pass remains separate platform work.
+- **Safe experiment and stop criterion:** if a `P1LIB2` library fails to load, or
   a 32-character name returns shortened, stop and fix the record path before the
   UI.
 - **Smaller alternative:** keep the name field at 16 bytes and truncate the
   display. This loses the 32-character names, so it is rejected.
-- **Rollback:** the `P1LIB2` writer is one constant and the v1 reader is additive.
-  Reverting the record helpers restores the 15-character limit.
+- **Rollback:** the previous commit restores the old-layout reader. That is a
+  compatibility branch, so keep it out of the clean tree.

@@ -101,7 +101,7 @@ int main(int argc, char** argv)
     p1editor->showPatchBrowser();
     ok = saveSnapshot(*editor, directory.getChildFile("editor-patches.png")) && ok;
     p1editor->closeDialog();
-    p1editor->showPartBrowser(true);
+    p1editor->showPartBrowser(0, true);
     ok = saveSnapshot(*editor, directory.getChildFile("editor-parts.png")) && ok;
     p1editor->closeDialog();
     p1editor->showSinglePartsBrowser();
@@ -169,7 +169,7 @@ int main(int argc, char** argv)
     processor.setPartName(0, "bank test part");
     processor.setPatchName("bank test");
     setRaw("op1_ratio.p0", 131072);
-    p1editor->savePartToSlot(10);
+    p1editor->savePartToSlot(0, 10);
     const auto& savedParams = processor.presets().partParams(10);
     if (savedParams.size() != static_cast<std::size_t>(kP1PartParamCount) ||
         savedParams[0] != 131072) {
@@ -177,7 +177,7 @@ int main(int argc, char** argv)
         ok = false;
     }
     setRaw("op1_ratio.p0", 65536);
-    p1editor->loadPartFromSlot(10);
+    p1editor->loadPartFromSlot(0, 10);
     if (raw("op1_ratio.p0") != 131072) {
         std::printf("editor snapshot: part slot did not restore the parameter\n");
         ok = false;

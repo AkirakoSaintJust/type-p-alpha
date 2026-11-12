@@ -35,8 +35,7 @@ Results so far seem to be fit for intent. I've been able to easily make rudiment
 
 1. More precise spectrograms, with clear differentiation of odd and even harmonics, and maybe some numbers for easier reading. Being able to reliably see the spectra is essential for additive-style synthesis.
 2. Exploiting parallelism if possible!
-3. Extending patch and part names to a maximum of 32 characters instead of 15.
-4. A web app made from the same engine and a panel from the editor design.
+3. A web app made from the same engine and a panel from the editor design.
 
 ## Experiments I'd like to try
 
@@ -95,6 +94,11 @@ smoke, stability pass, editor snapshots, and the Linux DAW matrix. The
 `linux_daws` test needs Ardour, Carla, JACK and Xvfb. Use `ctest -E linux_daws` when
 those hosts are not installed.
 
+## Code map
+
+The hand-written types and functions, the generated files and the cleanup
+findings are in [`docs/codebase-audit.md`](docs/codebase-audit.md).
+
 ## Installation
 
 The release archives hold the VST3, the CLAP, the standalone app, and the licences. Copy
@@ -110,8 +114,10 @@ in `licences/`.
 
 ## Status
 
-The Type P.α engine and editor grew out of the abandoned Type P.fm1 build. The
-plugin passes pluginval at strictness 5 on Linux x86_64, with the editor open and
+The Type P.α engine and editor grew out of the abandoned Type P.fm1 build. Patch
+and part names carry 32 characters, and the library uses the `P1LIB2` record
+layout. The plugin passes pluginval at strictness 5 on Linux x86_64, with the
+editor open and
 the audio, state and automation checks included. The CLAP validator reports no
 failures and one warning, because its random-state test loads garbage without a
 crash. The filter runs per voice and per part now, so each part has its own cutoff,

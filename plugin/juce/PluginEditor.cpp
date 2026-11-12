@@ -1150,11 +1150,6 @@ void PluginEditor::applyRouting(int field, int part, int value)
             parameter->convertTo0to1(static_cast<float>(value)));
 }
 
-void PluginEditor::savePartToSlot(int slot)
-{
-    savePartToSlot(activePart_, slot);
-}
-
 void PluginEditor::savePartToSlot(int part, int slot)
 {
     auto& store = processor_.presets();
@@ -1163,11 +1158,6 @@ void PluginEditor::savePartToSlot(int part, int slot)
         return;
     store.setPartSource(part, slot);
     processor_.saveLibrary();
-}
-
-void PluginEditor::loadPartFromSlot(int slot)
-{
-    loadPartFromSlot(activePart_, slot);
 }
 
 void PluginEditor::loadPartFromSlot(int part, int slot)
@@ -1352,11 +1342,6 @@ void PluginEditor::showPatchSaveMode(int slot)
     canvas_.addAndMakeVisible(*dialog_);
     dialog_->setBounds(0, 0, kWidth, kHeight);
     dialog_->toFront(true);
-}
-
-void PluginEditor::showPartBrowser(bool saveMode)
-{
-    showPartBrowser(activePart_, saveMode);
 }
 
 void PluginEditor::showPartBrowser(int part, bool saveMode)

@@ -884,22 +884,6 @@ juce::Rectangle<int> P1Card::contentArea() const
     return getLocalBounds().withTrimmedTop(22).reduced(8, 0);
 }
 
-P1AlgorithmGraph::P1AlgorithmGraph(int algorithm) : algorithm_(algorithm)
-{
-    setInterceptsMouseClicks(false, false);
-}
-
-void P1AlgorithmGraph::setAlgorithm(int algorithm)
-{
-    algorithm_ = juce::jlimit(0, 7, algorithm);
-    repaint();
-}
-
-void P1AlgorithmGraph::paint(juce::Graphics& g)
-{
-    drawAlgorithmGraph(g, getLocalBounds().toFloat(), algorithm_);
-}
-
 P1AlgorithmBlock::P1AlgorithmBlock()
 {
     setMouseCursor(juce::MouseCursor::PointingHandCursor);

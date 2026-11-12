@@ -76,15 +76,6 @@ void drawSectionTitle(juce::Graphics& g, juce::Rectangle<int> area,
                false);
 }
 
-void drawLabel(juce::Graphics& g, juce::Rectangle<int> area,
-               const juce::String& text, juce::Justification justification,
-               juce::Colour textColour, float height)
-{
-    g.setFont(uiFont(height));
-    g.setColour(textColour);
-    g.drawText(text, area, justification, false);
-}
-
 P1LookAndFeel::P1LookAndFeel()
 {
     setColour(juce::PopupMenu::backgroundColourId, colour(tokens::popup));

@@ -11,20 +11,6 @@
 namespace p1::ui {
 namespace {
 
-void setParam(PluginEditor& editor, const juce::String& id, double value)
-{
-    if (auto* parameter = editor.state().getParameter(id))
-        parameter->setValueNotifyingHost(parameter->convertTo0to1(
-            static_cast<float>(value)));
-}
-
-double getParam(PluginEditor& editor, const juce::String& id)
-{
-    if (auto* value = editor.state().getRawParameterValue(id))
-        return value->load();
-    return 0.0;
-}
-
 class ModeButton : public juce::Button {
 public:
     explicit ModeButton(const juce::String& label) : juce::Button(label)

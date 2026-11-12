@@ -11,7 +11,7 @@
 
 #include "Params.h"
 #include "PresetStore.hpp"
-#include "part_migration.h"
+#include "part_defaults.h"
 
 extern "C" {
 #include "presets.h"
@@ -34,178 +34,6 @@ std::vector<int32_t> pattern(int seed)
     for (int i = 0; i < kP1PartParamCount; ++i)
         values[static_cast<std::size_t>(i)] = (i * 37 + seed) % 4096 - 2048;
     return values;
-}
-
-void append32(std::vector<uint8_t>& out, uint32_t value)
-{
-    out.push_back(static_cast<uint8_t>(value & 0xFFu));
-    out.push_back(static_cast<uint8_t>((value >> 8) & 0xFFu));
-    out.push_back(static_cast<uint8_t>((value >> 16) & 0xFFu));
-    out.push_back(static_cast<uint8_t>((value >> 24) & 0xFFu));
-}
-
-void test_legacy_library()
-{
-    constexpr int kLegacyCount = 146;
-    const auto legacyRecordSize =
-        static_cast<std::size_t>(PP_RECORD_V1(kLegacyCount));
-    std::vector<uint8_t> legacyBank(legacyRecordSize * 128u, 0xFF);
-    std::vector<int32_t> legacyParams(static_cast<std::size_t>(kLegacyCount));
-    for (int i = 0; i < kLegacyCount; ++i)
-        legacyParams[static_cast<std::size_t>(i)] = 1000 + i;
-    preset_part_pack_v1(legacyBank.data(), "old lead", legacyParams.data(),
-                        kLegacyCount);
-
-    p1::PresetStore store{kP1PartParamCount, kP1PartCount,
-                          p1::partParamDefaults(), p1::legacyPartParamMaps()};
-    const std::vector<uint8_t> multiBank(
-        static_cast<std::size_t>(MP_RECORD_V1(kP1PartCount)) * 64u, 0xFF);
-    static const uint8_t magic[7] = {'P', '1', 'L', 'I', 'B', '1', '\n'};
-    std::vector<uint8_t> library(magic, magic + 7);
-    append32(library, static_cast<uint32_t>(legacyBank.size()));
-    library.insert(library.end(), legacyBank.begin(), legacyBank.end());
-    append32(library, static_cast<uint32_t>(multiBank.size()));
-    library.insert(library.end(), multiBank.begin(), multiBank.end());
-
-    const bool loadedOk = store.loadLibrary(library.data(), library.size());
-    check(loadedOk, "load a library from the old part layout");
-    if (!loadedOk)
-        return;
-    check(store.partUsed(0) && store.partName(0) == "old lead",
-          "the old part name survives the migration");
-    const auto& loaded = store.partParams(0);
-    check(loaded[0] == legacyParams[0] && loaded[18] == legacyParams[18] &&
-              loaded[20] == legacyParams[19] && loaded[48] == legacyParams[47] &&
-              loaded[108] == legacyParams[105] &&
-              loaded[136] == legacyParams[132],
-          "the old head migrates across the feedback depths");
-    check(loaded[163] == legacyParams[133] && loaded[170] == legacyParams[140],
-          "the moved tail lands at 163..170");
-    const auto defaults = p1::partParamDefaults();
-    bool filterDefaulted = true;
-    for (int i = 137; i < 156; ++i) {
-        if (loaded[static_cast<std::size_t>(i)] !=
-            defaults[static_cast<std::size_t>(i)])
-            filterDefaulted = false;
-    }
-    check(filterDefaulted, "the filter block takes its defaults");
-    bool newDefaulted = true;
-    for (int i : {19, 49, 79, 109, 156, 157, 158, 159, 160, 161, 162}) {
-        if (loaded[static_cast<std::size_t>(i)] !=
-            defaults[static_cast<std::size_t>(i)])
-            newDefaulted = false;
-    }
-    check(newDefaulted, "the feedback depth and envelope take their defaults");
-}
-
-void test_legacy_160_library()
-{
-    constexpr int kOldCount = 160;
-    const auto recordSize = static_cast<std::size_t>(PP_RECORD_V1(kOldCount));
-    std::vector<uint8_t> oldBank(recordSize * 128u, 0xFF);
-    std::vector<int32_t> oldParams(static_cast<std::size_t>(kOldCount));
-    for (int i = 0; i < kOldCount; ++i)
-        oldParams[static_cast<std::size_t>(i)] = 2000 + i;
-    preset_part_pack_v1(oldBank.data(), "old 160", oldParams.data(), kOldCount);
-
-    p1::PresetStore store{kP1PartParamCount, kP1PartCount,
-                          p1::partParamDefaults(), p1::legacyPartParamMaps()};
-    const std::vector<uint8_t> multiBank(
-        static_cast<std::size_t>(MP_RECORD_V1(kP1PartCount)) * 64u, 0xFF);
-    static const uint8_t magic[7] = {'P', '1', 'L', 'I', 'B', '1', '\n'};
-    std::vector<uint8_t> library(magic, magic + 7);
-    append32(library, static_cast<uint32_t>(oldBank.size()));
-    library.insert(library.end(), oldBank.begin(), oldBank.end());
-    append32(library, static_cast<uint32_t>(multiBank.size()));
-    library.insert(library.end(), multiBank.begin(), multiBank.end());
-
-    const bool loadedOk = store.loadLibrary(library.data(), library.size());
-    check(loadedOk, "load a library from the 160 layout");
-    if (!loadedOk)
-        return;
-    check(store.partUsed(0) && store.partName(0) == "old 160",
-          "the 160 part name survives the migration");
-    const auto& loaded = store.partParams(0);
-    check(loaded[0] == oldParams[0] && loaded[18] == oldParams[18] &&
-              loaded[20] == oldParams[19] && loaded[48] == oldParams[47] &&
-              loaded[78] == oldParams[76] && loaded[108] == oldParams[105] &&
-              loaded[155] == oldParams[151] && loaded[163] == oldParams[152] &&
-              loaded[170] == oldParams[159],
-          "the 160 head and tail migrate");
-    const auto defaults = p1::partParamDefaults();
-    bool newDefaulted = true;
-    for (int i : {19, 49, 79, 109, 156, 157, 158, 159, 160, 161, 162}) {
-        if (loaded[static_cast<std::size_t>(i)] !=
-            defaults[static_cast<std::size_t>(i)])
-            newDefaulted = false;
-    }
-    check(newDefaulted, "the 160 feedback depth and envelope take their defaults");
-}
-
-void test_legacy_179_library()
-{
-    constexpr int kOldCount = 179;
-    const auto recordSize = static_cast<std::size_t>(PP_RECORD_V1(kOldCount));
-    std::vector<uint8_t> oldBank(recordSize * 128u, 0xFF);
-    std::vector<int32_t> oldParams(static_cast<std::size_t>(kOldCount));
-    for (int i = 0; i < kOldCount; ++i)
-        oldParams[static_cast<std::size_t>(i)] = 3000 + i;
-    preset_part_pack_v1(oldBank.data(), "old 179", oldParams.data(), kOldCount);
-
-    p1::PresetStore store{kP1PartParamCount, kP1PartCount,
-                          p1::partParamDefaults(), p1::legacyPartParamMaps()};
-    const std::vector<uint8_t> multiBank(
-        static_cast<std::size_t>(MP_RECORD_V1(kP1PartCount)) * 64u, 0xFF);
-    static const uint8_t magic[7] = {'P', '1', 'L', 'I', 'B', '1', '\n'};
-    std::vector<uint8_t> library(magic, magic + 7);
-    append32(library, static_cast<uint32_t>(oldBank.size()));
-    library.insert(library.end(), oldBank.begin(), oldBank.end());
-    append32(library, static_cast<uint32_t>(multiBank.size()));
-    library.insert(library.end(), multiBank.begin(), multiBank.end());
-
-    const bool loadedOk = store.loadLibrary(library.data(), library.size());
-    check(loadedOk, "load a library from the 179 layout");
-    if (!loadedOk)
-        return;
-    check(store.partUsed(0) && store.partName(0) == "old 179",
-          "the 179 part name survives the migration");
-    const auto& loaded = store.partParams(0);
-    check(loaded[0] == oldParams[0] && loaded[19] == oldParams[19] &&
-              loaded[20] == oldParams[22] && loaded[49] == oldParams[51] &&
-              loaded[50] == oldParams[54] && loaded[79] == oldParams[83] &&
-              loaded[80] == oldParams[86] && loaded[109] == oldParams[115] &&
-              loaded[110] == oldParams[118] && loaded[156] == oldParams[164] &&
-              loaded[162] == oldParams[170] && loaded[163] == oldParams[171] &&
-              loaded[170] == oldParams[178],
-          "the 179 head, envelope and mode block migrate");
-}
-
-void test_v1_name_library()
-{
-    const auto recordSize = static_cast<std::size_t>(
-        PP_RECORD_V1(static_cast<uint32_t>(kP1PartParamCount)));
-    std::vector<uint8_t> bank(recordSize * 128u, 0xFF);
-    const auto params = pattern(7);
-    preset_part_pack_v1(bank.data(), "fifteen chars", params.data(),
-                        static_cast<uint32_t>(kP1PartParamCount));
-    const std::vector<uint8_t> multi(
-        static_cast<std::size_t>(MP_RECORD_V1(kP1PartCount)) * 64u, 0xFF);
-    static const uint8_t magic[7] = {'P', '1', 'L', 'I', 'B', '1', '\n'};
-    std::vector<uint8_t> library(magic, magic + 7);
-    append32(library, static_cast<uint32_t>(bank.size()));
-    library.insert(library.end(), bank.begin(), bank.end());
-    append32(library, static_cast<uint32_t>(multi.size()));
-    library.insert(library.end(), multi.begin(), multi.end());
-
-    p1::PresetStore store{kP1PartParamCount, kP1PartCount,
-                          p1::partParamDefaults(), p1::legacyPartParamMaps()};
-    const bool loadedOk = store.loadLibrary(library.data(), library.size());
-    check(loadedOk, "load a v1-name library with the current part layout");
-    if (!loadedOk)
-        return;
-    check(store.partUsed(0) && store.partName(0) == "fifteen chars",
-          "the v1-name part name survives");
-    check(store.partParams(0) == params, "the v1-name part params survive");
 }
 
 } // namespace
@@ -310,10 +138,6 @@ int main()
     check(!libraryLoaded.loadLibrary(library.data(), library.size() - 1),
           "reject a library file with a short tail");
 
-    test_legacy_library();
-    test_legacy_160_library();
-    test_legacy_179_library();
-    test_v1_name_library();
 
     std::printf("preset: %s\n", failures ? "FAILED" : "passed");
     return failures ? 1 : 0;

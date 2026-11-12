@@ -22,9 +22,6 @@ float textWidth(const juce::Font& font, const juce::String& text);
 
 void drawSectionTitle(juce::Graphics& g, juce::Rectangle<int> area,
                       const juce::String& title);
-void drawLabel(juce::Graphics& g, juce::Rectangle<int> area,
-               const juce::String& text, juce::Justification justification,
-               juce::Colour colour, float height = tokens::textInlineLabel);
 
 class P1LookAndFeel : public juce::LookAndFeel_V4 {
 public:
