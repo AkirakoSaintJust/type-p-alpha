@@ -209,13 +209,18 @@ private:
 
 class P1Card : public juce::Component {
 public:
-    explicit P1Card(juce::String title);
+    explicit P1Card(juce::String title, std::function<void()> onCopy = {},
+                    std::function<void()> onPaste = {});
     void paint(juce::Graphics& g) override;
+    void resized() override;
 
     juce::Rectangle<int> contentArea() const;
 
 private:
     juce::String title_;
+    bool hasActions_ = false;
+    P1Button copy_{"copy", true};
+    P1Button paste_{"paste", true};
 };
 
 class P1AlgorithmBlock : public juce::Component {

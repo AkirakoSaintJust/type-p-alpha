@@ -14,7 +14,8 @@
 
 - **New player action:** open `operators` for the oscillator, amplitude envelope
   and feedback envelope, or open `operator lfos` for the oscillator and the three
-  per-operator LFOs.
+  per-operator LFOs. Each envelope and LFO card carries `copy` and `paste` in its
+  header, so a shape or an LFO moves between operators on its own.
 - **Sound and behaviour:** each operator owns its feedback envelope. The envelope
   levels are signed, so a positive level opens the feedback and a negative level
   closes it, with the envelope added straight to the feedback level and no depth
@@ -117,7 +118,9 @@ existing render stays exact.
   bit-exact path, the positive and negative level direction, and the peak bound.
   `feedback_bipolar` checks that the envelope level moves the negative magnitude.
   `plugin_smoke` restores every manifest parameter and the global library.
-  `plugin_stability` drives every parameter to its bounds.
+  `plugin_stability` drives every parameter to its bounds. `editor_snapshot`
+  checks that the amp envelope and detune LFO section clips paste to another
+  operator.
 - **Browser vector (if applicable):** the mockup check covers the operators tab,
   the operator lfos tab, the four feedback envelopes with four signed levels, and
   the two new LFO cards.

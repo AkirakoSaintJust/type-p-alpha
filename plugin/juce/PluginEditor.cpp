@@ -224,9 +224,11 @@ private:
         draw(name, display, shadow, x + 4.0f, 4.0f);
         draw(".", display, shadow, x + wordWidth + 4.0f, 4.0f);
         draw("a", brand, shadow, x + wordWidth + dotWidth + 4.0f, 4.0f);
+        draw("a", brand, shadow, x + wordWidth + dotWidth + 4.7f, 4.4f);
         draw(name, display, ink, x, 0.0f);
         draw(".", display, pink, x + wordWidth, 0.0f);
         draw("a", brand, ink, x + wordWidth + dotWidth, 0.0f);
+        draw("a", brand, ink, x + wordWidth + dotWidth + 0.7f, 0.4f);
     }
 
     PluginEditor& editor_;
@@ -921,10 +923,8 @@ void PluginEditor::showSinglePartsBrowser()
                           "import bank",
                           "init single part 1",
                           "init single part 2",
-                          "save single part 1",
-                          "save single part 2",
-                          "load single part 1",
-                          "load single part 2",
+                          "part 1 slots",
+                          "part 2 slots",
                           "cancel"},
         [this](int button) {
             if (button == 0) {
@@ -945,16 +945,10 @@ void PluginEditor::showSinglePartsBrowser()
                             "init");
             } else if (button == 4) {
                 closeDialog();
-                showPartBrowser(0, true);
+                showPartBrowser(0);
             } else if (button == 5) {
                 closeDialog();
-                showPartBrowser(1, true);
-            } else if (button == 6) {
-                closeDialog();
-                showPartBrowser(0, false);
-            } else if (button == 7) {
-                closeDialog();
-                showPartBrowser(1, false);
+                showPartBrowser(1);
             } else {
                 closeDialog();
             }
@@ -1074,6 +1068,72 @@ void PluginEditor::pasteOperator(int op)
             base = destination + ".eg.r1";
         else if (op != 0 && base == "release")
             base = destination + ".eg.r4";
+        if (auto* parameter = state().getParameter(base + suffix))
+            parameter->setValueNotifyingHost(
+                parameter->convertTo0to1(static_cast<float>(value)));
+    }
+    buildPage();
+}
+
+void PluginEditor::copyOperatorSection(int op, int part,
+                                       OperatorSection section)
+{
+    operatorSectionClipboard_.clear();
+    operatorSectionClipboardOp_ = op;
+    operatorSectionClipboardKind_ = section;
+    operatorSectionClipboardValid_ = true;
+    const auto suffix = ".p" + juce::String(part);
+    const auto prefix = "op" + juce::String(op + 1);
+    for (const auto& spec : kP1ParamSpecs) {
+        const juce::String id(spec.id);
+        if (!id.endsWith(suffix))
+            continue;
+        const auto base = id.dropLastCharacters(3);
+        bool matches = false;
+        switch (section) {
+        case OperatorSection::amplitudeEnvelope:
+            matches = base.startsWith(prefix + ".eg.");
+            break;
+        case OperatorSection::feedbackEnvelope:
+            matches = base.startsWith(prefix + ".fbenv.");
+            break;
+        case OperatorSection::amplitudeLfo:
+            matches = base.startsWith(prefix + "_trem_");
+            break;
+        case OperatorSection::feedbackLfo:
+            matches = base.startsWith(prefix + "_fblfo_");
+            break;
+        case OperatorSection::detuneLfo:
+            matches = base.startsWith(prefix + "_dlfo_");
+            break;
+        }
+        if (!matches)
+            continue;
+        if (auto* value = state().getRawParameterValue(id))
+            operatorSectionClipboard_[base] = value->load();
+    }
+}
+
+void PluginEditor::pasteOperatorSection(int op, int part,
+                                        OperatorSection section)
+{
+    if (!operatorSectionClipboardValid_ ||
+        operatorSectionClipboardKind_ != section ||
+        operatorSectionClipboard_.empty())
+        return;
+    const auto suffix = ".p" + juce::String(part);
+    const auto source = "op" + juce::String(operatorSectionClipboardOp_ + 1);
+    const auto destination = "op" + juce::String(op + 1);
+    for (const auto& [storedBase, value] : operatorSectionClipboard_) {
+        juce::String base = storedBase;
+        if (base.startsWith(source + "_") || base.startsWith(source + "."))
+            base = destination + base.substring(source.length());
+        if (op == 0 && section == OperatorSection::amplitudeEnvelope &&
+            base == "op1.eg.r1")
+            base = "attack";
+        else if (op == 0 && section == OperatorSection::amplitudeEnvelope &&
+                 base == "op1.eg.r4")
+            base = "release";
         if (auto* parameter = state().getParameter(base + suffix))
             parameter->setValueNotifyingHost(
                 parameter->convertTo0to1(static_cast<float>(value)));
@@ -1366,7 +1426,7 @@ void PluginEditor::showPatchSaveMode(int slot)
     dialog_->toFront(true);
 }
 
-void PluginEditor::showPartBrowser(int part, bool saveMode)
+void PluginEditor::showPartBrowser(int part)
 {
     auto& store = processor_.presets();
     part = juce::jlimit(0, kP1PartCount - 1, part);
@@ -1380,28 +1440,27 @@ void PluginEditor::showPartBrowser(int part, bool saveMode)
     auto* bodyPtr = body.get();
     const juce::String title =
         "part " + juce::String(part + 1) + " slots";
-    const juce::StringArray buttons =
-        saveMode ? juce::StringArray{"save", "cancel"}
-                 : juce::StringArray{"load", "cancel"};
     dialog_ = std::make_unique<p1::ui::P1Dialog>(
-        title, std::move(body), 420, 500, buttons,
-        [this, bodyPtr, saveMode, part](int button) {
+        title, std::move(body), 420, 500,
+        juce::StringArray{"save", "load", "cancel"},
+        [this, bodyPtr, part](int button) {
             if (button == 0) {
                 const int slot = bodyPtr->selected();
                 const bool used = processor_.presets().partUsed(slot);
                 closeDialog();
-                if (saveMode) {
-                    if (used) {
-                        showConfirm(
-                            "overwrite part slot " +
-                                juce::String(slot + 1).paddedLeft('0', 2) + "?",
-                            [this, part, slot] { savePartToSlot(part, slot); });
-                    } else {
-                        savePartToSlot(part, slot);
-                    }
+                if (used) {
+                    showConfirm(
+                        "overwrite part slot " +
+                            juce::String(slot + 1).paddedLeft('0', 2) + "?",
+                        [this, part, slot] { savePartToSlot(part, slot); });
                 } else {
-                    loadPartFromSlot(part, slot);
+                    savePartToSlot(part, slot);
                 }
+            } else if (button == 1) {
+                const int slot = bodyPtr->selected();
+                closeDialog();
+                if (processor_.presets().partUsed(slot))
+                    loadPartFromSlot(part, slot);
             } else {
                 closeDialog();
             }

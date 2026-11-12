@@ -122,18 +122,21 @@ public:
                                muted ? 1 : 0);
                   }),
           osc_(editor, op, part_),
-          ampLfo_(editor, "amplitude lfo", params::opTremRate(op, part_),
+          ampLfo_(editor, "amp lfo", params::opTremRate(op, part_),
                   params::opTremDepth(op, part_), params::opTremWave(op, part_),
-                  params::opTremMode(op, part_)),
-          feedbackLfo_(editor, "feedback lfo",
+                  params::opTremMode(op, part_), op, part_,
+                  PluginEditor::OperatorSection::amplitudeLfo),
+          feedbackLfo_(editor, "fb lfo",
                        params::opFeedbackLfoRate(op, part_),
                        params::opFeedbackLfoDepth(op, part_),
                        params::opFeedbackLfoWave(op, part_),
-                       params::opFeedbackLfoMode(op, part_)),
+                       params::opFeedbackLfoMode(op, part_), op, part_,
+                       PluginEditor::OperatorSection::feedbackLfo),
           detuneLfo_(editor, "detune lfo", params::opDetuneLfoRate(op, part_),
                      params::opDetuneLfoDepth(op, part_),
                      params::opDetuneLfoWave(op, part_),
-                     params::opDetuneLfoMode(op, part_))
+                     params::opDetuneLfoMode(op, part_), op, part_,
+                     PluginEditor::OperatorSection::detuneLfo)
     {
         addAndMakeVisible(header_);
         addAndMakeVisible(scope_);

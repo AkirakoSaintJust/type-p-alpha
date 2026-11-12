@@ -102,9 +102,50 @@ int main(int argc, char** argv)
     p1editor->showPatchBrowser();
     ok = saveSnapshot(*editor, directory.getChildFile("editor-patches.png")) && ok;
     p1editor->closeDialog();
-    p1editor->showPartBrowser(0, true);
+    p1editor->showPartBrowser(0);
     ok = saveSnapshot(*editor, directory.getChildFile("editor-parts.png")) && ok;
     p1editor->closeDialog();
+
+    {
+        auto& params = processor.parameters();
+        auto setRaw = [&params](const char* id, float value) {
+            if (auto* parameter = params.getParameter(id))
+                parameter->setValueNotifyingHost(
+                    parameter->convertTo0to1(value));
+        };
+        auto readRaw = [&params](const char* id) {
+            const auto* value = params.getRawParameterValue(id);
+            return value == nullptr ? 0.0f : value->load();
+        };
+        const float srcAmp = readRaw("op1.eg.l1.p0");
+        const float dstAmp = readRaw("op2.eg.l1.p0");
+        setRaw("op1.eg.l1.p0", 42.0f);
+        p1editor->copyOperatorSection(
+            0, 0, PluginEditor::OperatorSection::amplitudeEnvelope);
+        p1editor->pasteOperatorSection(
+            1, 0, PluginEditor::OperatorSection::amplitudeEnvelope);
+        if (std::lround(readRaw("op2.eg.l1.p0")) != 42) {
+            std::printf("editor snapshot: amp envelope section paste failed\n");
+            ok = false;
+        }
+        setRaw("op1.eg.l1.p0", srcAmp);
+        setRaw("op2.eg.l1.p0", dstAmp);
+
+        const float srcLfo = readRaw("op1_dlfo_depth.p0");
+        const float dstLfo = readRaw("op2_dlfo_depth.p0");
+        setRaw("op1_dlfo_depth.p0", 1234.0f);
+        p1editor->copyOperatorSection(
+            0, 0, PluginEditor::OperatorSection::detuneLfo);
+        p1editor->pasteOperatorSection(
+            1, 0, PluginEditor::OperatorSection::detuneLfo);
+        if (std::lround(readRaw("op2_dlfo_depth.p0")) != 1234) {
+            std::printf("editor snapshot: detune lfo section paste failed\n");
+            ok = false;
+        }
+        setRaw("op1_dlfo_depth.p0", srcLfo);
+        setRaw("op2_dlfo_depth.p0", dstLfo);
+    }
+
     p1editor->showSinglePartsBrowser();
     ok = saveSnapshot(*editor,
                       directory.getChildFile("editor-single-parts.png")) && ok;

@@ -1205,7 +1205,7 @@
       ba(o, "l", 1, "L2", 0, 99, function (v) { return v; }, 1),
       ba(o, "l", 2, "L3", 0, 99, function (v) { return v; }, 1)
     ];
-    return makeSection("AMPLITUDE ENVELOPE", "env", envRates.concat(envLevels), {
+    return makeSection("AMP ENV", "env", envRates.concat(envLevels), {
       before: envBox,
       rows: [envRates, envLevels]
     });
@@ -1228,11 +1228,10 @@
       ba(o, "fbenvL", 2, "L3", -100, 100, bipFmt, 1),
       ba(o, "fbenvL", 3, "L4", -100, 100, bipFmt, 1)
     ];
-    return makeSection("FEEDBACK ENVELOPE", "fbenv", rates.concat(levels), {
+    return makeSection("FB ENV", "fbenv", rates.concat(levels), {
       before: graph,
       headExtra: on,
-      rows: [rates, levels],
-      copy: false
+      rows: [rates, levels]
     });
   }
 
@@ -1272,10 +1271,10 @@
     OPS.forEach(function (o, i) {
       const col = opShell(o, i);
       col.appendChild(oscSection(o));
-      col.appendChild(lfoSection("AMPLITUDE LFO", "amplfo", o, "lfoRate",
+      col.appendChild(lfoSection("AMP LFO", "amplfo", o, "lfoRate",
         "lfoDepth", "lfoWave", "lfoMode", -99, 99,
         function (v) { return (v > 0 ? "+" : "") + v; }, 1));
-      col.appendChild(lfoSection("FEEDBACK LFO", "fblfo", o, "fbLfoRate",
+      col.appendChild(lfoSection("FB LFO", "fblfo", o, "fbLfoRate",
         "fbLfoDepth", "fbLfoWave", "fbLfoMode", -100, 100, bipFmt, 1));
       col.appendChild(lfoSection("DETUNE LFO", "dlfo", o, "detuneLfoRate",
         "detuneLfoDepth", "detuneLfoWave", "detuneLfoMode", -12, 12,
@@ -1570,10 +1569,8 @@
       { label: "import bank", onClick: function (close) { close(); importLibrary(); } },
       { label: "init single part 1", onClick: function (close) { close(); openInitConfirm(1); } },
       { label: "init single part 2", onClick: function (close) { close(); openInitConfirm(2); } },
-      { label: "save single part 1", onClick: function (close) { close(); openPartSlots("save", 1); } },
-      { label: "save single part 2", onClick: function (close) { close(); openPartSlots("save", 2); } },
-      { label: "load single part 1", onClick: function (close) { close(); openPartSlots("load", 1); } },
-      { label: "load single part 2", onClick: function (close) { close(); openPartSlots("load", 2); } },
+      { label: "part 1 slots", onClick: function (close) { close(); openPartSlots(1); } },
+      { label: "part 2 slots", onClick: function (close) { close(); openPartSlots(2); } },
       { label: "cancel", onClick: function (close) { close(); } }
     ], true);
   }
@@ -1702,7 +1699,7 @@
     renderAlg();
   }
 
-  function openPartSlots(mode, part) {
+  function openPartSlots(part) {
     const partIdx = (part === undefined ? activePart : part) - 1;
     let sel = partSource[partIdx] >= 0 ? partSource[partIdx] : 0;
     const bodyEl = document.createElement("div");
@@ -1724,14 +1721,14 @@
     }
     bodyEl.appendChild(list);
     openDialog("part " + (partIdx + 1) + " slots", bodyEl, [
-      { label: mode, primary: true, onClick: function (close) {
+      { label: "save", primary: true, onClick: function (close) {
         close();
-        if (mode === "save") {
-          if (PART_SLOTS[sel]) confirmOverwritePart(sel, partIdx + 1);
-          else savePartToSlot(sel, partIdx + 1);
-        } else if (PART_SLOTS[sel]) {
-          loadPartFromSlot(sel, partIdx + 1);
-        }
+        if (PART_SLOTS[sel]) confirmOverwritePart(sel, partIdx + 1);
+        else savePartToSlot(sel, partIdx + 1);
+      } },
+      { label: "load", onClick: function (close) {
+        close();
+        if (PART_SLOTS[sel]) loadPartFromSlot(sel, partIdx + 1);
       } },
       { label: "cancel", onClick: function (close) { close(); } }
     ]);

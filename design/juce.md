@@ -94,12 +94,13 @@ Every page fills the same height:
 - patch settings: two part cards, each with five knobs, a level slider and a
   scope and spectro, which grow to fill the remaining card height, followed by the
   voice mode block.
-- operators: four columns with oscillator, amplitude envelope and feedback envelope.
-  The amplitude envelope uses one row for R1 to R4 and a second row for L1 to L3. The
-  feedback envelope uses R1 to R4 and L1 to L4, with signed levels and an on switch.
-- operator lfos: four operator columns with the oscillator, then the amplitude LFO,
-  feedback LFO and detune LFO cards. Each LFO card carries its `bipolar` switch
-  beside the wave select.
+- operators: four columns with oscillator, `amp env` and `fb env`. The amplitude
+  envelope uses one row for R1 to R4 and a second row for L1 to L3. The feedback
+  envelope uses R1 to R4 and L1 to L4, with signed levels and an on switch beside
+  its graph. The two envelope cards carry copy and paste in their headers.
+- operator lfos: four operator columns with the oscillator, then the `amp lfo`,
+  `fb lfo` and `detune lfo` cards. Each LFO card carries copy and paste in its
+  header, and its `bipolar` switch beside the wave select.
 - fx / mod: a three by two grid. Filter 1, the filter envelope and the pitch LFO
   fill the first row. Pitch envelope, key follow and velocity follow fill the second
   row. The two follow cards are separate, and each has its own on switch and wipe
@@ -108,8 +109,9 @@ Every page fills the same height:
 ## Header
 
 - Draw `TYPE P.` in Zen Dots at the 30px wordmark size, with the dot in pink, then
-  a lowercase `a` in Unbounded Regular at the same height. Keep the solid
-  `brandShadow` offset behind the whole wordmark.
+  a lowercase `a` in Unbounded at the same height, with a slightly heavier weight
+  than the regular face. Keep the solid `brandShadow` offset behind the whole
+  wordmark.
 - The algorithm block is a button. Draw the 30px number, the caret and the 240 by
   128 graph. Centre the graph content in its viewBox so the header and the picker
   tiles share one optical centre.
@@ -166,7 +168,9 @@ current state in pink and the other word faint.
 The level slider is a 14px track with a purple fill and a `level` caption.
 
 List dialogs fill the dialog body with 24px slot rows. Use a thin scrollbar, and
-keep names at the preset record limit of 32 characters.
+keep names at the preset record limit of 32 characters. The multi-patch and part
+slot lists both carry `save` and `load` beside the scroller, so the slot is chosen
+before the action.
 
 ## Visualisers
 

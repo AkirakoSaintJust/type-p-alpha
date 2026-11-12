@@ -72,7 +72,7 @@ void drawSectionTitle(juce::Graphics& g, juce::Rectangle<int> area,
     g.setColour(colour(tokens::faint));
     g.drawText("//", area, juce::Justification::centredLeft, false);
     g.setColour(colour(tokens::pink));
-    g.drawText(title, area.withTrimmedLeft(14), juce::Justification::centredLeft,
+    g.drawText(title, area.withTrimmedLeft(19), juce::Justification::centredLeft,
                false);
 }
 

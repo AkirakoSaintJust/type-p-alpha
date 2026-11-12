@@ -859,15 +859,34 @@ void P1LevelSlider::setFromMouse(const juce::MouseEvent& event)
     attach_->setValueAsCompleteGesture(value);
 }
 
-P1Card::P1Card(juce::String title) : title_(std::move(title))
+P1Card::P1Card(juce::String title, std::function<void()> onCopy,
+               std::function<void()> onPaste)
+    : title_(std::move(title))
 {
     setInterceptsMouseClicks(false, true);
+    if (onCopy && onPaste) {
+        hasActions_ = true;
+        copy_.onClick = std::move(onCopy);
+        paste_.onClick = std::move(onPaste);
+        addAndMakeVisible(copy_);
+        addAndMakeVisible(paste_);
+    }
 }
 
 void P1Card::paint(juce::Graphics& g)
 {
     g.fillAll(colour(tokens::panel));
     drawSectionTitle(g, getLocalBounds().removeFromTop(20).reduced(8, 0), title_);
+}
+
+void P1Card::resized()
+{
+    if (!hasActions_)
+        return;
+    auto row = getLocalBounds().removeFromTop(20).reduced(4, 1);
+    paste_.setBounds(row.removeFromRight(52));
+    row.removeFromRight(2);
+    copy_.setBounds(row.removeFromRight(52));
 }
 
 juce::Rectangle<int> P1Card::contentArea() const

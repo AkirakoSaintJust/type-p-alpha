@@ -325,8 +325,9 @@ and the panel readouts.
 | `P1Wave` | Waveform shape widget. |
 | `P1LevelSlider` | Wide level slider with APVTS attachment. |
 | `P1LevelSlider::setFromMouse` | Map a click to a level. |
-| `P1Card` | Titled card surface. |
+| `P1Card` | Titled card surface with optional copy and paste header buttons. |
 | `P1Card::contentArea` | Content rectangle below the title. |
+| `P1Card::resized` | Place the copy and paste header buttons at the right. |
 | `P1AlgorithmBlock` | Clickable algorithm number and graph. |
 | `P1Dialog` | Modal dialog with a body and wrapping buttons. |
 | `drawAlgorithmGraph` | Draw one of the eight routing graphs. |
@@ -419,7 +420,7 @@ engine, the MIDI bridge, the rate bridge, the preset bank and the UI state.
 | Algorithm | `showAlgorithmPicker`, `applyAlgorithm` |
 | Names | `showRenameDialog` |
 | Library | `showSinglePartsBrowser`, `exportLibrary`, `importLibrary`, `showPatchBrowser`, `showPatchSaveMode`, `showPartBrowser` |
-| Part actions | `copyPart`, `pastePart`, `initPart`, `initMultiPatch`, `togglePartMute`, `savePartToSlot`, `loadPartFromSlot` |
+| Part actions | `copyPart`, `pastePart`, `initPart`, `initMultiPatch`, `togglePartMute`, `savePartToSlot`, `loadPartFromSlot`, `copyOperator`, `pasteOperator`, `copyOperatorSection`, `pasteOperatorSection` |
 | Multi actions | `savePatchToSlot`, `loadPatchFromSlot` |
 | Parameter bridge | `currentPartParams`, `applyPartParams`, `currentRouting`, `applyRouting` |
 | Dialog helpers | `showConfirm`, `closeDialog` |
@@ -462,7 +463,7 @@ engine, the MIDI bridge, the rate bridge, the preset bank and the UI state.
 | `preset_smoke.cpp` | Check the current record, the 32-character name and the `P1LIB2` library. |
 | `plugin_smoke.cpp` | Check state restore, the global library, automation and the 48 kHz bridge. |
 | `plugin_stability.cpp` | Stress every parameter, polyphony, MIDI storms and truncated state. |
-| `editor_snapshot.cpp` | Render the editor pages, the dialogs, the long name and the half-size frame. |
+| `editor_snapshot.cpp` | Render the editor pages, the dialogs, the long name, the section paste and the half-size frame. |
 | `engine_render_reference.h` | Independent reference render used by `engine_parity`. |
 
 ## Tools
@@ -502,7 +503,7 @@ The CSS is a token mirror of `design/tokens.css`; it is not duplicated logic.
 | Item | Why |
 | --- | --- |
 | `Pages.cpp` local `setParam` / `getParam` | Duplicated the inline helpers in `Pages.h`. |
-| One-argument `showPartBrowser`, `savePartToSlot` and `loadPartFromSlot` | Only the snapshot test used them; the explicit part form is the real API. |
+| One-argument `savePartToSlot` and `loadPartFromSlot` | Only the snapshot test used them; the explicit part form is the real API. |
 | `P1AlgorithmGraph` | No caller; `P1AlgorithmBlock` and `drawAlgorithmGraph` cover the header. |
 | `drawLabel` | No caller. |
 | `plugin/engine/msvc_compat.h` | It was a no-op for the clang-cl build and only served a pure-MSVC path the project does not use. |

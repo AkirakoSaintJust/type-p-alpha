@@ -170,8 +170,8 @@ Shape:
 
 Brand left, algorithm centre-left, output scope right and patch controls far right,
 with the wordmark as `TYPE P.` in Zen Dots, the dot in pink, the lowercase `a` in
-Unbounded, and the brand line `p1onken // パンク派第１音響合成研究班` in 12px
-DotGothic `dim`.
+Unbounded at a slightly heavier weight than the regular face, and the brand line
+`p1onken // パンク派第１音響合成研究班` in 12px DotGothic `dim`.
 
 The algorithm block is a button, and it shows a 30px Zen Dots number, a caret, and
 the routing graph. The graph is 240 by 128 in the viewBox, scaled to about 244 by
@@ -221,23 +221,24 @@ sit next to the mode buttons with a 32px gap rather than at the card edge.
 
 Four borderless columns, each with the operator name at the left, copy and paste
 after it, and the mute switch at the right with a 16px gap before it, then a scope
-and spectro pair, and three cards: `oscillator`, `amplitude envelope`,
-`feedback envelope`. The oscillator card holds ratio, detune, level, feedback and
-the wave select. The amplitude envelope holds R1 to R4 on the first row and L1 to L3
-on the second row. The feedback envelope holds its own R1 to R4 and L1 to L4 rows,
-with signed levels in feedback units and an `on` switch in the card header. The four
-oscillator knobs spread across the card. The envelope rates and levels each get their
-own row.
+and spectro pair, and three cards: `oscillator`, `amp env`, `fb env`. The
+oscillator card holds ratio, detune, level, feedback and the wave select. The `amp
+env` card holds R1 to R4 on the first row and L1 to L3 on the second row. The `fb
+env` card holds its own R1 to R4 and L1 to L4 rows, with signed levels in feedback
+units and an `on` switch beside its graph. Every envelope and LFO card carries
+`copy` and `paste` in its header, so a shape or an LFO moves between operators
+without touching the rest of the operator. The four oscillator knobs spread across
+the card. The envelope rates and levels each get their own row.
 
 ### Operator LFOs
 
 Four borderless columns, each with the operator name, copy and paste, the mute
-switch, a scope and spectro pair, then four cards: `oscillator`, `amplitude lfo`,
-`feedback lfo`, and `detune lfo`. The oscillator card repeats the operator
-oscillator controls so the operator stays recognisable on this page. Each LFO card
-holds rate, depth, the wave select and the `bipolar` switch. The amplitude LFO depth
-is in level steps, the feedback LFO depth is a percentage of the feedback range, and
-the detune LFO depth is in semitones.
+switch, a scope and spectro pair, then four cards: `oscillator`, `amp lfo`, `fb
+lfo`, and `detune lfo`. The oscillator card repeats the operator oscillator
+controls so the operator stays recognisable on this page. Each LFO card holds rate,
+depth, the wave select and the `bipolar` switch, and carries `copy` and `paste` in
+its header. The amplitude LFO depth is in level steps, the feedback LFO depth is a
+percentage of the feedback range, and the detune LFO depth is in semitones.
 
 ### FX / MOD
 
@@ -275,11 +276,11 @@ the current patch.` and offers `init` and `cancel`. The save chooser is titled
 
 The single parts popup is titled `single parts` and lists part 1 and part 2 with
 their names and source slots. It carries `export bank`, `import bank`, `init single
-part 1`, `init single part 2`, `save single part 1`, `save single part 2`, `load
-single part 1`, `load single part 2` and `cancel`, and the buttons wrap onto two
-rows. The part slots list is titled `part n slots` and holds 128 sounds, with the
-part's source slot selected on open. Dialogs put `cancel` at the right edge of the
-last button row.
+part 1`, `init single part 2`, `part 1 slots`, `part 2 slots` and `cancel`. The part
+slots list is titled `part n slots` and holds 128 sounds, with the part's source slot
+selected on open, and it carries `save`, `load` and `cancel` so the slot is chosen
+first and the action second, as in the multi-patch library. Dialogs put `cancel` at
+the right edge of the last button row.
 
 ### Status
 

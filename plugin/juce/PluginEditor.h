@@ -33,6 +33,14 @@ public:
 
 class PluginEditor : public juce::AudioProcessorEditor, private juce::Timer {
 public:
+    enum class OperatorSection {
+        amplitudeEnvelope,
+        feedbackEnvelope,
+        amplitudeLfo,
+        feedbackLfo,
+        detuneLfo,
+    };
+
     explicit PluginEditor(TypePAlphaAudioProcessor& audioProcessor);
     ~PluginEditor() override;
 
@@ -56,11 +64,13 @@ public:
     void importLibrary();
     void showPatchBrowser();
     void showPatchSaveMode(int slot);
-    void showPartBrowser(int part, bool saveMode);
+    void showPartBrowser(int part);
     void copyPart(int part);
     void pastePart(int part);
     void copyOperator(int op);
     void pasteOperator(int op);
+    void copyOperatorSection(int op, int part, OperatorSection section);
+    void pasteOperatorSection(int op, int part, OperatorSection section);
     void initPart(int part);
     void initMultiPatch();
     void togglePartMute(int part, bool muted);
@@ -106,4 +116,9 @@ private:
     std::map<juce::String, double> partClipboard_;
     std::map<juce::String, double> operatorClipboard_;
     int operatorClipboardOp_ = -1;
+    std::map<juce::String, double> operatorSectionClipboard_;
+    int operatorSectionClipboardOp_ = -1;
+    OperatorSection operatorSectionClipboardKind_ =
+        OperatorSection::amplitudeEnvelope;
+    bool operatorSectionClipboardValid_ = false;
 };

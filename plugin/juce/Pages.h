@@ -134,6 +134,7 @@ public:
 
     void resized() override
     {
+        P1Card::resized();
         auto area = contentArea();
         auto row = area.removeFromTop(70);
         const int cell = row.getWidth() / 4;
@@ -155,7 +156,17 @@ private:
 class AmplitudeEnvelopeCard : public P1Card {
 public:
     AmplitudeEnvelopeCard(PluginEditor& editor, int op, int part)
-        : P1Card("amplitude envelope"),
+        : P1Card("amp env",
+                 [&ed = editor, op, part] {
+                     ed.copyOperatorSection(
+                         op, part,
+                         PluginEditor::OperatorSection::amplitudeEnvelope);
+                 },
+                 [&ed = editor, op, part] {
+                     ed.pasteOperatorSection(
+                         op, part,
+                         PluginEditor::OperatorSection::amplitudeEnvelope);
+                 }),
           envView_(editor.state(),
                    {params::opEnvRate(op, 0, part), params::opEnvRate(op, 1, part),
                     params::opEnvRate(op, 2, part), params::opEnvRate(op, 3, part)},
@@ -180,6 +191,7 @@ public:
 
     void resized() override
     {
+        P1Card::resized();
         auto area = contentArea();
         envView_.setBounds(area.removeFromTop(40));
         auto rates = area.removeFromTop(64);
@@ -203,7 +215,17 @@ private:
 class FeedbackEnvelopeCard : public P1Card {
 public:
     FeedbackEnvelopeCard(PluginEditor& editor, int op, int part)
-        : P1Card("feedback envelope"),
+        : P1Card("fb env",
+                 [&ed = editor, op, part] {
+                     ed.copyOperatorSection(
+                         op, part,
+                         PluginEditor::OperatorSection::feedbackEnvelope);
+                 },
+                 [&ed = editor, op, part] {
+                     ed.pasteOperatorSection(
+                         op, part,
+                         PluginEditor::OperatorSection::feedbackEnvelope);
+                 }),
           envView_(editor.state(),
                    {params::opFeedbackRate(op, 0, part),
                     params::opFeedbackRate(op, 1, part),
@@ -234,8 +256,12 @@ public:
 
     void resized() override
     {
+        P1Card::resized();
         auto area = contentArea();
-        envView_.setBounds(area.removeFromTop(64));
+        auto top = area.removeFromTop(64);
+        auto onArea = top.removeFromRight(56);
+        on_.setBounds(onArea.removeFromTop(18).reduced(4, 0));
+        envView_.setBounds(top);
         auto rates = area.removeFromTop(64);
         const int rateCell = rates.getWidth() / 4;
         for (auto& knob : rates_)
@@ -259,8 +285,15 @@ private:
 class LfoCard : public P1Card {
 public:
     LfoCard(PluginEditor& editor, juce::String title, juce::String rateID,
-            juce::String depthID, juce::String waveID, juce::String modeID)
-        : P1Card(std::move(title)),
+            juce::String depthID, juce::String waveID, juce::String modeID,
+            int op, int part, PluginEditor::OperatorSection section)
+        : P1Card(std::move(title),
+                 [&ed = editor, op, part, section] {
+                     ed.copyOperatorSection(op, part, section);
+                 },
+                 [&ed = editor, op, part, section] {
+                     ed.pasteOperatorSection(op, part, section);
+                 }),
           rate_(editor.state(), std::move(rateID), "rate", 28.0f),
           depth_(editor.state(), std::move(depthID), "depth", 28.0f),
           wave_(editor.state(), std::move(waveID), params::lfoWaveNames()),
@@ -274,6 +307,7 @@ public:
 
     void resized() override
     {
+        P1Card::resized();
         auto area = contentArea();
         auto row = area.removeFromTop(70);
         rate_.setBounds(row.removeFromLeft(row.getWidth() / 2));
