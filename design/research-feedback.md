@@ -258,7 +258,20 @@ envelope could replace the pitch envelope on that page and move the pitch envelo
 to its own page, or the envelope card could sit on a new `feedback` page under
 FX/MOD. The new page is the cleaner option: the envelope shape is easier to read at
 full width, and the operator cards only gain one depth knob. The control map and
-the mockup are part of the second contract, not this note.
+the mockup are part of the envelope contract.
+
+### Envelope measurement
+
+The shared envelope is now measured on the engine. The test uses one sine operator
+at note 60, `fbenv` r1 at 50, r2..r4 at 99 and l1..l3 at 99, and 16,384 samples.
+Depth 0 is bit-identical. A +100 percent depth with a base of 0 raises the
+third-to-fundamental ratio by 22 percent. A -100 percent depth with a base of 50
+percent lowers the spectral centroid by 65 percent. The dynamic peaks are 35 and 27
+percent above the endpoint statics, inside the 50 percent margin. The 146 and 160
+libraries load, the current layout round-trips, and the 356 parameters reach the
+APVTS. The engine side is done. The page, the mockup and the snapshots are the next
+milestone, and the evidence is in
+[`../plugin/evidence/feedback-envelope.md`](../plugin/evidence/feedback-envelope.md).
 
 ## Measurement method
 
@@ -287,7 +300,9 @@ confirms the positive path against the captured reference.
 The sign flip failed at 25 and 50 percent feedback. It is not shipped, and the
 160-to-164 migration was not used. The measured table is in
 [`../plugin/evidence/feedback-polarity.md`](../plugin/evidence/feedback-polarity.md).
-The shared feedback envelope with a per-operator depth is the next feedback feature,
-because it modulates the feedback magnitude. A different tap, such as a one-pole
-lowpass, or an odd-symmetric nonlinearity in the loop is the follow-up if the
-negative-feedback line continues, and it needs its own contract.
+The shared feedback envelope with a per-operator depth is implemented on the engine
+side and measured in
+[`../plugin/evidence/feedback-envelope.md`](../plugin/evidence/feedback-envelope.md).
+The page, the mockup and the snapshots are the next milestone. A different tap, such
+as a one-pole lowpass, or an odd-symmetric nonlinearity in the loop is the follow-up
+if the negative-feedback line continues, and it needs its own contract.

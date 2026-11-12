@@ -107,6 +107,12 @@ target_include_directories(engine_parity PRIVATE "${P1_GENERATED_DIR}")
 add_dependencies(engine_parity p1_params)
 add_test(NAME engine_parity COMMAND engine_parity)
 
+add_executable(feedback_envelope tests/feedback_envelope.cpp)
+target_link_libraries(feedback_envelope PRIVATE p1_engine)
+target_include_directories(feedback_envelope PRIVATE "${P1_GENERATED_DIR}")
+add_dependencies(feedback_envelope p1_params)
+add_test(NAME feedback_envelope COMMAND feedback_envelope)
+
 add_executable(rate_bridge_test tests/rate_bridge_test.cpp)
 target_link_libraries(rate_bridge_test PRIVATE p1_engine)
 add_test(NAME rate_bridge COMMAND rate_bridge_test)

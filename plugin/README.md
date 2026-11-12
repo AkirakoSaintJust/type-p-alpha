@@ -23,6 +23,7 @@ ctest --test-dir build --output-on-failure
 ```
 
 - `engine_parity` compiles the engine and checks the MIDI path.
+- `feedback_envelope` checks the shared envelope and the per-operator depth.
 - `rate_bridge` checks the output-rate adaptation and the exact core-rate bypass.
 - `preset_smoke` checks the preset records.
 - `plugin_smoke` checks the APVTS, the state and the automation.

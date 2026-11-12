@@ -111,5 +111,5 @@ private:
     bool libraryLoaded_ = false;
     juce::File libraryFileOverride_;
     p1::PresetStore presets_{kP1PartParamCount, kP1PartCount,
-                             p1::partParamDefaults(), p1::legacyPartParamMap()};
+                             p1::partParamDefaults(), p1::legacyPartParamMaps()};
 };

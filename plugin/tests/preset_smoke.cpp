@@ -56,7 +56,7 @@ void test_legacy_library()
                      kLegacyCount);
 
     p1::PresetStore store{kP1PartParamCount, kP1PartCount,
-                          p1::partParamDefaults(), p1::legacyPartParamMap()};
+                          p1::partParamDefaults(), p1::legacyPartParamMaps()};
     const auto multiBank = store.packMultiBank();
     static const uint8_t magic[7] = {'P', '1', 'L', 'I', 'B', '1', '\n'};
     std::vector<uint8_t> library(magic, magic + 7);
@@ -70,18 +70,68 @@ void test_legacy_library()
     check(store.partUsed(0) && store.partName(0) == "old lead",
           "the old part name survives the migration");
     const auto& loaded = store.partParams(0);
-    check(loaded[0] == legacyParams[0] && loaded[132] == legacyParams[132],
-          "the unchanged head keeps its index");
-    check(loaded[152] == legacyParams[133] && loaded[159] == legacyParams[140],
-          "the moved tail lands at 152..159");
+    check(loaded[0] == legacyParams[0] && loaded[18] == legacyParams[18] &&
+              loaded[20] == legacyParams[19] && loaded[48] == legacyParams[47] &&
+              loaded[108] == legacyParams[105] &&
+              loaded[136] == legacyParams[132],
+          "the old head migrates across the feedback depths");
+    check(loaded[163] == legacyParams[133] && loaded[170] == legacyParams[140],
+          "the moved tail lands at 163..170");
     const auto defaults = p1::partParamDefaults();
     bool filterDefaulted = true;
-    for (int i = 133; i < 152; ++i) {
+    for (int i = 137; i < 156; ++i) {
         if (loaded[static_cast<std::size_t>(i)] !=
             defaults[static_cast<std::size_t>(i)])
             filterDefaulted = false;
     }
-    check(filterDefaulted, "the new filter block takes its defaults");
+    check(filterDefaulted, "the filter block takes its defaults");
+    bool newDefaulted = true;
+    for (int i : {19, 49, 79, 109, 156, 157, 158, 159, 160, 161, 162}) {
+        if (loaded[static_cast<std::size_t>(i)] !=
+            defaults[static_cast<std::size_t>(i)])
+            newDefaulted = false;
+    }
+    check(newDefaulted, "the feedback depth and envelope take their defaults");
+}
+
+void test_legacy_160_library()
+{
+    constexpr int kOldCount = 160;
+    const auto recordSize = static_cast<std::size_t>(PP_RECORD(kOldCount));
+    std::vector<uint8_t> oldBank(recordSize * 128u, 0xFF);
+    std::vector<int32_t> oldParams(static_cast<std::size_t>(kOldCount));
+    for (int i = 0; i < kOldCount; ++i)
+        oldParams[static_cast<std::size_t>(i)] = 2000 + i;
+    preset_part_pack(oldBank.data(), "old 160", oldParams.data(), kOldCount);
+
+    p1::PresetStore store{kP1PartParamCount, kP1PartCount,
+                          p1::partParamDefaults(), p1::legacyPartParamMaps()};
+    const auto multiBank = store.packMultiBank();
+    static const uint8_t magic[7] = {'P', '1', 'L', 'I', 'B', '1', '\n'};
+    std::vector<uint8_t> library(magic, magic + 7);
+    append32(library, static_cast<uint32_t>(oldBank.size()));
+    library.insert(library.end(), oldBank.begin(), oldBank.end());
+    append32(library, static_cast<uint32_t>(multiBank.size()));
+    library.insert(library.end(), multiBank.begin(), multiBank.end());
+
+    check(store.loadLibrary(library.data(), library.size()),
+          "load a library from the 160 layout");
+    check(store.partUsed(0) && store.partName(0) == "old 160",
+          "the 160 part name survives the migration");
+    const auto& loaded = store.partParams(0);
+    check(loaded[0] == oldParams[0] && loaded[18] == oldParams[18] &&
+              loaded[20] == oldParams[19] && loaded[48] == oldParams[47] &&
+              loaded[108] == oldParams[105] && loaded[155] == oldParams[151] &&
+              loaded[163] == oldParams[152] && loaded[170] == oldParams[159],
+          "the 160 head and tail migrate");
+    const auto defaults = p1::partParamDefaults();
+    bool newDefaulted = true;
+    for (int i : {19, 49, 79, 109, 156, 157, 158, 159, 160, 161, 162}) {
+        if (loaded[static_cast<std::size_t>(i)] !=
+            defaults[static_cast<std::size_t>(i)])
+            newDefaulted = false;
+    }
+    check(newDefaulted, "the 160 feedback depth and envelope take their defaults");
 }
 
 } // namespace
@@ -181,6 +231,7 @@ int main()
           "reject a library file with a short tail");
 
     test_legacy_library();
+    test_legacy_160_library();
 
     std::printf("preset: %s\n", failures ? "FAILED" : "passed");
     return failures ? 1 : 0;

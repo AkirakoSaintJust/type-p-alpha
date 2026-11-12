@@ -13,11 +13,11 @@ namespace p1 {
 
 PresetStore::PresetStore(int partParamCount, int partCount,
                          std::vector<int32_t> defaults,
-                         std::vector<int> legacyPartMap)
+                         std::vector<std::vector<int>> legacyPartMaps)
     : partParamCount_(std::max(0, partParamCount)),
       partCount_(std::max(0, partCount)),
       defaults_(std::move(defaults)),
-      legacyPartMap_(std::move(legacyPartMap)),
+      legacyPartMaps_(std::move(legacyPartMaps)),
       parts_(static_cast<std::size_t>(kPartSlots)),
       multis_(static_cast<std::size_t>(kMultiSlots)),
       partSource_(static_cast<std::size_t>(partCount_), -1)
@@ -169,10 +169,21 @@ bool PresetStore::loadPartBank(const uint8_t* data, std::size_t size)
 
 bool PresetStore::loadLegacyPartBank(const uint8_t* data, std::size_t size)
 {
-    const auto legacyCount = static_cast<uint32_t>(legacyPartMap_.size());
-    const auto recordSize = PP_RECORD(legacyCount);
-    if (legacyCount == 0 || data == nullptr || size != recordSize * kPartSlots)
+    const std::vector<int>* map = nullptr;
+    for (const auto& candidate : legacyPartMaps_) {
+        if (candidate.empty())
+            continue;
+        const auto recordSize =
+            PP_RECORD(static_cast<uint32_t>(candidate.size()));
+        if (size == recordSize * kPartSlots) {
+            map = &candidate;
+            break;
+        }
+    }
+    if (map == nullptr || data == nullptr)
         return false;
+    const auto legacyCount = static_cast<uint32_t>(map->size());
+    const auto recordSize = PP_RECORD(legacyCount);
     for (int slot = 0; slot < kPartSlots; ++slot) {
         auto& part = parts_[static_cast<std::size_t>(slot)];
         part.used = false;
@@ -187,8 +198,8 @@ bool PresetStore::loadLegacyPartBank(const uint8_t* data, std::size_t size)
             continue;
         part.used = true;
         part.name = shortName(name);
-        for (std::size_t i = 0; i < legacyPartMap_.size(); ++i) {
-            const int destination = legacyPartMap_[i];
+        for (std::size_t i = 0; i < map->size(); ++i) {
+            const int destination = (*map)[i];
             if (destination >= 0 && destination < partParamCount_)
                 part.params[static_cast<std::size_t>(destination)] = legacy[i];
         }
@@ -297,13 +308,20 @@ bool PresetStore::loadLibrary(const uint8_t* data, std::size_t size)
     uint32_t multiSize = 0;
     const auto currentPartSize =
         partRecordSize() * static_cast<std::size_t>(kPartSlots);
-    const auto legacyPartSize =
-        legacyPartMap_.empty()
-            ? 0u
-            : PP_RECORD(static_cast<uint32_t>(legacyPartMap_.size())) *
-                  static_cast<std::size_t>(kPartSlots);
-    if (!get32(partSize) || (static_cast<std::size_t>(partSize) != currentPartSize &&
-                             static_cast<std::size_t>(partSize) != legacyPartSize))
+    if (!get32(partSize))
+        return false;
+    bool accepted = static_cast<std::size_t>(partSize) == currentPartSize;
+    if (!accepted) {
+        for (const auto& map : legacyPartMaps_) {
+            if (static_cast<std::size_t>(partSize) ==
+                PP_RECORD(static_cast<uint32_t>(map.size())) *
+                    static_cast<std::size_t>(kPartSlots)) {
+                accepted = true;
+                break;
+            }
+        }
+    }
+    if (!accepted)
         return false;
     if (offset + partSize + 4u > size)
         return false;
