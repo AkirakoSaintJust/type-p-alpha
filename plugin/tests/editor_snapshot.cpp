@@ -86,11 +86,11 @@ int main(int argc, char** argv)
     ok = saveSnapshot(*editor, directory.getChildFile("editor-operators.png")) && ok;
     p1editor->showTab(2);
     fill();
-    ok = saveSnapshot(*editor, directory.getChildFile("editor-fxmod.png")) && ok;
-    p1editor->showTab(3);
-    fill();
     ok = saveSnapshot(*editor,
                       directory.getChildFile("editor-operator-lfos.png")) && ok;
+    p1editor->showTab(3);
+    fill();
+    ok = saveSnapshot(*editor, directory.getChildFile("editor-fxmod.png")) && ok;
     p1editor->showTab(0);
     fill();
     p1editor->showAlgorithmPicker();

@@ -57,9 +57,9 @@ inline juce::String opFeedback(int op, int part)
 {
     return withPart(opBase(op, "_feedback"), part);
 }
-inline juce::String opFeedbackDepth(int op, int part)
+inline juce::String opFeedbackOn(int op, int part)
 {
-    return withPart(opBase(op, "_fb_depth"), part);
+    return withPart(opBase(op, "_fbenv_on"), part);
 }
 inline juce::String opFeedbackLfoRate(int op, int part)
 {

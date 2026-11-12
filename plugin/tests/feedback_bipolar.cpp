@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: GPL-3.0-only */
 /* Bipolar feedback: the positive half is the current path, the negative half is the
- * square family with the same average, and the envelope depth offsets the
+ * square family with the same average, and the envelope level offsets the
  * magnitude without changing the sign. */
 #include <array>
 #include <cmath>
@@ -50,7 +50,7 @@ bool set_param(p1::Engine& engine, const char* name, int32_t value)
     return true;
 }
 
-bool setup(p1::Engine& engine, int32_t feedback, int32_t depth)
+bool setup(p1::Engine& engine, int32_t feedback, int32_t envLevel)
 {
     bool ok = true;
     ok &= set_param(engine, "algorithm.p0", 7);
@@ -59,7 +59,10 @@ bool setup(p1::Engine& engine, int32_t feedback, int32_t depth)
     ok &= set_param(engine, "op1_detune.p0", 0);
     ok &= set_param(engine, "op1_level.p0", 99);
     ok &= set_param(engine, "op1_feedback.p0", feedback);
-    ok &= set_param(engine, "op1_fb_depth.p0", depth);
+    ok &= set_param(engine, "op1_fbenv_l1.p0", envLevel);
+    ok &= set_param(engine, "op1_fbenv_l2.p0", envLevel);
+    ok &= set_param(engine, "op1_fbenv_l3.p0", envLevel);
+    ok &= set_param(engine, "op1_fbenv_l4.p0", envLevel);
     ok &= set_param(engine, "op1_mute.p0", 0);
     ok &= set_param(engine, "op2_level.p0", 0);
     ok &= set_param(engine, "op3_level.p0", 0);
@@ -139,11 +142,11 @@ Spectrum analyse(const std::vector<int32_t>& samples)
     return out;
 }
 
-bool render(int32_t feedback, int32_t depth, std::vector<int32_t>& samples)
+bool render(int32_t feedback, int32_t envLevel, std::vector<int32_t>& samples)
 {
     p1::Engine engine;
     engine.reset();
-    if (!setup(engine, feedback, depth))
+    if (!setup(engine, feedback, envLevel))
         return false;
     engine.noteOn(60, 100, 0);
     samples.assign(2u * static_cast<std::size_t>(kSamples), 0);
@@ -199,17 +202,17 @@ int main()
     check(std::abs(ratio(negative[1], 3, 1) - 0.391) < 0.03,
           "the negative 50 percent third harmonic matches the abs neg");
 
-    std::vector<int32_t> depthOff;
-    std::vector<int32_t> depthOn;
-    if (!render(-16384, 0, depthOff) || !render(-16384, 32767, depthOn)) {
+    std::vector<int32_t> envOff;
+    std::vector<int32_t> envOn;
+    if (!render(-16384, 0, envOff) || !render(-16384, 8192, envOn)) {
         std::printf("bipolar: setup failed\n");
         return 1;
     }
-    const Spectrum off = analyse(depthOff);
-    const Spectrum on = analyse(depthOn);
+    const Spectrum off = analyse(envOff);
+    const Spectrum on = analyse(envOn);
     check(std::abs(ratio(on, 3, 1) - ratio(off, 3, 1)) > 0.02 ||
               std::abs(on.hf - off.hf) > off.hf * 0.10,
-          "the envelope depth moves the negative magnitude");
+          "the envelope level moves the negative magnitude");
 
     bool bounded = true;
     for (const auto& s : positive)

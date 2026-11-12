@@ -94,15 +94,16 @@ Every page fills the same height:
 - patch settings: two part cards, each with five knobs, a level slider and a
   scope and spectro, which grow to fill the remaining card height, followed by the
   voice mode block.
-- operators: four columns with oscillator, amplitude envelope and feedback envelope,
-  where the envelopes use one row for R1 to R4 and a second row for L1 to L3.
+- operators: four columns with oscillator, amplitude envelope and feedback envelope.
+  The amplitude envelope uses one row for R1 to R4 and a second row for L1 to L3. The
+  feedback envelope uses R1 to R4 and L1 to L4, with signed levels and an on switch.
+- operator lfos: four operator columns with the oscillator, then the amplitude LFO,
+  feedback LFO and detune LFO cards. Each LFO card carries its `bipolar` switch
+  beside the wave select.
 - fx / mod: a three by two grid. Filter 1, the filter envelope and the pitch LFO
   fill the first row. Pitch envelope, key follow and velocity follow fill the second
   row. The two follow cards are separate, and each has its own on switch and wipe
   button. The pitch LFO carries its `bipolar` switch beside the wave select.
-- operator lfos: four operator columns with the oscillator, then the amplitude LFO,
-  feedback LFO and detune LFO cards. Each LFO card carries its `bipolar` switch
-  beside the wave select.
 
 ## Header
 
@@ -188,7 +189,8 @@ parameter set and the same ranges, grouped to match the pages rather than the JS
 order.
 
 - patch settings: parts, keyzones, levels, delays, voice mode.
-- operators: four sets of oscillator, envelope and amplitude LFO parameters.
+- operators: four sets of oscillator, amplitude envelope, feedback envelope and the
+  three LFO parameters.
 - fx / mod: filter, filter envelope, pitch LFO, pitch envelope, key and velocity
   follow.
 - global: algorithm and patch name.

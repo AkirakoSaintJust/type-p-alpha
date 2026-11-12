@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: GPL-3.0-only */
 /* Feedback envelope: each operator's internal fbenv node offsets that operator's
- * feedback amount by its depth. Depth 0 is bit-exact; a positive depth opens the
- * feedback as the envelope rises, a negative depth closes it. */
+ * feedback amount directly. A flat envelope is bit-exact; positive levels open
+ * the feedback as the envelope rises, negative levels close it. */
 #include <array>
 #include <cmath>
 #include <cstdint>
@@ -49,8 +49,8 @@ bool set_param(p1::Engine& engine, const char* name, int32_t value)
     return true;
 }
 
-bool setup(p1::Engine& engine, int32_t feedback, int32_t depth,
-           int32_t envL1, int32_t envR1)
+bool setup(p1::Engine& engine, int32_t feedback, int32_t envL1, int32_t envR1,
+           int32_t on)
 {
     bool ok = true;
     ok &= set_param(engine, "algorithm.p0", 7);
@@ -59,7 +59,6 @@ bool setup(p1::Engine& engine, int32_t feedback, int32_t depth,
     ok &= set_param(engine, "op1_detune.p0", 0);
     ok &= set_param(engine, "op1_level.p0", 99);
     ok &= set_param(engine, "op1_feedback.p0", feedback);
-    ok &= set_param(engine, "op1_fb_depth.p0", depth);
     ok &= set_param(engine, "op1_mute.p0", 0);
     ok &= set_param(engine, "op2_level.p0", 0);
     ok &= set_param(engine, "op3_level.p0", 0);
@@ -76,6 +75,7 @@ bool setup(p1::Engine& engine, int32_t feedback, int32_t depth,
     ok &= set_param(engine, "op1.eg.l3.p0", 99);
     ok &= set_param(engine, "op1_trem_depth.p0", 0);
     ok &= set_param(engine, "filter_on.p0", 0);
+    ok &= set_param(engine, "op1_fbenv_on.p0", on);
     ok &= set_param(engine, "op1_fbenv_r1.p0", envR1);
     ok &= set_param(engine, "op1_fbenv_r2.p0", 99);
     ok &= set_param(engine, "op1_fbenv_r3.p0", 99);
@@ -83,6 +83,7 @@ bool setup(p1::Engine& engine, int32_t feedback, int32_t depth,
     ok &= set_param(engine, "op1_fbenv_l1.p0", envL1);
     ok &= set_param(engine, "op1_fbenv_l2.p0", envL1);
     ok &= set_param(engine, "op1_fbenv_l3.p0", envL1);
+    ok &= set_param(engine, "op1_fbenv_l4.p0", envL1);
     return ok;
 }
 
@@ -138,12 +139,12 @@ double peakOf(const std::vector<int32_t>& samples)
     return static_cast<double>(peak);
 }
 
-bool render(int32_t feedback, int32_t depth, int32_t envL1, int32_t envR1,
+bool render(int32_t feedback, int32_t envL1, int32_t envR1, int32_t on,
             std::vector<int32_t>& samples)
 {
     p1::Engine engine;
     engine.reset();
-    if (!setup(engine, feedback, depth, envL1, envR1))
+    if (!setup(engine, feedback, envL1, envR1, on))
         return false;
     engine.noteOn(60, 100, 0);
     samples.assign(2u * static_cast<std::size_t>(kSamples), 0);
@@ -158,25 +159,25 @@ int main()
     std::setvbuf(stdout, nullptr, _IONBF, 0);
     std::printf("feedback envelope experiment\n");
 
-    std::vector<int32_t> fast;
-    std::vector<int32_t> silent;
-    if (!render(0, 0, 99, 50, fast) || !render(0, 0, 0, 99, silent)) {
+    std::vector<int32_t> flat;
+    std::vector<int32_t> bypassed;
+    if (!render(0, 0, 50, 1, flat) || !render(0, 32767, 50, 0, bypassed)) {
         std::printf("envelope: setup failed\n");
         return 1;
     }
-    check(std::memcmp(fast.data(), silent.data(),
+    check(std::memcmp(flat.data(), bypassed.data(),
                       2u * static_cast<std::size_t>(kSamples) *
                           sizeof(int32_t)) == 0,
-          "depth 0 ignores the envelope shape");
+          "a flat envelope and the off switch are bit-exact");
 
     std::vector<int32_t> plus;
     std::vector<int32_t> minus;
     std::vector<int32_t> staticFull;
     std::vector<int32_t> staticHalf;
-    if (!render(0, 32767, 99, 50, plus) ||
-        !render(16384, -32767, 99, 50, minus) ||
-        !render(32767, 0, 99, 50, staticFull) ||
-        !render(16384, 0, 99, 50, staticHalf)) {
+    if (!render(0, 8192, 80, 1, plus) ||
+        !render(16384, -32767, 50, 1, minus) ||
+        !render(32767, 0, 50, 1, staticFull) ||
+        !render(16384, 0, 50, 1, staticHalf)) {
         std::printf("envelope: setup failed\n");
         return 1;
     }
@@ -186,9 +187,9 @@ int main()
     const Window minusFirst = analyseWindow(minus, 2048);
     const Window minusLast = analyseWindow(minus, kSamples - kWindow);
 
-    std::printf("envelope: +100 first centroid %.3f A3/A1 %.3f\n",
+    std::printf("envelope: +25 first centroid %.3f A3/A1 %.3f\n",
                 plusFirst.centroid, plusFirst.a[3] / plusFirst.a[1]);
-    std::printf("envelope: +100 last  centroid %.3f A3/A1 %.3f\n",
+    std::printf("envelope: +25 last  centroid %.3f A3/A1 %.3f\n",
                 plusLast.centroid, plusLast.a[3] / plusLast.a[1]);
     std::printf("envelope: -100 first centroid %.3f A3/A1 %.3f\n",
                 minusFirst.centroid, minusFirst.a[3] / minusFirst.a[1]);
@@ -198,22 +199,22 @@ int main()
     check(plusLast.centroid > plusFirst.centroid * 1.10 ||
               plusLast.a[3] / plusLast.a[1] >
                   plusFirst.a[3] / plusFirst.a[1] * 1.10,
-          "positive depth brightens the last window");
+          "positive levels brighten the last window");
     check(minusLast.centroid < minusFirst.centroid * 0.90 ||
               minusLast.a[3] / minusLast.a[1] <
                   minusFirst.a[3] / minusFirst.a[1] * 0.90,
-          "negative depth darkens the last window");
+          "negative levels darken the last window");
 
     const double plusPeak = peakOf(plus);
     const double minusPeak = peakOf(minus);
     const double fullPeak = peakOf(staticFull);
     const double halfPeak = peakOf(staticHalf);
-    std::printf("envelope: peaks +100 %.0f -100 %.0f full %.0f half %.0f\n",
+    std::printf("envelope: peaks +25 %.0f -100 %.0f full %.0f half %.0f\n",
                 plusPeak, minusPeak, fullPeak, halfPeak);
     check(plusPeak <= fullPeak * 1.50,
-          "the positive depth peak stays within 50 percent");
+          "the positive level peak stays within 50 percent");
     check(minusPeak <= halfPeak * 1.50,
-          "the negative depth peak stays within 50 percent");
+          "the negative level peak stays within 50 percent");
 
     std::printf("envelope: %s\n", failures ? "FAILED" : "passed");
     return failures ? 1 : 0;

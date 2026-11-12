@@ -115,12 +115,12 @@ in `licences/`.
 
 The Type P.α engine and editor grew out of the abandoned Type P.fm1 build. Patch
 and part names carry 32 characters, and the library uses the `P1LIB2` record
-layout. Each operator carries its own amplitude and feedback envelope and its
-amplitude, feedback and detune LFOs, with the three LFO families on the
-`operator lfos` tab. The plugin passes pluginval at strictness 5 on Linux x86_64,
-with the editor open and the audio, state and automation checks included. The CLAP
-validator reports no failures and one warning, because its random-state test loads
-garbage without a
+layout. Each operator carries its own amplitude envelope and signed feedback
+envelope, and its amplitude, feedback and detune LFOs, with the three LFO
+families on the `operator lfos` tab. The plugin passes pluginval at strictness 5
+on Linux x86_64, with the editor open and the audio, state and automation checks
+included. The CLAP validator reports no failures and one warning, because its
+random-state test loads garbage without a
 crash. The filter runs per voice and per part now, so each part has its own cutoff,
 resonance, mode and envelope, and its own key and velocity follow.
 

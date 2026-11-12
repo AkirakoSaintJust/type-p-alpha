@@ -51,7 +51,6 @@ bool setup(p1::Engine& engine, int32_t feedbackLfoDepth, int32_t detuneLfoDepth,
     ok &= set_param(engine, "op1_detune.p0", 0);
     ok &= set_param(engine, "op1_level.p0", 99);
     ok &= set_param(engine, "op1_feedback.p0", 16384);
-    ok &= set_param(engine, "op1_fb_depth.p0", 0);
     ok &= set_param(engine, "op1_mute.p0", 0);
     ok &= set_param(engine, "op2_level.p0", 0);
     ok &= set_param(engine, "op3_level.p0", 0);

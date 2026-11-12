@@ -184,6 +184,19 @@
     },
     {
       "id": 14,
+      "name": "op1_fbenv_on.p0",
+      "target": "op1.fbenv.on.p0",
+      "min": 0,
+      "max": 1,
+      "default": 1,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "onoff"
+    },
+    {
+      "id": 15,
       "name": "op1_fbenv_r1.p0",
       "target": "op1.fbenv.r1.p0",
       "min": 0,
@@ -196,7 +209,7 @@
       "display": "raw"
     },
     {
-      "id": 15,
+      "id": 16,
       "name": "op1_fbenv_r2.p0",
       "target": "op1.fbenv.r2.p0",
       "min": 0,
@@ -209,7 +222,7 @@
       "display": "raw"
     },
     {
-      "id": 16,
+      "id": 17,
       "name": "op1_fbenv_r3.p0",
       "target": "op1.fbenv.r3.p0",
       "min": 0,
@@ -222,7 +235,7 @@
       "display": "raw"
     },
     {
-      "id": 17,
+      "id": 18,
       "name": "op1_fbenv_r4.p0",
       "target": "op1.fbenv.r4.p0",
       "min": 0,
@@ -235,46 +248,59 @@
       "display": "raw"
     },
     {
-      "id": 18,
+      "id": 19,
       "name": "op1_fbenv_l1.p0",
       "target": "op1.fbenv.l1.p0",
-      "min": 0,
-      "max": 99,
-      "default": 99,
+      "min": -32768,
+      "max": 32767,
+      "default": 0,
       "curve": "linear",
       "unit": "",
       "rate": "block",
       "modulatable": false,
-      "display": "raw"
-    },
-    {
-      "id": 19,
-      "name": "op1_fbenv_l2.p0",
-      "target": "op1.fbenv.l2.p0",
-      "min": 0,
-      "max": 99,
-      "default": 93,
-      "curve": "linear",
-      "unit": "",
-      "rate": "block",
-      "modulatable": false,
-      "display": "raw"
+      "display": "pct_bip"
     },
     {
       "id": 20,
-      "name": "op1_fbenv_l3.p0",
-      "target": "op1.fbenv.l3.p0",
-      "min": 0,
-      "max": 99,
-      "default": 87,
+      "name": "op1_fbenv_l2.p0",
+      "target": "op1.fbenv.l2.p0",
+      "min": -32768,
+      "max": 32767,
+      "default": 0,
       "curve": "linear",
       "unit": "",
       "rate": "block",
       "modulatable": false,
-      "display": "raw"
+      "display": "pct_bip"
     },
     {
       "id": 21,
+      "name": "op1_fbenv_l3.p0",
+      "target": "op1.fbenv.l3.p0",
+      "min": -32768,
+      "max": 32767,
+      "default": 0,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "pct_bip"
+    },
+    {
+      "id": 22,
+      "name": "op1_fbenv_l4.p0",
+      "target": "op1.fbenv.l4.p0",
+      "min": -32768,
+      "max": 32767,
+      "default": 0,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "pct_bip"
+    },
+    {
+      "id": 23,
       "name": "op1_fblfo_rate.p0",
       "target": "op1.fblfo.rate.p0",
       "min": 0,
@@ -287,7 +313,7 @@
       "display": "hz"
     },
     {
-      "id": 22,
+      "id": 24,
       "name": "op1_fblfo_depth.p0",
       "target": "op1.fblfo.depth.p0",
       "min": -32767,
@@ -300,7 +326,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 23,
+      "id": 25,
       "name": "op1_fblfo_wave.p0",
       "target": "op1.fblfo.wave.p0",
       "min": 0,
@@ -313,7 +339,7 @@
       "display": "wave"
     },
     {
-      "id": 24,
+      "id": 26,
       "name": "op1_fblfo_mode.p0",
       "target": "op1.fblfo.mode.p0",
       "min": 0,
@@ -326,7 +352,7 @@
       "display": "onoff"
     },
     {
-      "id": 25,
+      "id": 27,
       "name": "op1_dlfo_rate.p0",
       "target": "op1.dlfo.rate.p0",
       "min": 0,
@@ -339,7 +365,7 @@
       "display": "hz"
     },
     {
-      "id": 26,
+      "id": 28,
       "name": "op1_dlfo_depth.p0",
       "target": "op1.dlfo.depth.p0",
       "min": -32768,
@@ -352,7 +378,7 @@
       "display": "semi_lfo"
     },
     {
-      "id": 27,
+      "id": 29,
       "name": "op1_dlfo_wave.p0",
       "target": "op1.dlfo.wave.p0",
       "min": 0,
@@ -365,7 +391,7 @@
       "display": "wave"
     },
     {
-      "id": 28,
+      "id": 30,
       "name": "op1_dlfo_mode.p0",
       "target": "op1.dlfo.mode.p0",
       "min": 0,
@@ -378,7 +404,7 @@
       "display": "onoff"
     },
     {
-      "id": 29,
+      "id": 31,
       "name": "op1.velamp.depth.p0",
       "target": "op1.velamp.depth.p0",
       "min": -32768,
@@ -391,7 +417,7 @@
       "display": "raw"
     },
     {
-      "id": 30,
+      "id": 32,
       "name": "op1.velfm.depth.p0",
       "target": "op1.velfm.depth.p0",
       "min": -32768,
@@ -404,7 +430,7 @@
       "display": "raw"
     },
     {
-      "id": 31,
+      "id": 33,
       "name": "op1.velrate.depth.p0",
       "target": "op1.velrate.depth.p0",
       "min": -32768,
@@ -417,7 +443,7 @@
       "display": "raw"
     },
     {
-      "id": 32,
+      "id": 34,
       "name": "op1_level.p0",
       "target": "op1.tl.level.p0",
       "min": 0,
@@ -430,7 +456,7 @@
       "display": "raw"
     },
     {
-      "id": 33,
+      "id": 35,
       "name": "op1_feedback.p0",
       "target": "op1.fb.level.p0",
       "min": -32767,
@@ -443,20 +469,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 34,
-      "name": "op1_fb_depth.p0",
-      "target": "op1.fb.depth.p0",
-      "min": -32767,
-      "max": 32767,
-      "default": 0,
-      "curve": "linear",
-      "unit": "",
-      "rate": "block",
-      "modulatable": false,
-      "display": "pct_bip"
-    },
-    {
-      "id": 35,
+      "id": 36,
       "name": "op1_level_ks_lo.p0",
       "target": "op1.level_ks.lo.p0",
       "min": -100,
@@ -469,7 +482,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 36,
+      "id": 37,
       "name": "op1_level_ks_hi.p0",
       "target": "op1.level_ks.hi.p0",
       "min": -100,
@@ -482,7 +495,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 37,
+      "id": 38,
       "name": "op1_fb_ks_lo.p0",
       "target": "op1.fb_ks.lo.p0",
       "min": -100,
@@ -495,7 +508,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 38,
+      "id": 39,
       "name": "op1_fb_ks_hi.p0",
       "target": "op1.fb_ks.hi.p0",
       "min": -100,
@@ -508,7 +521,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 39,
+      "id": 40,
       "name": "op1_aenv_ks_lo.p0",
       "target": "op1.eg_ks.lo.p0",
       "min": -100,
@@ -521,7 +534,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 40,
+      "id": 41,
       "name": "op1_aenv_ks_hi.p0",
       "target": "op1.eg_ks.hi.p0",
       "min": -100,
@@ -534,7 +547,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 41,
+      "id": 42,
       "name": "op1_level_vs.p0",
       "target": "op1.level_vs.amount.p0",
       "min": -100,
@@ -547,7 +560,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 42,
+      "id": 43,
       "name": "op1_fb_vs.p0",
       "target": "op1.fb_vs.amount.p0",
       "min": -100,
@@ -560,7 +573,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 43,
+      "id": 44,
       "name": "op1_aenv_vs.p0",
       "target": "op1.eg_vs.amount.p0",
       "min": -100,
@@ -573,7 +586,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 44,
+      "id": 45,
       "name": "op1_mute.p0",
       "target": "op1.mute.mute.p0",
       "min": 0,
@@ -586,7 +599,7 @@
       "display": "onoff_inv"
     },
     {
-      "id": 45,
+      "id": 46,
       "name": "op2_ratio.p0",
       "target": "op2.ph.inc_ratio.p0",
       "min": 32768,
@@ -599,7 +612,7 @@
       "display": "ratio"
     },
     {
-      "id": 46,
+      "id": 47,
       "name": "op2_detune.p0",
       "target": "op2.ph.detune.p0",
       "min": -50,
@@ -612,7 +625,7 @@
       "display": "cent"
     },
     {
-      "id": 47,
+      "id": 48,
       "name": "op2_waveform.p0",
       "target": "op2.osc.waveform.p0",
       "min": 0,
@@ -625,7 +638,7 @@
       "display": "wave"
     },
     {
-      "id": 48,
+      "id": 49,
       "name": "op2.eg.r1.p0",
       "target": "op2.eg.r1.p0",
       "min": 0,
@@ -638,7 +651,7 @@
       "display": "raw"
     },
     {
-      "id": 49,
+      "id": 50,
       "name": "op2.eg.r2.p0",
       "target": "op2.eg.r2.p0",
       "min": 0,
@@ -651,7 +664,7 @@
       "display": "raw"
     },
     {
-      "id": 50,
+      "id": 51,
       "name": "op2.eg.r3.p0",
       "target": "op2.eg.r3.p0",
       "min": 0,
@@ -664,7 +677,7 @@
       "display": "raw"
     },
     {
-      "id": 51,
+      "id": 52,
       "name": "op2.eg.r4.p0",
       "target": "op2.eg.r4.p0",
       "min": 0,
@@ -677,7 +690,7 @@
       "display": "raw"
     },
     {
-      "id": 52,
+      "id": 53,
       "name": "op2.eg.l1.p0",
       "target": "op2.eg.l1.p0",
       "min": 0,
@@ -690,7 +703,7 @@
       "display": "raw"
     },
     {
-      "id": 53,
+      "id": 54,
       "name": "op2.eg.l2.p0",
       "target": "op2.eg.l2.p0",
       "min": 0,
@@ -703,7 +716,7 @@
       "display": "raw"
     },
     {
-      "id": 54,
+      "id": 55,
       "name": "op2.eg.l3.p0",
       "target": "op2.eg.l3.p0",
       "min": 0,
@@ -716,7 +729,7 @@
       "display": "raw"
     },
     {
-      "id": 55,
+      "id": 56,
       "name": "op2_trem_rate.p0",
       "target": "op2.lfo.rate.p0",
       "min": 0,
@@ -729,7 +742,7 @@
       "display": "hz"
     },
     {
-      "id": 56,
+      "id": 57,
       "name": "op2_trem_depth.p0",
       "target": "op2.lfo.depth.p0",
       "min": -99,
@@ -742,7 +755,7 @@
       "display": "raw"
     },
     {
-      "id": 57,
+      "id": 58,
       "name": "op2_trem_wave.p0",
       "target": "op2.lfo.wave.p0",
       "min": 0,
@@ -755,7 +768,7 @@
       "display": "wave"
     },
     {
-      "id": 58,
+      "id": 59,
       "name": "op2_trem_mode.p0",
       "target": "op2.lfo.mode.p0",
       "min": 0,
@@ -768,7 +781,20 @@
       "display": "onoff"
     },
     {
-      "id": 59,
+      "id": 60,
+      "name": "op2_fbenv_on.p0",
+      "target": "op2.fbenv.on.p0",
+      "min": 0,
+      "max": 1,
+      "default": 1,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "onoff"
+    },
+    {
+      "id": 61,
       "name": "op2_fbenv_r1.p0",
       "target": "op2.fbenv.r1.p0",
       "min": 0,
@@ -781,7 +807,7 @@
       "display": "raw"
     },
     {
-      "id": 60,
+      "id": 62,
       "name": "op2_fbenv_r2.p0",
       "target": "op2.fbenv.r2.p0",
       "min": 0,
@@ -794,7 +820,7 @@
       "display": "raw"
     },
     {
-      "id": 61,
+      "id": 63,
       "name": "op2_fbenv_r3.p0",
       "target": "op2.fbenv.r3.p0",
       "min": 0,
@@ -807,7 +833,7 @@
       "display": "raw"
     },
     {
-      "id": 62,
+      "id": 64,
       "name": "op2_fbenv_r4.p0",
       "target": "op2.fbenv.r4.p0",
       "min": 0,
@@ -820,46 +846,59 @@
       "display": "raw"
     },
     {
-      "id": 63,
+      "id": 65,
       "name": "op2_fbenv_l1.p0",
       "target": "op2.fbenv.l1.p0",
-      "min": 0,
-      "max": 99,
-      "default": 99,
+      "min": -32768,
+      "max": 32767,
+      "default": 0,
       "curve": "linear",
       "unit": "",
       "rate": "block",
       "modulatable": false,
-      "display": "raw"
-    },
-    {
-      "id": 64,
-      "name": "op2_fbenv_l2.p0",
-      "target": "op2.fbenv.l2.p0",
-      "min": 0,
-      "max": 99,
-      "default": 93,
-      "curve": "linear",
-      "unit": "",
-      "rate": "block",
-      "modulatable": false,
-      "display": "raw"
-    },
-    {
-      "id": 65,
-      "name": "op2_fbenv_l3.p0",
-      "target": "op2.fbenv.l3.p0",
-      "min": 0,
-      "max": 99,
-      "default": 87,
-      "curve": "linear",
-      "unit": "",
-      "rate": "block",
-      "modulatable": false,
-      "display": "raw"
+      "display": "pct_bip"
     },
     {
       "id": 66,
+      "name": "op2_fbenv_l2.p0",
+      "target": "op2.fbenv.l2.p0",
+      "min": -32768,
+      "max": 32767,
+      "default": 0,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "pct_bip"
+    },
+    {
+      "id": 67,
+      "name": "op2_fbenv_l3.p0",
+      "target": "op2.fbenv.l3.p0",
+      "min": -32768,
+      "max": 32767,
+      "default": 0,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "pct_bip"
+    },
+    {
+      "id": 68,
+      "name": "op2_fbenv_l4.p0",
+      "target": "op2.fbenv.l4.p0",
+      "min": -32768,
+      "max": 32767,
+      "default": 0,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "pct_bip"
+    },
+    {
+      "id": 69,
       "name": "op2_fblfo_rate.p0",
       "target": "op2.fblfo.rate.p0",
       "min": 0,
@@ -872,7 +911,7 @@
       "display": "hz"
     },
     {
-      "id": 67,
+      "id": 70,
       "name": "op2_fblfo_depth.p0",
       "target": "op2.fblfo.depth.p0",
       "min": -32767,
@@ -885,7 +924,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 68,
+      "id": 71,
       "name": "op2_fblfo_wave.p0",
       "target": "op2.fblfo.wave.p0",
       "min": 0,
@@ -898,7 +937,7 @@
       "display": "wave"
     },
     {
-      "id": 69,
+      "id": 72,
       "name": "op2_fblfo_mode.p0",
       "target": "op2.fblfo.mode.p0",
       "min": 0,
@@ -911,7 +950,7 @@
       "display": "onoff"
     },
     {
-      "id": 70,
+      "id": 73,
       "name": "op2_dlfo_rate.p0",
       "target": "op2.dlfo.rate.p0",
       "min": 0,
@@ -924,7 +963,7 @@
       "display": "hz"
     },
     {
-      "id": 71,
+      "id": 74,
       "name": "op2_dlfo_depth.p0",
       "target": "op2.dlfo.depth.p0",
       "min": -32768,
@@ -937,7 +976,7 @@
       "display": "semi_lfo"
     },
     {
-      "id": 72,
+      "id": 75,
       "name": "op2_dlfo_wave.p0",
       "target": "op2.dlfo.wave.p0",
       "min": 0,
@@ -950,7 +989,7 @@
       "display": "wave"
     },
     {
-      "id": 73,
+      "id": 76,
       "name": "op2_dlfo_mode.p0",
       "target": "op2.dlfo.mode.p0",
       "min": 0,
@@ -963,7 +1002,7 @@
       "display": "onoff"
     },
     {
-      "id": 74,
+      "id": 77,
       "name": "op2.velamp.depth.p0",
       "target": "op2.velamp.depth.p0",
       "min": -32768,
@@ -976,7 +1015,7 @@
       "display": "raw"
     },
     {
-      "id": 75,
+      "id": 78,
       "name": "op2.velfm.depth.p0",
       "target": "op2.velfm.depth.p0",
       "min": -32768,
@@ -989,7 +1028,7 @@
       "display": "raw"
     },
     {
-      "id": 76,
+      "id": 79,
       "name": "op2.velrate.depth.p0",
       "target": "op2.velrate.depth.p0",
       "min": -32768,
@@ -1002,7 +1041,7 @@
       "display": "raw"
     },
     {
-      "id": 77,
+      "id": 80,
       "name": "op2_level.p0",
       "target": "op2.tl.level.p0",
       "min": 0,
@@ -1015,7 +1054,7 @@
       "display": "raw"
     },
     {
-      "id": 78,
+      "id": 81,
       "name": "op2_feedback.p0",
       "target": "op2.fb.level.p0",
       "min": -32767,
@@ -1028,20 +1067,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 79,
-      "name": "op2_fb_depth.p0",
-      "target": "op2.fb.depth.p0",
-      "min": -32767,
-      "max": 32767,
-      "default": 0,
-      "curve": "linear",
-      "unit": "",
-      "rate": "block",
-      "modulatable": false,
-      "display": "pct_bip"
-    },
-    {
-      "id": 80,
+      "id": 82,
       "name": "op2_level_ks_lo.p0",
       "target": "op2.level_ks.lo.p0",
       "min": -100,
@@ -1054,7 +1080,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 81,
+      "id": 83,
       "name": "op2_level_ks_hi.p0",
       "target": "op2.level_ks.hi.p0",
       "min": -100,
@@ -1067,7 +1093,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 82,
+      "id": 84,
       "name": "op2_fb_ks_lo.p0",
       "target": "op2.fb_ks.lo.p0",
       "min": -100,
@@ -1080,7 +1106,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 83,
+      "id": 85,
       "name": "op2_fb_ks_hi.p0",
       "target": "op2.fb_ks.hi.p0",
       "min": -100,
@@ -1093,7 +1119,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 84,
+      "id": 86,
       "name": "op2_aenv_ks_lo.p0",
       "target": "op2.eg_ks.lo.p0",
       "min": -100,
@@ -1106,7 +1132,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 85,
+      "id": 87,
       "name": "op2_aenv_ks_hi.p0",
       "target": "op2.eg_ks.hi.p0",
       "min": -100,
@@ -1119,7 +1145,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 86,
+      "id": 88,
       "name": "op2_level_vs.p0",
       "target": "op2.level_vs.amount.p0",
       "min": -100,
@@ -1132,7 +1158,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 87,
+      "id": 89,
       "name": "op2_fb_vs.p0",
       "target": "op2.fb_vs.amount.p0",
       "min": -100,
@@ -1145,7 +1171,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 88,
+      "id": 90,
       "name": "op2_aenv_vs.p0",
       "target": "op2.eg_vs.amount.p0",
       "min": -100,
@@ -1158,7 +1184,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 89,
+      "id": 91,
       "name": "op2_mute.p0",
       "target": "op2.mute.mute.p0",
       "min": 0,
@@ -1171,7 +1197,7 @@
       "display": "onoff_inv"
     },
     {
-      "id": 90,
+      "id": 92,
       "name": "op3_ratio.p0",
       "target": "op3.ph.inc_ratio.p0",
       "min": 32768,
@@ -1184,7 +1210,7 @@
       "display": "ratio"
     },
     {
-      "id": 91,
+      "id": 93,
       "name": "op3_detune.p0",
       "target": "op3.ph.detune.p0",
       "min": -50,
@@ -1197,7 +1223,7 @@
       "display": "cent"
     },
     {
-      "id": 92,
+      "id": 94,
       "name": "op3_waveform.p0",
       "target": "op3.osc.waveform.p0",
       "min": 0,
@@ -1210,7 +1236,7 @@
       "display": "wave"
     },
     {
-      "id": 93,
+      "id": 95,
       "name": "op3.eg.r1.p0",
       "target": "op3.eg.r1.p0",
       "min": 0,
@@ -1223,7 +1249,7 @@
       "display": "raw"
     },
     {
-      "id": 94,
+      "id": 96,
       "name": "op3.eg.r2.p0",
       "target": "op3.eg.r2.p0",
       "min": 0,
@@ -1236,7 +1262,7 @@
       "display": "raw"
     },
     {
-      "id": 95,
+      "id": 97,
       "name": "op3.eg.r3.p0",
       "target": "op3.eg.r3.p0",
       "min": 0,
@@ -1249,7 +1275,7 @@
       "display": "raw"
     },
     {
-      "id": 96,
+      "id": 98,
       "name": "op3.eg.r4.p0",
       "target": "op3.eg.r4.p0",
       "min": 0,
@@ -1262,7 +1288,7 @@
       "display": "raw"
     },
     {
-      "id": 97,
+      "id": 99,
       "name": "op3.eg.l1.p0",
       "target": "op3.eg.l1.p0",
       "min": 0,
@@ -1275,7 +1301,7 @@
       "display": "raw"
     },
     {
-      "id": 98,
+      "id": 100,
       "name": "op3.eg.l2.p0",
       "target": "op3.eg.l2.p0",
       "min": 0,
@@ -1288,7 +1314,7 @@
       "display": "raw"
     },
     {
-      "id": 99,
+      "id": 101,
       "name": "op3.eg.l3.p0",
       "target": "op3.eg.l3.p0",
       "min": 0,
@@ -1301,7 +1327,7 @@
       "display": "raw"
     },
     {
-      "id": 100,
+      "id": 102,
       "name": "op3_trem_rate.p0",
       "target": "op3.lfo.rate.p0",
       "min": 0,
@@ -1314,7 +1340,7 @@
       "display": "hz"
     },
     {
-      "id": 101,
+      "id": 103,
       "name": "op3_trem_depth.p0",
       "target": "op3.lfo.depth.p0",
       "min": -99,
@@ -1327,7 +1353,7 @@
       "display": "raw"
     },
     {
-      "id": 102,
+      "id": 104,
       "name": "op3_trem_wave.p0",
       "target": "op3.lfo.wave.p0",
       "min": 0,
@@ -1340,7 +1366,7 @@
       "display": "wave"
     },
     {
-      "id": 103,
+      "id": 105,
       "name": "op3_trem_mode.p0",
       "target": "op3.lfo.mode.p0",
       "min": 0,
@@ -1353,7 +1379,20 @@
       "display": "onoff"
     },
     {
-      "id": 104,
+      "id": 106,
+      "name": "op3_fbenv_on.p0",
+      "target": "op3.fbenv.on.p0",
+      "min": 0,
+      "max": 1,
+      "default": 1,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "onoff"
+    },
+    {
+      "id": 107,
       "name": "op3_fbenv_r1.p0",
       "target": "op3.fbenv.r1.p0",
       "min": 0,
@@ -1366,7 +1405,7 @@
       "display": "raw"
     },
     {
-      "id": 105,
+      "id": 108,
       "name": "op3_fbenv_r2.p0",
       "target": "op3.fbenv.r2.p0",
       "min": 0,
@@ -1379,7 +1418,7 @@
       "display": "raw"
     },
     {
-      "id": 106,
+      "id": 109,
       "name": "op3_fbenv_r3.p0",
       "target": "op3.fbenv.r3.p0",
       "min": 0,
@@ -1392,7 +1431,7 @@
       "display": "raw"
     },
     {
-      "id": 107,
+      "id": 110,
       "name": "op3_fbenv_r4.p0",
       "target": "op3.fbenv.r4.p0",
       "min": 0,
@@ -1405,46 +1444,59 @@
       "display": "raw"
     },
     {
-      "id": 108,
+      "id": 111,
       "name": "op3_fbenv_l1.p0",
       "target": "op3.fbenv.l1.p0",
-      "min": 0,
-      "max": 99,
-      "default": 99,
+      "min": -32768,
+      "max": 32767,
+      "default": 0,
       "curve": "linear",
       "unit": "",
       "rate": "block",
       "modulatable": false,
-      "display": "raw"
+      "display": "pct_bip"
     },
     {
-      "id": 109,
+      "id": 112,
       "name": "op3_fbenv_l2.p0",
       "target": "op3.fbenv.l2.p0",
-      "min": 0,
-      "max": 99,
-      "default": 93,
+      "min": -32768,
+      "max": 32767,
+      "default": 0,
       "curve": "linear",
       "unit": "",
       "rate": "block",
       "modulatable": false,
-      "display": "raw"
+      "display": "pct_bip"
     },
     {
-      "id": 110,
+      "id": 113,
       "name": "op3_fbenv_l3.p0",
       "target": "op3.fbenv.l3.p0",
-      "min": 0,
-      "max": 99,
-      "default": 87,
+      "min": -32768,
+      "max": 32767,
+      "default": 0,
       "curve": "linear",
       "unit": "",
       "rate": "block",
       "modulatable": false,
-      "display": "raw"
+      "display": "pct_bip"
     },
     {
-      "id": 111,
+      "id": 114,
+      "name": "op3_fbenv_l4.p0",
+      "target": "op3.fbenv.l4.p0",
+      "min": -32768,
+      "max": 32767,
+      "default": 0,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "pct_bip"
+    },
+    {
+      "id": 115,
       "name": "op3_fblfo_rate.p0",
       "target": "op3.fblfo.rate.p0",
       "min": 0,
@@ -1457,7 +1509,7 @@
       "display": "hz"
     },
     {
-      "id": 112,
+      "id": 116,
       "name": "op3_fblfo_depth.p0",
       "target": "op3.fblfo.depth.p0",
       "min": -32767,
@@ -1470,7 +1522,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 113,
+      "id": 117,
       "name": "op3_fblfo_wave.p0",
       "target": "op3.fblfo.wave.p0",
       "min": 0,
@@ -1483,7 +1535,7 @@
       "display": "wave"
     },
     {
-      "id": 114,
+      "id": 118,
       "name": "op3_fblfo_mode.p0",
       "target": "op3.fblfo.mode.p0",
       "min": 0,
@@ -1496,7 +1548,7 @@
       "display": "onoff"
     },
     {
-      "id": 115,
+      "id": 119,
       "name": "op3_dlfo_rate.p0",
       "target": "op3.dlfo.rate.p0",
       "min": 0,
@@ -1509,7 +1561,7 @@
       "display": "hz"
     },
     {
-      "id": 116,
+      "id": 120,
       "name": "op3_dlfo_depth.p0",
       "target": "op3.dlfo.depth.p0",
       "min": -32768,
@@ -1522,7 +1574,7 @@
       "display": "semi_lfo"
     },
     {
-      "id": 117,
+      "id": 121,
       "name": "op3_dlfo_wave.p0",
       "target": "op3.dlfo.wave.p0",
       "min": 0,
@@ -1535,7 +1587,7 @@
       "display": "wave"
     },
     {
-      "id": 118,
+      "id": 122,
       "name": "op3_dlfo_mode.p0",
       "target": "op3.dlfo.mode.p0",
       "min": 0,
@@ -1548,7 +1600,7 @@
       "display": "onoff"
     },
     {
-      "id": 119,
+      "id": 123,
       "name": "op3.velamp.depth.p0",
       "target": "op3.velamp.depth.p0",
       "min": -32768,
@@ -1561,7 +1613,7 @@
       "display": "raw"
     },
     {
-      "id": 120,
+      "id": 124,
       "name": "op3.velfm.depth.p0",
       "target": "op3.velfm.depth.p0",
       "min": -32768,
@@ -1574,7 +1626,7 @@
       "display": "raw"
     },
     {
-      "id": 121,
+      "id": 125,
       "name": "op3.velrate.depth.p0",
       "target": "op3.velrate.depth.p0",
       "min": -32768,
@@ -1587,7 +1639,7 @@
       "display": "raw"
     },
     {
-      "id": 122,
+      "id": 126,
       "name": "op3_level.p0",
       "target": "op3.tl.level.p0",
       "min": 0,
@@ -1600,7 +1652,7 @@
       "display": "raw"
     },
     {
-      "id": 123,
+      "id": 127,
       "name": "op3_feedback.p0",
       "target": "op3.fb.level.p0",
       "min": -32767,
@@ -1613,20 +1665,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 124,
-      "name": "op3_fb_depth.p0",
-      "target": "op3.fb.depth.p0",
-      "min": -32767,
-      "max": 32767,
-      "default": 0,
-      "curve": "linear",
-      "unit": "",
-      "rate": "block",
-      "modulatable": false,
-      "display": "pct_bip"
-    },
-    {
-      "id": 125,
+      "id": 128,
       "name": "op3_level_ks_lo.p0",
       "target": "op3.level_ks.lo.p0",
       "min": -100,
@@ -1639,7 +1678,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 126,
+      "id": 129,
       "name": "op3_level_ks_hi.p0",
       "target": "op3.level_ks.hi.p0",
       "min": -100,
@@ -1652,7 +1691,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 127,
+      "id": 130,
       "name": "op3_fb_ks_lo.p0",
       "target": "op3.fb_ks.lo.p0",
       "min": -100,
@@ -1665,7 +1704,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 128,
+      "id": 131,
       "name": "op3_fb_ks_hi.p0",
       "target": "op3.fb_ks.hi.p0",
       "min": -100,
@@ -1678,7 +1717,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 129,
+      "id": 132,
       "name": "op3_aenv_ks_lo.p0",
       "target": "op3.eg_ks.lo.p0",
       "min": -100,
@@ -1691,7 +1730,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 130,
+      "id": 133,
       "name": "op3_aenv_ks_hi.p0",
       "target": "op3.eg_ks.hi.p0",
       "min": -100,
@@ -1704,7 +1743,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 131,
+      "id": 134,
       "name": "op3_level_vs.p0",
       "target": "op3.level_vs.amount.p0",
       "min": -100,
@@ -1717,7 +1756,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 132,
+      "id": 135,
       "name": "op3_fb_vs.p0",
       "target": "op3.fb_vs.amount.p0",
       "min": -100,
@@ -1730,7 +1769,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 133,
+      "id": 136,
       "name": "op3_aenv_vs.p0",
       "target": "op3.eg_vs.amount.p0",
       "min": -100,
@@ -1743,7 +1782,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 134,
+      "id": 137,
       "name": "op3_mute.p0",
       "target": "op3.mute.mute.p0",
       "min": 0,
@@ -1756,7 +1795,7 @@
       "display": "onoff_inv"
     },
     {
-      "id": 135,
+      "id": 138,
       "name": "op4_ratio.p0",
       "target": "op4.ph.inc_ratio.p0",
       "min": 32768,
@@ -1769,7 +1808,7 @@
       "display": "ratio"
     },
     {
-      "id": 136,
+      "id": 139,
       "name": "op4_detune.p0",
       "target": "op4.ph.detune.p0",
       "min": -50,
@@ -1782,7 +1821,7 @@
       "display": "cent"
     },
     {
-      "id": 137,
+      "id": 140,
       "name": "op4_waveform.p0",
       "target": "op4.osc.waveform.p0",
       "min": 0,
@@ -1795,7 +1834,7 @@
       "display": "wave"
     },
     {
-      "id": 138,
+      "id": 141,
       "name": "op4.eg.r1.p0",
       "target": "op4.eg.r1.p0",
       "min": 0,
@@ -1808,7 +1847,7 @@
       "display": "raw"
     },
     {
-      "id": 139,
+      "id": 142,
       "name": "op4.eg.r2.p0",
       "target": "op4.eg.r2.p0",
       "min": 0,
@@ -1821,7 +1860,7 @@
       "display": "raw"
     },
     {
-      "id": 140,
+      "id": 143,
       "name": "op4.eg.r3.p0",
       "target": "op4.eg.r3.p0",
       "min": 0,
@@ -1834,7 +1873,7 @@
       "display": "raw"
     },
     {
-      "id": 141,
+      "id": 144,
       "name": "op4.eg.r4.p0",
       "target": "op4.eg.r4.p0",
       "min": 0,
@@ -1847,7 +1886,7 @@
       "display": "raw"
     },
     {
-      "id": 142,
+      "id": 145,
       "name": "op4.eg.l1.p0",
       "target": "op4.eg.l1.p0",
       "min": 0,
@@ -1860,7 +1899,7 @@
       "display": "raw"
     },
     {
-      "id": 143,
+      "id": 146,
       "name": "op4.eg.l2.p0",
       "target": "op4.eg.l2.p0",
       "min": 0,
@@ -1873,7 +1912,7 @@
       "display": "raw"
     },
     {
-      "id": 144,
+      "id": 147,
       "name": "op4.eg.l3.p0",
       "target": "op4.eg.l3.p0",
       "min": 0,
@@ -1886,7 +1925,7 @@
       "display": "raw"
     },
     {
-      "id": 145,
+      "id": 148,
       "name": "op4_trem_rate.p0",
       "target": "op4.lfo.rate.p0",
       "min": 0,
@@ -1899,7 +1938,7 @@
       "display": "hz"
     },
     {
-      "id": 146,
+      "id": 149,
       "name": "op4_trem_depth.p0",
       "target": "op4.lfo.depth.p0",
       "min": -99,
@@ -1912,7 +1951,7 @@
       "display": "raw"
     },
     {
-      "id": 147,
+      "id": 150,
       "name": "op4_trem_wave.p0",
       "target": "op4.lfo.wave.p0",
       "min": 0,
@@ -1925,7 +1964,7 @@
       "display": "wave"
     },
     {
-      "id": 148,
+      "id": 151,
       "name": "op4_trem_mode.p0",
       "target": "op4.lfo.mode.p0",
       "min": 0,
@@ -1938,7 +1977,20 @@
       "display": "onoff"
     },
     {
-      "id": 149,
+      "id": 152,
+      "name": "op4_fbenv_on.p0",
+      "target": "op4.fbenv.on.p0",
+      "min": 0,
+      "max": 1,
+      "default": 1,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "onoff"
+    },
+    {
+      "id": 153,
       "name": "op4_fbenv_r1.p0",
       "target": "op4.fbenv.r1.p0",
       "min": 0,
@@ -1951,7 +2003,7 @@
       "display": "raw"
     },
     {
-      "id": 150,
+      "id": 154,
       "name": "op4_fbenv_r2.p0",
       "target": "op4.fbenv.r2.p0",
       "min": 0,
@@ -1964,7 +2016,7 @@
       "display": "raw"
     },
     {
-      "id": 151,
+      "id": 155,
       "name": "op4_fbenv_r3.p0",
       "target": "op4.fbenv.r3.p0",
       "min": 0,
@@ -1977,7 +2029,7 @@
       "display": "raw"
     },
     {
-      "id": 152,
+      "id": 156,
       "name": "op4_fbenv_r4.p0",
       "target": "op4.fbenv.r4.p0",
       "min": 0,
@@ -1990,46 +2042,59 @@
       "display": "raw"
     },
     {
-      "id": 153,
+      "id": 157,
       "name": "op4_fbenv_l1.p0",
       "target": "op4.fbenv.l1.p0",
-      "min": 0,
-      "max": 99,
-      "default": 99,
+      "min": -32768,
+      "max": 32767,
+      "default": 0,
       "curve": "linear",
       "unit": "",
       "rate": "block",
       "modulatable": false,
-      "display": "raw"
+      "display": "pct_bip"
     },
     {
-      "id": 154,
+      "id": 158,
       "name": "op4_fbenv_l2.p0",
       "target": "op4.fbenv.l2.p0",
-      "min": 0,
-      "max": 99,
-      "default": 93,
+      "min": -32768,
+      "max": 32767,
+      "default": 0,
       "curve": "linear",
       "unit": "",
       "rate": "block",
       "modulatable": false,
-      "display": "raw"
+      "display": "pct_bip"
     },
     {
-      "id": 155,
+      "id": 159,
       "name": "op4_fbenv_l3.p0",
       "target": "op4.fbenv.l3.p0",
-      "min": 0,
-      "max": 99,
-      "default": 87,
+      "min": -32768,
+      "max": 32767,
+      "default": 0,
       "curve": "linear",
       "unit": "",
       "rate": "block",
       "modulatable": false,
-      "display": "raw"
+      "display": "pct_bip"
     },
     {
-      "id": 156,
+      "id": 160,
+      "name": "op4_fbenv_l4.p0",
+      "target": "op4.fbenv.l4.p0",
+      "min": -32768,
+      "max": 32767,
+      "default": 0,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "pct_bip"
+    },
+    {
+      "id": 161,
       "name": "op4_fblfo_rate.p0",
       "target": "op4.fblfo.rate.p0",
       "min": 0,
@@ -2042,7 +2107,7 @@
       "display": "hz"
     },
     {
-      "id": 157,
+      "id": 162,
       "name": "op4_fblfo_depth.p0",
       "target": "op4.fblfo.depth.p0",
       "min": -32767,
@@ -2055,7 +2120,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 158,
+      "id": 163,
       "name": "op4_fblfo_wave.p0",
       "target": "op4.fblfo.wave.p0",
       "min": 0,
@@ -2068,7 +2133,7 @@
       "display": "wave"
     },
     {
-      "id": 159,
+      "id": 164,
       "name": "op4_fblfo_mode.p0",
       "target": "op4.fblfo.mode.p0",
       "min": 0,
@@ -2081,7 +2146,7 @@
       "display": "onoff"
     },
     {
-      "id": 160,
+      "id": 165,
       "name": "op4_dlfo_rate.p0",
       "target": "op4.dlfo.rate.p0",
       "min": 0,
@@ -2094,7 +2159,7 @@
       "display": "hz"
     },
     {
-      "id": 161,
+      "id": 166,
       "name": "op4_dlfo_depth.p0",
       "target": "op4.dlfo.depth.p0",
       "min": -32768,
@@ -2107,7 +2172,7 @@
       "display": "semi_lfo"
     },
     {
-      "id": 162,
+      "id": 167,
       "name": "op4_dlfo_wave.p0",
       "target": "op4.dlfo.wave.p0",
       "min": 0,
@@ -2120,7 +2185,7 @@
       "display": "wave"
     },
     {
-      "id": 163,
+      "id": 168,
       "name": "op4_dlfo_mode.p0",
       "target": "op4.dlfo.mode.p0",
       "min": 0,
@@ -2133,7 +2198,7 @@
       "display": "onoff"
     },
     {
-      "id": 164,
+      "id": 169,
       "name": "op4.velamp.depth.p0",
       "target": "op4.velamp.depth.p0",
       "min": -32768,
@@ -2146,7 +2211,7 @@
       "display": "raw"
     },
     {
-      "id": 165,
+      "id": 170,
       "name": "op4.velfm.depth.p0",
       "target": "op4.velfm.depth.p0",
       "min": -32768,
@@ -2159,7 +2224,7 @@
       "display": "raw"
     },
     {
-      "id": 166,
+      "id": 171,
       "name": "op4.velrate.depth.p0",
       "target": "op4.velrate.depth.p0",
       "min": -32768,
@@ -2172,7 +2237,7 @@
       "display": "raw"
     },
     {
-      "id": 167,
+      "id": 172,
       "name": "op4_level.p0",
       "target": "op4.tl.level.p0",
       "min": 0,
@@ -2185,7 +2250,7 @@
       "display": "raw"
     },
     {
-      "id": 168,
+      "id": 173,
       "name": "op4_feedback.p0",
       "target": "op4.fb.level.p0",
       "min": -32767,
@@ -2198,20 +2263,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 169,
-      "name": "op4_fb_depth.p0",
-      "target": "op4.fb.depth.p0",
-      "min": -32767,
-      "max": 32767,
-      "default": 0,
-      "curve": "linear",
-      "unit": "",
-      "rate": "block",
-      "modulatable": false,
-      "display": "pct_bip"
-    },
-    {
-      "id": 170,
+      "id": 174,
       "name": "op4_level_ks_lo.p0",
       "target": "op4.level_ks.lo.p0",
       "min": -100,
@@ -2224,7 +2276,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 171,
+      "id": 175,
       "name": "op4_level_ks_hi.p0",
       "target": "op4.level_ks.hi.p0",
       "min": -100,
@@ -2237,7 +2289,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 172,
+      "id": 176,
       "name": "op4_fb_ks_lo.p0",
       "target": "op4.fb_ks.lo.p0",
       "min": -100,
@@ -2250,7 +2302,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 173,
+      "id": 177,
       "name": "op4_fb_ks_hi.p0",
       "target": "op4.fb_ks.hi.p0",
       "min": -100,
@@ -2263,7 +2315,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 174,
+      "id": 178,
       "name": "op4_aenv_ks_lo.p0",
       "target": "op4.eg_ks.lo.p0",
       "min": -100,
@@ -2276,7 +2328,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 175,
+      "id": 179,
       "name": "op4_aenv_ks_hi.p0",
       "target": "op4.eg_ks.hi.p0",
       "min": -100,
@@ -2289,7 +2341,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 176,
+      "id": 180,
       "name": "op4_level_vs.p0",
       "target": "op4.level_vs.amount.p0",
       "min": -100,
@@ -2302,7 +2354,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 177,
+      "id": 181,
       "name": "op4_fb_vs.p0",
       "target": "op4.fb_vs.amount.p0",
       "min": -100,
@@ -2315,7 +2367,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 178,
+      "id": 182,
       "name": "op4_aenv_vs.p0",
       "target": "op4.eg_vs.amount.p0",
       "min": -100,
@@ -2328,7 +2380,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 179,
+      "id": 183,
       "name": "op4_mute.p0",
       "target": "op4.mute.mute.p0",
       "min": 0,
@@ -2341,7 +2393,7 @@
       "display": "onoff_inv"
     },
     {
-      "id": 180,
+      "id": 184,
       "name": "algorithm.p0",
       "target": "algo.algorithm.p0",
       "min": 0,
@@ -2354,7 +2406,7 @@
       "display": "raw"
     },
     {
-      "id": 181,
+      "id": 185,
       "name": "penv_on.p0",
       "target": "penv.on.p0",
       "min": 0,
@@ -2367,7 +2419,7 @@
       "display": "onoff"
     },
     {
-      "id": 182,
+      "id": 186,
       "name": "penv_r1.p0",
       "target": "penv.r1.p0",
       "min": 0,
@@ -2380,7 +2432,7 @@
       "display": "raw"
     },
     {
-      "id": 183,
+      "id": 187,
       "name": "penv_r2.p0",
       "target": "penv.r2.p0",
       "min": 0,
@@ -2393,7 +2445,7 @@
       "display": "raw"
     },
     {
-      "id": 184,
+      "id": 188,
       "name": "penv_r3.p0",
       "target": "penv.r3.p0",
       "min": 0,
@@ -2406,7 +2458,7 @@
       "display": "raw"
     },
     {
-      "id": 185,
+      "id": 189,
       "name": "penv_r4.p0",
       "target": "penv.r4.p0",
       "min": 0,
@@ -2419,7 +2471,7 @@
       "display": "raw"
     },
     {
-      "id": 186,
+      "id": 190,
       "name": "penv_l1.p0",
       "target": "penv.l1.p0",
       "min": -32768,
@@ -2432,7 +2484,7 @@
       "display": "semi_fine"
     },
     {
-      "id": 187,
+      "id": 191,
       "name": "penv_l2.p0",
       "target": "penv.l2.p0",
       "min": -32768,
@@ -2445,7 +2497,7 @@
       "display": "semi_fine"
     },
     {
-      "id": 188,
+      "id": 192,
       "name": "penv_l3.p0",
       "target": "penv.l3.p0",
       "min": -32768,
@@ -2458,7 +2510,7 @@
       "display": "semi_fine"
     },
     {
-      "id": 189,
+      "id": 193,
       "name": "penv_l4.p0",
       "target": "penv.l4.p0",
       "min": -32768,
@@ -2471,7 +2523,7 @@
       "display": "semi_fine"
     },
     {
-      "id": 190,
+      "id": 194,
       "name": "penv_ks_lo.p0",
       "target": "penv_ks.lo.p0",
       "min": -100,
@@ -2484,7 +2536,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 191,
+      "id": 195,
       "name": "penv_ks_hi.p0",
       "target": "penv_ks.hi.p0",
       "min": -100,
@@ -2497,7 +2549,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 192,
+      "id": 196,
       "name": "penv_vs.p0",
       "target": "penv_vs.amount.p0",
       "min": -100,
@@ -2510,7 +2562,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 193,
+      "id": 197,
       "name": "pitch_rate.p0",
       "target": "plfo.rate.p0",
       "min": 0,
@@ -2523,7 +2575,7 @@
       "display": "hz"
     },
     {
-      "id": 194,
+      "id": 198,
       "name": "pitch_depth.p0",
       "target": "plfo.depth.p0",
       "min": -32768,
@@ -2536,7 +2588,7 @@
       "display": "semi_lfo"
     },
     {
-      "id": 195,
+      "id": 199,
       "name": "pitch_wave.p0",
       "target": "plfo.wave.p0",
       "min": 0,
@@ -2549,7 +2601,7 @@
       "display": "wave"
     },
     {
-      "id": 196,
+      "id": 200,
       "name": "pitch_mode.p0",
       "target": "plfo.mode.p0",
       "min": 0,
@@ -2562,7 +2614,7 @@
       "display": "onoff"
     },
     {
-      "id": 197,
+      "id": 201,
       "name": "f1_cutoff_ks_lo.p0",
       "target": "f1_ks.lo.p0",
       "min": -100,
@@ -2575,7 +2627,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 198,
+      "id": 202,
       "name": "f1_cutoff_ks_hi.p0",
       "target": "f1_ks.hi.p0",
       "min": -100,
@@ -2588,7 +2640,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 199,
+      "id": 203,
       "name": "fenv_ks_lo.p0",
       "target": "fenv_ks.lo.p0",
       "min": -100,
@@ -2601,7 +2653,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 200,
+      "id": 204,
       "name": "fenv_ks_hi.p0",
       "target": "fenv_ks.hi.p0",
       "min": -100,
@@ -2614,7 +2666,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 201,
+      "id": 205,
       "name": "f1_cutoff_vs.p0",
       "target": "f1_vs.amount.p0",
       "min": -100,
@@ -2627,7 +2679,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 202,
+      "id": 206,
       "name": "fenv_vs.p0",
       "target": "fenv_vs.amount.p0",
       "min": -100,
@@ -2640,7 +2692,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 203,
+      "id": 207,
       "name": "cutoff.p0",
       "target": "lp.f.p0",
       "min": 0,
@@ -2653,7 +2705,7 @@
       "display": "off_pct"
     },
     {
-      "id": 204,
+      "id": 208,
       "name": "res.p0",
       "target": "lp.res.p0",
       "min": 0,
@@ -2666,7 +2718,7 @@
       "display": "pct_exp"
     },
     {
-      "id": 205,
+      "id": 209,
       "name": "lp.comp.p0",
       "target": "lp.comp.p0",
       "min": -32768,
@@ -2679,7 +2731,7 @@
       "display": "raw"
     },
     {
-      "id": 206,
+      "id": 210,
       "name": "filter_type.p0",
       "target": "lp.mode.p0",
       "min": 0,
@@ -2692,7 +2744,7 @@
       "display": "filter"
     },
     {
-      "id": 207,
+      "id": 211,
       "name": "filter_on.p0",
       "target": "lp.on.p0",
       "min": 0,
@@ -2705,7 +2757,7 @@
       "display": "onoff"
     },
     {
-      "id": 208,
+      "id": 212,
       "name": "fenv_depth.p0",
       "target": "lp.fenv_depth.p0",
       "min": 0,
@@ -2718,7 +2770,7 @@
       "display": "pct"
     },
     {
-      "id": 209,
+      "id": 213,
       "name": "fenv_r1.p0",
       "target": "fenv.r1.p0",
       "min": 0,
@@ -2731,7 +2783,7 @@
       "display": "raw"
     },
     {
-      "id": 210,
+      "id": 214,
       "name": "fenv_r2.p0",
       "target": "fenv.r2.p0",
       "min": 0,
@@ -2744,7 +2796,7 @@
       "display": "raw"
     },
     {
-      "id": 211,
+      "id": 215,
       "name": "fenv_r3.p0",
       "target": "fenv.r3.p0",
       "min": 0,
@@ -2757,7 +2809,7 @@
       "display": "raw"
     },
     {
-      "id": 212,
+      "id": 216,
       "name": "fenv_r4.p0",
       "target": "fenv.r4.p0",
       "min": 0,
@@ -2770,7 +2822,7 @@
       "display": "raw"
     },
     {
-      "id": 213,
+      "id": 217,
       "name": "fenv_l1.p0",
       "target": "fenv.l1.p0",
       "min": 0,
@@ -2783,7 +2835,7 @@
       "display": "raw"
     },
     {
-      "id": 214,
+      "id": 218,
       "name": "fenv_l2.p0",
       "target": "fenv.l2.p0",
       "min": 0,
@@ -2796,7 +2848,7 @@
       "display": "raw"
     },
     {
-      "id": 215,
+      "id": 219,
       "name": "fenv_l3.p0",
       "target": "fenv.l3.p0",
       "min": 0,
@@ -2809,7 +2861,7 @@
       "display": "raw"
     },
     {
-      "id": 216,
+      "id": 220,
       "name": "mode.p0",
       "target": "vm_mode",
       "min": 0,
@@ -2822,7 +2874,7 @@
       "display": "mode"
     },
     {
-      "id": 217,
+      "id": 221,
       "name": "unison_count.p0",
       "target": "vm_unison_count",
       "min": 1,
@@ -2835,7 +2887,7 @@
       "display": "raw"
     },
     {
-      "id": 218,
+      "id": 222,
       "name": "unison_detune.p0",
       "target": "vm_unison_detune",
       "min": 0,
@@ -2848,7 +2900,7 @@
       "display": "raw"
     },
     {
-      "id": 219,
+      "id": 223,
       "name": "detune.p0",
       "target": "vm_detune",
       "min": -50,
@@ -2861,7 +2913,7 @@
       "display": "cent"
     },
     {
-      "id": 220,
+      "id": 224,
       "name": "transpose.p0",
       "target": "vm_transpose",
       "min": -24,
@@ -2874,7 +2926,7 @@
       "display": "semitones"
     },
     {
-      "id": 221,
+      "id": 225,
       "name": "legato.p0",
       "target": "vm_legato",
       "min": 0,
@@ -2887,7 +2939,7 @@
       "display": "onoff"
     },
     {
-      "id": 222,
+      "id": 226,
       "name": "portamento.p0",
       "target": "vm_portamento",
       "min": 0,
@@ -2900,7 +2952,7 @@
       "display": "porta"
     },
     {
-      "id": 223,
+      "id": 227,
       "name": "note_priority.p0",
       "target": "vm_note_priority",
       "min": 0,
@@ -2913,7 +2965,7 @@
       "display": "priority"
     },
     {
-      "id": 224,
+      "id": 228,
       "name": "op1_ratio.p1",
       "target": "op1.ph.inc_ratio.p1",
       "min": 32768,
@@ -2926,7 +2978,7 @@
       "display": "ratio"
     },
     {
-      "id": 225,
+      "id": 229,
       "name": "op1_detune.p1",
       "target": "op1.ph.detune.p1",
       "min": -50,
@@ -2939,7 +2991,7 @@
       "display": "cent"
     },
     {
-      "id": 226,
+      "id": 230,
       "name": "op1_waveform.p1",
       "target": "op1.osc.waveform.p1",
       "min": 0,
@@ -2952,7 +3004,7 @@
       "display": "wave"
     },
     {
-      "id": 227,
+      "id": 231,
       "name": "attack.p1",
       "target": "op1.eg.r1.p1",
       "min": 0,
@@ -2965,7 +3017,7 @@
       "display": "raw"
     },
     {
-      "id": 228,
+      "id": 232,
       "name": "op1.eg.r2.p1",
       "target": "op1.eg.r2.p1",
       "min": 0,
@@ -2978,7 +3030,7 @@
       "display": "raw"
     },
     {
-      "id": 229,
+      "id": 233,
       "name": "op1.eg.r3.p1",
       "target": "op1.eg.r3.p1",
       "min": 0,
@@ -2991,7 +3043,7 @@
       "display": "raw"
     },
     {
-      "id": 230,
+      "id": 234,
       "name": "release.p1",
       "target": "op1.eg.r4.p1",
       "min": 0,
@@ -3004,7 +3056,7 @@
       "display": "raw"
     },
     {
-      "id": 231,
+      "id": 235,
       "name": "op1.eg.l1.p1",
       "target": "op1.eg.l1.p1",
       "min": 0,
@@ -3017,7 +3069,7 @@
       "display": "raw"
     },
     {
-      "id": 232,
+      "id": 236,
       "name": "op1.eg.l2.p1",
       "target": "op1.eg.l2.p1",
       "min": 0,
@@ -3030,7 +3082,7 @@
       "display": "raw"
     },
     {
-      "id": 233,
+      "id": 237,
       "name": "op1.eg.l3.p1",
       "target": "op1.eg.l3.p1",
       "min": 0,
@@ -3043,7 +3095,7 @@
       "display": "raw"
     },
     {
-      "id": 234,
+      "id": 238,
       "name": "op1_trem_rate.p1",
       "target": "op1.lfo.rate.p1",
       "min": 0,
@@ -3056,7 +3108,7 @@
       "display": "hz"
     },
     {
-      "id": 235,
+      "id": 239,
       "name": "op1_trem_depth.p1",
       "target": "op1.lfo.depth.p1",
       "min": -99,
@@ -3069,7 +3121,7 @@
       "display": "raw"
     },
     {
-      "id": 236,
+      "id": 240,
       "name": "op1_trem_wave.p1",
       "target": "op1.lfo.wave.p1",
       "min": 0,
@@ -3082,7 +3134,7 @@
       "display": "wave"
     },
     {
-      "id": 237,
+      "id": 241,
       "name": "op1_trem_mode.p1",
       "target": "op1.lfo.mode.p1",
       "min": 0,
@@ -3095,7 +3147,20 @@
       "display": "onoff"
     },
     {
-      "id": 238,
+      "id": 242,
+      "name": "op1_fbenv_on.p1",
+      "target": "op1.fbenv.on.p1",
+      "min": 0,
+      "max": 1,
+      "default": 1,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "onoff"
+    },
+    {
+      "id": 243,
       "name": "op1_fbenv_r1.p1",
       "target": "op1.fbenv.r1.p1",
       "min": 0,
@@ -3108,7 +3173,7 @@
       "display": "raw"
     },
     {
-      "id": 239,
+      "id": 244,
       "name": "op1_fbenv_r2.p1",
       "target": "op1.fbenv.r2.p1",
       "min": 0,
@@ -3121,7 +3186,7 @@
       "display": "raw"
     },
     {
-      "id": 240,
+      "id": 245,
       "name": "op1_fbenv_r3.p1",
       "target": "op1.fbenv.r3.p1",
       "min": 0,
@@ -3134,7 +3199,7 @@
       "display": "raw"
     },
     {
-      "id": 241,
+      "id": 246,
       "name": "op1_fbenv_r4.p1",
       "target": "op1.fbenv.r4.p1",
       "min": 0,
@@ -3147,46 +3212,59 @@
       "display": "raw"
     },
     {
-      "id": 242,
+      "id": 247,
       "name": "op1_fbenv_l1.p1",
       "target": "op1.fbenv.l1.p1",
-      "min": 0,
-      "max": 99,
-      "default": 99,
+      "min": -32768,
+      "max": 32767,
+      "default": 0,
       "curve": "linear",
       "unit": "",
       "rate": "block",
       "modulatable": false,
-      "display": "raw"
+      "display": "pct_bip"
     },
     {
-      "id": 243,
+      "id": 248,
       "name": "op1_fbenv_l2.p1",
       "target": "op1.fbenv.l2.p1",
-      "min": 0,
-      "max": 99,
-      "default": 93,
+      "min": -32768,
+      "max": 32767,
+      "default": 0,
       "curve": "linear",
       "unit": "",
       "rate": "block",
       "modulatable": false,
-      "display": "raw"
+      "display": "pct_bip"
     },
     {
-      "id": 244,
+      "id": 249,
       "name": "op1_fbenv_l3.p1",
       "target": "op1.fbenv.l3.p1",
-      "min": 0,
-      "max": 99,
-      "default": 87,
+      "min": -32768,
+      "max": 32767,
+      "default": 0,
       "curve": "linear",
       "unit": "",
       "rate": "block",
       "modulatable": false,
-      "display": "raw"
+      "display": "pct_bip"
     },
     {
-      "id": 245,
+      "id": 250,
+      "name": "op1_fbenv_l4.p1",
+      "target": "op1.fbenv.l4.p1",
+      "min": -32768,
+      "max": 32767,
+      "default": 0,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "pct_bip"
+    },
+    {
+      "id": 251,
       "name": "op1_fblfo_rate.p1",
       "target": "op1.fblfo.rate.p1",
       "min": 0,
@@ -3199,7 +3277,7 @@
       "display": "hz"
     },
     {
-      "id": 246,
+      "id": 252,
       "name": "op1_fblfo_depth.p1",
       "target": "op1.fblfo.depth.p1",
       "min": -32767,
@@ -3212,7 +3290,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 247,
+      "id": 253,
       "name": "op1_fblfo_wave.p1",
       "target": "op1.fblfo.wave.p1",
       "min": 0,
@@ -3225,7 +3303,7 @@
       "display": "wave"
     },
     {
-      "id": 248,
+      "id": 254,
       "name": "op1_fblfo_mode.p1",
       "target": "op1.fblfo.mode.p1",
       "min": 0,
@@ -3238,7 +3316,7 @@
       "display": "onoff"
     },
     {
-      "id": 249,
+      "id": 255,
       "name": "op1_dlfo_rate.p1",
       "target": "op1.dlfo.rate.p1",
       "min": 0,
@@ -3251,7 +3329,7 @@
       "display": "hz"
     },
     {
-      "id": 250,
+      "id": 256,
       "name": "op1_dlfo_depth.p1",
       "target": "op1.dlfo.depth.p1",
       "min": -32768,
@@ -3264,7 +3342,7 @@
       "display": "semi_lfo"
     },
     {
-      "id": 251,
+      "id": 257,
       "name": "op1_dlfo_wave.p1",
       "target": "op1.dlfo.wave.p1",
       "min": 0,
@@ -3277,7 +3355,7 @@
       "display": "wave"
     },
     {
-      "id": 252,
+      "id": 258,
       "name": "op1_dlfo_mode.p1",
       "target": "op1.dlfo.mode.p1",
       "min": 0,
@@ -3290,7 +3368,7 @@
       "display": "onoff"
     },
     {
-      "id": 253,
+      "id": 259,
       "name": "op1.velamp.depth.p1",
       "target": "op1.velamp.depth.p1",
       "min": -32768,
@@ -3303,7 +3381,7 @@
       "display": "raw"
     },
     {
-      "id": 254,
+      "id": 260,
       "name": "op1.velfm.depth.p1",
       "target": "op1.velfm.depth.p1",
       "min": -32768,
@@ -3316,7 +3394,7 @@
       "display": "raw"
     },
     {
-      "id": 255,
+      "id": 261,
       "name": "op1.velrate.depth.p1",
       "target": "op1.velrate.depth.p1",
       "min": -32768,
@@ -3329,7 +3407,7 @@
       "display": "raw"
     },
     {
-      "id": 256,
+      "id": 262,
       "name": "op1_level.p1",
       "target": "op1.tl.level.p1",
       "min": 0,
@@ -3342,7 +3420,7 @@
       "display": "raw"
     },
     {
-      "id": 257,
+      "id": 263,
       "name": "op1_feedback.p1",
       "target": "op1.fb.level.p1",
       "min": -32767,
@@ -3355,20 +3433,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 258,
-      "name": "op1_fb_depth.p1",
-      "target": "op1.fb.depth.p1",
-      "min": -32767,
-      "max": 32767,
-      "default": 0,
-      "curve": "linear",
-      "unit": "",
-      "rate": "block",
-      "modulatable": false,
-      "display": "pct_bip"
-    },
-    {
-      "id": 259,
+      "id": 264,
       "name": "op1_level_ks_lo.p1",
       "target": "op1.level_ks.lo.p1",
       "min": -100,
@@ -3381,7 +3446,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 260,
+      "id": 265,
       "name": "op1_level_ks_hi.p1",
       "target": "op1.level_ks.hi.p1",
       "min": -100,
@@ -3394,7 +3459,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 261,
+      "id": 266,
       "name": "op1_fb_ks_lo.p1",
       "target": "op1.fb_ks.lo.p1",
       "min": -100,
@@ -3407,7 +3472,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 262,
+      "id": 267,
       "name": "op1_fb_ks_hi.p1",
       "target": "op1.fb_ks.hi.p1",
       "min": -100,
@@ -3420,7 +3485,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 263,
+      "id": 268,
       "name": "op1_aenv_ks_lo.p1",
       "target": "op1.eg_ks.lo.p1",
       "min": -100,
@@ -3433,7 +3498,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 264,
+      "id": 269,
       "name": "op1_aenv_ks_hi.p1",
       "target": "op1.eg_ks.hi.p1",
       "min": -100,
@@ -3446,7 +3511,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 265,
+      "id": 270,
       "name": "op1_level_vs.p1",
       "target": "op1.level_vs.amount.p1",
       "min": -100,
@@ -3459,7 +3524,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 266,
+      "id": 271,
       "name": "op1_fb_vs.p1",
       "target": "op1.fb_vs.amount.p1",
       "min": -100,
@@ -3472,7 +3537,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 267,
+      "id": 272,
       "name": "op1_aenv_vs.p1",
       "target": "op1.eg_vs.amount.p1",
       "min": -100,
@@ -3485,7 +3550,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 268,
+      "id": 273,
       "name": "op1_mute.p1",
       "target": "op1.mute.mute.p1",
       "min": 0,
@@ -3498,7 +3563,7 @@
       "display": "onoff_inv"
     },
     {
-      "id": 269,
+      "id": 274,
       "name": "op2_ratio.p1",
       "target": "op2.ph.inc_ratio.p1",
       "min": 32768,
@@ -3511,7 +3576,7 @@
       "display": "ratio"
     },
     {
-      "id": 270,
+      "id": 275,
       "name": "op2_detune.p1",
       "target": "op2.ph.detune.p1",
       "min": -50,
@@ -3524,7 +3589,7 @@
       "display": "cent"
     },
     {
-      "id": 271,
+      "id": 276,
       "name": "op2_waveform.p1",
       "target": "op2.osc.waveform.p1",
       "min": 0,
@@ -3537,7 +3602,7 @@
       "display": "wave"
     },
     {
-      "id": 272,
+      "id": 277,
       "name": "op2.eg.r1.p1",
       "target": "op2.eg.r1.p1",
       "min": 0,
@@ -3550,7 +3615,7 @@
       "display": "raw"
     },
     {
-      "id": 273,
+      "id": 278,
       "name": "op2.eg.r2.p1",
       "target": "op2.eg.r2.p1",
       "min": 0,
@@ -3563,7 +3628,7 @@
       "display": "raw"
     },
     {
-      "id": 274,
+      "id": 279,
       "name": "op2.eg.r3.p1",
       "target": "op2.eg.r3.p1",
       "min": 0,
@@ -3576,7 +3641,7 @@
       "display": "raw"
     },
     {
-      "id": 275,
+      "id": 280,
       "name": "op2.eg.r4.p1",
       "target": "op2.eg.r4.p1",
       "min": 0,
@@ -3589,7 +3654,7 @@
       "display": "raw"
     },
     {
-      "id": 276,
+      "id": 281,
       "name": "op2.eg.l1.p1",
       "target": "op2.eg.l1.p1",
       "min": 0,
@@ -3602,7 +3667,7 @@
       "display": "raw"
     },
     {
-      "id": 277,
+      "id": 282,
       "name": "op2.eg.l2.p1",
       "target": "op2.eg.l2.p1",
       "min": 0,
@@ -3615,7 +3680,7 @@
       "display": "raw"
     },
     {
-      "id": 278,
+      "id": 283,
       "name": "op2.eg.l3.p1",
       "target": "op2.eg.l3.p1",
       "min": 0,
@@ -3628,7 +3693,7 @@
       "display": "raw"
     },
     {
-      "id": 279,
+      "id": 284,
       "name": "op2_trem_rate.p1",
       "target": "op2.lfo.rate.p1",
       "min": 0,
@@ -3641,7 +3706,7 @@
       "display": "hz"
     },
     {
-      "id": 280,
+      "id": 285,
       "name": "op2_trem_depth.p1",
       "target": "op2.lfo.depth.p1",
       "min": -99,
@@ -3654,7 +3719,7 @@
       "display": "raw"
     },
     {
-      "id": 281,
+      "id": 286,
       "name": "op2_trem_wave.p1",
       "target": "op2.lfo.wave.p1",
       "min": 0,
@@ -3667,7 +3732,7 @@
       "display": "wave"
     },
     {
-      "id": 282,
+      "id": 287,
       "name": "op2_trem_mode.p1",
       "target": "op2.lfo.mode.p1",
       "min": 0,
@@ -3680,7 +3745,20 @@
       "display": "onoff"
     },
     {
-      "id": 283,
+      "id": 288,
+      "name": "op2_fbenv_on.p1",
+      "target": "op2.fbenv.on.p1",
+      "min": 0,
+      "max": 1,
+      "default": 1,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "onoff"
+    },
+    {
+      "id": 289,
       "name": "op2_fbenv_r1.p1",
       "target": "op2.fbenv.r1.p1",
       "min": 0,
@@ -3693,7 +3771,7 @@
       "display": "raw"
     },
     {
-      "id": 284,
+      "id": 290,
       "name": "op2_fbenv_r2.p1",
       "target": "op2.fbenv.r2.p1",
       "min": 0,
@@ -3706,7 +3784,7 @@
       "display": "raw"
     },
     {
-      "id": 285,
+      "id": 291,
       "name": "op2_fbenv_r3.p1",
       "target": "op2.fbenv.r3.p1",
       "min": 0,
@@ -3719,7 +3797,7 @@
       "display": "raw"
     },
     {
-      "id": 286,
+      "id": 292,
       "name": "op2_fbenv_r4.p1",
       "target": "op2.fbenv.r4.p1",
       "min": 0,
@@ -3732,46 +3810,59 @@
       "display": "raw"
     },
     {
-      "id": 287,
+      "id": 293,
       "name": "op2_fbenv_l1.p1",
       "target": "op2.fbenv.l1.p1",
-      "min": 0,
-      "max": 99,
-      "default": 99,
+      "min": -32768,
+      "max": 32767,
+      "default": 0,
       "curve": "linear",
       "unit": "",
       "rate": "block",
       "modulatable": false,
-      "display": "raw"
+      "display": "pct_bip"
     },
     {
-      "id": 288,
+      "id": 294,
       "name": "op2_fbenv_l2.p1",
       "target": "op2.fbenv.l2.p1",
-      "min": 0,
-      "max": 99,
-      "default": 93,
+      "min": -32768,
+      "max": 32767,
+      "default": 0,
       "curve": "linear",
       "unit": "",
       "rate": "block",
       "modulatable": false,
-      "display": "raw"
+      "display": "pct_bip"
     },
     {
-      "id": 289,
+      "id": 295,
       "name": "op2_fbenv_l3.p1",
       "target": "op2.fbenv.l3.p1",
-      "min": 0,
-      "max": 99,
-      "default": 87,
+      "min": -32768,
+      "max": 32767,
+      "default": 0,
       "curve": "linear",
       "unit": "",
       "rate": "block",
       "modulatable": false,
-      "display": "raw"
+      "display": "pct_bip"
     },
     {
-      "id": 290,
+      "id": 296,
+      "name": "op2_fbenv_l4.p1",
+      "target": "op2.fbenv.l4.p1",
+      "min": -32768,
+      "max": 32767,
+      "default": 0,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "pct_bip"
+    },
+    {
+      "id": 297,
       "name": "op2_fblfo_rate.p1",
       "target": "op2.fblfo.rate.p1",
       "min": 0,
@@ -3784,7 +3875,7 @@
       "display": "hz"
     },
     {
-      "id": 291,
+      "id": 298,
       "name": "op2_fblfo_depth.p1",
       "target": "op2.fblfo.depth.p1",
       "min": -32767,
@@ -3797,7 +3888,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 292,
+      "id": 299,
       "name": "op2_fblfo_wave.p1",
       "target": "op2.fblfo.wave.p1",
       "min": 0,
@@ -3810,7 +3901,7 @@
       "display": "wave"
     },
     {
-      "id": 293,
+      "id": 300,
       "name": "op2_fblfo_mode.p1",
       "target": "op2.fblfo.mode.p1",
       "min": 0,
@@ -3823,7 +3914,7 @@
       "display": "onoff"
     },
     {
-      "id": 294,
+      "id": 301,
       "name": "op2_dlfo_rate.p1",
       "target": "op2.dlfo.rate.p1",
       "min": 0,
@@ -3836,7 +3927,7 @@
       "display": "hz"
     },
     {
-      "id": 295,
+      "id": 302,
       "name": "op2_dlfo_depth.p1",
       "target": "op2.dlfo.depth.p1",
       "min": -32768,
@@ -3849,7 +3940,7 @@
       "display": "semi_lfo"
     },
     {
-      "id": 296,
+      "id": 303,
       "name": "op2_dlfo_wave.p1",
       "target": "op2.dlfo.wave.p1",
       "min": 0,
@@ -3862,7 +3953,7 @@
       "display": "wave"
     },
     {
-      "id": 297,
+      "id": 304,
       "name": "op2_dlfo_mode.p1",
       "target": "op2.dlfo.mode.p1",
       "min": 0,
@@ -3875,7 +3966,7 @@
       "display": "onoff"
     },
     {
-      "id": 298,
+      "id": 305,
       "name": "op2.velamp.depth.p1",
       "target": "op2.velamp.depth.p1",
       "min": -32768,
@@ -3888,7 +3979,7 @@
       "display": "raw"
     },
     {
-      "id": 299,
+      "id": 306,
       "name": "op2.velfm.depth.p1",
       "target": "op2.velfm.depth.p1",
       "min": -32768,
@@ -3901,7 +3992,7 @@
       "display": "raw"
     },
     {
-      "id": 300,
+      "id": 307,
       "name": "op2.velrate.depth.p1",
       "target": "op2.velrate.depth.p1",
       "min": -32768,
@@ -3914,7 +4005,7 @@
       "display": "raw"
     },
     {
-      "id": 301,
+      "id": 308,
       "name": "op2_level.p1",
       "target": "op2.tl.level.p1",
       "min": 0,
@@ -3927,7 +4018,7 @@
       "display": "raw"
     },
     {
-      "id": 302,
+      "id": 309,
       "name": "op2_feedback.p1",
       "target": "op2.fb.level.p1",
       "min": -32767,
@@ -3940,20 +4031,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 303,
-      "name": "op2_fb_depth.p1",
-      "target": "op2.fb.depth.p1",
-      "min": -32767,
-      "max": 32767,
-      "default": 0,
-      "curve": "linear",
-      "unit": "",
-      "rate": "block",
-      "modulatable": false,
-      "display": "pct_bip"
-    },
-    {
-      "id": 304,
+      "id": 310,
       "name": "op2_level_ks_lo.p1",
       "target": "op2.level_ks.lo.p1",
       "min": -100,
@@ -3966,7 +4044,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 305,
+      "id": 311,
       "name": "op2_level_ks_hi.p1",
       "target": "op2.level_ks.hi.p1",
       "min": -100,
@@ -3979,7 +4057,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 306,
+      "id": 312,
       "name": "op2_fb_ks_lo.p1",
       "target": "op2.fb_ks.lo.p1",
       "min": -100,
@@ -3992,7 +4070,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 307,
+      "id": 313,
       "name": "op2_fb_ks_hi.p1",
       "target": "op2.fb_ks.hi.p1",
       "min": -100,
@@ -4005,7 +4083,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 308,
+      "id": 314,
       "name": "op2_aenv_ks_lo.p1",
       "target": "op2.eg_ks.lo.p1",
       "min": -100,
@@ -4018,7 +4096,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 309,
+      "id": 315,
       "name": "op2_aenv_ks_hi.p1",
       "target": "op2.eg_ks.hi.p1",
       "min": -100,
@@ -4031,7 +4109,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 310,
+      "id": 316,
       "name": "op2_level_vs.p1",
       "target": "op2.level_vs.amount.p1",
       "min": -100,
@@ -4044,7 +4122,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 311,
+      "id": 317,
       "name": "op2_fb_vs.p1",
       "target": "op2.fb_vs.amount.p1",
       "min": -100,
@@ -4057,7 +4135,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 312,
+      "id": 318,
       "name": "op2_aenv_vs.p1",
       "target": "op2.eg_vs.amount.p1",
       "min": -100,
@@ -4070,7 +4148,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 313,
+      "id": 319,
       "name": "op2_mute.p1",
       "target": "op2.mute.mute.p1",
       "min": 0,
@@ -4083,7 +4161,7 @@
       "display": "onoff_inv"
     },
     {
-      "id": 314,
+      "id": 320,
       "name": "op3_ratio.p1",
       "target": "op3.ph.inc_ratio.p1",
       "min": 32768,
@@ -4096,7 +4174,7 @@
       "display": "ratio"
     },
     {
-      "id": 315,
+      "id": 321,
       "name": "op3_detune.p1",
       "target": "op3.ph.detune.p1",
       "min": -50,
@@ -4109,7 +4187,7 @@
       "display": "cent"
     },
     {
-      "id": 316,
+      "id": 322,
       "name": "op3_waveform.p1",
       "target": "op3.osc.waveform.p1",
       "min": 0,
@@ -4122,7 +4200,7 @@
       "display": "wave"
     },
     {
-      "id": 317,
+      "id": 323,
       "name": "op3.eg.r1.p1",
       "target": "op3.eg.r1.p1",
       "min": 0,
@@ -4135,7 +4213,7 @@
       "display": "raw"
     },
     {
-      "id": 318,
+      "id": 324,
       "name": "op3.eg.r2.p1",
       "target": "op3.eg.r2.p1",
       "min": 0,
@@ -4148,7 +4226,7 @@
       "display": "raw"
     },
     {
-      "id": 319,
+      "id": 325,
       "name": "op3.eg.r3.p1",
       "target": "op3.eg.r3.p1",
       "min": 0,
@@ -4161,7 +4239,7 @@
       "display": "raw"
     },
     {
-      "id": 320,
+      "id": 326,
       "name": "op3.eg.r4.p1",
       "target": "op3.eg.r4.p1",
       "min": 0,
@@ -4174,7 +4252,7 @@
       "display": "raw"
     },
     {
-      "id": 321,
+      "id": 327,
       "name": "op3.eg.l1.p1",
       "target": "op3.eg.l1.p1",
       "min": 0,
@@ -4187,7 +4265,7 @@
       "display": "raw"
     },
     {
-      "id": 322,
+      "id": 328,
       "name": "op3.eg.l2.p1",
       "target": "op3.eg.l2.p1",
       "min": 0,
@@ -4200,7 +4278,7 @@
       "display": "raw"
     },
     {
-      "id": 323,
+      "id": 329,
       "name": "op3.eg.l3.p1",
       "target": "op3.eg.l3.p1",
       "min": 0,
@@ -4213,7 +4291,7 @@
       "display": "raw"
     },
     {
-      "id": 324,
+      "id": 330,
       "name": "op3_trem_rate.p1",
       "target": "op3.lfo.rate.p1",
       "min": 0,
@@ -4226,7 +4304,7 @@
       "display": "hz"
     },
     {
-      "id": 325,
+      "id": 331,
       "name": "op3_trem_depth.p1",
       "target": "op3.lfo.depth.p1",
       "min": -99,
@@ -4239,7 +4317,7 @@
       "display": "raw"
     },
     {
-      "id": 326,
+      "id": 332,
       "name": "op3_trem_wave.p1",
       "target": "op3.lfo.wave.p1",
       "min": 0,
@@ -4252,7 +4330,7 @@
       "display": "wave"
     },
     {
-      "id": 327,
+      "id": 333,
       "name": "op3_trem_mode.p1",
       "target": "op3.lfo.mode.p1",
       "min": 0,
@@ -4265,7 +4343,20 @@
       "display": "onoff"
     },
     {
-      "id": 328,
+      "id": 334,
+      "name": "op3_fbenv_on.p1",
+      "target": "op3.fbenv.on.p1",
+      "min": 0,
+      "max": 1,
+      "default": 1,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "onoff"
+    },
+    {
+      "id": 335,
       "name": "op3_fbenv_r1.p1",
       "target": "op3.fbenv.r1.p1",
       "min": 0,
@@ -4278,7 +4369,7 @@
       "display": "raw"
     },
     {
-      "id": 329,
+      "id": 336,
       "name": "op3_fbenv_r2.p1",
       "target": "op3.fbenv.r2.p1",
       "min": 0,
@@ -4291,7 +4382,7 @@
       "display": "raw"
     },
     {
-      "id": 330,
+      "id": 337,
       "name": "op3_fbenv_r3.p1",
       "target": "op3.fbenv.r3.p1",
       "min": 0,
@@ -4304,7 +4395,7 @@
       "display": "raw"
     },
     {
-      "id": 331,
+      "id": 338,
       "name": "op3_fbenv_r4.p1",
       "target": "op3.fbenv.r4.p1",
       "min": 0,
@@ -4317,46 +4408,59 @@
       "display": "raw"
     },
     {
-      "id": 332,
+      "id": 339,
       "name": "op3_fbenv_l1.p1",
       "target": "op3.fbenv.l1.p1",
-      "min": 0,
-      "max": 99,
-      "default": 99,
+      "min": -32768,
+      "max": 32767,
+      "default": 0,
       "curve": "linear",
       "unit": "",
       "rate": "block",
       "modulatable": false,
-      "display": "raw"
+      "display": "pct_bip"
     },
     {
-      "id": 333,
+      "id": 340,
       "name": "op3_fbenv_l2.p1",
       "target": "op3.fbenv.l2.p1",
-      "min": 0,
-      "max": 99,
-      "default": 93,
+      "min": -32768,
+      "max": 32767,
+      "default": 0,
       "curve": "linear",
       "unit": "",
       "rate": "block",
       "modulatable": false,
-      "display": "raw"
+      "display": "pct_bip"
     },
     {
-      "id": 334,
+      "id": 341,
       "name": "op3_fbenv_l3.p1",
       "target": "op3.fbenv.l3.p1",
-      "min": 0,
-      "max": 99,
-      "default": 87,
+      "min": -32768,
+      "max": 32767,
+      "default": 0,
       "curve": "linear",
       "unit": "",
       "rate": "block",
       "modulatable": false,
-      "display": "raw"
+      "display": "pct_bip"
     },
     {
-      "id": 335,
+      "id": 342,
+      "name": "op3_fbenv_l4.p1",
+      "target": "op3.fbenv.l4.p1",
+      "min": -32768,
+      "max": 32767,
+      "default": 0,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "pct_bip"
+    },
+    {
+      "id": 343,
       "name": "op3_fblfo_rate.p1",
       "target": "op3.fblfo.rate.p1",
       "min": 0,
@@ -4369,7 +4473,7 @@
       "display": "hz"
     },
     {
-      "id": 336,
+      "id": 344,
       "name": "op3_fblfo_depth.p1",
       "target": "op3.fblfo.depth.p1",
       "min": -32767,
@@ -4382,7 +4486,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 337,
+      "id": 345,
       "name": "op3_fblfo_wave.p1",
       "target": "op3.fblfo.wave.p1",
       "min": 0,
@@ -4395,7 +4499,7 @@
       "display": "wave"
     },
     {
-      "id": 338,
+      "id": 346,
       "name": "op3_fblfo_mode.p1",
       "target": "op3.fblfo.mode.p1",
       "min": 0,
@@ -4408,7 +4512,7 @@
       "display": "onoff"
     },
     {
-      "id": 339,
+      "id": 347,
       "name": "op3_dlfo_rate.p1",
       "target": "op3.dlfo.rate.p1",
       "min": 0,
@@ -4421,7 +4525,7 @@
       "display": "hz"
     },
     {
-      "id": 340,
+      "id": 348,
       "name": "op3_dlfo_depth.p1",
       "target": "op3.dlfo.depth.p1",
       "min": -32768,
@@ -4434,7 +4538,7 @@
       "display": "semi_lfo"
     },
     {
-      "id": 341,
+      "id": 349,
       "name": "op3_dlfo_wave.p1",
       "target": "op3.dlfo.wave.p1",
       "min": 0,
@@ -4447,7 +4551,7 @@
       "display": "wave"
     },
     {
-      "id": 342,
+      "id": 350,
       "name": "op3_dlfo_mode.p1",
       "target": "op3.dlfo.mode.p1",
       "min": 0,
@@ -4460,7 +4564,7 @@
       "display": "onoff"
     },
     {
-      "id": 343,
+      "id": 351,
       "name": "op3.velamp.depth.p1",
       "target": "op3.velamp.depth.p1",
       "min": -32768,
@@ -4473,7 +4577,7 @@
       "display": "raw"
     },
     {
-      "id": 344,
+      "id": 352,
       "name": "op3.velfm.depth.p1",
       "target": "op3.velfm.depth.p1",
       "min": -32768,
@@ -4486,7 +4590,7 @@
       "display": "raw"
     },
     {
-      "id": 345,
+      "id": 353,
       "name": "op3.velrate.depth.p1",
       "target": "op3.velrate.depth.p1",
       "min": -32768,
@@ -4499,7 +4603,7 @@
       "display": "raw"
     },
     {
-      "id": 346,
+      "id": 354,
       "name": "op3_level.p1",
       "target": "op3.tl.level.p1",
       "min": 0,
@@ -4512,7 +4616,7 @@
       "display": "raw"
     },
     {
-      "id": 347,
+      "id": 355,
       "name": "op3_feedback.p1",
       "target": "op3.fb.level.p1",
       "min": -32767,
@@ -4525,20 +4629,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 348,
-      "name": "op3_fb_depth.p1",
-      "target": "op3.fb.depth.p1",
-      "min": -32767,
-      "max": 32767,
-      "default": 0,
-      "curve": "linear",
-      "unit": "",
-      "rate": "block",
-      "modulatable": false,
-      "display": "pct_bip"
-    },
-    {
-      "id": 349,
+      "id": 356,
       "name": "op3_level_ks_lo.p1",
       "target": "op3.level_ks.lo.p1",
       "min": -100,
@@ -4551,7 +4642,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 350,
+      "id": 357,
       "name": "op3_level_ks_hi.p1",
       "target": "op3.level_ks.hi.p1",
       "min": -100,
@@ -4564,7 +4655,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 351,
+      "id": 358,
       "name": "op3_fb_ks_lo.p1",
       "target": "op3.fb_ks.lo.p1",
       "min": -100,
@@ -4577,7 +4668,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 352,
+      "id": 359,
       "name": "op3_fb_ks_hi.p1",
       "target": "op3.fb_ks.hi.p1",
       "min": -100,
@@ -4590,7 +4681,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 353,
+      "id": 360,
       "name": "op3_aenv_ks_lo.p1",
       "target": "op3.eg_ks.lo.p1",
       "min": -100,
@@ -4603,7 +4694,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 354,
+      "id": 361,
       "name": "op3_aenv_ks_hi.p1",
       "target": "op3.eg_ks.hi.p1",
       "min": -100,
@@ -4616,7 +4707,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 355,
+      "id": 362,
       "name": "op3_level_vs.p1",
       "target": "op3.level_vs.amount.p1",
       "min": -100,
@@ -4629,7 +4720,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 356,
+      "id": 363,
       "name": "op3_fb_vs.p1",
       "target": "op3.fb_vs.amount.p1",
       "min": -100,
@@ -4642,7 +4733,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 357,
+      "id": 364,
       "name": "op3_aenv_vs.p1",
       "target": "op3.eg_vs.amount.p1",
       "min": -100,
@@ -4655,7 +4746,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 358,
+      "id": 365,
       "name": "op3_mute.p1",
       "target": "op3.mute.mute.p1",
       "min": 0,
@@ -4668,7 +4759,7 @@
       "display": "onoff_inv"
     },
     {
-      "id": 359,
+      "id": 366,
       "name": "op4_ratio.p1",
       "target": "op4.ph.inc_ratio.p1",
       "min": 32768,
@@ -4681,7 +4772,7 @@
       "display": "ratio"
     },
     {
-      "id": 360,
+      "id": 367,
       "name": "op4_detune.p1",
       "target": "op4.ph.detune.p1",
       "min": -50,
@@ -4694,7 +4785,7 @@
       "display": "cent"
     },
     {
-      "id": 361,
+      "id": 368,
       "name": "op4_waveform.p1",
       "target": "op4.osc.waveform.p1",
       "min": 0,
@@ -4707,7 +4798,7 @@
       "display": "wave"
     },
     {
-      "id": 362,
+      "id": 369,
       "name": "op4.eg.r1.p1",
       "target": "op4.eg.r1.p1",
       "min": 0,
@@ -4720,7 +4811,7 @@
       "display": "raw"
     },
     {
-      "id": 363,
+      "id": 370,
       "name": "op4.eg.r2.p1",
       "target": "op4.eg.r2.p1",
       "min": 0,
@@ -4733,7 +4824,7 @@
       "display": "raw"
     },
     {
-      "id": 364,
+      "id": 371,
       "name": "op4.eg.r3.p1",
       "target": "op4.eg.r3.p1",
       "min": 0,
@@ -4746,7 +4837,7 @@
       "display": "raw"
     },
     {
-      "id": 365,
+      "id": 372,
       "name": "op4.eg.r4.p1",
       "target": "op4.eg.r4.p1",
       "min": 0,
@@ -4759,7 +4850,7 @@
       "display": "raw"
     },
     {
-      "id": 366,
+      "id": 373,
       "name": "op4.eg.l1.p1",
       "target": "op4.eg.l1.p1",
       "min": 0,
@@ -4772,7 +4863,7 @@
       "display": "raw"
     },
     {
-      "id": 367,
+      "id": 374,
       "name": "op4.eg.l2.p1",
       "target": "op4.eg.l2.p1",
       "min": 0,
@@ -4785,7 +4876,7 @@
       "display": "raw"
     },
     {
-      "id": 368,
+      "id": 375,
       "name": "op4.eg.l3.p1",
       "target": "op4.eg.l3.p1",
       "min": 0,
@@ -4798,7 +4889,7 @@
       "display": "raw"
     },
     {
-      "id": 369,
+      "id": 376,
       "name": "op4_trem_rate.p1",
       "target": "op4.lfo.rate.p1",
       "min": 0,
@@ -4811,7 +4902,7 @@
       "display": "hz"
     },
     {
-      "id": 370,
+      "id": 377,
       "name": "op4_trem_depth.p1",
       "target": "op4.lfo.depth.p1",
       "min": -99,
@@ -4824,7 +4915,7 @@
       "display": "raw"
     },
     {
-      "id": 371,
+      "id": 378,
       "name": "op4_trem_wave.p1",
       "target": "op4.lfo.wave.p1",
       "min": 0,
@@ -4837,7 +4928,7 @@
       "display": "wave"
     },
     {
-      "id": 372,
+      "id": 379,
       "name": "op4_trem_mode.p1",
       "target": "op4.lfo.mode.p1",
       "min": 0,
@@ -4850,7 +4941,20 @@
       "display": "onoff"
     },
     {
-      "id": 373,
+      "id": 380,
+      "name": "op4_fbenv_on.p1",
+      "target": "op4.fbenv.on.p1",
+      "min": 0,
+      "max": 1,
+      "default": 1,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "onoff"
+    },
+    {
+      "id": 381,
       "name": "op4_fbenv_r1.p1",
       "target": "op4.fbenv.r1.p1",
       "min": 0,
@@ -4863,7 +4967,7 @@
       "display": "raw"
     },
     {
-      "id": 374,
+      "id": 382,
       "name": "op4_fbenv_r2.p1",
       "target": "op4.fbenv.r2.p1",
       "min": 0,
@@ -4876,7 +4980,7 @@
       "display": "raw"
     },
     {
-      "id": 375,
+      "id": 383,
       "name": "op4_fbenv_r3.p1",
       "target": "op4.fbenv.r3.p1",
       "min": 0,
@@ -4889,7 +4993,7 @@
       "display": "raw"
     },
     {
-      "id": 376,
+      "id": 384,
       "name": "op4_fbenv_r4.p1",
       "target": "op4.fbenv.r4.p1",
       "min": 0,
@@ -4902,46 +5006,59 @@
       "display": "raw"
     },
     {
-      "id": 377,
+      "id": 385,
       "name": "op4_fbenv_l1.p1",
       "target": "op4.fbenv.l1.p1",
-      "min": 0,
-      "max": 99,
-      "default": 99,
+      "min": -32768,
+      "max": 32767,
+      "default": 0,
       "curve": "linear",
       "unit": "",
       "rate": "block",
       "modulatable": false,
-      "display": "raw"
+      "display": "pct_bip"
     },
     {
-      "id": 378,
+      "id": 386,
       "name": "op4_fbenv_l2.p1",
       "target": "op4.fbenv.l2.p1",
-      "min": 0,
-      "max": 99,
-      "default": 93,
+      "min": -32768,
+      "max": 32767,
+      "default": 0,
       "curve": "linear",
       "unit": "",
       "rate": "block",
       "modulatable": false,
-      "display": "raw"
+      "display": "pct_bip"
     },
     {
-      "id": 379,
+      "id": 387,
       "name": "op4_fbenv_l3.p1",
       "target": "op4.fbenv.l3.p1",
-      "min": 0,
-      "max": 99,
-      "default": 87,
+      "min": -32768,
+      "max": 32767,
+      "default": 0,
       "curve": "linear",
       "unit": "",
       "rate": "block",
       "modulatable": false,
-      "display": "raw"
+      "display": "pct_bip"
     },
     {
-      "id": 380,
+      "id": 388,
+      "name": "op4_fbenv_l4.p1",
+      "target": "op4.fbenv.l4.p1",
+      "min": -32768,
+      "max": 32767,
+      "default": 0,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "pct_bip"
+    },
+    {
+      "id": 389,
       "name": "op4_fblfo_rate.p1",
       "target": "op4.fblfo.rate.p1",
       "min": 0,
@@ -4954,7 +5071,7 @@
       "display": "hz"
     },
     {
-      "id": 381,
+      "id": 390,
       "name": "op4_fblfo_depth.p1",
       "target": "op4.fblfo.depth.p1",
       "min": -32767,
@@ -4967,7 +5084,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 382,
+      "id": 391,
       "name": "op4_fblfo_wave.p1",
       "target": "op4.fblfo.wave.p1",
       "min": 0,
@@ -4980,7 +5097,7 @@
       "display": "wave"
     },
     {
-      "id": 383,
+      "id": 392,
       "name": "op4_fblfo_mode.p1",
       "target": "op4.fblfo.mode.p1",
       "min": 0,
@@ -4993,7 +5110,7 @@
       "display": "onoff"
     },
     {
-      "id": 384,
+      "id": 393,
       "name": "op4_dlfo_rate.p1",
       "target": "op4.dlfo.rate.p1",
       "min": 0,
@@ -5006,7 +5123,7 @@
       "display": "hz"
     },
     {
-      "id": 385,
+      "id": 394,
       "name": "op4_dlfo_depth.p1",
       "target": "op4.dlfo.depth.p1",
       "min": -32768,
@@ -5019,7 +5136,7 @@
       "display": "semi_lfo"
     },
     {
-      "id": 386,
+      "id": 395,
       "name": "op4_dlfo_wave.p1",
       "target": "op4.dlfo.wave.p1",
       "min": 0,
@@ -5032,7 +5149,7 @@
       "display": "wave"
     },
     {
-      "id": 387,
+      "id": 396,
       "name": "op4_dlfo_mode.p1",
       "target": "op4.dlfo.mode.p1",
       "min": 0,
@@ -5045,7 +5162,7 @@
       "display": "onoff"
     },
     {
-      "id": 388,
+      "id": 397,
       "name": "op4.velamp.depth.p1",
       "target": "op4.velamp.depth.p1",
       "min": -32768,
@@ -5058,7 +5175,7 @@
       "display": "raw"
     },
     {
-      "id": 389,
+      "id": 398,
       "name": "op4.velfm.depth.p1",
       "target": "op4.velfm.depth.p1",
       "min": -32768,
@@ -5071,7 +5188,7 @@
       "display": "raw"
     },
     {
-      "id": 390,
+      "id": 399,
       "name": "op4.velrate.depth.p1",
       "target": "op4.velrate.depth.p1",
       "min": -32768,
@@ -5084,7 +5201,7 @@
       "display": "raw"
     },
     {
-      "id": 391,
+      "id": 400,
       "name": "op4_level.p1",
       "target": "op4.tl.level.p1",
       "min": 0,
@@ -5097,7 +5214,7 @@
       "display": "raw"
     },
     {
-      "id": 392,
+      "id": 401,
       "name": "op4_feedback.p1",
       "target": "op4.fb.level.p1",
       "min": -32767,
@@ -5110,20 +5227,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 393,
-      "name": "op4_fb_depth.p1",
-      "target": "op4.fb.depth.p1",
-      "min": -32767,
-      "max": 32767,
-      "default": 0,
-      "curve": "linear",
-      "unit": "",
-      "rate": "block",
-      "modulatable": false,
-      "display": "pct_bip"
-    },
-    {
-      "id": 394,
+      "id": 402,
       "name": "op4_level_ks_lo.p1",
       "target": "op4.level_ks.lo.p1",
       "min": -100,
@@ -5136,7 +5240,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 395,
+      "id": 403,
       "name": "op4_level_ks_hi.p1",
       "target": "op4.level_ks.hi.p1",
       "min": -100,
@@ -5149,7 +5253,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 396,
+      "id": 404,
       "name": "op4_fb_ks_lo.p1",
       "target": "op4.fb_ks.lo.p1",
       "min": -100,
@@ -5162,7 +5266,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 397,
+      "id": 405,
       "name": "op4_fb_ks_hi.p1",
       "target": "op4.fb_ks.hi.p1",
       "min": -100,
@@ -5175,7 +5279,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 398,
+      "id": 406,
       "name": "op4_aenv_ks_lo.p1",
       "target": "op4.eg_ks.lo.p1",
       "min": -100,
@@ -5188,7 +5292,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 399,
+      "id": 407,
       "name": "op4_aenv_ks_hi.p1",
       "target": "op4.eg_ks.hi.p1",
       "min": -100,
@@ -5201,7 +5305,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 400,
+      "id": 408,
       "name": "op4_level_vs.p1",
       "target": "op4.level_vs.amount.p1",
       "min": -100,
@@ -5214,7 +5318,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 401,
+      "id": 409,
       "name": "op4_fb_vs.p1",
       "target": "op4.fb_vs.amount.p1",
       "min": -100,
@@ -5227,7 +5331,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 402,
+      "id": 410,
       "name": "op4_aenv_vs.p1",
       "target": "op4.eg_vs.amount.p1",
       "min": -100,
@@ -5240,7 +5344,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 403,
+      "id": 411,
       "name": "op4_mute.p1",
       "target": "op4.mute.mute.p1",
       "min": 0,
@@ -5253,7 +5357,7 @@
       "display": "onoff_inv"
     },
     {
-      "id": 404,
+      "id": 412,
       "name": "algorithm.p1",
       "target": "algo.algorithm.p1",
       "min": 0,
@@ -5266,7 +5370,7 @@
       "display": "raw"
     },
     {
-      "id": 405,
+      "id": 413,
       "name": "penv_on.p1",
       "target": "penv.on.p1",
       "min": 0,
@@ -5279,7 +5383,7 @@
       "display": "onoff"
     },
     {
-      "id": 406,
+      "id": 414,
       "name": "penv_r1.p1",
       "target": "penv.r1.p1",
       "min": 0,
@@ -5292,7 +5396,7 @@
       "display": "raw"
     },
     {
-      "id": 407,
+      "id": 415,
       "name": "penv_r2.p1",
       "target": "penv.r2.p1",
       "min": 0,
@@ -5305,7 +5409,7 @@
       "display": "raw"
     },
     {
-      "id": 408,
+      "id": 416,
       "name": "penv_r3.p1",
       "target": "penv.r3.p1",
       "min": 0,
@@ -5318,7 +5422,7 @@
       "display": "raw"
     },
     {
-      "id": 409,
+      "id": 417,
       "name": "penv_r4.p1",
       "target": "penv.r4.p1",
       "min": 0,
@@ -5331,7 +5435,7 @@
       "display": "raw"
     },
     {
-      "id": 410,
+      "id": 418,
       "name": "penv_l1.p1",
       "target": "penv.l1.p1",
       "min": -32768,
@@ -5344,7 +5448,7 @@
       "display": "semi_fine"
     },
     {
-      "id": 411,
+      "id": 419,
       "name": "penv_l2.p1",
       "target": "penv.l2.p1",
       "min": -32768,
@@ -5357,7 +5461,7 @@
       "display": "semi_fine"
     },
     {
-      "id": 412,
+      "id": 420,
       "name": "penv_l3.p1",
       "target": "penv.l3.p1",
       "min": -32768,
@@ -5370,7 +5474,7 @@
       "display": "semi_fine"
     },
     {
-      "id": 413,
+      "id": 421,
       "name": "penv_l4.p1",
       "target": "penv.l4.p1",
       "min": -32768,
@@ -5383,7 +5487,7 @@
       "display": "semi_fine"
     },
     {
-      "id": 414,
+      "id": 422,
       "name": "penv_ks_lo.p1",
       "target": "penv_ks.lo.p1",
       "min": -100,
@@ -5396,7 +5500,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 415,
+      "id": 423,
       "name": "penv_ks_hi.p1",
       "target": "penv_ks.hi.p1",
       "min": -100,
@@ -5409,7 +5513,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 416,
+      "id": 424,
       "name": "penv_vs.p1",
       "target": "penv_vs.amount.p1",
       "min": -100,
@@ -5422,7 +5526,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 417,
+      "id": 425,
       "name": "pitch_rate.p1",
       "target": "plfo.rate.p1",
       "min": 0,
@@ -5435,7 +5539,7 @@
       "display": "hz"
     },
     {
-      "id": 418,
+      "id": 426,
       "name": "pitch_depth.p1",
       "target": "plfo.depth.p1",
       "min": -32768,
@@ -5448,7 +5552,7 @@
       "display": "semi_lfo"
     },
     {
-      "id": 419,
+      "id": 427,
       "name": "pitch_wave.p1",
       "target": "plfo.wave.p1",
       "min": 0,
@@ -5461,7 +5565,7 @@
       "display": "wave"
     },
     {
-      "id": 420,
+      "id": 428,
       "name": "pitch_mode.p1",
       "target": "plfo.mode.p1",
       "min": 0,
@@ -5474,7 +5578,7 @@
       "display": "onoff"
     },
     {
-      "id": 421,
+      "id": 429,
       "name": "f1_cutoff_ks_lo.p1",
       "target": "f1_ks.lo.p1",
       "min": -100,
@@ -5487,7 +5591,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 422,
+      "id": 430,
       "name": "f1_cutoff_ks_hi.p1",
       "target": "f1_ks.hi.p1",
       "min": -100,
@@ -5500,7 +5604,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 423,
+      "id": 431,
       "name": "fenv_ks_lo.p1",
       "target": "fenv_ks.lo.p1",
       "min": -100,
@@ -5513,7 +5617,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 424,
+      "id": 432,
       "name": "fenv_ks_hi.p1",
       "target": "fenv_ks.hi.p1",
       "min": -100,
@@ -5526,7 +5630,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 425,
+      "id": 433,
       "name": "f1_cutoff_vs.p1",
       "target": "f1_vs.amount.p1",
       "min": -100,
@@ -5539,7 +5643,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 426,
+      "id": 434,
       "name": "fenv_vs.p1",
       "target": "fenv_vs.amount.p1",
       "min": -100,
@@ -5552,7 +5656,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 427,
+      "id": 435,
       "name": "cutoff.p1",
       "target": "lp.f.p1",
       "min": 0,
@@ -5565,7 +5669,7 @@
       "display": "off_pct"
     },
     {
-      "id": 428,
+      "id": 436,
       "name": "res.p1",
       "target": "lp.res.p1",
       "min": 0,
@@ -5578,7 +5682,7 @@
       "display": "pct_exp"
     },
     {
-      "id": 429,
+      "id": 437,
       "name": "lp.comp.p1",
       "target": "lp.comp.p1",
       "min": -32768,
@@ -5591,7 +5695,7 @@
       "display": "raw"
     },
     {
-      "id": 430,
+      "id": 438,
       "name": "filter_type.p1",
       "target": "lp.mode.p1",
       "min": 0,
@@ -5604,7 +5708,7 @@
       "display": "filter"
     },
     {
-      "id": 431,
+      "id": 439,
       "name": "filter_on.p1",
       "target": "lp.on.p1",
       "min": 0,
@@ -5617,7 +5721,7 @@
       "display": "onoff"
     },
     {
-      "id": 432,
+      "id": 440,
       "name": "fenv_depth.p1",
       "target": "lp.fenv_depth.p1",
       "min": 0,
@@ -5630,7 +5734,7 @@
       "display": "pct"
     },
     {
-      "id": 433,
+      "id": 441,
       "name": "fenv_r1.p1",
       "target": "fenv.r1.p1",
       "min": 0,
@@ -5643,7 +5747,7 @@
       "display": "raw"
     },
     {
-      "id": 434,
+      "id": 442,
       "name": "fenv_r2.p1",
       "target": "fenv.r2.p1",
       "min": 0,
@@ -5656,7 +5760,7 @@
       "display": "raw"
     },
     {
-      "id": 435,
+      "id": 443,
       "name": "fenv_r3.p1",
       "target": "fenv.r3.p1",
       "min": 0,
@@ -5669,7 +5773,7 @@
       "display": "raw"
     },
     {
-      "id": 436,
+      "id": 444,
       "name": "fenv_r4.p1",
       "target": "fenv.r4.p1",
       "min": 0,
@@ -5682,7 +5786,7 @@
       "display": "raw"
     },
     {
-      "id": 437,
+      "id": 445,
       "name": "fenv_l1.p1",
       "target": "fenv.l1.p1",
       "min": 0,
@@ -5695,7 +5799,7 @@
       "display": "raw"
     },
     {
-      "id": 438,
+      "id": 446,
       "name": "fenv_l2.p1",
       "target": "fenv.l2.p1",
       "min": 0,
@@ -5708,7 +5812,7 @@
       "display": "raw"
     },
     {
-      "id": 439,
+      "id": 447,
       "name": "fenv_l3.p1",
       "target": "fenv.l3.p1",
       "min": 0,
@@ -5721,7 +5825,7 @@
       "display": "raw"
     },
     {
-      "id": 440,
+      "id": 448,
       "name": "mode.p1",
       "target": "vm_mode",
       "min": 0,
@@ -5734,7 +5838,7 @@
       "display": "mode"
     },
     {
-      "id": 441,
+      "id": 449,
       "name": "unison_count.p1",
       "target": "vm_unison_count",
       "min": 1,
@@ -5747,7 +5851,7 @@
       "display": "raw"
     },
     {
-      "id": 442,
+      "id": 450,
       "name": "unison_detune.p1",
       "target": "vm_unison_detune",
       "min": 0,
@@ -5760,7 +5864,7 @@
       "display": "raw"
     },
     {
-      "id": 443,
+      "id": 451,
       "name": "detune.p1",
       "target": "vm_detune",
       "min": -50,
@@ -5773,7 +5877,7 @@
       "display": "cent"
     },
     {
-      "id": 444,
+      "id": 452,
       "name": "transpose.p1",
       "target": "vm_transpose",
       "min": -24,
@@ -5786,7 +5890,7 @@
       "display": "semitones"
     },
     {
-      "id": 445,
+      "id": 453,
       "name": "legato.p1",
       "target": "vm_legato",
       "min": 0,
@@ -5799,7 +5903,7 @@
       "display": "onoff"
     },
     {
-      "id": 446,
+      "id": 454,
       "name": "portamento.p1",
       "target": "vm_portamento",
       "min": 0,
@@ -5812,7 +5916,7 @@
       "display": "porta"
     },
     {
-      "id": 447,
+      "id": 455,
       "name": "note_priority.p1",
       "target": "vm_note_priority",
       "min": 0,
@@ -5825,7 +5929,7 @@
       "display": "priority"
     },
     {
-      "id": 448,
+      "id": 456,
       "name": "breakpoint",
       "target": "key_bp.bp",
       "min": 0,
@@ -5838,7 +5942,7 @@
       "display": "note"
     },
     {
-      "id": 449,
+      "id": 457,
       "name": "key_sens_on",
       "target": "key_on.on",
       "min": 0,
@@ -5851,7 +5955,7 @@
       "display": "onoff"
     },
     {
-      "id": 450,
+      "id": 458,
       "name": "vel_sens_on",
       "target": "vel_on.on",
       "min": 0,
@@ -5864,7 +5968,7 @@
       "display": "onoff"
     },
     {
-      "id": 451,
+      "id": 459,
       "name": "dc.r",
       "target": "dc.r",
       "min": -32768,
@@ -5877,7 +5981,7 @@
       "display": "raw"
     },
     {
-      "id": 452,
+      "id": 460,
       "name": "channel.p0",
       "target": "part.channel.p0",
       "min": -1,
@@ -5890,7 +5994,7 @@
       "display": "raw"
     },
     {
-      "id": 453,
+      "id": 461,
       "name": "channel.p1",
       "target": "part.channel.p1",
       "min": -1,
@@ -5903,7 +6007,7 @@
       "display": "raw"
     },
     {
-      "id": 454,
+      "id": 462,
       "name": "low.p0",
       "target": "part.low.p0",
       "min": 0,
@@ -5916,7 +6020,7 @@
       "display": "note"
     },
     {
-      "id": 455,
+      "id": 463,
       "name": "low.p1",
       "target": "part.low.p1",
       "min": 0,
@@ -5929,7 +6033,7 @@
       "display": "note"
     },
     {
-      "id": 456,
+      "id": 464,
       "name": "high.p0",
       "target": "part.high.p0",
       "min": 0,
@@ -5942,7 +6046,7 @@
       "display": "note"
     },
     {
-      "id": 457,
+      "id": 465,
       "name": "high.p1",
       "target": "part.high.p1",
       "min": 0,
@@ -5955,7 +6059,7 @@
       "display": "note"
     },
     {
-      "id": 458,
+      "id": 466,
       "name": "level.p0",
       "target": "part.level.p0",
       "min": 0,
@@ -5968,7 +6072,7 @@
       "display": "raw"
     },
     {
-      "id": 459,
+      "id": 467,
       "name": "level.p1",
       "target": "part.level.p1",
       "min": 0,
@@ -5981,7 +6085,7 @@
       "display": "raw"
     },
     {
-      "id": 460,
+      "id": 468,
       "name": "delay.p0",
       "target": "part.delay.p0",
       "min": 0,
@@ -5994,7 +6098,7 @@
       "display": "raw"
     },
     {
-      "id": 461,
+      "id": 469,
       "name": "delay.p1",
       "target": "part.delay.p1",
       "min": 0,

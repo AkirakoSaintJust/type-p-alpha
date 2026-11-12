@@ -341,10 +341,11 @@ mechanical, so the table lists each family and its target.
 | `partSuffix`, `withPart` | `.pN` suffix and base id. |
 | `algorithm`, `channel`, `keyLow`, `keyHigh`, `level`, `delay`, `detune`, `transpose`, `mode`, `legato`, `unisonCount`, `unisonDetune`, `portamento`, `notePriority` | part-level ids. |
 | `opBase` | `opN_` prefix. |
-| `opRatio`, `opDetune`, `opWaveform`, `opLevel`, `opFeedback`, `opFeedbackDepth` | operator oscillator ids. |
+| `opRatio`, `opDetune`, `opWaveform`, `opLevel`, `opFeedback` | operator oscillator ids. |
 | `opTremRate`, `opTremDepth`, `opTremWave`, `opTremMode`, `opMute` | operator amplitude LFO and mute ids. |
 | `opEnvRate`, `opEnvLevel` | operator amplitude envelope ids. |
-| `opFeedbackRate`, `opFeedbackLevel`, `opFeedbackDepth` | per-operator feedback envelope and depth ids. |
+| `opFeedbackOn` | per-operator feedback envelope on switch. |
+| `opFeedbackRate`, `opFeedbackLevel` | per-operator feedback envelope rate and signed level ids. |
 | `opFeedbackLfoRate`, `opFeedbackLfoDepth`, `opFeedbackLfoWave`, `opFeedbackLfoMode` | feedback LFO ids. |
 | `opDetuneLfoRate`, `opDetuneLfoDepth`, `opDetuneLfoWave`, `opDetuneLfoMode` | detune LFO ids. |
 | `pitchRate`, `pitchDepth`, `pitchWave`, `pitchMode`, `pitchEnvOn`, `pitchEnvRate`, `pitchEnvLevel` | pitch LFO and pitch envelope ids. |
@@ -435,7 +436,7 @@ engine, the MIDI bridge, the rate bridge, the preset bank and the UI state.
 | `OperatorsPage` | Four operator columns. |
 | `OscillatorCard` | Shared operator oscillator card. |
 | `AmplitudeEnvelopeCard` | Shared per-operator amplitude envelope card. |
-| `FeedbackEnvelopeCard` | Per-operator feedback envelope graph, rates, levels and depth. |
+| `FeedbackEnvelopeCard` | Per-operator signed feedback envelope graph, rates, levels and on switch. |
 | `LfoCard` | Shared rate, depth, wave and bipolar card for the three LFO families. |
 | `OpLfoColumn` | One operator LFO column: oscillator, amplitude LFO, feedback LFO, detune LFO. |
 | `OperatorLfosPage` | Four operator LFO columns. |
@@ -454,8 +455,8 @@ engine, the MIDI bridge, the rate bridge, the preset bank and the UI state.
 | File | Purpose |
 | --- | --- |
 | `engine_parity.cpp` | Compare the generated engine against the independent reference for filters, key follow and render parity. |
-| `feedback_envelope.cpp` | Measure the per-operator feedback envelope and the depth offsets. |
-| `feedback_bipolar.cpp` | Measure the positive path, the abs negative half, the envelope and the peak bound. |
+| `feedback_envelope.cpp` | Measure the per-operator envelope direction, the flat path and the peak bound. |
+| `feedback_bipolar.cpp` | Measure the positive path, the abs negative half, the signed envelope level and the peak bound. |
 | `operator_lfos.cpp` | Check the feedback and detune LFO paths at depth 0 and above. |
 | `rate_bridge_test.cpp` | Check the resampler latency and spectral behaviour. |
 | `preset_smoke.cpp` | Check the current record, the 32-character name and the `P1LIB2` library. |

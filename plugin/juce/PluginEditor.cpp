@@ -790,8 +790,8 @@ void PluginEditor::buildUi()
     juce::StringArray labels;
     labels.add("patch settings");
     labels.add("operators");
-    labels.add("fx / mod");
     labels.add("operator lfos");
+    labels.add("fx / mod");
     tabs_.setLabels(labels);
     switchingTab_ = true;
     tabs_.setActive(activeTab_);
@@ -815,10 +815,10 @@ void PluginEditor::buildPage()
         page_ = p1::ui::makeOperatorsPage(*this);
         break;
     case 2:
-        page_ = p1::ui::makeFxModPage(*this);
+        page_ = p1::ui::makeOperatorLfosPage(*this);
         break;
     case 3:
-        page_ = p1::ui::makeOperatorLfosPage(*this);
+        page_ = p1::ui::makeFxModPage(*this);
         break;
     default:
         page_ = p1::ui::makePatchPage(*this);

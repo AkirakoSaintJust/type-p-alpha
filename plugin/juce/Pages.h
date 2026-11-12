@@ -211,20 +211,20 @@ public:
                     params::opFeedbackRate(op, 3, part)},
                    {params::opFeedbackLevel(op, 0, part),
                     params::opFeedbackLevel(op, 1, part),
-                    params::opFeedbackLevel(op, 2, part)},
-                   colour(tokens::purple), 0.0, 99.0, false),
-          depth_(editor.state(), params::opFeedbackDepth(op, part), "depth",
-                 28.0f)
+                    params::opFeedbackLevel(op, 2, part),
+                    params::opFeedbackLevel(op, 3, part)},
+                   colour(tokens::purple), -32768.0, 32767.0, true),
+          on_(editor.state(), params::opFeedbackOn(op, part), "on")
     {
         addAndMakeVisible(envView_);
-        addAndMakeVisible(depth_);
+        addAndMakeVisible(on_);
         for (int i = 0; i < 4; ++i) {
             rates_[static_cast<std::size_t>(i)] = std::make_unique<ParamKnob>(
                 editor.state(), params::opFeedbackRate(op, i, part),
                 "r" + juce::String(i + 1), 28.0f);
             addAndMakeVisible(*rates_[static_cast<std::size_t>(i)]);
         }
-        for (int i = 0; i < 3; ++i) {
+        for (int i = 0; i < 4; ++i) {
             levels_[static_cast<std::size_t>(i)] = std::make_unique<ParamKnob>(
                 editor.state(), params::opFeedbackLevel(op, i, part),
                 "l" + juce::String(i + 1), 28.0f);
@@ -235,26 +235,25 @@ public:
     void resized() override
     {
         auto area = contentArea();
-        auto top = area.removeFromTop(64);
-        depth_.setBounds(top.removeFromRight(80));
-        envView_.setBounds(top);
+        envView_.setBounds(area.removeFromTop(64));
         auto rates = area.removeFromTop(64);
         const int rateCell = rates.getWidth() / 4;
         for (auto& knob : rates_)
             knob->setBounds(rates.removeFromLeft(rateCell));
         auto levels = area.removeFromTop(64);
-        const int levelCell = levels.getWidth() / 3;
+        const int levelCell = levels.getWidth() / 4;
         for (auto& knob : levels_)
             knob->setBounds(levels.removeFromLeft(levelCell));
+        on_.setBounds(getWidth() - 56, 0, 48, 18);
     }
 
     void tick() { envView_.repaint(); }
 
 private:
     P1Envelope envView_;
-    ParamKnob depth_;
+    P1Toggle on_;
     std::array<std::unique_ptr<ParamKnob>, 4> rates_{};
-    std::array<std::unique_ptr<ParamKnob>, 3> levels_{};
+    std::array<std::unique_ptr<ParamKnob>, 4> levels_{};
 };
 
 class LfoCard : public P1Card {

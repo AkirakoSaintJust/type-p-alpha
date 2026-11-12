@@ -201,9 +201,9 @@ and the selected part button has a green border and green text.
 
 ### Tabs
 
-`patch settings`, `operators`, `fx / mod`, `operator lfos`, with no vertical dividers.
-The active tab is a pink cut polygon rather than a rectangle. Inactive tabs are dim
-text on black.
+`patch settings`, `operators`, `operator lfos`, `fx / mod`, with no vertical
+dividers. The active tab is a pink cut polygon rather than a rectangle. Inactive tabs
+are dim text on black.
 
 ### Patch settings
 
@@ -224,9 +224,10 @@ after it, and the mute switch at the right with a 16px gap before it, then a sco
 and spectro pair, and three cards: `oscillator`, `amplitude envelope`,
 `feedback envelope`. The oscillator card holds ratio, detune, level, feedback and
 the wave select. The amplitude envelope holds R1 to R4 on the first row and L1 to L3
-on the second row. The feedback envelope holds its own R1 to R4 and L1 to L3 rows,
-and the operator's `depth` knob sits beside its graph. The four oscillator knobs
-spread across the card. The envelope rates and levels each get their own row.
+on the second row. The feedback envelope holds its own R1 to R4 and L1 to L4 rows,
+with signed levels in feedback units and an `on` switch in the card header. The four
+oscillator knobs spread across the card. The envelope rates and levels each get their
+own row.
 
 ### Operator LFOs
 

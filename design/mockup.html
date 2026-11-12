@@ -253,9 +253,6 @@
   .opcol .env .knob { width: 34px; }
   .opcol .env .knobs { justify-content: space-between; }
   .opcol .env .knobs + .knobs { margin-top: 1px; }
-  .fb-top { display: flex; gap: 4px; align-items: flex-start; }
-  .fb-top .envbox { flex: 1; margin-bottom: 4px; }
-  .fb-top .knob { width: 50px; flex: 0 0 50px; }
   .opcol .dial, .opcol .dial svg { width: 28px; height: 28px; }
   .opcol .envbox { height: 34px; margin-bottom: 3px; }
   .opcol-head { display: flex; align-items: center; justify-content: space-between; }
@@ -610,10 +607,10 @@
 
   /* ---------------- data ---------------- */
   const INIT_OPS = [
-    { name: "op1", role: "car", ratio: 1.0, detune: 0, level: 99, fb: 0, wave: "sine", r: [99, 40, 30, 60], l: [99, 70, 0], lfoRate: 5.0, lfoDepth: 0, lfoWave: "sine", lfoMode: true, fbDepth: 0, fbenvR: [80, 60, 50, 80], fbenvL: [99, 93, 87], fbLfoRate: 4.0, fbLfoDepth: 0, fbLfoWave: "sine", fbLfoMode: true, detuneLfoRate: 4.0, detuneLfoDepth: 0, detuneLfoWave: "sine", detuneLfoMode: true, mute: false },
-    { name: "op2", role: "mod", ratio: 2.0, detune: 0, level: 0, fb: 0, wave: "sine", r: [99, 45, 35, 60], l: [0, 0, 0], lfoRate: 5.0, lfoDepth: 0, lfoWave: "sine", lfoMode: true, fbDepth: 0, fbenvR: [80, 60, 50, 80], fbenvL: [99, 93, 87], fbLfoRate: 4.0, fbLfoDepth: 0, fbLfoWave: "sine", fbLfoMode: true, detuneLfoRate: 4.0, detuneLfoDepth: 0, detuneLfoWave: "sine", detuneLfoMode: true, mute: false },
-    { name: "op3", role: "car", ratio: 1.0, detune: 0, level: 0, fb: 0, wave: "sine", r: [99, 40, 30, 60], l: [0, 0, 0], lfoRate: 5.0, lfoDepth: 0, lfoWave: "sine", lfoMode: true, fbDepth: 0, fbenvR: [80, 60, 50, 80], fbenvL: [99, 93, 87], fbLfoRate: 4.0, fbLfoDepth: 0, fbLfoWave: "sine", fbLfoMode: true, detuneLfoRate: 4.0, detuneLfoDepth: 0, detuneLfoWave: "sine", detuneLfoMode: true, mute: false },
-    { name: "op4", role: "mod", ratio: 3.0, detune: 0, level: 0, fb: 0, wave: "sine", r: [99, 40, 30, 60], l: [0, 0, 0], lfoRate: 5.0, lfoDepth: 0, lfoWave: "sine", lfoMode: true, fbDepth: 0, fbenvR: [80, 60, 50, 80], fbenvL: [99, 93, 87], fbLfoRate: 4.0, fbLfoDepth: 0, fbLfoWave: "sine", fbLfoMode: true, detuneLfoRate: 4.0, detuneLfoDepth: 0, detuneLfoWave: "sine", detuneLfoMode: true, mute: false }
+    { name: "op1", role: "car", ratio: 1.0, detune: 0, level: 99, fb: 0, wave: "sine", r: [99, 40, 30, 60], l: [99, 70, 0], lfoRate: 5.0, lfoDepth: 0, lfoWave: "sine", lfoMode: true, fbOn: true, fbenvR: [80, 60, 50, 80], fbenvL: [0, 0, 0, 0], fbLfoRate: 4.0, fbLfoDepth: 0, fbLfoWave: "sine", fbLfoMode: true, detuneLfoRate: 4.0, detuneLfoDepth: 0, detuneLfoWave: "sine", detuneLfoMode: true, mute: false },
+    { name: "op2", role: "mod", ratio: 2.0, detune: 0, level: 0, fb: 0, wave: "sine", r: [99, 45, 35, 60], l: [0, 0, 0], lfoRate: 5.0, lfoDepth: 0, lfoWave: "sine", lfoMode: true, fbOn: true, fbenvR: [80, 60, 50, 80], fbenvL: [0, 0, 0, 0], fbLfoRate: 4.0, fbLfoDepth: 0, fbLfoWave: "sine", fbLfoMode: true, detuneLfoRate: 4.0, detuneLfoDepth: 0, detuneLfoWave: "sine", detuneLfoMode: true, mute: false },
+    { name: "op3", role: "car", ratio: 1.0, detune: 0, level: 0, fb: 0, wave: "sine", r: [99, 40, 30, 60], l: [0, 0, 0], lfoRate: 5.0, lfoDepth: 0, lfoWave: "sine", lfoMode: true, fbOn: true, fbenvR: [80, 60, 50, 80], fbenvL: [0, 0, 0, 0], fbLfoRate: 4.0, fbLfoDepth: 0, fbLfoWave: "sine", fbLfoMode: true, detuneLfoRate: 4.0, detuneLfoDepth: 0, detuneLfoWave: "sine", detuneLfoMode: true, mute: false },
+    { name: "op4", role: "mod", ratio: 3.0, detune: 0, level: 0, fb: 0, wave: "sine", r: [99, 40, 30, 60], l: [0, 0, 0], lfoRate: 5.0, lfoDepth: 0, lfoWave: "sine", lfoMode: true, fbOn: true, fbenvR: [80, 60, 50, 80], fbenvL: [0, 0, 0, 0], fbLfoRate: 4.0, fbLfoDepth: 0, fbLfoWave: "sine", fbLfoMode: true, detuneLfoRate: 4.0, detuneLfoDepth: 0, detuneLfoWave: "sine", detuneLfoMode: true, mute: false }
   ];
   const WAVES = ["sine", "triangle", "half sine", "half tri", "2x sine", "2x tri",
     "2x half sine", "2x half tri", "rect sine", "pulse", "square", "saw"];
@@ -858,15 +855,17 @@
   function notePair(n) { return n + "/" + noteName(n); }
   function bipFmt(v) { return (v > 0 ? "+" : "") + v + "%"; }
 
-  function penvSvg(r, l) {
+  function penvSvg(r, l, scaleMax) {
     const W = 240, H = 62, mid = H / 2;
+    const top = scaleMax || 12;
     const widths = r.map(function (rr) { return 8 + (99 - rr) / 99 * 26; });
     const total = widths.reduce(function (a, b) { return a + b; }, 0);
     const scale = (W - 12) / total;
     let x = 6, d = "M 6 " + mid;
-    [l[0], l[1], l[2], 0].forEach(function (lev, i) {
+    const levels = l.length >= 4 ? [l[0], l[1], l[2], l[3]] : [l[0], l[1], l[2], 0];
+    levels.forEach(function (lev, i) {
       x += widths[i] * scale;
-      const y = mid - lev / 12 * (mid - 5);
+      const y = mid - lev / top * (mid - 5);
       d += " L " + x.toFixed(1) + " " + y.toFixed(1);
     });
     return '<svg viewBox="0 0 ' + W + " " + H + '">' +
@@ -1108,7 +1107,7 @@
       ratio: o.ratio, detune: o.detune, level: o.level, fb: o.fb, wave: o.wave,
       r: o.r.slice(), l: o.l.slice(), lfoRate: o.lfoRate, lfoDepth: o.lfoDepth,
       lfoWave: o.lfoWave, lfoMode: o.lfoMode,
-      fbDepth: o.fbDepth, fbenvR: o.fbenvR.slice(), fbenvL: o.fbenvL.slice(),
+      fbOn: o.fbOn, fbenvR: o.fbenvR.slice(), fbenvL: o.fbenvL.slice(),
       fbLfoRate: o.fbLfoRate, fbLfoDepth: o.fbLfoDepth,
       fbLfoWave: o.fbLfoWave, fbLfoMode: o.fbLfoMode,
       detuneLfoRate: o.detuneLfoRate, detuneLfoDepth: o.detuneLfoDepth,
@@ -1122,7 +1121,7 @@
     o.ratio = d.ratio; o.detune = d.detune; o.level = d.level; o.fb = d.fb; o.wave = d.wave;
     o.r = d.r.slice(); o.l = d.l.slice(); o.lfoRate = d.lfoRate; o.lfoDepth = d.lfoDepth;
     o.lfoWave = d.lfoWave; o.lfoMode = d.lfoMode;
-    o.fbDepth = d.fbDepth;
+    o.fbOn = d.fbOn;
     o.fbenvR = d.fbenvR.slice(); o.fbenvL = d.fbenvL.slice();
     o.fbLfoRate = d.fbLfoRate; o.fbLfoDepth = d.fbLfoDepth;
     o.fbLfoWave = d.fbLfoWave; o.fbLfoMode = d.fbLfoMode;
@@ -1215,10 +1214,8 @@
   function fbEnvSection(o) {
     const graph = document.createElement("div");
     graph.className = "envbox";
-    graph.innerHTML = envSvg(o.fbenvR, o.fbenvL);
-    const top = document.createElement("div");
-    top.className = "fb-top";
-    top.append(graph, knobFor(b(o, "fbDepth", "DEPTH", -100, 100, bipFmt, 1)));
+    graph.innerHTML = penvSvg(o.fbenvR, o.fbenvL, 100);
+    const on = makeToggle("on", o.fbOn, function (v) { o.fbOn = v; rerender(); });
     const rates = [
       ba(o, "fbenvR", 0, "R1", 0, 99, function (v) { return v; }, 1),
       ba(o, "fbenvR", 1, "R2", 0, 99, function (v) { return v; }, 1),
@@ -1226,12 +1223,14 @@
       ba(o, "fbenvR", 3, "R4", 0, 99, function (v) { return v; }, 1)
     ];
     const levels = [
-      ba(o, "fbenvL", 0, "L1", 0, 99, function (v) { return v; }, 1),
-      ba(o, "fbenvL", 1, "L2", 0, 99, function (v) { return v; }, 1),
-      ba(o, "fbenvL", 2, "L3", 0, 99, function (v) { return v; }, 1)
+      ba(o, "fbenvL", 0, "L1", -100, 100, bipFmt, 1),
+      ba(o, "fbenvL", 1, "L2", -100, 100, bipFmt, 1),
+      ba(o, "fbenvL", 2, "L3", -100, 100, bipFmt, 1),
+      ba(o, "fbenvL", 3, "L4", -100, 100, bipFmt, 1)
     ];
     return makeSection("FEEDBACK ENVELOPE", "fbenv", rates.concat(levels), {
-      before: top,
+      before: graph,
+      headExtra: on,
       rows: [rates, levels],
       copy: false
     });
@@ -1433,8 +1432,8 @@
   const TABS = [
     { id: "patch", label: "patch settings", view: viewPatch },
     { id: "ops", label: "operators", view: viewOps },
-    { id: "fxmod", label: "fx / mod", view: viewFxMod },
-    { id: "oplfo", label: "operator lfos", view: viewOperatorLfos }
+    { id: "oplfo", label: "operator lfos", view: viewOperatorLfos },
+    { id: "fxmod", label: "fx / mod", view: viewFxMod }
   ];
   const body = document.getElementById("body");
   const tabsEl = document.getElementById("tabs");
@@ -1684,9 +1683,9 @@
     d.velFollow = JSON.parse(JSON.stringify(s.velFollow));
     d.ops.forEach(function (o) {
       if (o.lfoMode === undefined) o.lfoMode = true;
-      if (o.fbDepth === undefined) o.fbDepth = 0;
+      if (o.fbOn === undefined) o.fbOn = true;
       if (!Array.isArray(o.fbenvR)) o.fbenvR = [80, 60, 50, 80];
-      if (!Array.isArray(o.fbenvL)) o.fbenvL = [99, 93, 87];
+      if (!Array.isArray(o.fbenvL)) o.fbenvL = [0, 0, 0, 0];
       if (o.fbLfoRate === undefined) o.fbLfoRate = 4.0;
       if (o.fbLfoDepth === undefined) o.fbLfoDepth = 0;
       if (o.fbLfoWave === undefined) o.fbLfoWave = "sine";
@@ -2043,9 +2042,9 @@
       ops: (s.ops.length === 4 ? s.ops : base.ops).map(function (o) {
         return Object.assign({
           lfoMode: true,
-          fbDepth: 0,
+          fbOn: true,
           fbenvR: [80, 60, 50, 80],
-          fbenvL: [99, 93, 87],
+          fbenvL: [0, 0, 0, 0],
           fbLfoRate: 4.0,
           fbLfoDepth: 0,
           fbLfoWave: "sine",
