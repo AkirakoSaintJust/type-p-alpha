@@ -51,19 +51,22 @@ public:
     void showAlgorithmPicker();
     void applyAlgorithm(int algorithm);
     void showRenameDialog(bool part, int index);
-    void showPartMenu(juce::Component& anchor);
+    void showSinglePartsBrowser();
     void exportLibrary();
     void importLibrary();
     void showPatchBrowser();
     void showPatchSaveMode(int slot);
     void showPartBrowser(bool saveMode);
+    void showPartBrowser(int part, bool saveMode);
     void copyPart(int part);
     void pastePart(int part);
     void initPart(int part);
     void initMultiPatch();
     void togglePartMute(int part, bool muted);
     void savePartToSlot(int slot);
+    void savePartToSlot(int part, int slot);
     void loadPartFromSlot(int slot);
+    void loadPartFromSlot(int part, int slot);
     void savePatchToSlot(int slot, int mode = 0);
     void loadPatchFromSlot(int slot);
     void showConfirm(const juce::String& message, std::function<void()> onConfirm,

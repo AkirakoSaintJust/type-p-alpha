@@ -14,7 +14,7 @@ class PresetStore {
 public:
     static constexpr int kPartSlots = 128;
     static constexpr int kMultiSlots = 64;
-    static constexpr int kNameLen = 15;
+    static constexpr int kNameLen = 32;
 
     struct Part {
         bool used = false;
@@ -78,7 +78,9 @@ public:
 
 private:
     static std::string shortName(const std::string& name);
-    bool loadLegacyPartBank(const uint8_t* data, std::size_t size);
+    bool loadPartBankWith(const uint8_t* data, std::size_t size, uint32_t nameLen,
+                          const std::vector<int>* legacyMap);
+    bool loadMultiBankWith(const uint8_t* data, std::size_t size, uint32_t nameLen);
 
     int partParamCount_ = 0;
     int partCount_ = 0;

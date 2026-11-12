@@ -129,8 +129,8 @@ public:
         g.setColour(colour(active_ ? tokens::green : tokens::text));
         g.drawText("part " + juce::String(part_ + 1) + ": " +
                        editor_.processor().getPartName(part_),
-                   getLocalBounds().reduced(12).removeFromTop(20),
-                   juce::Justification::centredLeft, false);
+                   getLocalBounds().reduced(12).removeFromTop(20).withTrimmedRight(300),
+                   juce::Justification::centredLeft, true);
     }
 
     void tick()

@@ -104,6 +104,10 @@ int main(int argc, char** argv)
     p1editor->showPartBrowser(true);
     ok = saveSnapshot(*editor, directory.getChildFile("editor-parts.png")) && ok;
     p1editor->closeDialog();
+    p1editor->showSinglePartsBrowser();
+    ok = saveSnapshot(*editor,
+                      directory.getChildFile("editor-single-parts.png")) && ok;
+    p1editor->closeDialog();
     p1editor->showConfirm("overwrite patch slot 01?", [] {});
     ok = saveSnapshot(*editor, directory.getChildFile("editor-confirm.png")) && ok;
     p1editor->closeDialog();
@@ -138,6 +142,14 @@ int main(int argc, char** argv)
         std::printf("editor snapshot: part unmute did not restore level\n");
         ok = false;
     }
+
+    p1editor->setActivePart(0);
+    processor.setPartName(0, "12345678901234567890123456789012");
+    processor.setPatchName("12345678901234567890123456789012");
+    p1editor->refreshNames();
+    fill();
+    ok = saveSnapshot(*editor,
+                      directory.getChildFile("editor-long-name.png")) && ok;
 
     editor->setSize(620, 493);
     fill();

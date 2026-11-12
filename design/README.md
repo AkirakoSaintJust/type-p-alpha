@@ -81,6 +81,7 @@ Scale:
 | button key hint | DotGothic16 | 11 | lower |
 | mini button | DotGothic16 | 12 | lower |
 | legend word | DotGothic16 | 11 | lower |
+| switch state | DotGothic16 | 11 | lower |
 | legend glyph | DotGothic16 | 12 | lower |
 | mute tile label | DotGothic16 | 13 | lower |
 | note | DotGothic16 | 13 | lower |
@@ -93,7 +94,7 @@ Scale:
 | operator name | Zen Dots | 14 | lower |
 | part name | Zen Dots | 12 | lower |
 | dialog title | Zen Dots | 11 | lower |
-| toolbar label | Zen Dots | 9 | lower |
+| toolbar label | DotGothic16 | 9 | lower |
 | status | Zen Dots | 11 | lower |
 | algorithm label | Zen Dots | 10 | lower |
 | algorithm number | Zen Dots | 30 | lower |
@@ -255,14 +256,17 @@ that the graph cannot clip or touch the caption.
 The multi-patch library lists the 64 multi patches and carries `export bank`,
 `import bank`, `init multi-patch`, `save` and `load`. Export and import use the
 operating system file dialogs. Init multi-patch asks `init multi-patch? this wipes
-the current patch.` and offers `cancel` and `init`. The save chooser is titled
+the current patch.` and offers `init` and `cancel`. The save chooser is titled
 `save multi-patch` and carries `discard edits to parts`, `save as new parts` and
 `mutate parts in place`.
 
-The part slots list is titled `part n slots` and holds 128 sounds, with the part's
-source slot selected on open. The part menu carries rename, copy, paste, init, save,
-load, export library and import library in that order, with a separator before the
-save pair and another before the library pair.
+The single parts popup is titled `single parts` and lists part 1 and part 2 with
+their names and source slots. It carries `export bank`, `import bank`, `init single
+part 1`, `init single part 2`, `save single part 1`, `save single part 2`, `load
+single part 1`, `load single part 2` and `cancel`, and the buttons wrap onto two
+rows. The part slots list is titled `part n slots` and holds 128 sounds, with the
+part's source slot selected on open. Dialogs put `cancel` at the right edge of the
+last button row.
 
 ### Status
 
@@ -305,7 +309,7 @@ save pair and another before the library pair.
 - A state switch reads `on` or `off`, with the control name when it needs one,
   so the toggle reads `bipolar on` rather than a fixed `on`.
 - Part titles are `part n: name`.
-- Names use the preset record limit of 15 characters.
+- Names use the preset record limit of 32 characters.
 - No `what this is` section. The page shows the product. Use the space for the
   next action, the controls, or a real limit.
 - No `The... The...` lists. Drop the article, lead with the noun or the verb, or

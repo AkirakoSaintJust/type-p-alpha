@@ -115,6 +115,10 @@
   }
   .btn:hover { border-color: var(--pink); }
   .btn .k { color: var(--faint); font-size: 11px; letter-spacing: .03em; }
+  .btn.patch { width: 150px; box-sizing: border-box; min-width: 0; }
+  .btn.patch #patchName {
+    flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis;
+  }
   .btn.renamer { color: var(--dim); }
   .btn.renamer:hover { color: var(--pink); }
 
@@ -148,7 +152,7 @@
   .tbtn:hover { border-color: var(--pink); color: var(--text); }
   .tbtn.partsel { padding: 5px 11px; }
   .tbtn.partsel.active { border-color: var(--green); color: var(--green); }
-  .tbtn.pmenu { padding: 5px 9px; }
+  .tbtn.partlib { padding: 5px 9px; }
 
   /* ---------------- tabs ---------------- */
   .tabs { display: flex; gap: 0; padding: 0; background: #000; border-bottom: 1px solid var(--line2); }
@@ -263,7 +267,8 @@
   .part { border: 1px solid transparent; background: #000; padding: 8px 10px 10px; display: flex; flex-direction: column; }
   .part.active { border-color: var(--green); }
   .part .ph { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-  .part .pn { font-family: var(--font-head); font-size: 12px; letter-spacing: .04em; color: var(--dim); }
+  .part .ph > div:first-child { min-width: 0; flex: 1; }
+  .part .pn { font-family: var(--font-head); font-size: 12px; letter-spacing: .04em; color: var(--dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .part.active .pn { color: var(--green); }
   .part .pacts { display: flex; gap: 4px; align-items: center; }
   .part .knobs { gap: 6px 2px; }
@@ -334,21 +339,6 @@
   .dialog-foot button.primary { border-color: var(--pink); color: var(--pink); background: #000; }
   .dialog-foot button:hover { filter: brightness(1.2); }
 
-  .part-menu {
-    position: absolute; z-index: 25; width: 210px;
-    background: var(--popup); border: 1px solid var(--line2);
-    box-shadow: 0 16px 40px rgba(0,0,0,.8);
-  }
-  .part-menu .pm-head { padding: 8px 10px; border-bottom: 1px solid #2e2e2e; font-size: 11px; letter-spacing: .08em; color: var(--dim); }
-  .part-menu .pm-sep { height: 6px; border-bottom: 1px solid #262626; background: #000; }
-  .part-menu button {
-    display: block; width: 100%; text-align: left;
-    background: none; border: 0; border-bottom: 1px solid #262626;
-    color: var(--white); font-size: 12px; letter-spacing: .04em; padding: 9px 10px; cursor: pointer;
-  }
-  .part-menu button:hover:not(:disabled) { background: #262626; color: var(--pink); }
-  .part-menu button:disabled { color: #555; cursor: default; }
-
   .slots { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
   .slots .slot {
     background: #000; border: 1px solid #3a3a3a; color: var(--white);
@@ -382,7 +372,7 @@
   .slotrow.sel { border-color: var(--purple); border-style: solid; color: var(--purple); background: rgba(199,128,255,.08); }
   .slotrow .pno { color: var(--faint); min-width: 26px; }
   .slotrow.sel .pno, .slotrow.sel .sname { color: var(--purple); }
-  .slotrow .sname { flex: 1; }
+  .slotrow .sname { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .slotrow.dead { opacity: .35; }
   .patchlist::-webkit-scrollbar, .partlist::-webkit-scrollbar { width: 8px; }
   .patchlist::-webkit-scrollbar-track, .partlist::-webkit-scrollbar-track { background: #000; }
@@ -408,7 +398,7 @@
   .preset-row.sel { background: rgba(199,128,255,.14); border: 1px solid var(--purple); }
   .preset-row.sel .pno, .preset-row.sel .pname { color: var(--purple); }
   .preset-row .pno { color: var(--faint); font-size: 13px; min-width: 24px; }
-  .preset-row .pname { flex: 1; color: var(--white); }
+  .preset-row .pname { flex: 1; color: var(--white); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .preset-row.empty .pname { color: var(--faint); }
   .preset-row .tag { color: var(--pink); font-size: 11px; margin-left: 8px; letter-spacing: .04em; }
   .preset-row .meta { color: #9a9a9a; font-size: 13px; letter-spacing: .02em; }
@@ -986,8 +976,8 @@
     note.textContent = "Pink operators are carriers.";
     bodyEl.appendChild(note);
     openDialog("ALGORITHM", bodyEl, [
-      { label: "CANCEL", onClick: function (close) { close(); } },
-      { label: "LOAD", primary: true, onClick: function (close) { close(); setAlg(sel); } }
+      { label: "LOAD", primary: true, onClick: function (close) { close(); setAlg(sel); } },
+      { label: "CANCEL", onClick: function (close) { close(); } }
     ], true);
   }
 
@@ -1515,60 +1505,46 @@
       const btn = document.createElement("button");
       btn.className = "tbtn partsel" + (activePart === i + 1 ? " active" : "");
       btn.textContent = "part " + (i + 1);
-      btn.addEventListener("click", function () { setActivePart(i + 1); closePartMenu(); });
+      btn.addEventListener("click", function () { setActivePart(i + 1); });
       g2.appendChild(btn);
     });
     const edit = document.createElement("button");
-    edit.className = "tbtn pmenu";
-    edit.textContent = "part library actions... \u25BE";
-    edit.title = "Part library: rename, copy, init, save, load, and the bank";
-    edit.addEventListener("click", function (e) { e.stopPropagation(); openPartMenu(edit); });
+    edit.className = "tbtn partlib";
+    edit.textContent = "part library actions...";
+    edit.title = "Single part library";
+    edit.addEventListener("click", function () { openSingleParts(); });
     g2.appendChild(edit);
     toolbarEl.appendChild(g2);
   }
 
-  let partMenu = null;
-  function closePartMenu() { if (partMenu) { partMenu.remove(); partMenu = null; } }
-  function openPartMenu(btn) {
-    closePartMenu();
-    const p = activePart;
-    const canPaste = clipboard && clipboard.kind === "part";
-    const menu = document.createElement("div");
-    menu.className = "part-menu";
-    menu.innerHTML = '<div class="pm-head">part ' + p + ": " + PARTS[p - 1].name + "</div>" +
-      '<button data-act="rename">RENAME PART</button>' +
-      '<button data-act="copy">COPY PART</button>' +
-      '<button data-act="paste"' + (canPaste ? "" : " disabled") + '>PASTE PART</button>' +
-      '<button data-act="init">INIT PART</button>' +
-      '<div class="pm-sep"></div>' +
-      '<button data-act="save">SAVE PART&hellip;</button>' +
-      '<button data-act="load">LOAD PART&hellip;</button>' +
-      '<div class="pm-sep"></div>' +
-      '<button data-act="export">EXPORT LIBRARY&hellip;</button>' +
-      '<button data-act="import">IMPORT LIBRARY&hellip;</button>';
-    menu.addEventListener("click", function (e) {
-      const b = e.target.closest("button");
-      if (!b || b.disabled) return;
-      closePartMenu();
-      if (b.dataset.act === "rename") renamePart(p - 1);
-      else if (b.dataset.act === "load") openPartSlots("load");
-      else if (b.dataset.act === "save") openPartSlots("save");
-      else if (b.dataset.act === "init") openInitConfirm(p);
-      else if (b.dataset.act === "copy") { copyPart(); toast("part copied"); }
-      else if (b.dataset.act === "paste") { pastePart(p); }
-      else if (b.dataset.act === "export") exportLibrary();
-      else if (b.dataset.act === "import") importLibrary();
-    });
-    plugin.appendChild(menu);
-    const r = btn.getBoundingClientRect();
-    const pr = plugin.getBoundingClientRect();
-    menu.style.left = (r.left - pr.left) + "px";
-    menu.style.top = (r.bottom - pr.top + 4) + "px";
-    partMenu = menu;
+  function openSingleParts() {
+    const bodyEl = document.createElement("div");
+    const list = document.createElement("div");
+    list.className = "partlist bank";
+    for (let i = 0; i < 2; i++) {
+      const source = partSource[i];
+      const row = document.createElement("div");
+      row.className = "preset-row";
+      row.innerHTML = '<span class="pno">' + (i + 1) + "</span>" +
+        '<span class="pname">part ' + (i + 1) + ": " + PARTS[i].name + "</span>" +
+        '<span class="meta">' +
+        (source >= 0 ? "slot " + String(source + 1).padStart(2, "0") : "no slot") +
+        "</span>";
+      list.appendChild(row);
+    }
+    bodyEl.appendChild(list);
+    openDialog("single parts", bodyEl, [
+      { label: "export bank", onClick: function (close) { close(); exportLibrary(); } },
+      { label: "import bank", onClick: function (close) { close(); importLibrary(); } },
+      { label: "init single part 1", onClick: function (close) { close(); openInitConfirm(1); } },
+      { label: "init single part 2", onClick: function (close) { close(); openInitConfirm(2); } },
+      { label: "save single part 1", onClick: function (close) { close(); openPartSlots("save", 1); } },
+      { label: "save single part 2", onClick: function (close) { close(); openPartSlots("save", 2); } },
+      { label: "load single part 1", onClick: function (close) { close(); openPartSlots("load", 1); } },
+      { label: "load single part 2", onClick: function (close) { close(); openPartSlots("load", 2); } },
+      { label: "cancel", onClick: function (close) { close(); } }
+    ], true);
   }
-  document.addEventListener("click", function (e) {
-    if (partMenu && !e.target.closest(".part-menu") && !e.target.closest(".pmenu")) closePartMenu();
-  });
 
   /* ---------------- dialogs ---------------- */
   function openDialog(title, bodyNode, buttons, wide) {
@@ -1614,19 +1590,19 @@
     const input = document.createElement("input");
     input.className = "textin";
     input.value = currentName;
-    input.maxLength = 15;
+    input.maxLength = 32;
     bodyEl.appendChild(input);
     const note = document.createElement("div");
     note.className = "note";
-    note.textContent = "max 15 characters.";
+    note.textContent = "max 32 characters.";
     bodyEl.appendChild(note);
     openDialog(title, bodyEl, [
-      { label: "cancel", onClick: function (close) { close(); } },
       { label: "save", primary: true, onClick: function (close) {
         const v = input.value.trim();
         close();
         if (v) onSave(v);
-      } }
+      } },
+      { label: "cancel", onClick: function (close) { close(); } }
     ]);
     setTimeout(function () { input.focus(); input.select(); }, 30);
   }
@@ -1687,8 +1663,8 @@
     renderAlg();
   }
 
-  function openPartSlots(mode) {
-    const partIdx = activePart - 1;
+  function openPartSlots(mode, part) {
+    const partIdx = (part === undefined ? activePart : part) - 1;
     let sel = partSource[partIdx] >= 0 ? partSource[partIdx] : 0;
     const bodyEl = document.createElement("div");
     const list = document.createElement("div");
@@ -1708,43 +1684,45 @@
       cells.push(c);
     }
     bodyEl.appendChild(list);
-    openDialog("part " + activePart + " slots", bodyEl, [
-      { label: "cancel", onClick: function (close) { close(); } },
+    openDialog("part " + (partIdx + 1) + " slots", bodyEl, [
       { label: mode, primary: true, onClick: function (close) {
         close();
         if (mode === "save") {
-          if (PART_SLOTS[sel]) confirmOverwritePart(sel);
-          else savePartToSlot(sel);
+          if (PART_SLOTS[sel]) confirmOverwritePart(sel, partIdx + 1);
+          else savePartToSlot(sel, partIdx + 1);
         } else if (PART_SLOTS[sel]) {
-          loadPartFromSlot(sel);
+          loadPartFromSlot(sel, partIdx + 1);
         }
-      } }
+      } },
+      { label: "cancel", onClick: function (close) { close(); } }
     ]);
   }
 
-  function confirmOverwritePart(idx) {
+  function confirmOverwritePart(idx, part) {
     const bodyEl = document.createElement("div");
     bodyEl.innerHTML = "overwrite part slot <b>" + String(idx + 1).padStart(2, "0") + "</b>?";
     openDialog("confirm save", bodyEl, [
-      { label: "cancel", onClick: function (close) { close(); } },
       { label: "save", primary: true, onClick: function (close) {
         close();
-        savePartToSlot(idx);
-      } }
+        savePartToSlot(idx, part);
+      } },
+      { label: "cancel", onClick: function (close) { close(); } }
     ]);
   }
 
-  function savePartToSlot(idx) {
-    PART_SLOTS[idx] = partSnapshot(activePart - 1);
-    partSource[activePart - 1] = idx;
+  function savePartToSlot(idx, part) {
+    const p = part === undefined ? activePart : part;
+    PART_SLOTS[idx] = partSnapshot(p - 1);
+    partSource[p - 1] = idx;
     toast("part saved to slot " + String(idx + 1).padStart(2, "0"));
   }
 
-  function loadPartFromSlot(idx) {
+  function loadPartFromSlot(idx, part) {
     const s = PART_SLOTS[idx];
     if (!s) return;
-    applyPartSnapshot(activePart - 1, s);
-    partSource[activePart - 1] = idx;
+    const p = part === undefined ? activePart : part;
+    applyPartSnapshot(p - 1, s);
+    partSource[p - 1] = idx;
     toast("part loaded from slot " + String(idx + 1).padStart(2, "0"));
   }
 
@@ -1773,12 +1751,12 @@
     const bodyEl = document.createElement("div");
     bodyEl.innerHTML = "init part <b>" + p + "</b>? this wipes the current part.";
     openDialog("init part", bodyEl, [
-      { label: "cancel", onClick: function (close) { close(); } },
       { label: "init", primary: true, onClick: function (close) {
         close();
         initPart(p - 1);
         toast("part initialised");
-      } }
+      } },
+      { label: "cancel", onClick: function (close) { close(); } }
     ]);
   }
 
@@ -1881,7 +1859,6 @@
     render();
     bodyEl.appendChild(list);
     openDialog("multi-patches", bodyEl, [
-      { label: "cancel", onClick: function (close) { close(); } },
       { label: "export bank", onClick: function (close) { close(); exportLibrary(); } },
       { label: "import bank", onClick: function (close) { close(); importLibrary(); } },
       { label: "init multi-patch", onClick: function (close) {
@@ -1892,7 +1869,8 @@
       { label: "load", primary: true, onClick: function (close) {
         close();
         loadPatchFromSlot(sel);
-      } }
+      } },
+      { label: "cancel", onClick: function (close) { close(); } }
     ], true);
   }
   document.getElementById("patchBtn").addEventListener("click", openPatchBrowser);
@@ -1901,11 +1879,11 @@
     const bodyEl = document.createElement("div");
     bodyEl.innerHTML = "init multi-patch? this wipes the current patch.";
     openDialog("init multi-patch", bodyEl, [
-      { label: "cancel", onClick: function (close) { close(); } },
       { label: "init", primary: true, onClick: function (close) {
         close();
         initMultiPatch();
-      } }
+      } },
+      { label: "cancel", onClick: function (close) { close(); } }
     ]);
   }
 
@@ -1928,12 +1906,12 @@
     });
     bodyEl.appendChild(list);
     openDialog("save multi-patch", bodyEl, [
-      { label: "cancel", onClick: function (close) { close(); } },
       { label: "save", primary: true, onClick: function (close) {
         close();
         if (PATCHES[slot].used) confirmOverwriteMulti(slot, sel);
         else savePatchToSlot(slot, sel);
-      } }
+      } },
+      { label: "cancel", onClick: function (close) { close(); } }
     ]);
   }
 
@@ -1942,11 +1920,11 @@
     bodyEl.innerHTML = "overwrite multi-patch slot <b>" +
       String(slot + 1).padStart(2, "0") + "</b>?";
     openDialog("confirm save", bodyEl, [
-      { label: "cancel", onClick: function (close) { close(); } },
       { label: "save", primary: true, onClick: function (close) {
         close();
         savePatchToSlot(slot, mode);
-      } }
+      } },
+      { label: "cancel", onClick: function (close) { close(); } }
     ]);
   }
 
@@ -2100,7 +2078,7 @@
     if (h === "save") { showTab("patch"); openPartSlots("save"); return; }
     if (h === "load") { showTab("patch"); openPartSlots("load"); return; }
     if (h === "init") { showTab("patch"); openInitConfirm(activePart); return; }
-    if (h === "menu") { showTab("patch"); openPartMenu(document.querySelector(".pmenu")); return; }
+    if (h === "menu") { showTab("patch"); openSingleParts(); return; }
     if (h === "alg") { showTab("patch"); openAlgPicker(); return; }
     if (h === "rename") { showTab("patch"); renamePart(0); return; }
     if (h === "fx" || h === "mod") { showTab("fxmod"); return; }

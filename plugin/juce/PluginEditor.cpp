@@ -13,11 +13,6 @@ namespace {
 constexpr int kWidth = 1240;
 constexpr int kHeight = 985;
 
-juce::String ellipsis(const juce::String& text, int maxChars)
-{
-    return text.length() <= maxChars ? text : text.substring(0, maxChars);
-}
-
 class PatchButton : public juce::Button {
 public:
     PatchButton() : juce::Button("patch")
@@ -46,8 +41,8 @@ public:
                    juce::Justification::centredLeft, false);
         g.setFont(p1::ui::uiFont(p1::tokens::textButton));
         g.setColour(p1::ui::colour(p1::tokens::white));
-        g.drawText(ellipsis(name_, 15), 46, 0, getWidth() - 52, getHeight(),
-                   juce::Justification::centredLeft, false);
+        g.drawText(name_, 46, 0, getWidth() - 52, getHeight(),
+                   juce::Justification::centredLeft, true);
     }
 
 private:
@@ -277,7 +272,7 @@ public:
         partButtons_[1]->onClick = [this] { editor_.setActivePart(1); };
         addAndMakeVisible(*partButtons_[0]);
         addAndMakeVisible(*partButtons_[1]);
-        edit_.onClick = [this] { editor_.showPartMenu(edit_); };
+        edit_.onClick = [this] { editor_.showSinglePartsBrowser(); };
         addAndMakeVisible(edit_);
     }
 
@@ -500,6 +495,39 @@ private:
     juce::ListBox list_;
 };
 
+class SinglePartListBody : public juce::Component {
+public:
+    explicit SinglePartListBody(PluginEditor& editor) : editor_(editor) {}
+
+    void paint(juce::Graphics& g) override
+    {
+        g.fillAll(colour(tokens::popup));
+        auto area = getLocalBounds();
+        for (int part = 0; part < kP1PartCount; ++part) {
+            auto row = area.removeFromTop(30);
+            g.setColour(colour(tokens::line));
+            g.fillRect(row.getX() + 8, row.getBottom() - 1,
+                       row.getWidth() - 16, 1);
+            g.setFont(uiFont(tokens::textSlotRow));
+            g.setColour(colour(tokens::text));
+            g.drawText("part " + juce::String(part + 1) + ": " +
+                           editor_.processor().getPartName(part),
+                       row.reduced(8, 0).withTrimmedRight(90),
+                       juce::Justification::centredLeft, true);
+            const int source = editor_.processor().presets().partSource(part);
+            g.setColour(colour(source >= 0 ? tokens::purple : tokens::faint));
+            g.drawText(source >= 0
+                           ? "slot " + juce::String(source + 1).paddedLeft('0', 2)
+                           : "no slot",
+                       row.reduced(8, 0), juce::Justification::centredRight,
+                       false);
+        }
+    }
+
+private:
+    PluginEditor& editor_;
+};
+
 class AlgTile : public juce::Button {
 public:
     AlgTile(int index, std::function<void(int)> onSelect)
@@ -603,10 +631,10 @@ public:
         editor_.setColour(juce::TextEditor::textColourId,
                           p1::ui::colour(p1::tokens::green));
         editor_.setInputRestrictions(
-            15, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 _-.");
+            32, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 _-.");
         editor_.onReturnKey = [] {};
         addAndMakeVisible(editor_);
-        note_.setText("max 15 characters.", juce::dontSendNotification);
+        note_.setText("max 32 characters.", juce::dontSendNotification);
         note_.setFont(p1::ui::uiFont(12.0f));
         note_.setColour(juce::Label::textColourId,
                         p1::ui::colour(p1::tokens::dim));
@@ -856,9 +884,9 @@ void PluginEditor::showAlgorithmPicker()
     auto* bodyPtr = body.get();
     dialog_ = std::make_unique<p1::ui::P1Dialog>(
         "algorithm", std::move(body), 780, 490,
-        juce::StringArray{"cancel", "load"},
+        juce::StringArray{"load", "cancel"},
         [this, bodyPtr](int index) {
-            if (index == 1)
+            if (index == 0)
                 applyAlgorithm(bodyPtr->selected());
             closeDialog();
         },
@@ -884,9 +912,9 @@ void PluginEditor::showRenameDialog(bool part, int index)
     auto* bodyPtr = body.get();
     dialog_ = std::make_unique<p1::ui::P1Dialog>(
         part ? "rename part " + juce::String(index + 1) : "rename patch",
-        std::move(body), 420, 190, juce::StringArray{"cancel", "save"},
+        std::move(body), 420, 190, juce::StringArray{"save", "cancel"},
         [this, bodyPtr, part, index](int button) {
-            if (button == 1) {
+            if (button == 0) {
                 const juce::String text = bodyPtr->text();
                 if (part)
                     processor_.setPartName(index, text);
@@ -903,42 +931,56 @@ void PluginEditor::showRenameDialog(bool part, int index)
     bodyPtr->focus();
 }
 
-void PluginEditor::showPartMenu(juce::Component& anchor)
+void PluginEditor::showSinglePartsBrowser()
 {
-    juce::PopupMenu menu;
-    menu.addItem(1, "rename part");
-    menu.addItem(2, "copy part");
-    menu.addItem(3, "paste part");
-    menu.addItem(4, "init part");
-    menu.addSeparator();
-    menu.addItem(5, "save part...");
-    menu.addItem(6, "load part...");
-    menu.addSeparator();
-    menu.addItem(7, "export library...");
-    menu.addItem(8, "import library...");
-    menu.showMenuAsync(
-        juce::PopupMenu::Options().withTargetComponent(&anchor),
-        [this](int result) {
-            if (result == 1)
-                showRenameDialog(true, activePart_);
-            else if (result == 2)
-                copyPart(activePart_);
-            else if (result == 3)
-                pastePart(activePart_);
-            else if (result == 4)
-                showConfirm(
-                    "init part " + juce::String(activePart_ + 1) +
-                        "? this wipes the current part.",
-                    [this] { initPart(activePart_); }, "init part", "init");
-            else if (result == 5)
-                showPartBrowser(true);
-            else if (result == 6)
-                showPartBrowser(false);
-            else if (result == 7)
+    dialog_ = std::make_unique<p1::ui::P1Dialog>(
+        "single parts", std::make_unique<SinglePartListBody>(*this), 980, 200,
+        juce::StringArray{"export bank",
+                          "import bank",
+                          "init single part 1",
+                          "init single part 2",
+                          "save single part 1",
+                          "save single part 2",
+                          "load single part 1",
+                          "load single part 2",
+                          "cancel"},
+        [this](int button) {
+            if (button == 0) {
+                closeDialog();
                 exportLibrary();
-            else if (result == 8)
+            } else if (button == 1) {
+                closeDialog();
                 importLibrary();
-        });
+            } else if (button == 2) {
+                closeDialog();
+                showConfirm("init part 1? this wipes the current part.",
+                            [this] { initPart(0); }, "init single part 1",
+                            "init");
+            } else if (button == 3) {
+                closeDialog();
+                showConfirm("init part 2? this wipes the current part.",
+                            [this] { initPart(1); }, "init single part 2",
+                            "init");
+            } else if (button == 4) {
+                closeDialog();
+                showPartBrowser(0, true);
+            } else if (button == 5) {
+                closeDialog();
+                showPartBrowser(1, true);
+            } else if (button == 6) {
+                closeDialog();
+                showPartBrowser(0, false);
+            } else if (button == 7) {
+                closeDialog();
+                showPartBrowser(1, false);
+            } else {
+                closeDialog();
+            }
+        },
+        [this] { closeDialog(); });
+    canvas_.addAndMakeVisible(*dialog_);
+    dialog_->setBounds(0, 0, kWidth, kHeight);
+    dialog_->toFront(true);
 }
 
 void PluginEditor::exportLibrary()
@@ -1110,24 +1152,34 @@ void PluginEditor::applyRouting(int field, int part, int value)
 
 void PluginEditor::savePartToSlot(int slot)
 {
+    savePartToSlot(activePart_, slot);
+}
+
+void PluginEditor::savePartToSlot(int part, int slot)
+{
     auto& store = processor_.presets();
-    if (!store.savePart(slot, processor_.getPartName(activePart_).toStdString(),
-                        currentPartParams(activePart_)))
+    if (!store.savePart(slot, processor_.getPartName(part).toStdString(),
+                        currentPartParams(part)))
         return;
-    store.setPartSource(activePart_, slot);
+    store.setPartSource(part, slot);
     processor_.saveLibrary();
 }
 
 void PluginEditor::loadPartFromSlot(int slot)
+{
+    loadPartFromSlot(activePart_, slot);
+}
+
+void PluginEditor::loadPartFromSlot(int part, int slot)
 {
     auto& store = processor_.presets();
     std::string name;
     std::vector<int32_t> params;
     if (!store.loadPart(slot, name, params))
         return;
-    applyPartParams(activePart_, params);
-    processor_.setPartName(activePart_, juce::String(name));
-    store.setPartSource(activePart_, slot);
+    applyPartParams(part, params);
+    processor_.setPartName(part, juce::String(name));
+    store.setPartSource(part, slot);
     refreshNames();
 }
 
@@ -1215,9 +1267,9 @@ void PluginEditor::showConfirm(const juce::String& message,
     body->setJustificationType(juce::Justification::centred);
     dialog_ = std::make_unique<p1::ui::P1Dialog>(
         title, std::move(body), 420, 160,
-        juce::StringArray{"cancel", confirm},
+        juce::StringArray{confirm, "cancel"},
         [this, confirmAction = std::move(onConfirm)](int button) {
-            if (button == 1)
+            if (button == 0)
                 confirmAction();
             closeDialog();
         },
@@ -1240,24 +1292,24 @@ void PluginEditor::showPatchBrowser()
     auto* bodyPtr = body.get();
     dialog_ = std::make_unique<p1::ui::P1Dialog>(
         "multi-patches", std::move(body), 640, 500,
-        juce::StringArray{"cancel", "export bank", "import bank", "init multi-patch",
-                          "save", "load"},
+        juce::StringArray{"export bank", "import bank", "init multi-patch",
+                          "save", "load", "cancel"},
         [this, bodyPtr](int button) {
-            if (button == 1) {
+            if (button == 0) {
                 closeDialog();
                 exportLibrary();
-            } else if (button == 2) {
+            } else if (button == 1) {
                 closeDialog();
                 importLibrary();
-            } else if (button == 3) {
+            } else if (button == 2) {
                 closeDialog();
                 showConfirm("init multi-patch? this wipes the current patch.",
                             [this] { initMultiPatch(); }, "init multi-patch", "init");
-            } else if (button == 4) {
+            } else if (button == 3) {
                 const int slot = bodyPtr->selected();
                 closeDialog();
                 showPatchSaveMode(slot);
-            } else if (button == 5) {
+            } else if (button == 4) {
                 loadPatchFromSlot(bodyPtr->selected());
                 closeDialog();
             } else {
@@ -1279,9 +1331,9 @@ void PluginEditor::showPatchSaveMode(int slot)
     auto* bodyPtr = body.get();
     dialog_ = std::make_unique<p1::ui::P1Dialog>(
         "save multi-patch", std::move(body), 420, 280,
-        juce::StringArray{"cancel", "save"},
+        juce::StringArray{"save", "cancel"},
         [this, bodyPtr, slot](int button) {
-            if (button == 1) {
+            if (button == 0) {
                 const int mode = bodyPtr->selected();
                 closeDialog();
                 if (processor_.presets().multiUsed(slot)) {
@@ -1304,24 +1356,30 @@ void PluginEditor::showPatchSaveMode(int slot)
 
 void PluginEditor::showPartBrowser(bool saveMode)
 {
+    showPartBrowser(activePart_, saveMode);
+}
+
+void PluginEditor::showPartBrowser(int part, bool saveMode)
+{
     auto& store = processor_.presets();
+    part = juce::jlimit(0, kP1PartCount - 1, part);
     auto body = std::make_unique<SlotListBody>(
         p1::PresetStore::kPartSlots,
         [this](int slot) {
             return juce::String(processor_.presets().partName(slot));
         },
         [this](int slot) { return processor_.presets().partUsed(slot); },
-        store.partSource(activePart_));
+        store.partSource(part));
     auto* bodyPtr = body.get();
     const juce::String title =
-        "part " + juce::String(activePart_ + 1) + " slots";
+        "part " + juce::String(part + 1) + " slots";
     const juce::StringArray buttons =
-        saveMode ? juce::StringArray{"cancel", "save"}
-                 : juce::StringArray{"cancel", "load"};
+        saveMode ? juce::StringArray{"save", "cancel"}
+                 : juce::StringArray{"load", "cancel"};
     dialog_ = std::make_unique<p1::ui::P1Dialog>(
         title, std::move(body), 420, 500, buttons,
-        [this, bodyPtr, saveMode](int button) {
-            if (button == 1) {
+        [this, bodyPtr, saveMode, part](int button) {
+            if (button == 0) {
                 const int slot = bodyPtr->selected();
                 const bool used = processor_.presets().partUsed(slot);
                 closeDialog();
@@ -1330,12 +1388,12 @@ void PluginEditor::showPartBrowser(bool saveMode)
                         showConfirm(
                             "overwrite part slot " +
                                 juce::String(slot + 1).paddedLeft('0', 2) + "?",
-                            [this, slot] { savePartToSlot(slot); });
+                            [this, part, slot] { savePartToSlot(part, slot); });
                     } else {
-                        savePartToSlot(slot);
+                        savePartToSlot(part, slot);
                     }
                 } else {
-                    loadPartFromSlot(slot);
+                    loadPartFromSlot(part, slot);
                 }
             } else {
                 closeDialog();

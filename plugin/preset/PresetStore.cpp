@@ -144,7 +144,17 @@ std::vector<uint8_t> PresetStore::packPartBank() const
 
 bool PresetStore::loadPartBank(const uint8_t* data, std::size_t size)
 {
-    const auto recordSize = partRecordSize();
+    return loadPartBankWith(data, size, PRESET_NAME_LEN, nullptr);
+}
+
+bool PresetStore::loadPartBankWith(const uint8_t* data, std::size_t size,
+                                   uint32_t nameLen,
+                                   const std::vector<int>* legacyMap)
+{
+    const std::size_t sourceCount =
+        legacyMap ? legacyMap->size()
+                  : static_cast<std::size_t>(partParamCount_);
+    const std::size_t recordSize = 1u + nameLen + sourceCount * 4u + 4u;
     if (data == nullptr || size != recordSize * kPartSlots)
         return false;
     for (int slot = 0; slot < kPartSlots; ++slot) {
@@ -156,52 +166,24 @@ bool PresetStore::loadPartBank(const uint8_t* data, std::size_t size)
         if (raw[0] == PRESET_EMPTY)
             continue;
         char name[PRESET_NAME_LEN] = {};
-        std::vector<int32_t> params(static_cast<std::size_t>(partParamCount_));
-        if (preset_part_unpack(raw, static_cast<uint32_t>(partParamCount_), name,
-                               params.data())) {
-            part.used = true;
-            part.name = shortName(name);
-            part.params = std::move(params);
-        }
-    }
-    return true;
-}
-
-bool PresetStore::loadLegacyPartBank(const uint8_t* data, std::size_t size)
-{
-    const std::vector<int>* map = nullptr;
-    for (const auto& candidate : legacyPartMaps_) {
-        if (candidate.empty())
-            continue;
-        const auto recordSize =
-            PP_RECORD(static_cast<uint32_t>(candidate.size()));
-        if (size == recordSize * kPartSlots) {
-            map = &candidate;
-            break;
-        }
-    }
-    if (map == nullptr || data == nullptr)
-        return false;
-    const auto legacyCount = static_cast<uint32_t>(map->size());
-    const auto recordSize = PP_RECORD(legacyCount);
-    for (int slot = 0; slot < kPartSlots; ++slot) {
-        auto& part = parts_[static_cast<std::size_t>(slot)];
-        part.used = false;
-        part.name.clear();
-        part.params = defaults_;
-        const auto* raw = data + static_cast<std::size_t>(slot) * recordSize;
-        if (raw[0] == PRESET_EMPTY)
-            continue;
-        char name[PRESET_NAME_LEN] = {};
-        std::vector<int32_t> legacy(legacyCount);
-        if (!preset_part_unpack(raw, legacyCount, name, legacy.data()))
+        std::vector<int32_t> values(sourceCount);
+        const auto count = static_cast<uint32_t>(sourceCount);
+        const bool ok =
+            nameLen == PRESET_NAME_LEN
+                ? preset_part_unpack(raw, count, name, values.data())
+                : preset_part_unpack_v1(raw, count, name, values.data());
+        if (!ok)
             continue;
         part.used = true;
         part.name = shortName(name);
-        for (std::size_t i = 0; i < map->size(); ++i) {
-            const int destination = (*map)[i];
-            if (destination >= 0 && destination < partParamCount_)
-                part.params[static_cast<std::size_t>(destination)] = legacy[i];
+        if (legacyMap != nullptr) {
+            for (std::size_t i = 0; i < legacyMap->size(); ++i) {
+                const int destination = (*legacyMap)[i];
+                if (destination >= 0 && destination < partParamCount_)
+                    part.params[static_cast<std::size_t>(destination)] = values[i];
+            }
+        } else {
+            part.params = std::move(values);
         }
     }
     return true;
@@ -226,7 +208,15 @@ std::vector<uint8_t> PresetStore::packMultiBank() const
 
 bool PresetStore::loadMultiBank(const uint8_t* data, std::size_t size)
 {
-    const auto recordSize = multiRecordSize();
+    return loadMultiBankWith(data, size, PRESET_NAME_LEN);
+}
+
+bool PresetStore::loadMultiBankWith(const uint8_t* data, std::size_t size,
+                                    uint32_t nameLen)
+{
+    const std::size_t recordSize =
+        1u + nameLen + static_cast<std::size_t>(partCount_) +
+        static_cast<std::size_t>(partCount_) * 5u * 4u + 4u;
     if (data == nullptr || size != recordSize * kMultiSlots)
         return false;
     for (int slot = 0; slot < kMultiSlots; ++slot) {
@@ -249,18 +239,25 @@ bool PresetStore::loadMultiBank(const uint8_t* data, std::size_t size)
         std::vector<int32_t> channel(static_cast<std::size_t>(partCount_));
         std::vector<int32_t> low(static_cast<std::size_t>(partCount_));
         std::vector<int32_t> high(static_cast<std::size_t>(partCount_));
-        if (preset_multi_unpack(raw, static_cast<uint32_t>(partCount_), name,
-                                partSlot.data(), level.data(), delay.data(),
-                                channel.data(), low.data(), high.data())) {
-            multi.used = true;
-            multi.name = shortName(name);
-            multi.partSlot = std::move(partSlot);
-            multi.level = std::move(level);
-            multi.delay = std::move(delay);
-            multi.channel = std::move(channel);
-            multi.low = std::move(low);
-            multi.high = std::move(high);
-        }
+        const auto count = static_cast<uint32_t>(partCount_);
+        const bool ok =
+            nameLen == PRESET_NAME_LEN
+                ? preset_multi_unpack(raw, count, name, partSlot.data(),
+                                      level.data(), delay.data(), channel.data(),
+                                      low.data(), high.data())
+                : preset_multi_unpack_v1(raw, count, name, partSlot.data(),
+                                         level.data(), delay.data(), channel.data(),
+                                         low.data(), high.data());
+        if (!ok)
+            continue;
+        multi.used = true;
+        multi.name = shortName(name);
+        multi.partSlot = std::move(partSlot);
+        multi.level = std::move(level);
+        multi.delay = std::move(delay);
+        multi.channel = std::move(channel);
+        multi.low = std::move(low);
+        multi.high = std::move(high);
     }
     return true;
 }
@@ -269,7 +266,7 @@ std::vector<uint8_t> PresetStore::packLibrary() const
 {
     const auto part = packPartBank();
     const auto multi = packMultiBank();
-    static const uint8_t magic[7] = {'P', '1', 'L', 'I', 'B', '1', '\n'};
+    static const uint8_t magic[7] = {'P', '1', 'L', 'I', 'B', '2', '\n'};
     std::vector<uint8_t> out;
     out.reserve(7u + 4u + part.size() + 4u + multi.size());
     out.insert(out.end(), magic, magic + 7);
@@ -288,10 +285,13 @@ std::vector<uint8_t> PresetStore::packLibrary() const
 
 bool PresetStore::loadLibrary(const uint8_t* data, std::size_t size)
 {
-    static const uint8_t magic[7] = {'P', '1', 'L', 'I', 'B', '1', '\n'};
+    static const uint8_t magic1[7] = {'P', '1', 'L', 'I', 'B', '1', '\n'};
+    static const uint8_t magic2[7] = {'P', '1', 'L', 'I', 'B', '2', '\n'};
     if (data == nullptr || size < 7u + 4u)
         return false;
-    if (std::memcmp(data, magic, 7) != 0)
+    const bool v1Magic = std::memcmp(data, magic1, 7) == 0;
+    const bool v2Magic = std::memcmp(data, magic2, 7) == 0;
+    if (!v1Magic && !v2Magic)
         return false;
     std::size_t offset = 7u;
     const auto get32 = [data, size, &offset](uint32_t& value) {
@@ -306,39 +306,59 @@ bool PresetStore::loadLibrary(const uint8_t* data, std::size_t size)
     };
     uint32_t partSize = 0;
     uint32_t multiSize = 0;
-    const auto currentPartSize =
-        partRecordSize() * static_cast<std::size_t>(kPartSlots);
     if (!get32(partSize))
         return false;
-    bool accepted = static_cast<std::size_t>(partSize) == currentPartSize;
-    if (!accepted) {
+    uint32_t nameLen = PRESET_NAME_LEN;
+    const std::vector<int>* legacyMap = nullptr;
+    const auto currentPartSize =
+        static_cast<std::size_t>(PP_RECORD(static_cast<uint32_t>(partParamCount_))) *
+        static_cast<std::size_t>(kPartSlots);
+    const auto v1PartSize =
+        static_cast<std::size_t>(PP_RECORD_V1(static_cast<uint32_t>(partParamCount_))) *
+        static_cast<std::size_t>(kPartSlots);
+    if (static_cast<std::size_t>(partSize) == currentPartSize) {
+        nameLen = PRESET_NAME_LEN;
+    } else if (static_cast<std::size_t>(partSize) == v1PartSize) {
+        nameLen = PRESET_LEGACY_NAME_LEN;
+    } else {
+        bool found = false;
         for (const auto& map : legacyPartMaps_) {
-            if (static_cast<std::size_t>(partSize) ==
-                PP_RECORD(static_cast<uint32_t>(map.size())) *
-                    static_cast<std::size_t>(kPartSlots)) {
-                accepted = true;
+            if (!map.empty() &&
+                static_cast<std::size_t>(partSize) ==
+                    static_cast<std::size_t>(
+                        PP_RECORD_V1(static_cast<uint32_t>(map.size()))) *
+                        static_cast<std::size_t>(kPartSlots)) {
+                nameLen = PRESET_LEGACY_NAME_LEN;
+                legacyMap = &map;
+                found = true;
                 break;
             }
         }
+        if (!found)
+            return false;
     }
-    if (!accepted)
+    if ((v2Magic && nameLen != PRESET_NAME_LEN) ||
+        (v1Magic && nameLen == PRESET_NAME_LEN))
         return false;
     if (offset + partSize + 4u > size)
         return false;
     const auto* partData = data + offset;
     offset += partSize;
-    if (!get32(multiSize) ||
-        static_cast<std::size_t>(multiSize) !=
-            multiRecordSize() * static_cast<std::size_t>(kMultiSlots))
+    if (!get32(multiSize))
+        return false;
+    const auto expectedMultiSize =
+        static_cast<std::size_t>(
+            nameLen == PRESET_NAME_LEN
+                ? MP_RECORD(static_cast<uint32_t>(partCount_))
+                : MP_RECORD_V1(static_cast<uint32_t>(partCount_))) *
+        static_cast<std::size_t>(kMultiSlots);
+    if (static_cast<std::size_t>(multiSize) != expectedMultiSize)
         return false;
     if (offset + multiSize != size)
         return false;
     const auto* multiData = data + offset;
-    const bool partsOk =
-        static_cast<std::size_t>(partSize) == currentPartSize
-            ? loadPartBank(partData, partSize)
-            : loadLegacyPartBank(partData, partSize);
-    if (!partsOk || !loadMultiBank(multiData, multiSize))
+    if (!loadPartBankWith(partData, partSize, nameLen, legacyMap) ||
+        !loadMultiBankWith(multiData, multiSize, nameLen))
         return false;
     currentMulti_ = -1;
     std::fill(partSource_.begin(), partSource_.end(), -1);

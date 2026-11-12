@@ -3,6 +3,7 @@
 
 #include <algorithm>
 #include <cmath>
+#include <vector>
 
 #include "math_tables.h"
 
@@ -439,13 +440,13 @@ void P1Toggle::paintButton(juce::Graphics& g, bool highlighted, bool)
     const float thumbX = on ? track.getX() + 1.0f : track.getRight() - 11.0f;
     g.setColour(on ? colour(tokens::pink) : colour(tokens::faint));
     g.fillRect(juce::Rectangle<float>(thumbX, track.getY() + 1.0f, 10.0f, 8.0f));
-    g.setFont(displayFont(tokens::textToolbarLabel));
+    g.setFont(uiFont(tokens::textLegend));
     g.setColour(on ? colour(tokens::green) : colour(tokens::dim));
     const juce::String state = on ? "on" : "off";
     const juce::String caption =
         (label_ == "on" || label_.isEmpty()) ? state : label_ + " " + state;
     g.drawText(caption, juce::Rectangle<int>(32, 0, getWidth() - 32, getHeight()),
-               juce::Justification::centredLeft, false);
+               juce::Justification::centredLeft, true);
 }
 
 P1Choice::P1Choice(juce::StringArray items, int selected)
@@ -1014,16 +1015,41 @@ void P1Dialog::resized()
     closeArea_ = juce::Rectangle<int>(panel_.getRight() - 34, panel_.getY() + 10, 20, 20);
     auto content = panel_.reduced(14);
     content.removeFromTop(34);
-    auto footer = content.removeFromBottom(42);
+
+    struct Item {
+        int index = 0;
+        int width = 0;
+    };
+    std::vector<std::vector<Item>> rows(1);
+    int used = 0;
+    for (int i = 0; i < buttons_.size(); ++i) {
+        const int width = juce::jmax(
+            64, buttonComponents_[static_cast<std::size_t>(i)]->getButtonText().length() * 7 + 20);
+        if (!rows.back().empty() && used + 8 + width > content.getWidth()) {
+            rows.emplace_back();
+            used = 0;
+        }
+        if (!rows.back().empty())
+            used += 8;
+        rows.back().push_back(Item{i, width});
+        used += width;
+    }
+    const int footerHeight = 42 + static_cast<int>(rows.size() - 1) * 32;
+    auto footer = content.removeFromBottom(footerHeight);
     if (body_ != nullptr)
         body_->setBounds(content);
-    int x = footer.getRight();
-    for (auto it = buttonComponents_.rbegin(); it != buttonComponents_.rend(); ++it) {
-        const int width =
-            juce::jmax(64, (*it)->getButtonText().length() * 8 + 24);
-        x -= width;
-        (*it)->setBounds(x, footer.getCentreY() - 12, width, 24);
-        x -= 8;
+    int y = footer.getBottom() - 33;
+    for (int r = static_cast<int>(rows.size()) - 1; r >= 0; --r) {
+        int rowWidth = 0;
+        for (std::size_t i = 0; i < rows[static_cast<std::size_t>(r)].size(); ++i)
+            rowWidth += rows[static_cast<std::size_t>(r)][i].width + (i == 0 ? 0 : 8);
+        int x = footer.getRight() - rowWidth;
+        for (const auto& item : rows[static_cast<std::size_t>(r)]) {
+            buttonComponents_[static_cast<std::size_t>(item.index)]->setBounds(
+                x, y, item.width, 24);
+            x += item.width + 8;
+        }
+        y -= 32;
     }
 }
 
