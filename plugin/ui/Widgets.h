@@ -214,11 +214,14 @@ public:
     void paint(juce::Graphics& g) override;
     void resized() override;
 
+    void setHeaderTrailingWidth(int width);
+    juce::Rectangle<int> headerTrailingBounds() const;
     juce::Rectangle<int> contentArea() const;
 
 private:
     juce::String title_;
     bool hasActions_ = false;
+    int trailingWidth_ = 0;
     P1Button copy_{"copy", true};
     P1Button paste_{"paste", true};
 };

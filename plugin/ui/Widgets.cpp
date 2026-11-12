@@ -884,9 +884,23 @@ void P1Card::resized()
     if (!hasActions_)
         return;
     auto row = getLocalBounds().removeFromTop(20).reduced(4, 1);
+    if (trailingWidth_ > 0)
+        row.removeFromRight(trailingWidth_ + 6);
     paste_.setBounds(row.removeFromRight(52));
     row.removeFromRight(2);
     copy_.setBounds(row.removeFromRight(52));
+}
+
+void P1Card::setHeaderTrailingWidth(int width)
+{
+    trailingWidth_ = juce::jmax(0, width);
+    resized();
+}
+
+juce::Rectangle<int> P1Card::headerTrailingBounds() const
+{
+    auto row = getLocalBounds().removeFromTop(20).reduced(4, 1);
+    return row.removeFromRight(trailingWidth_);
 }
 
 juce::Rectangle<int> P1Card::contentArea() const

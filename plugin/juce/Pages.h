@@ -262,6 +262,7 @@ public:
                 "l" + juce::String(i + 1), 28.0f);
             addAndMakeVisible(*levels_[static_cast<std::size_t>(i)]);
         }
+        setHeaderTrailingWidth(48);
     }
 
     void resized() override
@@ -279,7 +280,7 @@ public:
         const int levelCell = levels.getWidth() / 4;
         for (auto& knob : levels_)
             knob->setBounds(levels.removeFromLeft(levelCell));
-        on_.setBounds(getWidth() - 166, 1, 48, 18);
+        on_.setBounds(headerTrailingBounds());
     }
 
     void tick() { envView_.repaint(); }
