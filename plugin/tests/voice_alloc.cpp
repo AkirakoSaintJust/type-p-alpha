@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: GPL-3.0-only */
-/* Voice allocation: a held three-note chord takes three voices on one part, a
- * release takes only its own voice, and the same sequence repeats after the
- * voices have been recycled. */
+/* Voice allocation: a held chord or scale takes one voice per note, a release
+ * takes only its own voice, and the same sequence repeats after the voices have
+ * been recycled. */
 #include <cstdio>
 #include <vector>
 
@@ -11,9 +11,13 @@ namespace {
 
 constexpr int kVoices = 20;
 
+int failures = 0;
+
 void check(bool ok, const char* what)
 {
     std::printf("voices: %-58s %s\n", what, ok ? "ok" : "FAIL");
+    if (!ok)
+        ++failures;
 }
 
 bool chord(p1::Engine& engine, uint32_t channel, int& gated, bool* notes)
@@ -69,10 +73,31 @@ int main()
     check(remaining == 2 && kept60 && kept67 && released64,
           "a release keeps the other two chord notes");
 
-    const bool second = [&] {
+    {
         engine.reset();
-        return chord(engine, 1, gated, notes);
-    }();
+        const int scaleNotes[7] = {60, 62, 64, 65, 67, 69, 71};
+        for (int note : scaleNotes)
+            engine.noteOn(static_cast<uint32_t>(note), 100, 0);
+        int scaleGated = 0;
+        bool seen[7] = {};
+        for (int v = 0; v < kVoices; ++v) {
+            const auto* state = engine.state();
+            if (!state->voice_gate[v])
+                continue;
+            ++scaleGated;
+            for (int i = 0; i < 7; ++i)
+                if (state->voice_note[v] == scaleNotes[i])
+                    seen[i] = true;
+        }
+        bool allSeen = true;
+        for (bool value : seen)
+            allSeen = allSeen && value;
+        check(scaleGated == 7 && allSeen,
+              "a held seven-note scale takes seven voices");
+    }
+
+    engine.reset();
+    const bool second = chord(engine, 1, gated, notes);
     check(second, "the same chord takes three voices on part two");
 
     bool wrongChannel = false;
@@ -94,6 +119,6 @@ int main()
     }
     check(recycled, "chords still allocate three voices after recycling");
 
-    std::printf("voices: %s\n", first && second && recycled ? "passed" : "FAILED");
-    return first && second && recycled ? 0 : 1;
+    std::printf("voices: %s\n", failures ? "FAILED" : "passed");
+    return failures ? 1 : 0;
 }

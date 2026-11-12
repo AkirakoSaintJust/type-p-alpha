@@ -126,11 +126,11 @@ outputs 0, and a flat envelope outputs 0, so the existing render stays exact.
   negative family selection from a zero base, a partial negative level against an
   existing feedback amount, a negative level crossing a positive base, and the peak
   bound. `feedback_bipolar` checks the negative family and the envelope level.
-  `voice_alloc` checks a three-note chord, one note's release, both part channels
-  and recycled voices. `plugin_smoke` checks a three-note chord through the host
-  block and restores every manifest parameter. `plugin_stability` drives every
-  parameter to its bounds. `editor_snapshot` checks that the oscillator, amp
-  envelope and detune LFO sections paste to another operator.
+  `voice_alloc` checks a three-note chord, a seven-note scale, one note's release,
+  both part channels and recycled voices. `plugin_smoke` checks a three-note chord
+  through the host block and restores every manifest parameter. `plugin_stability`
+  drives every parameter to its bounds. `editor_snapshot` checks that the
+  oscillator, amp envelope and detune LFO sections paste to another operator.
 - **Browser vector (if applicable):** the mockup check covers the operators tab,
   the operator lfos tab, the four feedback envelopes with four signed levels, and
   the two new LFO cards.
