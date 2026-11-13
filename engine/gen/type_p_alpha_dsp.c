@@ -18,6 +18,7 @@ typedef struct type_p_alpha_state {
     uint32_t op1_osc_wave[NVOICE];
     uint32_t op1_osc_base[NVOICE];
     uint32_t op1_osc_bl[NVOICE];
+    uint32_t op1_osc_tick[NVOICE];
     uint32_t op1_eg_stage[NVOICE];
     int32_t op1_eg_level[NVOICE];
     uint32_t op1_eg_r1_eff[NVOICE];
@@ -52,6 +53,15 @@ typedef struct type_p_alpha_state {
     int32_t op1_fb_vs_k[NVOICE];
     int32_t op1_eg_vs_k[NVOICE];
     int32_t op1_d1_prev[NVOICE];
+    uint32_t op1_specenv_stage[NVOICE];
+    int32_t op1_specenv_level[NVOICE];
+    uint32_t op1_specenv_r1_eff[NVOICE];
+    uint32_t op1_specenv_r2_eff[NVOICE];
+    uint32_t op1_specenv_r3_eff[NVOICE];
+    uint32_t op1_specenv_r4_eff[NVOICE];
+    uint32_t op1_speclfo_phase[NVOICE];
+    uint32_t op1_speclfo_base[NVOICE];
+    int32_t op1_speclfo_w[NVOICE];
     uint32_t op2_ph_inc[NVOICE];
     uint32_t op2_ph_phase[NVOICE];
     uint32_t op2_ph_step[NVOICE];
@@ -59,6 +69,7 @@ typedef struct type_p_alpha_state {
     uint32_t op2_osc_wave[NVOICE];
     uint32_t op2_osc_base[NVOICE];
     uint32_t op2_osc_bl[NVOICE];
+    uint32_t op2_osc_tick[NVOICE];
     uint32_t op2_eg_stage[NVOICE];
     int32_t op2_eg_level[NVOICE];
     uint32_t op2_eg_r1_eff[NVOICE];
@@ -93,6 +104,15 @@ typedef struct type_p_alpha_state {
     int32_t op2_fb_vs_k[NVOICE];
     int32_t op2_eg_vs_k[NVOICE];
     int32_t op2_d1_prev[NVOICE];
+    uint32_t op2_specenv_stage[NVOICE];
+    int32_t op2_specenv_level[NVOICE];
+    uint32_t op2_specenv_r1_eff[NVOICE];
+    uint32_t op2_specenv_r2_eff[NVOICE];
+    uint32_t op2_specenv_r3_eff[NVOICE];
+    uint32_t op2_specenv_r4_eff[NVOICE];
+    uint32_t op2_speclfo_phase[NVOICE];
+    uint32_t op2_speclfo_base[NVOICE];
+    int32_t op2_speclfo_w[NVOICE];
     uint32_t op3_ph_inc[NVOICE];
     uint32_t op3_ph_phase[NVOICE];
     uint32_t op3_ph_step[NVOICE];
@@ -100,6 +120,7 @@ typedef struct type_p_alpha_state {
     uint32_t op3_osc_wave[NVOICE];
     uint32_t op3_osc_base[NVOICE];
     uint32_t op3_osc_bl[NVOICE];
+    uint32_t op3_osc_tick[NVOICE];
     uint32_t op3_eg_stage[NVOICE];
     int32_t op3_eg_level[NVOICE];
     uint32_t op3_eg_r1_eff[NVOICE];
@@ -134,6 +155,15 @@ typedef struct type_p_alpha_state {
     int32_t op3_fb_vs_k[NVOICE];
     int32_t op3_eg_vs_k[NVOICE];
     int32_t op3_d1_prev[NVOICE];
+    uint32_t op3_specenv_stage[NVOICE];
+    int32_t op3_specenv_level[NVOICE];
+    uint32_t op3_specenv_r1_eff[NVOICE];
+    uint32_t op3_specenv_r2_eff[NVOICE];
+    uint32_t op3_specenv_r3_eff[NVOICE];
+    uint32_t op3_specenv_r4_eff[NVOICE];
+    uint32_t op3_speclfo_phase[NVOICE];
+    uint32_t op3_speclfo_base[NVOICE];
+    int32_t op3_speclfo_w[NVOICE];
     uint32_t op4_ph_inc[NVOICE];
     uint32_t op4_ph_phase[NVOICE];
     uint32_t op4_ph_step[NVOICE];
@@ -141,6 +171,7 @@ typedef struct type_p_alpha_state {
     uint32_t op4_osc_wave[NVOICE];
     uint32_t op4_osc_base[NVOICE];
     uint32_t op4_osc_bl[NVOICE];
+    uint32_t op4_osc_tick[NVOICE];
     uint32_t op4_eg_stage[NVOICE];
     int32_t op4_eg_level[NVOICE];
     uint32_t op4_eg_r1_eff[NVOICE];
@@ -175,6 +206,15 @@ typedef struct type_p_alpha_state {
     int32_t op4_fb_vs_k[NVOICE];
     int32_t op4_eg_vs_k[NVOICE];
     int32_t op4_d1_prev[NVOICE];
+    uint32_t op4_specenv_stage[NVOICE];
+    int32_t op4_specenv_level[NVOICE];
+    uint32_t op4_specenv_r1_eff[NVOICE];
+    uint32_t op4_specenv_r2_eff[NVOICE];
+    uint32_t op4_specenv_r3_eff[NVOICE];
+    uint32_t op4_specenv_r4_eff[NVOICE];
+    uint32_t op4_speclfo_phase[NVOICE];
+    uint32_t op4_speclfo_base[NVOICE];
+    int32_t op4_speclfo_w[NVOICE];
     int32_t d1_prev[NVOICE];
     int32_t d2_prev[NVOICE];
     int32_t d3_prev[NVOICE];
@@ -233,6 +273,40 @@ typedef struct type_p_alpha_state {
     int32_t op1_ph_inc_ratio[2];
     int32_t op1_ph_detune[2];
     int32_t op1_osc_waveform[2];
+    int32_t op1_osc_spec_a1[2];
+    int32_t op1_osc_spec_a2[2];
+    int32_t op1_osc_spec_a3[2];
+    int32_t op1_osc_spec_a4[2];
+    int32_t op1_osc_spec_a5[2];
+    int32_t op1_osc_spec_a6[2];
+    int32_t op1_osc_spec_a7[2];
+    int32_t op1_osc_spec_a8[2];
+    int32_t op1_osc_spec_a9[2];
+    int32_t op1_osc_spec_a10[2];
+    int32_t op1_osc_spec_a11[2];
+    int32_t op1_osc_spec_a12[2];
+    int32_t op1_osc_spec_a13[2];
+    int32_t op1_osc_spec_a14[2];
+    int32_t op1_osc_spec_a15[2];
+    int32_t op1_osc_spec_a16[2];
+    int32_t op1_osc_spec_b1[2];
+    int32_t op1_osc_spec_b2[2];
+    int32_t op1_osc_spec_b3[2];
+    int32_t op1_osc_spec_b4[2];
+    int32_t op1_osc_spec_b5[2];
+    int32_t op1_osc_spec_b6[2];
+    int32_t op1_osc_spec_b7[2];
+    int32_t op1_osc_spec_b8[2];
+    int32_t op1_osc_spec_b9[2];
+    int32_t op1_osc_spec_b10[2];
+    int32_t op1_osc_spec_b11[2];
+    int32_t op1_osc_spec_b12[2];
+    int32_t op1_osc_spec_b13[2];
+    int32_t op1_osc_spec_b14[2];
+    int32_t op1_osc_spec_b15[2];
+    int32_t op1_osc_spec_b16[2];
+    int32_t op1_osc_spec_morph[2];
+    int32_t op1_osc_spec_env_depth[2];
     int32_t op1_eg_r1[2];
     int32_t op1_eg_r2[2];
     int32_t op1_eg_r3[2];
@@ -276,9 +350,54 @@ typedef struct type_p_alpha_state {
     int32_t op1_fb_vs_amount[2];
     int32_t op1_eg_vs_amount[2];
     int32_t op1_mute_mute[2];
+    int32_t op1_specenv_r1[2];
+    int32_t op1_specenv_r2[2];
+    int32_t op1_specenv_r3[2];
+    int32_t op1_specenv_r4[2];
+    int32_t op1_specenv_l1[2];
+    int32_t op1_specenv_l2[2];
+    int32_t op1_specenv_l3[2];
+    int32_t op1_speclfo_rate[2];
+    int32_t op1_speclfo_depth[2];
+    int32_t op1_speclfo_wave[2];
+    int32_t op1_speclfo_mode[2];
     int32_t op2_ph_inc_ratio[2];
     int32_t op2_ph_detune[2];
     int32_t op2_osc_waveform[2];
+    int32_t op2_osc_spec_a1[2];
+    int32_t op2_osc_spec_a2[2];
+    int32_t op2_osc_spec_a3[2];
+    int32_t op2_osc_spec_a4[2];
+    int32_t op2_osc_spec_a5[2];
+    int32_t op2_osc_spec_a6[2];
+    int32_t op2_osc_spec_a7[2];
+    int32_t op2_osc_spec_a8[2];
+    int32_t op2_osc_spec_a9[2];
+    int32_t op2_osc_spec_a10[2];
+    int32_t op2_osc_spec_a11[2];
+    int32_t op2_osc_spec_a12[2];
+    int32_t op2_osc_spec_a13[2];
+    int32_t op2_osc_spec_a14[2];
+    int32_t op2_osc_spec_a15[2];
+    int32_t op2_osc_spec_a16[2];
+    int32_t op2_osc_spec_b1[2];
+    int32_t op2_osc_spec_b2[2];
+    int32_t op2_osc_spec_b3[2];
+    int32_t op2_osc_spec_b4[2];
+    int32_t op2_osc_spec_b5[2];
+    int32_t op2_osc_spec_b6[2];
+    int32_t op2_osc_spec_b7[2];
+    int32_t op2_osc_spec_b8[2];
+    int32_t op2_osc_spec_b9[2];
+    int32_t op2_osc_spec_b10[2];
+    int32_t op2_osc_spec_b11[2];
+    int32_t op2_osc_spec_b12[2];
+    int32_t op2_osc_spec_b13[2];
+    int32_t op2_osc_spec_b14[2];
+    int32_t op2_osc_spec_b15[2];
+    int32_t op2_osc_spec_b16[2];
+    int32_t op2_osc_spec_morph[2];
+    int32_t op2_osc_spec_env_depth[2];
     int32_t op2_eg_r1[2];
     int32_t op2_eg_r2[2];
     int32_t op2_eg_r3[2];
@@ -322,9 +441,54 @@ typedef struct type_p_alpha_state {
     int32_t op2_fb_vs_amount[2];
     int32_t op2_eg_vs_amount[2];
     int32_t op2_mute_mute[2];
+    int32_t op2_specenv_r1[2];
+    int32_t op2_specenv_r2[2];
+    int32_t op2_specenv_r3[2];
+    int32_t op2_specenv_r4[2];
+    int32_t op2_specenv_l1[2];
+    int32_t op2_specenv_l2[2];
+    int32_t op2_specenv_l3[2];
+    int32_t op2_speclfo_rate[2];
+    int32_t op2_speclfo_depth[2];
+    int32_t op2_speclfo_wave[2];
+    int32_t op2_speclfo_mode[2];
     int32_t op3_ph_inc_ratio[2];
     int32_t op3_ph_detune[2];
     int32_t op3_osc_waveform[2];
+    int32_t op3_osc_spec_a1[2];
+    int32_t op3_osc_spec_a2[2];
+    int32_t op3_osc_spec_a3[2];
+    int32_t op3_osc_spec_a4[2];
+    int32_t op3_osc_spec_a5[2];
+    int32_t op3_osc_spec_a6[2];
+    int32_t op3_osc_spec_a7[2];
+    int32_t op3_osc_spec_a8[2];
+    int32_t op3_osc_spec_a9[2];
+    int32_t op3_osc_spec_a10[2];
+    int32_t op3_osc_spec_a11[2];
+    int32_t op3_osc_spec_a12[2];
+    int32_t op3_osc_spec_a13[2];
+    int32_t op3_osc_spec_a14[2];
+    int32_t op3_osc_spec_a15[2];
+    int32_t op3_osc_spec_a16[2];
+    int32_t op3_osc_spec_b1[2];
+    int32_t op3_osc_spec_b2[2];
+    int32_t op3_osc_spec_b3[2];
+    int32_t op3_osc_spec_b4[2];
+    int32_t op3_osc_spec_b5[2];
+    int32_t op3_osc_spec_b6[2];
+    int32_t op3_osc_spec_b7[2];
+    int32_t op3_osc_spec_b8[2];
+    int32_t op3_osc_spec_b9[2];
+    int32_t op3_osc_spec_b10[2];
+    int32_t op3_osc_spec_b11[2];
+    int32_t op3_osc_spec_b12[2];
+    int32_t op3_osc_spec_b13[2];
+    int32_t op3_osc_spec_b14[2];
+    int32_t op3_osc_spec_b15[2];
+    int32_t op3_osc_spec_b16[2];
+    int32_t op3_osc_spec_morph[2];
+    int32_t op3_osc_spec_env_depth[2];
     int32_t op3_eg_r1[2];
     int32_t op3_eg_r2[2];
     int32_t op3_eg_r3[2];
@@ -368,9 +532,54 @@ typedef struct type_p_alpha_state {
     int32_t op3_fb_vs_amount[2];
     int32_t op3_eg_vs_amount[2];
     int32_t op3_mute_mute[2];
+    int32_t op3_specenv_r1[2];
+    int32_t op3_specenv_r2[2];
+    int32_t op3_specenv_r3[2];
+    int32_t op3_specenv_r4[2];
+    int32_t op3_specenv_l1[2];
+    int32_t op3_specenv_l2[2];
+    int32_t op3_specenv_l3[2];
+    int32_t op3_speclfo_rate[2];
+    int32_t op3_speclfo_depth[2];
+    int32_t op3_speclfo_wave[2];
+    int32_t op3_speclfo_mode[2];
     int32_t op4_ph_inc_ratio[2];
     int32_t op4_ph_detune[2];
     int32_t op4_osc_waveform[2];
+    int32_t op4_osc_spec_a1[2];
+    int32_t op4_osc_spec_a2[2];
+    int32_t op4_osc_spec_a3[2];
+    int32_t op4_osc_spec_a4[2];
+    int32_t op4_osc_spec_a5[2];
+    int32_t op4_osc_spec_a6[2];
+    int32_t op4_osc_spec_a7[2];
+    int32_t op4_osc_spec_a8[2];
+    int32_t op4_osc_spec_a9[2];
+    int32_t op4_osc_spec_a10[2];
+    int32_t op4_osc_spec_a11[2];
+    int32_t op4_osc_spec_a12[2];
+    int32_t op4_osc_spec_a13[2];
+    int32_t op4_osc_spec_a14[2];
+    int32_t op4_osc_spec_a15[2];
+    int32_t op4_osc_spec_a16[2];
+    int32_t op4_osc_spec_b1[2];
+    int32_t op4_osc_spec_b2[2];
+    int32_t op4_osc_spec_b3[2];
+    int32_t op4_osc_spec_b4[2];
+    int32_t op4_osc_spec_b5[2];
+    int32_t op4_osc_spec_b6[2];
+    int32_t op4_osc_spec_b7[2];
+    int32_t op4_osc_spec_b8[2];
+    int32_t op4_osc_spec_b9[2];
+    int32_t op4_osc_spec_b10[2];
+    int32_t op4_osc_spec_b11[2];
+    int32_t op4_osc_spec_b12[2];
+    int32_t op4_osc_spec_b13[2];
+    int32_t op4_osc_spec_b14[2];
+    int32_t op4_osc_spec_b15[2];
+    int32_t op4_osc_spec_b16[2];
+    int32_t op4_osc_spec_morph[2];
+    int32_t op4_osc_spec_env_depth[2];
     int32_t op4_eg_r1[2];
     int32_t op4_eg_r2[2];
     int32_t op4_eg_r3[2];
@@ -414,6 +623,17 @@ typedef struct type_p_alpha_state {
     int32_t op4_fb_vs_amount[2];
     int32_t op4_eg_vs_amount[2];
     int32_t op4_mute_mute[2];
+    int32_t op4_specenv_r1[2];
+    int32_t op4_specenv_r2[2];
+    int32_t op4_specenv_r3[2];
+    int32_t op4_specenv_r4[2];
+    int32_t op4_specenv_l1[2];
+    int32_t op4_specenv_l2[2];
+    int32_t op4_specenv_l3[2];
+    int32_t op4_speclfo_rate[2];
+    int32_t op4_speclfo_depth[2];
+    int32_t op4_speclfo_wave[2];
+    int32_t op4_speclfo_mode[2];
     int32_t algo_algorithm[2];
     int32_t penv_on[2];
     int32_t penv_r1[2];
@@ -467,6 +687,8 @@ typedef struct type_p_alpha_state {
     int32_t penv_cv_x[NVOICE];
     int32_t psum_cv_x[NVOICE];
     int32_t algo_alg_x[NVOICE];
+    int32_t op4_speclfo_cv_x[NVOICE];
+    int32_t op4_specenv_cv_x[NVOICE];
     int32_t op4_eg_vs_k_x[NVOICE];
     int32_t op4_fb_vs_k_x[NVOICE];
     int32_t op4_level_vs_k_x[NVOICE];
@@ -483,6 +705,8 @@ typedef struct type_p_alpha_state {
     int32_t op4_fblfo_cv_x[NVOICE];
     int32_t op4_fbenv_cv_x[NVOICE];
     int32_t op4_lfo_cv_x[NVOICE];
+    int32_t op3_speclfo_cv_x[NVOICE];
+    int32_t op3_specenv_cv_x[NVOICE];
     int32_t op3_eg_vs_k_x[NVOICE];
     int32_t op3_fb_vs_k_x[NVOICE];
     int32_t op3_level_vs_k_x[NVOICE];
@@ -499,6 +723,8 @@ typedef struct type_p_alpha_state {
     int32_t op3_fblfo_cv_x[NVOICE];
     int32_t op3_fbenv_cv_x[NVOICE];
     int32_t op3_lfo_cv_x[NVOICE];
+    int32_t op2_speclfo_cv_x[NVOICE];
+    int32_t op2_specenv_cv_x[NVOICE];
     int32_t op2_eg_vs_k_x[NVOICE];
     int32_t op2_fb_vs_k_x[NVOICE];
     int32_t op2_level_vs_k_x[NVOICE];
@@ -515,6 +741,8 @@ typedef struct type_p_alpha_state {
     int32_t op2_fblfo_cv_x[NVOICE];
     int32_t op2_fbenv_cv_x[NVOICE];
     int32_t op2_lfo_cv_x[NVOICE];
+    int32_t op1_speclfo_cv_x[NVOICE];
+    int32_t op1_specenv_cv_x[NVOICE];
     int32_t op1_eg_vs_k_x[NVOICE];
     int32_t op1_fb_vs_k_x[NVOICE];
     int32_t op1_level_vs_k_x[NVOICE];
@@ -538,6 +766,10 @@ typedef struct type_p_alpha_state {
     int32_t type_p_alpha_render_bus1[CONTROL_BLOCK];
     int32_t type_p_alpha_tap0[N_TAP_CH][DSP_TAP_FRAMES];
     int32_t type_p_alpha_tap1[N_TAP_CH][DSP_TAP_FRAMES];
+    int16_t op1_osc_bank[8192];
+    int16_t op2_osc_bank[8192];
+    int16_t op3_osc_bank[8192];
+    int16_t op4_osc_bank[8192];
     uint16_t voice_rel[NVOICE];
     uint8_t voice_gate[NVOICE];
     uint8_t voice_note[NVOICE];
@@ -555,487 +787,881 @@ static inline __attribute__((always_inline)) uint32_t note_to_inc(uint32_t note)
     return note_inc_c9[note % 12u] >> (10u - note / 12u);
 }
 
-#define PARAM_COUNT 470
+#define PARAM_COUNT 830
 
 typedef struct { uint32_t id; const char *name; int32_t min, max, def;
                  uint8_t curve; uint8_t rate; const char *unit; } dsp_param;
-const dsp_param type_p_alpha_dsp_params[470] = {
+const dsp_param type_p_alpha_dsp_params[830] = {
     { 0u, "op1_ratio.p0", 32768, 1048576, 65536, 0u, 0u, "" },
     { 1u, "op1_detune.p0", -50, 50, 0, 0u, 0u, "" },
-    { 2u, "op1_waveform.p0", 0, 12, 0, 0u, 0u, "" },
-    { 3u, "attack.p0", 0, 99, 80, 0u, 0u, "" },
-    { 4u, "op1.eg.r2.p0", 0, 99, 60, 0u, 0u, "" },
-    { 5u, "op1.eg.r3.p0", 0, 99, 50, 0u, 0u, "" },
-    { 6u, "release.p0", 0, 99, 80, 0u, 0u, "" },
-    { 7u, "op1.eg.l1.p0", 0, 99, 99, 0u, 0u, "" },
-    { 8u, "op1.eg.l2.p0", 0, 99, 93, 0u, 0u, "" },
-    { 9u, "op1.eg.l3.p0", 0, 99, 87, 0u, 0u, "" },
-    { 10u, "op1_trem_rate.p0", 0, 20000000, 389566, 1u, 0u, "" },
-    { 11u, "op1_trem_depth.p0", -99, 99, 0, 0u, 0u, "" },
-    { 12u, "op1_trem_wave.p0", 0, 11, 0, 0u, 0u, "" },
-    { 13u, "op1_trem_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 14u, "op1_fbenv_on.p0", 0, 1, 1, 0u, 0u, "" },
-    { 15u, "op1_fbenv_r1.p0", 0, 99, 80, 0u, 0u, "" },
-    { 16u, "op1_fbenv_r2.p0", 0, 99, 60, 0u, 0u, "" },
-    { 17u, "op1_fbenv_r3.p0", 0, 99, 50, 0u, 0u, "" },
-    { 18u, "op1_fbenv_r4.p0", 0, 99, 80, 0u, 0u, "" },
-    { 19u, "op1_fbenv_l1.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 20u, "op1_fbenv_l2.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 21u, "op1_fbenv_l3.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 22u, "op1_fbenv_l4.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 23u, "op1_fblfo_rate.p0", 0, 20000000, 389566, 1u, 0u, "" },
-    { 24u, "op1_fblfo_depth.p0", -32767, 32767, 0, 0u, 0u, "" },
-    { 25u, "op1_fblfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
-    { 26u, "op1_fblfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 27u, "op1_dlfo_rate.p0", 0, 20000000, 389566, 1u, 0u, "" },
-    { 28u, "op1_dlfo_depth.p0", -32768, 32768, 0, 0u, 0u, "" },
-    { 29u, "op1_dlfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
-    { 30u, "op1_dlfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 31u, "op1.velamp.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 32u, "op1.velfm.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 33u, "op1.velrate.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 34u, "op1_level.p0", 0, 99, 75, 0u, 0u, "" },
-    { 35u, "op1_feedback.p0", -32767, 32767, 0, 0u, 0u, "" },
-    { 36u, "op1_level_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
-    { 37u, "op1_level_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
-    { 38u, "op1_fb_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
-    { 39u, "op1_fb_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
-    { 40u, "op1_aenv_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
-    { 41u, "op1_aenv_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
-    { 42u, "op1_level_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 43u, "op1_fb_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 44u, "op1_aenv_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 45u, "op1_mute.p0", 0, 1, 0, 0u, 0u, "" },
-    { 46u, "op2_ratio.p0", 32768, 1048576, 65536, 0u, 0u, "" },
-    { 47u, "op2_detune.p0", -50, 50, 0, 0u, 0u, "" },
-    { 48u, "op2_waveform.p0", 0, 12, 0, 0u, 0u, "" },
-    { 49u, "op2.eg.r1.p0", 0, 99, 80, 0u, 0u, "" },
-    { 50u, "op2.eg.r2.p0", 0, 99, 60, 0u, 0u, "" },
-    { 51u, "op2.eg.r3.p0", 0, 99, 50, 0u, 0u, "" },
-    { 52u, "op2.eg.r4.p0", 0, 99, 80, 0u, 0u, "" },
-    { 53u, "op2.eg.l1.p0", 0, 99, 99, 0u, 0u, "" },
-    { 54u, "op2.eg.l2.p0", 0, 99, 93, 0u, 0u, "" },
-    { 55u, "op2.eg.l3.p0", 0, 99, 87, 0u, 0u, "" },
-    { 56u, "op2_trem_rate.p0", 0, 20000000, 486958, 1u, 0u, "" },
-    { 57u, "op2_trem_depth.p0", -99, 99, 0, 0u, 0u, "" },
-    { 58u, "op2_trem_wave.p0", 0, 11, 0, 0u, 0u, "" },
-    { 59u, "op2_trem_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 60u, "op2_fbenv_on.p0", 0, 1, 1, 0u, 0u, "" },
-    { 61u, "op2_fbenv_r1.p0", 0, 99, 80, 0u, 0u, "" },
-    { 62u, "op2_fbenv_r2.p0", 0, 99, 60, 0u, 0u, "" },
-    { 63u, "op2_fbenv_r3.p0", 0, 99, 50, 0u, 0u, "" },
-    { 64u, "op2_fbenv_r4.p0", 0, 99, 80, 0u, 0u, "" },
-    { 65u, "op2_fbenv_l1.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 66u, "op2_fbenv_l2.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 67u, "op2_fbenv_l3.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 68u, "op2_fbenv_l4.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 69u, "op2_fblfo_rate.p0", 0, 20000000, 389566, 1u, 0u, "" },
-    { 70u, "op2_fblfo_depth.p0", -32767, 32767, 0, 0u, 0u, "" },
-    { 71u, "op2_fblfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
-    { 72u, "op2_fblfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 73u, "op2_dlfo_rate.p0", 0, 20000000, 389566, 1u, 0u, "" },
-    { 74u, "op2_dlfo_depth.p0", -32768, 32768, 0, 0u, 0u, "" },
-    { 75u, "op2_dlfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
-    { 76u, "op2_dlfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 77u, "op2.velamp.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 78u, "op2.velfm.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 79u, "op2.velrate.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 80u, "op2_level.p0", 0, 99, 85, 0u, 0u, "" },
-    { 81u, "op2_feedback.p0", -32767, 32767, 0, 0u, 0u, "" },
-    { 82u, "op2_level_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
-    { 83u, "op2_level_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
-    { 84u, "op2_fb_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
-    { 85u, "op2_fb_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
-    { 86u, "op2_aenv_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
-    { 87u, "op2_aenv_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
-    { 88u, "op2_level_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 89u, "op2_fb_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 90u, "op2_aenv_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 91u, "op2_mute.p0", 0, 1, 0, 0u, 0u, "" },
-    { 92u, "op3_ratio.p0", 32768, 1048576, 196608, 0u, 0u, "" },
-    { 93u, "op3_detune.p0", -50, 50, 0, 0u, 0u, "" },
-    { 94u, "op3_waveform.p0", 0, 12, 0, 0u, 0u, "" },
-    { 95u, "op3.eg.r1.p0", 0, 99, 80, 0u, 0u, "" },
-    { 96u, "op3.eg.r2.p0", 0, 99, 60, 0u, 0u, "" },
-    { 97u, "op3.eg.r3.p0", 0, 99, 50, 0u, 0u, "" },
-    { 98u, "op3.eg.r4.p0", 0, 99, 80, 0u, 0u, "" },
-    { 99u, "op3.eg.l1.p0", 0, 99, 99, 0u, 0u, "" },
-    { 100u, "op3.eg.l2.p0", 0, 99, 93, 0u, 0u, "" },
-    { 101u, "op3.eg.l3.p0", 0, 99, 87, 0u, 0u, "" },
-    { 102u, "op3_trem_rate.p0", 0, 20000000, 292174, 1u, 0u, "" },
-    { 103u, "op3_trem_depth.p0", -99, 99, 0, 0u, 0u, "" },
-    { 104u, "op3_trem_wave.p0", 0, 11, 0, 0u, 0u, "" },
-    { 105u, "op3_trem_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 106u, "op3_fbenv_on.p0", 0, 1, 1, 0u, 0u, "" },
-    { 107u, "op3_fbenv_r1.p0", 0, 99, 80, 0u, 0u, "" },
-    { 108u, "op3_fbenv_r2.p0", 0, 99, 60, 0u, 0u, "" },
-    { 109u, "op3_fbenv_r3.p0", 0, 99, 50, 0u, 0u, "" },
-    { 110u, "op3_fbenv_r4.p0", 0, 99, 80, 0u, 0u, "" },
-    { 111u, "op3_fbenv_l1.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 112u, "op3_fbenv_l2.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 113u, "op3_fbenv_l3.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 114u, "op3_fbenv_l4.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 115u, "op3_fblfo_rate.p0", 0, 20000000, 389566, 1u, 0u, "" },
-    { 116u, "op3_fblfo_depth.p0", -32767, 32767, 0, 0u, 0u, "" },
-    { 117u, "op3_fblfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
-    { 118u, "op3_fblfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 119u, "op3_dlfo_rate.p0", 0, 20000000, 389566, 1u, 0u, "" },
-    { 120u, "op3_dlfo_depth.p0", -32768, 32768, 0, 0u, 0u, "" },
-    { 121u, "op3_dlfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
-    { 122u, "op3_dlfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 123u, "op3.velamp.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 124u, "op3.velfm.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 125u, "op3.velrate.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 126u, "op3_level.p0", 0, 99, 70, 0u, 0u, "" },
-    { 127u, "op3_feedback.p0", -32767, 32767, 0, 0u, 0u, "" },
-    { 128u, "op3_level_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
-    { 129u, "op3_level_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
-    { 130u, "op3_fb_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
-    { 131u, "op3_fb_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
-    { 132u, "op3_aenv_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
-    { 133u, "op3_aenv_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
-    { 134u, "op3_level_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 135u, "op3_fb_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 136u, "op3_aenv_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 137u, "op3_mute.p0", 0, 1, 0, 0u, 0u, "" },
-    { 138u, "op4_ratio.p0", 32768, 1048576, 131072, 0u, 0u, "" },
-    { 139u, "op4_detune.p0", -50, 50, 0, 0u, 0u, "" },
-    { 140u, "op4_waveform.p0", 0, 12, 0, 0u, 0u, "" },
-    { 141u, "op4.eg.r1.p0", 0, 99, 80, 0u, 0u, "" },
-    { 142u, "op4.eg.r2.p0", 0, 99, 60, 0u, 0u, "" },
-    { 143u, "op4.eg.r3.p0", 0, 99, 50, 0u, 0u, "" },
-    { 144u, "op4.eg.r4.p0", 0, 99, 80, 0u, 0u, "" },
-    { 145u, "op4.eg.l1.p0", 0, 99, 99, 0u, 0u, "" },
-    { 146u, "op4.eg.l2.p0", 0, 99, 93, 0u, 0u, "" },
-    { 147u, "op4.eg.l3.p0", 0, 99, 87, 0u, 0u, "" },
-    { 148u, "op4_trem_rate.p0", 0, 20000000, 340870, 1u, 0u, "" },
-    { 149u, "op4_trem_depth.p0", -99, 99, 0, 0u, 0u, "" },
-    { 150u, "op4_trem_wave.p0", 0, 11, 0, 0u, 0u, "" },
-    { 151u, "op4_trem_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 152u, "op4_fbenv_on.p0", 0, 1, 1, 0u, 0u, "" },
-    { 153u, "op4_fbenv_r1.p0", 0, 99, 80, 0u, 0u, "" },
-    { 154u, "op4_fbenv_r2.p0", 0, 99, 60, 0u, 0u, "" },
-    { 155u, "op4_fbenv_r3.p0", 0, 99, 50, 0u, 0u, "" },
-    { 156u, "op4_fbenv_r4.p0", 0, 99, 80, 0u, 0u, "" },
-    { 157u, "op4_fbenv_l1.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 158u, "op4_fbenv_l2.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 159u, "op4_fbenv_l3.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 160u, "op4_fbenv_l4.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 161u, "op4_fblfo_rate.p0", 0, 20000000, 389566, 1u, 0u, "" },
-    { 162u, "op4_fblfo_depth.p0", -32767, 32767, 0, 0u, 0u, "" },
-    { 163u, "op4_fblfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
-    { 164u, "op4_fblfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 165u, "op4_dlfo_rate.p0", 0, 20000000, 389566, 1u, 0u, "" },
-    { 166u, "op4_dlfo_depth.p0", -32768, 32768, 0, 0u, 0u, "" },
-    { 167u, "op4_dlfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
-    { 168u, "op4_dlfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 169u, "op4.velamp.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 170u, "op4.velfm.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 171u, "op4.velrate.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 172u, "op4_level.p0", 0, 99, 85, 0u, 0u, "" },
-    { 173u, "op4_feedback.p0", -32767, 32767, 0, 0u, 0u, "" },
-    { 174u, "op4_level_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
-    { 175u, "op4_level_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
-    { 176u, "op4_fb_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
-    { 177u, "op4_fb_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
-    { 178u, "op4_aenv_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
-    { 179u, "op4_aenv_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
-    { 180u, "op4_level_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 181u, "op4_fb_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 182u, "op4_aenv_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 183u, "op4_mute.p0", 0, 1, 0, 0u, 0u, "" },
-    { 184u, "algorithm.p0", 0, 7, 4, 0u, 0u, "" },
-    { 185u, "penv_on.p0", 0, 1, 0, 0u, 0u, "" },
-    { 186u, "penv_r1.p0", 0, 99, 80, 0u, 0u, "" },
-    { 187u, "penv_r2.p0", 0, 99, 60, 0u, 0u, "" },
-    { 188u, "penv_r3.p0", 0, 99, 50, 0u, 0u, "" },
-    { 189u, "penv_r4.p0", 0, 99, 80, 0u, 0u, "" },
-    { 190u, "penv_l1.p0", -32768, 32767, 5461, 0u, 0u, "" },
-    { 191u, "penv_l2.p0", -32768, 32767, 2731, 0u, 0u, "" },
-    { 192u, "penv_l3.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 193u, "penv_l4.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 194u, "penv_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
-    { 195u, "penv_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
-    { 196u, "penv_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 197u, "pitch_rate.p0", 0, 20000000, 486958, 1u, 0u, "" },
-    { 198u, "pitch_depth.p0", -32768, 32768, 273, 0u, 0u, "" },
-    { 199u, "pitch_wave.p0", 0, 11, 0, 0u, 0u, "" },
-    { 200u, "pitch_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 201u, "f1_cutoff_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
-    { 202u, "f1_cutoff_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
-    { 203u, "fenv_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
-    { 204u, "fenv_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
-    { 205u, "f1_cutoff_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 206u, "fenv_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 207u, "cutoff.p0", 0, 55296, 8000, 1u, 0u, "" },
-    { 208u, "res.p0", 0, 41942, 16000, 1u, 0u, "" },
-    { 209u, "lp.comp.p0", -32768, 32767, 32767, 0u, 0u, "" },
-    { 210u, "filter_type.p0", 0, 2, 0, 0u, 0u, "" },
-    { 211u, "filter_on.p0", 0, 1, 0, 0u, 0u, "" },
-    { 212u, "fenv_depth.p0", 0, 65535, 0, 0u, 0u, "" },
-    { 213u, "fenv_r1.p0", 0, 99, 80, 0u, 0u, "" },
-    { 214u, "fenv_r2.p0", 0, 99, 60, 0u, 0u, "" },
-    { 215u, "fenv_r3.p0", 0, 99, 50, 0u, 0u, "" },
-    { 216u, "fenv_r4.p0", 0, 99, 80, 0u, 0u, "" },
-    { 217u, "fenv_l1.p0", 0, 99, 99, 0u, 0u, "" },
-    { 218u, "fenv_l2.p0", 0, 99, 93, 0u, 0u, "" },
-    { 219u, "fenv_l3.p0", 0, 99, 87, 0u, 0u, "" },
-    { 220u, "mode.p0", 0, 1, 0, 0u, 0u, "" },
-    { 221u, "unison_count.p0", 1, 8, 1, 0u, 0u, "" },
-    { 222u, "unison_detune.p0", 0, 200, 0, 0u, 0u, "cents" },
-    { 223u, "detune.p0", -50, 50, 0, 0u, 0u, "cents" },
-    { 224u, "transpose.p0", -24, 24, 0, 0u, 0u, "st" },
-    { 225u, "legato.p0", 0, 1, 0, 0u, 0u, "" },
-    { 226u, "portamento.p0", 0, 5000, 0, 1u, 0u, "" },
-    { 227u, "note_priority.p0", 0, 2, 0, 0u, 0u, "" },
-    { 228u, "op1_ratio.p1", 32768, 1048576, 65536, 0u, 0u, "" },
-    { 229u, "op1_detune.p1", -50, 50, 0, 0u, 0u, "" },
-    { 230u, "op1_waveform.p1", 0, 12, 0, 0u, 0u, "" },
-    { 231u, "attack.p1", 0, 99, 80, 0u, 0u, "" },
-    { 232u, "op1.eg.r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 233u, "op1.eg.r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 234u, "release.p1", 0, 99, 80, 0u, 0u, "" },
-    { 235u, "op1.eg.l1.p1", 0, 99, 99, 0u, 0u, "" },
-    { 236u, "op1.eg.l2.p1", 0, 99, 93, 0u, 0u, "" },
-    { 237u, "op1.eg.l3.p1", 0, 99, 87, 0u, 0u, "" },
-    { 238u, "op1_trem_rate.p1", 0, 20000000, 389566, 1u, 0u, "" },
-    { 239u, "op1_trem_depth.p1", -99, 99, 0, 0u, 0u, "" },
-    { 240u, "op1_trem_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 241u, "op1_trem_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 242u, "op1_fbenv_on.p1", 0, 1, 1, 0u, 0u, "" },
-    { 243u, "op1_fbenv_r1.p1", 0, 99, 80, 0u, 0u, "" },
-    { 244u, "op1_fbenv_r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 245u, "op1_fbenv_r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 246u, "op1_fbenv_r4.p1", 0, 99, 80, 0u, 0u, "" },
-    { 247u, "op1_fbenv_l1.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 248u, "op1_fbenv_l2.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 249u, "op1_fbenv_l3.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 250u, "op1_fbenv_l4.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 251u, "op1_fblfo_rate.p1", 0, 20000000, 389566, 1u, 0u, "" },
-    { 252u, "op1_fblfo_depth.p1", -32767, 32767, 0, 0u, 0u, "" },
-    { 253u, "op1_fblfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 254u, "op1_fblfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 255u, "op1_dlfo_rate.p1", 0, 20000000, 389566, 1u, 0u, "" },
-    { 256u, "op1_dlfo_depth.p1", -32768, 32768, 0, 0u, 0u, "" },
-    { 257u, "op1_dlfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 258u, "op1_dlfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 259u, "op1.velamp.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 260u, "op1.velfm.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 261u, "op1.velrate.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 262u, "op1_level.p1", 0, 99, 75, 0u, 0u, "" },
-    { 263u, "op1_feedback.p1", -32767, 32767, 0, 0u, 0u, "" },
-    { 264u, "op1_level_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 265u, "op1_level_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 266u, "op1_fb_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 267u, "op1_fb_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 268u, "op1_aenv_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 269u, "op1_aenv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 270u, "op1_level_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 271u, "op1_fb_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 272u, "op1_aenv_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 273u, "op1_mute.p1", 0, 1, 0, 0u, 0u, "" },
-    { 274u, "op2_ratio.p1", 32768, 1048576, 65536, 0u, 0u, "" },
-    { 275u, "op2_detune.p1", -50, 50, 0, 0u, 0u, "" },
-    { 276u, "op2_waveform.p1", 0, 12, 0, 0u, 0u, "" },
-    { 277u, "op2.eg.r1.p1", 0, 99, 80, 0u, 0u, "" },
-    { 278u, "op2.eg.r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 279u, "op2.eg.r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 280u, "op2.eg.r4.p1", 0, 99, 80, 0u, 0u, "" },
-    { 281u, "op2.eg.l1.p1", 0, 99, 99, 0u, 0u, "" },
-    { 282u, "op2.eg.l2.p1", 0, 99, 93, 0u, 0u, "" },
-    { 283u, "op2.eg.l3.p1", 0, 99, 87, 0u, 0u, "" },
-    { 284u, "op2_trem_rate.p1", 0, 20000000, 486958, 1u, 0u, "" },
-    { 285u, "op2_trem_depth.p1", -99, 99, 0, 0u, 0u, "" },
-    { 286u, "op2_trem_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 287u, "op2_trem_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 288u, "op2_fbenv_on.p1", 0, 1, 1, 0u, 0u, "" },
-    { 289u, "op2_fbenv_r1.p1", 0, 99, 80, 0u, 0u, "" },
-    { 290u, "op2_fbenv_r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 291u, "op2_fbenv_r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 292u, "op2_fbenv_r4.p1", 0, 99, 80, 0u, 0u, "" },
-    { 293u, "op2_fbenv_l1.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 294u, "op2_fbenv_l2.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 295u, "op2_fbenv_l3.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 296u, "op2_fbenv_l4.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 297u, "op2_fblfo_rate.p1", 0, 20000000, 389566, 1u, 0u, "" },
-    { 298u, "op2_fblfo_depth.p1", -32767, 32767, 0, 0u, 0u, "" },
-    { 299u, "op2_fblfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 300u, "op2_fblfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 301u, "op2_dlfo_rate.p1", 0, 20000000, 389566, 1u, 0u, "" },
-    { 302u, "op2_dlfo_depth.p1", -32768, 32768, 0, 0u, 0u, "" },
-    { 303u, "op2_dlfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 304u, "op2_dlfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 305u, "op2.velamp.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 306u, "op2.velfm.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 307u, "op2.velrate.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 308u, "op2_level.p1", 0, 99, 85, 0u, 0u, "" },
-    { 309u, "op2_feedback.p1", -32767, 32767, 0, 0u, 0u, "" },
-    { 310u, "op2_level_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 311u, "op2_level_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 312u, "op2_fb_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 313u, "op2_fb_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 314u, "op2_aenv_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 315u, "op2_aenv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 316u, "op2_level_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 317u, "op2_fb_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 318u, "op2_aenv_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 319u, "op2_mute.p1", 0, 1, 0, 0u, 0u, "" },
-    { 320u, "op3_ratio.p1", 32768, 1048576, 196608, 0u, 0u, "" },
-    { 321u, "op3_detune.p1", -50, 50, 0, 0u, 0u, "" },
-    { 322u, "op3_waveform.p1", 0, 12, 0, 0u, 0u, "" },
-    { 323u, "op3.eg.r1.p1", 0, 99, 80, 0u, 0u, "" },
-    { 324u, "op3.eg.r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 325u, "op3.eg.r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 326u, "op3.eg.r4.p1", 0, 99, 80, 0u, 0u, "" },
-    { 327u, "op3.eg.l1.p1", 0, 99, 99, 0u, 0u, "" },
-    { 328u, "op3.eg.l2.p1", 0, 99, 93, 0u, 0u, "" },
-    { 329u, "op3.eg.l3.p1", 0, 99, 87, 0u, 0u, "" },
-    { 330u, "op3_trem_rate.p1", 0, 20000000, 292174, 1u, 0u, "" },
-    { 331u, "op3_trem_depth.p1", -99, 99, 0, 0u, 0u, "" },
-    { 332u, "op3_trem_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 333u, "op3_trem_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 334u, "op3_fbenv_on.p1", 0, 1, 1, 0u, 0u, "" },
-    { 335u, "op3_fbenv_r1.p1", 0, 99, 80, 0u, 0u, "" },
-    { 336u, "op3_fbenv_r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 337u, "op3_fbenv_r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 338u, "op3_fbenv_r4.p1", 0, 99, 80, 0u, 0u, "" },
-    { 339u, "op3_fbenv_l1.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 340u, "op3_fbenv_l2.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 341u, "op3_fbenv_l3.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 342u, "op3_fbenv_l4.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 343u, "op3_fblfo_rate.p1", 0, 20000000, 389566, 1u, 0u, "" },
-    { 344u, "op3_fblfo_depth.p1", -32767, 32767, 0, 0u, 0u, "" },
-    { 345u, "op3_fblfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 346u, "op3_fblfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 347u, "op3_dlfo_rate.p1", 0, 20000000, 389566, 1u, 0u, "" },
-    { 348u, "op3_dlfo_depth.p1", -32768, 32768, 0, 0u, 0u, "" },
-    { 349u, "op3_dlfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 350u, "op3_dlfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 351u, "op3.velamp.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 352u, "op3.velfm.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 353u, "op3.velrate.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 354u, "op3_level.p1", 0, 99, 70, 0u, 0u, "" },
-    { 355u, "op3_feedback.p1", -32767, 32767, 0, 0u, 0u, "" },
-    { 356u, "op3_level_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 357u, "op3_level_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 358u, "op3_fb_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 359u, "op3_fb_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 360u, "op3_aenv_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 361u, "op3_aenv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 362u, "op3_level_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 363u, "op3_fb_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 364u, "op3_aenv_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 365u, "op3_mute.p1", 0, 1, 0, 0u, 0u, "" },
-    { 366u, "op4_ratio.p1", 32768, 1048576, 131072, 0u, 0u, "" },
-    { 367u, "op4_detune.p1", -50, 50, 0, 0u, 0u, "" },
-    { 368u, "op4_waveform.p1", 0, 12, 0, 0u, 0u, "" },
-    { 369u, "op4.eg.r1.p1", 0, 99, 80, 0u, 0u, "" },
-    { 370u, "op4.eg.r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 371u, "op4.eg.r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 372u, "op4.eg.r4.p1", 0, 99, 80, 0u, 0u, "" },
-    { 373u, "op4.eg.l1.p1", 0, 99, 99, 0u, 0u, "" },
-    { 374u, "op4.eg.l2.p1", 0, 99, 93, 0u, 0u, "" },
-    { 375u, "op4.eg.l3.p1", 0, 99, 87, 0u, 0u, "" },
-    { 376u, "op4_trem_rate.p1", 0, 20000000, 340870, 1u, 0u, "" },
-    { 377u, "op4_trem_depth.p1", -99, 99, 0, 0u, 0u, "" },
-    { 378u, "op4_trem_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 379u, "op4_trem_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 380u, "op4_fbenv_on.p1", 0, 1, 1, 0u, 0u, "" },
-    { 381u, "op4_fbenv_r1.p1", 0, 99, 80, 0u, 0u, "" },
-    { 382u, "op4_fbenv_r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 383u, "op4_fbenv_r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 384u, "op4_fbenv_r4.p1", 0, 99, 80, 0u, 0u, "" },
-    { 385u, "op4_fbenv_l1.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 386u, "op4_fbenv_l2.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 387u, "op4_fbenv_l3.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 388u, "op4_fbenv_l4.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 389u, "op4_fblfo_rate.p1", 0, 20000000, 389566, 1u, 0u, "" },
-    { 390u, "op4_fblfo_depth.p1", -32767, 32767, 0, 0u, 0u, "" },
-    { 391u, "op4_fblfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 392u, "op4_fblfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 393u, "op4_dlfo_rate.p1", 0, 20000000, 389566, 1u, 0u, "" },
-    { 394u, "op4_dlfo_depth.p1", -32768, 32768, 0, 0u, 0u, "" },
-    { 395u, "op4_dlfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 396u, "op4_dlfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 397u, "op4.velamp.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 398u, "op4.velfm.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 399u, "op4.velrate.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 400u, "op4_level.p1", 0, 99, 85, 0u, 0u, "" },
-    { 401u, "op4_feedback.p1", -32767, 32767, 0, 0u, 0u, "" },
-    { 402u, "op4_level_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 403u, "op4_level_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 404u, "op4_fb_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 405u, "op4_fb_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 406u, "op4_aenv_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 407u, "op4_aenv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 408u, "op4_level_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 409u, "op4_fb_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 410u, "op4_aenv_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 411u, "op4_mute.p1", 0, 1, 0, 0u, 0u, "" },
-    { 412u, "algorithm.p1", 0, 7, 4, 0u, 0u, "" },
-    { 413u, "penv_on.p1", 0, 1, 0, 0u, 0u, "" },
-    { 414u, "penv_r1.p1", 0, 99, 80, 0u, 0u, "" },
-    { 415u, "penv_r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 416u, "penv_r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 417u, "penv_r4.p1", 0, 99, 80, 0u, 0u, "" },
-    { 418u, "penv_l1.p1", -32768, 32767, 5461, 0u, 0u, "" },
-    { 419u, "penv_l2.p1", -32768, 32767, 2731, 0u, 0u, "" },
-    { 420u, "penv_l3.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 421u, "penv_l4.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 422u, "penv_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 423u, "penv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 424u, "penv_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 425u, "pitch_rate.p1", 0, 20000000, 486958, 1u, 0u, "" },
-    { 426u, "pitch_depth.p1", -32768, 32768, 273, 0u, 0u, "" },
-    { 427u, "pitch_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 428u, "pitch_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 429u, "f1_cutoff_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 430u, "f1_cutoff_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 431u, "fenv_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 432u, "fenv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 433u, "f1_cutoff_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 434u, "fenv_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 435u, "cutoff.p1", 0, 55296, 8000, 1u, 0u, "" },
-    { 436u, "res.p1", 0, 41942, 16000, 1u, 0u, "" },
-    { 437u, "lp.comp.p1", -32768, 32767, 32767, 0u, 0u, "" },
-    { 438u, "filter_type.p1", 0, 2, 0, 0u, 0u, "" },
-    { 439u, "filter_on.p1", 0, 1, 0, 0u, 0u, "" },
-    { 440u, "fenv_depth.p1", 0, 65535, 0, 0u, 0u, "" },
-    { 441u, "fenv_r1.p1", 0, 99, 80, 0u, 0u, "" },
-    { 442u, "fenv_r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 443u, "fenv_r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 444u, "fenv_r4.p1", 0, 99, 80, 0u, 0u, "" },
-    { 445u, "fenv_l1.p1", 0, 99, 99, 0u, 0u, "" },
-    { 446u, "fenv_l2.p1", 0, 99, 93, 0u, 0u, "" },
-    { 447u, "fenv_l3.p1", 0, 99, 87, 0u, 0u, "" },
-    { 448u, "mode.p1", 0, 1, 0, 0u, 0u, "" },
-    { 449u, "unison_count.p1", 1, 8, 1, 0u, 0u, "" },
-    { 450u, "unison_detune.p1", 0, 200, 0, 0u, 0u, "cents" },
-    { 451u, "detune.p1", -50, 50, 0, 0u, 0u, "cents" },
-    { 452u, "transpose.p1", -24, 24, 0, 0u, 0u, "st" },
-    { 453u, "legato.p1", 0, 1, 0, 0u, 0u, "" },
-    { 454u, "portamento.p1", 0, 5000, 0, 1u, 0u, "" },
-    { 455u, "note_priority.p1", 0, 2, 0, 0u, 0u, "" },
-    { 456u, "breakpoint", 0, 127, 60, 0u, 0u, "" },
-    { 457u, "key_sens_on", 0, 1, 1, 0u, 0u, "" },
-    { 458u, "vel_sens_on", 0, 1, 1, 0u, 0u, "" },
-    { 459u, "dc.r", -32768, 32767, 32735, 0u, 0u, "" },
-    { 460u, "channel.p0", -1, 15, 0, 0u, 0u, "" },
-    { 461u, "channel.p1", -1, 15, 1, 0u, 0u, "" },
-    { 462u, "low.p0", 0, 127, 0, 0u, 0u, "" },
-    { 463u, "low.p1", 0, 127, 0, 0u, 0u, "" },
-    { 464u, "high.p0", 0, 127, 127, 0u, 0u, "" },
-    { 465u, "high.p1", 0, 127, 127, 0u, 0u, "" },
-    { 466u, "level.p0", 0, 99, 99, 0u, 0u, "" },
-    { 467u, "level.p1", 0, 99, 99, 0u, 0u, "" },
-    { 468u, "delay.p0", 0, 1000, 0, 0u, 0u, "ms" },
-    { 469u, "delay.p1", 0, 1000, 0, 0u, 0u, "ms" },
+    { 2u, "op1_waveform.p0", 0, 13, 0, 0u, 0u, "" },
+    { 3u, "op1_spec_a1.p0", 0, 99, 99, 0u, 0u, "" },
+    { 4u, "op1_spec_a2.p0", 0, 99, 0, 0u, 0u, "" },
+    { 5u, "op1_spec_a3.p0", 0, 99, 0, 0u, 0u, "" },
+    { 6u, "op1_spec_a4.p0", 0, 99, 0, 0u, 0u, "" },
+    { 7u, "op1_spec_a5.p0", 0, 99, 0, 0u, 0u, "" },
+    { 8u, "op1_spec_a6.p0", 0, 99, 0, 0u, 0u, "" },
+    { 9u, "op1_spec_a7.p0", 0, 99, 0, 0u, 0u, "" },
+    { 10u, "op1_spec_a8.p0", 0, 99, 0, 0u, 0u, "" },
+    { 11u, "op1_spec_a9.p0", 0, 99, 0, 0u, 0u, "" },
+    { 12u, "op1_spec_a10.p0", 0, 99, 0, 0u, 0u, "" },
+    { 13u, "op1_spec_a11.p0", 0, 99, 0, 0u, 0u, "" },
+    { 14u, "op1_spec_a12.p0", 0, 99, 0, 0u, 0u, "" },
+    { 15u, "op1_spec_a13.p0", 0, 99, 0, 0u, 0u, "" },
+    { 16u, "op1_spec_a14.p0", 0, 99, 0, 0u, 0u, "" },
+    { 17u, "op1_spec_a15.p0", 0, 99, 0, 0u, 0u, "" },
+    { 18u, "op1_spec_a16.p0", 0, 99, 0, 0u, 0u, "" },
+    { 19u, "op1_spec_b1.p0", 0, 99, 99, 0u, 0u, "" },
+    { 20u, "op1_spec_b2.p0", 0, 99, 45, 0u, 0u, "" },
+    { 21u, "op1_spec_b3.p0", 0, 99, 30, 0u, 0u, "" },
+    { 22u, "op1_spec_b4.p0", 0, 99, 15, 0u, 0u, "" },
+    { 23u, "op1_spec_b5.p0", 0, 99, 55, 0u, 0u, "" },
+    { 24u, "op1_spec_b6.p0", 0, 99, 40, 0u, 0u, "" },
+    { 25u, "op1_spec_b7.p0", 0, 99, 25, 0u, 0u, "" },
+    { 26u, "op1_spec_b8.p0", 0, 99, 12, 0u, 0u, "" },
+    { 27u, "op1_spec_b9.p0", 0, 99, 8, 0u, 0u, "" },
+    { 28u, "op1_spec_b10.p0", 0, 99, 5, 0u, 0u, "" },
+    { 29u, "op1_spec_b11.p0", 0, 99, 3, 0u, 0u, "" },
+    { 30u, "op1_spec_b12.p0", 0, 99, 2, 0u, 0u, "" },
+    { 31u, "op1_spec_b13.p0", 0, 99, 1, 0u, 0u, "" },
+    { 32u, "op1_spec_b14.p0", 0, 99, 0, 0u, 0u, "" },
+    { 33u, "op1_spec_b15.p0", 0, 99, 0, 0u, 0u, "" },
+    { 34u, "op1_spec_b16.p0", 0, 99, 0, 0u, 0u, "" },
+    { 35u, "op1_spec_morph.p0", 0, 99, 0, 0u, 0u, "" },
+    { 36u, "op1_spec_env_depth.p0", -99, 99, 0, 0u, 0u, "" },
+    { 37u, "attack.p0", 0, 99, 80, 0u, 0u, "" },
+    { 38u, "op1.eg.r2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 39u, "op1.eg.r3.p0", 0, 99, 50, 0u, 0u, "" },
+    { 40u, "release.p0", 0, 99, 80, 0u, 0u, "" },
+    { 41u, "op1.eg.l1.p0", 0, 99, 99, 0u, 0u, "" },
+    { 42u, "op1.eg.l2.p0", 0, 99, 93, 0u, 0u, "" },
+    { 43u, "op1.eg.l3.p0", 0, 99, 87, 0u, 0u, "" },
+    { 44u, "op1_trem_rate.p0", 0, 20000000, 389566, 1u, 0u, "" },
+    { 45u, "op1_trem_depth.p0", -99, 99, 0, 0u, 0u, "" },
+    { 46u, "op1_trem_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 47u, "op1_trem_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 48u, "op1_fbenv_on.p0", 0, 1, 1, 0u, 0u, "" },
+    { 49u, "op1_fbenv_r1.p0", 0, 99, 80, 0u, 0u, "" },
+    { 50u, "op1_fbenv_r2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 51u, "op1_fbenv_r3.p0", 0, 99, 50, 0u, 0u, "" },
+    { 52u, "op1_fbenv_r4.p0", 0, 99, 80, 0u, 0u, "" },
+    { 53u, "op1_fbenv_l1.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 54u, "op1_fbenv_l2.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 55u, "op1_fbenv_l3.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 56u, "op1_fbenv_l4.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 57u, "op1_fblfo_rate.p0", 0, 20000000, 389566, 1u, 0u, "" },
+    { 58u, "op1_fblfo_depth.p0", -32767, 32767, 0, 0u, 0u, "" },
+    { 59u, "op1_fblfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 60u, "op1_fblfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 61u, "op1_dlfo_rate.p0", 0, 20000000, 389566, 1u, 0u, "" },
+    { 62u, "op1_dlfo_depth.p0", -32768, 32768, 0, 0u, 0u, "" },
+    { 63u, "op1_dlfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 64u, "op1_dlfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 65u, "op1.velamp.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 66u, "op1.velfm.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 67u, "op1.velrate.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 68u, "op1_level.p0", 0, 99, 75, 0u, 0u, "" },
+    { 69u, "op1_feedback.p0", -32767, 32767, 0, 0u, 0u, "" },
+    { 70u, "op1_level_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 71u, "op1_level_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 72u, "op1_fb_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 73u, "op1_fb_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 74u, "op1_aenv_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 75u, "op1_aenv_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 76u, "op1_level_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 77u, "op1_fb_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 78u, "op1_aenv_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 79u, "op1_mute.p0", 0, 1, 0, 0u, 0u, "" },
+    { 80u, "op1_spec_env_r1.p0", 0, 99, 80, 0u, 0u, "" },
+    { 81u, "op1_spec_env_r2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 82u, "op1_spec_env_r3.p0", 0, 99, 50, 0u, 0u, "" },
+    { 83u, "op1_spec_env_r4.p0", 0, 99, 80, 0u, 0u, "" },
+    { 84u, "op1_spec_env_l1.p0", 0, 99, 99, 0u, 0u, "" },
+    { 85u, "op1_spec_env_l2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 86u, "op1_spec_env_l3.p0", 0, 99, 0, 0u, 0u, "" },
+    { 87u, "op1_spec_lfo_rate.p0", 0, 20000000, 389566, 1u, 0u, "" },
+    { 88u, "op1_spec_lfo_depth.p0", -99, 99, 0, 0u, 0u, "" },
+    { 89u, "op1_spec_lfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 90u, "op1_spec_lfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 91u, "op2_ratio.p0", 32768, 1048576, 65536, 0u, 0u, "" },
+    { 92u, "op2_detune.p0", -50, 50, 0, 0u, 0u, "" },
+    { 93u, "op2_waveform.p0", 0, 13, 0, 0u, 0u, "" },
+    { 94u, "op2_spec_a1.p0", 0, 99, 99, 0u, 0u, "" },
+    { 95u, "op2_spec_a2.p0", 0, 99, 0, 0u, 0u, "" },
+    { 96u, "op2_spec_a3.p0", 0, 99, 0, 0u, 0u, "" },
+    { 97u, "op2_spec_a4.p0", 0, 99, 0, 0u, 0u, "" },
+    { 98u, "op2_spec_a5.p0", 0, 99, 0, 0u, 0u, "" },
+    { 99u, "op2_spec_a6.p0", 0, 99, 0, 0u, 0u, "" },
+    { 100u, "op2_spec_a7.p0", 0, 99, 0, 0u, 0u, "" },
+    { 101u, "op2_spec_a8.p0", 0, 99, 0, 0u, 0u, "" },
+    { 102u, "op2_spec_a9.p0", 0, 99, 0, 0u, 0u, "" },
+    { 103u, "op2_spec_a10.p0", 0, 99, 0, 0u, 0u, "" },
+    { 104u, "op2_spec_a11.p0", 0, 99, 0, 0u, 0u, "" },
+    { 105u, "op2_spec_a12.p0", 0, 99, 0, 0u, 0u, "" },
+    { 106u, "op2_spec_a13.p0", 0, 99, 0, 0u, 0u, "" },
+    { 107u, "op2_spec_a14.p0", 0, 99, 0, 0u, 0u, "" },
+    { 108u, "op2_spec_a15.p0", 0, 99, 0, 0u, 0u, "" },
+    { 109u, "op2_spec_a16.p0", 0, 99, 0, 0u, 0u, "" },
+    { 110u, "op2_spec_b1.p0", 0, 99, 99, 0u, 0u, "" },
+    { 111u, "op2_spec_b2.p0", 0, 99, 45, 0u, 0u, "" },
+    { 112u, "op2_spec_b3.p0", 0, 99, 30, 0u, 0u, "" },
+    { 113u, "op2_spec_b4.p0", 0, 99, 15, 0u, 0u, "" },
+    { 114u, "op2_spec_b5.p0", 0, 99, 55, 0u, 0u, "" },
+    { 115u, "op2_spec_b6.p0", 0, 99, 40, 0u, 0u, "" },
+    { 116u, "op2_spec_b7.p0", 0, 99, 25, 0u, 0u, "" },
+    { 117u, "op2_spec_b8.p0", 0, 99, 12, 0u, 0u, "" },
+    { 118u, "op2_spec_b9.p0", 0, 99, 8, 0u, 0u, "" },
+    { 119u, "op2_spec_b10.p0", 0, 99, 5, 0u, 0u, "" },
+    { 120u, "op2_spec_b11.p0", 0, 99, 3, 0u, 0u, "" },
+    { 121u, "op2_spec_b12.p0", 0, 99, 2, 0u, 0u, "" },
+    { 122u, "op2_spec_b13.p0", 0, 99, 1, 0u, 0u, "" },
+    { 123u, "op2_spec_b14.p0", 0, 99, 0, 0u, 0u, "" },
+    { 124u, "op2_spec_b15.p0", 0, 99, 0, 0u, 0u, "" },
+    { 125u, "op2_spec_b16.p0", 0, 99, 0, 0u, 0u, "" },
+    { 126u, "op2_spec_morph.p0", 0, 99, 0, 0u, 0u, "" },
+    { 127u, "op2_spec_env_depth.p0", -99, 99, 0, 0u, 0u, "" },
+    { 128u, "op2.eg.r1.p0", 0, 99, 80, 0u, 0u, "" },
+    { 129u, "op2.eg.r2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 130u, "op2.eg.r3.p0", 0, 99, 50, 0u, 0u, "" },
+    { 131u, "op2.eg.r4.p0", 0, 99, 80, 0u, 0u, "" },
+    { 132u, "op2.eg.l1.p0", 0, 99, 99, 0u, 0u, "" },
+    { 133u, "op2.eg.l2.p0", 0, 99, 93, 0u, 0u, "" },
+    { 134u, "op2.eg.l3.p0", 0, 99, 87, 0u, 0u, "" },
+    { 135u, "op2_trem_rate.p0", 0, 20000000, 486958, 1u, 0u, "" },
+    { 136u, "op2_trem_depth.p0", -99, 99, 0, 0u, 0u, "" },
+    { 137u, "op2_trem_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 138u, "op2_trem_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 139u, "op2_fbenv_on.p0", 0, 1, 1, 0u, 0u, "" },
+    { 140u, "op2_fbenv_r1.p0", 0, 99, 80, 0u, 0u, "" },
+    { 141u, "op2_fbenv_r2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 142u, "op2_fbenv_r3.p0", 0, 99, 50, 0u, 0u, "" },
+    { 143u, "op2_fbenv_r4.p0", 0, 99, 80, 0u, 0u, "" },
+    { 144u, "op2_fbenv_l1.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 145u, "op2_fbenv_l2.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 146u, "op2_fbenv_l3.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 147u, "op2_fbenv_l4.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 148u, "op2_fblfo_rate.p0", 0, 20000000, 389566, 1u, 0u, "" },
+    { 149u, "op2_fblfo_depth.p0", -32767, 32767, 0, 0u, 0u, "" },
+    { 150u, "op2_fblfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 151u, "op2_fblfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 152u, "op2_dlfo_rate.p0", 0, 20000000, 389566, 1u, 0u, "" },
+    { 153u, "op2_dlfo_depth.p0", -32768, 32768, 0, 0u, 0u, "" },
+    { 154u, "op2_dlfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 155u, "op2_dlfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 156u, "op2.velamp.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 157u, "op2.velfm.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 158u, "op2.velrate.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 159u, "op2_level.p0", 0, 99, 85, 0u, 0u, "" },
+    { 160u, "op2_feedback.p0", -32767, 32767, 0, 0u, 0u, "" },
+    { 161u, "op2_level_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 162u, "op2_level_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 163u, "op2_fb_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 164u, "op2_fb_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 165u, "op2_aenv_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 166u, "op2_aenv_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 167u, "op2_level_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 168u, "op2_fb_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 169u, "op2_aenv_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 170u, "op2_mute.p0", 0, 1, 0, 0u, 0u, "" },
+    { 171u, "op2_spec_env_r1.p0", 0, 99, 80, 0u, 0u, "" },
+    { 172u, "op2_spec_env_r2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 173u, "op2_spec_env_r3.p0", 0, 99, 50, 0u, 0u, "" },
+    { 174u, "op2_spec_env_r4.p0", 0, 99, 80, 0u, 0u, "" },
+    { 175u, "op2_spec_env_l1.p0", 0, 99, 99, 0u, 0u, "" },
+    { 176u, "op2_spec_env_l2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 177u, "op2_spec_env_l3.p0", 0, 99, 0, 0u, 0u, "" },
+    { 178u, "op2_spec_lfo_rate.p0", 0, 20000000, 389566, 1u, 0u, "" },
+    { 179u, "op2_spec_lfo_depth.p0", -99, 99, 0, 0u, 0u, "" },
+    { 180u, "op2_spec_lfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 181u, "op2_spec_lfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 182u, "op3_ratio.p0", 32768, 1048576, 196608, 0u, 0u, "" },
+    { 183u, "op3_detune.p0", -50, 50, 0, 0u, 0u, "" },
+    { 184u, "op3_waveform.p0", 0, 13, 0, 0u, 0u, "" },
+    { 185u, "op3_spec_a1.p0", 0, 99, 99, 0u, 0u, "" },
+    { 186u, "op3_spec_a2.p0", 0, 99, 0, 0u, 0u, "" },
+    { 187u, "op3_spec_a3.p0", 0, 99, 0, 0u, 0u, "" },
+    { 188u, "op3_spec_a4.p0", 0, 99, 0, 0u, 0u, "" },
+    { 189u, "op3_spec_a5.p0", 0, 99, 0, 0u, 0u, "" },
+    { 190u, "op3_spec_a6.p0", 0, 99, 0, 0u, 0u, "" },
+    { 191u, "op3_spec_a7.p0", 0, 99, 0, 0u, 0u, "" },
+    { 192u, "op3_spec_a8.p0", 0, 99, 0, 0u, 0u, "" },
+    { 193u, "op3_spec_a9.p0", 0, 99, 0, 0u, 0u, "" },
+    { 194u, "op3_spec_a10.p0", 0, 99, 0, 0u, 0u, "" },
+    { 195u, "op3_spec_a11.p0", 0, 99, 0, 0u, 0u, "" },
+    { 196u, "op3_spec_a12.p0", 0, 99, 0, 0u, 0u, "" },
+    { 197u, "op3_spec_a13.p0", 0, 99, 0, 0u, 0u, "" },
+    { 198u, "op3_spec_a14.p0", 0, 99, 0, 0u, 0u, "" },
+    { 199u, "op3_spec_a15.p0", 0, 99, 0, 0u, 0u, "" },
+    { 200u, "op3_spec_a16.p0", 0, 99, 0, 0u, 0u, "" },
+    { 201u, "op3_spec_b1.p0", 0, 99, 99, 0u, 0u, "" },
+    { 202u, "op3_spec_b2.p0", 0, 99, 45, 0u, 0u, "" },
+    { 203u, "op3_spec_b3.p0", 0, 99, 30, 0u, 0u, "" },
+    { 204u, "op3_spec_b4.p0", 0, 99, 15, 0u, 0u, "" },
+    { 205u, "op3_spec_b5.p0", 0, 99, 55, 0u, 0u, "" },
+    { 206u, "op3_spec_b6.p0", 0, 99, 40, 0u, 0u, "" },
+    { 207u, "op3_spec_b7.p0", 0, 99, 25, 0u, 0u, "" },
+    { 208u, "op3_spec_b8.p0", 0, 99, 12, 0u, 0u, "" },
+    { 209u, "op3_spec_b9.p0", 0, 99, 8, 0u, 0u, "" },
+    { 210u, "op3_spec_b10.p0", 0, 99, 5, 0u, 0u, "" },
+    { 211u, "op3_spec_b11.p0", 0, 99, 3, 0u, 0u, "" },
+    { 212u, "op3_spec_b12.p0", 0, 99, 2, 0u, 0u, "" },
+    { 213u, "op3_spec_b13.p0", 0, 99, 1, 0u, 0u, "" },
+    { 214u, "op3_spec_b14.p0", 0, 99, 0, 0u, 0u, "" },
+    { 215u, "op3_spec_b15.p0", 0, 99, 0, 0u, 0u, "" },
+    { 216u, "op3_spec_b16.p0", 0, 99, 0, 0u, 0u, "" },
+    { 217u, "op3_spec_morph.p0", 0, 99, 0, 0u, 0u, "" },
+    { 218u, "op3_spec_env_depth.p0", -99, 99, 0, 0u, 0u, "" },
+    { 219u, "op3.eg.r1.p0", 0, 99, 80, 0u, 0u, "" },
+    { 220u, "op3.eg.r2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 221u, "op3.eg.r3.p0", 0, 99, 50, 0u, 0u, "" },
+    { 222u, "op3.eg.r4.p0", 0, 99, 80, 0u, 0u, "" },
+    { 223u, "op3.eg.l1.p0", 0, 99, 99, 0u, 0u, "" },
+    { 224u, "op3.eg.l2.p0", 0, 99, 93, 0u, 0u, "" },
+    { 225u, "op3.eg.l3.p0", 0, 99, 87, 0u, 0u, "" },
+    { 226u, "op3_trem_rate.p0", 0, 20000000, 292174, 1u, 0u, "" },
+    { 227u, "op3_trem_depth.p0", -99, 99, 0, 0u, 0u, "" },
+    { 228u, "op3_trem_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 229u, "op3_trem_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 230u, "op3_fbenv_on.p0", 0, 1, 1, 0u, 0u, "" },
+    { 231u, "op3_fbenv_r1.p0", 0, 99, 80, 0u, 0u, "" },
+    { 232u, "op3_fbenv_r2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 233u, "op3_fbenv_r3.p0", 0, 99, 50, 0u, 0u, "" },
+    { 234u, "op3_fbenv_r4.p0", 0, 99, 80, 0u, 0u, "" },
+    { 235u, "op3_fbenv_l1.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 236u, "op3_fbenv_l2.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 237u, "op3_fbenv_l3.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 238u, "op3_fbenv_l4.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 239u, "op3_fblfo_rate.p0", 0, 20000000, 389566, 1u, 0u, "" },
+    { 240u, "op3_fblfo_depth.p0", -32767, 32767, 0, 0u, 0u, "" },
+    { 241u, "op3_fblfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 242u, "op3_fblfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 243u, "op3_dlfo_rate.p0", 0, 20000000, 389566, 1u, 0u, "" },
+    { 244u, "op3_dlfo_depth.p0", -32768, 32768, 0, 0u, 0u, "" },
+    { 245u, "op3_dlfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 246u, "op3_dlfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 247u, "op3.velamp.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 248u, "op3.velfm.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 249u, "op3.velrate.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 250u, "op3_level.p0", 0, 99, 70, 0u, 0u, "" },
+    { 251u, "op3_feedback.p0", -32767, 32767, 0, 0u, 0u, "" },
+    { 252u, "op3_level_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 253u, "op3_level_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 254u, "op3_fb_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 255u, "op3_fb_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 256u, "op3_aenv_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 257u, "op3_aenv_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 258u, "op3_level_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 259u, "op3_fb_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 260u, "op3_aenv_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 261u, "op3_mute.p0", 0, 1, 0, 0u, 0u, "" },
+    { 262u, "op3_spec_env_r1.p0", 0, 99, 80, 0u, 0u, "" },
+    { 263u, "op3_spec_env_r2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 264u, "op3_spec_env_r3.p0", 0, 99, 50, 0u, 0u, "" },
+    { 265u, "op3_spec_env_r4.p0", 0, 99, 80, 0u, 0u, "" },
+    { 266u, "op3_spec_env_l1.p0", 0, 99, 99, 0u, 0u, "" },
+    { 267u, "op3_spec_env_l2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 268u, "op3_spec_env_l3.p0", 0, 99, 0, 0u, 0u, "" },
+    { 269u, "op3_spec_lfo_rate.p0", 0, 20000000, 389566, 1u, 0u, "" },
+    { 270u, "op3_spec_lfo_depth.p0", -99, 99, 0, 0u, 0u, "" },
+    { 271u, "op3_spec_lfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 272u, "op3_spec_lfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 273u, "op4_ratio.p0", 32768, 1048576, 131072, 0u, 0u, "" },
+    { 274u, "op4_detune.p0", -50, 50, 0, 0u, 0u, "" },
+    { 275u, "op4_waveform.p0", 0, 13, 0, 0u, 0u, "" },
+    { 276u, "op4_spec_a1.p0", 0, 99, 99, 0u, 0u, "" },
+    { 277u, "op4_spec_a2.p0", 0, 99, 0, 0u, 0u, "" },
+    { 278u, "op4_spec_a3.p0", 0, 99, 0, 0u, 0u, "" },
+    { 279u, "op4_spec_a4.p0", 0, 99, 0, 0u, 0u, "" },
+    { 280u, "op4_spec_a5.p0", 0, 99, 0, 0u, 0u, "" },
+    { 281u, "op4_spec_a6.p0", 0, 99, 0, 0u, 0u, "" },
+    { 282u, "op4_spec_a7.p0", 0, 99, 0, 0u, 0u, "" },
+    { 283u, "op4_spec_a8.p0", 0, 99, 0, 0u, 0u, "" },
+    { 284u, "op4_spec_a9.p0", 0, 99, 0, 0u, 0u, "" },
+    { 285u, "op4_spec_a10.p0", 0, 99, 0, 0u, 0u, "" },
+    { 286u, "op4_spec_a11.p0", 0, 99, 0, 0u, 0u, "" },
+    { 287u, "op4_spec_a12.p0", 0, 99, 0, 0u, 0u, "" },
+    { 288u, "op4_spec_a13.p0", 0, 99, 0, 0u, 0u, "" },
+    { 289u, "op4_spec_a14.p0", 0, 99, 0, 0u, 0u, "" },
+    { 290u, "op4_spec_a15.p0", 0, 99, 0, 0u, 0u, "" },
+    { 291u, "op4_spec_a16.p0", 0, 99, 0, 0u, 0u, "" },
+    { 292u, "op4_spec_b1.p0", 0, 99, 99, 0u, 0u, "" },
+    { 293u, "op4_spec_b2.p0", 0, 99, 45, 0u, 0u, "" },
+    { 294u, "op4_spec_b3.p0", 0, 99, 30, 0u, 0u, "" },
+    { 295u, "op4_spec_b4.p0", 0, 99, 15, 0u, 0u, "" },
+    { 296u, "op4_spec_b5.p0", 0, 99, 55, 0u, 0u, "" },
+    { 297u, "op4_spec_b6.p0", 0, 99, 40, 0u, 0u, "" },
+    { 298u, "op4_spec_b7.p0", 0, 99, 25, 0u, 0u, "" },
+    { 299u, "op4_spec_b8.p0", 0, 99, 12, 0u, 0u, "" },
+    { 300u, "op4_spec_b9.p0", 0, 99, 8, 0u, 0u, "" },
+    { 301u, "op4_spec_b10.p0", 0, 99, 5, 0u, 0u, "" },
+    { 302u, "op4_spec_b11.p0", 0, 99, 3, 0u, 0u, "" },
+    { 303u, "op4_spec_b12.p0", 0, 99, 2, 0u, 0u, "" },
+    { 304u, "op4_spec_b13.p0", 0, 99, 1, 0u, 0u, "" },
+    { 305u, "op4_spec_b14.p0", 0, 99, 0, 0u, 0u, "" },
+    { 306u, "op4_spec_b15.p0", 0, 99, 0, 0u, 0u, "" },
+    { 307u, "op4_spec_b16.p0", 0, 99, 0, 0u, 0u, "" },
+    { 308u, "op4_spec_morph.p0", 0, 99, 0, 0u, 0u, "" },
+    { 309u, "op4_spec_env_depth.p0", -99, 99, 0, 0u, 0u, "" },
+    { 310u, "op4.eg.r1.p0", 0, 99, 80, 0u, 0u, "" },
+    { 311u, "op4.eg.r2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 312u, "op4.eg.r3.p0", 0, 99, 50, 0u, 0u, "" },
+    { 313u, "op4.eg.r4.p0", 0, 99, 80, 0u, 0u, "" },
+    { 314u, "op4.eg.l1.p0", 0, 99, 99, 0u, 0u, "" },
+    { 315u, "op4.eg.l2.p0", 0, 99, 93, 0u, 0u, "" },
+    { 316u, "op4.eg.l3.p0", 0, 99, 87, 0u, 0u, "" },
+    { 317u, "op4_trem_rate.p0", 0, 20000000, 340870, 1u, 0u, "" },
+    { 318u, "op4_trem_depth.p0", -99, 99, 0, 0u, 0u, "" },
+    { 319u, "op4_trem_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 320u, "op4_trem_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 321u, "op4_fbenv_on.p0", 0, 1, 1, 0u, 0u, "" },
+    { 322u, "op4_fbenv_r1.p0", 0, 99, 80, 0u, 0u, "" },
+    { 323u, "op4_fbenv_r2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 324u, "op4_fbenv_r3.p0", 0, 99, 50, 0u, 0u, "" },
+    { 325u, "op4_fbenv_r4.p0", 0, 99, 80, 0u, 0u, "" },
+    { 326u, "op4_fbenv_l1.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 327u, "op4_fbenv_l2.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 328u, "op4_fbenv_l3.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 329u, "op4_fbenv_l4.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 330u, "op4_fblfo_rate.p0", 0, 20000000, 389566, 1u, 0u, "" },
+    { 331u, "op4_fblfo_depth.p0", -32767, 32767, 0, 0u, 0u, "" },
+    { 332u, "op4_fblfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 333u, "op4_fblfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 334u, "op4_dlfo_rate.p0", 0, 20000000, 389566, 1u, 0u, "" },
+    { 335u, "op4_dlfo_depth.p0", -32768, 32768, 0, 0u, 0u, "" },
+    { 336u, "op4_dlfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 337u, "op4_dlfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 338u, "op4.velamp.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 339u, "op4.velfm.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 340u, "op4.velrate.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 341u, "op4_level.p0", 0, 99, 85, 0u, 0u, "" },
+    { 342u, "op4_feedback.p0", -32767, 32767, 0, 0u, 0u, "" },
+    { 343u, "op4_level_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 344u, "op4_level_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 345u, "op4_fb_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 346u, "op4_fb_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 347u, "op4_aenv_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 348u, "op4_aenv_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 349u, "op4_level_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 350u, "op4_fb_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 351u, "op4_aenv_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 352u, "op4_mute.p0", 0, 1, 0, 0u, 0u, "" },
+    { 353u, "op4_spec_env_r1.p0", 0, 99, 80, 0u, 0u, "" },
+    { 354u, "op4_spec_env_r2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 355u, "op4_spec_env_r3.p0", 0, 99, 50, 0u, 0u, "" },
+    { 356u, "op4_spec_env_r4.p0", 0, 99, 80, 0u, 0u, "" },
+    { 357u, "op4_spec_env_l1.p0", 0, 99, 99, 0u, 0u, "" },
+    { 358u, "op4_spec_env_l2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 359u, "op4_spec_env_l3.p0", 0, 99, 0, 0u, 0u, "" },
+    { 360u, "op4_spec_lfo_rate.p0", 0, 20000000, 389566, 1u, 0u, "" },
+    { 361u, "op4_spec_lfo_depth.p0", -99, 99, 0, 0u, 0u, "" },
+    { 362u, "op4_spec_lfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 363u, "op4_spec_lfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 364u, "algorithm.p0", 0, 7, 4, 0u, 0u, "" },
+    { 365u, "penv_on.p0", 0, 1, 0, 0u, 0u, "" },
+    { 366u, "penv_r1.p0", 0, 99, 80, 0u, 0u, "" },
+    { 367u, "penv_r2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 368u, "penv_r3.p0", 0, 99, 50, 0u, 0u, "" },
+    { 369u, "penv_r4.p0", 0, 99, 80, 0u, 0u, "" },
+    { 370u, "penv_l1.p0", -32768, 32767, 5461, 0u, 0u, "" },
+    { 371u, "penv_l2.p0", -32768, 32767, 2731, 0u, 0u, "" },
+    { 372u, "penv_l3.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 373u, "penv_l4.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 374u, "penv_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 375u, "penv_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 376u, "penv_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 377u, "pitch_rate.p0", 0, 20000000, 486958, 1u, 0u, "" },
+    { 378u, "pitch_depth.p0", -32768, 32768, 273, 0u, 0u, "" },
+    { 379u, "pitch_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 380u, "pitch_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 381u, "f1_cutoff_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 382u, "f1_cutoff_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 383u, "fenv_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 384u, "fenv_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 385u, "f1_cutoff_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 386u, "fenv_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 387u, "cutoff.p0", 0, 55296, 8000, 1u, 0u, "" },
+    { 388u, "res.p0", 0, 41942, 16000, 1u, 0u, "" },
+    { 389u, "lp.comp.p0", -32768, 32767, 32767, 0u, 0u, "" },
+    { 390u, "filter_type.p0", 0, 2, 0, 0u, 0u, "" },
+    { 391u, "filter_on.p0", 0, 1, 0, 0u, 0u, "" },
+    { 392u, "fenv_depth.p0", 0, 65535, 0, 0u, 0u, "" },
+    { 393u, "fenv_r1.p0", 0, 99, 80, 0u, 0u, "" },
+    { 394u, "fenv_r2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 395u, "fenv_r3.p0", 0, 99, 50, 0u, 0u, "" },
+    { 396u, "fenv_r4.p0", 0, 99, 80, 0u, 0u, "" },
+    { 397u, "fenv_l1.p0", 0, 99, 99, 0u, 0u, "" },
+    { 398u, "fenv_l2.p0", 0, 99, 93, 0u, 0u, "" },
+    { 399u, "fenv_l3.p0", 0, 99, 87, 0u, 0u, "" },
+    { 400u, "mode.p0", 0, 1, 0, 0u, 0u, "" },
+    { 401u, "unison_count.p0", 1, 8, 1, 0u, 0u, "" },
+    { 402u, "unison_detune.p0", 0, 200, 0, 0u, 0u, "cents" },
+    { 403u, "detune.p0", -50, 50, 0, 0u, 0u, "cents" },
+    { 404u, "transpose.p0", -24, 24, 0, 0u, 0u, "st" },
+    { 405u, "legato.p0", 0, 1, 0, 0u, 0u, "" },
+    { 406u, "portamento.p0", 0, 5000, 0, 1u, 0u, "" },
+    { 407u, "note_priority.p0", 0, 2, 0, 0u, 0u, "" },
+    { 408u, "op1_ratio.p1", 32768, 1048576, 65536, 0u, 0u, "" },
+    { 409u, "op1_detune.p1", -50, 50, 0, 0u, 0u, "" },
+    { 410u, "op1_waveform.p1", 0, 13, 0, 0u, 0u, "" },
+    { 411u, "op1_spec_a1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 412u, "op1_spec_a2.p1", 0, 99, 0, 0u, 0u, "" },
+    { 413u, "op1_spec_a3.p1", 0, 99, 0, 0u, 0u, "" },
+    { 414u, "op1_spec_a4.p1", 0, 99, 0, 0u, 0u, "" },
+    { 415u, "op1_spec_a5.p1", 0, 99, 0, 0u, 0u, "" },
+    { 416u, "op1_spec_a6.p1", 0, 99, 0, 0u, 0u, "" },
+    { 417u, "op1_spec_a7.p1", 0, 99, 0, 0u, 0u, "" },
+    { 418u, "op1_spec_a8.p1", 0, 99, 0, 0u, 0u, "" },
+    { 419u, "op1_spec_a9.p1", 0, 99, 0, 0u, 0u, "" },
+    { 420u, "op1_spec_a10.p1", 0, 99, 0, 0u, 0u, "" },
+    { 421u, "op1_spec_a11.p1", 0, 99, 0, 0u, 0u, "" },
+    { 422u, "op1_spec_a12.p1", 0, 99, 0, 0u, 0u, "" },
+    { 423u, "op1_spec_a13.p1", 0, 99, 0, 0u, 0u, "" },
+    { 424u, "op1_spec_a14.p1", 0, 99, 0, 0u, 0u, "" },
+    { 425u, "op1_spec_a15.p1", 0, 99, 0, 0u, 0u, "" },
+    { 426u, "op1_spec_a16.p1", 0, 99, 0, 0u, 0u, "" },
+    { 427u, "op1_spec_b1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 428u, "op1_spec_b2.p1", 0, 99, 45, 0u, 0u, "" },
+    { 429u, "op1_spec_b3.p1", 0, 99, 30, 0u, 0u, "" },
+    { 430u, "op1_spec_b4.p1", 0, 99, 15, 0u, 0u, "" },
+    { 431u, "op1_spec_b5.p1", 0, 99, 55, 0u, 0u, "" },
+    { 432u, "op1_spec_b6.p1", 0, 99, 40, 0u, 0u, "" },
+    { 433u, "op1_spec_b7.p1", 0, 99, 25, 0u, 0u, "" },
+    { 434u, "op1_spec_b8.p1", 0, 99, 12, 0u, 0u, "" },
+    { 435u, "op1_spec_b9.p1", 0, 99, 8, 0u, 0u, "" },
+    { 436u, "op1_spec_b10.p1", 0, 99, 5, 0u, 0u, "" },
+    { 437u, "op1_spec_b11.p1", 0, 99, 3, 0u, 0u, "" },
+    { 438u, "op1_spec_b12.p1", 0, 99, 2, 0u, 0u, "" },
+    { 439u, "op1_spec_b13.p1", 0, 99, 1, 0u, 0u, "" },
+    { 440u, "op1_spec_b14.p1", 0, 99, 0, 0u, 0u, "" },
+    { 441u, "op1_spec_b15.p1", 0, 99, 0, 0u, 0u, "" },
+    { 442u, "op1_spec_b16.p1", 0, 99, 0, 0u, 0u, "" },
+    { 443u, "op1_spec_morph.p1", 0, 99, 0, 0u, 0u, "" },
+    { 444u, "op1_spec_env_depth.p1", -99, 99, 0, 0u, 0u, "" },
+    { 445u, "attack.p1", 0, 99, 80, 0u, 0u, "" },
+    { 446u, "op1.eg.r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 447u, "op1.eg.r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 448u, "release.p1", 0, 99, 80, 0u, 0u, "" },
+    { 449u, "op1.eg.l1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 450u, "op1.eg.l2.p1", 0, 99, 93, 0u, 0u, "" },
+    { 451u, "op1.eg.l3.p1", 0, 99, 87, 0u, 0u, "" },
+    { 452u, "op1_trem_rate.p1", 0, 20000000, 389566, 1u, 0u, "" },
+    { 453u, "op1_trem_depth.p1", -99, 99, 0, 0u, 0u, "" },
+    { 454u, "op1_trem_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 455u, "op1_trem_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 456u, "op1_fbenv_on.p1", 0, 1, 1, 0u, 0u, "" },
+    { 457u, "op1_fbenv_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 458u, "op1_fbenv_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 459u, "op1_fbenv_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 460u, "op1_fbenv_r4.p1", 0, 99, 80, 0u, 0u, "" },
+    { 461u, "op1_fbenv_l1.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 462u, "op1_fbenv_l2.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 463u, "op1_fbenv_l3.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 464u, "op1_fbenv_l4.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 465u, "op1_fblfo_rate.p1", 0, 20000000, 389566, 1u, 0u, "" },
+    { 466u, "op1_fblfo_depth.p1", -32767, 32767, 0, 0u, 0u, "" },
+    { 467u, "op1_fblfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 468u, "op1_fblfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 469u, "op1_dlfo_rate.p1", 0, 20000000, 389566, 1u, 0u, "" },
+    { 470u, "op1_dlfo_depth.p1", -32768, 32768, 0, 0u, 0u, "" },
+    { 471u, "op1_dlfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 472u, "op1_dlfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 473u, "op1.velamp.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 474u, "op1.velfm.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 475u, "op1.velrate.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 476u, "op1_level.p1", 0, 99, 75, 0u, 0u, "" },
+    { 477u, "op1_feedback.p1", -32767, 32767, 0, 0u, 0u, "" },
+    { 478u, "op1_level_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 479u, "op1_level_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 480u, "op1_fb_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 481u, "op1_fb_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 482u, "op1_aenv_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 483u, "op1_aenv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 484u, "op1_level_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 485u, "op1_fb_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 486u, "op1_aenv_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 487u, "op1_mute.p1", 0, 1, 0, 0u, 0u, "" },
+    { 488u, "op1_spec_env_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 489u, "op1_spec_env_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 490u, "op1_spec_env_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 491u, "op1_spec_env_r4.p1", 0, 99, 80, 0u, 0u, "" },
+    { 492u, "op1_spec_env_l1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 493u, "op1_spec_env_l2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 494u, "op1_spec_env_l3.p1", 0, 99, 0, 0u, 0u, "" },
+    { 495u, "op1_spec_lfo_rate.p1", 0, 20000000, 389566, 1u, 0u, "" },
+    { 496u, "op1_spec_lfo_depth.p1", -99, 99, 0, 0u, 0u, "" },
+    { 497u, "op1_spec_lfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 498u, "op1_spec_lfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 499u, "op2_ratio.p1", 32768, 1048576, 65536, 0u, 0u, "" },
+    { 500u, "op2_detune.p1", -50, 50, 0, 0u, 0u, "" },
+    { 501u, "op2_waveform.p1", 0, 13, 0, 0u, 0u, "" },
+    { 502u, "op2_spec_a1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 503u, "op2_spec_a2.p1", 0, 99, 0, 0u, 0u, "" },
+    { 504u, "op2_spec_a3.p1", 0, 99, 0, 0u, 0u, "" },
+    { 505u, "op2_spec_a4.p1", 0, 99, 0, 0u, 0u, "" },
+    { 506u, "op2_spec_a5.p1", 0, 99, 0, 0u, 0u, "" },
+    { 507u, "op2_spec_a6.p1", 0, 99, 0, 0u, 0u, "" },
+    { 508u, "op2_spec_a7.p1", 0, 99, 0, 0u, 0u, "" },
+    { 509u, "op2_spec_a8.p1", 0, 99, 0, 0u, 0u, "" },
+    { 510u, "op2_spec_a9.p1", 0, 99, 0, 0u, 0u, "" },
+    { 511u, "op2_spec_a10.p1", 0, 99, 0, 0u, 0u, "" },
+    { 512u, "op2_spec_a11.p1", 0, 99, 0, 0u, 0u, "" },
+    { 513u, "op2_spec_a12.p1", 0, 99, 0, 0u, 0u, "" },
+    { 514u, "op2_spec_a13.p1", 0, 99, 0, 0u, 0u, "" },
+    { 515u, "op2_spec_a14.p1", 0, 99, 0, 0u, 0u, "" },
+    { 516u, "op2_spec_a15.p1", 0, 99, 0, 0u, 0u, "" },
+    { 517u, "op2_spec_a16.p1", 0, 99, 0, 0u, 0u, "" },
+    { 518u, "op2_spec_b1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 519u, "op2_spec_b2.p1", 0, 99, 45, 0u, 0u, "" },
+    { 520u, "op2_spec_b3.p1", 0, 99, 30, 0u, 0u, "" },
+    { 521u, "op2_spec_b4.p1", 0, 99, 15, 0u, 0u, "" },
+    { 522u, "op2_spec_b5.p1", 0, 99, 55, 0u, 0u, "" },
+    { 523u, "op2_spec_b6.p1", 0, 99, 40, 0u, 0u, "" },
+    { 524u, "op2_spec_b7.p1", 0, 99, 25, 0u, 0u, "" },
+    { 525u, "op2_spec_b8.p1", 0, 99, 12, 0u, 0u, "" },
+    { 526u, "op2_spec_b9.p1", 0, 99, 8, 0u, 0u, "" },
+    { 527u, "op2_spec_b10.p1", 0, 99, 5, 0u, 0u, "" },
+    { 528u, "op2_spec_b11.p1", 0, 99, 3, 0u, 0u, "" },
+    { 529u, "op2_spec_b12.p1", 0, 99, 2, 0u, 0u, "" },
+    { 530u, "op2_spec_b13.p1", 0, 99, 1, 0u, 0u, "" },
+    { 531u, "op2_spec_b14.p1", 0, 99, 0, 0u, 0u, "" },
+    { 532u, "op2_spec_b15.p1", 0, 99, 0, 0u, 0u, "" },
+    { 533u, "op2_spec_b16.p1", 0, 99, 0, 0u, 0u, "" },
+    { 534u, "op2_spec_morph.p1", 0, 99, 0, 0u, 0u, "" },
+    { 535u, "op2_spec_env_depth.p1", -99, 99, 0, 0u, 0u, "" },
+    { 536u, "op2.eg.r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 537u, "op2.eg.r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 538u, "op2.eg.r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 539u, "op2.eg.r4.p1", 0, 99, 80, 0u, 0u, "" },
+    { 540u, "op2.eg.l1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 541u, "op2.eg.l2.p1", 0, 99, 93, 0u, 0u, "" },
+    { 542u, "op2.eg.l3.p1", 0, 99, 87, 0u, 0u, "" },
+    { 543u, "op2_trem_rate.p1", 0, 20000000, 486958, 1u, 0u, "" },
+    { 544u, "op2_trem_depth.p1", -99, 99, 0, 0u, 0u, "" },
+    { 545u, "op2_trem_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 546u, "op2_trem_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 547u, "op2_fbenv_on.p1", 0, 1, 1, 0u, 0u, "" },
+    { 548u, "op2_fbenv_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 549u, "op2_fbenv_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 550u, "op2_fbenv_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 551u, "op2_fbenv_r4.p1", 0, 99, 80, 0u, 0u, "" },
+    { 552u, "op2_fbenv_l1.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 553u, "op2_fbenv_l2.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 554u, "op2_fbenv_l3.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 555u, "op2_fbenv_l4.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 556u, "op2_fblfo_rate.p1", 0, 20000000, 389566, 1u, 0u, "" },
+    { 557u, "op2_fblfo_depth.p1", -32767, 32767, 0, 0u, 0u, "" },
+    { 558u, "op2_fblfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 559u, "op2_fblfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 560u, "op2_dlfo_rate.p1", 0, 20000000, 389566, 1u, 0u, "" },
+    { 561u, "op2_dlfo_depth.p1", -32768, 32768, 0, 0u, 0u, "" },
+    { 562u, "op2_dlfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 563u, "op2_dlfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 564u, "op2.velamp.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 565u, "op2.velfm.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 566u, "op2.velrate.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 567u, "op2_level.p1", 0, 99, 85, 0u, 0u, "" },
+    { 568u, "op2_feedback.p1", -32767, 32767, 0, 0u, 0u, "" },
+    { 569u, "op2_level_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 570u, "op2_level_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 571u, "op2_fb_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 572u, "op2_fb_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 573u, "op2_aenv_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 574u, "op2_aenv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 575u, "op2_level_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 576u, "op2_fb_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 577u, "op2_aenv_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 578u, "op2_mute.p1", 0, 1, 0, 0u, 0u, "" },
+    { 579u, "op2_spec_env_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 580u, "op2_spec_env_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 581u, "op2_spec_env_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 582u, "op2_spec_env_r4.p1", 0, 99, 80, 0u, 0u, "" },
+    { 583u, "op2_spec_env_l1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 584u, "op2_spec_env_l2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 585u, "op2_spec_env_l3.p1", 0, 99, 0, 0u, 0u, "" },
+    { 586u, "op2_spec_lfo_rate.p1", 0, 20000000, 389566, 1u, 0u, "" },
+    { 587u, "op2_spec_lfo_depth.p1", -99, 99, 0, 0u, 0u, "" },
+    { 588u, "op2_spec_lfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 589u, "op2_spec_lfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 590u, "op3_ratio.p1", 32768, 1048576, 196608, 0u, 0u, "" },
+    { 591u, "op3_detune.p1", -50, 50, 0, 0u, 0u, "" },
+    { 592u, "op3_waveform.p1", 0, 13, 0, 0u, 0u, "" },
+    { 593u, "op3_spec_a1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 594u, "op3_spec_a2.p1", 0, 99, 0, 0u, 0u, "" },
+    { 595u, "op3_spec_a3.p1", 0, 99, 0, 0u, 0u, "" },
+    { 596u, "op3_spec_a4.p1", 0, 99, 0, 0u, 0u, "" },
+    { 597u, "op3_spec_a5.p1", 0, 99, 0, 0u, 0u, "" },
+    { 598u, "op3_spec_a6.p1", 0, 99, 0, 0u, 0u, "" },
+    { 599u, "op3_spec_a7.p1", 0, 99, 0, 0u, 0u, "" },
+    { 600u, "op3_spec_a8.p1", 0, 99, 0, 0u, 0u, "" },
+    { 601u, "op3_spec_a9.p1", 0, 99, 0, 0u, 0u, "" },
+    { 602u, "op3_spec_a10.p1", 0, 99, 0, 0u, 0u, "" },
+    { 603u, "op3_spec_a11.p1", 0, 99, 0, 0u, 0u, "" },
+    { 604u, "op3_spec_a12.p1", 0, 99, 0, 0u, 0u, "" },
+    { 605u, "op3_spec_a13.p1", 0, 99, 0, 0u, 0u, "" },
+    { 606u, "op3_spec_a14.p1", 0, 99, 0, 0u, 0u, "" },
+    { 607u, "op3_spec_a15.p1", 0, 99, 0, 0u, 0u, "" },
+    { 608u, "op3_spec_a16.p1", 0, 99, 0, 0u, 0u, "" },
+    { 609u, "op3_spec_b1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 610u, "op3_spec_b2.p1", 0, 99, 45, 0u, 0u, "" },
+    { 611u, "op3_spec_b3.p1", 0, 99, 30, 0u, 0u, "" },
+    { 612u, "op3_spec_b4.p1", 0, 99, 15, 0u, 0u, "" },
+    { 613u, "op3_spec_b5.p1", 0, 99, 55, 0u, 0u, "" },
+    { 614u, "op3_spec_b6.p1", 0, 99, 40, 0u, 0u, "" },
+    { 615u, "op3_spec_b7.p1", 0, 99, 25, 0u, 0u, "" },
+    { 616u, "op3_spec_b8.p1", 0, 99, 12, 0u, 0u, "" },
+    { 617u, "op3_spec_b9.p1", 0, 99, 8, 0u, 0u, "" },
+    { 618u, "op3_spec_b10.p1", 0, 99, 5, 0u, 0u, "" },
+    { 619u, "op3_spec_b11.p1", 0, 99, 3, 0u, 0u, "" },
+    { 620u, "op3_spec_b12.p1", 0, 99, 2, 0u, 0u, "" },
+    { 621u, "op3_spec_b13.p1", 0, 99, 1, 0u, 0u, "" },
+    { 622u, "op3_spec_b14.p1", 0, 99, 0, 0u, 0u, "" },
+    { 623u, "op3_spec_b15.p1", 0, 99, 0, 0u, 0u, "" },
+    { 624u, "op3_spec_b16.p1", 0, 99, 0, 0u, 0u, "" },
+    { 625u, "op3_spec_morph.p1", 0, 99, 0, 0u, 0u, "" },
+    { 626u, "op3_spec_env_depth.p1", -99, 99, 0, 0u, 0u, "" },
+    { 627u, "op3.eg.r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 628u, "op3.eg.r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 629u, "op3.eg.r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 630u, "op3.eg.r4.p1", 0, 99, 80, 0u, 0u, "" },
+    { 631u, "op3.eg.l1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 632u, "op3.eg.l2.p1", 0, 99, 93, 0u, 0u, "" },
+    { 633u, "op3.eg.l3.p1", 0, 99, 87, 0u, 0u, "" },
+    { 634u, "op3_trem_rate.p1", 0, 20000000, 292174, 1u, 0u, "" },
+    { 635u, "op3_trem_depth.p1", -99, 99, 0, 0u, 0u, "" },
+    { 636u, "op3_trem_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 637u, "op3_trem_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 638u, "op3_fbenv_on.p1", 0, 1, 1, 0u, 0u, "" },
+    { 639u, "op3_fbenv_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 640u, "op3_fbenv_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 641u, "op3_fbenv_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 642u, "op3_fbenv_r4.p1", 0, 99, 80, 0u, 0u, "" },
+    { 643u, "op3_fbenv_l1.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 644u, "op3_fbenv_l2.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 645u, "op3_fbenv_l3.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 646u, "op3_fbenv_l4.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 647u, "op3_fblfo_rate.p1", 0, 20000000, 389566, 1u, 0u, "" },
+    { 648u, "op3_fblfo_depth.p1", -32767, 32767, 0, 0u, 0u, "" },
+    { 649u, "op3_fblfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 650u, "op3_fblfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 651u, "op3_dlfo_rate.p1", 0, 20000000, 389566, 1u, 0u, "" },
+    { 652u, "op3_dlfo_depth.p1", -32768, 32768, 0, 0u, 0u, "" },
+    { 653u, "op3_dlfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 654u, "op3_dlfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 655u, "op3.velamp.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 656u, "op3.velfm.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 657u, "op3.velrate.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 658u, "op3_level.p1", 0, 99, 70, 0u, 0u, "" },
+    { 659u, "op3_feedback.p1", -32767, 32767, 0, 0u, 0u, "" },
+    { 660u, "op3_level_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 661u, "op3_level_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 662u, "op3_fb_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 663u, "op3_fb_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 664u, "op3_aenv_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 665u, "op3_aenv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 666u, "op3_level_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 667u, "op3_fb_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 668u, "op3_aenv_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 669u, "op3_mute.p1", 0, 1, 0, 0u, 0u, "" },
+    { 670u, "op3_spec_env_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 671u, "op3_spec_env_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 672u, "op3_spec_env_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 673u, "op3_spec_env_r4.p1", 0, 99, 80, 0u, 0u, "" },
+    { 674u, "op3_spec_env_l1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 675u, "op3_spec_env_l2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 676u, "op3_spec_env_l3.p1", 0, 99, 0, 0u, 0u, "" },
+    { 677u, "op3_spec_lfo_rate.p1", 0, 20000000, 389566, 1u, 0u, "" },
+    { 678u, "op3_spec_lfo_depth.p1", -99, 99, 0, 0u, 0u, "" },
+    { 679u, "op3_spec_lfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 680u, "op3_spec_lfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 681u, "op4_ratio.p1", 32768, 1048576, 131072, 0u, 0u, "" },
+    { 682u, "op4_detune.p1", -50, 50, 0, 0u, 0u, "" },
+    { 683u, "op4_waveform.p1", 0, 13, 0, 0u, 0u, "" },
+    { 684u, "op4_spec_a1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 685u, "op4_spec_a2.p1", 0, 99, 0, 0u, 0u, "" },
+    { 686u, "op4_spec_a3.p1", 0, 99, 0, 0u, 0u, "" },
+    { 687u, "op4_spec_a4.p1", 0, 99, 0, 0u, 0u, "" },
+    { 688u, "op4_spec_a5.p1", 0, 99, 0, 0u, 0u, "" },
+    { 689u, "op4_spec_a6.p1", 0, 99, 0, 0u, 0u, "" },
+    { 690u, "op4_spec_a7.p1", 0, 99, 0, 0u, 0u, "" },
+    { 691u, "op4_spec_a8.p1", 0, 99, 0, 0u, 0u, "" },
+    { 692u, "op4_spec_a9.p1", 0, 99, 0, 0u, 0u, "" },
+    { 693u, "op4_spec_a10.p1", 0, 99, 0, 0u, 0u, "" },
+    { 694u, "op4_spec_a11.p1", 0, 99, 0, 0u, 0u, "" },
+    { 695u, "op4_spec_a12.p1", 0, 99, 0, 0u, 0u, "" },
+    { 696u, "op4_spec_a13.p1", 0, 99, 0, 0u, 0u, "" },
+    { 697u, "op4_spec_a14.p1", 0, 99, 0, 0u, 0u, "" },
+    { 698u, "op4_spec_a15.p1", 0, 99, 0, 0u, 0u, "" },
+    { 699u, "op4_spec_a16.p1", 0, 99, 0, 0u, 0u, "" },
+    { 700u, "op4_spec_b1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 701u, "op4_spec_b2.p1", 0, 99, 45, 0u, 0u, "" },
+    { 702u, "op4_spec_b3.p1", 0, 99, 30, 0u, 0u, "" },
+    { 703u, "op4_spec_b4.p1", 0, 99, 15, 0u, 0u, "" },
+    { 704u, "op4_spec_b5.p1", 0, 99, 55, 0u, 0u, "" },
+    { 705u, "op4_spec_b6.p1", 0, 99, 40, 0u, 0u, "" },
+    { 706u, "op4_spec_b7.p1", 0, 99, 25, 0u, 0u, "" },
+    { 707u, "op4_spec_b8.p1", 0, 99, 12, 0u, 0u, "" },
+    { 708u, "op4_spec_b9.p1", 0, 99, 8, 0u, 0u, "" },
+    { 709u, "op4_spec_b10.p1", 0, 99, 5, 0u, 0u, "" },
+    { 710u, "op4_spec_b11.p1", 0, 99, 3, 0u, 0u, "" },
+    { 711u, "op4_spec_b12.p1", 0, 99, 2, 0u, 0u, "" },
+    { 712u, "op4_spec_b13.p1", 0, 99, 1, 0u, 0u, "" },
+    { 713u, "op4_spec_b14.p1", 0, 99, 0, 0u, 0u, "" },
+    { 714u, "op4_spec_b15.p1", 0, 99, 0, 0u, 0u, "" },
+    { 715u, "op4_spec_b16.p1", 0, 99, 0, 0u, 0u, "" },
+    { 716u, "op4_spec_morph.p1", 0, 99, 0, 0u, 0u, "" },
+    { 717u, "op4_spec_env_depth.p1", -99, 99, 0, 0u, 0u, "" },
+    { 718u, "op4.eg.r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 719u, "op4.eg.r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 720u, "op4.eg.r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 721u, "op4.eg.r4.p1", 0, 99, 80, 0u, 0u, "" },
+    { 722u, "op4.eg.l1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 723u, "op4.eg.l2.p1", 0, 99, 93, 0u, 0u, "" },
+    { 724u, "op4.eg.l3.p1", 0, 99, 87, 0u, 0u, "" },
+    { 725u, "op4_trem_rate.p1", 0, 20000000, 340870, 1u, 0u, "" },
+    { 726u, "op4_trem_depth.p1", -99, 99, 0, 0u, 0u, "" },
+    { 727u, "op4_trem_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 728u, "op4_trem_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 729u, "op4_fbenv_on.p1", 0, 1, 1, 0u, 0u, "" },
+    { 730u, "op4_fbenv_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 731u, "op4_fbenv_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 732u, "op4_fbenv_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 733u, "op4_fbenv_r4.p1", 0, 99, 80, 0u, 0u, "" },
+    { 734u, "op4_fbenv_l1.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 735u, "op4_fbenv_l2.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 736u, "op4_fbenv_l3.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 737u, "op4_fbenv_l4.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 738u, "op4_fblfo_rate.p1", 0, 20000000, 389566, 1u, 0u, "" },
+    { 739u, "op4_fblfo_depth.p1", -32767, 32767, 0, 0u, 0u, "" },
+    { 740u, "op4_fblfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 741u, "op4_fblfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 742u, "op4_dlfo_rate.p1", 0, 20000000, 389566, 1u, 0u, "" },
+    { 743u, "op4_dlfo_depth.p1", -32768, 32768, 0, 0u, 0u, "" },
+    { 744u, "op4_dlfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 745u, "op4_dlfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 746u, "op4.velamp.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 747u, "op4.velfm.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 748u, "op4.velrate.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 749u, "op4_level.p1", 0, 99, 85, 0u, 0u, "" },
+    { 750u, "op4_feedback.p1", -32767, 32767, 0, 0u, 0u, "" },
+    { 751u, "op4_level_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 752u, "op4_level_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 753u, "op4_fb_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 754u, "op4_fb_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 755u, "op4_aenv_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 756u, "op4_aenv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 757u, "op4_level_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 758u, "op4_fb_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 759u, "op4_aenv_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 760u, "op4_mute.p1", 0, 1, 0, 0u, 0u, "" },
+    { 761u, "op4_spec_env_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 762u, "op4_spec_env_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 763u, "op4_spec_env_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 764u, "op4_spec_env_r4.p1", 0, 99, 80, 0u, 0u, "" },
+    { 765u, "op4_spec_env_l1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 766u, "op4_spec_env_l2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 767u, "op4_spec_env_l3.p1", 0, 99, 0, 0u, 0u, "" },
+    { 768u, "op4_spec_lfo_rate.p1", 0, 20000000, 389566, 1u, 0u, "" },
+    { 769u, "op4_spec_lfo_depth.p1", -99, 99, 0, 0u, 0u, "" },
+    { 770u, "op4_spec_lfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 771u, "op4_spec_lfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 772u, "algorithm.p1", 0, 7, 4, 0u, 0u, "" },
+    { 773u, "penv_on.p1", 0, 1, 0, 0u, 0u, "" },
+    { 774u, "penv_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 775u, "penv_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 776u, "penv_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 777u, "penv_r4.p1", 0, 99, 80, 0u, 0u, "" },
+    { 778u, "penv_l1.p1", -32768, 32767, 5461, 0u, 0u, "" },
+    { 779u, "penv_l2.p1", -32768, 32767, 2731, 0u, 0u, "" },
+    { 780u, "penv_l3.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 781u, "penv_l4.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 782u, "penv_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 783u, "penv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 784u, "penv_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 785u, "pitch_rate.p1", 0, 20000000, 486958, 1u, 0u, "" },
+    { 786u, "pitch_depth.p1", -32768, 32768, 273, 0u, 0u, "" },
+    { 787u, "pitch_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 788u, "pitch_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 789u, "f1_cutoff_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 790u, "f1_cutoff_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 791u, "fenv_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 792u, "fenv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 793u, "f1_cutoff_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 794u, "fenv_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 795u, "cutoff.p1", 0, 55296, 8000, 1u, 0u, "" },
+    { 796u, "res.p1", 0, 41942, 16000, 1u, 0u, "" },
+    { 797u, "lp.comp.p1", -32768, 32767, 32767, 0u, 0u, "" },
+    { 798u, "filter_type.p1", 0, 2, 0, 0u, 0u, "" },
+    { 799u, "filter_on.p1", 0, 1, 0, 0u, 0u, "" },
+    { 800u, "fenv_depth.p1", 0, 65535, 0, 0u, 0u, "" },
+    { 801u, "fenv_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 802u, "fenv_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 803u, "fenv_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 804u, "fenv_r4.p1", 0, 99, 80, 0u, 0u, "" },
+    { 805u, "fenv_l1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 806u, "fenv_l2.p1", 0, 99, 93, 0u, 0u, "" },
+    { 807u, "fenv_l3.p1", 0, 99, 87, 0u, 0u, "" },
+    { 808u, "mode.p1", 0, 1, 0, 0u, 0u, "" },
+    { 809u, "unison_count.p1", 1, 8, 1, 0u, 0u, "" },
+    { 810u, "unison_detune.p1", 0, 200, 0, 0u, 0u, "cents" },
+    { 811u, "detune.p1", -50, 50, 0, 0u, 0u, "cents" },
+    { 812u, "transpose.p1", -24, 24, 0, 0u, 0u, "st" },
+    { 813u, "legato.p1", 0, 1, 0, 0u, 0u, "" },
+    { 814u, "portamento.p1", 0, 5000, 0, 1u, 0u, "" },
+    { 815u, "note_priority.p1", 0, 2, 0, 0u, 0u, "" },
+    { 816u, "breakpoint", 0, 127, 60, 0u, 0u, "" },
+    { 817u, "key_sens_on", 0, 1, 1, 0u, 0u, "" },
+    { 818u, "vel_sens_on", 0, 1, 1, 0u, 0u, "" },
+    { 819u, "dc.r", -32768, 32767, 32735, 0u, 0u, "" },
+    { 820u, "channel.p0", -1, 15, 0, 0u, 0u, "" },
+    { 821u, "channel.p1", -1, 15, 1, 0u, 0u, "" },
+    { 822u, "low.p0", 0, 127, 0, 0u, 0u, "" },
+    { 823u, "low.p1", 0, 127, 0, 0u, 0u, "" },
+    { 824u, "high.p0", 0, 127, 127, 0u, 0u, "" },
+    { 825u, "high.p1", 0, 127, 127, 0u, 0u, "" },
+    { 826u, "level.p0", 0, 99, 99, 0u, 0u, "" },
+    { 827u, "level.p1", 0, 99, 99, 0u, 0u, "" },
+    { 828u, "delay.p0", 0, 1000, 0, 0u, 0u, "ms" },
+    { 829u, "delay.p1", 0, 1000, 0, 0u, 0u, "ms" },
 };
 typedef struct { uint32_t off; uint8_t part; } type_p_alpha_slot_t;
-static const type_p_alpha_slot_t type_p_alpha_slots[470] = {
+static const type_p_alpha_slot_t type_p_alpha_slots[830] = {
     { (uint32_t)offsetof(type_p_alpha_state, op1_ph_inc_ratio), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_ph_detune), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_osc_waveform), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a1), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a2), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a3), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a4), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a5), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a6), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a7), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a8), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a9), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a10), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a11), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a12), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a13), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a14), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a15), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a16), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b1), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b2), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b3), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b4), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b5), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b6), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b7), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b8), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b9), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b10), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b11), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b12), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b13), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b14), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b15), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b16), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_morph), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_env_depth), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_eg_r1), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_eg_r2), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_eg_r3), 0u },
@@ -1079,9 +1705,54 @@ static const type_p_alpha_slot_t type_p_alpha_slots[470] = {
     { (uint32_t)offsetof(type_p_alpha_state, op1_fb_vs_amount), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_eg_vs_amount), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_mute_mute), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_specenv_r1), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_specenv_r2), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_specenv_r3), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_specenv_r4), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_specenv_l1), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_specenv_l2), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_specenv_l3), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_speclfo_rate), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_speclfo_depth), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_speclfo_wave), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_speclfo_mode), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_ph_inc_ratio), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_ph_detune), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_osc_waveform), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a1), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a2), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a3), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a4), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a5), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a6), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a7), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a8), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a9), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a10), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a11), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a12), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a13), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a14), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a15), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a16), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b1), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b2), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b3), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b4), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b5), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b6), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b7), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b8), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b9), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b10), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b11), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b12), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b13), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b14), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b15), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b16), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_morph), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_env_depth), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_eg_r1), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_eg_r2), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_eg_r3), 0u },
@@ -1125,9 +1796,54 @@ static const type_p_alpha_slot_t type_p_alpha_slots[470] = {
     { (uint32_t)offsetof(type_p_alpha_state, op2_fb_vs_amount), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_eg_vs_amount), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_mute_mute), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_specenv_r1), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_specenv_r2), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_specenv_r3), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_specenv_r4), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_specenv_l1), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_specenv_l2), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_specenv_l3), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_speclfo_rate), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_speclfo_depth), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_speclfo_wave), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_speclfo_mode), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_ph_inc_ratio), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_ph_detune), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_osc_waveform), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a1), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a2), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a3), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a4), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a5), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a6), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a7), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a8), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a9), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a10), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a11), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a12), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a13), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a14), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a15), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a16), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b1), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b2), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b3), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b4), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b5), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b6), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b7), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b8), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b9), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b10), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b11), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b12), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b13), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b14), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b15), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b16), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_morph), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_env_depth), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_eg_r1), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_eg_r2), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_eg_r3), 0u },
@@ -1171,9 +1887,54 @@ static const type_p_alpha_slot_t type_p_alpha_slots[470] = {
     { (uint32_t)offsetof(type_p_alpha_state, op3_fb_vs_amount), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_eg_vs_amount), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_mute_mute), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_specenv_r1), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_specenv_r2), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_specenv_r3), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_specenv_r4), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_specenv_l1), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_specenv_l2), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_specenv_l3), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_speclfo_rate), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_speclfo_depth), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_speclfo_wave), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_speclfo_mode), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_ph_inc_ratio), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_ph_detune), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_osc_waveform), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a1), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a2), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a3), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a4), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a5), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a6), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a7), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a8), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a9), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a10), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a11), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a12), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a13), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a14), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a15), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a16), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b1), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b2), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b3), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b4), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b5), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b6), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b7), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b8), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b9), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b10), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b11), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b12), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b13), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b14), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b15), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b16), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_morph), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_env_depth), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_eg_r1), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_eg_r2), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_eg_r3), 0u },
@@ -1217,6 +1978,17 @@ static const type_p_alpha_slot_t type_p_alpha_slots[470] = {
     { (uint32_t)offsetof(type_p_alpha_state, op4_fb_vs_amount), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_eg_vs_amount), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_mute_mute), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_specenv_r1), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_specenv_r2), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_specenv_r3), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_specenv_r4), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_specenv_l1), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_specenv_l2), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_specenv_l3), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_speclfo_rate), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_speclfo_depth), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_speclfo_wave), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_speclfo_mode), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, algo_algorithm), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, penv_on), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, penv_r1), 0u },
@@ -1264,6 +2036,40 @@ static const type_p_alpha_slot_t type_p_alpha_slots[470] = {
     { (uint32_t)offsetof(type_p_alpha_state, op1_ph_inc_ratio), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_ph_detune), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_osc_waveform), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a1), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a2), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a3), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a4), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a5), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a6), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a7), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a8), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a9), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a10), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a11), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a12), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a13), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a14), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a15), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a16), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b1), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b2), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b3), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b4), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b5), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b6), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b7), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b8), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b9), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b10), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b11), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b12), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b13), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b14), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b15), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b16), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_morph), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_env_depth), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_eg_r1), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_eg_r2), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_eg_r3), 1u },
@@ -1307,9 +2113,54 @@ static const type_p_alpha_slot_t type_p_alpha_slots[470] = {
     { (uint32_t)offsetof(type_p_alpha_state, op1_fb_vs_amount), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_eg_vs_amount), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_mute_mute), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_specenv_r1), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_specenv_r2), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_specenv_r3), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_specenv_r4), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_specenv_l1), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_specenv_l2), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_specenv_l3), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_speclfo_rate), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_speclfo_depth), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_speclfo_wave), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_speclfo_mode), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_ph_inc_ratio), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_ph_detune), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_osc_waveform), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a1), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a2), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a3), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a4), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a5), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a6), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a7), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a8), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a9), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a10), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a11), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a12), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a13), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a14), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a15), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a16), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b1), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b2), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b3), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b4), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b5), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b6), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b7), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b8), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b9), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b10), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b11), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b12), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b13), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b14), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b15), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b16), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_morph), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_env_depth), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_eg_r1), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_eg_r2), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_eg_r3), 1u },
@@ -1353,9 +2204,54 @@ static const type_p_alpha_slot_t type_p_alpha_slots[470] = {
     { (uint32_t)offsetof(type_p_alpha_state, op2_fb_vs_amount), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_eg_vs_amount), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_mute_mute), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_specenv_r1), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_specenv_r2), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_specenv_r3), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_specenv_r4), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_specenv_l1), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_specenv_l2), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_specenv_l3), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_speclfo_rate), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_speclfo_depth), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_speclfo_wave), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_speclfo_mode), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_ph_inc_ratio), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_ph_detune), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_osc_waveform), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a1), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a2), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a3), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a4), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a5), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a6), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a7), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a8), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a9), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a10), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a11), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a12), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a13), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a14), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a15), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a16), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b1), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b2), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b3), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b4), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b5), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b6), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b7), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b8), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b9), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b10), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b11), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b12), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b13), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b14), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b15), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b16), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_morph), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_env_depth), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_eg_r1), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_eg_r2), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_eg_r3), 1u },
@@ -1399,9 +2295,54 @@ static const type_p_alpha_slot_t type_p_alpha_slots[470] = {
     { (uint32_t)offsetof(type_p_alpha_state, op3_fb_vs_amount), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_eg_vs_amount), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_mute_mute), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_specenv_r1), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_specenv_r2), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_specenv_r3), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_specenv_r4), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_specenv_l1), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_specenv_l2), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_specenv_l3), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_speclfo_rate), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_speclfo_depth), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_speclfo_wave), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_speclfo_mode), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_ph_inc_ratio), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_ph_detune), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_osc_waveform), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a1), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a2), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a3), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a4), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a5), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a6), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a7), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a8), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a9), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a10), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a11), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a12), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a13), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a14), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a15), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a16), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b1), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b2), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b3), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b4), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b5), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b6), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b7), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b8), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b9), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b10), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b11), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b12), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b13), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b14), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b15), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b16), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_morph), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_env_depth), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_eg_r1), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_eg_r2), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_eg_r3), 1u },
@@ -1445,6 +2386,17 @@ static const type_p_alpha_slot_t type_p_alpha_slots[470] = {
     { (uint32_t)offsetof(type_p_alpha_state, op4_fb_vs_amount), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_eg_vs_amount), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_mute_mute), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_specenv_r1), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_specenv_r2), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_specenv_r3), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_specenv_r4), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_specenv_l1), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_specenv_l2), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_specenv_l3), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_speclfo_rate), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_speclfo_depth), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_speclfo_wave), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_speclfo_mode), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, algo_algorithm), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, penv_on), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, penv_r1), 1u },
@@ -1528,6 +2480,7 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op1_osc_wave (S->op1_osc_wave)
 #define op1_osc_base (S->op1_osc_base)
 #define op1_osc_bl (S->op1_osc_bl)
+#define op1_osc_tick (S->op1_osc_tick)
 #define op1_eg_stage (S->op1_eg_stage)
 #define op1_eg_level (S->op1_eg_level)
 #define op1_eg_r1_eff (S->op1_eg_r1_eff)
@@ -1562,6 +2515,15 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op1_fb_vs_k (S->op1_fb_vs_k)
 #define op1_eg_vs_k (S->op1_eg_vs_k)
 #define op1_d1_prev (S->op1_d1_prev)
+#define op1_specenv_stage (S->op1_specenv_stage)
+#define op1_specenv_level (S->op1_specenv_level)
+#define op1_specenv_r1_eff (S->op1_specenv_r1_eff)
+#define op1_specenv_r2_eff (S->op1_specenv_r2_eff)
+#define op1_specenv_r3_eff (S->op1_specenv_r3_eff)
+#define op1_specenv_r4_eff (S->op1_specenv_r4_eff)
+#define op1_speclfo_phase (S->op1_speclfo_phase)
+#define op1_speclfo_base (S->op1_speclfo_base)
+#define op1_speclfo_w (S->op1_speclfo_w)
 #define op2_ph_inc (S->op2_ph_inc)
 #define op2_ph_phase (S->op2_ph_phase)
 #define op2_ph_step (S->op2_ph_step)
@@ -1569,6 +2531,7 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op2_osc_wave (S->op2_osc_wave)
 #define op2_osc_base (S->op2_osc_base)
 #define op2_osc_bl (S->op2_osc_bl)
+#define op2_osc_tick (S->op2_osc_tick)
 #define op2_eg_stage (S->op2_eg_stage)
 #define op2_eg_level (S->op2_eg_level)
 #define op2_eg_r1_eff (S->op2_eg_r1_eff)
@@ -1603,6 +2566,15 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op2_fb_vs_k (S->op2_fb_vs_k)
 #define op2_eg_vs_k (S->op2_eg_vs_k)
 #define op2_d1_prev (S->op2_d1_prev)
+#define op2_specenv_stage (S->op2_specenv_stage)
+#define op2_specenv_level (S->op2_specenv_level)
+#define op2_specenv_r1_eff (S->op2_specenv_r1_eff)
+#define op2_specenv_r2_eff (S->op2_specenv_r2_eff)
+#define op2_specenv_r3_eff (S->op2_specenv_r3_eff)
+#define op2_specenv_r4_eff (S->op2_specenv_r4_eff)
+#define op2_speclfo_phase (S->op2_speclfo_phase)
+#define op2_speclfo_base (S->op2_speclfo_base)
+#define op2_speclfo_w (S->op2_speclfo_w)
 #define op3_ph_inc (S->op3_ph_inc)
 #define op3_ph_phase (S->op3_ph_phase)
 #define op3_ph_step (S->op3_ph_step)
@@ -1610,6 +2582,7 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op3_osc_wave (S->op3_osc_wave)
 #define op3_osc_base (S->op3_osc_base)
 #define op3_osc_bl (S->op3_osc_bl)
+#define op3_osc_tick (S->op3_osc_tick)
 #define op3_eg_stage (S->op3_eg_stage)
 #define op3_eg_level (S->op3_eg_level)
 #define op3_eg_r1_eff (S->op3_eg_r1_eff)
@@ -1644,6 +2617,15 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op3_fb_vs_k (S->op3_fb_vs_k)
 #define op3_eg_vs_k (S->op3_eg_vs_k)
 #define op3_d1_prev (S->op3_d1_prev)
+#define op3_specenv_stage (S->op3_specenv_stage)
+#define op3_specenv_level (S->op3_specenv_level)
+#define op3_specenv_r1_eff (S->op3_specenv_r1_eff)
+#define op3_specenv_r2_eff (S->op3_specenv_r2_eff)
+#define op3_specenv_r3_eff (S->op3_specenv_r3_eff)
+#define op3_specenv_r4_eff (S->op3_specenv_r4_eff)
+#define op3_speclfo_phase (S->op3_speclfo_phase)
+#define op3_speclfo_base (S->op3_speclfo_base)
+#define op3_speclfo_w (S->op3_speclfo_w)
 #define op4_ph_inc (S->op4_ph_inc)
 #define op4_ph_phase (S->op4_ph_phase)
 #define op4_ph_step (S->op4_ph_step)
@@ -1651,6 +2633,7 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op4_osc_wave (S->op4_osc_wave)
 #define op4_osc_base (S->op4_osc_base)
 #define op4_osc_bl (S->op4_osc_bl)
+#define op4_osc_tick (S->op4_osc_tick)
 #define op4_eg_stage (S->op4_eg_stage)
 #define op4_eg_level (S->op4_eg_level)
 #define op4_eg_r1_eff (S->op4_eg_r1_eff)
@@ -1685,6 +2668,15 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op4_fb_vs_k (S->op4_fb_vs_k)
 #define op4_eg_vs_k (S->op4_eg_vs_k)
 #define op4_d1_prev (S->op4_d1_prev)
+#define op4_specenv_stage (S->op4_specenv_stage)
+#define op4_specenv_level (S->op4_specenv_level)
+#define op4_specenv_r1_eff (S->op4_specenv_r1_eff)
+#define op4_specenv_r2_eff (S->op4_specenv_r2_eff)
+#define op4_specenv_r3_eff (S->op4_specenv_r3_eff)
+#define op4_specenv_r4_eff (S->op4_specenv_r4_eff)
+#define op4_speclfo_phase (S->op4_speclfo_phase)
+#define op4_speclfo_base (S->op4_speclfo_base)
+#define op4_speclfo_w (S->op4_speclfo_w)
 #define d1_prev (S->d1_prev)
 #define d2_prev (S->d2_prev)
 #define d3_prev (S->d3_prev)
@@ -1743,6 +2735,40 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op1_ph_inc_ratio (S->op1_ph_inc_ratio)
 #define op1_ph_detune (S->op1_ph_detune)
 #define op1_osc_waveform (S->op1_osc_waveform)
+#define op1_osc_spec_a1 (S->op1_osc_spec_a1)
+#define op1_osc_spec_a2 (S->op1_osc_spec_a2)
+#define op1_osc_spec_a3 (S->op1_osc_spec_a3)
+#define op1_osc_spec_a4 (S->op1_osc_spec_a4)
+#define op1_osc_spec_a5 (S->op1_osc_spec_a5)
+#define op1_osc_spec_a6 (S->op1_osc_spec_a6)
+#define op1_osc_spec_a7 (S->op1_osc_spec_a7)
+#define op1_osc_spec_a8 (S->op1_osc_spec_a8)
+#define op1_osc_spec_a9 (S->op1_osc_spec_a9)
+#define op1_osc_spec_a10 (S->op1_osc_spec_a10)
+#define op1_osc_spec_a11 (S->op1_osc_spec_a11)
+#define op1_osc_spec_a12 (S->op1_osc_spec_a12)
+#define op1_osc_spec_a13 (S->op1_osc_spec_a13)
+#define op1_osc_spec_a14 (S->op1_osc_spec_a14)
+#define op1_osc_spec_a15 (S->op1_osc_spec_a15)
+#define op1_osc_spec_a16 (S->op1_osc_spec_a16)
+#define op1_osc_spec_b1 (S->op1_osc_spec_b1)
+#define op1_osc_spec_b2 (S->op1_osc_spec_b2)
+#define op1_osc_spec_b3 (S->op1_osc_spec_b3)
+#define op1_osc_spec_b4 (S->op1_osc_spec_b4)
+#define op1_osc_spec_b5 (S->op1_osc_spec_b5)
+#define op1_osc_spec_b6 (S->op1_osc_spec_b6)
+#define op1_osc_spec_b7 (S->op1_osc_spec_b7)
+#define op1_osc_spec_b8 (S->op1_osc_spec_b8)
+#define op1_osc_spec_b9 (S->op1_osc_spec_b9)
+#define op1_osc_spec_b10 (S->op1_osc_spec_b10)
+#define op1_osc_spec_b11 (S->op1_osc_spec_b11)
+#define op1_osc_spec_b12 (S->op1_osc_spec_b12)
+#define op1_osc_spec_b13 (S->op1_osc_spec_b13)
+#define op1_osc_spec_b14 (S->op1_osc_spec_b14)
+#define op1_osc_spec_b15 (S->op1_osc_spec_b15)
+#define op1_osc_spec_b16 (S->op1_osc_spec_b16)
+#define op1_osc_spec_morph (S->op1_osc_spec_morph)
+#define op1_osc_spec_env_depth (S->op1_osc_spec_env_depth)
 #define op1_eg_r1 (S->op1_eg_r1)
 #define op1_eg_r2 (S->op1_eg_r2)
 #define op1_eg_r3 (S->op1_eg_r3)
@@ -1786,9 +2812,54 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op1_fb_vs_amount (S->op1_fb_vs_amount)
 #define op1_eg_vs_amount (S->op1_eg_vs_amount)
 #define op1_mute_mute (S->op1_mute_mute)
+#define op1_specenv_r1 (S->op1_specenv_r1)
+#define op1_specenv_r2 (S->op1_specenv_r2)
+#define op1_specenv_r3 (S->op1_specenv_r3)
+#define op1_specenv_r4 (S->op1_specenv_r4)
+#define op1_specenv_l1 (S->op1_specenv_l1)
+#define op1_specenv_l2 (S->op1_specenv_l2)
+#define op1_specenv_l3 (S->op1_specenv_l3)
+#define op1_speclfo_rate (S->op1_speclfo_rate)
+#define op1_speclfo_depth (S->op1_speclfo_depth)
+#define op1_speclfo_wave (S->op1_speclfo_wave)
+#define op1_speclfo_mode (S->op1_speclfo_mode)
 #define op2_ph_inc_ratio (S->op2_ph_inc_ratio)
 #define op2_ph_detune (S->op2_ph_detune)
 #define op2_osc_waveform (S->op2_osc_waveform)
+#define op2_osc_spec_a1 (S->op2_osc_spec_a1)
+#define op2_osc_spec_a2 (S->op2_osc_spec_a2)
+#define op2_osc_spec_a3 (S->op2_osc_spec_a3)
+#define op2_osc_spec_a4 (S->op2_osc_spec_a4)
+#define op2_osc_spec_a5 (S->op2_osc_spec_a5)
+#define op2_osc_spec_a6 (S->op2_osc_spec_a6)
+#define op2_osc_spec_a7 (S->op2_osc_spec_a7)
+#define op2_osc_spec_a8 (S->op2_osc_spec_a8)
+#define op2_osc_spec_a9 (S->op2_osc_spec_a9)
+#define op2_osc_spec_a10 (S->op2_osc_spec_a10)
+#define op2_osc_spec_a11 (S->op2_osc_spec_a11)
+#define op2_osc_spec_a12 (S->op2_osc_spec_a12)
+#define op2_osc_spec_a13 (S->op2_osc_spec_a13)
+#define op2_osc_spec_a14 (S->op2_osc_spec_a14)
+#define op2_osc_spec_a15 (S->op2_osc_spec_a15)
+#define op2_osc_spec_a16 (S->op2_osc_spec_a16)
+#define op2_osc_spec_b1 (S->op2_osc_spec_b1)
+#define op2_osc_spec_b2 (S->op2_osc_spec_b2)
+#define op2_osc_spec_b3 (S->op2_osc_spec_b3)
+#define op2_osc_spec_b4 (S->op2_osc_spec_b4)
+#define op2_osc_spec_b5 (S->op2_osc_spec_b5)
+#define op2_osc_spec_b6 (S->op2_osc_spec_b6)
+#define op2_osc_spec_b7 (S->op2_osc_spec_b7)
+#define op2_osc_spec_b8 (S->op2_osc_spec_b8)
+#define op2_osc_spec_b9 (S->op2_osc_spec_b9)
+#define op2_osc_spec_b10 (S->op2_osc_spec_b10)
+#define op2_osc_spec_b11 (S->op2_osc_spec_b11)
+#define op2_osc_spec_b12 (S->op2_osc_spec_b12)
+#define op2_osc_spec_b13 (S->op2_osc_spec_b13)
+#define op2_osc_spec_b14 (S->op2_osc_spec_b14)
+#define op2_osc_spec_b15 (S->op2_osc_spec_b15)
+#define op2_osc_spec_b16 (S->op2_osc_spec_b16)
+#define op2_osc_spec_morph (S->op2_osc_spec_morph)
+#define op2_osc_spec_env_depth (S->op2_osc_spec_env_depth)
 #define op2_eg_r1 (S->op2_eg_r1)
 #define op2_eg_r2 (S->op2_eg_r2)
 #define op2_eg_r3 (S->op2_eg_r3)
@@ -1832,9 +2903,54 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op2_fb_vs_amount (S->op2_fb_vs_amount)
 #define op2_eg_vs_amount (S->op2_eg_vs_amount)
 #define op2_mute_mute (S->op2_mute_mute)
+#define op2_specenv_r1 (S->op2_specenv_r1)
+#define op2_specenv_r2 (S->op2_specenv_r2)
+#define op2_specenv_r3 (S->op2_specenv_r3)
+#define op2_specenv_r4 (S->op2_specenv_r4)
+#define op2_specenv_l1 (S->op2_specenv_l1)
+#define op2_specenv_l2 (S->op2_specenv_l2)
+#define op2_specenv_l3 (S->op2_specenv_l3)
+#define op2_speclfo_rate (S->op2_speclfo_rate)
+#define op2_speclfo_depth (S->op2_speclfo_depth)
+#define op2_speclfo_wave (S->op2_speclfo_wave)
+#define op2_speclfo_mode (S->op2_speclfo_mode)
 #define op3_ph_inc_ratio (S->op3_ph_inc_ratio)
 #define op3_ph_detune (S->op3_ph_detune)
 #define op3_osc_waveform (S->op3_osc_waveform)
+#define op3_osc_spec_a1 (S->op3_osc_spec_a1)
+#define op3_osc_spec_a2 (S->op3_osc_spec_a2)
+#define op3_osc_spec_a3 (S->op3_osc_spec_a3)
+#define op3_osc_spec_a4 (S->op3_osc_spec_a4)
+#define op3_osc_spec_a5 (S->op3_osc_spec_a5)
+#define op3_osc_spec_a6 (S->op3_osc_spec_a6)
+#define op3_osc_spec_a7 (S->op3_osc_spec_a7)
+#define op3_osc_spec_a8 (S->op3_osc_spec_a8)
+#define op3_osc_spec_a9 (S->op3_osc_spec_a9)
+#define op3_osc_spec_a10 (S->op3_osc_spec_a10)
+#define op3_osc_spec_a11 (S->op3_osc_spec_a11)
+#define op3_osc_spec_a12 (S->op3_osc_spec_a12)
+#define op3_osc_spec_a13 (S->op3_osc_spec_a13)
+#define op3_osc_spec_a14 (S->op3_osc_spec_a14)
+#define op3_osc_spec_a15 (S->op3_osc_spec_a15)
+#define op3_osc_spec_a16 (S->op3_osc_spec_a16)
+#define op3_osc_spec_b1 (S->op3_osc_spec_b1)
+#define op3_osc_spec_b2 (S->op3_osc_spec_b2)
+#define op3_osc_spec_b3 (S->op3_osc_spec_b3)
+#define op3_osc_spec_b4 (S->op3_osc_spec_b4)
+#define op3_osc_spec_b5 (S->op3_osc_spec_b5)
+#define op3_osc_spec_b6 (S->op3_osc_spec_b6)
+#define op3_osc_spec_b7 (S->op3_osc_spec_b7)
+#define op3_osc_spec_b8 (S->op3_osc_spec_b8)
+#define op3_osc_spec_b9 (S->op3_osc_spec_b9)
+#define op3_osc_spec_b10 (S->op3_osc_spec_b10)
+#define op3_osc_spec_b11 (S->op3_osc_spec_b11)
+#define op3_osc_spec_b12 (S->op3_osc_spec_b12)
+#define op3_osc_spec_b13 (S->op3_osc_spec_b13)
+#define op3_osc_spec_b14 (S->op3_osc_spec_b14)
+#define op3_osc_spec_b15 (S->op3_osc_spec_b15)
+#define op3_osc_spec_b16 (S->op3_osc_spec_b16)
+#define op3_osc_spec_morph (S->op3_osc_spec_morph)
+#define op3_osc_spec_env_depth (S->op3_osc_spec_env_depth)
 #define op3_eg_r1 (S->op3_eg_r1)
 #define op3_eg_r2 (S->op3_eg_r2)
 #define op3_eg_r3 (S->op3_eg_r3)
@@ -1878,9 +2994,54 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op3_fb_vs_amount (S->op3_fb_vs_amount)
 #define op3_eg_vs_amount (S->op3_eg_vs_amount)
 #define op3_mute_mute (S->op3_mute_mute)
+#define op3_specenv_r1 (S->op3_specenv_r1)
+#define op3_specenv_r2 (S->op3_specenv_r2)
+#define op3_specenv_r3 (S->op3_specenv_r3)
+#define op3_specenv_r4 (S->op3_specenv_r4)
+#define op3_specenv_l1 (S->op3_specenv_l1)
+#define op3_specenv_l2 (S->op3_specenv_l2)
+#define op3_specenv_l3 (S->op3_specenv_l3)
+#define op3_speclfo_rate (S->op3_speclfo_rate)
+#define op3_speclfo_depth (S->op3_speclfo_depth)
+#define op3_speclfo_wave (S->op3_speclfo_wave)
+#define op3_speclfo_mode (S->op3_speclfo_mode)
 #define op4_ph_inc_ratio (S->op4_ph_inc_ratio)
 #define op4_ph_detune (S->op4_ph_detune)
 #define op4_osc_waveform (S->op4_osc_waveform)
+#define op4_osc_spec_a1 (S->op4_osc_spec_a1)
+#define op4_osc_spec_a2 (S->op4_osc_spec_a2)
+#define op4_osc_spec_a3 (S->op4_osc_spec_a3)
+#define op4_osc_spec_a4 (S->op4_osc_spec_a4)
+#define op4_osc_spec_a5 (S->op4_osc_spec_a5)
+#define op4_osc_spec_a6 (S->op4_osc_spec_a6)
+#define op4_osc_spec_a7 (S->op4_osc_spec_a7)
+#define op4_osc_spec_a8 (S->op4_osc_spec_a8)
+#define op4_osc_spec_a9 (S->op4_osc_spec_a9)
+#define op4_osc_spec_a10 (S->op4_osc_spec_a10)
+#define op4_osc_spec_a11 (S->op4_osc_spec_a11)
+#define op4_osc_spec_a12 (S->op4_osc_spec_a12)
+#define op4_osc_spec_a13 (S->op4_osc_spec_a13)
+#define op4_osc_spec_a14 (S->op4_osc_spec_a14)
+#define op4_osc_spec_a15 (S->op4_osc_spec_a15)
+#define op4_osc_spec_a16 (S->op4_osc_spec_a16)
+#define op4_osc_spec_b1 (S->op4_osc_spec_b1)
+#define op4_osc_spec_b2 (S->op4_osc_spec_b2)
+#define op4_osc_spec_b3 (S->op4_osc_spec_b3)
+#define op4_osc_spec_b4 (S->op4_osc_spec_b4)
+#define op4_osc_spec_b5 (S->op4_osc_spec_b5)
+#define op4_osc_spec_b6 (S->op4_osc_spec_b6)
+#define op4_osc_spec_b7 (S->op4_osc_spec_b7)
+#define op4_osc_spec_b8 (S->op4_osc_spec_b8)
+#define op4_osc_spec_b9 (S->op4_osc_spec_b9)
+#define op4_osc_spec_b10 (S->op4_osc_spec_b10)
+#define op4_osc_spec_b11 (S->op4_osc_spec_b11)
+#define op4_osc_spec_b12 (S->op4_osc_spec_b12)
+#define op4_osc_spec_b13 (S->op4_osc_spec_b13)
+#define op4_osc_spec_b14 (S->op4_osc_spec_b14)
+#define op4_osc_spec_b15 (S->op4_osc_spec_b15)
+#define op4_osc_spec_b16 (S->op4_osc_spec_b16)
+#define op4_osc_spec_morph (S->op4_osc_spec_morph)
+#define op4_osc_spec_env_depth (S->op4_osc_spec_env_depth)
 #define op4_eg_r1 (S->op4_eg_r1)
 #define op4_eg_r2 (S->op4_eg_r2)
 #define op4_eg_r3 (S->op4_eg_r3)
@@ -1924,6 +3085,17 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op4_fb_vs_amount (S->op4_fb_vs_amount)
 #define op4_eg_vs_amount (S->op4_eg_vs_amount)
 #define op4_mute_mute (S->op4_mute_mute)
+#define op4_specenv_r1 (S->op4_specenv_r1)
+#define op4_specenv_r2 (S->op4_specenv_r2)
+#define op4_specenv_r3 (S->op4_specenv_r3)
+#define op4_specenv_r4 (S->op4_specenv_r4)
+#define op4_specenv_l1 (S->op4_specenv_l1)
+#define op4_specenv_l2 (S->op4_specenv_l2)
+#define op4_specenv_l3 (S->op4_specenv_l3)
+#define op4_speclfo_rate (S->op4_speclfo_rate)
+#define op4_speclfo_depth (S->op4_speclfo_depth)
+#define op4_speclfo_wave (S->op4_speclfo_wave)
+#define op4_speclfo_mode (S->op4_speclfo_mode)
 #define algo_algorithm (S->algo_algorithm)
 #define penv_on (S->penv_on)
 #define penv_r1 (S->penv_r1)
@@ -1977,6 +3149,8 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define penv_cv_x (S->penv_cv_x)
 #define psum_cv_x (S->psum_cv_x)
 #define algo_alg_x (S->algo_alg_x)
+#define op4_speclfo_cv_x (S->op4_speclfo_cv_x)
+#define op4_specenv_cv_x (S->op4_specenv_cv_x)
 #define op4_eg_vs_k_x (S->op4_eg_vs_k_x)
 #define op4_fb_vs_k_x (S->op4_fb_vs_k_x)
 #define op4_level_vs_k_x (S->op4_level_vs_k_x)
@@ -1993,6 +3167,8 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op4_fblfo_cv_x (S->op4_fblfo_cv_x)
 #define op4_fbenv_cv_x (S->op4_fbenv_cv_x)
 #define op4_lfo_cv_x (S->op4_lfo_cv_x)
+#define op3_speclfo_cv_x (S->op3_speclfo_cv_x)
+#define op3_specenv_cv_x (S->op3_specenv_cv_x)
 #define op3_eg_vs_k_x (S->op3_eg_vs_k_x)
 #define op3_fb_vs_k_x (S->op3_fb_vs_k_x)
 #define op3_level_vs_k_x (S->op3_level_vs_k_x)
@@ -2009,6 +3185,8 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op3_fblfo_cv_x (S->op3_fblfo_cv_x)
 #define op3_fbenv_cv_x (S->op3_fbenv_cv_x)
 #define op3_lfo_cv_x (S->op3_lfo_cv_x)
+#define op2_speclfo_cv_x (S->op2_speclfo_cv_x)
+#define op2_specenv_cv_x (S->op2_specenv_cv_x)
 #define op2_eg_vs_k_x (S->op2_eg_vs_k_x)
 #define op2_fb_vs_k_x (S->op2_fb_vs_k_x)
 #define op2_level_vs_k_x (S->op2_level_vs_k_x)
@@ -2025,6 +3203,8 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op2_fblfo_cv_x (S->op2_fblfo_cv_x)
 #define op2_fbenv_cv_x (S->op2_fbenv_cv_x)
 #define op2_lfo_cv_x (S->op2_lfo_cv_x)
+#define op1_speclfo_cv_x (S->op1_speclfo_cv_x)
+#define op1_specenv_cv_x (S->op1_specenv_cv_x)
 #define op1_eg_vs_k_x (S->op1_eg_vs_k_x)
 #define op1_fb_vs_k_x (S->op1_fb_vs_k_x)
 #define op1_level_vs_k_x (S->op1_level_vs_k_x)
@@ -2048,6 +3228,10 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define type_p_alpha_render_bus1 (S->type_p_alpha_render_bus1)
 #define type_p_alpha_tap0 (S->type_p_alpha_tap0)
 #define type_p_alpha_tap1 (S->type_p_alpha_tap1)
+#define op1_osc_bank (S->op1_osc_bank)
+#define op2_osc_bank (S->op2_osc_bank)
+#define op3_osc_bank (S->op3_osc_bank)
+#define op4_osc_bank (S->op4_osc_bank)
 #define voice_rel (S->voice_rel)
 #define voice_gate (S->voice_gate)
 #define voice_note (S->voice_note)
@@ -2288,6 +3472,74 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
            The 8 shipped routings clamp at 7. */
         uint32_t alg = algo_algorithm[voice_part[v]] > 7u ? 7u : algo_algorithm[voice_part[v]];
         algo_alg_x[v] = (int32_t)alg;
+        /* Low-frequency oscillator (control rate): phase advances by `rate` per sample
+           (`rate * CONTROL_BLOCK` per control tick, where CONTROL_BLOCK is the emitted
+           macro), and the output is a `p1_wave` waveform scaled by `depth` in the target
+           parameter's units. `mode` 1 is bipolar (+/- depth around the target), and mode 0
+           is unipolar (0..1 from the target value toward `depth`). A negative depth in
+           bipolar mode inverts the phase. */
+        op4_speclfo_phase[v] += op4_speclfo_rate[voice_part[v]] * CONTROL_BLOCK;
+        op4_speclfo_w[v] = p1_wave[op4_speclfo_base[v] + (op4_speclfo_phase[v] >> 22)];
+        op4_speclfo_cv_x[v] = op4_speclfo_mode[voice_part[v]]
+            ? p1_q15_mul(op4_speclfo_w[v], op4_speclfo_depth[voice_part[v]])
+            : p1_q15_mul((op4_speclfo_w[v] + 32768) >> 1, op4_speclfo_depth[voice_part[v]]);
+        /* DX-style rate/level envelope (control rate). It has four rates and three levels,
+           all 0..99 on the Yamaha scale. Each stage advances `level` toward its target by
+           the rate's one-pole coefficient (`p1_rate_coeff[r_eff]`, Q16), scaled by
+           `rate_scale`, which is velocity -> envelope rate (Q15 unity 32768, always
+           >= 0), whilst a key-follow factor `k` (Q15) pushes each rate toward 0 (slower)
+           or 99 (faster) and the effective rates are block-derived. The decay 2 stage
+           uses `p1_rate_coeff_r3`, a separate curve whose rate 1 is the OPM's slowest
+           D2R time and whose 99 steps cover the OPM's 31 with more resolution. Levels
+           are total-level 0..99 -> Q15 gain via `p1_level_gain`. A stage ends when it
+           is within 8 units of its target on the side it is moving toward, so a target
+           above the current level runs up instead of snapping. A level of 99 is max and
+           0 is silence. `trigger` (default `voice_trig[v]`) resets to attack on a note-on
+           edge, even mid-note (a voice steal). Stages: 0=attack (0->l1), 1=decay1
+           (l1->l2), 2=decay2 (l2->l3), 3=sustain (hold l3), 4=release (->0). A gate edge
+           starts release. There are no local declarations, because the body is inlined
+           once per operator, so every value is an inline expression. */
+        if (voice_trig[v]) { op4_specenv_stage[v] = 0u; op4_specenv_level[v] = 0; }
+        if (voice_gate[v]) {
+            if (op4_specenv_stage[v] == 4u) { op4_specenv_stage[v] = 0u; op4_specenv_level[v] = 0; }
+        } else if (op4_specenv_stage[v] != 4u) {
+            op4_specenv_stage[v] = 4u;
+        }
+        if (op4_specenv_stage[v] == 0u) {
+            op4_specenv_level[v] = p1_onepole(op4_specenv_level[v],
+                p1_level_gain[op4_specenv_l1[voice_part[v]]],
+                p1_q16_mul(p1_rate_coeff[op4_specenv_r1_eff[v]], 32768 << 1));
+            if (p1_level_gain[op4_specenv_l1[voice_part[v]]] >= op4_specenv_level[v]
+                    ? op4_specenv_level[v] >= p1_level_gain[op4_specenv_l1[voice_part[v]]] - 8
+                    : op4_specenv_level[v] <= p1_level_gain[op4_specenv_l1[voice_part[v]]] + 8) {
+                op4_specenv_level[v] = p1_level_gain[op4_specenv_l1[voice_part[v]]]; op4_specenv_stage[v] = 1u;
+            }
+        } else if (op4_specenv_stage[v] == 1u) {
+            op4_specenv_level[v] = p1_onepole(op4_specenv_level[v],
+                p1_level_gain[op4_specenv_l2[voice_part[v]]],
+                p1_q16_mul(p1_rate_coeff[op4_specenv_r2_eff[v]], 32768 << 1));
+            if (p1_level_gain[op4_specenv_l2[voice_part[v]]] >= op4_specenv_level[v]
+                    ? op4_specenv_level[v] >= p1_level_gain[op4_specenv_l2[voice_part[v]]] - 8
+                    : op4_specenv_level[v] <= p1_level_gain[op4_specenv_l2[voice_part[v]]] + 8) {
+                op4_specenv_level[v] = p1_level_gain[op4_specenv_l2[voice_part[v]]]; op4_specenv_stage[v] = 2u;
+            }
+        } else if (op4_specenv_stage[v] == 2u) {
+            op4_specenv_level[v] = p1_onepole(op4_specenv_level[v],
+                p1_level_gain[op4_specenv_l3[voice_part[v]]],
+                p1_q16_mul(p1_rate_coeff_r3[op4_specenv_r3_eff[v]], 32768 << 1));
+            if (p1_level_gain[op4_specenv_l3[voice_part[v]]] >= op4_specenv_level[v]
+                    ? op4_specenv_level[v] >= p1_level_gain[op4_specenv_l3[voice_part[v]]] - 8
+                    : op4_specenv_level[v] <= p1_level_gain[op4_specenv_l3[voice_part[v]]] + 8) {
+                op4_specenv_level[v] = p1_level_gain[op4_specenv_l3[voice_part[v]]]; op4_specenv_stage[v] = 3u;
+            }
+        } else if (op4_specenv_stage[v] == 3u) {
+            op4_specenv_level[v] = p1_level_gain[op4_specenv_l3[voice_part[v]]];
+        } else {
+            op4_specenv_level[v] = p1_onepole(op4_specenv_level[v], 0,
+                p1_q16_mul(p1_rate_coeff[op4_specenv_r4_eff[v]], 32768 << 1));
+            if (op4_specenv_level[v] < 8) op4_specenv_level[v] = 0;
+        }
+        op4_specenv_cv_x[v] = op4_specenv_level[v];
         /* Velocity-follow factor: block-derived from the voice's velocity and the amount,
            gated by the global velocity-sensitivity switch. The output copies it. */
         op4_eg_vs_k_x[v] = op4_eg_vs_k[v];
@@ -2440,6 +3692,74 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
         op4_lfo_cv_x[v] = op4_lfo_mode[voice_part[v]]
             ? p1_q15_mul(op4_lfo_w[v], op4_lfo_depth[voice_part[v]])
             : p1_q15_mul((op4_lfo_w[v] + 32768) >> 1, op4_lfo_depth[voice_part[v]]);
+        /* Low-frequency oscillator (control rate): phase advances by `rate` per sample
+           (`rate * CONTROL_BLOCK` per control tick, where CONTROL_BLOCK is the emitted
+           macro), and the output is a `p1_wave` waveform scaled by `depth` in the target
+           parameter's units. `mode` 1 is bipolar (+/- depth around the target), and mode 0
+           is unipolar (0..1 from the target value toward `depth`). A negative depth in
+           bipolar mode inverts the phase. */
+        op3_speclfo_phase[v] += op3_speclfo_rate[voice_part[v]] * CONTROL_BLOCK;
+        op3_speclfo_w[v] = p1_wave[op3_speclfo_base[v] + (op3_speclfo_phase[v] >> 22)];
+        op3_speclfo_cv_x[v] = op3_speclfo_mode[voice_part[v]]
+            ? p1_q15_mul(op3_speclfo_w[v], op3_speclfo_depth[voice_part[v]])
+            : p1_q15_mul((op3_speclfo_w[v] + 32768) >> 1, op3_speclfo_depth[voice_part[v]]);
+        /* DX-style rate/level envelope (control rate). It has four rates and three levels,
+           all 0..99 on the Yamaha scale. Each stage advances `level` toward its target by
+           the rate's one-pole coefficient (`p1_rate_coeff[r_eff]`, Q16), scaled by
+           `rate_scale`, which is velocity -> envelope rate (Q15 unity 32768, always
+           >= 0), whilst a key-follow factor `k` (Q15) pushes each rate toward 0 (slower)
+           or 99 (faster) and the effective rates are block-derived. The decay 2 stage
+           uses `p1_rate_coeff_r3`, a separate curve whose rate 1 is the OPM's slowest
+           D2R time and whose 99 steps cover the OPM's 31 with more resolution. Levels
+           are total-level 0..99 -> Q15 gain via `p1_level_gain`. A stage ends when it
+           is within 8 units of its target on the side it is moving toward, so a target
+           above the current level runs up instead of snapping. A level of 99 is max and
+           0 is silence. `trigger` (default `voice_trig[v]`) resets to attack on a note-on
+           edge, even mid-note (a voice steal). Stages: 0=attack (0->l1), 1=decay1
+           (l1->l2), 2=decay2 (l2->l3), 3=sustain (hold l3), 4=release (->0). A gate edge
+           starts release. There are no local declarations, because the body is inlined
+           once per operator, so every value is an inline expression. */
+        if (voice_trig[v]) { op3_specenv_stage[v] = 0u; op3_specenv_level[v] = 0; }
+        if (voice_gate[v]) {
+            if (op3_specenv_stage[v] == 4u) { op3_specenv_stage[v] = 0u; op3_specenv_level[v] = 0; }
+        } else if (op3_specenv_stage[v] != 4u) {
+            op3_specenv_stage[v] = 4u;
+        }
+        if (op3_specenv_stage[v] == 0u) {
+            op3_specenv_level[v] = p1_onepole(op3_specenv_level[v],
+                p1_level_gain[op3_specenv_l1[voice_part[v]]],
+                p1_q16_mul(p1_rate_coeff[op3_specenv_r1_eff[v]], 32768 << 1));
+            if (p1_level_gain[op3_specenv_l1[voice_part[v]]] >= op3_specenv_level[v]
+                    ? op3_specenv_level[v] >= p1_level_gain[op3_specenv_l1[voice_part[v]]] - 8
+                    : op3_specenv_level[v] <= p1_level_gain[op3_specenv_l1[voice_part[v]]] + 8) {
+                op3_specenv_level[v] = p1_level_gain[op3_specenv_l1[voice_part[v]]]; op3_specenv_stage[v] = 1u;
+            }
+        } else if (op3_specenv_stage[v] == 1u) {
+            op3_specenv_level[v] = p1_onepole(op3_specenv_level[v],
+                p1_level_gain[op3_specenv_l2[voice_part[v]]],
+                p1_q16_mul(p1_rate_coeff[op3_specenv_r2_eff[v]], 32768 << 1));
+            if (p1_level_gain[op3_specenv_l2[voice_part[v]]] >= op3_specenv_level[v]
+                    ? op3_specenv_level[v] >= p1_level_gain[op3_specenv_l2[voice_part[v]]] - 8
+                    : op3_specenv_level[v] <= p1_level_gain[op3_specenv_l2[voice_part[v]]] + 8) {
+                op3_specenv_level[v] = p1_level_gain[op3_specenv_l2[voice_part[v]]]; op3_specenv_stage[v] = 2u;
+            }
+        } else if (op3_specenv_stage[v] == 2u) {
+            op3_specenv_level[v] = p1_onepole(op3_specenv_level[v],
+                p1_level_gain[op3_specenv_l3[voice_part[v]]],
+                p1_q16_mul(p1_rate_coeff_r3[op3_specenv_r3_eff[v]], 32768 << 1));
+            if (p1_level_gain[op3_specenv_l3[voice_part[v]]] >= op3_specenv_level[v]
+                    ? op3_specenv_level[v] >= p1_level_gain[op3_specenv_l3[voice_part[v]]] - 8
+                    : op3_specenv_level[v] <= p1_level_gain[op3_specenv_l3[voice_part[v]]] + 8) {
+                op3_specenv_level[v] = p1_level_gain[op3_specenv_l3[voice_part[v]]]; op3_specenv_stage[v] = 3u;
+            }
+        } else if (op3_specenv_stage[v] == 3u) {
+            op3_specenv_level[v] = p1_level_gain[op3_specenv_l3[voice_part[v]]];
+        } else {
+            op3_specenv_level[v] = p1_onepole(op3_specenv_level[v], 0,
+                p1_q16_mul(p1_rate_coeff[op3_specenv_r4_eff[v]], 32768 << 1));
+            if (op3_specenv_level[v] < 8) op3_specenv_level[v] = 0;
+        }
+        op3_specenv_cv_x[v] = op3_specenv_level[v];
         /* Velocity-follow factor: block-derived from the voice's velocity and the amount,
            gated by the global velocity-sensitivity switch. The output copies it. */
         op3_eg_vs_k_x[v] = op3_eg_vs_k[v];
@@ -2592,6 +3912,74 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
         op3_lfo_cv_x[v] = op3_lfo_mode[voice_part[v]]
             ? p1_q15_mul(op3_lfo_w[v], op3_lfo_depth[voice_part[v]])
             : p1_q15_mul((op3_lfo_w[v] + 32768) >> 1, op3_lfo_depth[voice_part[v]]);
+        /* Low-frequency oscillator (control rate): phase advances by `rate` per sample
+           (`rate * CONTROL_BLOCK` per control tick, where CONTROL_BLOCK is the emitted
+           macro), and the output is a `p1_wave` waveform scaled by `depth` in the target
+           parameter's units. `mode` 1 is bipolar (+/- depth around the target), and mode 0
+           is unipolar (0..1 from the target value toward `depth`). A negative depth in
+           bipolar mode inverts the phase. */
+        op2_speclfo_phase[v] += op2_speclfo_rate[voice_part[v]] * CONTROL_BLOCK;
+        op2_speclfo_w[v] = p1_wave[op2_speclfo_base[v] + (op2_speclfo_phase[v] >> 22)];
+        op2_speclfo_cv_x[v] = op2_speclfo_mode[voice_part[v]]
+            ? p1_q15_mul(op2_speclfo_w[v], op2_speclfo_depth[voice_part[v]])
+            : p1_q15_mul((op2_speclfo_w[v] + 32768) >> 1, op2_speclfo_depth[voice_part[v]]);
+        /* DX-style rate/level envelope (control rate). It has four rates and three levels,
+           all 0..99 on the Yamaha scale. Each stage advances `level` toward its target by
+           the rate's one-pole coefficient (`p1_rate_coeff[r_eff]`, Q16), scaled by
+           `rate_scale`, which is velocity -> envelope rate (Q15 unity 32768, always
+           >= 0), whilst a key-follow factor `k` (Q15) pushes each rate toward 0 (slower)
+           or 99 (faster) and the effective rates are block-derived. The decay 2 stage
+           uses `p1_rate_coeff_r3`, a separate curve whose rate 1 is the OPM's slowest
+           D2R time and whose 99 steps cover the OPM's 31 with more resolution. Levels
+           are total-level 0..99 -> Q15 gain via `p1_level_gain`. A stage ends when it
+           is within 8 units of its target on the side it is moving toward, so a target
+           above the current level runs up instead of snapping. A level of 99 is max and
+           0 is silence. `trigger` (default `voice_trig[v]`) resets to attack on a note-on
+           edge, even mid-note (a voice steal). Stages: 0=attack (0->l1), 1=decay1
+           (l1->l2), 2=decay2 (l2->l3), 3=sustain (hold l3), 4=release (->0). A gate edge
+           starts release. There are no local declarations, because the body is inlined
+           once per operator, so every value is an inline expression. */
+        if (voice_trig[v]) { op2_specenv_stage[v] = 0u; op2_specenv_level[v] = 0; }
+        if (voice_gate[v]) {
+            if (op2_specenv_stage[v] == 4u) { op2_specenv_stage[v] = 0u; op2_specenv_level[v] = 0; }
+        } else if (op2_specenv_stage[v] != 4u) {
+            op2_specenv_stage[v] = 4u;
+        }
+        if (op2_specenv_stage[v] == 0u) {
+            op2_specenv_level[v] = p1_onepole(op2_specenv_level[v],
+                p1_level_gain[op2_specenv_l1[voice_part[v]]],
+                p1_q16_mul(p1_rate_coeff[op2_specenv_r1_eff[v]], 32768 << 1));
+            if (p1_level_gain[op2_specenv_l1[voice_part[v]]] >= op2_specenv_level[v]
+                    ? op2_specenv_level[v] >= p1_level_gain[op2_specenv_l1[voice_part[v]]] - 8
+                    : op2_specenv_level[v] <= p1_level_gain[op2_specenv_l1[voice_part[v]]] + 8) {
+                op2_specenv_level[v] = p1_level_gain[op2_specenv_l1[voice_part[v]]]; op2_specenv_stage[v] = 1u;
+            }
+        } else if (op2_specenv_stage[v] == 1u) {
+            op2_specenv_level[v] = p1_onepole(op2_specenv_level[v],
+                p1_level_gain[op2_specenv_l2[voice_part[v]]],
+                p1_q16_mul(p1_rate_coeff[op2_specenv_r2_eff[v]], 32768 << 1));
+            if (p1_level_gain[op2_specenv_l2[voice_part[v]]] >= op2_specenv_level[v]
+                    ? op2_specenv_level[v] >= p1_level_gain[op2_specenv_l2[voice_part[v]]] - 8
+                    : op2_specenv_level[v] <= p1_level_gain[op2_specenv_l2[voice_part[v]]] + 8) {
+                op2_specenv_level[v] = p1_level_gain[op2_specenv_l2[voice_part[v]]]; op2_specenv_stage[v] = 2u;
+            }
+        } else if (op2_specenv_stage[v] == 2u) {
+            op2_specenv_level[v] = p1_onepole(op2_specenv_level[v],
+                p1_level_gain[op2_specenv_l3[voice_part[v]]],
+                p1_q16_mul(p1_rate_coeff_r3[op2_specenv_r3_eff[v]], 32768 << 1));
+            if (p1_level_gain[op2_specenv_l3[voice_part[v]]] >= op2_specenv_level[v]
+                    ? op2_specenv_level[v] >= p1_level_gain[op2_specenv_l3[voice_part[v]]] - 8
+                    : op2_specenv_level[v] <= p1_level_gain[op2_specenv_l3[voice_part[v]]] + 8) {
+                op2_specenv_level[v] = p1_level_gain[op2_specenv_l3[voice_part[v]]]; op2_specenv_stage[v] = 3u;
+            }
+        } else if (op2_specenv_stage[v] == 3u) {
+            op2_specenv_level[v] = p1_level_gain[op2_specenv_l3[voice_part[v]]];
+        } else {
+            op2_specenv_level[v] = p1_onepole(op2_specenv_level[v], 0,
+                p1_q16_mul(p1_rate_coeff[op2_specenv_r4_eff[v]], 32768 << 1));
+            if (op2_specenv_level[v] < 8) op2_specenv_level[v] = 0;
+        }
+        op2_specenv_cv_x[v] = op2_specenv_level[v];
         /* Velocity-follow factor: block-derived from the voice's velocity and the amount,
            gated by the global velocity-sensitivity switch. The output copies it. */
         op2_eg_vs_k_x[v] = op2_eg_vs_k[v];
@@ -2744,6 +4132,74 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
         op2_lfo_cv_x[v] = op2_lfo_mode[voice_part[v]]
             ? p1_q15_mul(op2_lfo_w[v], op2_lfo_depth[voice_part[v]])
             : p1_q15_mul((op2_lfo_w[v] + 32768) >> 1, op2_lfo_depth[voice_part[v]]);
+        /* Low-frequency oscillator (control rate): phase advances by `rate` per sample
+           (`rate * CONTROL_BLOCK` per control tick, where CONTROL_BLOCK is the emitted
+           macro), and the output is a `p1_wave` waveform scaled by `depth` in the target
+           parameter's units. `mode` 1 is bipolar (+/- depth around the target), and mode 0
+           is unipolar (0..1 from the target value toward `depth`). A negative depth in
+           bipolar mode inverts the phase. */
+        op1_speclfo_phase[v] += op1_speclfo_rate[voice_part[v]] * CONTROL_BLOCK;
+        op1_speclfo_w[v] = p1_wave[op1_speclfo_base[v] + (op1_speclfo_phase[v] >> 22)];
+        op1_speclfo_cv_x[v] = op1_speclfo_mode[voice_part[v]]
+            ? p1_q15_mul(op1_speclfo_w[v], op1_speclfo_depth[voice_part[v]])
+            : p1_q15_mul((op1_speclfo_w[v] + 32768) >> 1, op1_speclfo_depth[voice_part[v]]);
+        /* DX-style rate/level envelope (control rate). It has four rates and three levels,
+           all 0..99 on the Yamaha scale. Each stage advances `level` toward its target by
+           the rate's one-pole coefficient (`p1_rate_coeff[r_eff]`, Q16), scaled by
+           `rate_scale`, which is velocity -> envelope rate (Q15 unity 32768, always
+           >= 0), whilst a key-follow factor `k` (Q15) pushes each rate toward 0 (slower)
+           or 99 (faster) and the effective rates are block-derived. The decay 2 stage
+           uses `p1_rate_coeff_r3`, a separate curve whose rate 1 is the OPM's slowest
+           D2R time and whose 99 steps cover the OPM's 31 with more resolution. Levels
+           are total-level 0..99 -> Q15 gain via `p1_level_gain`. A stage ends when it
+           is within 8 units of its target on the side it is moving toward, so a target
+           above the current level runs up instead of snapping. A level of 99 is max and
+           0 is silence. `trigger` (default `voice_trig[v]`) resets to attack on a note-on
+           edge, even mid-note (a voice steal). Stages: 0=attack (0->l1), 1=decay1
+           (l1->l2), 2=decay2 (l2->l3), 3=sustain (hold l3), 4=release (->0). A gate edge
+           starts release. There are no local declarations, because the body is inlined
+           once per operator, so every value is an inline expression. */
+        if (voice_trig[v]) { op1_specenv_stage[v] = 0u; op1_specenv_level[v] = 0; }
+        if (voice_gate[v]) {
+            if (op1_specenv_stage[v] == 4u) { op1_specenv_stage[v] = 0u; op1_specenv_level[v] = 0; }
+        } else if (op1_specenv_stage[v] != 4u) {
+            op1_specenv_stage[v] = 4u;
+        }
+        if (op1_specenv_stage[v] == 0u) {
+            op1_specenv_level[v] = p1_onepole(op1_specenv_level[v],
+                p1_level_gain[op1_specenv_l1[voice_part[v]]],
+                p1_q16_mul(p1_rate_coeff[op1_specenv_r1_eff[v]], 32768 << 1));
+            if (p1_level_gain[op1_specenv_l1[voice_part[v]]] >= op1_specenv_level[v]
+                    ? op1_specenv_level[v] >= p1_level_gain[op1_specenv_l1[voice_part[v]]] - 8
+                    : op1_specenv_level[v] <= p1_level_gain[op1_specenv_l1[voice_part[v]]] + 8) {
+                op1_specenv_level[v] = p1_level_gain[op1_specenv_l1[voice_part[v]]]; op1_specenv_stage[v] = 1u;
+            }
+        } else if (op1_specenv_stage[v] == 1u) {
+            op1_specenv_level[v] = p1_onepole(op1_specenv_level[v],
+                p1_level_gain[op1_specenv_l2[voice_part[v]]],
+                p1_q16_mul(p1_rate_coeff[op1_specenv_r2_eff[v]], 32768 << 1));
+            if (p1_level_gain[op1_specenv_l2[voice_part[v]]] >= op1_specenv_level[v]
+                    ? op1_specenv_level[v] >= p1_level_gain[op1_specenv_l2[voice_part[v]]] - 8
+                    : op1_specenv_level[v] <= p1_level_gain[op1_specenv_l2[voice_part[v]]] + 8) {
+                op1_specenv_level[v] = p1_level_gain[op1_specenv_l2[voice_part[v]]]; op1_specenv_stage[v] = 2u;
+            }
+        } else if (op1_specenv_stage[v] == 2u) {
+            op1_specenv_level[v] = p1_onepole(op1_specenv_level[v],
+                p1_level_gain[op1_specenv_l3[voice_part[v]]],
+                p1_q16_mul(p1_rate_coeff_r3[op1_specenv_r3_eff[v]], 32768 << 1));
+            if (p1_level_gain[op1_specenv_l3[voice_part[v]]] >= op1_specenv_level[v]
+                    ? op1_specenv_level[v] >= p1_level_gain[op1_specenv_l3[voice_part[v]]] - 8
+                    : op1_specenv_level[v] <= p1_level_gain[op1_specenv_l3[voice_part[v]]] + 8) {
+                op1_specenv_level[v] = p1_level_gain[op1_specenv_l3[voice_part[v]]]; op1_specenv_stage[v] = 3u;
+            }
+        } else if (op1_specenv_stage[v] == 3u) {
+            op1_specenv_level[v] = p1_level_gain[op1_specenv_l3[voice_part[v]]];
+        } else {
+            op1_specenv_level[v] = p1_onepole(op1_specenv_level[v], 0,
+                p1_q16_mul(p1_rate_coeff[op1_specenv_r4_eff[v]], 32768 << 1));
+            if (op1_specenv_level[v] < 8) op1_specenv_level[v] = 0;
+        }
+        op1_specenv_cv_x[v] = op1_specenv_level[v];
         /* Velocity-follow factor: block-derived from the voice's velocity and the amount,
            gated by the global velocity-sensitivity switch. The output copies it. */
         op1_eg_vs_k_x[v] = op1_eg_vs_k[v];
@@ -2917,6 +4373,11 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
         penv_r4_eff[v] = (uint32_t)p1_key_apply(penv_r4[voice_part[v]], p1_key_add(penv_ks_k_x[v], penv_vs_k_x[v]), 0, 99);
         lp_f_eff[v] = p1_key_apply(lp_f[voice_part[v]], p1_key_add(f1_ks_k_x[v], f1_vs_k_x[v]), 0, 65535);
         lp_fc[v] = p1_clamp16_max(lp_f_eff[v] + p1_q16_mul(lp_fenv_depth[voice_part[v]], fenv_cv_x[v] << 1), 55296);
+        op4_speclfo_base[v] = ((uint32_t)p1_wave_base[((op4_speclfo_wave[voice_part[v]] > 11u) ? 0u : op4_speclfo_wave[voice_part[v]])] << 10);
+        op4_specenv_r1_eff[v] = (uint32_t)p1_key_apply(op4_specenv_r1[voice_part[v]], p1_key_add(0, 0), 0, 99);
+        op4_specenv_r2_eff[v] = (uint32_t)p1_key_apply(op4_specenv_r2[voice_part[v]], p1_key_add(0, 0), 0, 99);
+        op4_specenv_r3_eff[v] = (uint32_t)p1_key_apply(op4_specenv_r3[voice_part[v]], p1_key_add(0, 0), 0, 99);
+        op4_specenv_r4_eff[v] = (uint32_t)p1_key_apply(op4_specenv_r4[voice_part[v]], p1_key_add(0, 0), 0, 99);
         op4_eg_vs_k[v] = vel_on_on_x ? p1_vel_scale((int32_t)voice_velocity[v], op4_eg_vs_amount[voice_part[v]]) : 0;
         op4_fb_vs_k[v] = 1 ? p1_vel_scale((int32_t)voice_velocity[v], op4_fb_vs_amount[voice_part[v]]) : 0;
         op4_level_vs_k[v] = 1 ? p1_vel_scale((int32_t)voice_velocity[v], op4_level_vs_amount[voice_part[v]]) : 0;
@@ -2930,9 +4391,10 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
         op4_dlfo_base[v] = ((uint32_t)p1_wave_base[((op4_dlfo_wave[voice_part[v]] > 11u) ? 0u : op4_dlfo_wave[voice_part[v]])] << 10);
         op4_ph_step[v] = (uint32_t)(((int64_t)op4_ph_inc[v] * (32768 + op4_dsum_cv_x[v] + p1_detune_pitch[op4_ph_detune[voice_part[v]] + 50])) >> 15);
         op4_ph_mip[v] = p1_wave_mip(op4_ph_step[v]);
-        op4_osc_wave[v] = ((op4_osc_waveform[voice_part[v]] > 12u) ? 0u : op4_osc_waveform[voice_part[v]]);
-        op4_osc_base[v] = ((uint32_t)p1_wave_base[op4_osc_wave[v]] << 10);
-        op4_osc_bl[v] = ((op4_osc_wave[v] >= 10u) ? 1u : 0u);
+        op4_osc_wave[v] = ((op4_osc_waveform[voice_part[v]] > 13u) ? 0u : op4_osc_waveform[voice_part[v]]);
+        op4_osc_base[v] = ((uint32_t)p1_wave_base[(op4_osc_wave[v] > 12u) ? 0u : op4_osc_wave[v]] << 10);
+        op4_osc_bl[v] = ((op4_osc_wave[v] >= 10u && op4_osc_wave[v] <= 12u) ? 1u : 0u);
+        op4_osc_tick[v] = ((v == 0) ? (p1_spectral_tick(op4_osc_bank, op4_osc_waveform, op4_osc_spec_a1, op4_osc_spec_a2, op4_osc_spec_a3, op4_osc_spec_a4, op4_osc_spec_a5, op4_osc_spec_a6, op4_osc_spec_a7, op4_osc_spec_a8, op4_osc_spec_a9, op4_osc_spec_a10, op4_osc_spec_a11, op4_osc_spec_a12, op4_osc_spec_a13, op4_osc_spec_a14, op4_osc_spec_a15, op4_osc_spec_a16, op4_osc_spec_b1, op4_osc_spec_b2, op4_osc_spec_b3, op4_osc_spec_b4, op4_osc_spec_b5, op4_osc_spec_b6, op4_osc_spec_b7, op4_osc_spec_b8, op4_osc_spec_b9, op4_osc_spec_b10, op4_osc_spec_b11, op4_osc_spec_b12, op4_osc_spec_b13, op4_osc_spec_b14, op4_osc_spec_b15, op4_osc_spec_b16), 0u) : 0u);
         op4_fblfo_base[v] = ((uint32_t)p1_wave_base[((op4_fblfo_wave[voice_part[v]] > 11u) ? 0u : op4_fblfo_wave[voice_part[v]])] << 10);
         op4_fbenv_r1_eff[v] = (uint32_t)p1_key_apply(op4_fbenv_r1[voice_part[v]], p1_key_add(0, 0), 0, 99);
         op4_fbenv_r2_eff[v] = (uint32_t)p1_key_apply(op4_fbenv_r2[voice_part[v]], p1_key_add(0, 0), 0, 99);
@@ -2943,6 +4405,11 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
         op4_fb_signed[v] = ((op4_fb_level[voice_part[v]] < 0 ? -1 : 1) * p1_key_apply(op4_fb_level[voice_part[v]] < 0 ? -op4_fb_level[voice_part[v]] : op4_fb_level[voice_part[v]], p1_key_add(op4_fb_ks_k_x[v], op4_fb_vs_k_x[v]), 0, 32767)) + op4_fbenv_cv_x[v] + op4_fblfo_cv_x[v];
         op4_fb_level_eff[v] = p1_clamp(op4_fb_signed[v] < 0 ? -op4_fb_signed[v] : op4_fb_signed[v], 0, 32767);
         op4_fb_negative[v] = (op4_fb_signed[v] < 0) ? 1u : 0u;
+        op3_speclfo_base[v] = ((uint32_t)p1_wave_base[((op3_speclfo_wave[voice_part[v]] > 11u) ? 0u : op3_speclfo_wave[voice_part[v]])] << 10);
+        op3_specenv_r1_eff[v] = (uint32_t)p1_key_apply(op3_specenv_r1[voice_part[v]], p1_key_add(0, 0), 0, 99);
+        op3_specenv_r2_eff[v] = (uint32_t)p1_key_apply(op3_specenv_r2[voice_part[v]], p1_key_add(0, 0), 0, 99);
+        op3_specenv_r3_eff[v] = (uint32_t)p1_key_apply(op3_specenv_r3[voice_part[v]], p1_key_add(0, 0), 0, 99);
+        op3_specenv_r4_eff[v] = (uint32_t)p1_key_apply(op3_specenv_r4[voice_part[v]], p1_key_add(0, 0), 0, 99);
         op3_eg_vs_k[v] = vel_on_on_x ? p1_vel_scale((int32_t)voice_velocity[v], op3_eg_vs_amount[voice_part[v]]) : 0;
         op3_fb_vs_k[v] = 1 ? p1_vel_scale((int32_t)voice_velocity[v], op3_fb_vs_amount[voice_part[v]]) : 0;
         op3_level_vs_k[v] = 1 ? p1_vel_scale((int32_t)voice_velocity[v], op3_level_vs_amount[voice_part[v]]) : 0;
@@ -2956,9 +4423,10 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
         op3_dlfo_base[v] = ((uint32_t)p1_wave_base[((op3_dlfo_wave[voice_part[v]] > 11u) ? 0u : op3_dlfo_wave[voice_part[v]])] << 10);
         op3_ph_step[v] = (uint32_t)(((int64_t)op3_ph_inc[v] * (32768 + op3_dsum_cv_x[v] + p1_detune_pitch[op3_ph_detune[voice_part[v]] + 50])) >> 15);
         op3_ph_mip[v] = p1_wave_mip(op3_ph_step[v]);
-        op3_osc_wave[v] = ((op3_osc_waveform[voice_part[v]] > 12u) ? 0u : op3_osc_waveform[voice_part[v]]);
-        op3_osc_base[v] = ((uint32_t)p1_wave_base[op3_osc_wave[v]] << 10);
-        op3_osc_bl[v] = ((op3_osc_wave[v] >= 10u) ? 1u : 0u);
+        op3_osc_wave[v] = ((op3_osc_waveform[voice_part[v]] > 13u) ? 0u : op3_osc_waveform[voice_part[v]]);
+        op3_osc_base[v] = ((uint32_t)p1_wave_base[(op3_osc_wave[v] > 12u) ? 0u : op3_osc_wave[v]] << 10);
+        op3_osc_bl[v] = ((op3_osc_wave[v] >= 10u && op3_osc_wave[v] <= 12u) ? 1u : 0u);
+        op3_osc_tick[v] = ((v == 0) ? (p1_spectral_tick(op3_osc_bank, op3_osc_waveform, op3_osc_spec_a1, op3_osc_spec_a2, op3_osc_spec_a3, op3_osc_spec_a4, op3_osc_spec_a5, op3_osc_spec_a6, op3_osc_spec_a7, op3_osc_spec_a8, op3_osc_spec_a9, op3_osc_spec_a10, op3_osc_spec_a11, op3_osc_spec_a12, op3_osc_spec_a13, op3_osc_spec_a14, op3_osc_spec_a15, op3_osc_spec_a16, op3_osc_spec_b1, op3_osc_spec_b2, op3_osc_spec_b3, op3_osc_spec_b4, op3_osc_spec_b5, op3_osc_spec_b6, op3_osc_spec_b7, op3_osc_spec_b8, op3_osc_spec_b9, op3_osc_spec_b10, op3_osc_spec_b11, op3_osc_spec_b12, op3_osc_spec_b13, op3_osc_spec_b14, op3_osc_spec_b15, op3_osc_spec_b16), 0u) : 0u);
         op3_fblfo_base[v] = ((uint32_t)p1_wave_base[((op3_fblfo_wave[voice_part[v]] > 11u) ? 0u : op3_fblfo_wave[voice_part[v]])] << 10);
         op3_fbenv_r1_eff[v] = (uint32_t)p1_key_apply(op3_fbenv_r1[voice_part[v]], p1_key_add(0, 0), 0, 99);
         op3_fbenv_r2_eff[v] = (uint32_t)p1_key_apply(op3_fbenv_r2[voice_part[v]], p1_key_add(0, 0), 0, 99);
@@ -2969,6 +4437,11 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
         op3_fb_signed[v] = ((op3_fb_level[voice_part[v]] < 0 ? -1 : 1) * p1_key_apply(op3_fb_level[voice_part[v]] < 0 ? -op3_fb_level[voice_part[v]] : op3_fb_level[voice_part[v]], p1_key_add(op3_fb_ks_k_x[v], op3_fb_vs_k_x[v]), 0, 32767)) + op3_fbenv_cv_x[v] + op3_fblfo_cv_x[v];
         op3_fb_level_eff[v] = p1_clamp(op3_fb_signed[v] < 0 ? -op3_fb_signed[v] : op3_fb_signed[v], 0, 32767);
         op3_fb_negative[v] = (op3_fb_signed[v] < 0) ? 1u : 0u;
+        op2_speclfo_base[v] = ((uint32_t)p1_wave_base[((op2_speclfo_wave[voice_part[v]] > 11u) ? 0u : op2_speclfo_wave[voice_part[v]])] << 10);
+        op2_specenv_r1_eff[v] = (uint32_t)p1_key_apply(op2_specenv_r1[voice_part[v]], p1_key_add(0, 0), 0, 99);
+        op2_specenv_r2_eff[v] = (uint32_t)p1_key_apply(op2_specenv_r2[voice_part[v]], p1_key_add(0, 0), 0, 99);
+        op2_specenv_r3_eff[v] = (uint32_t)p1_key_apply(op2_specenv_r3[voice_part[v]], p1_key_add(0, 0), 0, 99);
+        op2_specenv_r4_eff[v] = (uint32_t)p1_key_apply(op2_specenv_r4[voice_part[v]], p1_key_add(0, 0), 0, 99);
         op2_eg_vs_k[v] = vel_on_on_x ? p1_vel_scale((int32_t)voice_velocity[v], op2_eg_vs_amount[voice_part[v]]) : 0;
         op2_fb_vs_k[v] = 1 ? p1_vel_scale((int32_t)voice_velocity[v], op2_fb_vs_amount[voice_part[v]]) : 0;
         op2_level_vs_k[v] = 1 ? p1_vel_scale((int32_t)voice_velocity[v], op2_level_vs_amount[voice_part[v]]) : 0;
@@ -2982,9 +4455,10 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
         op2_dlfo_base[v] = ((uint32_t)p1_wave_base[((op2_dlfo_wave[voice_part[v]] > 11u) ? 0u : op2_dlfo_wave[voice_part[v]])] << 10);
         op2_ph_step[v] = (uint32_t)(((int64_t)op2_ph_inc[v] * (32768 + op2_dsum_cv_x[v] + p1_detune_pitch[op2_ph_detune[voice_part[v]] + 50])) >> 15);
         op2_ph_mip[v] = p1_wave_mip(op2_ph_step[v]);
-        op2_osc_wave[v] = ((op2_osc_waveform[voice_part[v]] > 12u) ? 0u : op2_osc_waveform[voice_part[v]]);
-        op2_osc_base[v] = ((uint32_t)p1_wave_base[op2_osc_wave[v]] << 10);
-        op2_osc_bl[v] = ((op2_osc_wave[v] >= 10u) ? 1u : 0u);
+        op2_osc_wave[v] = ((op2_osc_waveform[voice_part[v]] > 13u) ? 0u : op2_osc_waveform[voice_part[v]]);
+        op2_osc_base[v] = ((uint32_t)p1_wave_base[(op2_osc_wave[v] > 12u) ? 0u : op2_osc_wave[v]] << 10);
+        op2_osc_bl[v] = ((op2_osc_wave[v] >= 10u && op2_osc_wave[v] <= 12u) ? 1u : 0u);
+        op2_osc_tick[v] = ((v == 0) ? (p1_spectral_tick(op2_osc_bank, op2_osc_waveform, op2_osc_spec_a1, op2_osc_spec_a2, op2_osc_spec_a3, op2_osc_spec_a4, op2_osc_spec_a5, op2_osc_spec_a6, op2_osc_spec_a7, op2_osc_spec_a8, op2_osc_spec_a9, op2_osc_spec_a10, op2_osc_spec_a11, op2_osc_spec_a12, op2_osc_spec_a13, op2_osc_spec_a14, op2_osc_spec_a15, op2_osc_spec_a16, op2_osc_spec_b1, op2_osc_spec_b2, op2_osc_spec_b3, op2_osc_spec_b4, op2_osc_spec_b5, op2_osc_spec_b6, op2_osc_spec_b7, op2_osc_spec_b8, op2_osc_spec_b9, op2_osc_spec_b10, op2_osc_spec_b11, op2_osc_spec_b12, op2_osc_spec_b13, op2_osc_spec_b14, op2_osc_spec_b15, op2_osc_spec_b16), 0u) : 0u);
         op2_fblfo_base[v] = ((uint32_t)p1_wave_base[((op2_fblfo_wave[voice_part[v]] > 11u) ? 0u : op2_fblfo_wave[voice_part[v]])] << 10);
         op2_fbenv_r1_eff[v] = (uint32_t)p1_key_apply(op2_fbenv_r1[voice_part[v]], p1_key_add(0, 0), 0, 99);
         op2_fbenv_r2_eff[v] = (uint32_t)p1_key_apply(op2_fbenv_r2[voice_part[v]], p1_key_add(0, 0), 0, 99);
@@ -2995,6 +4469,11 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
         op2_fb_signed[v] = ((op2_fb_level[voice_part[v]] < 0 ? -1 : 1) * p1_key_apply(op2_fb_level[voice_part[v]] < 0 ? -op2_fb_level[voice_part[v]] : op2_fb_level[voice_part[v]], p1_key_add(op2_fb_ks_k_x[v], op2_fb_vs_k_x[v]), 0, 32767)) + op2_fbenv_cv_x[v] + op2_fblfo_cv_x[v];
         op2_fb_level_eff[v] = p1_clamp(op2_fb_signed[v] < 0 ? -op2_fb_signed[v] : op2_fb_signed[v], 0, 32767);
         op2_fb_negative[v] = (op2_fb_signed[v] < 0) ? 1u : 0u;
+        op1_speclfo_base[v] = ((uint32_t)p1_wave_base[((op1_speclfo_wave[voice_part[v]] > 11u) ? 0u : op1_speclfo_wave[voice_part[v]])] << 10);
+        op1_specenv_r1_eff[v] = (uint32_t)p1_key_apply(op1_specenv_r1[voice_part[v]], p1_key_add(0, 0), 0, 99);
+        op1_specenv_r2_eff[v] = (uint32_t)p1_key_apply(op1_specenv_r2[voice_part[v]], p1_key_add(0, 0), 0, 99);
+        op1_specenv_r3_eff[v] = (uint32_t)p1_key_apply(op1_specenv_r3[voice_part[v]], p1_key_add(0, 0), 0, 99);
+        op1_specenv_r4_eff[v] = (uint32_t)p1_key_apply(op1_specenv_r4[voice_part[v]], p1_key_add(0, 0), 0, 99);
         op1_eg_vs_k[v] = vel_on_on_x ? p1_vel_scale((int32_t)voice_velocity[v], op1_eg_vs_amount[voice_part[v]]) : 0;
         op1_fb_vs_k[v] = 1 ? p1_vel_scale((int32_t)voice_velocity[v], op1_fb_vs_amount[voice_part[v]]) : 0;
         op1_level_vs_k[v] = 1 ? p1_vel_scale((int32_t)voice_velocity[v], op1_level_vs_amount[voice_part[v]]) : 0;
@@ -3008,9 +4487,10 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
         op1_dlfo_base[v] = ((uint32_t)p1_wave_base[((op1_dlfo_wave[voice_part[v]] > 11u) ? 0u : op1_dlfo_wave[voice_part[v]])] << 10);
         op1_ph_step[v] = (uint32_t)(((int64_t)op1_ph_inc[v] * (32768 + op1_dsum_cv_x[v] + p1_detune_pitch[op1_ph_detune[voice_part[v]] + 50])) >> 15);
         op1_ph_mip[v] = p1_wave_mip(op1_ph_step[v]);
-        op1_osc_wave[v] = ((op1_osc_waveform[voice_part[v]] > 12u) ? 0u : op1_osc_waveform[voice_part[v]]);
-        op1_osc_base[v] = ((uint32_t)p1_wave_base[op1_osc_wave[v]] << 10);
-        op1_osc_bl[v] = ((op1_osc_wave[v] >= 10u) ? 1u : 0u);
+        op1_osc_wave[v] = ((op1_osc_waveform[voice_part[v]] > 13u) ? 0u : op1_osc_waveform[voice_part[v]]);
+        op1_osc_base[v] = ((uint32_t)p1_wave_base[(op1_osc_wave[v] > 12u) ? 0u : op1_osc_wave[v]] << 10);
+        op1_osc_bl[v] = ((op1_osc_wave[v] >= 10u && op1_osc_wave[v] <= 12u) ? 1u : 0u);
+        op1_osc_tick[v] = ((v == 0) ? (p1_spectral_tick(op1_osc_bank, op1_osc_waveform, op1_osc_spec_a1, op1_osc_spec_a2, op1_osc_spec_a3, op1_osc_spec_a4, op1_osc_spec_a5, op1_osc_spec_a6, op1_osc_spec_a7, op1_osc_spec_a8, op1_osc_spec_a9, op1_osc_spec_a10, op1_osc_spec_a11, op1_osc_spec_a12, op1_osc_spec_a13, op1_osc_spec_a14, op1_osc_spec_a15, op1_osc_spec_a16, op1_osc_spec_b1, op1_osc_spec_b2, op1_osc_spec_b3, op1_osc_spec_b4, op1_osc_spec_b5, op1_osc_spec_b6, op1_osc_spec_b7, op1_osc_spec_b8, op1_osc_spec_b9, op1_osc_spec_b10, op1_osc_spec_b11, op1_osc_spec_b12, op1_osc_spec_b13, op1_osc_spec_b14, op1_osc_spec_b15, op1_osc_spec_b16), 0u) : 0u);
         op1_fblfo_base[v] = ((uint32_t)p1_wave_base[((op1_fblfo_wave[voice_part[v]] > 11u) ? 0u : op1_fblfo_wave[voice_part[v]])] << 10);
         op1_fbenv_r1_eff[v] = (uint32_t)p1_key_apply(op1_fbenv_r1[voice_part[v]], p1_key_add(0, 0), 0, 99);
         op1_fbenv_r2_eff[v] = (uint32_t)p1_key_apply(op1_fbenv_r2[voice_part[v]], p1_key_add(0, 0), 0, 99);
@@ -3206,14 +4686,24 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
             uint32_t op4_ph_phase_x = op4_ph_phase[v] + ((uint32_t)op4_sum_audio_x << 20) + (uint32_t)0;
             op4_ph_phase[v] += op4_ph_step[v];
             uint32_t op4_ph_mip_x = op4_ph_mip[v];
-            /* Wave reader: one load from the precomputed 13-wave table (`p1_wave`). The
-               `waveform` param is not modulatable, so its `(p1_wave_base[waveform] << 10)`
-               base is recomputed only each block (the node's block_derived), and the per-sample
-               work is the phase index plus the load. For the band-limited waves (10/11/12), the
-               `mip` level from the phasor is added to the base, so the top octaves read a
-               table with fewer harmonics and stop aliasing. Waves 0-9 ignore it. */
-            int32_t op4_osc_audio_x = p1_wave[op4_osc_base[v]
-                + ((op4_osc_bl[v] ? op4_ph_mip_x : 0u) << 10) + (op4_ph_phase_x >> 22)];
+            /* Waveform reader. Values 0-12 read the precomputed 13-wave table (`p1_wave`):
+               one load, with the band-limited mip added for waves 10/11/12. Value 13 reads
+               the additive bank: the a and b spectra at the mip selected from the phasor,
+               blended by the per-voice morph. The morph is the panel value 0..99 plus the
+               envelope depth times the Q15 envelope, plus the LFO in panel units. The bank
+               is regenerated at the first voice of each control block by the block-derived
+               `tick`, and the 10 ms crossfade is in the read. */
+            int32_t op4_osc_audio_x;
+            if (op4_osc_wave[v] >= 13u) {
+                op4_osc_audio_x = p1_spectral_read(
+                    op4_osc_bank, (int)voice_part[v], op4_ph_phase_x, op4_ph_mip_x,
+                    p1_spectral_morph(op4_osc_spec_morph[voice_part[v]],
+                                      op4_osc_spec_env_depth[voice_part[v]],
+                                      op4_specenv_cv_x[v], op4_speclfo_cv_x[v]));
+            } else {
+                op4_osc_audio_x = p1_wave[op4_osc_base[v]
+                    + ((op4_osc_bl[v] ? op4_ph_mip_x : 0u) << 10) + (op4_ph_phase_x >> 22)];
+            }
             /* Yamaha total-level gain: audio × cv × gain(level_eff). `level` is 0..99, the
                block-rate `lfo` input adds a signed level offset in the same units, and the
                sum is pushed toward 0/99 by a key-follow factor `k` (Q15). The effective level
@@ -3281,14 +4771,24 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
             uint32_t op3_ph_phase_x = op3_ph_phase[v] + ((uint32_t)op3_sum_audio_x << 20) + (uint32_t)0;
             op3_ph_phase[v] += op3_ph_step[v];
             uint32_t op3_ph_mip_x = op3_ph_mip[v];
-            /* Wave reader: one load from the precomputed 13-wave table (`p1_wave`). The
-               `waveform` param is not modulatable, so its `(p1_wave_base[waveform] << 10)`
-               base is recomputed only each block (the node's block_derived), and the per-sample
-               work is the phase index plus the load. For the band-limited waves (10/11/12), the
-               `mip` level from the phasor is added to the base, so the top octaves read a
-               table with fewer harmonics and stop aliasing. Waves 0-9 ignore it. */
-            int32_t op3_osc_audio_x = p1_wave[op3_osc_base[v]
-                + ((op3_osc_bl[v] ? op3_ph_mip_x : 0u) << 10) + (op3_ph_phase_x >> 22)];
+            /* Waveform reader. Values 0-12 read the precomputed 13-wave table (`p1_wave`):
+               one load, with the band-limited mip added for waves 10/11/12. Value 13 reads
+               the additive bank: the a and b spectra at the mip selected from the phasor,
+               blended by the per-voice morph. The morph is the panel value 0..99 plus the
+               envelope depth times the Q15 envelope, plus the LFO in panel units. The bank
+               is regenerated at the first voice of each control block by the block-derived
+               `tick`, and the 10 ms crossfade is in the read. */
+            int32_t op3_osc_audio_x;
+            if (op3_osc_wave[v] >= 13u) {
+                op3_osc_audio_x = p1_spectral_read(
+                    op3_osc_bank, (int)voice_part[v], op3_ph_phase_x, op3_ph_mip_x,
+                    p1_spectral_morph(op3_osc_spec_morph[voice_part[v]],
+                                      op3_osc_spec_env_depth[voice_part[v]],
+                                      op3_specenv_cv_x[v], op3_speclfo_cv_x[v]));
+            } else {
+                op3_osc_audio_x = p1_wave[op3_osc_base[v]
+                    + ((op3_osc_bl[v] ? op3_ph_mip_x : 0u) << 10) + (op3_ph_phase_x >> 22)];
+            }
             /* Yamaha total-level gain: audio × cv × gain(level_eff). `level` is 0..99, the
                block-rate `lfo` input adds a signed level offset in the same units, and the
                sum is pushed toward 0/99 by a key-follow factor `k` (Q15). The effective level
@@ -3356,14 +4856,24 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
             uint32_t op2_ph_phase_x = op2_ph_phase[v] + ((uint32_t)op2_sum_audio_x << 20) + (uint32_t)0;
             op2_ph_phase[v] += op2_ph_step[v];
             uint32_t op2_ph_mip_x = op2_ph_mip[v];
-            /* Wave reader: one load from the precomputed 13-wave table (`p1_wave`). The
-               `waveform` param is not modulatable, so its `(p1_wave_base[waveform] << 10)`
-               base is recomputed only each block (the node's block_derived), and the per-sample
-               work is the phase index plus the load. For the band-limited waves (10/11/12), the
-               `mip` level from the phasor is added to the base, so the top octaves read a
-               table with fewer harmonics and stop aliasing. Waves 0-9 ignore it. */
-            int32_t op2_osc_audio_x = p1_wave[op2_osc_base[v]
-                + ((op2_osc_bl[v] ? op2_ph_mip_x : 0u) << 10) + (op2_ph_phase_x >> 22)];
+            /* Waveform reader. Values 0-12 read the precomputed 13-wave table (`p1_wave`):
+               one load, with the band-limited mip added for waves 10/11/12. Value 13 reads
+               the additive bank: the a and b spectra at the mip selected from the phasor,
+               blended by the per-voice morph. The morph is the panel value 0..99 plus the
+               envelope depth times the Q15 envelope, plus the LFO in panel units. The bank
+               is regenerated at the first voice of each control block by the block-derived
+               `tick`, and the 10 ms crossfade is in the read. */
+            int32_t op2_osc_audio_x;
+            if (op2_osc_wave[v] >= 13u) {
+                op2_osc_audio_x = p1_spectral_read(
+                    op2_osc_bank, (int)voice_part[v], op2_ph_phase_x, op2_ph_mip_x,
+                    p1_spectral_morph(op2_osc_spec_morph[voice_part[v]],
+                                      op2_osc_spec_env_depth[voice_part[v]],
+                                      op2_specenv_cv_x[v], op2_speclfo_cv_x[v]));
+            } else {
+                op2_osc_audio_x = p1_wave[op2_osc_base[v]
+                    + ((op2_osc_bl[v] ? op2_ph_mip_x : 0u) << 10) + (op2_ph_phase_x >> 22)];
+            }
             /* Yamaha total-level gain: audio × cv × gain(level_eff). `level` is 0..99, the
                block-rate `lfo` input adds a signed level offset in the same units, and the
                sum is pushed toward 0/99 by a key-follow factor `k` (Q15). The effective level
@@ -3431,14 +4941,24 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
             uint32_t op1_ph_phase_x = op1_ph_phase[v] + ((uint32_t)op1_sum_audio_x << 20) + (uint32_t)0;
             op1_ph_phase[v] += op1_ph_step[v];
             uint32_t op1_ph_mip_x = op1_ph_mip[v];
-            /* Wave reader: one load from the precomputed 13-wave table (`p1_wave`). The
-               `waveform` param is not modulatable, so its `(p1_wave_base[waveform] << 10)`
-               base is recomputed only each block (the node's block_derived), and the per-sample
-               work is the phase index plus the load. For the band-limited waves (10/11/12), the
-               `mip` level from the phasor is added to the base, so the top octaves read a
-               table with fewer harmonics and stop aliasing. Waves 0-9 ignore it. */
-            int32_t op1_osc_audio_x = p1_wave[op1_osc_base[v]
-                + ((op1_osc_bl[v] ? op1_ph_mip_x : 0u) << 10) + (op1_ph_phase_x >> 22)];
+            /* Waveform reader. Values 0-12 read the precomputed 13-wave table (`p1_wave`):
+               one load, with the band-limited mip added for waves 10/11/12. Value 13 reads
+               the additive bank: the a and b spectra at the mip selected from the phasor,
+               blended by the per-voice morph. The morph is the panel value 0..99 plus the
+               envelope depth times the Q15 envelope, plus the LFO in panel units. The bank
+               is regenerated at the first voice of each control block by the block-derived
+               `tick`, and the 10 ms crossfade is in the read. */
+            int32_t op1_osc_audio_x;
+            if (op1_osc_wave[v] >= 13u) {
+                op1_osc_audio_x = p1_spectral_read(
+                    op1_osc_bank, (int)voice_part[v], op1_ph_phase_x, op1_ph_mip_x,
+                    p1_spectral_morph(op1_osc_spec_morph[voice_part[v]],
+                                      op1_osc_spec_env_depth[voice_part[v]],
+                                      op1_specenv_cv_x[v], op1_speclfo_cv_x[v]));
+            } else {
+                op1_osc_audio_x = p1_wave[op1_osc_base[v]
+                    + ((op1_osc_bl[v] ? op1_ph_mip_x : 0u) << 10) + (op1_ph_phase_x >> 22)];
+            }
             /* Yamaha total-level gain: audio × cv × gain(level_eff). `level` is 0..99, the
                block-rate `lfo` input adds a signed level offset in the same units, and the
                sum is pushed toward 0/99 by a key-follow factor `k` (Q15). The effective level

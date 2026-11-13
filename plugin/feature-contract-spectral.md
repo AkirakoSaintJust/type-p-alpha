@@ -62,16 +62,16 @@ waveform parameter grows from 0 to 11 to 0 to 13.
 | Parameter | Target | Range | Default | Display |
 | --- | --- | --- | --- | --- |
 | `opN_waveform` | `opN.osc.waveform` | 0..13 | 0 | `wave` |
-| `opN_spec_a1` ... `opN_spec_a16` | `opN.spec.a1` ... `a16` | 0..99 | 99, then 0 | raw |
-| `opN_spec_b1` ... `opN_spec_b16` | `opN.spec.b1` ... `b16` | 0..99 | formant at h5 | raw |
-| `opN_spec_morph` | `opN.spec.morph` | 0..99 | 0 | raw |
-| `opN_spec_env_r1` ... `r4` | `opN.spec.env.r1` ... `r4` | 0..99 | 80, 60, 50, 80 | raw |
-| `opN_spec_env_l1` ... `l3` | `opN.spec.env.l1` ... `l3` | 0..99 | 99, 60, 0 | raw |
-| `opN_spec_env_depth` | `opN.spec.env.depth` | -99..99 | 0 | raw |
-| `opN_spec_lfo_rate` | `opN.spec.lfo.rate` | 0..20 Hz | 4.0 Hz | `hz` |
-| `opN_spec_lfo_depth` | `opN.spec.lfo.depth` | -99..99 | 0 | raw |
-| `opN_spec_lfo_wave` | `opN.spec.lfo.wave` | six waves | sine | `wave` |
-| `opN_spec_lfo_mode` | `opN.spec.lfo.mode` | 0..1 | 1 | `onoff` |
+| `opN_spec_a1` ... `opN_spec_a16` | `opN.osc.spec_a1` ... `a16` | 0..99 | 99, then 0 | raw |
+| `opN_spec_b1` ... `opN_spec_b16` | `opN.osc.spec_b1` ... `b16` | 0..99 | formant at h5 | raw |
+| `opN_spec_morph` | `opN.osc.spec_morph` | 0..99 | 0 | raw |
+| `opN_spec_env_r1` ... `r4` | `opN.specenv.r1` ... `r4` | 0..99 | 80, 60, 50, 80 | raw |
+| `opN_spec_env_l1` ... `l3` | `opN.specenv.l1` ... `l3` | 0..99 | 99, 60, 0 | raw |
+| `opN_spec_env_depth` | `opN.osc.spec_env_depth` | -99..99 | 0 | raw |
+| `opN_spec_lfo_rate` | `opN.speclfo.rate` | 0..20 Hz | 4.0 Hz | `hz` |
+| `opN_spec_lfo_depth` | `opN.speclfo.depth` | -99..99 | 0 | raw |
+| `opN_spec_lfo_wave` | `opN.speclfo.wave` | six waves | sine | `wave` |
+| `opN_spec_lfo_mode` | `opN.speclfo.mode` | 0..1 | 1 | `onoff` |
 
 The morph is:
 
@@ -150,9 +150,10 @@ Selecting a wave keeps the stored spectra. The preview is not written on page op
    node limits, the waveform range, the wave names, the preset version and the
    wavetable test are in. The Windows `ctest` run is 11 of 11, and the table test
    confirms the current waves byte for byte.
-2. **Spectral engine:** the 180 parameters, the table bank, the analysis table in
-   the editor, the spectrum mode 13, the morph, the envelope and the LFO. The
-   engine parity covers the wave path and the new spectral test covers the bank.
+2. **Spectral engine:** in. The 180 parameters, the bank, the spectrum mode 13,
+   the morph, the envelope and the LFO are in. The 256-sample table reads with a
+   24-bit phase fraction; the first pass used the 1024-sample shift and played the
+   table four times too high. The Windows `ctest` run is 12 of 12.
 3. **Editor pages:** the two tabs, the bar editor, the macros, the preview and the
    copy and paste. The snapshots and the page index remap are in this stage.
 4. **Release evidence:** the Linux goldens, the DAW pass and the pluginval report.

@@ -18,6 +18,7 @@ typedef struct type_p_alpha_state {
     uint32_t op1_osc_wave[NVOICE];
     uint32_t op1_osc_base[NVOICE];
     uint32_t op1_osc_bl[NVOICE];
+    uint32_t op1_osc_tick[NVOICE];
     uint32_t op1_eg_stage[NVOICE];
     int32_t op1_eg_level[NVOICE];
     uint32_t op1_eg_r1_eff[NVOICE];
@@ -52,6 +53,15 @@ typedef struct type_p_alpha_state {
     int32_t op1_fb_vs_k[NVOICE];
     int32_t op1_eg_vs_k[NVOICE];
     int32_t op1_d1_prev[NVOICE];
+    uint32_t op1_specenv_stage[NVOICE];
+    int32_t op1_specenv_level[NVOICE];
+    uint32_t op1_specenv_r1_eff[NVOICE];
+    uint32_t op1_specenv_r2_eff[NVOICE];
+    uint32_t op1_specenv_r3_eff[NVOICE];
+    uint32_t op1_specenv_r4_eff[NVOICE];
+    uint32_t op1_speclfo_phase[NVOICE];
+    uint32_t op1_speclfo_base[NVOICE];
+    int32_t op1_speclfo_w[NVOICE];
     uint32_t op2_ph_inc[NVOICE];
     uint32_t op2_ph_phase[NVOICE];
     uint32_t op2_ph_step[NVOICE];
@@ -59,6 +69,7 @@ typedef struct type_p_alpha_state {
     uint32_t op2_osc_wave[NVOICE];
     uint32_t op2_osc_base[NVOICE];
     uint32_t op2_osc_bl[NVOICE];
+    uint32_t op2_osc_tick[NVOICE];
     uint32_t op2_eg_stage[NVOICE];
     int32_t op2_eg_level[NVOICE];
     uint32_t op2_eg_r1_eff[NVOICE];
@@ -93,6 +104,15 @@ typedef struct type_p_alpha_state {
     int32_t op2_fb_vs_k[NVOICE];
     int32_t op2_eg_vs_k[NVOICE];
     int32_t op2_d1_prev[NVOICE];
+    uint32_t op2_specenv_stage[NVOICE];
+    int32_t op2_specenv_level[NVOICE];
+    uint32_t op2_specenv_r1_eff[NVOICE];
+    uint32_t op2_specenv_r2_eff[NVOICE];
+    uint32_t op2_specenv_r3_eff[NVOICE];
+    uint32_t op2_specenv_r4_eff[NVOICE];
+    uint32_t op2_speclfo_phase[NVOICE];
+    uint32_t op2_speclfo_base[NVOICE];
+    int32_t op2_speclfo_w[NVOICE];
     uint32_t op3_ph_inc[NVOICE];
     uint32_t op3_ph_phase[NVOICE];
     uint32_t op3_ph_step[NVOICE];
@@ -100,6 +120,7 @@ typedef struct type_p_alpha_state {
     uint32_t op3_osc_wave[NVOICE];
     uint32_t op3_osc_base[NVOICE];
     uint32_t op3_osc_bl[NVOICE];
+    uint32_t op3_osc_tick[NVOICE];
     uint32_t op3_eg_stage[NVOICE];
     int32_t op3_eg_level[NVOICE];
     uint32_t op3_eg_r1_eff[NVOICE];
@@ -134,6 +155,15 @@ typedef struct type_p_alpha_state {
     int32_t op3_fb_vs_k[NVOICE];
     int32_t op3_eg_vs_k[NVOICE];
     int32_t op3_d1_prev[NVOICE];
+    uint32_t op3_specenv_stage[NVOICE];
+    int32_t op3_specenv_level[NVOICE];
+    uint32_t op3_specenv_r1_eff[NVOICE];
+    uint32_t op3_specenv_r2_eff[NVOICE];
+    uint32_t op3_specenv_r3_eff[NVOICE];
+    uint32_t op3_specenv_r4_eff[NVOICE];
+    uint32_t op3_speclfo_phase[NVOICE];
+    uint32_t op3_speclfo_base[NVOICE];
+    int32_t op3_speclfo_w[NVOICE];
     uint32_t op4_ph_inc[NVOICE];
     uint32_t op4_ph_phase[NVOICE];
     uint32_t op4_ph_step[NVOICE];
@@ -141,6 +171,7 @@ typedef struct type_p_alpha_state {
     uint32_t op4_osc_wave[NVOICE];
     uint32_t op4_osc_base[NVOICE];
     uint32_t op4_osc_bl[NVOICE];
+    uint32_t op4_osc_tick[NVOICE];
     uint32_t op4_eg_stage[NVOICE];
     int32_t op4_eg_level[NVOICE];
     uint32_t op4_eg_r1_eff[NVOICE];
@@ -175,6 +206,15 @@ typedef struct type_p_alpha_state {
     int32_t op4_fb_vs_k[NVOICE];
     int32_t op4_eg_vs_k[NVOICE];
     int32_t op4_d1_prev[NVOICE];
+    uint32_t op4_specenv_stage[NVOICE];
+    int32_t op4_specenv_level[NVOICE];
+    uint32_t op4_specenv_r1_eff[NVOICE];
+    uint32_t op4_specenv_r2_eff[NVOICE];
+    uint32_t op4_specenv_r3_eff[NVOICE];
+    uint32_t op4_specenv_r4_eff[NVOICE];
+    uint32_t op4_speclfo_phase[NVOICE];
+    uint32_t op4_speclfo_base[NVOICE];
+    int32_t op4_speclfo_w[NVOICE];
     int32_t d1_prev[NVOICE];
     int32_t d2_prev[NVOICE];
     int32_t d3_prev[NVOICE];
@@ -233,6 +273,40 @@ typedef struct type_p_alpha_state {
     int32_t op1_ph_inc_ratio[2];
     int32_t op1_ph_detune[2];
     int32_t op1_osc_waveform[2];
+    int32_t op1_osc_spec_a1[2];
+    int32_t op1_osc_spec_a2[2];
+    int32_t op1_osc_spec_a3[2];
+    int32_t op1_osc_spec_a4[2];
+    int32_t op1_osc_spec_a5[2];
+    int32_t op1_osc_spec_a6[2];
+    int32_t op1_osc_spec_a7[2];
+    int32_t op1_osc_spec_a8[2];
+    int32_t op1_osc_spec_a9[2];
+    int32_t op1_osc_spec_a10[2];
+    int32_t op1_osc_spec_a11[2];
+    int32_t op1_osc_spec_a12[2];
+    int32_t op1_osc_spec_a13[2];
+    int32_t op1_osc_spec_a14[2];
+    int32_t op1_osc_spec_a15[2];
+    int32_t op1_osc_spec_a16[2];
+    int32_t op1_osc_spec_b1[2];
+    int32_t op1_osc_spec_b2[2];
+    int32_t op1_osc_spec_b3[2];
+    int32_t op1_osc_spec_b4[2];
+    int32_t op1_osc_spec_b5[2];
+    int32_t op1_osc_spec_b6[2];
+    int32_t op1_osc_spec_b7[2];
+    int32_t op1_osc_spec_b8[2];
+    int32_t op1_osc_spec_b9[2];
+    int32_t op1_osc_spec_b10[2];
+    int32_t op1_osc_spec_b11[2];
+    int32_t op1_osc_spec_b12[2];
+    int32_t op1_osc_spec_b13[2];
+    int32_t op1_osc_spec_b14[2];
+    int32_t op1_osc_spec_b15[2];
+    int32_t op1_osc_spec_b16[2];
+    int32_t op1_osc_spec_morph[2];
+    int32_t op1_osc_spec_env_depth[2];
     int32_t op1_eg_r1[2];
     int32_t op1_eg_r2[2];
     int32_t op1_eg_r3[2];
@@ -276,9 +350,54 @@ typedef struct type_p_alpha_state {
     int32_t op1_fb_vs_amount[2];
     int32_t op1_eg_vs_amount[2];
     int32_t op1_mute_mute[2];
+    int32_t op1_specenv_r1[2];
+    int32_t op1_specenv_r2[2];
+    int32_t op1_specenv_r3[2];
+    int32_t op1_specenv_r4[2];
+    int32_t op1_specenv_l1[2];
+    int32_t op1_specenv_l2[2];
+    int32_t op1_specenv_l3[2];
+    int32_t op1_speclfo_rate[2];
+    int32_t op1_speclfo_depth[2];
+    int32_t op1_speclfo_wave[2];
+    int32_t op1_speclfo_mode[2];
     int32_t op2_ph_inc_ratio[2];
     int32_t op2_ph_detune[2];
     int32_t op2_osc_waveform[2];
+    int32_t op2_osc_spec_a1[2];
+    int32_t op2_osc_spec_a2[2];
+    int32_t op2_osc_spec_a3[2];
+    int32_t op2_osc_spec_a4[2];
+    int32_t op2_osc_spec_a5[2];
+    int32_t op2_osc_spec_a6[2];
+    int32_t op2_osc_spec_a7[2];
+    int32_t op2_osc_spec_a8[2];
+    int32_t op2_osc_spec_a9[2];
+    int32_t op2_osc_spec_a10[2];
+    int32_t op2_osc_spec_a11[2];
+    int32_t op2_osc_spec_a12[2];
+    int32_t op2_osc_spec_a13[2];
+    int32_t op2_osc_spec_a14[2];
+    int32_t op2_osc_spec_a15[2];
+    int32_t op2_osc_spec_a16[2];
+    int32_t op2_osc_spec_b1[2];
+    int32_t op2_osc_spec_b2[2];
+    int32_t op2_osc_spec_b3[2];
+    int32_t op2_osc_spec_b4[2];
+    int32_t op2_osc_spec_b5[2];
+    int32_t op2_osc_spec_b6[2];
+    int32_t op2_osc_spec_b7[2];
+    int32_t op2_osc_spec_b8[2];
+    int32_t op2_osc_spec_b9[2];
+    int32_t op2_osc_spec_b10[2];
+    int32_t op2_osc_spec_b11[2];
+    int32_t op2_osc_spec_b12[2];
+    int32_t op2_osc_spec_b13[2];
+    int32_t op2_osc_spec_b14[2];
+    int32_t op2_osc_spec_b15[2];
+    int32_t op2_osc_spec_b16[2];
+    int32_t op2_osc_spec_morph[2];
+    int32_t op2_osc_spec_env_depth[2];
     int32_t op2_eg_r1[2];
     int32_t op2_eg_r2[2];
     int32_t op2_eg_r3[2];
@@ -322,9 +441,54 @@ typedef struct type_p_alpha_state {
     int32_t op2_fb_vs_amount[2];
     int32_t op2_eg_vs_amount[2];
     int32_t op2_mute_mute[2];
+    int32_t op2_specenv_r1[2];
+    int32_t op2_specenv_r2[2];
+    int32_t op2_specenv_r3[2];
+    int32_t op2_specenv_r4[2];
+    int32_t op2_specenv_l1[2];
+    int32_t op2_specenv_l2[2];
+    int32_t op2_specenv_l3[2];
+    int32_t op2_speclfo_rate[2];
+    int32_t op2_speclfo_depth[2];
+    int32_t op2_speclfo_wave[2];
+    int32_t op2_speclfo_mode[2];
     int32_t op3_ph_inc_ratio[2];
     int32_t op3_ph_detune[2];
     int32_t op3_osc_waveform[2];
+    int32_t op3_osc_spec_a1[2];
+    int32_t op3_osc_spec_a2[2];
+    int32_t op3_osc_spec_a3[2];
+    int32_t op3_osc_spec_a4[2];
+    int32_t op3_osc_spec_a5[2];
+    int32_t op3_osc_spec_a6[2];
+    int32_t op3_osc_spec_a7[2];
+    int32_t op3_osc_spec_a8[2];
+    int32_t op3_osc_spec_a9[2];
+    int32_t op3_osc_spec_a10[2];
+    int32_t op3_osc_spec_a11[2];
+    int32_t op3_osc_spec_a12[2];
+    int32_t op3_osc_spec_a13[2];
+    int32_t op3_osc_spec_a14[2];
+    int32_t op3_osc_spec_a15[2];
+    int32_t op3_osc_spec_a16[2];
+    int32_t op3_osc_spec_b1[2];
+    int32_t op3_osc_spec_b2[2];
+    int32_t op3_osc_spec_b3[2];
+    int32_t op3_osc_spec_b4[2];
+    int32_t op3_osc_spec_b5[2];
+    int32_t op3_osc_spec_b6[2];
+    int32_t op3_osc_spec_b7[2];
+    int32_t op3_osc_spec_b8[2];
+    int32_t op3_osc_spec_b9[2];
+    int32_t op3_osc_spec_b10[2];
+    int32_t op3_osc_spec_b11[2];
+    int32_t op3_osc_spec_b12[2];
+    int32_t op3_osc_spec_b13[2];
+    int32_t op3_osc_spec_b14[2];
+    int32_t op3_osc_spec_b15[2];
+    int32_t op3_osc_spec_b16[2];
+    int32_t op3_osc_spec_morph[2];
+    int32_t op3_osc_spec_env_depth[2];
     int32_t op3_eg_r1[2];
     int32_t op3_eg_r2[2];
     int32_t op3_eg_r3[2];
@@ -368,9 +532,54 @@ typedef struct type_p_alpha_state {
     int32_t op3_fb_vs_amount[2];
     int32_t op3_eg_vs_amount[2];
     int32_t op3_mute_mute[2];
+    int32_t op3_specenv_r1[2];
+    int32_t op3_specenv_r2[2];
+    int32_t op3_specenv_r3[2];
+    int32_t op3_specenv_r4[2];
+    int32_t op3_specenv_l1[2];
+    int32_t op3_specenv_l2[2];
+    int32_t op3_specenv_l3[2];
+    int32_t op3_speclfo_rate[2];
+    int32_t op3_speclfo_depth[2];
+    int32_t op3_speclfo_wave[2];
+    int32_t op3_speclfo_mode[2];
     int32_t op4_ph_inc_ratio[2];
     int32_t op4_ph_detune[2];
     int32_t op4_osc_waveform[2];
+    int32_t op4_osc_spec_a1[2];
+    int32_t op4_osc_spec_a2[2];
+    int32_t op4_osc_spec_a3[2];
+    int32_t op4_osc_spec_a4[2];
+    int32_t op4_osc_spec_a5[2];
+    int32_t op4_osc_spec_a6[2];
+    int32_t op4_osc_spec_a7[2];
+    int32_t op4_osc_spec_a8[2];
+    int32_t op4_osc_spec_a9[2];
+    int32_t op4_osc_spec_a10[2];
+    int32_t op4_osc_spec_a11[2];
+    int32_t op4_osc_spec_a12[2];
+    int32_t op4_osc_spec_a13[2];
+    int32_t op4_osc_spec_a14[2];
+    int32_t op4_osc_spec_a15[2];
+    int32_t op4_osc_spec_a16[2];
+    int32_t op4_osc_spec_b1[2];
+    int32_t op4_osc_spec_b2[2];
+    int32_t op4_osc_spec_b3[2];
+    int32_t op4_osc_spec_b4[2];
+    int32_t op4_osc_spec_b5[2];
+    int32_t op4_osc_spec_b6[2];
+    int32_t op4_osc_spec_b7[2];
+    int32_t op4_osc_spec_b8[2];
+    int32_t op4_osc_spec_b9[2];
+    int32_t op4_osc_spec_b10[2];
+    int32_t op4_osc_spec_b11[2];
+    int32_t op4_osc_spec_b12[2];
+    int32_t op4_osc_spec_b13[2];
+    int32_t op4_osc_spec_b14[2];
+    int32_t op4_osc_spec_b15[2];
+    int32_t op4_osc_spec_b16[2];
+    int32_t op4_osc_spec_morph[2];
+    int32_t op4_osc_spec_env_depth[2];
     int32_t op4_eg_r1[2];
     int32_t op4_eg_r2[2];
     int32_t op4_eg_r3[2];
@@ -414,6 +623,17 @@ typedef struct type_p_alpha_state {
     int32_t op4_fb_vs_amount[2];
     int32_t op4_eg_vs_amount[2];
     int32_t op4_mute_mute[2];
+    int32_t op4_specenv_r1[2];
+    int32_t op4_specenv_r2[2];
+    int32_t op4_specenv_r3[2];
+    int32_t op4_specenv_r4[2];
+    int32_t op4_specenv_l1[2];
+    int32_t op4_specenv_l2[2];
+    int32_t op4_specenv_l3[2];
+    int32_t op4_speclfo_rate[2];
+    int32_t op4_speclfo_depth[2];
+    int32_t op4_speclfo_wave[2];
+    int32_t op4_speclfo_mode[2];
     int32_t algo_algorithm[2];
     int32_t penv_on[2];
     int32_t penv_r1[2];
@@ -467,6 +687,8 @@ typedef struct type_p_alpha_state {
     int32_t penv_cv_x[NVOICE];
     int32_t psum_cv_x[NVOICE];
     int32_t algo_alg_x[NVOICE];
+    int32_t op4_speclfo_cv_x[NVOICE];
+    int32_t op4_specenv_cv_x[NVOICE];
     int32_t op4_eg_vs_k_x[NVOICE];
     int32_t op4_fb_vs_k_x[NVOICE];
     int32_t op4_level_vs_k_x[NVOICE];
@@ -483,6 +705,8 @@ typedef struct type_p_alpha_state {
     int32_t op4_fblfo_cv_x[NVOICE];
     int32_t op4_fbenv_cv_x[NVOICE];
     int32_t op4_lfo_cv_x[NVOICE];
+    int32_t op3_speclfo_cv_x[NVOICE];
+    int32_t op3_specenv_cv_x[NVOICE];
     int32_t op3_eg_vs_k_x[NVOICE];
     int32_t op3_fb_vs_k_x[NVOICE];
     int32_t op3_level_vs_k_x[NVOICE];
@@ -499,6 +723,8 @@ typedef struct type_p_alpha_state {
     int32_t op3_fblfo_cv_x[NVOICE];
     int32_t op3_fbenv_cv_x[NVOICE];
     int32_t op3_lfo_cv_x[NVOICE];
+    int32_t op2_speclfo_cv_x[NVOICE];
+    int32_t op2_specenv_cv_x[NVOICE];
     int32_t op2_eg_vs_k_x[NVOICE];
     int32_t op2_fb_vs_k_x[NVOICE];
     int32_t op2_level_vs_k_x[NVOICE];
@@ -515,6 +741,8 @@ typedef struct type_p_alpha_state {
     int32_t op2_fblfo_cv_x[NVOICE];
     int32_t op2_fbenv_cv_x[NVOICE];
     int32_t op2_lfo_cv_x[NVOICE];
+    int32_t op1_speclfo_cv_x[NVOICE];
+    int32_t op1_specenv_cv_x[NVOICE];
     int32_t op1_eg_vs_k_x[NVOICE];
     int32_t op1_fb_vs_k_x[NVOICE];
     int32_t op1_level_vs_k_x[NVOICE];
@@ -538,6 +766,10 @@ typedef struct type_p_alpha_state {
     int32_t type_p_alpha_render_bus1[CONTROL_BLOCK];
     int32_t type_p_alpha_tap0[N_TAP_CH][DSP_TAP_FRAMES];
     int32_t type_p_alpha_tap1[N_TAP_CH][DSP_TAP_FRAMES];
+    int16_t op1_osc_bank[8192];
+    int16_t op2_osc_bank[8192];
+    int16_t op3_osc_bank[8192];
+    int16_t op4_osc_bank[8192];
     uint16_t voice_rel[NVOICE];
     uint8_t voice_gate[NVOICE];
     uint8_t voice_note[NVOICE];
@@ -564,435 +796,435 @@ uint32_t type_p_alpha_dsp_param_count(void);
 const int32_t *type_p_alpha_dsp_tap_s(type_p_alpha_state *state, uint32_t ch);
 typedef struct { uint16_t id; int32_t value; } type_p_alpha_init_entry;
 static const type_p_alpha_init_entry type_p_alpha_init[] = {
-    { 184u, 7 },
-    { 412u, 7 },
-    { 207u, 0 },
-    { 435u, 0 },
-    { 208u, 16000 },
-    { 436u, 16000 },
-    { 210u, 0 },
-    { 438u, 0 },
-    { 211u, 0 },
-    { 439u, 0 },
-    { 213u, 80 },
-    { 441u, 80 },
-    { 214u, 60 },
-    { 442u, 60 },
-    { 215u, 50 },
-    { 443u, 50 },
-    { 216u, 80 },
-    { 444u, 80 },
-    { 217u, 99 },
-    { 445u, 99 },
-    { 218u, 93 },
-    { 446u, 93 },
-    { 219u, 87 },
-    { 447u, 87 },
-    { 212u, 0 },
-    { 440u, 0 },
-    { 197u, 0 },
-    { 425u, 0 },
-    { 198u, 0 },
-    { 426u, 0 },
-    { 199u, 0 },
-    { 427u, 0 },
-    { 200u, 1 },
-    { 428u, 1 },
-    { 185u, 0 },
-    { 413u, 0 },
-    { 186u, 80 },
-    { 414u, 80 },
-    { 187u, 60 },
-    { 415u, 60 },
-    { 188u, 50 },
-    { 416u, 50 },
-    { 189u, 80 },
-    { 417u, 80 },
-    { 190u, 5461 },
-    { 418u, 5461 },
-    { 191u, 2731 },
-    { 419u, 2731 },
-    { 192u, 0 },
-    { 420u, 0 },
-    { 193u, 0 },
-    { 421u, 0 },
-    { 220u, 0 },
-    { 448u, 0 },
-    { 221u, 1 },
-    { 449u, 1 },
-    { 222u, 0 },
-    { 450u, 0 },
-    { 225u, 0 },
-    { 453u, 0 },
-    { 226u, 0 },
-    { 454u, 0 },
-    { 227u, 0 },
-    { 455u, 0 },
-    { 0u, 65536 },
-    { 228u, 65536 },
-    { 2u, 0 },
-    { 230u, 0 },
-    { 34u, 75 },
-    { 262u, 75 },
-    { 35u, 0 },
-    { 263u, 0 },
-    { 14u, 1 },
-    { 242u, 1 },
-    { 15u, 80 },
-    { 243u, 80 },
-    { 16u, 60 },
-    { 244u, 60 },
-    { 17u, 50 },
-    { 245u, 50 },
-    { 18u, 80 },
-    { 246u, 80 },
-    { 19u, 0 },
-    { 247u, 0 },
-    { 20u, 0 },
-    { 248u, 0 },
-    { 21u, 0 },
-    { 249u, 0 },
-    { 22u, 0 },
-    { 250u, 0 },
-    { 23u, 389566 },
-    { 251u, 389566 },
-    { 24u, 0 },
-    { 252u, 0 },
-    { 25u, 0 },
-    { 253u, 0 },
-    { 26u, 1 },
-    { 254u, 1 },
-    { 27u, 389566 },
-    { 255u, 389566 },
-    { 28u, 0 },
-    { 256u, 0 },
-    { 29u, 0 },
-    { 257u, 0 },
-    { 30u, 1 },
-    { 258u, 1 },
-    { 1u, 0 },
-    { 229u, 0 },
-    { 45u, 0 },
-    { 273u, 0 },
-    { 10u, 0 },
-    { 238u, 0 },
-    { 11u, 0 },
-    { 239u, 0 },
-    { 12u, 0 },
-    { 240u, 0 },
-    { 13u, 1 },
-    { 241u, 1 },
-    { 3u, 80 },
-    { 231u, 80 },
-    { 4u, 60 },
-    { 232u, 60 },
-    { 5u, 50 },
-    { 233u, 50 },
-    { 6u, 80 },
-    { 234u, 80 },
-    { 7u, 99 },
-    { 235u, 99 },
-    { 8u, 93 },
-    { 236u, 93 },
-    { 9u, 87 },
-    { 237u, 87 },
-    { 46u, 65536 },
-    { 274u, 65536 },
-    { 48u, 0 },
-    { 276u, 0 },
-    { 80u, 85 },
-    { 308u, 85 },
-    { 81u, 0 },
-    { 309u, 0 },
-    { 60u, 1 },
-    { 288u, 1 },
-    { 61u, 80 },
-    { 289u, 80 },
-    { 62u, 60 },
-    { 290u, 60 },
-    { 63u, 50 },
-    { 291u, 50 },
-    { 64u, 80 },
-    { 292u, 80 },
-    { 65u, 0 },
-    { 293u, 0 },
-    { 66u, 0 },
-    { 294u, 0 },
-    { 67u, 0 },
-    { 295u, 0 },
-    { 68u, 0 },
-    { 296u, 0 },
-    { 69u, 389566 },
-    { 297u, 389566 },
-    { 70u, 0 },
-    { 298u, 0 },
-    { 71u, 0 },
-    { 299u, 0 },
-    { 72u, 1 },
-    { 300u, 1 },
-    { 73u, 389566 },
-    { 301u, 389566 },
-    { 74u, 0 },
-    { 302u, 0 },
-    { 75u, 0 },
-    { 303u, 0 },
-    { 76u, 1 },
-    { 304u, 1 },
-    { 47u, 0 },
-    { 275u, 0 },
-    { 91u, 0 },
-    { 319u, 0 },
-    { 56u, 0 },
-    { 284u, 0 },
-    { 57u, 0 },
-    { 285u, 0 },
-    { 58u, 0 },
-    { 286u, 0 },
-    { 59u, 1 },
-    { 287u, 1 },
-    { 49u, 80 },
-    { 277u, 80 },
-    { 50u, 60 },
-    { 278u, 60 },
-    { 51u, 50 },
-    { 279u, 50 },
-    { 52u, 80 },
-    { 280u, 80 },
-    { 53u, 99 },
-    { 281u, 99 },
-    { 54u, 93 },
-    { 282u, 93 },
-    { 55u, 87 },
-    { 283u, 87 },
-    { 92u, 65536 },
-    { 320u, 65536 },
-    { 94u, 0 },
-    { 322u, 0 },
-    { 126u, 70 },
-    { 354u, 70 },
-    { 127u, 0 },
-    { 355u, 0 },
-    { 106u, 1 },
-    { 334u, 1 },
-    { 107u, 80 },
-    { 335u, 80 },
-    { 108u, 60 },
-    { 336u, 60 },
-    { 109u, 50 },
-    { 337u, 50 },
-    { 110u, 80 },
-    { 338u, 80 },
-    { 111u, 0 },
-    { 339u, 0 },
-    { 112u, 0 },
-    { 340u, 0 },
-    { 113u, 0 },
-    { 341u, 0 },
-    { 114u, 0 },
-    { 342u, 0 },
-    { 115u, 389566 },
-    { 343u, 389566 },
-    { 116u, 0 },
-    { 344u, 0 },
-    { 117u, 0 },
-    { 345u, 0 },
-    { 118u, 1 },
-    { 346u, 1 },
-    { 119u, 389566 },
-    { 347u, 389566 },
-    { 120u, 0 },
-    { 348u, 0 },
-    { 121u, 0 },
-    { 349u, 0 },
-    { 122u, 1 },
-    { 350u, 1 },
-    { 93u, 0 },
-    { 321u, 0 },
-    { 137u, 0 },
-    { 365u, 0 },
-    { 102u, 0 },
-    { 330u, 0 },
-    { 103u, 0 },
-    { 331u, 0 },
-    { 104u, 0 },
-    { 332u, 0 },
-    { 105u, 1 },
-    { 333u, 1 },
-    { 95u, 80 },
-    { 323u, 80 },
-    { 96u, 60 },
-    { 324u, 60 },
-    { 97u, 50 },
-    { 325u, 50 },
-    { 98u, 80 },
-    { 326u, 80 },
-    { 99u, 99 },
-    { 327u, 99 },
-    { 100u, 93 },
-    { 328u, 93 },
-    { 101u, 87 },
-    { 329u, 87 },
-    { 138u, 65536 },
-    { 366u, 65536 },
-    { 140u, 0 },
-    { 368u, 0 },
-    { 172u, 85 },
-    { 400u, 85 },
-    { 173u, 0 },
-    { 401u, 0 },
-    { 152u, 1 },
-    { 380u, 1 },
-    { 153u, 80 },
-    { 381u, 80 },
-    { 154u, 60 },
-    { 382u, 60 },
-    { 155u, 50 },
-    { 383u, 50 },
-    { 156u, 80 },
-    { 384u, 80 },
-    { 157u, 0 },
-    { 385u, 0 },
-    { 158u, 0 },
-    { 386u, 0 },
-    { 159u, 0 },
+    { 364u, 7 },
+    { 772u, 7 },
     { 387u, 0 },
-    { 160u, 0 },
-    { 388u, 0 },
-    { 161u, 389566 },
-    { 389u, 389566 },
-    { 162u, 0 },
+    { 795u, 0 },
+    { 388u, 16000 },
+    { 796u, 16000 },
     { 390u, 0 },
-    { 163u, 0 },
+    { 798u, 0 },
     { 391u, 0 },
-    { 164u, 1 },
-    { 392u, 1 },
-    { 165u, 389566 },
-    { 393u, 389566 },
-    { 166u, 0 },
-    { 394u, 0 },
-    { 167u, 0 },
-    { 395u, 0 },
-    { 168u, 1 },
-    { 396u, 1 },
-    { 139u, 0 },
-    { 367u, 0 },
-    { 183u, 0 },
-    { 411u, 0 },
-    { 148u, 0 },
-    { 376u, 0 },
-    { 149u, 0 },
+    { 799u, 0 },
+    { 393u, 80 },
+    { 801u, 80 },
+    { 394u, 60 },
+    { 802u, 60 },
+    { 395u, 50 },
+    { 803u, 50 },
+    { 396u, 80 },
+    { 804u, 80 },
+    { 397u, 99 },
+    { 805u, 99 },
+    { 398u, 93 },
+    { 806u, 93 },
+    { 399u, 87 },
+    { 807u, 87 },
+    { 392u, 0 },
+    { 800u, 0 },
     { 377u, 0 },
-    { 150u, 0 },
+    { 785u, 0 },
     { 378u, 0 },
-    { 151u, 1 },
-    { 379u, 1 },
-    { 141u, 80 },
+    { 786u, 0 },
+    { 379u, 0 },
+    { 787u, 0 },
+    { 380u, 1 },
+    { 788u, 1 },
+    { 365u, 0 },
+    { 773u, 0 },
+    { 366u, 80 },
+    { 774u, 80 },
+    { 367u, 60 },
+    { 775u, 60 },
+    { 368u, 50 },
+    { 776u, 50 },
     { 369u, 80 },
-    { 142u, 60 },
-    { 370u, 60 },
-    { 143u, 50 },
-    { 371u, 50 },
-    { 144u, 80 },
-    { 372u, 80 },
-    { 145u, 99 },
-    { 373u, 99 },
-    { 146u, 93 },
-    { 374u, 93 },
-    { 147u, 87 },
-    { 375u, 87 },
-    { 456u, 60 },
-    { 36u, -50 },
-    { 264u, -50 },
-    { 37u, -50 },
-    { 265u, -50 },
-    { 38u, 0 },
-    { 266u, 0 },
-    { 39u, 0 },
-    { 267u, 0 },
-    { 82u, 0 },
-    { 310u, 0 },
-    { 83u, 0 },
-    { 311u, 0 },
-    { 84u, 0 },
-    { 312u, 0 },
-    { 85u, 0 },
-    { 313u, 0 },
-    { 128u, -50 },
-    { 356u, -50 },
-    { 129u, 0 },
-    { 357u, 0 },
-    { 130u, 0 },
-    { 358u, 0 },
-    { 131u, 0 },
-    { 359u, 0 },
-    { 174u, 0 },
+    { 777u, 80 },
+    { 370u, 5461 },
+    { 778u, 5461 },
+    { 371u, 2731 },
+    { 779u, 2731 },
+    { 372u, 0 },
+    { 780u, 0 },
+    { 373u, 0 },
+    { 781u, 0 },
+    { 400u, 0 },
+    { 808u, 0 },
+    { 401u, 1 },
+    { 809u, 1 },
     { 402u, 0 },
-    { 175u, 0 },
-    { 403u, 0 },
-    { 176u, 0 },
-    { 404u, 0 },
-    { 177u, 0 },
+    { 810u, 0 },
     { 405u, 0 },
-    { 40u, 0 },
-    { 268u, 0 },
-    { 41u, 0 },
-    { 269u, 0 },
-    { 86u, 0 },
-    { 314u, 0 },
-    { 87u, 0 },
-    { 315u, 0 },
-    { 132u, 0 },
-    { 360u, 0 },
-    { 133u, 0 },
-    { 361u, 0 },
-    { 178u, 0 },
+    { 813u, 0 },
     { 406u, 0 },
-    { 179u, 0 },
+    { 814u, 0 },
     { 407u, 0 },
-    { 194u, 0 },
-    { 422u, 0 },
-    { 195u, 0 },
-    { 423u, 0 },
-    { 201u, 0 },
-    { 429u, 0 },
-    { 202u, 0 },
-    { 430u, 0 },
-    { 203u, 0 },
-    { 431u, 0 },
-    { 204u, 0 },
-    { 432u, 0 },
-    { 457u, 1 },
-    { 458u, 1 },
-    { 42u, 0 },
-    { 270u, 0 },
-    { 43u, 0 },
-    { 271u, 0 },
-    { 44u, 0 },
-    { 272u, 0 },
-    { 88u, 0 },
-    { 316u, 0 },
-    { 89u, 0 },
-    { 317u, 0 },
-    { 90u, 0 },
-    { 318u, 0 },
-    { 134u, 0 },
-    { 362u, 0 },
-    { 135u, 0 },
-    { 363u, 0 },
-    { 136u, 0 },
-    { 364u, 0 },
-    { 180u, 0 },
-    { 408u, 0 },
-    { 181u, 0 },
-    { 409u, 0 },
-    { 182u, 0 },
+    { 815u, 0 },
+    { 0u, 65536 },
+    { 408u, 65536 },
+    { 2u, 0 },
     { 410u, 0 },
-    { 196u, 0 },
-    { 424u, 0 },
-    { 205u, 0 },
-    { 433u, 0 },
-    { 206u, 0 },
-    { 434u, 0 },
+    { 68u, 75 },
+    { 476u, 75 },
+    { 69u, 0 },
+    { 477u, 0 },
+    { 48u, 1 },
+    { 456u, 1 },
+    { 49u, 80 },
+    { 457u, 80 },
+    { 50u, 60 },
+    { 458u, 60 },
+    { 51u, 50 },
+    { 459u, 50 },
+    { 52u, 80 },
+    { 460u, 80 },
+    { 53u, 0 },
+    { 461u, 0 },
+    { 54u, 0 },
+    { 462u, 0 },
+    { 55u, 0 },
+    { 463u, 0 },
+    { 56u, 0 },
+    { 464u, 0 },
+    { 57u, 389566 },
+    { 465u, 389566 },
+    { 58u, 0 },
+    { 466u, 0 },
+    { 59u, 0 },
+    { 467u, 0 },
+    { 60u, 1 },
+    { 468u, 1 },
+    { 61u, 389566 },
+    { 469u, 389566 },
+    { 62u, 0 },
+    { 470u, 0 },
+    { 63u, 0 },
+    { 471u, 0 },
+    { 64u, 1 },
+    { 472u, 1 },
+    { 1u, 0 },
+    { 409u, 0 },
+    { 79u, 0 },
+    { 487u, 0 },
+    { 44u, 0 },
+    { 452u, 0 },
+    { 45u, 0 },
+    { 453u, 0 },
+    { 46u, 0 },
+    { 454u, 0 },
+    { 47u, 1 },
+    { 455u, 1 },
+    { 37u, 80 },
+    { 445u, 80 },
+    { 38u, 60 },
+    { 446u, 60 },
+    { 39u, 50 },
+    { 447u, 50 },
+    { 40u, 80 },
+    { 448u, 80 },
+    { 41u, 99 },
+    { 449u, 99 },
+    { 42u, 93 },
+    { 450u, 93 },
+    { 43u, 87 },
+    { 451u, 87 },
+    { 91u, 65536 },
+    { 499u, 65536 },
+    { 93u, 0 },
+    { 501u, 0 },
+    { 159u, 85 },
+    { 567u, 85 },
+    { 160u, 0 },
+    { 568u, 0 },
+    { 139u, 1 },
+    { 547u, 1 },
+    { 140u, 80 },
+    { 548u, 80 },
+    { 141u, 60 },
+    { 549u, 60 },
+    { 142u, 50 },
+    { 550u, 50 },
+    { 143u, 80 },
+    { 551u, 80 },
+    { 144u, 0 },
+    { 552u, 0 },
+    { 145u, 0 },
+    { 553u, 0 },
+    { 146u, 0 },
+    { 554u, 0 },
+    { 147u, 0 },
+    { 555u, 0 },
+    { 148u, 389566 },
+    { 556u, 389566 },
+    { 149u, 0 },
+    { 557u, 0 },
+    { 150u, 0 },
+    { 558u, 0 },
+    { 151u, 1 },
+    { 559u, 1 },
+    { 152u, 389566 },
+    { 560u, 389566 },
+    { 153u, 0 },
+    { 561u, 0 },
+    { 154u, 0 },
+    { 562u, 0 },
+    { 155u, 1 },
+    { 563u, 1 },
+    { 92u, 0 },
+    { 500u, 0 },
+    { 170u, 0 },
+    { 578u, 0 },
+    { 135u, 0 },
+    { 543u, 0 },
+    { 136u, 0 },
+    { 544u, 0 },
+    { 137u, 0 },
+    { 545u, 0 },
+    { 138u, 1 },
+    { 546u, 1 },
+    { 128u, 80 },
+    { 536u, 80 },
+    { 129u, 60 },
+    { 537u, 60 },
+    { 130u, 50 },
+    { 538u, 50 },
+    { 131u, 80 },
+    { 539u, 80 },
+    { 132u, 99 },
+    { 540u, 99 },
+    { 133u, 93 },
+    { 541u, 93 },
+    { 134u, 87 },
+    { 542u, 87 },
+    { 182u, 65536 },
+    { 590u, 65536 },
+    { 184u, 0 },
+    { 592u, 0 },
+    { 250u, 70 },
+    { 658u, 70 },
+    { 251u, 0 },
+    { 659u, 0 },
+    { 230u, 1 },
+    { 638u, 1 },
+    { 231u, 80 },
+    { 639u, 80 },
+    { 232u, 60 },
+    { 640u, 60 },
+    { 233u, 50 },
+    { 641u, 50 },
+    { 234u, 80 },
+    { 642u, 80 },
+    { 235u, 0 },
+    { 643u, 0 },
+    { 236u, 0 },
+    { 644u, 0 },
+    { 237u, 0 },
+    { 645u, 0 },
+    { 238u, 0 },
+    { 646u, 0 },
+    { 239u, 389566 },
+    { 647u, 389566 },
+    { 240u, 0 },
+    { 648u, 0 },
+    { 241u, 0 },
+    { 649u, 0 },
+    { 242u, 1 },
+    { 650u, 1 },
+    { 243u, 389566 },
+    { 651u, 389566 },
+    { 244u, 0 },
+    { 652u, 0 },
+    { 245u, 0 },
+    { 653u, 0 },
+    { 246u, 1 },
+    { 654u, 1 },
+    { 183u, 0 },
+    { 591u, 0 },
+    { 261u, 0 },
+    { 669u, 0 },
+    { 226u, 0 },
+    { 634u, 0 },
+    { 227u, 0 },
+    { 635u, 0 },
+    { 228u, 0 },
+    { 636u, 0 },
+    { 229u, 1 },
+    { 637u, 1 },
+    { 219u, 80 },
+    { 627u, 80 },
+    { 220u, 60 },
+    { 628u, 60 },
+    { 221u, 50 },
+    { 629u, 50 },
+    { 222u, 80 },
+    { 630u, 80 },
+    { 223u, 99 },
+    { 631u, 99 },
+    { 224u, 93 },
+    { 632u, 93 },
+    { 225u, 87 },
+    { 633u, 87 },
+    { 273u, 65536 },
+    { 681u, 65536 },
+    { 275u, 0 },
+    { 683u, 0 },
+    { 341u, 85 },
+    { 749u, 85 },
+    { 342u, 0 },
+    { 750u, 0 },
+    { 321u, 1 },
+    { 729u, 1 },
+    { 322u, 80 },
+    { 730u, 80 },
+    { 323u, 60 },
+    { 731u, 60 },
+    { 324u, 50 },
+    { 732u, 50 },
+    { 325u, 80 },
+    { 733u, 80 },
+    { 326u, 0 },
+    { 734u, 0 },
+    { 327u, 0 },
+    { 735u, 0 },
+    { 328u, 0 },
+    { 736u, 0 },
+    { 329u, 0 },
+    { 737u, 0 },
+    { 330u, 389566 },
+    { 738u, 389566 },
+    { 331u, 0 },
+    { 739u, 0 },
+    { 332u, 0 },
+    { 740u, 0 },
+    { 333u, 1 },
+    { 741u, 1 },
+    { 334u, 389566 },
+    { 742u, 389566 },
+    { 335u, 0 },
+    { 743u, 0 },
+    { 336u, 0 },
+    { 744u, 0 },
+    { 337u, 1 },
+    { 745u, 1 },
+    { 274u, 0 },
+    { 682u, 0 },
+    { 352u, 0 },
+    { 760u, 0 },
+    { 317u, 0 },
+    { 725u, 0 },
+    { 318u, 0 },
+    { 726u, 0 },
+    { 319u, 0 },
+    { 727u, 0 },
+    { 320u, 1 },
+    { 728u, 1 },
+    { 310u, 80 },
+    { 718u, 80 },
+    { 311u, 60 },
+    { 719u, 60 },
+    { 312u, 50 },
+    { 720u, 50 },
+    { 313u, 80 },
+    { 721u, 80 },
+    { 314u, 99 },
+    { 722u, 99 },
+    { 315u, 93 },
+    { 723u, 93 },
+    { 316u, 87 },
+    { 724u, 87 },
+    { 816u, 60 },
+    { 70u, -50 },
+    { 478u, -50 },
+    { 71u, -50 },
+    { 479u, -50 },
+    { 72u, 0 },
+    { 480u, 0 },
+    { 73u, 0 },
+    { 481u, 0 },
+    { 161u, 0 },
+    { 569u, 0 },
+    { 162u, 0 },
+    { 570u, 0 },
+    { 163u, 0 },
+    { 571u, 0 },
+    { 164u, 0 },
+    { 572u, 0 },
+    { 252u, -50 },
+    { 660u, -50 },
+    { 253u, 0 },
+    { 661u, 0 },
+    { 254u, 0 },
+    { 662u, 0 },
+    { 255u, 0 },
+    { 663u, 0 },
+    { 343u, 0 },
+    { 751u, 0 },
+    { 344u, 0 },
+    { 752u, 0 },
+    { 345u, 0 },
+    { 753u, 0 },
+    { 346u, 0 },
+    { 754u, 0 },
+    { 74u, 0 },
+    { 482u, 0 },
+    { 75u, 0 },
+    { 483u, 0 },
+    { 165u, 0 },
+    { 573u, 0 },
+    { 166u, 0 },
+    { 574u, 0 },
+    { 256u, 0 },
+    { 664u, 0 },
+    { 257u, 0 },
+    { 665u, 0 },
+    { 347u, 0 },
+    { 755u, 0 },
+    { 348u, 0 },
+    { 756u, 0 },
+    { 374u, 0 },
+    { 782u, 0 },
+    { 375u, 0 },
+    { 783u, 0 },
+    { 381u, 0 },
+    { 789u, 0 },
+    { 382u, 0 },
+    { 790u, 0 },
+    { 383u, 0 },
+    { 791u, 0 },
+    { 384u, 0 },
+    { 792u, 0 },
+    { 817u, 1 },
+    { 818u, 1 },
+    { 76u, 0 },
+    { 484u, 0 },
+    { 77u, 0 },
+    { 485u, 0 },
+    { 78u, 0 },
+    { 486u, 0 },
+    { 167u, 0 },
+    { 575u, 0 },
+    { 168u, 0 },
+    { 576u, 0 },
+    { 169u, 0 },
+    { 577u, 0 },
+    { 258u, 0 },
+    { 666u, 0 },
+    { 259u, 0 },
+    { 667u, 0 },
+    { 260u, 0 },
+    { 668u, 0 },
+    { 349u, 0 },
+    { 757u, 0 },
+    { 350u, 0 },
+    { 758u, 0 },
+    { 351u, 0 },
+    { 759u, 0 },
+    { 376u, 0 },
+    { 784u, 0 },
+    { 385u, 0 },
+    { 793u, 0 },
+    { 386u, 0 },
+    { 794u, 0 },
 };
 #define type_p_alpha_INIT_N (sizeof type_p_alpha_init / sizeof type_p_alpha_init[0])
 #ifdef __cplusplus

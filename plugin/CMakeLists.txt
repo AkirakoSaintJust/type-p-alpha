@@ -130,6 +130,12 @@ add_executable(wavetable tests/wavetable.cpp)
 target_include_directories(wavetable PRIVATE "${P1_SYNTH_GEN}")
 add_test(NAME wavetable COMMAND wavetable)
 
+add_executable(spectral tests/spectral.cpp)
+target_link_libraries(spectral PRIVATE p1_engine)
+target_include_directories(spectral PRIVATE "${P1_GENERATED_DIR}")
+add_dependencies(spectral p1_params)
+add_test(NAME spectral COMMAND spectral)
+
 add_executable(additive_bench tests/additive_bench.cpp)
 target_link_libraries(additive_bench PRIVATE p1_engine)
 target_include_directories(additive_bench PRIVATE "${P1_GENERATED_DIR}")

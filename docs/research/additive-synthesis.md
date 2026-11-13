@@ -335,15 +335,17 @@ The auditions are:
   four-second time ramp.
 
 The first two are table oscillators. The third is the real voice graph with the
-additive oscillator. The 20-voice CPU row keeps the full four-operator graph; the
-audition uses the clean carrier and silences part 2. The engine prototype uses the
-same linear table read as the standalone. The first engine pass used a nearest
-read, and the sample-and-hold roughness read as noise in the upper harmonics; the
-linear read removes it. The first shared-morph pass advanced the morph inside the
-per-voice sample loop, so each chord voice saw a different blend; the morph is now
-one per-sample ramp that every voice shares. The modulators and feedback are
-disabled for the audition, so the remaining brightness is the bright table's
-formant, which the standalone shares.
+additive oscillator. The engine prototype used the 1024-sample phase shift on the
+256-sample table, so its audition plays four times the intended pitch. The product
+bank uses a 24-bit fraction, and the spectral test checks the fundamental. The
+20-voice CPU row keeps the full four-operator graph; the audition uses the clean
+carrier and silences part 2. The engine prototype uses the same linear table read as
+the standalone. The first engine pass used a nearest read, and the sample-and-hold
+roughness read as noise in the upper harmonics; the linear read removes it. The
+first shared-morph pass advanced the morph inside the per-voice sample loop, so each
+chord voice saw a different blend; the morph is now one per-sample ramp that every
+voice shares. The modulators and feedback are disabled for the audition, so the
+remaining brightness is the bright table's formant, which the standalone shares.
 
 ## Remaining experiments
 

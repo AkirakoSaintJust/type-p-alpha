@@ -310,6 +310,11 @@ and scales the table to full range, which is the normalisation step that the fir
 survey run lacked, and without it the table clipped at -23 dB and the alias floor
 read as far better than the table actually was. The normalisation is mandatory.
 
+The bank is 256 samples per mip. The read uses a 24-bit phase fraction, so the
+table's harmonic 1 is the note's fundamental. The first prototype used the
+1024-sample shift (22 bits) and played the table four times too high; the product
+uses 24 bits and the spectral test checks the fundamental.
+
 When a level changes, the engine marks the operator dirty, regenerates the affected
 spectrum on the 344 Hz control tick, writes the new table into the shadow while the
 current table keeps playing, and crossfades the read from the old table to the new

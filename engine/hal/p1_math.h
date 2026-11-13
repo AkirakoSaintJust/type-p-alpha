@@ -281,6 +281,10 @@ P1_MATH_INLINE int32_t p1_poly_blep(uint32_t p, uint32_t inc, uint32_t inv_inc)
 }
 
 
+/* ------------------------------------------------------- additive bank */
+#include "spectral.h"
+
+
 /* ------------------------------------------------------- FFT (float, opt-in) */
 #ifdef P1_MATH_FFT
 #include "kiss_fft/kiss_fft.h"
