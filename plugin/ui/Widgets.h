@@ -51,6 +51,7 @@ private:
                             const juce::MouseWheelDetails& wheel) override;
 
         std::function<bool(const juce::KeyPress&)> onDetentKey;
+        std::function<void()> onUserEdit;
     };
 
     void updateValueText();

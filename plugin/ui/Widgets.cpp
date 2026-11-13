@@ -238,10 +238,11 @@ ParamKnob::ParamKnob(APVTS& state, juce::String paramID, juce::String label,
     slider_.onDetentKey = [this](const juce::KeyPress& key) {
         return stepRatio(key);
     };
-    slider_.onDragStart = [this] {
+    slider_.onUserEdit = [this] {
         if (onUserEdit)
             onUserEdit();
     };
+    slider_.onDragStart = [this] { slider_.onUserEdit(); };
     slider_.onValueChange = [this] {
         snapValue();
         updateValueText();
@@ -287,6 +288,8 @@ void ParamKnob::KnobSlider::mouseWheelMove(const juce::MouseEvent& event,
         amount = -amount;
     if (std::abs(amount) < 1.0e-6f)
         return;
+    if (onUserEdit)
+        onUserEdit();
     /* The default JUCE wheel step is 15% of the range, which is far too coarse
        for a raw level or a Q15 rate. Use 2% per step, and 0.5% with shift. */
     const double proportion = 0.02 * (event.mods.isShiftDown() ? 0.25 : 1.0);
