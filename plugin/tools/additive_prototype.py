@@ -119,7 +119,7 @@ def _patch(source: str) -> str:
             f"int32_t op{op}_osc_audio_x = p1_additive_wave("
             f"op{op}_ph_phase_x, "
             f"p1_additive_mip(op{op}_ph_step[v], {_HARMONICS}u, "
-            f"{_LEVELS}u), op{op}_eg_level[v]);"
+            f"{_LEVELS}u), p1_additive_morph);"
         )
 
     patched, count = pattern.subn(replace, source)
@@ -128,11 +128,21 @@ def _patch(source: str) -> str:
     if '#include "tables.h"' in patched:
         patched = patched.replace(
             '#include "tables.h"',
-            '#include "tables.h"\n#include "additive_tables.h"',
+            '#include "tables.h"\n#include "additive_tables.h"\n\n'
+            "int32_t p1_additive_morph = 0;\n"
+            "int32_t p1_additive_morph_step = 0;",
             1,
         )
     else:
         raise SystemExit("additive prototype: tables include not found")
+    loop = "for (uint32_t f = b; f < b + 32u && f < frames; f++) {"
+    if loop not in patched:
+        raise SystemExit("additive prototype: sample loop not found")
+    patched = patched.replace(
+        loop,
+        loop + "\n            p1_additive_morph += p1_additive_morph_step;",
+        1,
+    )
     return patched
 
 

@@ -331,7 +331,7 @@ The auditions are:
 - `build/additive-oscillator.wav`: the 344 Hz control-rate morph with the mix
   interpolated across the full block.
 - `build/additive-engine.wav`: the integrated engine, four notes, with the
-  operator amplitude envelope as the morph.
+  four-second time ramp as the morph.
 
 The first two are table oscillators. The third is the real voice graph with the
 additive oscillator.

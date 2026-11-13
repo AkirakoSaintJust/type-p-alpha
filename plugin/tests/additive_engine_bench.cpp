@@ -14,6 +14,9 @@
 
 #include "Engine.hpp"
 
+extern "C" int32_t p1_additive_morph;
+extern "C" int32_t p1_additive_morph_step;
+
 namespace {
 
 constexpr int kRate = 44100;
@@ -77,6 +80,8 @@ int main(int argc, char** argv)
     {
         p1::Engine engine;
         engine.reset();
+        p1_additive_morph = 16384;
+        p1_additive_morph_step = 0;
         for (int i = 0; i < kVoices; ++i)
             engine.noteOn(static_cast<uint32_t>(48 + i * 2), 100, 0);
         std::vector<int32_t> output(static_cast<std::size_t>(kRate) * 2u);
@@ -99,14 +104,24 @@ int main(int argc, char** argv)
     {
         p1::Engine engine;
         engine.reset();
+        p1_additive_morph = 0;
+        p1_additive_morph_step = 0;
         const int notes[4] = {60, 64, 67, 71};
         for (int note : notes)
             engine.noteOn(static_cast<uint32_t>(note), 100, 0);
         const int frames = kRate * 4;
         std::vector<int32_t> output(static_cast<std::size_t>(frames) * 2u, 0);
-        engine.render(output.data(), static_cast<uint32_t>(frames));
+        for (int position = 0; position < frames; position += 128) {
+            const int length = std::min(128, frames - position);
+            const double t = static_cast<double>(position) / kRate;
+            const int target = static_cast<int>(
+                std::min(1.0, t / 4.0) * 32767.0);
+            p1_additive_morph_step = (target - p1_additive_morph) / length;
+            engine.render(output.data() + position * 2, length);
+        }
         writeWav(wavPath, output);
-        std::printf("audition: %s (four-note chord, engine voice path)\n",
+        std::printf("audition: %s (four-note chord, 4 s time ramp, engine "
+                    "voice path)\n",
                     wavPath.c_str());
     }
     return 0;
