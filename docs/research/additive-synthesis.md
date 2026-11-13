@@ -252,25 +252,65 @@ A 16 harmonic table at 256 samples for a four-operator part:
    mode per operator, so existing patches stay bit-exact when it is off.
 6. Measure before expanding to 32 harmonics. The 32 harmonic table is still
    affordable at a 344 Hz update and 512 samples, but its memory and generation are
-   four times the 16 harmonic case. The 1,378 Hz path is the one to watch.
+   four times the 16 harmonic case. The 1,378 Hz path is the one to watch. The
+   headless measurement below covers the first pass; the integrated table remains.
 
-## Experiments
+## Headless measurement
 
-- **Baseline:** render 20 voices and four operators at 44.1 kHz for 60 seconds with
-  the current engine and record the wall time. Repeat with a second table read to
-  isolate the morph cost.
-- **Generation matrix:** H = 16 and 32, N = 256 and 512, update rates 172, 344, 689
-  and 1,378 Hz. Record the wall time and the table generation share.
-- **Morph:** two tables per operator, a per-voice mix from the amplitude envelope.
-  Check the spectrum at the start and end of the envelope and the absence of
-  clicks.
-- **Mip behaviour:** play the top octave with 32 harmonics and compare the alias
+The benchmark is `plugin/tests/additive_bench.cpp`. It is a console target, not a
+ctest gate. The baseline is the real engine at 20 voices and four operators. The
+generator is the proposed shared-part algorithm measured in isolation. The morph
+read is a synthetic two-table loop at 80 operator voices. The audition is a simple
+table oscillator.
+
+Platform: Windows 11 build 26300, AMD Ryzen 7 5825U (8 cores, 16 threads), clang
+23.1.5, Release. The figures are the minimum of three runs, which removes most of
+the background noise; the run-to-run spread was a few percent.
+
+| Work | Time for 60 s | Share of one core |
+| --- | --- | --- |
+| Baseline, 20 voices, four operators | 1,030 ms | 1.72% |
+| 16/256 table, eight tables, 344 Hz | 560 ms | 0.93% |
+| 16/256 table, 1,378 Hz | 2,283 ms | 3.80% |
+| 32/256 table, 344 Hz | 1,276 ms | 2.13% |
+| 32/512 table, 344 Hz | 2,650 ms | 4.42% |
+| 32/512 table, 1,378 Hz | 10,831 ms | 18.05% |
+| Morph read, 80 voices, two tables | 152 ms | 0.25% |
+
+The generator sustains about 1.0 to 1.2 billion multiply-adds per second on this
+machine. The table sizes are 256 and 512 samples; the eight tables are four
+operators and two parts.
+
+The 16/256 path at 344 Hz adds 0.93% to the baseline and the morph adds 0.25%. A
+mip set roughly doubles the generation, so the 16/256 path at 344 Hz lands near
+3.8% of one core with the baseline. The 32/512 path at 344 Hz is about 10.8% with
+mips, which is possible but no longer cheap. The 32/512 path at 1,378 Hz is about
+38%, so the fast update is the one to watch, as the estimates suggested. The 32/256
+path at 344 Hz is about 6.2%; its eight samples per cycle at the top harmonic are
+the next thing to check.
+
+These figures are a cost model. The generator is isolated and the morph read is a
+synthetic loop; the baseline is the real engine. The next step is one integrated
+table and one morph in the engine, then the same 20-voice render through the real
+oscillator.
+
+The audition is `build/additive-headless.wav`, a four-second C major seventh chord
+that morphs from a dark to a bright 16 harmonic table. It is a simple table
+oscillator, not the engine. The spectral movement and the absence of a step at the
+table change are the things to listen for.
+
+## Remaining experiments
+
+- **Integrated table:** add one table and one morph to the engine and repeat the
+  20-voice baseline, including the real oscillator read and the mip selection.
+- **Mip floor:** play the top octave with 16 and 32 harmonics and compare the alias
   floor against the current band-limited waves.
+- **Interpolation:** compare nearest and linear reads at 256 samples with 32
+  harmonics, where the top harmonic has eight samples per cycle.
 - **Formant hybrid:** four per-voice peaks on the table output. Check the fixed
   formants across two octaves and the CPU cost.
-- **Perceptual:** a bright and dark morph, a formant peak and a 32 harmonic saw.
-  Judge the spectral character and the envelope, LFO and modulation timing, as the
-  optimisation gate requires.
+- **Perceptual:** the audition above, a formant peak and a 32 harmonic saw, judged
+  against the spectral character and the envelope, LFO and modulation timing.
 
 The stop criteria are the current engine's exact render when the additive mode is
 off, an alias floor no worse than the band-limited waves, no click at a table

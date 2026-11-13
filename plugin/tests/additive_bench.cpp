@@ -1,0 +1,297 @@
+/* SPDX-License-Identifier: GPL-3.0-only */
+/* Headless additive table experiment.
+ *
+ * The baseline is the real engine at 20 voices and four operators. The table
+ * generator is the proposed shared-part algorithm, measured in isolation at the
+ * 16/32 harmonic and 256/512 sample matrix. The read model measures the extra
+ * table read and morph blend that a per-voice morph adds. The audition writes a
+ * short WAV from a simple table oscillator, not from the engine.
+ */
+#include <algorithm>
+#include <array>
+#include <chrono>
+#include <cmath>
+#include <cstdint>
+#include <cstdio>
+#include <fstream>
+#include <string>
+#include <vector>
+
+#include "Engine.hpp"
+
+namespace {
+
+constexpr int kRate = 44100;
+constexpr int kVoices = 20;
+constexpr int kOperators = 4;
+constexpr int kParts = 2;
+constexpr int kTables = kOperators * kParts;
+constexpr double kPi = 3.14159265358979323846;
+
+double secondsSince(std::chrono::steady_clock::time_point start)
+{
+    return std::chrono::duration<double>(std::chrono::steady_clock::now() - start)
+        .count();
+}
+
+int16_t clampQ15(int32_t value)
+{
+    return static_cast<int16_t>(std::max(-32768, std::min(32767, value)));
+}
+
+std::vector<int16_t> sineTable(int size)
+{
+    std::vector<int16_t> table(static_cast<std::size_t>(size));
+    for (int i = 0; i < size; ++i) {
+        const double phase = 2.0 * kPi * i / size;
+        table[static_cast<std::size_t>(i)] =
+            static_cast<int16_t>(std::lround(std::sin(phase) * 32767.0));
+    }
+    return table;
+}
+
+std::vector<int16_t> recipe(int harmonics, double tilt, int formant, double peak)
+{
+    std::vector<int16_t> amps(static_cast<std::size_t>(harmonics));
+    for (int h = 1; h <= harmonics; ++h) {
+        double value = std::pow(static_cast<double>(h), -tilt);
+        if (formant > 0) {
+            const double distance = static_cast<double>(h - formant);
+            value += peak * std::exp(-distance * distance / 8.0);
+        }
+        amps[static_cast<std::size_t>(h - 1)] =
+            static_cast<int16_t>(std::lround(std::min(1.0, value) * 32767.0));
+    }
+    return amps;
+}
+
+void generateTable(std::vector<int16_t>& table, int harmonics, int size,
+                   const std::vector<int16_t>& amps,
+                   const std::vector<int16_t>& sine, int updates,
+                   uint64_t& checksum)
+{
+    const int mask = size - 1;
+    for (int update = 0; update < updates; ++update) {
+        for (int i = 0; i < size; ++i) {
+            int32_t sum = 0;
+            for (int h = 1; h <= harmonics; ++h) {
+                sum += (static_cast<int32_t>(amps[static_cast<std::size_t>(h - 1)]) *
+                        sine[static_cast<std::size_t>((h * i) & mask)]) >>
+                       15;
+            }
+            table[static_cast<std::size_t>(i)] = clampQ15(sum);
+            checksum += static_cast<uint16_t>(table[static_cast<std::size_t>(i)]);
+        }
+    }
+}
+
+double baselineSeconds()
+{
+    p1::Engine engine;
+    engine.reset();
+    for (int i = 0; i < kVoices; ++i)
+        engine.noteOn(static_cast<uint32_t>(48 + i * 2), 100, 0);
+    std::vector<int32_t> output(static_cast<std::size_t>(kRate) * 2u);
+    engine.render(output.data(), kRate); /* settle the envelopes */
+
+    constexpr int kSeconds = 20;
+    double best = 1e9;
+    for (int run = 0; run < 3; ++run) {
+        output.assign(static_cast<std::size_t>(kRate) * 2u * kSeconds, 0);
+        const auto start = std::chrono::steady_clock::now();
+        engine.render(output.data(), static_cast<uint32_t>(kRate * kSeconds));
+        best = std::min(best, secondsSince(start));
+    }
+    return best;
+}
+
+double readModelSeconds(int tableSize)
+{
+    std::vector<int16_t> a(static_cast<std::size_t>(tableSize), 0);
+    std::vector<int16_t> b(static_cast<std::size_t>(tableSize), 0);
+    for (int i = 0; i < tableSize; ++i) {
+        a[static_cast<std::size_t>(i)] =
+            static_cast<int16_t>(std::lround(std::sin(2.0 * kPi * i / tableSize) * 12000.0));
+        b[static_cast<std::size_t>(i)] =
+            static_cast<int16_t>(std::lround(std::cos(2.0 * kPi * i / tableSize) * 12000.0));
+    }
+    const int shift = tableSize == 256 ? 24 : 23;
+    const int mask = tableSize - 1;
+    const int samples = kRate * 10;
+    int64_t checksum = 0;
+    double best = 1e9;
+    for (int run = 0; run < 3; ++run) {
+        const auto start = std::chrono::steady_clock::now();
+        for (int voice = 0; voice < kOperators * kVoices; ++voice) {
+            uint32_t phase = static_cast<uint32_t>(voice * 104729);
+            const uint32_t step = static_cast<uint32_t>(30000 + voice * 137);
+            for (int i = 0; i < samples; ++i) {
+                const int index = static_cast<int>(phase >> shift) & mask;
+                const int mix = 16384;
+                const int32_t value =
+                    (static_cast<int32_t>(a[static_cast<std::size_t>(index)]) *
+                         (32768 - mix) +
+                     static_cast<int32_t>(b[static_cast<std::size_t>(index)]) * mix) >>
+                    15;
+                checksum += value;
+                phase += step;
+            }
+        }
+        best = std::min(best, secondsSince(start));
+    }
+    volatile int64_t sink = checksum;
+    (void)sink;
+    return best;
+}
+
+double readTable(const std::vector<int16_t>& table, double phase)
+{
+    const double position = phase * table.size();
+    const auto index = static_cast<std::size_t>(position) % table.size();
+    const auto next = (index + 1u) % table.size();
+    const double fraction = position - std::floor(position);
+    return table[index] + (table[next] - table[index]) * fraction;
+}
+
+void writeWav(const std::string& path, const std::vector<int16_t>& left,
+              const std::vector<int16_t>& right)
+{
+    std::ofstream file(path, std::ios::binary);
+    if (!file)
+        return;
+    const auto dataBytes = static_cast<uint32_t>(left.size() * 2u * 2u);
+    auto write32 = [&file](uint32_t value) {
+        const char bytes[4] = {static_cast<char>(value & 0xFF),
+                               static_cast<char>((value >> 8) & 0xFF),
+                               static_cast<char>((value >> 16) & 0xFF),
+                               static_cast<char>((value >> 24) & 0xFF)};
+        file.write(bytes, 4);
+    };
+    auto write16 = [&file](uint16_t value) {
+        const char bytes[2] = {static_cast<char>(value & 0xFF),
+                               static_cast<char>((value >> 8) & 0xFF)};
+        file.write(bytes, 2);
+    };
+    file.write("RIFF", 4);
+    write32(36u + dataBytes);
+    file.write("WAVEfmt ", 8);
+    write32(16);
+    write16(1);
+    write16(2);
+    write32(kRate);
+    write32(kRate * 4);
+    write16(4);
+    write16(16);
+    file.write("data", 4);
+    write32(dataBytes);
+    for (std::size_t i = 0; i < left.size(); ++i) {
+        write16(static_cast<uint16_t>(left[i]));
+        write16(static_cast<uint16_t>(right[i]));
+    }
+}
+
+void audition(const std::string& path)
+{
+    constexpr int kSize = 512;
+    constexpr int kHarmonics = 16;
+    constexpr double kSeconds = 4.0;
+    const auto sine = sineTable(kSize);
+    const auto darkAmps = recipe(kHarmonics, 2.2, 0, 0.0);
+    const auto brightAmps = recipe(kHarmonics, 0.7, 6, 1.2);
+    std::vector<int16_t> dark(static_cast<std::size_t>(kSize));
+    std::vector<int16_t> bright(static_cast<std::size_t>(kSize));
+    uint64_t checksum = 0;
+    generateTable(dark, kHarmonics, kSize, darkAmps, sine, 1, checksum);
+    generateTable(bright, kHarmonics, kSize, brightAmps, sine, 1, checksum);
+
+    const int samples = static_cast<int>(kRate * kSeconds);
+    const int notes[4] = {60, 64, 67, 71};
+    std::array<double, 4> phase{};
+    std::vector<int16_t> left(static_cast<std::size_t>(samples));
+    std::vector<int16_t> right(static_cast<std::size_t>(samples));
+    for (int i = 0; i < samples; ++i) {
+        const double t = static_cast<double>(i) / kRate;
+        const double mix = std::min(1.0, t / kSeconds);
+        double sum = 0.0;
+        for (int n = 0; n < 4; ++n) {
+            const double frequency = 440.0 * std::pow(2.0, (notes[n] - 69) / 12.0);
+            const double a = readTable(dark, phase[static_cast<std::size_t>(n)]);
+            const double b = readTable(bright, phase[static_cast<std::size_t>(n)]);
+            sum += a * (1.0 - mix) + b * mix;
+            phase[static_cast<std::size_t>(n)] += frequency / kRate;
+            if (phase[static_cast<std::size_t>(n)] >= 1.0)
+                phase[static_cast<std::size_t>(n)] -= 1.0;
+        }
+        const double fade = std::min(1.0, t / 0.02) *
+                            std::min(1.0, (kSeconds - t) / 0.02);
+        const double value = sum / (4.0 * 32768.0) * 0.7 * fade;
+        const auto pcm = static_cast<int16_t>(
+            std::max(-32768.0, std::min(32767.0, value * 32767.0)));
+        left[static_cast<std::size_t>(i)] = pcm;
+        right[static_cast<std::size_t>(i)] = pcm;
+    }
+    writeWav(path, left, right);
+    std::printf("audition: %s (%d harmonics, dark to bright morph)\n",
+                path.c_str(), kHarmonics);
+}
+
+} // namespace
+
+int main(int argc, char** argv)
+{
+    const std::string wavPath = argc > 1 ? argv[1] : "additive-headless.wav";
+    std::printf("additive synthesis headless experiment\n");
+    std::printf("voices %d, operators %d, parts %d, rate %d\n", kVoices,
+                kOperators, kParts, kRate);
+
+    const double base = baselineSeconds();
+    std::printf("baseline: 20 voices, 20 s render: %.1f ms, 60 s: %.1f ms, "
+                "%.2f%% of realtime\n",
+                base * 1000.0, base * 3000.0, base / 20.0 * 100.0);
+
+    const int harmonicsList[2] = {16, 32};
+    const int sizeList[2] = {256, 512};
+    const int rates[4] = {172, 344, 689, 1378};
+    constexpr int kUpdateSeconds = 10;
+    uint64_t checksum = 0;
+
+    std::printf("\ngeneration matrix, %d tables, %d s of audio\n", kTables,
+                kUpdateSeconds);
+    std::printf("  H   N  rate   gen ms  60 s ms  %% realtime  work M/s  meas M/s\n");
+    for (int harmonics : harmonicsList) {
+        for (int size : sizeList) {
+            const auto amps = recipe(harmonics, 1.0, 6, 0.8);
+            const auto sine = sineTable(size);
+            std::vector<int16_t> table(static_cast<std::size_t>(size));
+            for (int rate : rates) {
+                const int updates = rate * kUpdateSeconds;
+                double elapsed = 1e9;
+                for (int run = 0; run < 3; ++run) {
+                    const auto start = std::chrono::steady_clock::now();
+                    for (int tableIndex = 0; tableIndex < kTables; ++tableIndex)
+                        generateTable(table, harmonics, size, amps, sine, updates,
+                                      checksum);
+                    elapsed = std::min(elapsed, secondsSince(start));
+                }
+                const double per60 = elapsed * 6.0;
+                const double work = static_cast<double>(kTables) * harmonics *
+                                    size * rate / 1e6;
+                const double measured = static_cast<double>(kTables) * harmonics *
+                                        size * updates / elapsed / 1e6;
+                std::printf(" %2d %3d %5d  %7.1f  %7.1f  %9.2f  %8.1f  %7.0f\n",
+                            harmonics, size, rate, elapsed * 1000.0,
+                            per60 * 1000.0, per60 / 60.0 * 100.0, work,
+                            measured);
+            }
+        }
+    }
+
+    const double read = readModelSeconds(256);
+    std::printf("\nmorph read model: 80 operator voices, 2 tables, 10 s render: "
+                "%.1f ms, 60 s: %.1f ms, %.2f%% of realtime\n",
+                read * 1000.0, read * 6000.0, read / 10.0 * 100.0);
+
+    audition(wavPath);
+    std::printf("checksum %llu\n", static_cast<unsigned long long>(checksum));
+    return 0;
+}
