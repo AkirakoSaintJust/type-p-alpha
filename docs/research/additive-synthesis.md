@@ -330,11 +330,14 @@ The auditions are:
   oscillator.
 - `build/additive-oscillator.wav`: the 344 Hz control-rate morph with the mix
   interpolated across the full block.
-- `build/additive-engine.wav`: the integrated engine, four notes, with the
-  four-second time ramp as the morph.
+- `build/additive-engine.wav`: the integrated engine, four notes, a single clean
+  carrier (algorithm 7, one operator, no feedback) and the four-second time ramp.
+  The full four-operator graph remains in the 20-voice CPU row.
 
 The first two are table oscillators. The third is the real voice graph with the
-additive oscillator.
+additive oscillator. The full init patch adds its modulators and FM sidebands,
+which is why the first engine audition sounded brighter; the clean carrier
+isolates the table and the morph from that FM.
 
 ## Remaining experiments
 

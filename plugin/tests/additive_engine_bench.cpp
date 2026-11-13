@@ -8,11 +8,13 @@
 #include <cmath>
 #include <cstdint>
 #include <cstdio>
+#include <cstring>
 #include <fstream>
 #include <string>
 #include <vector>
 
 #include "Engine.hpp"
+#include "Params.h"
 
 extern "C" int32_t p1_additive_morph;
 extern "C" int32_t p1_additive_morph_step;
@@ -26,6 +28,17 @@ double secondsSince(std::chrono::steady_clock::time_point start)
 {
     return std::chrono::duration<double>(std::chrono::steady_clock::now() - start)
         .count();
+}
+
+bool setEngineParam(p1::Engine& engine, const char* id, int32_t value)
+{
+    for (const auto& spec : kP1ParamSpecs) {
+        if (std::strcmp(spec.id, id) == 0) {
+            engine.setParam(static_cast<uint32_t>(spec.engineId), value);
+            return true;
+        }
+    }
+    return false;
 }
 
 void writeWav(const std::string& path, const std::vector<int32_t>& samples)
@@ -106,6 +119,14 @@ int main(int argc, char** argv)
         engine.reset();
         p1_additive_morph = 0;
         p1_additive_morph_step = 0;
+        setEngineParam(engine, "algorithm.p0", 7);
+        setEngineParam(engine, "op1_level.p0", 99);
+        setEngineParam(engine, "op1_feedback.p0", 0);
+        setEngineParam(engine, "op1_fb_depth.p0", 0);
+        for (const char* id : {"op2_level.p0", "op3_level.p0", "op4_level.p0"})
+            setEngineParam(engine, id, 0);
+        for (const char* id : {"op2_mute.p0", "op3_mute.p0", "op4_mute.p0"})
+            setEngineParam(engine, id, 1);
         const int notes[4] = {60, 64, 67, 71};
         for (int note : notes)
             engine.noteOn(static_cast<uint32_t>(note), 100, 0);
@@ -120,8 +141,8 @@ int main(int argc, char** argv)
             engine.render(output.data() + position * 2, length);
         }
         writeWav(wavPath, output);
-        std::printf("audition: %s (four-note chord, 4 s time ramp, engine "
-                    "voice path)\n",
+        std::printf("audition: %s (four-note chord, single clean carrier, 4 s "
+                    "time ramp, engine voice path)\n",
                     wavPath.c_str());
     }
     return 0;
