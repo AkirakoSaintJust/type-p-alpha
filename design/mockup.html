@@ -295,7 +295,6 @@
   .macro-row > .macro + .macro { border-left: 1px solid #2a2a2a; padding-left: 7px; }
   .morphrow { margin-top: 3px; }
   .morphrow .mlabel { width: 42px; }
-  .spectoggle { margin-left: auto; }
   .envtop { display: flex; align-items: center; gap: 6px; margin-bottom: 5px; }
   .envtop .envbox { flex: 1; height: 50px; margin-bottom: 0; }
   .envtop .knob { width: 46px; }
@@ -664,7 +663,6 @@
     { name: "op4", role: "mod", ratio: 3.0, detune: 0, level: 0, fb: 0, wave: "sine", r: [99, 40, 30, 60], l: [0, 0, 0], lfoRate: 5.0, lfoDepth: 0, lfoWave: "sine", lfoMode: true, fbOn: true, fbenvR: [80, 60, 50, 80], fbenvL: [0, 0, 0, 0], fbLfoRate: 4.0, fbLfoDepth: 0, fbLfoWave: "sine", fbLfoMode: true, detuneLfoRate: 4.0, detuneLfoDepth: 0, detuneLfoWave: "sine", detuneLfoMode: true, mute: false }
   ];
   INIT_OPS.forEach(function (o) {
-    o.specOn = false;
     o.specA = [99, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     o.specB = [99, 45, 30, 15, 55, 40, 25, 12, 8, 5, 3, 2, 1, 0, 0, 0];
     o.specMorph = 0;
@@ -678,7 +676,8 @@
     o.specFormant = 5;
   });
   const WAVES = ["sine", "triangle", "half sine", "half tri", "2x sine", "2x tri",
-    "2x half sine", "2x half tri", "rect sine", "rect tri", "pulse", "square", "saw"];
+    "2x half sine", "2x half tri", "rect sine", "rect tri", "pulse", "square",
+    "saw", "spectrum"];
   const LFO_WAVES = ["sine", "triangle", "saw", "inverse saw", "square", "random"];
   const PARTS = [
     { name: "init", midi: 1, low: 0, high: 127, level: 99, tune: 0, delay: 0, mute: false },
@@ -1232,7 +1231,7 @@
       fbLfoWave: o.fbLfoWave, fbLfoMode: o.fbLfoMode,
       detuneLfoRate: o.detuneLfoRate, detuneLfoDepth: o.detuneLfoDepth,
       detuneLfoWave: o.detuneLfoWave, detuneLfoMode: o.detuneLfoMode,
-      specOn: o.specOn, specA: o.specA.slice(), specB: o.specB.slice(),
+      specA: o.specA.slice(), specB: o.specB.slice(),
       specMorph: o.specMorph, specEnvR: o.specEnvR.slice(),
       specEnvL: o.specEnvL.slice(), specEnvDepth: o.specEnvDepth,
       specLfoRate: o.specLfoRate, specLfoDepth: o.specLfoDepth,
@@ -1252,7 +1251,6 @@
     o.fbLfoWave = d.fbLfoWave; o.fbLfoMode = d.fbLfoMode;
     o.detuneLfoRate = d.detuneLfoRate; o.detuneLfoDepth = d.detuneLfoDepth;
     o.detuneLfoWave = d.detuneLfoWave; o.detuneLfoMode = d.detuneLfoMode;
-    o.specOn = d.specOn;
     o.specA = d.specA.slice(); o.specB = d.specB.slice();
     o.specMorph = d.specMorph;
     o.specEnvR = d.specEnvR.slice(); o.specEnvL = d.specEnvL.slice();
@@ -1315,25 +1313,13 @@
     const waveRow = document.createElement("div");
     waveRow.className = "inline";
     const wl = document.createElement("span"); wl.className = "lbl"; wl.textContent = "WAVE";
-    const waveSel = makeSelect(WAVES, o.wave, function (v) { o.wave = v; });
-    const waveText = document.createElement("span");
-    waveText.className = "lbl";
-    waveText.textContent = "spectral";
+    const waveSel = makeSelect(WAVES, o.wave, function (v) {
+      o.wave = v;
+      rerender();
+    });
     waveRow.append(wl, waveSel);
     const rows = [waveRow];
-    if (o.specOn) {
-      waveSel.disabled = true;
-      waveSel.style.display = "none";
-      waveRow.appendChild(waveText);
-    }
     if (spectral) {
-      const specToggle = makeToggle("spec", o.specOn, function (v) {
-        if (v) commitSpecPreview(o);
-        else o.specOn = false;
-        rerender();
-      });
-      specToggle.classList.add("spectoggle");
-      waveRow.appendChild(specToggle);
       const morphRow = document.createElement("div");
       morphRow.className = "inline morphrow";
       morphRow.appendChild(makeMacro("MORPH", {
@@ -1474,14 +1460,14 @@
   }
 
   function specLevels(o, key) {
-    if (key === "specA" && !o.specOn) return specPreview(o);
+    if (key === "specA" && o.wave !== "spectrum") return specPreview(o);
     return o[key];
   }
 
   function commitSpecPreview(o) {
-    if (o.specOn) return false;
+    if (o.wave === "spectrum") return false;
     o.specA = specPreview(o).slice();
-    o.specOn = true;
+    o.wave = "spectrum";
     o.specPreview = null;
     o.specPreviewWave = null;
     return true;
@@ -1561,7 +1547,7 @@
     const left = document.createElement("div");
     left.className = "secheadleft";
     left.appendChild(h);
-    if (key === "specA" && !o.specOn) {
+    if (key === "specA" && o.wave !== "spectrum") {
       const badge = document.createElement("span");
       badge.className = "fromwave";
       badge.textContent = "from wave";
@@ -1696,7 +1682,7 @@
     const left = document.createElement("div");
     left.className = "secheadleft";
     left.appendChild(h);
-    if (!o.specOn) {
+    if (o.wave !== "spectrum") {
       const badge = document.createElement("span");
       badge.className = "fromwave";
       badge.textContent = "from wave";
@@ -1714,7 +1700,7 @@
     }
     plot.innerHTML = '<svg viewBox="0 0 ' + W + " " + H +
       '" preserveAspectRatio="none">' + grid +
-      specOutline(o.specOn ? o.specA : specPreview(o), "speca") +
+      specOutline(o.wave === "spectrum" ? o.specA : specPreview(o), "speca") +
       specOutline(o.specB, "specb") + "</svg>";
     const meter = document.createElement("div");
     meter.className = "morphmeter";
@@ -2247,7 +2233,6 @@
       if (o.detuneLfoDepth === undefined) o.detuneLfoDepth = 0;
       if (o.detuneLfoWave === undefined) o.detuneLfoWave = "sine";
       if (o.detuneLfoMode === undefined) o.detuneLfoMode = true;
-      if (o.specOn === undefined) o.specOn = false;
       if (!Array.isArray(o.specA)) o.specA = [99, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
       if (!Array.isArray(o.specB)) o.specB = [99, 45, 30, 15, 55, 40, 25, 12, 8, 5, 3, 2, 1, 0, 0, 0];
       if (o.specMorph === undefined) o.specMorph = 0;

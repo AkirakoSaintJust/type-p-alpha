@@ -1,75 +1,87 @@
 # Waveforms
 
-The oscillator carries thirteen single-cycle waves. This note covers the list
-order, the `rect tri` addition, and the harmonic analysis that the spectral pages
-use as a starting point.
+The oscillator carries fourteen selectable entries: thirteen single-cycle tables
+and the spectrum mode. This note covers the list, the `rect tri` table, the
+spectrum mode and the harmonic analysis behind the spectral pages.
 
 ## The list
 
-The twelve existing waves keep their stored values from 0 to 11. `rect tri` takes
-value 12, and the wave select shows it after `rect sine`:
+`rect tri` is inserted after `rect sine`, and `spectrum` sits at the end. The
+stored value is the visible position:
 
-| Visible position | Wave | Stored value |
-| --- | --- | --- |
-| 1 | sine | 0 |
-| 2 | triangle | 1 |
-| 3 | half sine | 2 |
-| 4 | half tri | 3 |
-| 5 | 2x sine | 4 |
-| 6 | 2x tri | 5 |
-| 7 | 2x half sine | 6 |
-| 8 | 2x half tri | 7 |
-| 9 | rect sine | 8 |
-| 10 | rect tri | 12 |
-| 11 | pulse | 9 |
-| 12 | square | 10 |
-| 13 | saw | 11 |
+| Value | Wave |
+| --- | --- |
+| 0 | sine |
+| 1 | triangle |
+| 2 | half sine |
+| 3 | half tri |
+| 4 | 2x sine |
+| 5 | 2x tri |
+| 6 | 2x half sine |
+| 7 | 2x half tri |
+| 8 | rect sine |
+| 9 | rect tri |
+| 10 | pulse |
+| 11 | square |
+| 12 | saw |
+| 13 | spectrum |
 
-The display order is a small map in the wave select. The stored value stays 12, so
-every existing patch, part and session keeps its waveform. The value is stable.
-Inserting at value 9 instead would need a `PRESET_VERSION` bump and a remap of 9 to
-10, 10 to 11 and 11 to 12 in the part bank and the APVTS state.
+The insertion shifts pulse, square and saw from 9, 10 and 11 to 10, 11 and 12.
+There is no release yet, so `PRESET_VERSION` moves to 3, the old test banks are
+regenerated, and no migration path is added. The new values are the only values.
+
+Value 13 is the spectrum mode, not a table. The engine reads the additive bank for
+13 and the wave table for 0 to 12.
 
 ## Rect tri
 
-`rect tri` is the full-wave rectified triangle: `abs(tri(p))`, with `tri(p)` the
-triangle from -1 to 1. It carries a DC term, the fundamental and the even
-harmonics, so it sits between the triangle and the saw in brightness.
+`rect tri` is the full-wave rectified triangle in the OPZ family: `abs(tri(p))`,
+with `tri(p)` the `sin × |sin|` triangle. In Q15 it is `q15_mul(a, a)` where `a` is
+`|sin|`, so it is the square of the rectified sine. The shape carries the
+fundamental and the even harmonics, which places it between the triangle and the
+saw in brightness.
 
-The table is Q15, 1024 samples per mip, peak normalised, with the same phase
-convention as `rect sine`. A single table would alias at high notes, so the wave
-needs a band-limited mip set like the pulse, square and saw tables.
+The table is Q15, 1024 samples, peak normalised, with the same phase convention as
+`rect sine`. It is a single table at value 9. The shape is smooth. The pulse, square
+and saw at 10 to 12 keep the nine-level band-limited mip sets.
 
-The script named in `wavetable.h` is not in this repository. `engine/gen/wavetable.h`
-says it comes from `tools/gen_wavetable.py`, and that path is absent. Adding the
-thirteenth table means restoring the generator or adding a small one that writes
-the new mip set and the extended `p1_wave_base` array. The existing twelve tables
-and their base offsets stay byte for byte, so the new mip set appends after the
-saw's nine tables and the base array grows to thirteen entries, which keeps every
-stored waveform value and every rendered sample of the current waves unchanged
-while the thirteenth table sits at the end of the bank.
+## The generator
+
+The old generator is `firmware/tools/gen_wavetable.py` in the umetate history before
+the FM-1 scrub. The new one is `tools/gen_wavetable.py` in this repository. It keeps
+the quarter-sine table and the exact `sin_wave` formulas for the twelve current
+waves, adds the rectified triangle at 9, shifts the three band-limited waves, and
+writes `engine/gen/wavetable.h`.
+
+The new table is 37,888 samples: ten single tables (0 to 9) and three nine-level
+mip sets (10, 11 and 12), which places the band-limited pulse, square and saw after
+the rectified triangle while the first ten tables keep their original order, so the
+current sine, triangle, half and rectified shapes render with the same samples and
+the new triangle is the only added table. The base array is 13 entries. The current
+twelve tables keep their samples, apart from the base offsets, and a test compares
+the old and new arrays before the new header is accepted.
+
+It is a host tool.
+
+The generator carries no firmware, M-VAVE or FM-1 device code. It is a host-side
+table tool for the plugin.
 
 ## The parameter
 
-The waveform parameter runs from 0 to 12. The `wave` display name list grows from
-twelve to thirteen. The LFO wave parameter keeps its own list of six and its 0 to
-11 range, so the shared `wave` display reads the waveform name list by stored
-value, not by the visible position.
-
-The plugin's wave select needs the display order map. The web lab and the manual
-use the same visible order. The engine switch reads the stored value.
+The waveform parameter runs from 0 to 13. The `wave` display name list grows to
+fourteen. The LFO wave parameter keeps its own six-name list and 0 to 11 range, so
+the shared `wave` display reads the stored value. The LFO list is separate.
 
 ## Harmonic analysis
 
-The spectral page analyses the selected wave into sixteen harmonic magnitudes. The
+The spectral pages analyse a wave from 0 to 12 into sixteen harmonic magnitudes. The
 analysis reads the mip-0 table, drops DC, and scales the largest harmonic to 99.
-The rest is a lookup. The result is a preview while the spectral mode is off, and
-the first edit commits it.
+The result is a preview while the waveform is not `spectrum`, and the first edit
+commits it. The `spectrum` entry has no analysis. It uses the stored a and b
+levels.
 
 The analysis table is generated with the wavetable bank, thirteen waves by sixteen
-harmonics, and a test compares it with a DFT of the checked-in table. A runtime DFT
-in the editor would work, but a small generated table keeps the editor and the
-engine on one source and avoids a cost on every page open.
+harmonics, and a test compares it with a DFT of the checked-in table.
 
 The analysis has the limits in `spectral.md`: a sixteen-harmonic truncation, no
 phase, and no DC. A 2x wave analyses to h2 and its multiples, so h1 reads zero and

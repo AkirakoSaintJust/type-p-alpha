@@ -87,10 +87,11 @@ the page needs the height for the envelope and the LFO.
 
 ## Oscillator card
 
-The mode is per operator. The two spectral pages use the oscillator card with two
-additions: a `spec` switch in the wave row and a `morph` slider under the wave
-select. The operators and operator lfos pages keep the current card, so their
-layout is unchanged.
+The mode is per operator. The wave select carries the mode, so there is no separate
+switch. It lists fourteen entries: the thirteen waves and `spectrum` at the end.
+The two spectral pages add a `morph` slider under the wave select. The operators
+and operator lfos pages keep the current card and show the same wave select, so
+`spectrum` is visible and selectable there too.
 
 | Control | Meaning |
 | --- | --- |
@@ -98,14 +99,12 @@ layout is unchanged.
 | detune | oscillator detune in cents, as now |
 | level | operator output level, as now |
 | feedback | operator feedback, as now |
-| wave | waveform used while the spectral mode is off, and the spectral pages analyse it |
-| spec | enables the spectral oscillator. The first spectral edit or the first morph move also enables it |
+| wave | select a wave 0 to 12, or `spectrum` at 13 for the additive oscillator |
 | morph | blend from spectrum a at 0 to spectrum b at 99 |
 
-When `spec` is on, the wave select gives way to the word `spectral`. The classic
-pages show the same state without a new control, so a spectral operator never
-claims to be a sine on the operators page. The scope and spectro always show the
-audio, so the mode is visible there too.
+Selecting `spectrum` uses the stored a and b spectra. Selecting a wave returns the
+operator to that wave and keeps the stored spectra for the next `spectrum`
+selection.
 
 The morph value is the base for the two modulation sources. The engine computes
 
@@ -120,31 +119,31 @@ the levels are part parameters and do not vary per voice.
 
 ## Starting from the waveform
 
-The spectral page opens on the operator's current wave. The editor analyses the
-selected waveform's 1024-sample mip-0 table into sixteen harmonic magnitudes, drops
-the DC term, scales the largest harmonic to 99, and shows the result as spectrum a.
-The analysis is a forward transform. The engine still rebuilds the time table from
-the levels.
+The spectral page opens on the operator's current wave. While the waveform is not
+`spectrum`, the editor analyses the selected waveform's 1024-sample mip-0 table into
+sixteen harmonic magnitudes, drops the DC term, scales the largest harmonic to 99,
+and shows the result as spectrum a. The analysis is a forward transform. The engine
+still rebuilds the time table from the levels.
 
-The analysis is a preview. While `spec` is off, the operator sounds through the
-selected waveform, the stored a and b levels are untouched, and the a card carries
-a `from wave` badge. Opening the page does not dirty the patch.
+The analysis is a preview. The operator sounds through the selected waveform, the
+stored a and b levels are untouched, and the a card carries a `from wave` badge.
+Opening the page does not dirty the patch.
 
 The first edit of a spectral control commits the preview. The controls are the
 sixteen a bars, the sixteen b bars, the four macros, `norm`, `to a` and `to b`, the
 morph value, and an envelope or LFO depth moved above zero. The editor writes the
-sixteen a levels, leaves b as stored, then writes `opN_spec_on`, in that order, so
-the engine never reads the new mode against the old table. The mode switch
-crossfades over 10 ms. A first edit on the b card or the morph also commits the a
-preview, because the engine needs the analysed a as soon as the mode is on.
+sixteen a levels, leaves b as stored, then writes `opN_waveform` as 13, in that
+order, so the engine never reads the new mode against the old table. The mode
+switch crossfades over 10 ms. A first edit on the b card or the morph also commits
+the a preview, because the engine needs the analysed a as soon as the mode is on.
 
 The first edit writes seventeen parameters, and a host undo may not group them.
-The switch is the explicit way back. Host automation of a level does not engage the
-mode either, because `opN_spec_on` is the gate.
+Selecting a wave is the explicit way back. Host automation of a level does not
+engage the mode either, because the waveform value is the gate.
 
-Once `spec` is on, the pages show the stored spectra. Switching `spec` off keeps
-the stored levels and returns the a card to the live waveform analysis. Switching
-it on restores the stored spectra without re-analysing.
+Once the waveform is `spectrum`, the pages show the stored spectra. Selecting a wave
+keeps the stored levels and returns the a card to the live waveform analysis.
+Selecting `spectrum` again restores the stored spectra without re-analysing.
 
 The analysis is a starting point. A sine, triangle or half sine survives the
 sixteen-harmonic limit closely. A saw, square, pulse or rectified shape loses its
@@ -158,8 +157,8 @@ thirty-two harmonic mode later closes part of the gap.
 
 Each operator has two cards, `spectrum a` and `spectrum b`, with the same
 controls. The sixteen stored levels per spectrum are the only saved spectrum state.
-While `spec` is off, the a card shows the live waveform analysis. Once the mode is
-on, both cards show the stored levels.
+While the waveform is not `spectrum`, the a card shows the live waveform analysis.
+Once the waveform is `spectrum`, both cards show the stored levels.
 
 | Control | Meaning |
 | --- | --- |
@@ -250,11 +249,13 @@ marker reflects the envelope and the LFO.
 
 ## Defaults
 
-The spectral mode is off, so the init patch and every existing patch stay exact.
+The waveform defaults to sine, so the init patch stays exact. Every patch that
+uses waves 0 to 8 stays exact too. The `rect tri` insertion shifts old values 9, 10
+and 11 to 10, 11 and 12, and the preset version moves to 3.
 
 | Control | Default |
 | --- | --- |
-| spec | off |
+| waveform | sine (0) |
 | spectrum a | h1 99, h2 to h16 zero |
 | spectrum b | 99, 45, 30, 15, 55, 40, 25, 12, 8, 5, 3, 2, 1, 0, 0, 0 |
 | morph | 0 |
@@ -266,18 +267,19 @@ The spectral mode is off, so the init patch and every existing patch stay exact.
 | lfo wave | sine |
 | lfo mode | bipolar |
 
-The stored spectrum a is a sine. The page shows the selected wave while the mode is
-off, and the first edit commits that analysis. Spectrum b is a formant shape at h5,
-which gives the morph an audible direction and shows the formant macro in context.
+The stored spectrum a is a sine. The page shows the selected wave while the
+waveform is not `spectrum`, and the first edit commits that analysis. Spectrum b is
+a formant shape at h5, which gives the morph an audible direction and shows the
+formant macro in context.
 
 ## Parameters
 
 Every new parameter is per operator and per part. The ids below use `opN` for
-operators 1 to 4 and `.pP` for parts 0 and 1. All are block rate.
+operators 1 to 4 and `.pP` for parts 0 and 1. All are block rate. The existing
+waveform parameter grows from 0 to 11 to 0 to 13, where 13 selects `spectrum`.
 
 | Group | Id | Count | Range | Default |
 | --- | --- | --- | --- | --- |
-| spectral on | `opN_spec_on.pP` | 1 | off, on | off |
 | spectrum a | `opN_spec_a1.pP` to `opN_spec_a16.pP` | 16 | 0 to 99 | 99, then zero |
 | spectrum b | `opN_spec_b1.pP` to `opN_spec_b16.pP` | 16 | 0 to 99 | as the defaults table |
 | morph | `opN_spec_morph.pP` | 1 | 0 to 99 | 0 |
@@ -289,8 +291,8 @@ operators 1 to 4 and `.pP` for parts 0 and 1. All are block rate.
 | lfo wave | `opN_spec_lfo_wave.pP` | 1 | six waves | sine |
 | lfo mode | `opN_spec_lfo_mode.pP` | 1 | unipolar, bipolar | bipolar |
 
-That is 46 parameters per operator, 184 per part, and 368 in the manifest. The
-part block grows from 228 to 412, and the manifest from 470 to 838.
+That is 45 parameters per operator, 180 per part, and 360 in the manifest. The
+part block grows from 228 to 408, and the manifest from 470 to 830.
 
 A thirty-two harmonic mode would add 32 levels per operator. It is not in the
 first release, and the sixteen-bar editor, the table generator and the parameter
@@ -334,19 +336,22 @@ A patch that enables all four operators on both parts and regenerates every tabl
 therefore sits near 6% of one core before the rest of the graph. The 1,378 Hz
 update path is not used. The control rate stays at 344 Hz.
 
-When `opN_spec_on` is off, the oscillator reads the existing table for the chosen
-waveform. The additive bank is not generated and the read path does not run.
+When `opN_waveform` is 13, the oscillator reads the additive bank. Values 0 to 12
+read the wave table, and the additive bank is not generated.
 
 ## Existing patches
 
-The parameters default to off and to a sine a-spectrum. The current twelve
-waveforms, the current init patch and the existing part and multi-patch files
-render through the waveform path with the same samples. The engine parity test
-covers the off state, and a new table test covers the on state.
+The waveform defaults to sine, and the spectral levels default to a sine
+a-spectrum. Waves 0 to 8 render the same samples. The `rect tri` insertion shifts
+old values 9, 10 and 11 to 10, 11 and 12, so the preset version moves to 3 and the
+old test banks are regenerated. The engine parity test covers the wave path, and a
+new table test covers the spectrum mode.
 
 ## Open items
 
 - Confirm the preview and commit rule, and the control list that engages the mode.
+- Write the thirteen-wave table generator, compare the current twelve tables with
+  the new output, and regenerate `engine/gen/wavetable.h`.
 - Generate the thirteen by sixteen harmonic analysis table from the wavetable bank
   and test it against a DFT of the checked-in table.
 - Confirm the four macro curves and the formant width by ear.

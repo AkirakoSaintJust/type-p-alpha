@@ -6,8 +6,8 @@ The shared visual language for the Type P.alpha editor. The clickable mockup at
 the platform notes are in `juce.md`, the spectral control map is in `spectral.md`,
 and the waveform list and analysis are in `waveforms.md`.
 
-Status: v1.4 draft, 2026-11-13. Adds the spectral pages, the waveform preview and
-the `part fx/mod` tab move.
+Status: v1.4 draft, 2026-11-13. Adds the spectral pages, the `spectrum` wave, the
+waveform preview and the `part fx/mod` tab move.
 
 ## Principles
 
@@ -242,7 +242,7 @@ after it, and the mute switch at the right with a 16px gap before it, then a sco
 and spectro pair, and three cards: `oscillator`, `amp env`, `fb env`. The
 oscillator card holds ratio, detune, level, feedback and the wave select. The wave
 select lists sine, triangle, half sine, half tri, 2x sine, 2x tri, 2x half sine,
-2x half tri, rect sine, rect tri, pulse, square and saw. The `amp
+2x half tri, rect sine, rect tri, pulse, square, saw and spectrum. The `amp
 env` card holds R1 to R4 on the first row and L1 to L3 on the second row. The `fb
 env` card holds its own R1 to R4 and L1 to L4 rows, with signed levels in feedback
 units and an `on` switch in the card header. The signed sum of the feedback knob,
@@ -268,11 +268,12 @@ negative depth in bipolar mode inverts the LFO phase.
 Four borderless columns, each with the operator name at the left, copy and paste
 after it, the mute switch at the right, then a scope and spectro pair and three
 cards: `oscillator`, `spectrum a`, `spectrum b`. The oscillator card repeats the
-operator oscillator controls and adds the `spec` switch in the wave row and a
-`morph` slider under it. The wave select gives way to `spectral` while the
-spectral mode is on. While the mode is off, the a card shows the analysis of the
-selected wave with a `from wave` badge. The first edit commits that analysis and
-turns the mode on. Each spectrum card holds sixteen bars with h1, h4, h8, h12
+operator oscillator controls and adds a `morph` slider under the wave select. The
+wave select carries the mode: `spectrum` is the last entry, and selecting it uses
+the stored spectra. While the waveform is not `spectrum`, the a card shows the
+analysis of the selected wave with a `from wave` badge. The first edit commits that
+analysis and moves the waveform to `spectrum`. Each spectrum card holds sixteen
+bars with h1, h4, h8, h12
 and h16 on the scale, then `norm` and `to b` or `to a` below the macro rows. The
 first macro row carries `odd` and `even`. The second carries `tilt` and `formant`
 with a harmonic select for the formant centre. A macro is a drag gesture: the bars
@@ -283,12 +284,12 @@ them. The card header carries copy and paste for the whole spectrum.
 
 Four columns, each with the operator name, copy and paste, the mute switch, the
 `oscillator` card, a `spectra` display, then the `morph env` and `morph lfo` cards.
-The display draws the selected wave's analysis in spectrum a while the mode is off,
-and the stored spectrum a while it is on. Spectrum a is a filled purple outline and
-spectrum b is a pink outline, with a marker under them that runs from `a` to `b` at
-the current morph value. The display does not take a drag. The `morph env` card
-holds the graph, the depth knob, R1 to R4 and L1 to L3. The `morph lfo` card holds
-rate, depth, the wave select and the `bipolar` switch.
+The display draws the selected wave's analysis in spectrum a while the waveform is
+not `spectrum`, and the stored spectrum a while it is. Spectrum a is a filled purple
+outline and spectrum b is a pink outline, with a marker under them that runs from
+`a` to `b` at the current morph value. The display does not take a drag. The `morph
+env` card holds the graph, the depth knob, R1 to R4 and L1 to L3. The `morph lfo`
+card holds rate, depth, the wave select and the `bipolar` switch.
 
 ### Dialogs
 
