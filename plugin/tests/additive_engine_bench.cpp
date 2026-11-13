@@ -16,8 +16,9 @@
 #include "Engine.hpp"
 #include "Params.h"
 
-extern "C" int32_t p1_additive_morph;
+extern "C" int32_t p1_additive_morph_start;
 extern "C" int32_t p1_additive_morph_step;
+extern "C" int32_t p1_additive_morph_now;
 
 namespace {
 
@@ -93,8 +94,9 @@ int main(int argc, char** argv)
     {
         p1::Engine engine;
         engine.reset();
-        p1_additive_morph = 16384;
+        p1_additive_morph_start = 16384;
         p1_additive_morph_step = 0;
+        p1_additive_morph_now = 16384;
         for (int i = 0; i < kVoices; ++i)
             engine.noteOn(static_cast<uint32_t>(48 + i * 2), 100, 0);
         std::vector<int32_t> output(static_cast<std::size_t>(kRate) * 2u);
@@ -117,9 +119,11 @@ int main(int argc, char** argv)
     {
         p1::Engine engine;
         engine.reset();
-        p1_additive_morph = 0;
+        p1_additive_morph_start = 0;
         p1_additive_morph_step = 0;
+        p1_additive_morph_now = 0;
         setEngineParam(engine, "algorithm.p0", 7);
+        setEngineParam(engine, "level.p1", 0);
         setEngineParam(engine, "op1_level.p0", 99);
         setEngineParam(engine, "op1_feedback.p0", 0);
         setEngineParam(engine, "op1_fb_depth.p0", 0);
@@ -132,12 +136,14 @@ int main(int argc, char** argv)
             engine.noteOn(static_cast<uint32_t>(note), 100, 0);
         const int frames = kRate * 4;
         std::vector<int32_t> output(static_cast<std::size_t>(frames) * 2u, 0);
-        for (int position = 0; position < frames; position += 128) {
-            const int length = std::min(128, frames - position);
+        for (int position = 0; position < frames; position += 32) {
+            const int length = std::min(32, frames - position);
             const double t = static_cast<double>(position) / kRate;
             const int target = static_cast<int>(
                 std::min(1.0, t / 4.0) * 32767.0);
-            p1_additive_morph_step = (target - p1_additive_morph) / length;
+            const int start = p1_additive_morph_now;
+            p1_additive_morph_start = start;
+            p1_additive_morph_step = (target - start) / length;
             engine.render(output.data() + position * 2, length);
         }
         writeWav(wavPath, output);
