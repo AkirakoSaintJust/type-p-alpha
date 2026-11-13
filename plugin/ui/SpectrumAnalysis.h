@@ -6,7 +6,8 @@
 namespace p1::ui {
 
 /* Sixteen harmonic magnitudes of one mip-0 wave table, normalised to 0..99.
- * Wave 13 has no table and returns zeros. */
-std::array<double, 16> analyseWaveTable(int wave);
+ * `firstHarmonic` is the 1-based harmonic of the first bar. Wave 13 has no table
+ * and returns zeros. */
+std::array<double, 16> analyseWaveTable(int wave, int firstHarmonic = 1);
 
 } // namespace p1::ui

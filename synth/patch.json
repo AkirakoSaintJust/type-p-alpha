@@ -1,6 +1,6 @@
 {
   "name": "type-p-alpha",
-  "voices": 20,
+  "voices": 24,
   "cpu0_voices": 12,
   "model": 64,
   "cc": [
@@ -1857,6 +1857,20 @@
       "curve": "linear",
       "display": "onoff"
     },
+    "op1_spec_range_a": {
+      "target": "op1.osc.spec_range_a",
+      "min": 0,
+      "max": 7,
+      "curve": "linear",
+      "display": "range"
+    },
+    "op1_spec_range_b": {
+      "target": "op1.osc.spec_range_b",
+      "min": 0,
+      "max": 7,
+      "curve": "linear",
+      "display": "range"
+    },
     "op2_spec_a1": {
       "target": "op2.osc.spec_a1",
       "min": 0,
@@ -2129,6 +2143,20 @@
       "max": 1,
       "curve": "linear",
       "display": "onoff"
+    },
+    "op2_spec_range_a": {
+      "target": "op2.osc.spec_range_a",
+      "min": 0,
+      "max": 7,
+      "curve": "linear",
+      "display": "range"
+    },
+    "op2_spec_range_b": {
+      "target": "op2.osc.spec_range_b",
+      "min": 0,
+      "max": 7,
+      "curve": "linear",
+      "display": "range"
     },
     "op3_spec_a1": {
       "target": "op3.osc.spec_a1",
@@ -2403,6 +2431,20 @@
       "curve": "linear",
       "display": "onoff"
     },
+    "op3_spec_range_a": {
+      "target": "op3.osc.spec_range_a",
+      "min": 0,
+      "max": 7,
+      "curve": "linear",
+      "display": "range"
+    },
+    "op3_spec_range_b": {
+      "target": "op3.osc.spec_range_b",
+      "min": 0,
+      "max": 7,
+      "curve": "linear",
+      "display": "range"
+    },
     "op4_spec_a1": {
       "target": "op4.osc.spec_a1",
       "min": 0,
@@ -2675,6 +2717,20 @@
       "max": 1,
       "curve": "linear",
       "display": "onoff"
+    },
+    "op4_spec_range_a": {
+      "target": "op4.osc.spec_range_a",
+      "min": 0,
+      "max": 7,
+      "curve": "linear",
+      "display": "range"
+    },
+    "op4_spec_range_b": {
+      "target": "op4.osc.spec_range_b",
+      "min": 0,
+      "max": 7,
+      "curve": "linear",
+      "display": "range"
     }
   },
   "voice": {
@@ -2759,7 +2815,9 @@
           "spec_lfo_rate": 357914,
           "spec_lfo_depth": 0,
           "spec_lfo_wave": 0,
-          "spec_lfo_mode": 1
+          "spec_lfo_mode": 1,
+          "spec_range_a": 0,
+          "spec_range_b": 0
         }
       },
       {
@@ -2842,7 +2900,9 @@
           "spec_lfo_rate": 357914,
           "spec_lfo_depth": 0,
           "spec_lfo_wave": 0,
-          "spec_lfo_mode": 1
+          "spec_lfo_mode": 1,
+          "spec_range_a": 0,
+          "spec_range_b": 0
         }
       },
       {
@@ -2925,7 +2985,9 @@
           "spec_lfo_rate": 357914,
           "spec_lfo_depth": 0,
           "spec_lfo_wave": 0,
-          "spec_lfo_mode": 1
+          "spec_lfo_mode": 1,
+          "spec_range_a": 0,
+          "spec_range_b": 0
         }
       },
       {
@@ -3008,7 +3070,9 @@
           "spec_lfo_rate": 357914,
           "spec_lfo_depth": 0,
           "spec_lfo_wave": 0,
-          "spec_lfo_mode": 1
+          "spec_lfo_mode": 1,
+          "spec_range_a": 0,
+          "spec_range_b": 0
         }
       },
       {

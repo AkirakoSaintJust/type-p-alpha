@@ -109,16 +109,17 @@ Every page fills the same height:
 - operator spectra: four operator columns with the oscillator card, then the
   `spectrum a` and `spectrum b` cards. The oscillator card adds the `morph` knob to
   the knob row, and the wave select carries `spectrum` at 13. Each spectrum
-  card is 220 high and holds a 16-bar editor, a harmonic scale, the `odd`, `even`,
-  `tilt` and `formant` macros, and `norm` with `to b` or `to a`. While the waveform
-  is not `spectrum`, the a card shows the analysis of the selected wave with a
-  `from wave` badge. The first edit commits that analysis and moves the waveform to
-  `spectrum`.
+  card is 220 high and holds a range select, a 16-bar editor, a harmonic scale, the
+  `odd`, `even`, `tilt` and `formant` macros, and `norm` with `to b` or `to a`.
+  While the waveform is not `spectrum`, the a card shows the analysis of the selected
+  wave with a `from wave` badge. The first A-card edit commits that analysis and
+  moves the waveform to `spectrum`.
 - op spectra mod: four operator columns with the oscillator card, a `spectra`
   display, the `morph env` card and the `morph lfo` card. The display draws the
   selected wave's analysis in a while the waveform is not `spectrum`, and the
-  stored a while it is, plus b and a morph marker. It takes no drag. The envelope
-  card carries the graph, the depth knob, R1 to R4 and L1 to L3.
+  stored a while it is, plus b and a morph marker. It takes no drag. When a and b
+  use different ranges, the display zooms out to the union of the two spans. The
+  envelope card carries the graph, the depth knob, R1 to R4 and L1 to L3.
 
 Moving `part fx/mod` next to `patch settings` shifts the stored `uiPage` index. The
 processor remaps old 1 to 2, 2 to 3 and 3 to 1 when an old state has no

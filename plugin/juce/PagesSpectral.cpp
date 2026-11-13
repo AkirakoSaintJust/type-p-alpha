@@ -35,6 +35,12 @@ juce::StringArray spectrumIDs(int op, int part, bool a)
     return ids;
 }
 
+juce::StringArray rangeNames()
+{
+    return {"1-16", "17-32", "33-48", "49-64",
+            "65-80", "81-96", "97-112", "113-128"};
+}
+
 class MacroSlider : public juce::Component {
 public:
     MacroSlider(juce::String label, double min, double max,
@@ -227,6 +233,10 @@ public:
           isA_(a),
           bars_(editor.state(), spectrumIDs(op, part, a),
                 colour(a ? tokens::purple : tokens::pink)),
+          range_(editor.state(),
+                 a ? params::opSpecRangeA(op, part)
+                   : params::opSpecRangeB(op, part),
+                 rangeNames()),
           norm_("norm", true),
           toOther_(a ? "to b" : "to a", true),
           odd_("odd", 0.0, 1.0, [this] { beginMacro(); },
@@ -243,6 +253,11 @@ public:
                    [this] { endMacro(); })
     {
         addAndMakeVisible(bars_);
+        addAndMakeVisible(range_);
+        rangeLabel_.setText("range", juce::dontSendNotification);
+        rangeLabel_.setFont(uiFont(tokens::textLegend));
+        rangeLabel_.setColour(juce::Label::textColourId, colour(tokens::dim));
+        addAndMakeVisible(rangeLabel_);
         addAndMakeVisible(norm_);
         addAndMakeVisible(toOther_);
         addAndMakeVisible(odd_);
@@ -303,8 +318,12 @@ public:
     {
         P1Card::resized();
         auto area = contentArea();
-        area.removeFromTop(6);
-        bars_.setBounds(area.removeFromTop(96));
+        area.removeFromTop(4);
+        auto rangeRow = area.removeFromTop(20);
+        rangeLabel_.setBounds(rangeRow.removeFromLeft(38));
+        range_.setBounds(rangeRow.removeFromLeft(92).reduced(1));
+        area.removeFromTop(2);
+        bars_.setBounds(area.removeFromTop(82));
         auto row = area.removeFromTop(22);
         odd_.setBounds(row.removeFromLeft(row.getWidth() / 3));
         even_.setBounds(row.removeFromLeft(row.getWidth() / 2));
@@ -339,14 +358,21 @@ private:
         bars_.setLevels(levels);
     }
 
-    std::vector<double> analyseWave(int wave) const
+    std::vector<double> analyseWave(int wave, int first) const
     {
-        const auto values = analyseWaveTable(wave);
+        const auto values = analyseWaveTable(wave, first);
         return std::vector<double>(values.begin(), values.end());
     }
 
     void updatePreview()
     {
+        const int range = juce::jlimit(
+            0, 7,
+            static_cast<int>(std::lround(getParam(
+                editor_, isA_ ? params::opSpecRangeA(op_, part_)
+                              : params::opSpecRangeB(op_, part_)))));
+        const int first = range * 16 + 1;
+        bars_.setFirstHarmonic(first);
         if (!isA_)
             return;
         const int wave = static_cast<int>(
@@ -359,10 +385,11 @@ private:
         }
         if (wave < 0 || wave > 12)
             return;
-        if (wave == lastWave_ && bars_.hasPreview())
+        if (wave == lastWave_ && first == lastFirst_ && bars_.hasPreview())
             return;
         lastWave_ = wave;
-        bars_.setPreviewLevels(analyseWave(wave));
+        lastFirst_ = first;
+        bars_.setPreviewLevels(analyseWave(wave, first));
     }
 
     void commitPreview()
@@ -418,7 +445,10 @@ private:
     int part_ = 0;
     bool isA_ = true;
     int lastWave_ = -1;
+    int lastFirst_ = 1;
     P1SpectralBars bars_;
+    ParamChoice range_;
+    juce::Label rangeLabel_;
     P1Button norm_;
     P1Button toOther_;
     MacroSlider odd_;
@@ -541,7 +571,9 @@ public:
           display_(editor.state(), spectrumIDs(op, part_, true),
                    spectrumIDs(op, part_, false),
                    params::opSpecMorph(op, part_),
-                   params::opWaveform(op, part_), colour(tokens::purple),
+                   params::opWaveform(op, part_),
+                   params::opSpecRangeA(op, part_),
+                   params::opSpecRangeB(op, part_), colour(tokens::purple),
                    colour(tokens::pink)),
           env_(editor, op, part_),
           lfo_(editor, "morph lfo", params::opSpecLfoRate(op, part_),

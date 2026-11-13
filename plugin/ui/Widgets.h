@@ -171,6 +171,7 @@ public:
     void setLevels(const std::vector<double>& levels);
     void setPreviewLevels(const std::vector<double>& levels);
     void clearPreview();
+    void setFirstHarmonic(int first);
     bool hasPreview() const { return !preview_.empty(); }
     std::function<void()> onEdit;
 
@@ -184,13 +185,15 @@ private:
     juce::StringArray parameterIDs_;
     juce::Colour colour_;
     std::vector<double> preview_;
+    int firstHarmonic_ = 1;
 };
 
 class P1SpectrumDisplay : public juce::Component {
 public:
     P1SpectrumDisplay(APVTS& state, juce::StringArray aIDs,
                       juce::StringArray bIDs, juce::String morphID,
-                      juce::String waveformID, juce::Colour aColour,
+                      juce::String waveformID, juce::String rangeAID,
+                      juce::String rangeBID, juce::Colour aColour,
                       juce::Colour bColour);
     void paint(juce::Graphics& g) override;
 
@@ -202,6 +205,8 @@ private:
     juce::StringArray bIDs_;
     juce::String morphID_;
     juce::String waveformID_;
+    juce::String rangeAID_;
+    juce::String rangeBID_;
     juce::Colour aColour_;
     juce::Colour bColour_;
 };

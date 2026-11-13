@@ -54,8 +54,10 @@ static inline int32_t p1_spectral_morph(int32_t base, int32_t depth,
 }
 
 /* One spectrum, all five mips, peak normalised to Q15. The levels are the
- * sixteen harmonic amplitudes in 0..99. */
-static inline void p1_spectral_table(int16_t *out, const int32_t *levels)
+ * sixteen harmonic amplitudes in 0..99, starting at `firstHarmonic` (1, 17, ...,
+ * 113). The range shifts every partial by the same offset. */
+static inline void p1_spectral_table(int16_t *out, const int32_t *levels,
+                                     int firstHarmonic)
 {
     int32_t raw[P1_SPEC_SIZE];
     for (int level = 0; level < P1_SPEC_LEVELS; ++level) {
@@ -64,7 +66,8 @@ static inline void p1_spectral_table(int16_t *out, const int32_t *levels)
         for (int i = 0; i < P1_SPEC_SIZE; ++i) {
             int32_t sum = 0;
             for (int n = 0; n < harmonics; ++n)
-                sum += levels[n] * p1_sin((uint32_t)(i * (n + 1)) << 24);
+                sum += levels[n] *
+                       p1_sin((uint32_t)(i * (firstHarmonic + n)) << 24);
             raw[i] = sum;
             const int32_t magnitude = sum < 0 ? -sum : sum;
             if (magnitude > peak)
@@ -79,9 +82,16 @@ static inline void p1_spectral_table(int16_t *out, const int32_t *levels)
     }
 }
 
-static inline uint16_t p1_spectral_hash(const int32_t *levels)
+static inline int p1_spectral_range_first(int32_t range)
 {
-    uint32_t h = 0;
+    const int32_t r = range < 0 ? 0 : (range > 7 ? 7 : range);
+    return (int)r * 16 + 1;
+}
+
+static inline uint16_t p1_spectral_hash(const int32_t *levels,
+                                        int firstHarmonic)
+{
+    uint32_t h = (uint32_t)firstHarmonic & 0xffffu;
     for (int i = 0; i < 16; ++i)
         h = (h * 31u + (uint32_t)levels[i]) & 0xffffu;
     return (uint16_t)h;
@@ -96,7 +106,8 @@ static inline void p1_spectral_copy(int16_t *dst, const int16_t *src)
 /* Generate or advance the bank for both parts. Called once per control block
  * at the first voice. One spectrum changes at a time per part. */
 static inline void p1_spectral_tick(
-    int16_t *bank, const int32_t *waveform,
+    int16_t *bank, const int32_t *waveform, const int32_t *range_a,
+    const int32_t *range_b,
     const int32_t *a1, const int32_t *a2, const int32_t *a3,
     const int32_t *a4, const int32_t *a5, const int32_t *a6,
     const int32_t *a7, const int32_t *a8, const int32_t *a9,
@@ -134,16 +145,19 @@ static inline void p1_spectral_tick(
              a15, a16},
             {b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14,
              b15, b16}};
+        const int first[2] = {p1_spectral_range_first(range_a[part]),
+                              p1_spectral_range_first(range_b[part])};
         for (int spectrum = 0; spectrum < 2; ++spectrum) {
             int32_t levels[16];
             for (int i = 0; i < 16; ++i)
                 levels[i] = sets[spectrum][i][part];
-            const uint16_t hash = p1_spectral_hash(levels);
+            const uint16_t hash = p1_spectral_hash(levels, first[spectrum]);
             const uint16_t committed = (uint16_t)bank[P1_SPEC_HASH +
                                                       part * 2 + spectrum];
             if (hash == committed)
                 continue;
-            p1_spectral_table(bank + P1_SPEC_SHADOW(part), levels);
+            p1_spectral_table(bank + P1_SPEC_SHADOW(part), levels,
+                              first[spectrum]);
             bank[P1_SPEC_TARGET + part] = (int16_t)spectrum;
             bank[P1_SPEC_TARGET_HASH + part * 2 + spectrum] = (int16_t)hash;
             bank[P1_SPEC_XFADE + part] = 256;

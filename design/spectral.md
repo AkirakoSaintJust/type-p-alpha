@@ -156,13 +156,14 @@ thirty-two harmonic mode later closes part of the gap.
 ## Spectrum cards
 
 Each operator has two cards, `spectrum a` and `spectrum b`, with the same
-controls. The sixteen stored levels per spectrum are the only saved spectrum state.
+controls. The sixteen levels and the range are the saved spectrum state.
 While the waveform is not `spectrum`, the a card shows the live waveform analysis.
 Once the waveform is `spectrum`, both cards show the stored levels.
 
 | Control | Meaning |
 | --- | --- |
-| 16 bars | harmonic 1 to 16, 0 to 99 per bar |
+| `range` | the harmonic block the 16 bars address: 1-16, 17-32, ..., 113-128 |
+| 16 bars | the selected range, 0 to 99 per bar |
 | `norm` | scale the sixteen bars so the tallest reads 99 |
 | `to b` / `to a` | copy this card's sixteen levels to the other spectrum |
 | `odd` | drag to attenuate the even harmonics |
@@ -174,7 +175,9 @@ Once the waveform is `spectrum`, both cards show the stored levels.
 The bar editor writes the level under the pointer and follows a drag across the
 bars. A bar snaps to whole units from 0 to 99. The engine normalises the generated
 table, so the bars set the relative amplitudes whilst the operator level sets the
-loudness.
+loudness. The range shifts the whole block, so a card set to 17-32 edits harmonics
+17 to 32. A and b carry independent ranges, and the mod display zooms to the union
+when they differ.
 
 Each card carries `copy` and `paste` in its header, like every other operator
 card, so a whole spectrum moves between operators. The `to b` and `to a` buttons
@@ -280,6 +283,8 @@ waveform parameter grows from 0 to 11 to 0 to 13, where 13 selects `spectrum`.
 
 | Group | Id | Count | Range | Default |
 | --- | --- | --- | --- | --- |
+| range a | `opN_spec_range_a.pP` | 1 | 0 to 7 | 0 |
+| range b | `opN_spec_range_b.pP` | 1 | 0 to 7 | 0 |
 | spectrum a | `opN_spec_a1.pP` to `opN_spec_a16.pP` | 16 | 0 to 99 | 99, then zero |
 | spectrum b | `opN_spec_b1.pP` to `opN_spec_b16.pP` | 16 | 0 to 99 | as the defaults table |
 | morph | `opN_spec_morph.pP` | 1 | 0 to 99 | 0 |
@@ -291,8 +296,12 @@ waveform parameter grows from 0 to 11 to 0 to 13, where 13 selects `spectrum`.
 | lfo wave | `opN_spec_lfo_wave.pP` | 1 | six waves | sine |
 | lfo mode | `opN_spec_lfo_mode.pP` | 1 | unipolar, bipolar | bipolar |
 
-That is 45 parameters per operator, 180 per part, and 360 in the manifest. The
-part block grows from 228 to 408, and the manifest from 470 to 830.
+That is 47 parameters per operator, 188 per part, and 376 in the manifest. The
+part block grows from 228 to 416, and the manifest from 470 to 846.
+
+The range is the harmonic block the 16 bars address: 0 is 1 to 16, 1 is 17 to 32,
+and 7 is 113 to 128. A and b each carry their own range, so the mod display zooms
+out to the union of both spans when they differ.
 
 A thirty-two harmonic mode would add 32 levels per operator. It is not in the
 first release, and the sixteen-bar editor, the table generator and the parameter
@@ -321,12 +330,12 @@ current table keeps playing, and crossfades the read from the old table to the n
 one over ten milliseconds, which keeps the update silent without stopping the
 voice. The read never stops. The morph blends the two existing tables per sample.
 
-The mip selector is the conservative one measured in the additive survey. At 16
-harmonics and 256 samples, the alias floor at C7 is -87.3 dB with the linear read.
-The selector costs the fifth to eighth harmonics at C7, which measure -91.6 dB
-against +4.2 dB with the bright policy. The first release keeps the conservative
-selector and records the number. A listening test then chooses between it and a
-one-level-brighter policy.
+The mip selector now uses Nyquist/2.25, between the Nyquist/4 survey and the bright
+Nyquist/2 policy. At 16 harmonics and 256 samples, the alias floor at C7 is
+-87.3 dB with the linear read in the survey. The Nyquist/4 selector cost the fifth
+to eighth harmonics at C7, which measure -91.6 dB against +4.2 dB with the bright
+policy. Nyquist/2.25 recovers part of that group with less alias headroom than the
+bright policy. The listening test can move it back.
 
 The measured costs on this machine, with the caveat that the CPU clock moved the
 runs by up to 25 percent:
@@ -340,6 +349,9 @@ runs by up to 25 percent:
 A patch that enables all four operators on both parts and regenerates every table
 therefore sits near 6% of one core before the rest of the graph. The 1,378 Hz
 update path is not used. The control rate stays at 344 Hz.
+
+The cost survey used 20 voices. The current engine has 24, so the per-voice rows
+scale by 1.2 and the full graph figure moves from 2.46% to about 2.95%.
 
 When `opN_waveform` is 13, the oscillator reads the additive bank. Values 0 to 12
 read the wave table, and the additive bank is not generated.

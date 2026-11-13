@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: GPL-3.0-only */
 /* Headless additive table experiment.
  *
- * The baseline is the real engine at 20 voices and four operators. The table
+ * The baseline is the real engine at 24 voices and four operators. The table
  * generator is the proposed shared-part algorithm, measured in isolation at the
  * 16/32 harmonic and 256/512 sample matrix. The read model measures the extra
  * table read and morph blend that a per-voice morph adds. The audition writes a
@@ -22,7 +22,7 @@
 namespace {
 
 constexpr int kRate = 48000;
-constexpr int kVoices = 20;
+constexpr int kVoices = 24;
 constexpr int kOperators = 4;
 constexpr int kParts = 2;
 constexpr int kTables = kOperators * kParts;
@@ -600,7 +600,7 @@ int main(int argc, char** argv)
                 kOperators, kParts, kRate);
 
     const double base = baselineSeconds();
-    std::printf("baseline: 20 voices, 20 s render: %.1f ms, 60 s: %.1f ms, "
+    std::printf("baseline: 24 voices, 20 s render: %.1f ms, 60 s: %.1f ms, "
                 "%.2f%% of realtime\n",
                 base * 1000.0, base * 3000.0, base / 20.0 * 100.0);
 
@@ -648,7 +648,7 @@ int main(int argc, char** argv)
 
     const double single = oscillatorSeconds(false);
     const double additive = oscillatorSeconds(true);
-    std::printf("\noscillator read, 20 voices, 4 operators, 16/256 tables\n");
+    std::printf("\noscillator read, 24 voices, 4 operators, 16/256 tables\n");
     std::printf("  single table, nearest: %.1f ms / 60 s, %.2f%% of realtime\n",
                 single * 6000.0, single / 10.0 * 100.0);
     std::printf("  two tables, linear, mip: %.1f ms / 60 s, %.2f%% of realtime\n",

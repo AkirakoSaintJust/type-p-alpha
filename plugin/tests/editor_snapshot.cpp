@@ -117,6 +117,17 @@ int main(int argc, char** argv)
     fill();
     ok = saveSnapshot(*editor,
                       directory.getChildFile("editor-op-spectra-mod.png")) && ok;
+    if (auto* rangeB =
+            p1editor->state().getParameter("op1_spec_range_b.p0")) {
+        rangeB->setValueNotifyingHost(rangeB->convertTo0to1(7.0f));
+        p1editor->updateVisualizers();
+        ok = saveSnapshot(
+                 *editor,
+                 directory.getChildFile("editor-op-spectra-mod-ranges.png")) &&
+             ok;
+        rangeB->setValueNotifyingHost(rangeB->convertTo0to1(0.0f));
+        p1editor->updateVisualizers();
+    }
     p1editor->showTab(0);
     fill();
     p1editor->showAlgorithmPicker();
@@ -181,6 +192,33 @@ int main(int argc, char** argv)
         }
         setRaw("op1_level.p0", srcOsc);
         setRaw("op2_level.p0", dstOsc);
+
+        const float srcSpec = readRaw("op1_spec_a1.p0");
+        const float dstSpec = readRaw("op2_spec_a1.p0");
+        const float srcRange = readRaw("op1_spec_range_a.p0");
+        const float dstRange = readRaw("op2_spec_range_a.p0");
+        const float srcWave = readRaw("op1_waveform.p0");
+        const float dstWave = readRaw("op2_waveform.p0");
+        setRaw("op1_spec_a1.p0", 77.0f);
+        setRaw("op1_spec_range_a.p0", 2.0f);
+        setRaw("op1_waveform.p0", 0.0f);
+        setRaw("op2_waveform.p0", 0.0f);
+        p1editor->copyOperatorSection(
+            0, 0, PluginEditor::OperatorSection::spectrumA);
+        p1editor->pasteOperatorSection(
+            1, 0, PluginEditor::OperatorSection::spectrumA);
+        if (std::lround(readRaw("op2_spec_a1.p0")) != 77 ||
+            std::lround(readRaw("op2_spec_range_a.p0")) != 2 ||
+            std::lround(readRaw("op2_waveform.p0")) != 13) {
+            std::printf("editor snapshot: spectrum paste did not activate the mode\n");
+            ok = false;
+        }
+        setRaw("op1_spec_a1.p0", srcSpec);
+        setRaw("op2_spec_a1.p0", dstSpec);
+        setRaw("op1_spec_range_a.p0", srcRange);
+        setRaw("op2_spec_range_a.p0", dstRange);
+        setRaw("op1_waveform.p0", srcWave);
+        setRaw("op2_waveform.p0", dstWave);
     }
 
     p1editor->showSinglePartsBrowser();

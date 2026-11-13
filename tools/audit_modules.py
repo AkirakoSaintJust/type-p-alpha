@@ -93,11 +93,13 @@ def main() -> int:
                      if p["name"] in (
                          "op1_spec_a1.p0", "op1_spec_a2.p0",
                          "op1_spec_b1.p0", "op1_spec_b2.p0",
-                         "op1_spec_morph.p0", "op1_spec_env_depth.p0")}
+                         "op1_spec_morph.p0", "op1_spec_env_depth.p0",
+                         "op1_spec_range_a.p0", "op1_spec_range_b.p0")}
     expected_defaults = {
         "op1_spec_a1.p0": 99, "op1_spec_a2.p0": 0,
         "op1_spec_b1.p0": 99, "op1_spec_b2.p0": 45,
         "op1_spec_morph.p0": 0, "op1_spec_env_depth.p0": 0,
+        "op1_spec_range_a.p0": 0, "op1_spec_range_b.p0": 0,
     }
 
     nodes = sorted(p.name for p in NODES.iterdir() if p.is_dir())
@@ -119,7 +121,7 @@ def main() -> int:
 
     if missing or param_problems or map_problems:
         return 1
-    if part_block != 408 or waveform_max != 13 or spec_per_op != 45:
+    if part_block != 416 or waveform_max != 13 or spec_per_op != 47:
         print("audit: generated manifest shape changed")
         return 1
     if spec_defaults != expected_defaults:

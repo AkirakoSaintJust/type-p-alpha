@@ -23,7 +23,7 @@ extern "C" int32_t p1_additive_morph_now;
 namespace {
 
 constexpr int kRate = 48000;
-constexpr int kVoices = 20;
+constexpr int kVoices = 24;
 
 double secondsSince(std::chrono::steady_clock::time_point start)
 {
@@ -111,7 +111,7 @@ int main(int argc, char** argv)
                           static_cast<uint32_t>(kRate * kSeconds));
             best = std::min(best, secondsSince(start));
         }
-        std::printf("20 voices, real graph, additive oscillator: 20 s render "
+        std::printf("24 voices, real graph, additive oscillator: 20 s render "
                     "%.1f ms, 60 s: %.1f ms, %.2f%% of realtime\n",
                     best * 1000.0, best * 3000.0, best / 20.0 * 100.0);
     }

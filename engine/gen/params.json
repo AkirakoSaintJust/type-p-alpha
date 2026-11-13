@@ -41,6 +41,32 @@
     },
     {
       "id": 3,
+      "name": "op1_spec_range_a.p0",
+      "target": "op1.osc.spec_range_a.p0",
+      "min": 0,
+      "max": 7,
+      "default": 0,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "range"
+    },
+    {
+      "id": 4,
+      "name": "op1_spec_range_b.p0",
+      "target": "op1.osc.spec_range_b.p0",
+      "min": 0,
+      "max": 7,
+      "default": 0,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "range"
+    },
+    {
+      "id": 5,
       "name": "op1_spec_a1.p0",
       "target": "op1.osc.spec_a1.p0",
       "min": 0,
@@ -53,7 +79,7 @@
       "display": "raw"
     },
     {
-      "id": 4,
+      "id": 6,
       "name": "op1_spec_a2.p0",
       "target": "op1.osc.spec_a2.p0",
       "min": 0,
@@ -66,7 +92,7 @@
       "display": "raw"
     },
     {
-      "id": 5,
+      "id": 7,
       "name": "op1_spec_a3.p0",
       "target": "op1.osc.spec_a3.p0",
       "min": 0,
@@ -79,7 +105,7 @@
       "display": "raw"
     },
     {
-      "id": 6,
+      "id": 8,
       "name": "op1_spec_a4.p0",
       "target": "op1.osc.spec_a4.p0",
       "min": 0,
@@ -92,7 +118,7 @@
       "display": "raw"
     },
     {
-      "id": 7,
+      "id": 9,
       "name": "op1_spec_a5.p0",
       "target": "op1.osc.spec_a5.p0",
       "min": 0,
@@ -105,7 +131,7 @@
       "display": "raw"
     },
     {
-      "id": 8,
+      "id": 10,
       "name": "op1_spec_a6.p0",
       "target": "op1.osc.spec_a6.p0",
       "min": 0,
@@ -118,7 +144,7 @@
       "display": "raw"
     },
     {
-      "id": 9,
+      "id": 11,
       "name": "op1_spec_a7.p0",
       "target": "op1.osc.spec_a7.p0",
       "min": 0,
@@ -131,7 +157,7 @@
       "display": "raw"
     },
     {
-      "id": 10,
+      "id": 12,
       "name": "op1_spec_a8.p0",
       "target": "op1.osc.spec_a8.p0",
       "min": 0,
@@ -144,7 +170,7 @@
       "display": "raw"
     },
     {
-      "id": 11,
+      "id": 13,
       "name": "op1_spec_a9.p0",
       "target": "op1.osc.spec_a9.p0",
       "min": 0,
@@ -157,7 +183,7 @@
       "display": "raw"
     },
     {
-      "id": 12,
+      "id": 14,
       "name": "op1_spec_a10.p0",
       "target": "op1.osc.spec_a10.p0",
       "min": 0,
@@ -170,7 +196,7 @@
       "display": "raw"
     },
     {
-      "id": 13,
+      "id": 15,
       "name": "op1_spec_a11.p0",
       "target": "op1.osc.spec_a11.p0",
       "min": 0,
@@ -183,7 +209,7 @@
       "display": "raw"
     },
     {
-      "id": 14,
+      "id": 16,
       "name": "op1_spec_a12.p0",
       "target": "op1.osc.spec_a12.p0",
       "min": 0,
@@ -196,7 +222,7 @@
       "display": "raw"
     },
     {
-      "id": 15,
+      "id": 17,
       "name": "op1_spec_a13.p0",
       "target": "op1.osc.spec_a13.p0",
       "min": 0,
@@ -209,7 +235,7 @@
       "display": "raw"
     },
     {
-      "id": 16,
+      "id": 18,
       "name": "op1_spec_a14.p0",
       "target": "op1.osc.spec_a14.p0",
       "min": 0,
@@ -222,7 +248,7 @@
       "display": "raw"
     },
     {
-      "id": 17,
+      "id": 19,
       "name": "op1_spec_a15.p0",
       "target": "op1.osc.spec_a15.p0",
       "min": 0,
@@ -235,7 +261,7 @@
       "display": "raw"
     },
     {
-      "id": 18,
+      "id": 20,
       "name": "op1_spec_a16.p0",
       "target": "op1.osc.spec_a16.p0",
       "min": 0,
@@ -248,7 +274,7 @@
       "display": "raw"
     },
     {
-      "id": 19,
+      "id": 21,
       "name": "op1_spec_b1.p0",
       "target": "op1.osc.spec_b1.p0",
       "min": 0,
@@ -261,7 +287,7 @@
       "display": "raw"
     },
     {
-      "id": 20,
+      "id": 22,
       "name": "op1_spec_b2.p0",
       "target": "op1.osc.spec_b2.p0",
       "min": 0,
@@ -274,7 +300,7 @@
       "display": "raw"
     },
     {
-      "id": 21,
+      "id": 23,
       "name": "op1_spec_b3.p0",
       "target": "op1.osc.spec_b3.p0",
       "min": 0,
@@ -287,7 +313,7 @@
       "display": "raw"
     },
     {
-      "id": 22,
+      "id": 24,
       "name": "op1_spec_b4.p0",
       "target": "op1.osc.spec_b4.p0",
       "min": 0,
@@ -300,7 +326,7 @@
       "display": "raw"
     },
     {
-      "id": 23,
+      "id": 25,
       "name": "op1_spec_b5.p0",
       "target": "op1.osc.spec_b5.p0",
       "min": 0,
@@ -313,7 +339,7 @@
       "display": "raw"
     },
     {
-      "id": 24,
+      "id": 26,
       "name": "op1_spec_b6.p0",
       "target": "op1.osc.spec_b6.p0",
       "min": 0,
@@ -326,7 +352,7 @@
       "display": "raw"
     },
     {
-      "id": 25,
+      "id": 27,
       "name": "op1_spec_b7.p0",
       "target": "op1.osc.spec_b7.p0",
       "min": 0,
@@ -339,7 +365,7 @@
       "display": "raw"
     },
     {
-      "id": 26,
+      "id": 28,
       "name": "op1_spec_b8.p0",
       "target": "op1.osc.spec_b8.p0",
       "min": 0,
@@ -352,7 +378,7 @@
       "display": "raw"
     },
     {
-      "id": 27,
+      "id": 29,
       "name": "op1_spec_b9.p0",
       "target": "op1.osc.spec_b9.p0",
       "min": 0,
@@ -365,7 +391,7 @@
       "display": "raw"
     },
     {
-      "id": 28,
+      "id": 30,
       "name": "op1_spec_b10.p0",
       "target": "op1.osc.spec_b10.p0",
       "min": 0,
@@ -378,7 +404,7 @@
       "display": "raw"
     },
     {
-      "id": 29,
+      "id": 31,
       "name": "op1_spec_b11.p0",
       "target": "op1.osc.spec_b11.p0",
       "min": 0,
@@ -391,7 +417,7 @@
       "display": "raw"
     },
     {
-      "id": 30,
+      "id": 32,
       "name": "op1_spec_b12.p0",
       "target": "op1.osc.spec_b12.p0",
       "min": 0,
@@ -404,7 +430,7 @@
       "display": "raw"
     },
     {
-      "id": 31,
+      "id": 33,
       "name": "op1_spec_b13.p0",
       "target": "op1.osc.spec_b13.p0",
       "min": 0,
@@ -417,7 +443,7 @@
       "display": "raw"
     },
     {
-      "id": 32,
+      "id": 34,
       "name": "op1_spec_b14.p0",
       "target": "op1.osc.spec_b14.p0",
       "min": 0,
@@ -430,7 +456,7 @@
       "display": "raw"
     },
     {
-      "id": 33,
+      "id": 35,
       "name": "op1_spec_b15.p0",
       "target": "op1.osc.spec_b15.p0",
       "min": 0,
@@ -443,7 +469,7 @@
       "display": "raw"
     },
     {
-      "id": 34,
+      "id": 36,
       "name": "op1_spec_b16.p0",
       "target": "op1.osc.spec_b16.p0",
       "min": 0,
@@ -456,7 +482,7 @@
       "display": "raw"
     },
     {
-      "id": 35,
+      "id": 37,
       "name": "op1_spec_morph.p0",
       "target": "op1.osc.spec_morph.p0",
       "min": 0,
@@ -469,7 +495,7 @@
       "display": "raw"
     },
     {
-      "id": 36,
+      "id": 38,
       "name": "op1_spec_env_depth.p0",
       "target": "op1.osc.spec_env_depth.p0",
       "min": -99,
@@ -482,7 +508,7 @@
       "display": "raw"
     },
     {
-      "id": 37,
+      "id": 39,
       "name": "attack.p0",
       "target": "op1.eg.r1.p0",
       "min": 0,
@@ -495,7 +521,7 @@
       "display": "raw"
     },
     {
-      "id": 38,
+      "id": 40,
       "name": "op1.eg.r2.p0",
       "target": "op1.eg.r2.p0",
       "min": 0,
@@ -508,7 +534,7 @@
       "display": "raw"
     },
     {
-      "id": 39,
+      "id": 41,
       "name": "op1.eg.r3.p0",
       "target": "op1.eg.r3.p0",
       "min": 0,
@@ -521,7 +547,7 @@
       "display": "raw"
     },
     {
-      "id": 40,
+      "id": 42,
       "name": "release.p0",
       "target": "op1.eg.r4.p0",
       "min": 0,
@@ -534,7 +560,7 @@
       "display": "raw"
     },
     {
-      "id": 41,
+      "id": 43,
       "name": "op1.eg.l1.p0",
       "target": "op1.eg.l1.p0",
       "min": 0,
@@ -547,7 +573,7 @@
       "display": "raw"
     },
     {
-      "id": 42,
+      "id": 44,
       "name": "op1.eg.l2.p0",
       "target": "op1.eg.l2.p0",
       "min": 0,
@@ -560,7 +586,7 @@
       "display": "raw"
     },
     {
-      "id": 43,
+      "id": 45,
       "name": "op1.eg.l3.p0",
       "target": "op1.eg.l3.p0",
       "min": 0,
@@ -573,7 +599,7 @@
       "display": "raw"
     },
     {
-      "id": 44,
+      "id": 46,
       "name": "op1_trem_rate.p0",
       "target": "op1.lfo.rate.p0",
       "min": 0,
@@ -586,7 +612,7 @@
       "display": "hz"
     },
     {
-      "id": 45,
+      "id": 47,
       "name": "op1_trem_depth.p0",
       "target": "op1.lfo.depth.p0",
       "min": -99,
@@ -599,7 +625,7 @@
       "display": "raw"
     },
     {
-      "id": 46,
+      "id": 48,
       "name": "op1_trem_wave.p0",
       "target": "op1.lfo.wave.p0",
       "min": 0,
@@ -612,7 +638,7 @@
       "display": "wave"
     },
     {
-      "id": 47,
+      "id": 49,
       "name": "op1_trem_mode.p0",
       "target": "op1.lfo.mode.p0",
       "min": 0,
@@ -625,7 +651,7 @@
       "display": "onoff"
     },
     {
-      "id": 48,
+      "id": 50,
       "name": "op1_fbenv_on.p0",
       "target": "op1.fbenv.on.p0",
       "min": 0,
@@ -638,7 +664,7 @@
       "display": "onoff"
     },
     {
-      "id": 49,
+      "id": 51,
       "name": "op1_fbenv_r1.p0",
       "target": "op1.fbenv.r1.p0",
       "min": 0,
@@ -651,7 +677,7 @@
       "display": "raw"
     },
     {
-      "id": 50,
+      "id": 52,
       "name": "op1_fbenv_r2.p0",
       "target": "op1.fbenv.r2.p0",
       "min": 0,
@@ -664,7 +690,7 @@
       "display": "raw"
     },
     {
-      "id": 51,
+      "id": 53,
       "name": "op1_fbenv_r3.p0",
       "target": "op1.fbenv.r3.p0",
       "min": 0,
@@ -677,7 +703,7 @@
       "display": "raw"
     },
     {
-      "id": 52,
+      "id": 54,
       "name": "op1_fbenv_r4.p0",
       "target": "op1.fbenv.r4.p0",
       "min": 0,
@@ -690,7 +716,7 @@
       "display": "raw"
     },
     {
-      "id": 53,
+      "id": 55,
       "name": "op1_fbenv_l1.p0",
       "target": "op1.fbenv.l1.p0",
       "min": -32768,
@@ -703,7 +729,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 54,
+      "id": 56,
       "name": "op1_fbenv_l2.p0",
       "target": "op1.fbenv.l2.p0",
       "min": -32768,
@@ -716,7 +742,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 55,
+      "id": 57,
       "name": "op1_fbenv_l3.p0",
       "target": "op1.fbenv.l3.p0",
       "min": -32768,
@@ -729,7 +755,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 56,
+      "id": 58,
       "name": "op1_fbenv_l4.p0",
       "target": "op1.fbenv.l4.p0",
       "min": -32768,
@@ -742,7 +768,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 57,
+      "id": 59,
       "name": "op1_fblfo_rate.p0",
       "target": "op1.fblfo.rate.p0",
       "min": 0,
@@ -755,7 +781,7 @@
       "display": "hz"
     },
     {
-      "id": 58,
+      "id": 60,
       "name": "op1_fblfo_depth.p0",
       "target": "op1.fblfo.depth.p0",
       "min": -32767,
@@ -768,7 +794,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 59,
+      "id": 61,
       "name": "op1_fblfo_wave.p0",
       "target": "op1.fblfo.wave.p0",
       "min": 0,
@@ -781,7 +807,7 @@
       "display": "wave"
     },
     {
-      "id": 60,
+      "id": 62,
       "name": "op1_fblfo_mode.p0",
       "target": "op1.fblfo.mode.p0",
       "min": 0,
@@ -794,7 +820,7 @@
       "display": "onoff"
     },
     {
-      "id": 61,
+      "id": 63,
       "name": "op1_dlfo_rate.p0",
       "target": "op1.dlfo.rate.p0",
       "min": 0,
@@ -807,7 +833,7 @@
       "display": "hz"
     },
     {
-      "id": 62,
+      "id": 64,
       "name": "op1_dlfo_depth.p0",
       "target": "op1.dlfo.depth.p0",
       "min": -32768,
@@ -820,7 +846,7 @@
       "display": "semi_lfo"
     },
     {
-      "id": 63,
+      "id": 65,
       "name": "op1_dlfo_wave.p0",
       "target": "op1.dlfo.wave.p0",
       "min": 0,
@@ -833,7 +859,7 @@
       "display": "wave"
     },
     {
-      "id": 64,
+      "id": 66,
       "name": "op1_dlfo_mode.p0",
       "target": "op1.dlfo.mode.p0",
       "min": 0,
@@ -846,7 +872,7 @@
       "display": "onoff"
     },
     {
-      "id": 65,
+      "id": 67,
       "name": "op1.velamp.depth.p0",
       "target": "op1.velamp.depth.p0",
       "min": -32768,
@@ -859,7 +885,7 @@
       "display": "raw"
     },
     {
-      "id": 66,
+      "id": 68,
       "name": "op1.velfm.depth.p0",
       "target": "op1.velfm.depth.p0",
       "min": -32768,
@@ -872,7 +898,7 @@
       "display": "raw"
     },
     {
-      "id": 67,
+      "id": 69,
       "name": "op1.velrate.depth.p0",
       "target": "op1.velrate.depth.p0",
       "min": -32768,
@@ -885,7 +911,7 @@
       "display": "raw"
     },
     {
-      "id": 68,
+      "id": 70,
       "name": "op1_level.p0",
       "target": "op1.tl.level.p0",
       "min": 0,
@@ -898,7 +924,7 @@
       "display": "raw"
     },
     {
-      "id": 69,
+      "id": 71,
       "name": "op1_feedback.p0",
       "target": "op1.fb.level.p0",
       "min": -32767,
@@ -911,7 +937,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 70,
+      "id": 72,
       "name": "op1_level_ks_lo.p0",
       "target": "op1.level_ks.lo.p0",
       "min": -100,
@@ -924,7 +950,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 71,
+      "id": 73,
       "name": "op1_level_ks_hi.p0",
       "target": "op1.level_ks.hi.p0",
       "min": -100,
@@ -937,7 +963,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 72,
+      "id": 74,
       "name": "op1_fb_ks_lo.p0",
       "target": "op1.fb_ks.lo.p0",
       "min": -100,
@@ -950,7 +976,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 73,
+      "id": 75,
       "name": "op1_fb_ks_hi.p0",
       "target": "op1.fb_ks.hi.p0",
       "min": -100,
@@ -963,7 +989,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 74,
+      "id": 76,
       "name": "op1_aenv_ks_lo.p0",
       "target": "op1.eg_ks.lo.p0",
       "min": -100,
@@ -976,7 +1002,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 75,
+      "id": 77,
       "name": "op1_aenv_ks_hi.p0",
       "target": "op1.eg_ks.hi.p0",
       "min": -100,
@@ -989,7 +1015,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 76,
+      "id": 78,
       "name": "op1_level_vs.p0",
       "target": "op1.level_vs.amount.p0",
       "min": -100,
@@ -1002,7 +1028,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 77,
+      "id": 79,
       "name": "op1_fb_vs.p0",
       "target": "op1.fb_vs.amount.p0",
       "min": -100,
@@ -1015,7 +1041,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 78,
+      "id": 80,
       "name": "op1_aenv_vs.p0",
       "target": "op1.eg_vs.amount.p0",
       "min": -100,
@@ -1028,7 +1054,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 79,
+      "id": 81,
       "name": "op1_mute.p0",
       "target": "op1.mute.mute.p0",
       "min": 0,
@@ -1041,7 +1067,7 @@
       "display": "onoff_inv"
     },
     {
-      "id": 80,
+      "id": 82,
       "name": "op1_spec_env_r1.p0",
       "target": "op1.specenv.r1.p0",
       "min": 0,
@@ -1054,7 +1080,7 @@
       "display": "raw"
     },
     {
-      "id": 81,
+      "id": 83,
       "name": "op1_spec_env_r2.p0",
       "target": "op1.specenv.r2.p0",
       "min": 0,
@@ -1067,7 +1093,7 @@
       "display": "raw"
     },
     {
-      "id": 82,
+      "id": 84,
       "name": "op1_spec_env_r3.p0",
       "target": "op1.specenv.r3.p0",
       "min": 0,
@@ -1080,7 +1106,7 @@
       "display": "raw"
     },
     {
-      "id": 83,
+      "id": 85,
       "name": "op1_spec_env_r4.p0",
       "target": "op1.specenv.r4.p0",
       "min": 0,
@@ -1093,7 +1119,7 @@
       "display": "raw"
     },
     {
-      "id": 84,
+      "id": 86,
       "name": "op1_spec_env_l1.p0",
       "target": "op1.specenv.l1.p0",
       "min": 0,
@@ -1106,7 +1132,7 @@
       "display": "raw"
     },
     {
-      "id": 85,
+      "id": 87,
       "name": "op1_spec_env_l2.p0",
       "target": "op1.specenv.l2.p0",
       "min": 0,
@@ -1119,7 +1145,7 @@
       "display": "raw"
     },
     {
-      "id": 86,
+      "id": 88,
       "name": "op1_spec_env_l3.p0",
       "target": "op1.specenv.l3.p0",
       "min": 0,
@@ -1132,7 +1158,7 @@
       "display": "raw"
     },
     {
-      "id": 87,
+      "id": 89,
       "name": "op1_spec_lfo_rate.p0",
       "target": "op1.speclfo.rate.p0",
       "min": 0,
@@ -1145,7 +1171,7 @@
       "display": "hz"
     },
     {
-      "id": 88,
+      "id": 90,
       "name": "op1_spec_lfo_depth.p0",
       "target": "op1.speclfo.depth.p0",
       "min": -99,
@@ -1158,7 +1184,7 @@
       "display": "raw"
     },
     {
-      "id": 89,
+      "id": 91,
       "name": "op1_spec_lfo_wave.p0",
       "target": "op1.speclfo.wave.p0",
       "min": 0,
@@ -1171,7 +1197,7 @@
       "display": "wave"
     },
     {
-      "id": 90,
+      "id": 92,
       "name": "op1_spec_lfo_mode.p0",
       "target": "op1.speclfo.mode.p0",
       "min": 0,
@@ -1184,7 +1210,7 @@
       "display": "onoff"
     },
     {
-      "id": 91,
+      "id": 93,
       "name": "op2_ratio.p0",
       "target": "op2.ph.inc_ratio.p0",
       "min": 32768,
@@ -1197,7 +1223,7 @@
       "display": "ratio"
     },
     {
-      "id": 92,
+      "id": 94,
       "name": "op2_detune.p0",
       "target": "op2.ph.detune.p0",
       "min": -50,
@@ -1210,7 +1236,7 @@
       "display": "cent"
     },
     {
-      "id": 93,
+      "id": 95,
       "name": "op2_waveform.p0",
       "target": "op2.osc.waveform.p0",
       "min": 0,
@@ -1223,7 +1249,33 @@
       "display": "wave"
     },
     {
-      "id": 94,
+      "id": 96,
+      "name": "op2_spec_range_a.p0",
+      "target": "op2.osc.spec_range_a.p0",
+      "min": 0,
+      "max": 7,
+      "default": 0,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "range"
+    },
+    {
+      "id": 97,
+      "name": "op2_spec_range_b.p0",
+      "target": "op2.osc.spec_range_b.p0",
+      "min": 0,
+      "max": 7,
+      "default": 0,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "range"
+    },
+    {
+      "id": 98,
       "name": "op2_spec_a1.p0",
       "target": "op2.osc.spec_a1.p0",
       "min": 0,
@@ -1236,7 +1288,7 @@
       "display": "raw"
     },
     {
-      "id": 95,
+      "id": 99,
       "name": "op2_spec_a2.p0",
       "target": "op2.osc.spec_a2.p0",
       "min": 0,
@@ -1249,7 +1301,7 @@
       "display": "raw"
     },
     {
-      "id": 96,
+      "id": 100,
       "name": "op2_spec_a3.p0",
       "target": "op2.osc.spec_a3.p0",
       "min": 0,
@@ -1262,7 +1314,7 @@
       "display": "raw"
     },
     {
-      "id": 97,
+      "id": 101,
       "name": "op2_spec_a4.p0",
       "target": "op2.osc.spec_a4.p0",
       "min": 0,
@@ -1275,7 +1327,7 @@
       "display": "raw"
     },
     {
-      "id": 98,
+      "id": 102,
       "name": "op2_spec_a5.p0",
       "target": "op2.osc.spec_a5.p0",
       "min": 0,
@@ -1288,7 +1340,7 @@
       "display": "raw"
     },
     {
-      "id": 99,
+      "id": 103,
       "name": "op2_spec_a6.p0",
       "target": "op2.osc.spec_a6.p0",
       "min": 0,
@@ -1301,7 +1353,7 @@
       "display": "raw"
     },
     {
-      "id": 100,
+      "id": 104,
       "name": "op2_spec_a7.p0",
       "target": "op2.osc.spec_a7.p0",
       "min": 0,
@@ -1314,7 +1366,7 @@
       "display": "raw"
     },
     {
-      "id": 101,
+      "id": 105,
       "name": "op2_spec_a8.p0",
       "target": "op2.osc.spec_a8.p0",
       "min": 0,
@@ -1327,7 +1379,7 @@
       "display": "raw"
     },
     {
-      "id": 102,
+      "id": 106,
       "name": "op2_spec_a9.p0",
       "target": "op2.osc.spec_a9.p0",
       "min": 0,
@@ -1340,7 +1392,7 @@
       "display": "raw"
     },
     {
-      "id": 103,
+      "id": 107,
       "name": "op2_spec_a10.p0",
       "target": "op2.osc.spec_a10.p0",
       "min": 0,
@@ -1353,7 +1405,7 @@
       "display": "raw"
     },
     {
-      "id": 104,
+      "id": 108,
       "name": "op2_spec_a11.p0",
       "target": "op2.osc.spec_a11.p0",
       "min": 0,
@@ -1366,7 +1418,7 @@
       "display": "raw"
     },
     {
-      "id": 105,
+      "id": 109,
       "name": "op2_spec_a12.p0",
       "target": "op2.osc.spec_a12.p0",
       "min": 0,
@@ -1379,7 +1431,7 @@
       "display": "raw"
     },
     {
-      "id": 106,
+      "id": 110,
       "name": "op2_spec_a13.p0",
       "target": "op2.osc.spec_a13.p0",
       "min": 0,
@@ -1392,7 +1444,7 @@
       "display": "raw"
     },
     {
-      "id": 107,
+      "id": 111,
       "name": "op2_spec_a14.p0",
       "target": "op2.osc.spec_a14.p0",
       "min": 0,
@@ -1405,7 +1457,7 @@
       "display": "raw"
     },
     {
-      "id": 108,
+      "id": 112,
       "name": "op2_spec_a15.p0",
       "target": "op2.osc.spec_a15.p0",
       "min": 0,
@@ -1418,7 +1470,7 @@
       "display": "raw"
     },
     {
-      "id": 109,
+      "id": 113,
       "name": "op2_spec_a16.p0",
       "target": "op2.osc.spec_a16.p0",
       "min": 0,
@@ -1431,7 +1483,7 @@
       "display": "raw"
     },
     {
-      "id": 110,
+      "id": 114,
       "name": "op2_spec_b1.p0",
       "target": "op2.osc.spec_b1.p0",
       "min": 0,
@@ -1444,7 +1496,7 @@
       "display": "raw"
     },
     {
-      "id": 111,
+      "id": 115,
       "name": "op2_spec_b2.p0",
       "target": "op2.osc.spec_b2.p0",
       "min": 0,
@@ -1457,7 +1509,7 @@
       "display": "raw"
     },
     {
-      "id": 112,
+      "id": 116,
       "name": "op2_spec_b3.p0",
       "target": "op2.osc.spec_b3.p0",
       "min": 0,
@@ -1470,7 +1522,7 @@
       "display": "raw"
     },
     {
-      "id": 113,
+      "id": 117,
       "name": "op2_spec_b4.p0",
       "target": "op2.osc.spec_b4.p0",
       "min": 0,
@@ -1483,7 +1535,7 @@
       "display": "raw"
     },
     {
-      "id": 114,
+      "id": 118,
       "name": "op2_spec_b5.p0",
       "target": "op2.osc.spec_b5.p0",
       "min": 0,
@@ -1496,7 +1548,7 @@
       "display": "raw"
     },
     {
-      "id": 115,
+      "id": 119,
       "name": "op2_spec_b6.p0",
       "target": "op2.osc.spec_b6.p0",
       "min": 0,
@@ -1509,7 +1561,7 @@
       "display": "raw"
     },
     {
-      "id": 116,
+      "id": 120,
       "name": "op2_spec_b7.p0",
       "target": "op2.osc.spec_b7.p0",
       "min": 0,
@@ -1522,7 +1574,7 @@
       "display": "raw"
     },
     {
-      "id": 117,
+      "id": 121,
       "name": "op2_spec_b8.p0",
       "target": "op2.osc.spec_b8.p0",
       "min": 0,
@@ -1535,7 +1587,7 @@
       "display": "raw"
     },
     {
-      "id": 118,
+      "id": 122,
       "name": "op2_spec_b9.p0",
       "target": "op2.osc.spec_b9.p0",
       "min": 0,
@@ -1548,7 +1600,7 @@
       "display": "raw"
     },
     {
-      "id": 119,
+      "id": 123,
       "name": "op2_spec_b10.p0",
       "target": "op2.osc.spec_b10.p0",
       "min": 0,
@@ -1561,7 +1613,7 @@
       "display": "raw"
     },
     {
-      "id": 120,
+      "id": 124,
       "name": "op2_spec_b11.p0",
       "target": "op2.osc.spec_b11.p0",
       "min": 0,
@@ -1574,7 +1626,7 @@
       "display": "raw"
     },
     {
-      "id": 121,
+      "id": 125,
       "name": "op2_spec_b12.p0",
       "target": "op2.osc.spec_b12.p0",
       "min": 0,
@@ -1587,7 +1639,7 @@
       "display": "raw"
     },
     {
-      "id": 122,
+      "id": 126,
       "name": "op2_spec_b13.p0",
       "target": "op2.osc.spec_b13.p0",
       "min": 0,
@@ -1600,7 +1652,7 @@
       "display": "raw"
     },
     {
-      "id": 123,
+      "id": 127,
       "name": "op2_spec_b14.p0",
       "target": "op2.osc.spec_b14.p0",
       "min": 0,
@@ -1613,7 +1665,7 @@
       "display": "raw"
     },
     {
-      "id": 124,
+      "id": 128,
       "name": "op2_spec_b15.p0",
       "target": "op2.osc.spec_b15.p0",
       "min": 0,
@@ -1626,7 +1678,7 @@
       "display": "raw"
     },
     {
-      "id": 125,
+      "id": 129,
       "name": "op2_spec_b16.p0",
       "target": "op2.osc.spec_b16.p0",
       "min": 0,
@@ -1639,7 +1691,7 @@
       "display": "raw"
     },
     {
-      "id": 126,
+      "id": 130,
       "name": "op2_spec_morph.p0",
       "target": "op2.osc.spec_morph.p0",
       "min": 0,
@@ -1652,7 +1704,7 @@
       "display": "raw"
     },
     {
-      "id": 127,
+      "id": 131,
       "name": "op2_spec_env_depth.p0",
       "target": "op2.osc.spec_env_depth.p0",
       "min": -99,
@@ -1665,7 +1717,7 @@
       "display": "raw"
     },
     {
-      "id": 128,
+      "id": 132,
       "name": "op2.eg.r1.p0",
       "target": "op2.eg.r1.p0",
       "min": 0,
@@ -1678,7 +1730,7 @@
       "display": "raw"
     },
     {
-      "id": 129,
+      "id": 133,
       "name": "op2.eg.r2.p0",
       "target": "op2.eg.r2.p0",
       "min": 0,
@@ -1691,7 +1743,7 @@
       "display": "raw"
     },
     {
-      "id": 130,
+      "id": 134,
       "name": "op2.eg.r3.p0",
       "target": "op2.eg.r3.p0",
       "min": 0,
@@ -1704,7 +1756,7 @@
       "display": "raw"
     },
     {
-      "id": 131,
+      "id": 135,
       "name": "op2.eg.r4.p0",
       "target": "op2.eg.r4.p0",
       "min": 0,
@@ -1717,7 +1769,7 @@
       "display": "raw"
     },
     {
-      "id": 132,
+      "id": 136,
       "name": "op2.eg.l1.p0",
       "target": "op2.eg.l1.p0",
       "min": 0,
@@ -1730,7 +1782,7 @@
       "display": "raw"
     },
     {
-      "id": 133,
+      "id": 137,
       "name": "op2.eg.l2.p0",
       "target": "op2.eg.l2.p0",
       "min": 0,
@@ -1743,7 +1795,7 @@
       "display": "raw"
     },
     {
-      "id": 134,
+      "id": 138,
       "name": "op2.eg.l3.p0",
       "target": "op2.eg.l3.p0",
       "min": 0,
@@ -1756,7 +1808,7 @@
       "display": "raw"
     },
     {
-      "id": 135,
+      "id": 139,
       "name": "op2_trem_rate.p0",
       "target": "op2.lfo.rate.p0",
       "min": 0,
@@ -1769,7 +1821,7 @@
       "display": "hz"
     },
     {
-      "id": 136,
+      "id": 140,
       "name": "op2_trem_depth.p0",
       "target": "op2.lfo.depth.p0",
       "min": -99,
@@ -1782,7 +1834,7 @@
       "display": "raw"
     },
     {
-      "id": 137,
+      "id": 141,
       "name": "op2_trem_wave.p0",
       "target": "op2.lfo.wave.p0",
       "min": 0,
@@ -1795,7 +1847,7 @@
       "display": "wave"
     },
     {
-      "id": 138,
+      "id": 142,
       "name": "op2_trem_mode.p0",
       "target": "op2.lfo.mode.p0",
       "min": 0,
@@ -1808,7 +1860,7 @@
       "display": "onoff"
     },
     {
-      "id": 139,
+      "id": 143,
       "name": "op2_fbenv_on.p0",
       "target": "op2.fbenv.on.p0",
       "min": 0,
@@ -1821,7 +1873,7 @@
       "display": "onoff"
     },
     {
-      "id": 140,
+      "id": 144,
       "name": "op2_fbenv_r1.p0",
       "target": "op2.fbenv.r1.p0",
       "min": 0,
@@ -1834,7 +1886,7 @@
       "display": "raw"
     },
     {
-      "id": 141,
+      "id": 145,
       "name": "op2_fbenv_r2.p0",
       "target": "op2.fbenv.r2.p0",
       "min": 0,
@@ -1847,7 +1899,7 @@
       "display": "raw"
     },
     {
-      "id": 142,
+      "id": 146,
       "name": "op2_fbenv_r3.p0",
       "target": "op2.fbenv.r3.p0",
       "min": 0,
@@ -1860,7 +1912,7 @@
       "display": "raw"
     },
     {
-      "id": 143,
+      "id": 147,
       "name": "op2_fbenv_r4.p0",
       "target": "op2.fbenv.r4.p0",
       "min": 0,
@@ -1873,7 +1925,7 @@
       "display": "raw"
     },
     {
-      "id": 144,
+      "id": 148,
       "name": "op2_fbenv_l1.p0",
       "target": "op2.fbenv.l1.p0",
       "min": -32768,
@@ -1886,7 +1938,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 145,
+      "id": 149,
       "name": "op2_fbenv_l2.p0",
       "target": "op2.fbenv.l2.p0",
       "min": -32768,
@@ -1899,7 +1951,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 146,
+      "id": 150,
       "name": "op2_fbenv_l3.p0",
       "target": "op2.fbenv.l3.p0",
       "min": -32768,
@@ -1912,7 +1964,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 147,
+      "id": 151,
       "name": "op2_fbenv_l4.p0",
       "target": "op2.fbenv.l4.p0",
       "min": -32768,
@@ -1925,7 +1977,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 148,
+      "id": 152,
       "name": "op2_fblfo_rate.p0",
       "target": "op2.fblfo.rate.p0",
       "min": 0,
@@ -1938,7 +1990,7 @@
       "display": "hz"
     },
     {
-      "id": 149,
+      "id": 153,
       "name": "op2_fblfo_depth.p0",
       "target": "op2.fblfo.depth.p0",
       "min": -32767,
@@ -1951,7 +2003,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 150,
+      "id": 154,
       "name": "op2_fblfo_wave.p0",
       "target": "op2.fblfo.wave.p0",
       "min": 0,
@@ -1964,7 +2016,7 @@
       "display": "wave"
     },
     {
-      "id": 151,
+      "id": 155,
       "name": "op2_fblfo_mode.p0",
       "target": "op2.fblfo.mode.p0",
       "min": 0,
@@ -1977,7 +2029,7 @@
       "display": "onoff"
     },
     {
-      "id": 152,
+      "id": 156,
       "name": "op2_dlfo_rate.p0",
       "target": "op2.dlfo.rate.p0",
       "min": 0,
@@ -1990,7 +2042,7 @@
       "display": "hz"
     },
     {
-      "id": 153,
+      "id": 157,
       "name": "op2_dlfo_depth.p0",
       "target": "op2.dlfo.depth.p0",
       "min": -32768,
@@ -2003,7 +2055,7 @@
       "display": "semi_lfo"
     },
     {
-      "id": 154,
+      "id": 158,
       "name": "op2_dlfo_wave.p0",
       "target": "op2.dlfo.wave.p0",
       "min": 0,
@@ -2016,7 +2068,7 @@
       "display": "wave"
     },
     {
-      "id": 155,
+      "id": 159,
       "name": "op2_dlfo_mode.p0",
       "target": "op2.dlfo.mode.p0",
       "min": 0,
@@ -2029,7 +2081,7 @@
       "display": "onoff"
     },
     {
-      "id": 156,
+      "id": 160,
       "name": "op2.velamp.depth.p0",
       "target": "op2.velamp.depth.p0",
       "min": -32768,
@@ -2042,7 +2094,7 @@
       "display": "raw"
     },
     {
-      "id": 157,
+      "id": 161,
       "name": "op2.velfm.depth.p0",
       "target": "op2.velfm.depth.p0",
       "min": -32768,
@@ -2055,7 +2107,7 @@
       "display": "raw"
     },
     {
-      "id": 158,
+      "id": 162,
       "name": "op2.velrate.depth.p0",
       "target": "op2.velrate.depth.p0",
       "min": -32768,
@@ -2068,7 +2120,7 @@
       "display": "raw"
     },
     {
-      "id": 159,
+      "id": 163,
       "name": "op2_level.p0",
       "target": "op2.tl.level.p0",
       "min": 0,
@@ -2081,7 +2133,7 @@
       "display": "raw"
     },
     {
-      "id": 160,
+      "id": 164,
       "name": "op2_feedback.p0",
       "target": "op2.fb.level.p0",
       "min": -32767,
@@ -2094,7 +2146,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 161,
+      "id": 165,
       "name": "op2_level_ks_lo.p0",
       "target": "op2.level_ks.lo.p0",
       "min": -100,
@@ -2107,7 +2159,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 162,
+      "id": 166,
       "name": "op2_level_ks_hi.p0",
       "target": "op2.level_ks.hi.p0",
       "min": -100,
@@ -2120,7 +2172,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 163,
+      "id": 167,
       "name": "op2_fb_ks_lo.p0",
       "target": "op2.fb_ks.lo.p0",
       "min": -100,
@@ -2133,7 +2185,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 164,
+      "id": 168,
       "name": "op2_fb_ks_hi.p0",
       "target": "op2.fb_ks.hi.p0",
       "min": -100,
@@ -2146,7 +2198,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 165,
+      "id": 169,
       "name": "op2_aenv_ks_lo.p0",
       "target": "op2.eg_ks.lo.p0",
       "min": -100,
@@ -2159,7 +2211,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 166,
+      "id": 170,
       "name": "op2_aenv_ks_hi.p0",
       "target": "op2.eg_ks.hi.p0",
       "min": -100,
@@ -2172,7 +2224,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 167,
+      "id": 171,
       "name": "op2_level_vs.p0",
       "target": "op2.level_vs.amount.p0",
       "min": -100,
@@ -2185,7 +2237,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 168,
+      "id": 172,
       "name": "op2_fb_vs.p0",
       "target": "op2.fb_vs.amount.p0",
       "min": -100,
@@ -2198,7 +2250,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 169,
+      "id": 173,
       "name": "op2_aenv_vs.p0",
       "target": "op2.eg_vs.amount.p0",
       "min": -100,
@@ -2211,7 +2263,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 170,
+      "id": 174,
       "name": "op2_mute.p0",
       "target": "op2.mute.mute.p0",
       "min": 0,
@@ -2224,7 +2276,7 @@
       "display": "onoff_inv"
     },
     {
-      "id": 171,
+      "id": 175,
       "name": "op2_spec_env_r1.p0",
       "target": "op2.specenv.r1.p0",
       "min": 0,
@@ -2237,7 +2289,7 @@
       "display": "raw"
     },
     {
-      "id": 172,
+      "id": 176,
       "name": "op2_spec_env_r2.p0",
       "target": "op2.specenv.r2.p0",
       "min": 0,
@@ -2250,7 +2302,7 @@
       "display": "raw"
     },
     {
-      "id": 173,
+      "id": 177,
       "name": "op2_spec_env_r3.p0",
       "target": "op2.specenv.r3.p0",
       "min": 0,
@@ -2263,7 +2315,7 @@
       "display": "raw"
     },
     {
-      "id": 174,
+      "id": 178,
       "name": "op2_spec_env_r4.p0",
       "target": "op2.specenv.r4.p0",
       "min": 0,
@@ -2276,7 +2328,7 @@
       "display": "raw"
     },
     {
-      "id": 175,
+      "id": 179,
       "name": "op2_spec_env_l1.p0",
       "target": "op2.specenv.l1.p0",
       "min": 0,
@@ -2289,7 +2341,7 @@
       "display": "raw"
     },
     {
-      "id": 176,
+      "id": 180,
       "name": "op2_spec_env_l2.p0",
       "target": "op2.specenv.l2.p0",
       "min": 0,
@@ -2302,7 +2354,7 @@
       "display": "raw"
     },
     {
-      "id": 177,
+      "id": 181,
       "name": "op2_spec_env_l3.p0",
       "target": "op2.specenv.l3.p0",
       "min": 0,
@@ -2315,7 +2367,7 @@
       "display": "raw"
     },
     {
-      "id": 178,
+      "id": 182,
       "name": "op2_spec_lfo_rate.p0",
       "target": "op2.speclfo.rate.p0",
       "min": 0,
@@ -2328,7 +2380,7 @@
       "display": "hz"
     },
     {
-      "id": 179,
+      "id": 183,
       "name": "op2_spec_lfo_depth.p0",
       "target": "op2.speclfo.depth.p0",
       "min": -99,
@@ -2341,7 +2393,7 @@
       "display": "raw"
     },
     {
-      "id": 180,
+      "id": 184,
       "name": "op2_spec_lfo_wave.p0",
       "target": "op2.speclfo.wave.p0",
       "min": 0,
@@ -2354,7 +2406,7 @@
       "display": "wave"
     },
     {
-      "id": 181,
+      "id": 185,
       "name": "op2_spec_lfo_mode.p0",
       "target": "op2.speclfo.mode.p0",
       "min": 0,
@@ -2367,7 +2419,7 @@
       "display": "onoff"
     },
     {
-      "id": 182,
+      "id": 186,
       "name": "op3_ratio.p0",
       "target": "op3.ph.inc_ratio.p0",
       "min": 32768,
@@ -2380,7 +2432,7 @@
       "display": "ratio"
     },
     {
-      "id": 183,
+      "id": 187,
       "name": "op3_detune.p0",
       "target": "op3.ph.detune.p0",
       "min": -50,
@@ -2393,7 +2445,7 @@
       "display": "cent"
     },
     {
-      "id": 184,
+      "id": 188,
       "name": "op3_waveform.p0",
       "target": "op3.osc.waveform.p0",
       "min": 0,
@@ -2406,7 +2458,33 @@
       "display": "wave"
     },
     {
-      "id": 185,
+      "id": 189,
+      "name": "op3_spec_range_a.p0",
+      "target": "op3.osc.spec_range_a.p0",
+      "min": 0,
+      "max": 7,
+      "default": 0,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "range"
+    },
+    {
+      "id": 190,
+      "name": "op3_spec_range_b.p0",
+      "target": "op3.osc.spec_range_b.p0",
+      "min": 0,
+      "max": 7,
+      "default": 0,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "range"
+    },
+    {
+      "id": 191,
       "name": "op3_spec_a1.p0",
       "target": "op3.osc.spec_a1.p0",
       "min": 0,
@@ -2419,7 +2497,7 @@
       "display": "raw"
     },
     {
-      "id": 186,
+      "id": 192,
       "name": "op3_spec_a2.p0",
       "target": "op3.osc.spec_a2.p0",
       "min": 0,
@@ -2432,7 +2510,7 @@
       "display": "raw"
     },
     {
-      "id": 187,
+      "id": 193,
       "name": "op3_spec_a3.p0",
       "target": "op3.osc.spec_a3.p0",
       "min": 0,
@@ -2445,7 +2523,7 @@
       "display": "raw"
     },
     {
-      "id": 188,
+      "id": 194,
       "name": "op3_spec_a4.p0",
       "target": "op3.osc.spec_a4.p0",
       "min": 0,
@@ -2458,7 +2536,7 @@
       "display": "raw"
     },
     {
-      "id": 189,
+      "id": 195,
       "name": "op3_spec_a5.p0",
       "target": "op3.osc.spec_a5.p0",
       "min": 0,
@@ -2471,7 +2549,7 @@
       "display": "raw"
     },
     {
-      "id": 190,
+      "id": 196,
       "name": "op3_spec_a6.p0",
       "target": "op3.osc.spec_a6.p0",
       "min": 0,
@@ -2484,7 +2562,7 @@
       "display": "raw"
     },
     {
-      "id": 191,
+      "id": 197,
       "name": "op3_spec_a7.p0",
       "target": "op3.osc.spec_a7.p0",
       "min": 0,
@@ -2497,7 +2575,7 @@
       "display": "raw"
     },
     {
-      "id": 192,
+      "id": 198,
       "name": "op3_spec_a8.p0",
       "target": "op3.osc.spec_a8.p0",
       "min": 0,
@@ -2510,7 +2588,7 @@
       "display": "raw"
     },
     {
-      "id": 193,
+      "id": 199,
       "name": "op3_spec_a9.p0",
       "target": "op3.osc.spec_a9.p0",
       "min": 0,
@@ -2523,7 +2601,7 @@
       "display": "raw"
     },
     {
-      "id": 194,
+      "id": 200,
       "name": "op3_spec_a10.p0",
       "target": "op3.osc.spec_a10.p0",
       "min": 0,
@@ -2536,7 +2614,7 @@
       "display": "raw"
     },
     {
-      "id": 195,
+      "id": 201,
       "name": "op3_spec_a11.p0",
       "target": "op3.osc.spec_a11.p0",
       "min": 0,
@@ -2549,7 +2627,7 @@
       "display": "raw"
     },
     {
-      "id": 196,
+      "id": 202,
       "name": "op3_spec_a12.p0",
       "target": "op3.osc.spec_a12.p0",
       "min": 0,
@@ -2562,7 +2640,7 @@
       "display": "raw"
     },
     {
-      "id": 197,
+      "id": 203,
       "name": "op3_spec_a13.p0",
       "target": "op3.osc.spec_a13.p0",
       "min": 0,
@@ -2575,7 +2653,7 @@
       "display": "raw"
     },
     {
-      "id": 198,
+      "id": 204,
       "name": "op3_spec_a14.p0",
       "target": "op3.osc.spec_a14.p0",
       "min": 0,
@@ -2588,7 +2666,7 @@
       "display": "raw"
     },
     {
-      "id": 199,
+      "id": 205,
       "name": "op3_spec_a15.p0",
       "target": "op3.osc.spec_a15.p0",
       "min": 0,
@@ -2601,7 +2679,7 @@
       "display": "raw"
     },
     {
-      "id": 200,
+      "id": 206,
       "name": "op3_spec_a16.p0",
       "target": "op3.osc.spec_a16.p0",
       "min": 0,
@@ -2614,7 +2692,7 @@
       "display": "raw"
     },
     {
-      "id": 201,
+      "id": 207,
       "name": "op3_spec_b1.p0",
       "target": "op3.osc.spec_b1.p0",
       "min": 0,
@@ -2627,7 +2705,7 @@
       "display": "raw"
     },
     {
-      "id": 202,
+      "id": 208,
       "name": "op3_spec_b2.p0",
       "target": "op3.osc.spec_b2.p0",
       "min": 0,
@@ -2640,7 +2718,7 @@
       "display": "raw"
     },
     {
-      "id": 203,
+      "id": 209,
       "name": "op3_spec_b3.p0",
       "target": "op3.osc.spec_b3.p0",
       "min": 0,
@@ -2653,7 +2731,7 @@
       "display": "raw"
     },
     {
-      "id": 204,
+      "id": 210,
       "name": "op3_spec_b4.p0",
       "target": "op3.osc.spec_b4.p0",
       "min": 0,
@@ -2666,7 +2744,7 @@
       "display": "raw"
     },
     {
-      "id": 205,
+      "id": 211,
       "name": "op3_spec_b5.p0",
       "target": "op3.osc.spec_b5.p0",
       "min": 0,
@@ -2679,7 +2757,7 @@
       "display": "raw"
     },
     {
-      "id": 206,
+      "id": 212,
       "name": "op3_spec_b6.p0",
       "target": "op3.osc.spec_b6.p0",
       "min": 0,
@@ -2692,7 +2770,7 @@
       "display": "raw"
     },
     {
-      "id": 207,
+      "id": 213,
       "name": "op3_spec_b7.p0",
       "target": "op3.osc.spec_b7.p0",
       "min": 0,
@@ -2705,7 +2783,7 @@
       "display": "raw"
     },
     {
-      "id": 208,
+      "id": 214,
       "name": "op3_spec_b8.p0",
       "target": "op3.osc.spec_b8.p0",
       "min": 0,
@@ -2718,7 +2796,7 @@
       "display": "raw"
     },
     {
-      "id": 209,
+      "id": 215,
       "name": "op3_spec_b9.p0",
       "target": "op3.osc.spec_b9.p0",
       "min": 0,
@@ -2731,7 +2809,7 @@
       "display": "raw"
     },
     {
-      "id": 210,
+      "id": 216,
       "name": "op3_spec_b10.p0",
       "target": "op3.osc.spec_b10.p0",
       "min": 0,
@@ -2744,7 +2822,7 @@
       "display": "raw"
     },
     {
-      "id": 211,
+      "id": 217,
       "name": "op3_spec_b11.p0",
       "target": "op3.osc.spec_b11.p0",
       "min": 0,
@@ -2757,7 +2835,7 @@
       "display": "raw"
     },
     {
-      "id": 212,
+      "id": 218,
       "name": "op3_spec_b12.p0",
       "target": "op3.osc.spec_b12.p0",
       "min": 0,
@@ -2770,7 +2848,7 @@
       "display": "raw"
     },
     {
-      "id": 213,
+      "id": 219,
       "name": "op3_spec_b13.p0",
       "target": "op3.osc.spec_b13.p0",
       "min": 0,
@@ -2783,7 +2861,7 @@
       "display": "raw"
     },
     {
-      "id": 214,
+      "id": 220,
       "name": "op3_spec_b14.p0",
       "target": "op3.osc.spec_b14.p0",
       "min": 0,
@@ -2796,7 +2874,7 @@
       "display": "raw"
     },
     {
-      "id": 215,
+      "id": 221,
       "name": "op3_spec_b15.p0",
       "target": "op3.osc.spec_b15.p0",
       "min": 0,
@@ -2809,7 +2887,7 @@
       "display": "raw"
     },
     {
-      "id": 216,
+      "id": 222,
       "name": "op3_spec_b16.p0",
       "target": "op3.osc.spec_b16.p0",
       "min": 0,
@@ -2822,7 +2900,7 @@
       "display": "raw"
     },
     {
-      "id": 217,
+      "id": 223,
       "name": "op3_spec_morph.p0",
       "target": "op3.osc.spec_morph.p0",
       "min": 0,
@@ -2835,7 +2913,7 @@
       "display": "raw"
     },
     {
-      "id": 218,
+      "id": 224,
       "name": "op3_spec_env_depth.p0",
       "target": "op3.osc.spec_env_depth.p0",
       "min": -99,
@@ -2848,7 +2926,7 @@
       "display": "raw"
     },
     {
-      "id": 219,
+      "id": 225,
       "name": "op3.eg.r1.p0",
       "target": "op3.eg.r1.p0",
       "min": 0,
@@ -2861,7 +2939,7 @@
       "display": "raw"
     },
     {
-      "id": 220,
+      "id": 226,
       "name": "op3.eg.r2.p0",
       "target": "op3.eg.r2.p0",
       "min": 0,
@@ -2874,7 +2952,7 @@
       "display": "raw"
     },
     {
-      "id": 221,
+      "id": 227,
       "name": "op3.eg.r3.p0",
       "target": "op3.eg.r3.p0",
       "min": 0,
@@ -2887,7 +2965,7 @@
       "display": "raw"
     },
     {
-      "id": 222,
+      "id": 228,
       "name": "op3.eg.r4.p0",
       "target": "op3.eg.r4.p0",
       "min": 0,
@@ -2900,7 +2978,7 @@
       "display": "raw"
     },
     {
-      "id": 223,
+      "id": 229,
       "name": "op3.eg.l1.p0",
       "target": "op3.eg.l1.p0",
       "min": 0,
@@ -2913,7 +2991,7 @@
       "display": "raw"
     },
     {
-      "id": 224,
+      "id": 230,
       "name": "op3.eg.l2.p0",
       "target": "op3.eg.l2.p0",
       "min": 0,
@@ -2926,7 +3004,7 @@
       "display": "raw"
     },
     {
-      "id": 225,
+      "id": 231,
       "name": "op3.eg.l3.p0",
       "target": "op3.eg.l3.p0",
       "min": 0,
@@ -2939,7 +3017,7 @@
       "display": "raw"
     },
     {
-      "id": 226,
+      "id": 232,
       "name": "op3_trem_rate.p0",
       "target": "op3.lfo.rate.p0",
       "min": 0,
@@ -2952,7 +3030,7 @@
       "display": "hz"
     },
     {
-      "id": 227,
+      "id": 233,
       "name": "op3_trem_depth.p0",
       "target": "op3.lfo.depth.p0",
       "min": -99,
@@ -2965,7 +3043,7 @@
       "display": "raw"
     },
     {
-      "id": 228,
+      "id": 234,
       "name": "op3_trem_wave.p0",
       "target": "op3.lfo.wave.p0",
       "min": 0,
@@ -2978,7 +3056,7 @@
       "display": "wave"
     },
     {
-      "id": 229,
+      "id": 235,
       "name": "op3_trem_mode.p0",
       "target": "op3.lfo.mode.p0",
       "min": 0,
@@ -2991,7 +3069,7 @@
       "display": "onoff"
     },
     {
-      "id": 230,
+      "id": 236,
       "name": "op3_fbenv_on.p0",
       "target": "op3.fbenv.on.p0",
       "min": 0,
@@ -3004,7 +3082,7 @@
       "display": "onoff"
     },
     {
-      "id": 231,
+      "id": 237,
       "name": "op3_fbenv_r1.p0",
       "target": "op3.fbenv.r1.p0",
       "min": 0,
@@ -3017,7 +3095,7 @@
       "display": "raw"
     },
     {
-      "id": 232,
+      "id": 238,
       "name": "op3_fbenv_r2.p0",
       "target": "op3.fbenv.r2.p0",
       "min": 0,
@@ -3030,7 +3108,7 @@
       "display": "raw"
     },
     {
-      "id": 233,
+      "id": 239,
       "name": "op3_fbenv_r3.p0",
       "target": "op3.fbenv.r3.p0",
       "min": 0,
@@ -3043,7 +3121,7 @@
       "display": "raw"
     },
     {
-      "id": 234,
+      "id": 240,
       "name": "op3_fbenv_r4.p0",
       "target": "op3.fbenv.r4.p0",
       "min": 0,
@@ -3056,7 +3134,7 @@
       "display": "raw"
     },
     {
-      "id": 235,
+      "id": 241,
       "name": "op3_fbenv_l1.p0",
       "target": "op3.fbenv.l1.p0",
       "min": -32768,
@@ -3069,7 +3147,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 236,
+      "id": 242,
       "name": "op3_fbenv_l2.p0",
       "target": "op3.fbenv.l2.p0",
       "min": -32768,
@@ -3082,7 +3160,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 237,
+      "id": 243,
       "name": "op3_fbenv_l3.p0",
       "target": "op3.fbenv.l3.p0",
       "min": -32768,
@@ -3095,7 +3173,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 238,
+      "id": 244,
       "name": "op3_fbenv_l4.p0",
       "target": "op3.fbenv.l4.p0",
       "min": -32768,
@@ -3108,7 +3186,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 239,
+      "id": 245,
       "name": "op3_fblfo_rate.p0",
       "target": "op3.fblfo.rate.p0",
       "min": 0,
@@ -3121,7 +3199,7 @@
       "display": "hz"
     },
     {
-      "id": 240,
+      "id": 246,
       "name": "op3_fblfo_depth.p0",
       "target": "op3.fblfo.depth.p0",
       "min": -32767,
@@ -3134,7 +3212,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 241,
+      "id": 247,
       "name": "op3_fblfo_wave.p0",
       "target": "op3.fblfo.wave.p0",
       "min": 0,
@@ -3147,7 +3225,7 @@
       "display": "wave"
     },
     {
-      "id": 242,
+      "id": 248,
       "name": "op3_fblfo_mode.p0",
       "target": "op3.fblfo.mode.p0",
       "min": 0,
@@ -3160,7 +3238,7 @@
       "display": "onoff"
     },
     {
-      "id": 243,
+      "id": 249,
       "name": "op3_dlfo_rate.p0",
       "target": "op3.dlfo.rate.p0",
       "min": 0,
@@ -3173,7 +3251,7 @@
       "display": "hz"
     },
     {
-      "id": 244,
+      "id": 250,
       "name": "op3_dlfo_depth.p0",
       "target": "op3.dlfo.depth.p0",
       "min": -32768,
@@ -3186,7 +3264,7 @@
       "display": "semi_lfo"
     },
     {
-      "id": 245,
+      "id": 251,
       "name": "op3_dlfo_wave.p0",
       "target": "op3.dlfo.wave.p0",
       "min": 0,
@@ -3199,7 +3277,7 @@
       "display": "wave"
     },
     {
-      "id": 246,
+      "id": 252,
       "name": "op3_dlfo_mode.p0",
       "target": "op3.dlfo.mode.p0",
       "min": 0,
@@ -3212,7 +3290,7 @@
       "display": "onoff"
     },
     {
-      "id": 247,
+      "id": 253,
       "name": "op3.velamp.depth.p0",
       "target": "op3.velamp.depth.p0",
       "min": -32768,
@@ -3225,7 +3303,7 @@
       "display": "raw"
     },
     {
-      "id": 248,
+      "id": 254,
       "name": "op3.velfm.depth.p0",
       "target": "op3.velfm.depth.p0",
       "min": -32768,
@@ -3238,7 +3316,7 @@
       "display": "raw"
     },
     {
-      "id": 249,
+      "id": 255,
       "name": "op3.velrate.depth.p0",
       "target": "op3.velrate.depth.p0",
       "min": -32768,
@@ -3251,7 +3329,7 @@
       "display": "raw"
     },
     {
-      "id": 250,
+      "id": 256,
       "name": "op3_level.p0",
       "target": "op3.tl.level.p0",
       "min": 0,
@@ -3264,7 +3342,7 @@
       "display": "raw"
     },
     {
-      "id": 251,
+      "id": 257,
       "name": "op3_feedback.p0",
       "target": "op3.fb.level.p0",
       "min": -32767,
@@ -3277,7 +3355,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 252,
+      "id": 258,
       "name": "op3_level_ks_lo.p0",
       "target": "op3.level_ks.lo.p0",
       "min": -100,
@@ -3290,7 +3368,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 253,
+      "id": 259,
       "name": "op3_level_ks_hi.p0",
       "target": "op3.level_ks.hi.p0",
       "min": -100,
@@ -3303,7 +3381,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 254,
+      "id": 260,
       "name": "op3_fb_ks_lo.p0",
       "target": "op3.fb_ks.lo.p0",
       "min": -100,
@@ -3316,7 +3394,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 255,
+      "id": 261,
       "name": "op3_fb_ks_hi.p0",
       "target": "op3.fb_ks.hi.p0",
       "min": -100,
@@ -3329,7 +3407,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 256,
+      "id": 262,
       "name": "op3_aenv_ks_lo.p0",
       "target": "op3.eg_ks.lo.p0",
       "min": -100,
@@ -3342,7 +3420,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 257,
+      "id": 263,
       "name": "op3_aenv_ks_hi.p0",
       "target": "op3.eg_ks.hi.p0",
       "min": -100,
@@ -3355,7 +3433,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 258,
+      "id": 264,
       "name": "op3_level_vs.p0",
       "target": "op3.level_vs.amount.p0",
       "min": -100,
@@ -3368,7 +3446,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 259,
+      "id": 265,
       "name": "op3_fb_vs.p0",
       "target": "op3.fb_vs.amount.p0",
       "min": -100,
@@ -3381,7 +3459,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 260,
+      "id": 266,
       "name": "op3_aenv_vs.p0",
       "target": "op3.eg_vs.amount.p0",
       "min": -100,
@@ -3394,7 +3472,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 261,
+      "id": 267,
       "name": "op3_mute.p0",
       "target": "op3.mute.mute.p0",
       "min": 0,
@@ -3407,7 +3485,7 @@
       "display": "onoff_inv"
     },
     {
-      "id": 262,
+      "id": 268,
       "name": "op3_spec_env_r1.p0",
       "target": "op3.specenv.r1.p0",
       "min": 0,
@@ -3420,7 +3498,7 @@
       "display": "raw"
     },
     {
-      "id": 263,
+      "id": 269,
       "name": "op3_spec_env_r2.p0",
       "target": "op3.specenv.r2.p0",
       "min": 0,
@@ -3433,7 +3511,7 @@
       "display": "raw"
     },
     {
-      "id": 264,
+      "id": 270,
       "name": "op3_spec_env_r3.p0",
       "target": "op3.specenv.r3.p0",
       "min": 0,
@@ -3446,7 +3524,7 @@
       "display": "raw"
     },
     {
-      "id": 265,
+      "id": 271,
       "name": "op3_spec_env_r4.p0",
       "target": "op3.specenv.r4.p0",
       "min": 0,
@@ -3459,7 +3537,7 @@
       "display": "raw"
     },
     {
-      "id": 266,
+      "id": 272,
       "name": "op3_spec_env_l1.p0",
       "target": "op3.specenv.l1.p0",
       "min": 0,
@@ -3472,7 +3550,7 @@
       "display": "raw"
     },
     {
-      "id": 267,
+      "id": 273,
       "name": "op3_spec_env_l2.p0",
       "target": "op3.specenv.l2.p0",
       "min": 0,
@@ -3485,7 +3563,7 @@
       "display": "raw"
     },
     {
-      "id": 268,
+      "id": 274,
       "name": "op3_spec_env_l3.p0",
       "target": "op3.specenv.l3.p0",
       "min": 0,
@@ -3498,7 +3576,7 @@
       "display": "raw"
     },
     {
-      "id": 269,
+      "id": 275,
       "name": "op3_spec_lfo_rate.p0",
       "target": "op3.speclfo.rate.p0",
       "min": 0,
@@ -3511,7 +3589,7 @@
       "display": "hz"
     },
     {
-      "id": 270,
+      "id": 276,
       "name": "op3_spec_lfo_depth.p0",
       "target": "op3.speclfo.depth.p0",
       "min": -99,
@@ -3524,7 +3602,7 @@
       "display": "raw"
     },
     {
-      "id": 271,
+      "id": 277,
       "name": "op3_spec_lfo_wave.p0",
       "target": "op3.speclfo.wave.p0",
       "min": 0,
@@ -3537,7 +3615,7 @@
       "display": "wave"
     },
     {
-      "id": 272,
+      "id": 278,
       "name": "op3_spec_lfo_mode.p0",
       "target": "op3.speclfo.mode.p0",
       "min": 0,
@@ -3550,7 +3628,7 @@
       "display": "onoff"
     },
     {
-      "id": 273,
+      "id": 279,
       "name": "op4_ratio.p0",
       "target": "op4.ph.inc_ratio.p0",
       "min": 32768,
@@ -3563,7 +3641,7 @@
       "display": "ratio"
     },
     {
-      "id": 274,
+      "id": 280,
       "name": "op4_detune.p0",
       "target": "op4.ph.detune.p0",
       "min": -50,
@@ -3576,7 +3654,7 @@
       "display": "cent"
     },
     {
-      "id": 275,
+      "id": 281,
       "name": "op4_waveform.p0",
       "target": "op4.osc.waveform.p0",
       "min": 0,
@@ -3589,7 +3667,33 @@
       "display": "wave"
     },
     {
-      "id": 276,
+      "id": 282,
+      "name": "op4_spec_range_a.p0",
+      "target": "op4.osc.spec_range_a.p0",
+      "min": 0,
+      "max": 7,
+      "default": 0,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "range"
+    },
+    {
+      "id": 283,
+      "name": "op4_spec_range_b.p0",
+      "target": "op4.osc.spec_range_b.p0",
+      "min": 0,
+      "max": 7,
+      "default": 0,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "range"
+    },
+    {
+      "id": 284,
       "name": "op4_spec_a1.p0",
       "target": "op4.osc.spec_a1.p0",
       "min": 0,
@@ -3602,7 +3706,7 @@
       "display": "raw"
     },
     {
-      "id": 277,
+      "id": 285,
       "name": "op4_spec_a2.p0",
       "target": "op4.osc.spec_a2.p0",
       "min": 0,
@@ -3615,7 +3719,7 @@
       "display": "raw"
     },
     {
-      "id": 278,
+      "id": 286,
       "name": "op4_spec_a3.p0",
       "target": "op4.osc.spec_a3.p0",
       "min": 0,
@@ -3628,7 +3732,7 @@
       "display": "raw"
     },
     {
-      "id": 279,
+      "id": 287,
       "name": "op4_spec_a4.p0",
       "target": "op4.osc.spec_a4.p0",
       "min": 0,
@@ -3641,7 +3745,7 @@
       "display": "raw"
     },
     {
-      "id": 280,
+      "id": 288,
       "name": "op4_spec_a5.p0",
       "target": "op4.osc.spec_a5.p0",
       "min": 0,
@@ -3654,7 +3758,7 @@
       "display": "raw"
     },
     {
-      "id": 281,
+      "id": 289,
       "name": "op4_spec_a6.p0",
       "target": "op4.osc.spec_a6.p0",
       "min": 0,
@@ -3667,7 +3771,7 @@
       "display": "raw"
     },
     {
-      "id": 282,
+      "id": 290,
       "name": "op4_spec_a7.p0",
       "target": "op4.osc.spec_a7.p0",
       "min": 0,
@@ -3680,7 +3784,7 @@
       "display": "raw"
     },
     {
-      "id": 283,
+      "id": 291,
       "name": "op4_spec_a8.p0",
       "target": "op4.osc.spec_a8.p0",
       "min": 0,
@@ -3693,7 +3797,7 @@
       "display": "raw"
     },
     {
-      "id": 284,
+      "id": 292,
       "name": "op4_spec_a9.p0",
       "target": "op4.osc.spec_a9.p0",
       "min": 0,
@@ -3706,7 +3810,7 @@
       "display": "raw"
     },
     {
-      "id": 285,
+      "id": 293,
       "name": "op4_spec_a10.p0",
       "target": "op4.osc.spec_a10.p0",
       "min": 0,
@@ -3719,7 +3823,7 @@
       "display": "raw"
     },
     {
-      "id": 286,
+      "id": 294,
       "name": "op4_spec_a11.p0",
       "target": "op4.osc.spec_a11.p0",
       "min": 0,
@@ -3732,7 +3836,7 @@
       "display": "raw"
     },
     {
-      "id": 287,
+      "id": 295,
       "name": "op4_spec_a12.p0",
       "target": "op4.osc.spec_a12.p0",
       "min": 0,
@@ -3745,7 +3849,7 @@
       "display": "raw"
     },
     {
-      "id": 288,
+      "id": 296,
       "name": "op4_spec_a13.p0",
       "target": "op4.osc.spec_a13.p0",
       "min": 0,
@@ -3758,7 +3862,7 @@
       "display": "raw"
     },
     {
-      "id": 289,
+      "id": 297,
       "name": "op4_spec_a14.p0",
       "target": "op4.osc.spec_a14.p0",
       "min": 0,
@@ -3771,7 +3875,7 @@
       "display": "raw"
     },
     {
-      "id": 290,
+      "id": 298,
       "name": "op4_spec_a15.p0",
       "target": "op4.osc.spec_a15.p0",
       "min": 0,
@@ -3784,7 +3888,7 @@
       "display": "raw"
     },
     {
-      "id": 291,
+      "id": 299,
       "name": "op4_spec_a16.p0",
       "target": "op4.osc.spec_a16.p0",
       "min": 0,
@@ -3797,7 +3901,7 @@
       "display": "raw"
     },
     {
-      "id": 292,
+      "id": 300,
       "name": "op4_spec_b1.p0",
       "target": "op4.osc.spec_b1.p0",
       "min": 0,
@@ -3810,7 +3914,7 @@
       "display": "raw"
     },
     {
-      "id": 293,
+      "id": 301,
       "name": "op4_spec_b2.p0",
       "target": "op4.osc.spec_b2.p0",
       "min": 0,
@@ -3823,7 +3927,7 @@
       "display": "raw"
     },
     {
-      "id": 294,
+      "id": 302,
       "name": "op4_spec_b3.p0",
       "target": "op4.osc.spec_b3.p0",
       "min": 0,
@@ -3836,7 +3940,7 @@
       "display": "raw"
     },
     {
-      "id": 295,
+      "id": 303,
       "name": "op4_spec_b4.p0",
       "target": "op4.osc.spec_b4.p0",
       "min": 0,
@@ -3849,7 +3953,7 @@
       "display": "raw"
     },
     {
-      "id": 296,
+      "id": 304,
       "name": "op4_spec_b5.p0",
       "target": "op4.osc.spec_b5.p0",
       "min": 0,
@@ -3862,7 +3966,7 @@
       "display": "raw"
     },
     {
-      "id": 297,
+      "id": 305,
       "name": "op4_spec_b6.p0",
       "target": "op4.osc.spec_b6.p0",
       "min": 0,
@@ -3875,7 +3979,7 @@
       "display": "raw"
     },
     {
-      "id": 298,
+      "id": 306,
       "name": "op4_spec_b7.p0",
       "target": "op4.osc.spec_b7.p0",
       "min": 0,
@@ -3888,7 +3992,7 @@
       "display": "raw"
     },
     {
-      "id": 299,
+      "id": 307,
       "name": "op4_spec_b8.p0",
       "target": "op4.osc.spec_b8.p0",
       "min": 0,
@@ -3901,7 +4005,7 @@
       "display": "raw"
     },
     {
-      "id": 300,
+      "id": 308,
       "name": "op4_spec_b9.p0",
       "target": "op4.osc.spec_b9.p0",
       "min": 0,
@@ -3914,7 +4018,7 @@
       "display": "raw"
     },
     {
-      "id": 301,
+      "id": 309,
       "name": "op4_spec_b10.p0",
       "target": "op4.osc.spec_b10.p0",
       "min": 0,
@@ -3927,7 +4031,7 @@
       "display": "raw"
     },
     {
-      "id": 302,
+      "id": 310,
       "name": "op4_spec_b11.p0",
       "target": "op4.osc.spec_b11.p0",
       "min": 0,
@@ -3940,7 +4044,7 @@
       "display": "raw"
     },
     {
-      "id": 303,
+      "id": 311,
       "name": "op4_spec_b12.p0",
       "target": "op4.osc.spec_b12.p0",
       "min": 0,
@@ -3953,7 +4057,7 @@
       "display": "raw"
     },
     {
-      "id": 304,
+      "id": 312,
       "name": "op4_spec_b13.p0",
       "target": "op4.osc.spec_b13.p0",
       "min": 0,
@@ -3966,7 +4070,7 @@
       "display": "raw"
     },
     {
-      "id": 305,
+      "id": 313,
       "name": "op4_spec_b14.p0",
       "target": "op4.osc.spec_b14.p0",
       "min": 0,
@@ -3979,7 +4083,7 @@
       "display": "raw"
     },
     {
-      "id": 306,
+      "id": 314,
       "name": "op4_spec_b15.p0",
       "target": "op4.osc.spec_b15.p0",
       "min": 0,
@@ -3992,7 +4096,7 @@
       "display": "raw"
     },
     {
-      "id": 307,
+      "id": 315,
       "name": "op4_spec_b16.p0",
       "target": "op4.osc.spec_b16.p0",
       "min": 0,
@@ -4005,7 +4109,7 @@
       "display": "raw"
     },
     {
-      "id": 308,
+      "id": 316,
       "name": "op4_spec_morph.p0",
       "target": "op4.osc.spec_morph.p0",
       "min": 0,
@@ -4018,7 +4122,7 @@
       "display": "raw"
     },
     {
-      "id": 309,
+      "id": 317,
       "name": "op4_spec_env_depth.p0",
       "target": "op4.osc.spec_env_depth.p0",
       "min": -99,
@@ -4031,7 +4135,7 @@
       "display": "raw"
     },
     {
-      "id": 310,
+      "id": 318,
       "name": "op4.eg.r1.p0",
       "target": "op4.eg.r1.p0",
       "min": 0,
@@ -4044,7 +4148,7 @@
       "display": "raw"
     },
     {
-      "id": 311,
+      "id": 319,
       "name": "op4.eg.r2.p0",
       "target": "op4.eg.r2.p0",
       "min": 0,
@@ -4057,7 +4161,7 @@
       "display": "raw"
     },
     {
-      "id": 312,
+      "id": 320,
       "name": "op4.eg.r3.p0",
       "target": "op4.eg.r3.p0",
       "min": 0,
@@ -4070,7 +4174,7 @@
       "display": "raw"
     },
     {
-      "id": 313,
+      "id": 321,
       "name": "op4.eg.r4.p0",
       "target": "op4.eg.r4.p0",
       "min": 0,
@@ -4083,7 +4187,7 @@
       "display": "raw"
     },
     {
-      "id": 314,
+      "id": 322,
       "name": "op4.eg.l1.p0",
       "target": "op4.eg.l1.p0",
       "min": 0,
@@ -4096,7 +4200,7 @@
       "display": "raw"
     },
     {
-      "id": 315,
+      "id": 323,
       "name": "op4.eg.l2.p0",
       "target": "op4.eg.l2.p0",
       "min": 0,
@@ -4109,7 +4213,7 @@
       "display": "raw"
     },
     {
-      "id": 316,
+      "id": 324,
       "name": "op4.eg.l3.p0",
       "target": "op4.eg.l3.p0",
       "min": 0,
@@ -4122,7 +4226,7 @@
       "display": "raw"
     },
     {
-      "id": 317,
+      "id": 325,
       "name": "op4_trem_rate.p0",
       "target": "op4.lfo.rate.p0",
       "min": 0,
@@ -4135,7 +4239,7 @@
       "display": "hz"
     },
     {
-      "id": 318,
+      "id": 326,
       "name": "op4_trem_depth.p0",
       "target": "op4.lfo.depth.p0",
       "min": -99,
@@ -4148,7 +4252,7 @@
       "display": "raw"
     },
     {
-      "id": 319,
+      "id": 327,
       "name": "op4_trem_wave.p0",
       "target": "op4.lfo.wave.p0",
       "min": 0,
@@ -4161,7 +4265,7 @@
       "display": "wave"
     },
     {
-      "id": 320,
+      "id": 328,
       "name": "op4_trem_mode.p0",
       "target": "op4.lfo.mode.p0",
       "min": 0,
@@ -4174,7 +4278,7 @@
       "display": "onoff"
     },
     {
-      "id": 321,
+      "id": 329,
       "name": "op4_fbenv_on.p0",
       "target": "op4.fbenv.on.p0",
       "min": 0,
@@ -4187,7 +4291,7 @@
       "display": "onoff"
     },
     {
-      "id": 322,
+      "id": 330,
       "name": "op4_fbenv_r1.p0",
       "target": "op4.fbenv.r1.p0",
       "min": 0,
@@ -4200,7 +4304,7 @@
       "display": "raw"
     },
     {
-      "id": 323,
+      "id": 331,
       "name": "op4_fbenv_r2.p0",
       "target": "op4.fbenv.r2.p0",
       "min": 0,
@@ -4213,7 +4317,7 @@
       "display": "raw"
     },
     {
-      "id": 324,
+      "id": 332,
       "name": "op4_fbenv_r3.p0",
       "target": "op4.fbenv.r3.p0",
       "min": 0,
@@ -4226,7 +4330,7 @@
       "display": "raw"
     },
     {
-      "id": 325,
+      "id": 333,
       "name": "op4_fbenv_r4.p0",
       "target": "op4.fbenv.r4.p0",
       "min": 0,
@@ -4239,7 +4343,7 @@
       "display": "raw"
     },
     {
-      "id": 326,
+      "id": 334,
       "name": "op4_fbenv_l1.p0",
       "target": "op4.fbenv.l1.p0",
       "min": -32768,
@@ -4252,7 +4356,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 327,
+      "id": 335,
       "name": "op4_fbenv_l2.p0",
       "target": "op4.fbenv.l2.p0",
       "min": -32768,
@@ -4265,7 +4369,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 328,
+      "id": 336,
       "name": "op4_fbenv_l3.p0",
       "target": "op4.fbenv.l3.p0",
       "min": -32768,
@@ -4278,7 +4382,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 329,
+      "id": 337,
       "name": "op4_fbenv_l4.p0",
       "target": "op4.fbenv.l4.p0",
       "min": -32768,
@@ -4291,7 +4395,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 330,
+      "id": 338,
       "name": "op4_fblfo_rate.p0",
       "target": "op4.fblfo.rate.p0",
       "min": 0,
@@ -4304,7 +4408,7 @@
       "display": "hz"
     },
     {
-      "id": 331,
+      "id": 339,
       "name": "op4_fblfo_depth.p0",
       "target": "op4.fblfo.depth.p0",
       "min": -32767,
@@ -4317,7 +4421,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 332,
+      "id": 340,
       "name": "op4_fblfo_wave.p0",
       "target": "op4.fblfo.wave.p0",
       "min": 0,
@@ -4330,7 +4434,7 @@
       "display": "wave"
     },
     {
-      "id": 333,
+      "id": 341,
       "name": "op4_fblfo_mode.p0",
       "target": "op4.fblfo.mode.p0",
       "min": 0,
@@ -4343,7 +4447,7 @@
       "display": "onoff"
     },
     {
-      "id": 334,
+      "id": 342,
       "name": "op4_dlfo_rate.p0",
       "target": "op4.dlfo.rate.p0",
       "min": 0,
@@ -4356,7 +4460,7 @@
       "display": "hz"
     },
     {
-      "id": 335,
+      "id": 343,
       "name": "op4_dlfo_depth.p0",
       "target": "op4.dlfo.depth.p0",
       "min": -32768,
@@ -4369,7 +4473,7 @@
       "display": "semi_lfo"
     },
     {
-      "id": 336,
+      "id": 344,
       "name": "op4_dlfo_wave.p0",
       "target": "op4.dlfo.wave.p0",
       "min": 0,
@@ -4382,7 +4486,7 @@
       "display": "wave"
     },
     {
-      "id": 337,
+      "id": 345,
       "name": "op4_dlfo_mode.p0",
       "target": "op4.dlfo.mode.p0",
       "min": 0,
@@ -4395,7 +4499,7 @@
       "display": "onoff"
     },
     {
-      "id": 338,
+      "id": 346,
       "name": "op4.velamp.depth.p0",
       "target": "op4.velamp.depth.p0",
       "min": -32768,
@@ -4408,7 +4512,7 @@
       "display": "raw"
     },
     {
-      "id": 339,
+      "id": 347,
       "name": "op4.velfm.depth.p0",
       "target": "op4.velfm.depth.p0",
       "min": -32768,
@@ -4421,7 +4525,7 @@
       "display": "raw"
     },
     {
-      "id": 340,
+      "id": 348,
       "name": "op4.velrate.depth.p0",
       "target": "op4.velrate.depth.p0",
       "min": -32768,
@@ -4434,7 +4538,7 @@
       "display": "raw"
     },
     {
-      "id": 341,
+      "id": 349,
       "name": "op4_level.p0",
       "target": "op4.tl.level.p0",
       "min": 0,
@@ -4447,7 +4551,7 @@
       "display": "raw"
     },
     {
-      "id": 342,
+      "id": 350,
       "name": "op4_feedback.p0",
       "target": "op4.fb.level.p0",
       "min": -32767,
@@ -4460,7 +4564,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 343,
+      "id": 351,
       "name": "op4_level_ks_lo.p0",
       "target": "op4.level_ks.lo.p0",
       "min": -100,
@@ -4473,7 +4577,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 344,
+      "id": 352,
       "name": "op4_level_ks_hi.p0",
       "target": "op4.level_ks.hi.p0",
       "min": -100,
@@ -4486,7 +4590,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 345,
+      "id": 353,
       "name": "op4_fb_ks_lo.p0",
       "target": "op4.fb_ks.lo.p0",
       "min": -100,
@@ -4499,7 +4603,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 346,
+      "id": 354,
       "name": "op4_fb_ks_hi.p0",
       "target": "op4.fb_ks.hi.p0",
       "min": -100,
@@ -4512,7 +4616,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 347,
+      "id": 355,
       "name": "op4_aenv_ks_lo.p0",
       "target": "op4.eg_ks.lo.p0",
       "min": -100,
@@ -4525,7 +4629,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 348,
+      "id": 356,
       "name": "op4_aenv_ks_hi.p0",
       "target": "op4.eg_ks.hi.p0",
       "min": -100,
@@ -4538,7 +4642,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 349,
+      "id": 357,
       "name": "op4_level_vs.p0",
       "target": "op4.level_vs.amount.p0",
       "min": -100,
@@ -4551,7 +4655,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 350,
+      "id": 358,
       "name": "op4_fb_vs.p0",
       "target": "op4.fb_vs.amount.p0",
       "min": -100,
@@ -4564,7 +4668,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 351,
+      "id": 359,
       "name": "op4_aenv_vs.p0",
       "target": "op4.eg_vs.amount.p0",
       "min": -100,
@@ -4577,7 +4681,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 352,
+      "id": 360,
       "name": "op4_mute.p0",
       "target": "op4.mute.mute.p0",
       "min": 0,
@@ -4590,7 +4694,7 @@
       "display": "onoff_inv"
     },
     {
-      "id": 353,
+      "id": 361,
       "name": "op4_spec_env_r1.p0",
       "target": "op4.specenv.r1.p0",
       "min": 0,
@@ -4603,7 +4707,7 @@
       "display": "raw"
     },
     {
-      "id": 354,
+      "id": 362,
       "name": "op4_spec_env_r2.p0",
       "target": "op4.specenv.r2.p0",
       "min": 0,
@@ -4616,7 +4720,7 @@
       "display": "raw"
     },
     {
-      "id": 355,
+      "id": 363,
       "name": "op4_spec_env_r3.p0",
       "target": "op4.specenv.r3.p0",
       "min": 0,
@@ -4629,7 +4733,7 @@
       "display": "raw"
     },
     {
-      "id": 356,
+      "id": 364,
       "name": "op4_spec_env_r4.p0",
       "target": "op4.specenv.r4.p0",
       "min": 0,
@@ -4642,7 +4746,7 @@
       "display": "raw"
     },
     {
-      "id": 357,
+      "id": 365,
       "name": "op4_spec_env_l1.p0",
       "target": "op4.specenv.l1.p0",
       "min": 0,
@@ -4655,7 +4759,7 @@
       "display": "raw"
     },
     {
-      "id": 358,
+      "id": 366,
       "name": "op4_spec_env_l2.p0",
       "target": "op4.specenv.l2.p0",
       "min": 0,
@@ -4668,7 +4772,7 @@
       "display": "raw"
     },
     {
-      "id": 359,
+      "id": 367,
       "name": "op4_spec_env_l3.p0",
       "target": "op4.specenv.l3.p0",
       "min": 0,
@@ -4681,7 +4785,7 @@
       "display": "raw"
     },
     {
-      "id": 360,
+      "id": 368,
       "name": "op4_spec_lfo_rate.p0",
       "target": "op4.speclfo.rate.p0",
       "min": 0,
@@ -4694,7 +4798,7 @@
       "display": "hz"
     },
     {
-      "id": 361,
+      "id": 369,
       "name": "op4_spec_lfo_depth.p0",
       "target": "op4.speclfo.depth.p0",
       "min": -99,
@@ -4707,7 +4811,7 @@
       "display": "raw"
     },
     {
-      "id": 362,
+      "id": 370,
       "name": "op4_spec_lfo_wave.p0",
       "target": "op4.speclfo.wave.p0",
       "min": 0,
@@ -4720,7 +4824,7 @@
       "display": "wave"
     },
     {
-      "id": 363,
+      "id": 371,
       "name": "op4_spec_lfo_mode.p0",
       "target": "op4.speclfo.mode.p0",
       "min": 0,
@@ -4733,7 +4837,7 @@
       "display": "onoff"
     },
     {
-      "id": 364,
+      "id": 372,
       "name": "algorithm.p0",
       "target": "algo.algorithm.p0",
       "min": 0,
@@ -4746,7 +4850,7 @@
       "display": "raw"
     },
     {
-      "id": 365,
+      "id": 373,
       "name": "penv_on.p0",
       "target": "penv.on.p0",
       "min": 0,
@@ -4759,7 +4863,7 @@
       "display": "onoff"
     },
     {
-      "id": 366,
+      "id": 374,
       "name": "penv_r1.p0",
       "target": "penv.r1.p0",
       "min": 0,
@@ -4772,7 +4876,7 @@
       "display": "raw"
     },
     {
-      "id": 367,
+      "id": 375,
       "name": "penv_r2.p0",
       "target": "penv.r2.p0",
       "min": 0,
@@ -4785,7 +4889,7 @@
       "display": "raw"
     },
     {
-      "id": 368,
+      "id": 376,
       "name": "penv_r3.p0",
       "target": "penv.r3.p0",
       "min": 0,
@@ -4798,7 +4902,7 @@
       "display": "raw"
     },
     {
-      "id": 369,
+      "id": 377,
       "name": "penv_r4.p0",
       "target": "penv.r4.p0",
       "min": 0,
@@ -4811,7 +4915,7 @@
       "display": "raw"
     },
     {
-      "id": 370,
+      "id": 378,
       "name": "penv_l1.p0",
       "target": "penv.l1.p0",
       "min": -32768,
@@ -4824,7 +4928,7 @@
       "display": "semi_fine"
     },
     {
-      "id": 371,
+      "id": 379,
       "name": "penv_l2.p0",
       "target": "penv.l2.p0",
       "min": -32768,
@@ -4837,7 +4941,7 @@
       "display": "semi_fine"
     },
     {
-      "id": 372,
+      "id": 380,
       "name": "penv_l3.p0",
       "target": "penv.l3.p0",
       "min": -32768,
@@ -4850,7 +4954,7 @@
       "display": "semi_fine"
     },
     {
-      "id": 373,
+      "id": 381,
       "name": "penv_l4.p0",
       "target": "penv.l4.p0",
       "min": -32768,
@@ -4863,7 +4967,7 @@
       "display": "semi_fine"
     },
     {
-      "id": 374,
+      "id": 382,
       "name": "penv_ks_lo.p0",
       "target": "penv_ks.lo.p0",
       "min": -100,
@@ -4876,7 +4980,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 375,
+      "id": 383,
       "name": "penv_ks_hi.p0",
       "target": "penv_ks.hi.p0",
       "min": -100,
@@ -4889,7 +4993,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 376,
+      "id": 384,
       "name": "penv_vs.p0",
       "target": "penv_vs.amount.p0",
       "min": -100,
@@ -4902,7 +5006,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 377,
+      "id": 385,
       "name": "pitch_rate.p0",
       "target": "plfo.rate.p0",
       "min": 0,
@@ -4915,7 +5019,7 @@
       "display": "hz"
     },
     {
-      "id": 378,
+      "id": 386,
       "name": "pitch_depth.p0",
       "target": "plfo.depth.p0",
       "min": -32768,
@@ -4928,7 +5032,7 @@
       "display": "semi_lfo"
     },
     {
-      "id": 379,
+      "id": 387,
       "name": "pitch_wave.p0",
       "target": "plfo.wave.p0",
       "min": 0,
@@ -4941,7 +5045,7 @@
       "display": "wave"
     },
     {
-      "id": 380,
+      "id": 388,
       "name": "pitch_mode.p0",
       "target": "plfo.mode.p0",
       "min": 0,
@@ -4954,7 +5058,7 @@
       "display": "onoff"
     },
     {
-      "id": 381,
+      "id": 389,
       "name": "f1_cutoff_ks_lo.p0",
       "target": "f1_ks.lo.p0",
       "min": -100,
@@ -4967,7 +5071,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 382,
+      "id": 390,
       "name": "f1_cutoff_ks_hi.p0",
       "target": "f1_ks.hi.p0",
       "min": -100,
@@ -4980,7 +5084,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 383,
+      "id": 391,
       "name": "fenv_ks_lo.p0",
       "target": "fenv_ks.lo.p0",
       "min": -100,
@@ -4993,7 +5097,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 384,
+      "id": 392,
       "name": "fenv_ks_hi.p0",
       "target": "fenv_ks.hi.p0",
       "min": -100,
@@ -5006,7 +5110,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 385,
+      "id": 393,
       "name": "f1_cutoff_vs.p0",
       "target": "f1_vs.amount.p0",
       "min": -100,
@@ -5019,7 +5123,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 386,
+      "id": 394,
       "name": "fenv_vs.p0",
       "target": "fenv_vs.amount.p0",
       "min": -100,
@@ -5032,7 +5136,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 387,
+      "id": 395,
       "name": "cutoff.p0",
       "target": "lp.f.p0",
       "min": 0,
@@ -5045,7 +5149,7 @@
       "display": "off_pct"
     },
     {
-      "id": 388,
+      "id": 396,
       "name": "res.p0",
       "target": "lp.res.p0",
       "min": 0,
@@ -5058,7 +5162,7 @@
       "display": "pct_exp"
     },
     {
-      "id": 389,
+      "id": 397,
       "name": "lp.comp.p0",
       "target": "lp.comp.p0",
       "min": -32768,
@@ -5071,7 +5175,7 @@
       "display": "raw"
     },
     {
-      "id": 390,
+      "id": 398,
       "name": "filter_type.p0",
       "target": "lp.mode.p0",
       "min": 0,
@@ -5084,7 +5188,7 @@
       "display": "filter"
     },
     {
-      "id": 391,
+      "id": 399,
       "name": "filter_on.p0",
       "target": "lp.on.p0",
       "min": 0,
@@ -5097,7 +5201,7 @@
       "display": "onoff"
     },
     {
-      "id": 392,
+      "id": 400,
       "name": "fenv_depth.p0",
       "target": "lp.fenv_depth.p0",
       "min": 0,
@@ -5110,7 +5214,7 @@
       "display": "pct"
     },
     {
-      "id": 393,
+      "id": 401,
       "name": "fenv_r1.p0",
       "target": "fenv.r1.p0",
       "min": 0,
@@ -5123,7 +5227,7 @@
       "display": "raw"
     },
     {
-      "id": 394,
+      "id": 402,
       "name": "fenv_r2.p0",
       "target": "fenv.r2.p0",
       "min": 0,
@@ -5136,7 +5240,7 @@
       "display": "raw"
     },
     {
-      "id": 395,
+      "id": 403,
       "name": "fenv_r3.p0",
       "target": "fenv.r3.p0",
       "min": 0,
@@ -5149,7 +5253,7 @@
       "display": "raw"
     },
     {
-      "id": 396,
+      "id": 404,
       "name": "fenv_r4.p0",
       "target": "fenv.r4.p0",
       "min": 0,
@@ -5162,7 +5266,7 @@
       "display": "raw"
     },
     {
-      "id": 397,
+      "id": 405,
       "name": "fenv_l1.p0",
       "target": "fenv.l1.p0",
       "min": 0,
@@ -5175,7 +5279,7 @@
       "display": "raw"
     },
     {
-      "id": 398,
+      "id": 406,
       "name": "fenv_l2.p0",
       "target": "fenv.l2.p0",
       "min": 0,
@@ -5188,7 +5292,7 @@
       "display": "raw"
     },
     {
-      "id": 399,
+      "id": 407,
       "name": "fenv_l3.p0",
       "target": "fenv.l3.p0",
       "min": 0,
@@ -5201,7 +5305,7 @@
       "display": "raw"
     },
     {
-      "id": 400,
+      "id": 408,
       "name": "mode.p0",
       "target": "vm_mode",
       "min": 0,
@@ -5214,7 +5318,7 @@
       "display": "mode"
     },
     {
-      "id": 401,
+      "id": 409,
       "name": "unison_count.p0",
       "target": "vm_unison_count",
       "min": 1,
@@ -5227,7 +5331,7 @@
       "display": "raw"
     },
     {
-      "id": 402,
+      "id": 410,
       "name": "unison_detune.p0",
       "target": "vm_unison_detune",
       "min": 0,
@@ -5240,7 +5344,7 @@
       "display": "raw"
     },
     {
-      "id": 403,
+      "id": 411,
       "name": "detune.p0",
       "target": "vm_detune",
       "min": -50,
@@ -5253,7 +5357,7 @@
       "display": "cent"
     },
     {
-      "id": 404,
+      "id": 412,
       "name": "transpose.p0",
       "target": "vm_transpose",
       "min": -24,
@@ -5266,7 +5370,7 @@
       "display": "semitones"
     },
     {
-      "id": 405,
+      "id": 413,
       "name": "legato.p0",
       "target": "vm_legato",
       "min": 0,
@@ -5279,7 +5383,7 @@
       "display": "onoff"
     },
     {
-      "id": 406,
+      "id": 414,
       "name": "portamento.p0",
       "target": "vm_portamento",
       "min": 0,
@@ -5292,7 +5396,7 @@
       "display": "porta"
     },
     {
-      "id": 407,
+      "id": 415,
       "name": "note_priority.p0",
       "target": "vm_note_priority",
       "min": 0,
@@ -5305,7 +5409,7 @@
       "display": "priority"
     },
     {
-      "id": 408,
+      "id": 416,
       "name": "op1_ratio.p1",
       "target": "op1.ph.inc_ratio.p1",
       "min": 32768,
@@ -5318,7 +5422,7 @@
       "display": "ratio"
     },
     {
-      "id": 409,
+      "id": 417,
       "name": "op1_detune.p1",
       "target": "op1.ph.detune.p1",
       "min": -50,
@@ -5331,7 +5435,7 @@
       "display": "cent"
     },
     {
-      "id": 410,
+      "id": 418,
       "name": "op1_waveform.p1",
       "target": "op1.osc.waveform.p1",
       "min": 0,
@@ -5344,7 +5448,33 @@
       "display": "wave"
     },
     {
-      "id": 411,
+      "id": 419,
+      "name": "op1_spec_range_a.p1",
+      "target": "op1.osc.spec_range_a.p1",
+      "min": 0,
+      "max": 7,
+      "default": 0,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "range"
+    },
+    {
+      "id": 420,
+      "name": "op1_spec_range_b.p1",
+      "target": "op1.osc.spec_range_b.p1",
+      "min": 0,
+      "max": 7,
+      "default": 0,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "range"
+    },
+    {
+      "id": 421,
       "name": "op1_spec_a1.p1",
       "target": "op1.osc.spec_a1.p1",
       "min": 0,
@@ -5357,7 +5487,7 @@
       "display": "raw"
     },
     {
-      "id": 412,
+      "id": 422,
       "name": "op1_spec_a2.p1",
       "target": "op1.osc.spec_a2.p1",
       "min": 0,
@@ -5370,7 +5500,7 @@
       "display": "raw"
     },
     {
-      "id": 413,
+      "id": 423,
       "name": "op1_spec_a3.p1",
       "target": "op1.osc.spec_a3.p1",
       "min": 0,
@@ -5383,7 +5513,7 @@
       "display": "raw"
     },
     {
-      "id": 414,
+      "id": 424,
       "name": "op1_spec_a4.p1",
       "target": "op1.osc.spec_a4.p1",
       "min": 0,
@@ -5396,7 +5526,7 @@
       "display": "raw"
     },
     {
-      "id": 415,
+      "id": 425,
       "name": "op1_spec_a5.p1",
       "target": "op1.osc.spec_a5.p1",
       "min": 0,
@@ -5409,7 +5539,7 @@
       "display": "raw"
     },
     {
-      "id": 416,
+      "id": 426,
       "name": "op1_spec_a6.p1",
       "target": "op1.osc.spec_a6.p1",
       "min": 0,
@@ -5422,7 +5552,7 @@
       "display": "raw"
     },
     {
-      "id": 417,
+      "id": 427,
       "name": "op1_spec_a7.p1",
       "target": "op1.osc.spec_a7.p1",
       "min": 0,
@@ -5435,7 +5565,7 @@
       "display": "raw"
     },
     {
-      "id": 418,
+      "id": 428,
       "name": "op1_spec_a8.p1",
       "target": "op1.osc.spec_a8.p1",
       "min": 0,
@@ -5448,7 +5578,7 @@
       "display": "raw"
     },
     {
-      "id": 419,
+      "id": 429,
       "name": "op1_spec_a9.p1",
       "target": "op1.osc.spec_a9.p1",
       "min": 0,
@@ -5461,7 +5591,7 @@
       "display": "raw"
     },
     {
-      "id": 420,
+      "id": 430,
       "name": "op1_spec_a10.p1",
       "target": "op1.osc.spec_a10.p1",
       "min": 0,
@@ -5474,7 +5604,7 @@
       "display": "raw"
     },
     {
-      "id": 421,
+      "id": 431,
       "name": "op1_spec_a11.p1",
       "target": "op1.osc.spec_a11.p1",
       "min": 0,
@@ -5487,7 +5617,7 @@
       "display": "raw"
     },
     {
-      "id": 422,
+      "id": 432,
       "name": "op1_spec_a12.p1",
       "target": "op1.osc.spec_a12.p1",
       "min": 0,
@@ -5500,7 +5630,7 @@
       "display": "raw"
     },
     {
-      "id": 423,
+      "id": 433,
       "name": "op1_spec_a13.p1",
       "target": "op1.osc.spec_a13.p1",
       "min": 0,
@@ -5513,7 +5643,7 @@
       "display": "raw"
     },
     {
-      "id": 424,
+      "id": 434,
       "name": "op1_spec_a14.p1",
       "target": "op1.osc.spec_a14.p1",
       "min": 0,
@@ -5526,7 +5656,7 @@
       "display": "raw"
     },
     {
-      "id": 425,
+      "id": 435,
       "name": "op1_spec_a15.p1",
       "target": "op1.osc.spec_a15.p1",
       "min": 0,
@@ -5539,7 +5669,7 @@
       "display": "raw"
     },
     {
-      "id": 426,
+      "id": 436,
       "name": "op1_spec_a16.p1",
       "target": "op1.osc.spec_a16.p1",
       "min": 0,
@@ -5552,7 +5682,7 @@
       "display": "raw"
     },
     {
-      "id": 427,
+      "id": 437,
       "name": "op1_spec_b1.p1",
       "target": "op1.osc.spec_b1.p1",
       "min": 0,
@@ -5565,7 +5695,7 @@
       "display": "raw"
     },
     {
-      "id": 428,
+      "id": 438,
       "name": "op1_spec_b2.p1",
       "target": "op1.osc.spec_b2.p1",
       "min": 0,
@@ -5578,7 +5708,7 @@
       "display": "raw"
     },
     {
-      "id": 429,
+      "id": 439,
       "name": "op1_spec_b3.p1",
       "target": "op1.osc.spec_b3.p1",
       "min": 0,
@@ -5591,7 +5721,7 @@
       "display": "raw"
     },
     {
-      "id": 430,
+      "id": 440,
       "name": "op1_spec_b4.p1",
       "target": "op1.osc.spec_b4.p1",
       "min": 0,
@@ -5604,7 +5734,7 @@
       "display": "raw"
     },
     {
-      "id": 431,
+      "id": 441,
       "name": "op1_spec_b5.p1",
       "target": "op1.osc.spec_b5.p1",
       "min": 0,
@@ -5617,7 +5747,7 @@
       "display": "raw"
     },
     {
-      "id": 432,
+      "id": 442,
       "name": "op1_spec_b6.p1",
       "target": "op1.osc.spec_b6.p1",
       "min": 0,
@@ -5630,7 +5760,7 @@
       "display": "raw"
     },
     {
-      "id": 433,
+      "id": 443,
       "name": "op1_spec_b7.p1",
       "target": "op1.osc.spec_b7.p1",
       "min": 0,
@@ -5643,7 +5773,7 @@
       "display": "raw"
     },
     {
-      "id": 434,
+      "id": 444,
       "name": "op1_spec_b8.p1",
       "target": "op1.osc.spec_b8.p1",
       "min": 0,
@@ -5656,7 +5786,7 @@
       "display": "raw"
     },
     {
-      "id": 435,
+      "id": 445,
       "name": "op1_spec_b9.p1",
       "target": "op1.osc.spec_b9.p1",
       "min": 0,
@@ -5669,7 +5799,7 @@
       "display": "raw"
     },
     {
-      "id": 436,
+      "id": 446,
       "name": "op1_spec_b10.p1",
       "target": "op1.osc.spec_b10.p1",
       "min": 0,
@@ -5682,7 +5812,7 @@
       "display": "raw"
     },
     {
-      "id": 437,
+      "id": 447,
       "name": "op1_spec_b11.p1",
       "target": "op1.osc.spec_b11.p1",
       "min": 0,
@@ -5695,7 +5825,7 @@
       "display": "raw"
     },
     {
-      "id": 438,
+      "id": 448,
       "name": "op1_spec_b12.p1",
       "target": "op1.osc.spec_b12.p1",
       "min": 0,
@@ -5708,7 +5838,7 @@
       "display": "raw"
     },
     {
-      "id": 439,
+      "id": 449,
       "name": "op1_spec_b13.p1",
       "target": "op1.osc.spec_b13.p1",
       "min": 0,
@@ -5721,7 +5851,7 @@
       "display": "raw"
     },
     {
-      "id": 440,
+      "id": 450,
       "name": "op1_spec_b14.p1",
       "target": "op1.osc.spec_b14.p1",
       "min": 0,
@@ -5734,7 +5864,7 @@
       "display": "raw"
     },
     {
-      "id": 441,
+      "id": 451,
       "name": "op1_spec_b15.p1",
       "target": "op1.osc.spec_b15.p1",
       "min": 0,
@@ -5747,7 +5877,7 @@
       "display": "raw"
     },
     {
-      "id": 442,
+      "id": 452,
       "name": "op1_spec_b16.p1",
       "target": "op1.osc.spec_b16.p1",
       "min": 0,
@@ -5760,7 +5890,7 @@
       "display": "raw"
     },
     {
-      "id": 443,
+      "id": 453,
       "name": "op1_spec_morph.p1",
       "target": "op1.osc.spec_morph.p1",
       "min": 0,
@@ -5773,7 +5903,7 @@
       "display": "raw"
     },
     {
-      "id": 444,
+      "id": 454,
       "name": "op1_spec_env_depth.p1",
       "target": "op1.osc.spec_env_depth.p1",
       "min": -99,
@@ -5786,7 +5916,7 @@
       "display": "raw"
     },
     {
-      "id": 445,
+      "id": 455,
       "name": "attack.p1",
       "target": "op1.eg.r1.p1",
       "min": 0,
@@ -5799,7 +5929,7 @@
       "display": "raw"
     },
     {
-      "id": 446,
+      "id": 456,
       "name": "op1.eg.r2.p1",
       "target": "op1.eg.r2.p1",
       "min": 0,
@@ -5812,7 +5942,7 @@
       "display": "raw"
     },
     {
-      "id": 447,
+      "id": 457,
       "name": "op1.eg.r3.p1",
       "target": "op1.eg.r3.p1",
       "min": 0,
@@ -5825,7 +5955,7 @@
       "display": "raw"
     },
     {
-      "id": 448,
+      "id": 458,
       "name": "release.p1",
       "target": "op1.eg.r4.p1",
       "min": 0,
@@ -5838,7 +5968,7 @@
       "display": "raw"
     },
     {
-      "id": 449,
+      "id": 459,
       "name": "op1.eg.l1.p1",
       "target": "op1.eg.l1.p1",
       "min": 0,
@@ -5851,7 +5981,7 @@
       "display": "raw"
     },
     {
-      "id": 450,
+      "id": 460,
       "name": "op1.eg.l2.p1",
       "target": "op1.eg.l2.p1",
       "min": 0,
@@ -5864,7 +5994,7 @@
       "display": "raw"
     },
     {
-      "id": 451,
+      "id": 461,
       "name": "op1.eg.l3.p1",
       "target": "op1.eg.l3.p1",
       "min": 0,
@@ -5877,7 +6007,7 @@
       "display": "raw"
     },
     {
-      "id": 452,
+      "id": 462,
       "name": "op1_trem_rate.p1",
       "target": "op1.lfo.rate.p1",
       "min": 0,
@@ -5890,7 +6020,7 @@
       "display": "hz"
     },
     {
-      "id": 453,
+      "id": 463,
       "name": "op1_trem_depth.p1",
       "target": "op1.lfo.depth.p1",
       "min": -99,
@@ -5903,7 +6033,7 @@
       "display": "raw"
     },
     {
-      "id": 454,
+      "id": 464,
       "name": "op1_trem_wave.p1",
       "target": "op1.lfo.wave.p1",
       "min": 0,
@@ -5916,7 +6046,7 @@
       "display": "wave"
     },
     {
-      "id": 455,
+      "id": 465,
       "name": "op1_trem_mode.p1",
       "target": "op1.lfo.mode.p1",
       "min": 0,
@@ -5929,7 +6059,7 @@
       "display": "onoff"
     },
     {
-      "id": 456,
+      "id": 466,
       "name": "op1_fbenv_on.p1",
       "target": "op1.fbenv.on.p1",
       "min": 0,
@@ -5942,7 +6072,7 @@
       "display": "onoff"
     },
     {
-      "id": 457,
+      "id": 467,
       "name": "op1_fbenv_r1.p1",
       "target": "op1.fbenv.r1.p1",
       "min": 0,
@@ -5955,7 +6085,7 @@
       "display": "raw"
     },
     {
-      "id": 458,
+      "id": 468,
       "name": "op1_fbenv_r2.p1",
       "target": "op1.fbenv.r2.p1",
       "min": 0,
@@ -5968,7 +6098,7 @@
       "display": "raw"
     },
     {
-      "id": 459,
+      "id": 469,
       "name": "op1_fbenv_r3.p1",
       "target": "op1.fbenv.r3.p1",
       "min": 0,
@@ -5981,7 +6111,7 @@
       "display": "raw"
     },
     {
-      "id": 460,
+      "id": 470,
       "name": "op1_fbenv_r4.p1",
       "target": "op1.fbenv.r4.p1",
       "min": 0,
@@ -5994,7 +6124,7 @@
       "display": "raw"
     },
     {
-      "id": 461,
+      "id": 471,
       "name": "op1_fbenv_l1.p1",
       "target": "op1.fbenv.l1.p1",
       "min": -32768,
@@ -6007,7 +6137,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 462,
+      "id": 472,
       "name": "op1_fbenv_l2.p1",
       "target": "op1.fbenv.l2.p1",
       "min": -32768,
@@ -6020,7 +6150,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 463,
+      "id": 473,
       "name": "op1_fbenv_l3.p1",
       "target": "op1.fbenv.l3.p1",
       "min": -32768,
@@ -6033,7 +6163,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 464,
+      "id": 474,
       "name": "op1_fbenv_l4.p1",
       "target": "op1.fbenv.l4.p1",
       "min": -32768,
@@ -6046,7 +6176,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 465,
+      "id": 475,
       "name": "op1_fblfo_rate.p1",
       "target": "op1.fblfo.rate.p1",
       "min": 0,
@@ -6059,7 +6189,7 @@
       "display": "hz"
     },
     {
-      "id": 466,
+      "id": 476,
       "name": "op1_fblfo_depth.p1",
       "target": "op1.fblfo.depth.p1",
       "min": -32767,
@@ -6072,7 +6202,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 467,
+      "id": 477,
       "name": "op1_fblfo_wave.p1",
       "target": "op1.fblfo.wave.p1",
       "min": 0,
@@ -6085,7 +6215,7 @@
       "display": "wave"
     },
     {
-      "id": 468,
+      "id": 478,
       "name": "op1_fblfo_mode.p1",
       "target": "op1.fblfo.mode.p1",
       "min": 0,
@@ -6098,7 +6228,7 @@
       "display": "onoff"
     },
     {
-      "id": 469,
+      "id": 479,
       "name": "op1_dlfo_rate.p1",
       "target": "op1.dlfo.rate.p1",
       "min": 0,
@@ -6111,7 +6241,7 @@
       "display": "hz"
     },
     {
-      "id": 470,
+      "id": 480,
       "name": "op1_dlfo_depth.p1",
       "target": "op1.dlfo.depth.p1",
       "min": -32768,
@@ -6124,7 +6254,7 @@
       "display": "semi_lfo"
     },
     {
-      "id": 471,
+      "id": 481,
       "name": "op1_dlfo_wave.p1",
       "target": "op1.dlfo.wave.p1",
       "min": 0,
@@ -6137,7 +6267,7 @@
       "display": "wave"
     },
     {
-      "id": 472,
+      "id": 482,
       "name": "op1_dlfo_mode.p1",
       "target": "op1.dlfo.mode.p1",
       "min": 0,
@@ -6150,7 +6280,7 @@
       "display": "onoff"
     },
     {
-      "id": 473,
+      "id": 483,
       "name": "op1.velamp.depth.p1",
       "target": "op1.velamp.depth.p1",
       "min": -32768,
@@ -6163,7 +6293,7 @@
       "display": "raw"
     },
     {
-      "id": 474,
+      "id": 484,
       "name": "op1.velfm.depth.p1",
       "target": "op1.velfm.depth.p1",
       "min": -32768,
@@ -6176,7 +6306,7 @@
       "display": "raw"
     },
     {
-      "id": 475,
+      "id": 485,
       "name": "op1.velrate.depth.p1",
       "target": "op1.velrate.depth.p1",
       "min": -32768,
@@ -6189,7 +6319,7 @@
       "display": "raw"
     },
     {
-      "id": 476,
+      "id": 486,
       "name": "op1_level.p1",
       "target": "op1.tl.level.p1",
       "min": 0,
@@ -6202,7 +6332,7 @@
       "display": "raw"
     },
     {
-      "id": 477,
+      "id": 487,
       "name": "op1_feedback.p1",
       "target": "op1.fb.level.p1",
       "min": -32767,
@@ -6215,7 +6345,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 478,
+      "id": 488,
       "name": "op1_level_ks_lo.p1",
       "target": "op1.level_ks.lo.p1",
       "min": -100,
@@ -6228,7 +6358,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 479,
+      "id": 489,
       "name": "op1_level_ks_hi.p1",
       "target": "op1.level_ks.hi.p1",
       "min": -100,
@@ -6241,7 +6371,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 480,
+      "id": 490,
       "name": "op1_fb_ks_lo.p1",
       "target": "op1.fb_ks.lo.p1",
       "min": -100,
@@ -6254,7 +6384,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 481,
+      "id": 491,
       "name": "op1_fb_ks_hi.p1",
       "target": "op1.fb_ks.hi.p1",
       "min": -100,
@@ -6267,7 +6397,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 482,
+      "id": 492,
       "name": "op1_aenv_ks_lo.p1",
       "target": "op1.eg_ks.lo.p1",
       "min": -100,
@@ -6280,7 +6410,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 483,
+      "id": 493,
       "name": "op1_aenv_ks_hi.p1",
       "target": "op1.eg_ks.hi.p1",
       "min": -100,
@@ -6293,7 +6423,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 484,
+      "id": 494,
       "name": "op1_level_vs.p1",
       "target": "op1.level_vs.amount.p1",
       "min": -100,
@@ -6306,7 +6436,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 485,
+      "id": 495,
       "name": "op1_fb_vs.p1",
       "target": "op1.fb_vs.amount.p1",
       "min": -100,
@@ -6319,7 +6449,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 486,
+      "id": 496,
       "name": "op1_aenv_vs.p1",
       "target": "op1.eg_vs.amount.p1",
       "min": -100,
@@ -6332,7 +6462,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 487,
+      "id": 497,
       "name": "op1_mute.p1",
       "target": "op1.mute.mute.p1",
       "min": 0,
@@ -6345,7 +6475,7 @@
       "display": "onoff_inv"
     },
     {
-      "id": 488,
+      "id": 498,
       "name": "op1_spec_env_r1.p1",
       "target": "op1.specenv.r1.p1",
       "min": 0,
@@ -6358,7 +6488,7 @@
       "display": "raw"
     },
     {
-      "id": 489,
+      "id": 499,
       "name": "op1_spec_env_r2.p1",
       "target": "op1.specenv.r2.p1",
       "min": 0,
@@ -6371,7 +6501,7 @@
       "display": "raw"
     },
     {
-      "id": 490,
+      "id": 500,
       "name": "op1_spec_env_r3.p1",
       "target": "op1.specenv.r3.p1",
       "min": 0,
@@ -6384,7 +6514,7 @@
       "display": "raw"
     },
     {
-      "id": 491,
+      "id": 501,
       "name": "op1_spec_env_r4.p1",
       "target": "op1.specenv.r4.p1",
       "min": 0,
@@ -6397,7 +6527,7 @@
       "display": "raw"
     },
     {
-      "id": 492,
+      "id": 502,
       "name": "op1_spec_env_l1.p1",
       "target": "op1.specenv.l1.p1",
       "min": 0,
@@ -6410,7 +6540,7 @@
       "display": "raw"
     },
     {
-      "id": 493,
+      "id": 503,
       "name": "op1_spec_env_l2.p1",
       "target": "op1.specenv.l2.p1",
       "min": 0,
@@ -6423,7 +6553,7 @@
       "display": "raw"
     },
     {
-      "id": 494,
+      "id": 504,
       "name": "op1_spec_env_l3.p1",
       "target": "op1.specenv.l3.p1",
       "min": 0,
@@ -6436,7 +6566,7 @@
       "display": "raw"
     },
     {
-      "id": 495,
+      "id": 505,
       "name": "op1_spec_lfo_rate.p1",
       "target": "op1.speclfo.rate.p1",
       "min": 0,
@@ -6449,7 +6579,7 @@
       "display": "hz"
     },
     {
-      "id": 496,
+      "id": 506,
       "name": "op1_spec_lfo_depth.p1",
       "target": "op1.speclfo.depth.p1",
       "min": -99,
@@ -6462,7 +6592,7 @@
       "display": "raw"
     },
     {
-      "id": 497,
+      "id": 507,
       "name": "op1_spec_lfo_wave.p1",
       "target": "op1.speclfo.wave.p1",
       "min": 0,
@@ -6475,7 +6605,7 @@
       "display": "wave"
     },
     {
-      "id": 498,
+      "id": 508,
       "name": "op1_spec_lfo_mode.p1",
       "target": "op1.speclfo.mode.p1",
       "min": 0,
@@ -6488,7 +6618,7 @@
       "display": "onoff"
     },
     {
-      "id": 499,
+      "id": 509,
       "name": "op2_ratio.p1",
       "target": "op2.ph.inc_ratio.p1",
       "min": 32768,
@@ -6501,7 +6631,7 @@
       "display": "ratio"
     },
     {
-      "id": 500,
+      "id": 510,
       "name": "op2_detune.p1",
       "target": "op2.ph.detune.p1",
       "min": -50,
@@ -6514,7 +6644,7 @@
       "display": "cent"
     },
     {
-      "id": 501,
+      "id": 511,
       "name": "op2_waveform.p1",
       "target": "op2.osc.waveform.p1",
       "min": 0,
@@ -6527,7 +6657,33 @@
       "display": "wave"
     },
     {
-      "id": 502,
+      "id": 512,
+      "name": "op2_spec_range_a.p1",
+      "target": "op2.osc.spec_range_a.p1",
+      "min": 0,
+      "max": 7,
+      "default": 0,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "range"
+    },
+    {
+      "id": 513,
+      "name": "op2_spec_range_b.p1",
+      "target": "op2.osc.spec_range_b.p1",
+      "min": 0,
+      "max": 7,
+      "default": 0,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "range"
+    },
+    {
+      "id": 514,
       "name": "op2_spec_a1.p1",
       "target": "op2.osc.spec_a1.p1",
       "min": 0,
@@ -6540,7 +6696,7 @@
       "display": "raw"
     },
     {
-      "id": 503,
+      "id": 515,
       "name": "op2_spec_a2.p1",
       "target": "op2.osc.spec_a2.p1",
       "min": 0,
@@ -6553,7 +6709,7 @@
       "display": "raw"
     },
     {
-      "id": 504,
+      "id": 516,
       "name": "op2_spec_a3.p1",
       "target": "op2.osc.spec_a3.p1",
       "min": 0,
@@ -6566,7 +6722,7 @@
       "display": "raw"
     },
     {
-      "id": 505,
+      "id": 517,
       "name": "op2_spec_a4.p1",
       "target": "op2.osc.spec_a4.p1",
       "min": 0,
@@ -6579,7 +6735,7 @@
       "display": "raw"
     },
     {
-      "id": 506,
+      "id": 518,
       "name": "op2_spec_a5.p1",
       "target": "op2.osc.spec_a5.p1",
       "min": 0,
@@ -6592,7 +6748,7 @@
       "display": "raw"
     },
     {
-      "id": 507,
+      "id": 519,
       "name": "op2_spec_a6.p1",
       "target": "op2.osc.spec_a6.p1",
       "min": 0,
@@ -6605,7 +6761,7 @@
       "display": "raw"
     },
     {
-      "id": 508,
+      "id": 520,
       "name": "op2_spec_a7.p1",
       "target": "op2.osc.spec_a7.p1",
       "min": 0,
@@ -6618,7 +6774,7 @@
       "display": "raw"
     },
     {
-      "id": 509,
+      "id": 521,
       "name": "op2_spec_a8.p1",
       "target": "op2.osc.spec_a8.p1",
       "min": 0,
@@ -6631,7 +6787,7 @@
       "display": "raw"
     },
     {
-      "id": 510,
+      "id": 522,
       "name": "op2_spec_a9.p1",
       "target": "op2.osc.spec_a9.p1",
       "min": 0,
@@ -6644,7 +6800,7 @@
       "display": "raw"
     },
     {
-      "id": 511,
+      "id": 523,
       "name": "op2_spec_a10.p1",
       "target": "op2.osc.spec_a10.p1",
       "min": 0,
@@ -6657,7 +6813,7 @@
       "display": "raw"
     },
     {
-      "id": 512,
+      "id": 524,
       "name": "op2_spec_a11.p1",
       "target": "op2.osc.spec_a11.p1",
       "min": 0,
@@ -6670,7 +6826,7 @@
       "display": "raw"
     },
     {
-      "id": 513,
+      "id": 525,
       "name": "op2_spec_a12.p1",
       "target": "op2.osc.spec_a12.p1",
       "min": 0,
@@ -6683,7 +6839,7 @@
       "display": "raw"
     },
     {
-      "id": 514,
+      "id": 526,
       "name": "op2_spec_a13.p1",
       "target": "op2.osc.spec_a13.p1",
       "min": 0,
@@ -6696,7 +6852,7 @@
       "display": "raw"
     },
     {
-      "id": 515,
+      "id": 527,
       "name": "op2_spec_a14.p1",
       "target": "op2.osc.spec_a14.p1",
       "min": 0,
@@ -6709,7 +6865,7 @@
       "display": "raw"
     },
     {
-      "id": 516,
+      "id": 528,
       "name": "op2_spec_a15.p1",
       "target": "op2.osc.spec_a15.p1",
       "min": 0,
@@ -6722,7 +6878,7 @@
       "display": "raw"
     },
     {
-      "id": 517,
+      "id": 529,
       "name": "op2_spec_a16.p1",
       "target": "op2.osc.spec_a16.p1",
       "min": 0,
@@ -6735,7 +6891,7 @@
       "display": "raw"
     },
     {
-      "id": 518,
+      "id": 530,
       "name": "op2_spec_b1.p1",
       "target": "op2.osc.spec_b1.p1",
       "min": 0,
@@ -6748,7 +6904,7 @@
       "display": "raw"
     },
     {
-      "id": 519,
+      "id": 531,
       "name": "op2_spec_b2.p1",
       "target": "op2.osc.spec_b2.p1",
       "min": 0,
@@ -6761,7 +6917,7 @@
       "display": "raw"
     },
     {
-      "id": 520,
+      "id": 532,
       "name": "op2_spec_b3.p1",
       "target": "op2.osc.spec_b3.p1",
       "min": 0,
@@ -6774,7 +6930,7 @@
       "display": "raw"
     },
     {
-      "id": 521,
+      "id": 533,
       "name": "op2_spec_b4.p1",
       "target": "op2.osc.spec_b4.p1",
       "min": 0,
@@ -6787,7 +6943,7 @@
       "display": "raw"
     },
     {
-      "id": 522,
+      "id": 534,
       "name": "op2_spec_b5.p1",
       "target": "op2.osc.spec_b5.p1",
       "min": 0,
@@ -6800,7 +6956,7 @@
       "display": "raw"
     },
     {
-      "id": 523,
+      "id": 535,
       "name": "op2_spec_b6.p1",
       "target": "op2.osc.spec_b6.p1",
       "min": 0,
@@ -6813,7 +6969,7 @@
       "display": "raw"
     },
     {
-      "id": 524,
+      "id": 536,
       "name": "op2_spec_b7.p1",
       "target": "op2.osc.spec_b7.p1",
       "min": 0,
@@ -6826,7 +6982,7 @@
       "display": "raw"
     },
     {
-      "id": 525,
+      "id": 537,
       "name": "op2_spec_b8.p1",
       "target": "op2.osc.spec_b8.p1",
       "min": 0,
@@ -6839,7 +6995,7 @@
       "display": "raw"
     },
     {
-      "id": 526,
+      "id": 538,
       "name": "op2_spec_b9.p1",
       "target": "op2.osc.spec_b9.p1",
       "min": 0,
@@ -6852,7 +7008,7 @@
       "display": "raw"
     },
     {
-      "id": 527,
+      "id": 539,
       "name": "op2_spec_b10.p1",
       "target": "op2.osc.spec_b10.p1",
       "min": 0,
@@ -6865,7 +7021,7 @@
       "display": "raw"
     },
     {
-      "id": 528,
+      "id": 540,
       "name": "op2_spec_b11.p1",
       "target": "op2.osc.spec_b11.p1",
       "min": 0,
@@ -6878,7 +7034,7 @@
       "display": "raw"
     },
     {
-      "id": 529,
+      "id": 541,
       "name": "op2_spec_b12.p1",
       "target": "op2.osc.spec_b12.p1",
       "min": 0,
@@ -6891,7 +7047,7 @@
       "display": "raw"
     },
     {
-      "id": 530,
+      "id": 542,
       "name": "op2_spec_b13.p1",
       "target": "op2.osc.spec_b13.p1",
       "min": 0,
@@ -6904,7 +7060,7 @@
       "display": "raw"
     },
     {
-      "id": 531,
+      "id": 543,
       "name": "op2_spec_b14.p1",
       "target": "op2.osc.spec_b14.p1",
       "min": 0,
@@ -6917,7 +7073,7 @@
       "display": "raw"
     },
     {
-      "id": 532,
+      "id": 544,
       "name": "op2_spec_b15.p1",
       "target": "op2.osc.spec_b15.p1",
       "min": 0,
@@ -6930,7 +7086,7 @@
       "display": "raw"
     },
     {
-      "id": 533,
+      "id": 545,
       "name": "op2_spec_b16.p1",
       "target": "op2.osc.spec_b16.p1",
       "min": 0,
@@ -6943,7 +7099,7 @@
       "display": "raw"
     },
     {
-      "id": 534,
+      "id": 546,
       "name": "op2_spec_morph.p1",
       "target": "op2.osc.spec_morph.p1",
       "min": 0,
@@ -6956,7 +7112,7 @@
       "display": "raw"
     },
     {
-      "id": 535,
+      "id": 547,
       "name": "op2_spec_env_depth.p1",
       "target": "op2.osc.spec_env_depth.p1",
       "min": -99,
@@ -6969,7 +7125,7 @@
       "display": "raw"
     },
     {
-      "id": 536,
+      "id": 548,
       "name": "op2.eg.r1.p1",
       "target": "op2.eg.r1.p1",
       "min": 0,
@@ -6982,7 +7138,7 @@
       "display": "raw"
     },
     {
-      "id": 537,
+      "id": 549,
       "name": "op2.eg.r2.p1",
       "target": "op2.eg.r2.p1",
       "min": 0,
@@ -6995,7 +7151,7 @@
       "display": "raw"
     },
     {
-      "id": 538,
+      "id": 550,
       "name": "op2.eg.r3.p1",
       "target": "op2.eg.r3.p1",
       "min": 0,
@@ -7008,7 +7164,7 @@
       "display": "raw"
     },
     {
-      "id": 539,
+      "id": 551,
       "name": "op2.eg.r4.p1",
       "target": "op2.eg.r4.p1",
       "min": 0,
@@ -7021,7 +7177,7 @@
       "display": "raw"
     },
     {
-      "id": 540,
+      "id": 552,
       "name": "op2.eg.l1.p1",
       "target": "op2.eg.l1.p1",
       "min": 0,
@@ -7034,7 +7190,7 @@
       "display": "raw"
     },
     {
-      "id": 541,
+      "id": 553,
       "name": "op2.eg.l2.p1",
       "target": "op2.eg.l2.p1",
       "min": 0,
@@ -7047,7 +7203,7 @@
       "display": "raw"
     },
     {
-      "id": 542,
+      "id": 554,
       "name": "op2.eg.l3.p1",
       "target": "op2.eg.l3.p1",
       "min": 0,
@@ -7060,7 +7216,7 @@
       "display": "raw"
     },
     {
-      "id": 543,
+      "id": 555,
       "name": "op2_trem_rate.p1",
       "target": "op2.lfo.rate.p1",
       "min": 0,
@@ -7073,7 +7229,7 @@
       "display": "hz"
     },
     {
-      "id": 544,
+      "id": 556,
       "name": "op2_trem_depth.p1",
       "target": "op2.lfo.depth.p1",
       "min": -99,
@@ -7086,7 +7242,7 @@
       "display": "raw"
     },
     {
-      "id": 545,
+      "id": 557,
       "name": "op2_trem_wave.p1",
       "target": "op2.lfo.wave.p1",
       "min": 0,
@@ -7099,7 +7255,7 @@
       "display": "wave"
     },
     {
-      "id": 546,
+      "id": 558,
       "name": "op2_trem_mode.p1",
       "target": "op2.lfo.mode.p1",
       "min": 0,
@@ -7112,7 +7268,7 @@
       "display": "onoff"
     },
     {
-      "id": 547,
+      "id": 559,
       "name": "op2_fbenv_on.p1",
       "target": "op2.fbenv.on.p1",
       "min": 0,
@@ -7125,7 +7281,7 @@
       "display": "onoff"
     },
     {
-      "id": 548,
+      "id": 560,
       "name": "op2_fbenv_r1.p1",
       "target": "op2.fbenv.r1.p1",
       "min": 0,
@@ -7138,7 +7294,7 @@
       "display": "raw"
     },
     {
-      "id": 549,
+      "id": 561,
       "name": "op2_fbenv_r2.p1",
       "target": "op2.fbenv.r2.p1",
       "min": 0,
@@ -7151,7 +7307,7 @@
       "display": "raw"
     },
     {
-      "id": 550,
+      "id": 562,
       "name": "op2_fbenv_r3.p1",
       "target": "op2.fbenv.r3.p1",
       "min": 0,
@@ -7164,7 +7320,7 @@
       "display": "raw"
     },
     {
-      "id": 551,
+      "id": 563,
       "name": "op2_fbenv_r4.p1",
       "target": "op2.fbenv.r4.p1",
       "min": 0,
@@ -7177,7 +7333,7 @@
       "display": "raw"
     },
     {
-      "id": 552,
+      "id": 564,
       "name": "op2_fbenv_l1.p1",
       "target": "op2.fbenv.l1.p1",
       "min": -32768,
@@ -7190,7 +7346,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 553,
+      "id": 565,
       "name": "op2_fbenv_l2.p1",
       "target": "op2.fbenv.l2.p1",
       "min": -32768,
@@ -7203,7 +7359,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 554,
+      "id": 566,
       "name": "op2_fbenv_l3.p1",
       "target": "op2.fbenv.l3.p1",
       "min": -32768,
@@ -7216,7 +7372,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 555,
+      "id": 567,
       "name": "op2_fbenv_l4.p1",
       "target": "op2.fbenv.l4.p1",
       "min": -32768,
@@ -7229,7 +7385,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 556,
+      "id": 568,
       "name": "op2_fblfo_rate.p1",
       "target": "op2.fblfo.rate.p1",
       "min": 0,
@@ -7242,7 +7398,7 @@
       "display": "hz"
     },
     {
-      "id": 557,
+      "id": 569,
       "name": "op2_fblfo_depth.p1",
       "target": "op2.fblfo.depth.p1",
       "min": -32767,
@@ -7255,7 +7411,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 558,
+      "id": 570,
       "name": "op2_fblfo_wave.p1",
       "target": "op2.fblfo.wave.p1",
       "min": 0,
@@ -7268,7 +7424,7 @@
       "display": "wave"
     },
     {
-      "id": 559,
+      "id": 571,
       "name": "op2_fblfo_mode.p1",
       "target": "op2.fblfo.mode.p1",
       "min": 0,
@@ -7281,7 +7437,7 @@
       "display": "onoff"
     },
     {
-      "id": 560,
+      "id": 572,
       "name": "op2_dlfo_rate.p1",
       "target": "op2.dlfo.rate.p1",
       "min": 0,
@@ -7294,7 +7450,7 @@
       "display": "hz"
     },
     {
-      "id": 561,
+      "id": 573,
       "name": "op2_dlfo_depth.p1",
       "target": "op2.dlfo.depth.p1",
       "min": -32768,
@@ -7307,7 +7463,7 @@
       "display": "semi_lfo"
     },
     {
-      "id": 562,
+      "id": 574,
       "name": "op2_dlfo_wave.p1",
       "target": "op2.dlfo.wave.p1",
       "min": 0,
@@ -7320,7 +7476,7 @@
       "display": "wave"
     },
     {
-      "id": 563,
+      "id": 575,
       "name": "op2_dlfo_mode.p1",
       "target": "op2.dlfo.mode.p1",
       "min": 0,
@@ -7333,7 +7489,7 @@
       "display": "onoff"
     },
     {
-      "id": 564,
+      "id": 576,
       "name": "op2.velamp.depth.p1",
       "target": "op2.velamp.depth.p1",
       "min": -32768,
@@ -7346,7 +7502,7 @@
       "display": "raw"
     },
     {
-      "id": 565,
+      "id": 577,
       "name": "op2.velfm.depth.p1",
       "target": "op2.velfm.depth.p1",
       "min": -32768,
@@ -7359,7 +7515,7 @@
       "display": "raw"
     },
     {
-      "id": 566,
+      "id": 578,
       "name": "op2.velrate.depth.p1",
       "target": "op2.velrate.depth.p1",
       "min": -32768,
@@ -7372,7 +7528,7 @@
       "display": "raw"
     },
     {
-      "id": 567,
+      "id": 579,
       "name": "op2_level.p1",
       "target": "op2.tl.level.p1",
       "min": 0,
@@ -7385,7 +7541,7 @@
       "display": "raw"
     },
     {
-      "id": 568,
+      "id": 580,
       "name": "op2_feedback.p1",
       "target": "op2.fb.level.p1",
       "min": -32767,
@@ -7398,7 +7554,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 569,
+      "id": 581,
       "name": "op2_level_ks_lo.p1",
       "target": "op2.level_ks.lo.p1",
       "min": -100,
@@ -7411,7 +7567,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 570,
+      "id": 582,
       "name": "op2_level_ks_hi.p1",
       "target": "op2.level_ks.hi.p1",
       "min": -100,
@@ -7424,7 +7580,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 571,
+      "id": 583,
       "name": "op2_fb_ks_lo.p1",
       "target": "op2.fb_ks.lo.p1",
       "min": -100,
@@ -7437,7 +7593,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 572,
+      "id": 584,
       "name": "op2_fb_ks_hi.p1",
       "target": "op2.fb_ks.hi.p1",
       "min": -100,
@@ -7450,7 +7606,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 573,
+      "id": 585,
       "name": "op2_aenv_ks_lo.p1",
       "target": "op2.eg_ks.lo.p1",
       "min": -100,
@@ -7463,7 +7619,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 574,
+      "id": 586,
       "name": "op2_aenv_ks_hi.p1",
       "target": "op2.eg_ks.hi.p1",
       "min": -100,
@@ -7476,7 +7632,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 575,
+      "id": 587,
       "name": "op2_level_vs.p1",
       "target": "op2.level_vs.amount.p1",
       "min": -100,
@@ -7489,7 +7645,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 576,
+      "id": 588,
       "name": "op2_fb_vs.p1",
       "target": "op2.fb_vs.amount.p1",
       "min": -100,
@@ -7502,7 +7658,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 577,
+      "id": 589,
       "name": "op2_aenv_vs.p1",
       "target": "op2.eg_vs.amount.p1",
       "min": -100,
@@ -7515,7 +7671,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 578,
+      "id": 590,
       "name": "op2_mute.p1",
       "target": "op2.mute.mute.p1",
       "min": 0,
@@ -7528,7 +7684,7 @@
       "display": "onoff_inv"
     },
     {
-      "id": 579,
+      "id": 591,
       "name": "op2_spec_env_r1.p1",
       "target": "op2.specenv.r1.p1",
       "min": 0,
@@ -7541,7 +7697,7 @@
       "display": "raw"
     },
     {
-      "id": 580,
+      "id": 592,
       "name": "op2_spec_env_r2.p1",
       "target": "op2.specenv.r2.p1",
       "min": 0,
@@ -7554,7 +7710,7 @@
       "display": "raw"
     },
     {
-      "id": 581,
+      "id": 593,
       "name": "op2_spec_env_r3.p1",
       "target": "op2.specenv.r3.p1",
       "min": 0,
@@ -7567,7 +7723,7 @@
       "display": "raw"
     },
     {
-      "id": 582,
+      "id": 594,
       "name": "op2_spec_env_r4.p1",
       "target": "op2.specenv.r4.p1",
       "min": 0,
@@ -7580,7 +7736,7 @@
       "display": "raw"
     },
     {
-      "id": 583,
+      "id": 595,
       "name": "op2_spec_env_l1.p1",
       "target": "op2.specenv.l1.p1",
       "min": 0,
@@ -7593,7 +7749,7 @@
       "display": "raw"
     },
     {
-      "id": 584,
+      "id": 596,
       "name": "op2_spec_env_l2.p1",
       "target": "op2.specenv.l2.p1",
       "min": 0,
@@ -7606,7 +7762,7 @@
       "display": "raw"
     },
     {
-      "id": 585,
+      "id": 597,
       "name": "op2_spec_env_l3.p1",
       "target": "op2.specenv.l3.p1",
       "min": 0,
@@ -7619,7 +7775,7 @@
       "display": "raw"
     },
     {
-      "id": 586,
+      "id": 598,
       "name": "op2_spec_lfo_rate.p1",
       "target": "op2.speclfo.rate.p1",
       "min": 0,
@@ -7632,7 +7788,7 @@
       "display": "hz"
     },
     {
-      "id": 587,
+      "id": 599,
       "name": "op2_spec_lfo_depth.p1",
       "target": "op2.speclfo.depth.p1",
       "min": -99,
@@ -7645,7 +7801,7 @@
       "display": "raw"
     },
     {
-      "id": 588,
+      "id": 600,
       "name": "op2_spec_lfo_wave.p1",
       "target": "op2.speclfo.wave.p1",
       "min": 0,
@@ -7658,7 +7814,7 @@
       "display": "wave"
     },
     {
-      "id": 589,
+      "id": 601,
       "name": "op2_spec_lfo_mode.p1",
       "target": "op2.speclfo.mode.p1",
       "min": 0,
@@ -7671,7 +7827,7 @@
       "display": "onoff"
     },
     {
-      "id": 590,
+      "id": 602,
       "name": "op3_ratio.p1",
       "target": "op3.ph.inc_ratio.p1",
       "min": 32768,
@@ -7684,7 +7840,7 @@
       "display": "ratio"
     },
     {
-      "id": 591,
+      "id": 603,
       "name": "op3_detune.p1",
       "target": "op3.ph.detune.p1",
       "min": -50,
@@ -7697,7 +7853,7 @@
       "display": "cent"
     },
     {
-      "id": 592,
+      "id": 604,
       "name": "op3_waveform.p1",
       "target": "op3.osc.waveform.p1",
       "min": 0,
@@ -7710,7 +7866,33 @@
       "display": "wave"
     },
     {
-      "id": 593,
+      "id": 605,
+      "name": "op3_spec_range_a.p1",
+      "target": "op3.osc.spec_range_a.p1",
+      "min": 0,
+      "max": 7,
+      "default": 0,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "range"
+    },
+    {
+      "id": 606,
+      "name": "op3_spec_range_b.p1",
+      "target": "op3.osc.spec_range_b.p1",
+      "min": 0,
+      "max": 7,
+      "default": 0,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "range"
+    },
+    {
+      "id": 607,
       "name": "op3_spec_a1.p1",
       "target": "op3.osc.spec_a1.p1",
       "min": 0,
@@ -7723,7 +7905,7 @@
       "display": "raw"
     },
     {
-      "id": 594,
+      "id": 608,
       "name": "op3_spec_a2.p1",
       "target": "op3.osc.spec_a2.p1",
       "min": 0,
@@ -7736,7 +7918,7 @@
       "display": "raw"
     },
     {
-      "id": 595,
+      "id": 609,
       "name": "op3_spec_a3.p1",
       "target": "op3.osc.spec_a3.p1",
       "min": 0,
@@ -7749,7 +7931,7 @@
       "display": "raw"
     },
     {
-      "id": 596,
+      "id": 610,
       "name": "op3_spec_a4.p1",
       "target": "op3.osc.spec_a4.p1",
       "min": 0,
@@ -7762,7 +7944,7 @@
       "display": "raw"
     },
     {
-      "id": 597,
+      "id": 611,
       "name": "op3_spec_a5.p1",
       "target": "op3.osc.spec_a5.p1",
       "min": 0,
@@ -7775,7 +7957,7 @@
       "display": "raw"
     },
     {
-      "id": 598,
+      "id": 612,
       "name": "op3_spec_a6.p1",
       "target": "op3.osc.spec_a6.p1",
       "min": 0,
@@ -7788,7 +7970,7 @@
       "display": "raw"
     },
     {
-      "id": 599,
+      "id": 613,
       "name": "op3_spec_a7.p1",
       "target": "op3.osc.spec_a7.p1",
       "min": 0,
@@ -7801,7 +7983,7 @@
       "display": "raw"
     },
     {
-      "id": 600,
+      "id": 614,
       "name": "op3_spec_a8.p1",
       "target": "op3.osc.spec_a8.p1",
       "min": 0,
@@ -7814,7 +7996,7 @@
       "display": "raw"
     },
     {
-      "id": 601,
+      "id": 615,
       "name": "op3_spec_a9.p1",
       "target": "op3.osc.spec_a9.p1",
       "min": 0,
@@ -7827,7 +8009,7 @@
       "display": "raw"
     },
     {
-      "id": 602,
+      "id": 616,
       "name": "op3_spec_a10.p1",
       "target": "op3.osc.spec_a10.p1",
       "min": 0,
@@ -7840,7 +8022,7 @@
       "display": "raw"
     },
     {
-      "id": 603,
+      "id": 617,
       "name": "op3_spec_a11.p1",
       "target": "op3.osc.spec_a11.p1",
       "min": 0,
@@ -7853,7 +8035,7 @@
       "display": "raw"
     },
     {
-      "id": 604,
+      "id": 618,
       "name": "op3_spec_a12.p1",
       "target": "op3.osc.spec_a12.p1",
       "min": 0,
@@ -7866,7 +8048,7 @@
       "display": "raw"
     },
     {
-      "id": 605,
+      "id": 619,
       "name": "op3_spec_a13.p1",
       "target": "op3.osc.spec_a13.p1",
       "min": 0,
@@ -7879,7 +8061,7 @@
       "display": "raw"
     },
     {
-      "id": 606,
+      "id": 620,
       "name": "op3_spec_a14.p1",
       "target": "op3.osc.spec_a14.p1",
       "min": 0,
@@ -7892,7 +8074,7 @@
       "display": "raw"
     },
     {
-      "id": 607,
+      "id": 621,
       "name": "op3_spec_a15.p1",
       "target": "op3.osc.spec_a15.p1",
       "min": 0,
@@ -7905,7 +8087,7 @@
       "display": "raw"
     },
     {
-      "id": 608,
+      "id": 622,
       "name": "op3_spec_a16.p1",
       "target": "op3.osc.spec_a16.p1",
       "min": 0,
@@ -7918,7 +8100,7 @@
       "display": "raw"
     },
     {
-      "id": 609,
+      "id": 623,
       "name": "op3_spec_b1.p1",
       "target": "op3.osc.spec_b1.p1",
       "min": 0,
@@ -7931,7 +8113,7 @@
       "display": "raw"
     },
     {
-      "id": 610,
+      "id": 624,
       "name": "op3_spec_b2.p1",
       "target": "op3.osc.spec_b2.p1",
       "min": 0,
@@ -7944,7 +8126,7 @@
       "display": "raw"
     },
     {
-      "id": 611,
+      "id": 625,
       "name": "op3_spec_b3.p1",
       "target": "op3.osc.spec_b3.p1",
       "min": 0,
@@ -7957,7 +8139,7 @@
       "display": "raw"
     },
     {
-      "id": 612,
+      "id": 626,
       "name": "op3_spec_b4.p1",
       "target": "op3.osc.spec_b4.p1",
       "min": 0,
@@ -7970,7 +8152,7 @@
       "display": "raw"
     },
     {
-      "id": 613,
+      "id": 627,
       "name": "op3_spec_b5.p1",
       "target": "op3.osc.spec_b5.p1",
       "min": 0,
@@ -7983,7 +8165,7 @@
       "display": "raw"
     },
     {
-      "id": 614,
+      "id": 628,
       "name": "op3_spec_b6.p1",
       "target": "op3.osc.spec_b6.p1",
       "min": 0,
@@ -7996,7 +8178,7 @@
       "display": "raw"
     },
     {
-      "id": 615,
+      "id": 629,
       "name": "op3_spec_b7.p1",
       "target": "op3.osc.spec_b7.p1",
       "min": 0,
@@ -8009,7 +8191,7 @@
       "display": "raw"
     },
     {
-      "id": 616,
+      "id": 630,
       "name": "op3_spec_b8.p1",
       "target": "op3.osc.spec_b8.p1",
       "min": 0,
@@ -8022,7 +8204,7 @@
       "display": "raw"
     },
     {
-      "id": 617,
+      "id": 631,
       "name": "op3_spec_b9.p1",
       "target": "op3.osc.spec_b9.p1",
       "min": 0,
@@ -8035,7 +8217,7 @@
       "display": "raw"
     },
     {
-      "id": 618,
+      "id": 632,
       "name": "op3_spec_b10.p1",
       "target": "op3.osc.spec_b10.p1",
       "min": 0,
@@ -8048,7 +8230,7 @@
       "display": "raw"
     },
     {
-      "id": 619,
+      "id": 633,
       "name": "op3_spec_b11.p1",
       "target": "op3.osc.spec_b11.p1",
       "min": 0,
@@ -8061,7 +8243,7 @@
       "display": "raw"
     },
     {
-      "id": 620,
+      "id": 634,
       "name": "op3_spec_b12.p1",
       "target": "op3.osc.spec_b12.p1",
       "min": 0,
@@ -8074,7 +8256,7 @@
       "display": "raw"
     },
     {
-      "id": 621,
+      "id": 635,
       "name": "op3_spec_b13.p1",
       "target": "op3.osc.spec_b13.p1",
       "min": 0,
@@ -8087,7 +8269,7 @@
       "display": "raw"
     },
     {
-      "id": 622,
+      "id": 636,
       "name": "op3_spec_b14.p1",
       "target": "op3.osc.spec_b14.p1",
       "min": 0,
@@ -8100,7 +8282,7 @@
       "display": "raw"
     },
     {
-      "id": 623,
+      "id": 637,
       "name": "op3_spec_b15.p1",
       "target": "op3.osc.spec_b15.p1",
       "min": 0,
@@ -8113,7 +8295,7 @@
       "display": "raw"
     },
     {
-      "id": 624,
+      "id": 638,
       "name": "op3_spec_b16.p1",
       "target": "op3.osc.spec_b16.p1",
       "min": 0,
@@ -8126,7 +8308,7 @@
       "display": "raw"
     },
     {
-      "id": 625,
+      "id": 639,
       "name": "op3_spec_morph.p1",
       "target": "op3.osc.spec_morph.p1",
       "min": 0,
@@ -8139,7 +8321,7 @@
       "display": "raw"
     },
     {
-      "id": 626,
+      "id": 640,
       "name": "op3_spec_env_depth.p1",
       "target": "op3.osc.spec_env_depth.p1",
       "min": -99,
@@ -8152,7 +8334,7 @@
       "display": "raw"
     },
     {
-      "id": 627,
+      "id": 641,
       "name": "op3.eg.r1.p1",
       "target": "op3.eg.r1.p1",
       "min": 0,
@@ -8165,7 +8347,7 @@
       "display": "raw"
     },
     {
-      "id": 628,
+      "id": 642,
       "name": "op3.eg.r2.p1",
       "target": "op3.eg.r2.p1",
       "min": 0,
@@ -8178,7 +8360,7 @@
       "display": "raw"
     },
     {
-      "id": 629,
+      "id": 643,
       "name": "op3.eg.r3.p1",
       "target": "op3.eg.r3.p1",
       "min": 0,
@@ -8191,7 +8373,7 @@
       "display": "raw"
     },
     {
-      "id": 630,
+      "id": 644,
       "name": "op3.eg.r4.p1",
       "target": "op3.eg.r4.p1",
       "min": 0,
@@ -8204,7 +8386,7 @@
       "display": "raw"
     },
     {
-      "id": 631,
+      "id": 645,
       "name": "op3.eg.l1.p1",
       "target": "op3.eg.l1.p1",
       "min": 0,
@@ -8217,7 +8399,7 @@
       "display": "raw"
     },
     {
-      "id": 632,
+      "id": 646,
       "name": "op3.eg.l2.p1",
       "target": "op3.eg.l2.p1",
       "min": 0,
@@ -8230,7 +8412,7 @@
       "display": "raw"
     },
     {
-      "id": 633,
+      "id": 647,
       "name": "op3.eg.l3.p1",
       "target": "op3.eg.l3.p1",
       "min": 0,
@@ -8243,7 +8425,7 @@
       "display": "raw"
     },
     {
-      "id": 634,
+      "id": 648,
       "name": "op3_trem_rate.p1",
       "target": "op3.lfo.rate.p1",
       "min": 0,
@@ -8256,7 +8438,7 @@
       "display": "hz"
     },
     {
-      "id": 635,
+      "id": 649,
       "name": "op3_trem_depth.p1",
       "target": "op3.lfo.depth.p1",
       "min": -99,
@@ -8269,7 +8451,7 @@
       "display": "raw"
     },
     {
-      "id": 636,
+      "id": 650,
       "name": "op3_trem_wave.p1",
       "target": "op3.lfo.wave.p1",
       "min": 0,
@@ -8282,7 +8464,7 @@
       "display": "wave"
     },
     {
-      "id": 637,
+      "id": 651,
       "name": "op3_trem_mode.p1",
       "target": "op3.lfo.mode.p1",
       "min": 0,
@@ -8295,7 +8477,7 @@
       "display": "onoff"
     },
     {
-      "id": 638,
+      "id": 652,
       "name": "op3_fbenv_on.p1",
       "target": "op3.fbenv.on.p1",
       "min": 0,
@@ -8308,7 +8490,7 @@
       "display": "onoff"
     },
     {
-      "id": 639,
+      "id": 653,
       "name": "op3_fbenv_r1.p1",
       "target": "op3.fbenv.r1.p1",
       "min": 0,
@@ -8321,7 +8503,7 @@
       "display": "raw"
     },
     {
-      "id": 640,
+      "id": 654,
       "name": "op3_fbenv_r2.p1",
       "target": "op3.fbenv.r2.p1",
       "min": 0,
@@ -8334,7 +8516,7 @@
       "display": "raw"
     },
     {
-      "id": 641,
+      "id": 655,
       "name": "op3_fbenv_r3.p1",
       "target": "op3.fbenv.r3.p1",
       "min": 0,
@@ -8347,7 +8529,7 @@
       "display": "raw"
     },
     {
-      "id": 642,
+      "id": 656,
       "name": "op3_fbenv_r4.p1",
       "target": "op3.fbenv.r4.p1",
       "min": 0,
@@ -8360,7 +8542,7 @@
       "display": "raw"
     },
     {
-      "id": 643,
+      "id": 657,
       "name": "op3_fbenv_l1.p1",
       "target": "op3.fbenv.l1.p1",
       "min": -32768,
@@ -8373,7 +8555,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 644,
+      "id": 658,
       "name": "op3_fbenv_l2.p1",
       "target": "op3.fbenv.l2.p1",
       "min": -32768,
@@ -8386,7 +8568,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 645,
+      "id": 659,
       "name": "op3_fbenv_l3.p1",
       "target": "op3.fbenv.l3.p1",
       "min": -32768,
@@ -8399,7 +8581,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 646,
+      "id": 660,
       "name": "op3_fbenv_l4.p1",
       "target": "op3.fbenv.l4.p1",
       "min": -32768,
@@ -8412,7 +8594,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 647,
+      "id": 661,
       "name": "op3_fblfo_rate.p1",
       "target": "op3.fblfo.rate.p1",
       "min": 0,
@@ -8425,7 +8607,7 @@
       "display": "hz"
     },
     {
-      "id": 648,
+      "id": 662,
       "name": "op3_fblfo_depth.p1",
       "target": "op3.fblfo.depth.p1",
       "min": -32767,
@@ -8438,7 +8620,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 649,
+      "id": 663,
       "name": "op3_fblfo_wave.p1",
       "target": "op3.fblfo.wave.p1",
       "min": 0,
@@ -8451,7 +8633,7 @@
       "display": "wave"
     },
     {
-      "id": 650,
+      "id": 664,
       "name": "op3_fblfo_mode.p1",
       "target": "op3.fblfo.mode.p1",
       "min": 0,
@@ -8464,7 +8646,7 @@
       "display": "onoff"
     },
     {
-      "id": 651,
+      "id": 665,
       "name": "op3_dlfo_rate.p1",
       "target": "op3.dlfo.rate.p1",
       "min": 0,
@@ -8477,7 +8659,7 @@
       "display": "hz"
     },
     {
-      "id": 652,
+      "id": 666,
       "name": "op3_dlfo_depth.p1",
       "target": "op3.dlfo.depth.p1",
       "min": -32768,
@@ -8490,7 +8672,7 @@
       "display": "semi_lfo"
     },
     {
-      "id": 653,
+      "id": 667,
       "name": "op3_dlfo_wave.p1",
       "target": "op3.dlfo.wave.p1",
       "min": 0,
@@ -8503,7 +8685,7 @@
       "display": "wave"
     },
     {
-      "id": 654,
+      "id": 668,
       "name": "op3_dlfo_mode.p1",
       "target": "op3.dlfo.mode.p1",
       "min": 0,
@@ -8516,7 +8698,7 @@
       "display": "onoff"
     },
     {
-      "id": 655,
+      "id": 669,
       "name": "op3.velamp.depth.p1",
       "target": "op3.velamp.depth.p1",
       "min": -32768,
@@ -8529,7 +8711,7 @@
       "display": "raw"
     },
     {
-      "id": 656,
+      "id": 670,
       "name": "op3.velfm.depth.p1",
       "target": "op3.velfm.depth.p1",
       "min": -32768,
@@ -8542,7 +8724,7 @@
       "display": "raw"
     },
     {
-      "id": 657,
+      "id": 671,
       "name": "op3.velrate.depth.p1",
       "target": "op3.velrate.depth.p1",
       "min": -32768,
@@ -8555,7 +8737,7 @@
       "display": "raw"
     },
     {
-      "id": 658,
+      "id": 672,
       "name": "op3_level.p1",
       "target": "op3.tl.level.p1",
       "min": 0,
@@ -8568,7 +8750,7 @@
       "display": "raw"
     },
     {
-      "id": 659,
+      "id": 673,
       "name": "op3_feedback.p1",
       "target": "op3.fb.level.p1",
       "min": -32767,
@@ -8581,7 +8763,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 660,
+      "id": 674,
       "name": "op3_level_ks_lo.p1",
       "target": "op3.level_ks.lo.p1",
       "min": -100,
@@ -8594,7 +8776,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 661,
+      "id": 675,
       "name": "op3_level_ks_hi.p1",
       "target": "op3.level_ks.hi.p1",
       "min": -100,
@@ -8607,7 +8789,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 662,
+      "id": 676,
       "name": "op3_fb_ks_lo.p1",
       "target": "op3.fb_ks.lo.p1",
       "min": -100,
@@ -8620,7 +8802,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 663,
+      "id": 677,
       "name": "op3_fb_ks_hi.p1",
       "target": "op3.fb_ks.hi.p1",
       "min": -100,
@@ -8633,7 +8815,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 664,
+      "id": 678,
       "name": "op3_aenv_ks_lo.p1",
       "target": "op3.eg_ks.lo.p1",
       "min": -100,
@@ -8646,7 +8828,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 665,
+      "id": 679,
       "name": "op3_aenv_ks_hi.p1",
       "target": "op3.eg_ks.hi.p1",
       "min": -100,
@@ -8659,7 +8841,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 666,
+      "id": 680,
       "name": "op3_level_vs.p1",
       "target": "op3.level_vs.amount.p1",
       "min": -100,
@@ -8672,7 +8854,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 667,
+      "id": 681,
       "name": "op3_fb_vs.p1",
       "target": "op3.fb_vs.amount.p1",
       "min": -100,
@@ -8685,7 +8867,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 668,
+      "id": 682,
       "name": "op3_aenv_vs.p1",
       "target": "op3.eg_vs.amount.p1",
       "min": -100,
@@ -8698,7 +8880,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 669,
+      "id": 683,
       "name": "op3_mute.p1",
       "target": "op3.mute.mute.p1",
       "min": 0,
@@ -8711,7 +8893,7 @@
       "display": "onoff_inv"
     },
     {
-      "id": 670,
+      "id": 684,
       "name": "op3_spec_env_r1.p1",
       "target": "op3.specenv.r1.p1",
       "min": 0,
@@ -8724,7 +8906,7 @@
       "display": "raw"
     },
     {
-      "id": 671,
+      "id": 685,
       "name": "op3_spec_env_r2.p1",
       "target": "op3.specenv.r2.p1",
       "min": 0,
@@ -8737,7 +8919,7 @@
       "display": "raw"
     },
     {
-      "id": 672,
+      "id": 686,
       "name": "op3_spec_env_r3.p1",
       "target": "op3.specenv.r3.p1",
       "min": 0,
@@ -8750,7 +8932,7 @@
       "display": "raw"
     },
     {
-      "id": 673,
+      "id": 687,
       "name": "op3_spec_env_r4.p1",
       "target": "op3.specenv.r4.p1",
       "min": 0,
@@ -8763,7 +8945,7 @@
       "display": "raw"
     },
     {
-      "id": 674,
+      "id": 688,
       "name": "op3_spec_env_l1.p1",
       "target": "op3.specenv.l1.p1",
       "min": 0,
@@ -8776,7 +8958,7 @@
       "display": "raw"
     },
     {
-      "id": 675,
+      "id": 689,
       "name": "op3_spec_env_l2.p1",
       "target": "op3.specenv.l2.p1",
       "min": 0,
@@ -8789,7 +8971,7 @@
       "display": "raw"
     },
     {
-      "id": 676,
+      "id": 690,
       "name": "op3_spec_env_l3.p1",
       "target": "op3.specenv.l3.p1",
       "min": 0,
@@ -8802,7 +8984,7 @@
       "display": "raw"
     },
     {
-      "id": 677,
+      "id": 691,
       "name": "op3_spec_lfo_rate.p1",
       "target": "op3.speclfo.rate.p1",
       "min": 0,
@@ -8815,7 +8997,7 @@
       "display": "hz"
     },
     {
-      "id": 678,
+      "id": 692,
       "name": "op3_spec_lfo_depth.p1",
       "target": "op3.speclfo.depth.p1",
       "min": -99,
@@ -8828,7 +9010,7 @@
       "display": "raw"
     },
     {
-      "id": 679,
+      "id": 693,
       "name": "op3_spec_lfo_wave.p1",
       "target": "op3.speclfo.wave.p1",
       "min": 0,
@@ -8841,7 +9023,7 @@
       "display": "wave"
     },
     {
-      "id": 680,
+      "id": 694,
       "name": "op3_spec_lfo_mode.p1",
       "target": "op3.speclfo.mode.p1",
       "min": 0,
@@ -8854,7 +9036,7 @@
       "display": "onoff"
     },
     {
-      "id": 681,
+      "id": 695,
       "name": "op4_ratio.p1",
       "target": "op4.ph.inc_ratio.p1",
       "min": 32768,
@@ -8867,7 +9049,7 @@
       "display": "ratio"
     },
     {
-      "id": 682,
+      "id": 696,
       "name": "op4_detune.p1",
       "target": "op4.ph.detune.p1",
       "min": -50,
@@ -8880,7 +9062,7 @@
       "display": "cent"
     },
     {
-      "id": 683,
+      "id": 697,
       "name": "op4_waveform.p1",
       "target": "op4.osc.waveform.p1",
       "min": 0,
@@ -8893,7 +9075,33 @@
       "display": "wave"
     },
     {
-      "id": 684,
+      "id": 698,
+      "name": "op4_spec_range_a.p1",
+      "target": "op4.osc.spec_range_a.p1",
+      "min": 0,
+      "max": 7,
+      "default": 0,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "range"
+    },
+    {
+      "id": 699,
+      "name": "op4_spec_range_b.p1",
+      "target": "op4.osc.spec_range_b.p1",
+      "min": 0,
+      "max": 7,
+      "default": 0,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "range"
+    },
+    {
+      "id": 700,
       "name": "op4_spec_a1.p1",
       "target": "op4.osc.spec_a1.p1",
       "min": 0,
@@ -8906,7 +9114,7 @@
       "display": "raw"
     },
     {
-      "id": 685,
+      "id": 701,
       "name": "op4_spec_a2.p1",
       "target": "op4.osc.spec_a2.p1",
       "min": 0,
@@ -8919,7 +9127,7 @@
       "display": "raw"
     },
     {
-      "id": 686,
+      "id": 702,
       "name": "op4_spec_a3.p1",
       "target": "op4.osc.spec_a3.p1",
       "min": 0,
@@ -8932,7 +9140,7 @@
       "display": "raw"
     },
     {
-      "id": 687,
+      "id": 703,
       "name": "op4_spec_a4.p1",
       "target": "op4.osc.spec_a4.p1",
       "min": 0,
@@ -8945,7 +9153,7 @@
       "display": "raw"
     },
     {
-      "id": 688,
+      "id": 704,
       "name": "op4_spec_a5.p1",
       "target": "op4.osc.spec_a5.p1",
       "min": 0,
@@ -8958,7 +9166,7 @@
       "display": "raw"
     },
     {
-      "id": 689,
+      "id": 705,
       "name": "op4_spec_a6.p1",
       "target": "op4.osc.spec_a6.p1",
       "min": 0,
@@ -8971,7 +9179,7 @@
       "display": "raw"
     },
     {
-      "id": 690,
+      "id": 706,
       "name": "op4_spec_a7.p1",
       "target": "op4.osc.spec_a7.p1",
       "min": 0,
@@ -8984,7 +9192,7 @@
       "display": "raw"
     },
     {
-      "id": 691,
+      "id": 707,
       "name": "op4_spec_a8.p1",
       "target": "op4.osc.spec_a8.p1",
       "min": 0,
@@ -8997,7 +9205,7 @@
       "display": "raw"
     },
     {
-      "id": 692,
+      "id": 708,
       "name": "op4_spec_a9.p1",
       "target": "op4.osc.spec_a9.p1",
       "min": 0,
@@ -9010,7 +9218,7 @@
       "display": "raw"
     },
     {
-      "id": 693,
+      "id": 709,
       "name": "op4_spec_a10.p1",
       "target": "op4.osc.spec_a10.p1",
       "min": 0,
@@ -9023,7 +9231,7 @@
       "display": "raw"
     },
     {
-      "id": 694,
+      "id": 710,
       "name": "op4_spec_a11.p1",
       "target": "op4.osc.spec_a11.p1",
       "min": 0,
@@ -9036,7 +9244,7 @@
       "display": "raw"
     },
     {
-      "id": 695,
+      "id": 711,
       "name": "op4_spec_a12.p1",
       "target": "op4.osc.spec_a12.p1",
       "min": 0,
@@ -9049,7 +9257,7 @@
       "display": "raw"
     },
     {
-      "id": 696,
+      "id": 712,
       "name": "op4_spec_a13.p1",
       "target": "op4.osc.spec_a13.p1",
       "min": 0,
@@ -9062,7 +9270,7 @@
       "display": "raw"
     },
     {
-      "id": 697,
+      "id": 713,
       "name": "op4_spec_a14.p1",
       "target": "op4.osc.spec_a14.p1",
       "min": 0,
@@ -9075,7 +9283,7 @@
       "display": "raw"
     },
     {
-      "id": 698,
+      "id": 714,
       "name": "op4_spec_a15.p1",
       "target": "op4.osc.spec_a15.p1",
       "min": 0,
@@ -9088,7 +9296,7 @@
       "display": "raw"
     },
     {
-      "id": 699,
+      "id": 715,
       "name": "op4_spec_a16.p1",
       "target": "op4.osc.spec_a16.p1",
       "min": 0,
@@ -9101,7 +9309,7 @@
       "display": "raw"
     },
     {
-      "id": 700,
+      "id": 716,
       "name": "op4_spec_b1.p1",
       "target": "op4.osc.spec_b1.p1",
       "min": 0,
@@ -9114,7 +9322,7 @@
       "display": "raw"
     },
     {
-      "id": 701,
+      "id": 717,
       "name": "op4_spec_b2.p1",
       "target": "op4.osc.spec_b2.p1",
       "min": 0,
@@ -9127,7 +9335,7 @@
       "display": "raw"
     },
     {
-      "id": 702,
+      "id": 718,
       "name": "op4_spec_b3.p1",
       "target": "op4.osc.spec_b3.p1",
       "min": 0,
@@ -9140,7 +9348,7 @@
       "display": "raw"
     },
     {
-      "id": 703,
+      "id": 719,
       "name": "op4_spec_b4.p1",
       "target": "op4.osc.spec_b4.p1",
       "min": 0,
@@ -9153,7 +9361,7 @@
       "display": "raw"
     },
     {
-      "id": 704,
+      "id": 720,
       "name": "op4_spec_b5.p1",
       "target": "op4.osc.spec_b5.p1",
       "min": 0,
@@ -9166,7 +9374,7 @@
       "display": "raw"
     },
     {
-      "id": 705,
+      "id": 721,
       "name": "op4_spec_b6.p1",
       "target": "op4.osc.spec_b6.p1",
       "min": 0,
@@ -9179,7 +9387,7 @@
       "display": "raw"
     },
     {
-      "id": 706,
+      "id": 722,
       "name": "op4_spec_b7.p1",
       "target": "op4.osc.spec_b7.p1",
       "min": 0,
@@ -9192,7 +9400,7 @@
       "display": "raw"
     },
     {
-      "id": 707,
+      "id": 723,
       "name": "op4_spec_b8.p1",
       "target": "op4.osc.spec_b8.p1",
       "min": 0,
@@ -9205,7 +9413,7 @@
       "display": "raw"
     },
     {
-      "id": 708,
+      "id": 724,
       "name": "op4_spec_b9.p1",
       "target": "op4.osc.spec_b9.p1",
       "min": 0,
@@ -9218,7 +9426,7 @@
       "display": "raw"
     },
     {
-      "id": 709,
+      "id": 725,
       "name": "op4_spec_b10.p1",
       "target": "op4.osc.spec_b10.p1",
       "min": 0,
@@ -9231,7 +9439,7 @@
       "display": "raw"
     },
     {
-      "id": 710,
+      "id": 726,
       "name": "op4_spec_b11.p1",
       "target": "op4.osc.spec_b11.p1",
       "min": 0,
@@ -9244,7 +9452,7 @@
       "display": "raw"
     },
     {
-      "id": 711,
+      "id": 727,
       "name": "op4_spec_b12.p1",
       "target": "op4.osc.spec_b12.p1",
       "min": 0,
@@ -9257,7 +9465,7 @@
       "display": "raw"
     },
     {
-      "id": 712,
+      "id": 728,
       "name": "op4_spec_b13.p1",
       "target": "op4.osc.spec_b13.p1",
       "min": 0,
@@ -9270,7 +9478,7 @@
       "display": "raw"
     },
     {
-      "id": 713,
+      "id": 729,
       "name": "op4_spec_b14.p1",
       "target": "op4.osc.spec_b14.p1",
       "min": 0,
@@ -9283,7 +9491,7 @@
       "display": "raw"
     },
     {
-      "id": 714,
+      "id": 730,
       "name": "op4_spec_b15.p1",
       "target": "op4.osc.spec_b15.p1",
       "min": 0,
@@ -9296,7 +9504,7 @@
       "display": "raw"
     },
     {
-      "id": 715,
+      "id": 731,
       "name": "op4_spec_b16.p1",
       "target": "op4.osc.spec_b16.p1",
       "min": 0,
@@ -9309,7 +9517,7 @@
       "display": "raw"
     },
     {
-      "id": 716,
+      "id": 732,
       "name": "op4_spec_morph.p1",
       "target": "op4.osc.spec_morph.p1",
       "min": 0,
@@ -9322,7 +9530,7 @@
       "display": "raw"
     },
     {
-      "id": 717,
+      "id": 733,
       "name": "op4_spec_env_depth.p1",
       "target": "op4.osc.spec_env_depth.p1",
       "min": -99,
@@ -9335,7 +9543,7 @@
       "display": "raw"
     },
     {
-      "id": 718,
+      "id": 734,
       "name": "op4.eg.r1.p1",
       "target": "op4.eg.r1.p1",
       "min": 0,
@@ -9348,7 +9556,7 @@
       "display": "raw"
     },
     {
-      "id": 719,
+      "id": 735,
       "name": "op4.eg.r2.p1",
       "target": "op4.eg.r2.p1",
       "min": 0,
@@ -9361,7 +9569,7 @@
       "display": "raw"
     },
     {
-      "id": 720,
+      "id": 736,
       "name": "op4.eg.r3.p1",
       "target": "op4.eg.r3.p1",
       "min": 0,
@@ -9374,7 +9582,7 @@
       "display": "raw"
     },
     {
-      "id": 721,
+      "id": 737,
       "name": "op4.eg.r4.p1",
       "target": "op4.eg.r4.p1",
       "min": 0,
@@ -9387,7 +9595,7 @@
       "display": "raw"
     },
     {
-      "id": 722,
+      "id": 738,
       "name": "op4.eg.l1.p1",
       "target": "op4.eg.l1.p1",
       "min": 0,
@@ -9400,7 +9608,7 @@
       "display": "raw"
     },
     {
-      "id": 723,
+      "id": 739,
       "name": "op4.eg.l2.p1",
       "target": "op4.eg.l2.p1",
       "min": 0,
@@ -9413,7 +9621,7 @@
       "display": "raw"
     },
     {
-      "id": 724,
+      "id": 740,
       "name": "op4.eg.l3.p1",
       "target": "op4.eg.l3.p1",
       "min": 0,
@@ -9426,7 +9634,7 @@
       "display": "raw"
     },
     {
-      "id": 725,
+      "id": 741,
       "name": "op4_trem_rate.p1",
       "target": "op4.lfo.rate.p1",
       "min": 0,
@@ -9439,7 +9647,7 @@
       "display": "hz"
     },
     {
-      "id": 726,
+      "id": 742,
       "name": "op4_trem_depth.p1",
       "target": "op4.lfo.depth.p1",
       "min": -99,
@@ -9452,7 +9660,7 @@
       "display": "raw"
     },
     {
-      "id": 727,
+      "id": 743,
       "name": "op4_trem_wave.p1",
       "target": "op4.lfo.wave.p1",
       "min": 0,
@@ -9465,7 +9673,7 @@
       "display": "wave"
     },
     {
-      "id": 728,
+      "id": 744,
       "name": "op4_trem_mode.p1",
       "target": "op4.lfo.mode.p1",
       "min": 0,
@@ -9478,7 +9686,7 @@
       "display": "onoff"
     },
     {
-      "id": 729,
+      "id": 745,
       "name": "op4_fbenv_on.p1",
       "target": "op4.fbenv.on.p1",
       "min": 0,
@@ -9491,7 +9699,7 @@
       "display": "onoff"
     },
     {
-      "id": 730,
+      "id": 746,
       "name": "op4_fbenv_r1.p1",
       "target": "op4.fbenv.r1.p1",
       "min": 0,
@@ -9504,7 +9712,7 @@
       "display": "raw"
     },
     {
-      "id": 731,
+      "id": 747,
       "name": "op4_fbenv_r2.p1",
       "target": "op4.fbenv.r2.p1",
       "min": 0,
@@ -9517,7 +9725,7 @@
       "display": "raw"
     },
     {
-      "id": 732,
+      "id": 748,
       "name": "op4_fbenv_r3.p1",
       "target": "op4.fbenv.r3.p1",
       "min": 0,
@@ -9530,7 +9738,7 @@
       "display": "raw"
     },
     {
-      "id": 733,
+      "id": 749,
       "name": "op4_fbenv_r4.p1",
       "target": "op4.fbenv.r4.p1",
       "min": 0,
@@ -9543,7 +9751,7 @@
       "display": "raw"
     },
     {
-      "id": 734,
+      "id": 750,
       "name": "op4_fbenv_l1.p1",
       "target": "op4.fbenv.l1.p1",
       "min": -32768,
@@ -9556,7 +9764,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 735,
+      "id": 751,
       "name": "op4_fbenv_l2.p1",
       "target": "op4.fbenv.l2.p1",
       "min": -32768,
@@ -9569,7 +9777,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 736,
+      "id": 752,
       "name": "op4_fbenv_l3.p1",
       "target": "op4.fbenv.l3.p1",
       "min": -32768,
@@ -9582,7 +9790,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 737,
+      "id": 753,
       "name": "op4_fbenv_l4.p1",
       "target": "op4.fbenv.l4.p1",
       "min": -32768,
@@ -9595,7 +9803,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 738,
+      "id": 754,
       "name": "op4_fblfo_rate.p1",
       "target": "op4.fblfo.rate.p1",
       "min": 0,
@@ -9608,7 +9816,7 @@
       "display": "hz"
     },
     {
-      "id": 739,
+      "id": 755,
       "name": "op4_fblfo_depth.p1",
       "target": "op4.fblfo.depth.p1",
       "min": -32767,
@@ -9621,7 +9829,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 740,
+      "id": 756,
       "name": "op4_fblfo_wave.p1",
       "target": "op4.fblfo.wave.p1",
       "min": 0,
@@ -9634,7 +9842,7 @@
       "display": "wave"
     },
     {
-      "id": 741,
+      "id": 757,
       "name": "op4_fblfo_mode.p1",
       "target": "op4.fblfo.mode.p1",
       "min": 0,
@@ -9647,7 +9855,7 @@
       "display": "onoff"
     },
     {
-      "id": 742,
+      "id": 758,
       "name": "op4_dlfo_rate.p1",
       "target": "op4.dlfo.rate.p1",
       "min": 0,
@@ -9660,7 +9868,7 @@
       "display": "hz"
     },
     {
-      "id": 743,
+      "id": 759,
       "name": "op4_dlfo_depth.p1",
       "target": "op4.dlfo.depth.p1",
       "min": -32768,
@@ -9673,7 +9881,7 @@
       "display": "semi_lfo"
     },
     {
-      "id": 744,
+      "id": 760,
       "name": "op4_dlfo_wave.p1",
       "target": "op4.dlfo.wave.p1",
       "min": 0,
@@ -9686,7 +9894,7 @@
       "display": "wave"
     },
     {
-      "id": 745,
+      "id": 761,
       "name": "op4_dlfo_mode.p1",
       "target": "op4.dlfo.mode.p1",
       "min": 0,
@@ -9699,7 +9907,7 @@
       "display": "onoff"
     },
     {
-      "id": 746,
+      "id": 762,
       "name": "op4.velamp.depth.p1",
       "target": "op4.velamp.depth.p1",
       "min": -32768,
@@ -9712,7 +9920,7 @@
       "display": "raw"
     },
     {
-      "id": 747,
+      "id": 763,
       "name": "op4.velfm.depth.p1",
       "target": "op4.velfm.depth.p1",
       "min": -32768,
@@ -9725,7 +9933,7 @@
       "display": "raw"
     },
     {
-      "id": 748,
+      "id": 764,
       "name": "op4.velrate.depth.p1",
       "target": "op4.velrate.depth.p1",
       "min": -32768,
@@ -9738,7 +9946,7 @@
       "display": "raw"
     },
     {
-      "id": 749,
+      "id": 765,
       "name": "op4_level.p1",
       "target": "op4.tl.level.p1",
       "min": 0,
@@ -9751,7 +9959,7 @@
       "display": "raw"
     },
     {
-      "id": 750,
+      "id": 766,
       "name": "op4_feedback.p1",
       "target": "op4.fb.level.p1",
       "min": -32767,
@@ -9764,7 +9972,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 751,
+      "id": 767,
       "name": "op4_level_ks_lo.p1",
       "target": "op4.level_ks.lo.p1",
       "min": -100,
@@ -9777,7 +9985,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 752,
+      "id": 768,
       "name": "op4_level_ks_hi.p1",
       "target": "op4.level_ks.hi.p1",
       "min": -100,
@@ -9790,7 +9998,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 753,
+      "id": 769,
       "name": "op4_fb_ks_lo.p1",
       "target": "op4.fb_ks.lo.p1",
       "min": -100,
@@ -9803,7 +10011,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 754,
+      "id": 770,
       "name": "op4_fb_ks_hi.p1",
       "target": "op4.fb_ks.hi.p1",
       "min": -100,
@@ -9816,7 +10024,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 755,
+      "id": 771,
       "name": "op4_aenv_ks_lo.p1",
       "target": "op4.eg_ks.lo.p1",
       "min": -100,
@@ -9829,7 +10037,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 756,
+      "id": 772,
       "name": "op4_aenv_ks_hi.p1",
       "target": "op4.eg_ks.hi.p1",
       "min": -100,
@@ -9842,7 +10050,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 757,
+      "id": 773,
       "name": "op4_level_vs.p1",
       "target": "op4.level_vs.amount.p1",
       "min": -100,
@@ -9855,7 +10063,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 758,
+      "id": 774,
       "name": "op4_fb_vs.p1",
       "target": "op4.fb_vs.amount.p1",
       "min": -100,
@@ -9868,7 +10076,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 759,
+      "id": 775,
       "name": "op4_aenv_vs.p1",
       "target": "op4.eg_vs.amount.p1",
       "min": -100,
@@ -9881,7 +10089,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 760,
+      "id": 776,
       "name": "op4_mute.p1",
       "target": "op4.mute.mute.p1",
       "min": 0,
@@ -9894,7 +10102,7 @@
       "display": "onoff_inv"
     },
     {
-      "id": 761,
+      "id": 777,
       "name": "op4_spec_env_r1.p1",
       "target": "op4.specenv.r1.p1",
       "min": 0,
@@ -9907,7 +10115,7 @@
       "display": "raw"
     },
     {
-      "id": 762,
+      "id": 778,
       "name": "op4_spec_env_r2.p1",
       "target": "op4.specenv.r2.p1",
       "min": 0,
@@ -9920,7 +10128,7 @@
       "display": "raw"
     },
     {
-      "id": 763,
+      "id": 779,
       "name": "op4_spec_env_r3.p1",
       "target": "op4.specenv.r3.p1",
       "min": 0,
@@ -9933,7 +10141,7 @@
       "display": "raw"
     },
     {
-      "id": 764,
+      "id": 780,
       "name": "op4_spec_env_r4.p1",
       "target": "op4.specenv.r4.p1",
       "min": 0,
@@ -9946,7 +10154,7 @@
       "display": "raw"
     },
     {
-      "id": 765,
+      "id": 781,
       "name": "op4_spec_env_l1.p1",
       "target": "op4.specenv.l1.p1",
       "min": 0,
@@ -9959,7 +10167,7 @@
       "display": "raw"
     },
     {
-      "id": 766,
+      "id": 782,
       "name": "op4_spec_env_l2.p1",
       "target": "op4.specenv.l2.p1",
       "min": 0,
@@ -9972,7 +10180,7 @@
       "display": "raw"
     },
     {
-      "id": 767,
+      "id": 783,
       "name": "op4_spec_env_l3.p1",
       "target": "op4.specenv.l3.p1",
       "min": 0,
@@ -9985,7 +10193,7 @@
       "display": "raw"
     },
     {
-      "id": 768,
+      "id": 784,
       "name": "op4_spec_lfo_rate.p1",
       "target": "op4.speclfo.rate.p1",
       "min": 0,
@@ -9998,7 +10206,7 @@
       "display": "hz"
     },
     {
-      "id": 769,
+      "id": 785,
       "name": "op4_spec_lfo_depth.p1",
       "target": "op4.speclfo.depth.p1",
       "min": -99,
@@ -10011,7 +10219,7 @@
       "display": "raw"
     },
     {
-      "id": 770,
+      "id": 786,
       "name": "op4_spec_lfo_wave.p1",
       "target": "op4.speclfo.wave.p1",
       "min": 0,
@@ -10024,7 +10232,7 @@
       "display": "wave"
     },
     {
-      "id": 771,
+      "id": 787,
       "name": "op4_spec_lfo_mode.p1",
       "target": "op4.speclfo.mode.p1",
       "min": 0,
@@ -10037,7 +10245,7 @@
       "display": "onoff"
     },
     {
-      "id": 772,
+      "id": 788,
       "name": "algorithm.p1",
       "target": "algo.algorithm.p1",
       "min": 0,
@@ -10050,7 +10258,7 @@
       "display": "raw"
     },
     {
-      "id": 773,
+      "id": 789,
       "name": "penv_on.p1",
       "target": "penv.on.p1",
       "min": 0,
@@ -10063,7 +10271,7 @@
       "display": "onoff"
     },
     {
-      "id": 774,
+      "id": 790,
       "name": "penv_r1.p1",
       "target": "penv.r1.p1",
       "min": 0,
@@ -10076,7 +10284,7 @@
       "display": "raw"
     },
     {
-      "id": 775,
+      "id": 791,
       "name": "penv_r2.p1",
       "target": "penv.r2.p1",
       "min": 0,
@@ -10089,7 +10297,7 @@
       "display": "raw"
     },
     {
-      "id": 776,
+      "id": 792,
       "name": "penv_r3.p1",
       "target": "penv.r3.p1",
       "min": 0,
@@ -10102,7 +10310,7 @@
       "display": "raw"
     },
     {
-      "id": 777,
+      "id": 793,
       "name": "penv_r4.p1",
       "target": "penv.r4.p1",
       "min": 0,
@@ -10115,7 +10323,7 @@
       "display": "raw"
     },
     {
-      "id": 778,
+      "id": 794,
       "name": "penv_l1.p1",
       "target": "penv.l1.p1",
       "min": -32768,
@@ -10128,7 +10336,7 @@
       "display": "semi_fine"
     },
     {
-      "id": 779,
+      "id": 795,
       "name": "penv_l2.p1",
       "target": "penv.l2.p1",
       "min": -32768,
@@ -10141,7 +10349,7 @@
       "display": "semi_fine"
     },
     {
-      "id": 780,
+      "id": 796,
       "name": "penv_l3.p1",
       "target": "penv.l3.p1",
       "min": -32768,
@@ -10154,7 +10362,7 @@
       "display": "semi_fine"
     },
     {
-      "id": 781,
+      "id": 797,
       "name": "penv_l4.p1",
       "target": "penv.l4.p1",
       "min": -32768,
@@ -10167,7 +10375,7 @@
       "display": "semi_fine"
     },
     {
-      "id": 782,
+      "id": 798,
       "name": "penv_ks_lo.p1",
       "target": "penv_ks.lo.p1",
       "min": -100,
@@ -10180,7 +10388,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 783,
+      "id": 799,
       "name": "penv_ks_hi.p1",
       "target": "penv_ks.hi.p1",
       "min": -100,
@@ -10193,7 +10401,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 784,
+      "id": 800,
       "name": "penv_vs.p1",
       "target": "penv_vs.amount.p1",
       "min": -100,
@@ -10206,7 +10414,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 785,
+      "id": 801,
       "name": "pitch_rate.p1",
       "target": "plfo.rate.p1",
       "min": 0,
@@ -10219,7 +10427,7 @@
       "display": "hz"
     },
     {
-      "id": 786,
+      "id": 802,
       "name": "pitch_depth.p1",
       "target": "plfo.depth.p1",
       "min": -32768,
@@ -10232,7 +10440,7 @@
       "display": "semi_lfo"
     },
     {
-      "id": 787,
+      "id": 803,
       "name": "pitch_wave.p1",
       "target": "plfo.wave.p1",
       "min": 0,
@@ -10245,7 +10453,7 @@
       "display": "wave"
     },
     {
-      "id": 788,
+      "id": 804,
       "name": "pitch_mode.p1",
       "target": "plfo.mode.p1",
       "min": 0,
@@ -10258,7 +10466,7 @@
       "display": "onoff"
     },
     {
-      "id": 789,
+      "id": 805,
       "name": "f1_cutoff_ks_lo.p1",
       "target": "f1_ks.lo.p1",
       "min": -100,
@@ -10271,7 +10479,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 790,
+      "id": 806,
       "name": "f1_cutoff_ks_hi.p1",
       "target": "f1_ks.hi.p1",
       "min": -100,
@@ -10284,7 +10492,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 791,
+      "id": 807,
       "name": "fenv_ks_lo.p1",
       "target": "fenv_ks.lo.p1",
       "min": -100,
@@ -10297,7 +10505,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 792,
+      "id": 808,
       "name": "fenv_ks_hi.p1",
       "target": "fenv_ks.hi.p1",
       "min": -100,
@@ -10310,7 +10518,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 793,
+      "id": 809,
       "name": "f1_cutoff_vs.p1",
       "target": "f1_vs.amount.p1",
       "min": -100,
@@ -10323,7 +10531,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 794,
+      "id": 810,
       "name": "fenv_vs.p1",
       "target": "fenv_vs.amount.p1",
       "min": -100,
@@ -10336,7 +10544,7 @@
       "display": "pct_bip"
     },
     {
-      "id": 795,
+      "id": 811,
       "name": "cutoff.p1",
       "target": "lp.f.p1",
       "min": 0,
@@ -10349,7 +10557,7 @@
       "display": "off_pct"
     },
     {
-      "id": 796,
+      "id": 812,
       "name": "res.p1",
       "target": "lp.res.p1",
       "min": 0,
@@ -10362,7 +10570,7 @@
       "display": "pct_exp"
     },
     {
-      "id": 797,
+      "id": 813,
       "name": "lp.comp.p1",
       "target": "lp.comp.p1",
       "min": -32768,
@@ -10375,7 +10583,7 @@
       "display": "raw"
     },
     {
-      "id": 798,
+      "id": 814,
       "name": "filter_type.p1",
       "target": "lp.mode.p1",
       "min": 0,
@@ -10388,7 +10596,7 @@
       "display": "filter"
     },
     {
-      "id": 799,
+      "id": 815,
       "name": "filter_on.p1",
       "target": "lp.on.p1",
       "min": 0,
@@ -10401,7 +10609,7 @@
       "display": "onoff"
     },
     {
-      "id": 800,
+      "id": 816,
       "name": "fenv_depth.p1",
       "target": "lp.fenv_depth.p1",
       "min": 0,
@@ -10414,7 +10622,7 @@
       "display": "pct"
     },
     {
-      "id": 801,
+      "id": 817,
       "name": "fenv_r1.p1",
       "target": "fenv.r1.p1",
       "min": 0,
@@ -10427,7 +10635,7 @@
       "display": "raw"
     },
     {
-      "id": 802,
+      "id": 818,
       "name": "fenv_r2.p1",
       "target": "fenv.r2.p1",
       "min": 0,
@@ -10440,7 +10648,7 @@
       "display": "raw"
     },
     {
-      "id": 803,
+      "id": 819,
       "name": "fenv_r3.p1",
       "target": "fenv.r3.p1",
       "min": 0,
@@ -10453,7 +10661,7 @@
       "display": "raw"
     },
     {
-      "id": 804,
+      "id": 820,
       "name": "fenv_r4.p1",
       "target": "fenv.r4.p1",
       "min": 0,
@@ -10466,7 +10674,7 @@
       "display": "raw"
     },
     {
-      "id": 805,
+      "id": 821,
       "name": "fenv_l1.p1",
       "target": "fenv.l1.p1",
       "min": 0,
@@ -10479,7 +10687,7 @@
       "display": "raw"
     },
     {
-      "id": 806,
+      "id": 822,
       "name": "fenv_l2.p1",
       "target": "fenv.l2.p1",
       "min": 0,
@@ -10492,7 +10700,7 @@
       "display": "raw"
     },
     {
-      "id": 807,
+      "id": 823,
       "name": "fenv_l3.p1",
       "target": "fenv.l3.p1",
       "min": 0,
@@ -10505,7 +10713,7 @@
       "display": "raw"
     },
     {
-      "id": 808,
+      "id": 824,
       "name": "mode.p1",
       "target": "vm_mode",
       "min": 0,
@@ -10518,7 +10726,7 @@
       "display": "mode"
     },
     {
-      "id": 809,
+      "id": 825,
       "name": "unison_count.p1",
       "target": "vm_unison_count",
       "min": 1,
@@ -10531,7 +10739,7 @@
       "display": "raw"
     },
     {
-      "id": 810,
+      "id": 826,
       "name": "unison_detune.p1",
       "target": "vm_unison_detune",
       "min": 0,
@@ -10544,7 +10752,7 @@
       "display": "raw"
     },
     {
-      "id": 811,
+      "id": 827,
       "name": "detune.p1",
       "target": "vm_detune",
       "min": -50,
@@ -10557,7 +10765,7 @@
       "display": "cent"
     },
     {
-      "id": 812,
+      "id": 828,
       "name": "transpose.p1",
       "target": "vm_transpose",
       "min": -24,
@@ -10570,7 +10778,7 @@
       "display": "semitones"
     },
     {
-      "id": 813,
+      "id": 829,
       "name": "legato.p1",
       "target": "vm_legato",
       "min": 0,
@@ -10583,7 +10791,7 @@
       "display": "onoff"
     },
     {
-      "id": 814,
+      "id": 830,
       "name": "portamento.p1",
       "target": "vm_portamento",
       "min": 0,
@@ -10596,7 +10804,7 @@
       "display": "porta"
     },
     {
-      "id": 815,
+      "id": 831,
       "name": "note_priority.p1",
       "target": "vm_note_priority",
       "min": 0,
@@ -10609,7 +10817,7 @@
       "display": "priority"
     },
     {
-      "id": 816,
+      "id": 832,
       "name": "breakpoint",
       "target": "key_bp.bp",
       "min": 0,
@@ -10622,7 +10830,7 @@
       "display": "note"
     },
     {
-      "id": 817,
+      "id": 833,
       "name": "key_sens_on",
       "target": "key_on.on",
       "min": 0,
@@ -10635,7 +10843,7 @@
       "display": "onoff"
     },
     {
-      "id": 818,
+      "id": 834,
       "name": "vel_sens_on",
       "target": "vel_on.on",
       "min": 0,
@@ -10648,7 +10856,7 @@
       "display": "onoff"
     },
     {
-      "id": 819,
+      "id": 835,
       "name": "dc.r",
       "target": "dc.r",
       "min": -32768,
@@ -10661,7 +10869,7 @@
       "display": "raw"
     },
     {
-      "id": 820,
+      "id": 836,
       "name": "channel.p0",
       "target": "part.channel.p0",
       "min": -1,
@@ -10674,7 +10882,7 @@
       "display": "raw"
     },
     {
-      "id": 821,
+      "id": 837,
       "name": "channel.p1",
       "target": "part.channel.p1",
       "min": -1,
@@ -10687,7 +10895,7 @@
       "display": "raw"
     },
     {
-      "id": 822,
+      "id": 838,
       "name": "low.p0",
       "target": "part.low.p0",
       "min": 0,
@@ -10700,7 +10908,7 @@
       "display": "note"
     },
     {
-      "id": 823,
+      "id": 839,
       "name": "low.p1",
       "target": "part.low.p1",
       "min": 0,
@@ -10713,7 +10921,7 @@
       "display": "note"
     },
     {
-      "id": 824,
+      "id": 840,
       "name": "high.p0",
       "target": "part.high.p0",
       "min": 0,
@@ -10726,7 +10934,7 @@
       "display": "note"
     },
     {
-      "id": 825,
+      "id": 841,
       "name": "high.p1",
       "target": "part.high.p1",
       "min": 0,
@@ -10739,7 +10947,7 @@
       "display": "note"
     },
     {
-      "id": 826,
+      "id": 842,
       "name": "level.p0",
       "target": "part.level.p0",
       "min": 0,
@@ -10752,7 +10960,7 @@
       "display": "raw"
     },
     {
-      "id": 827,
+      "id": 843,
       "name": "level.p1",
       "target": "part.level.p1",
       "min": 0,
@@ -10765,7 +10973,7 @@
       "display": "raw"
     },
     {
-      "id": 828,
+      "id": 844,
       "name": "delay.p0",
       "target": "part.delay.p0",
       "min": 0,
@@ -10778,7 +10986,7 @@
       "display": "raw"
     },
     {
-      "id": 829,
+      "id": 845,
       "name": "delay.p1",
       "target": "part.delay.p1",
       "min": 0,

@@ -9,7 +9,7 @@
 
 namespace {
 
-constexpr int kVoices = 20;
+constexpr int kVoices = 24;
 
 int failures = 0;
 
@@ -94,6 +94,37 @@ int main()
             allSeen = allSeen && value;
         check(scaleGated == 7 && allSeen,
               "a held seven-note scale takes seven voices");
+    }
+
+    {
+        engine.reset();
+        const int notes12[12] = {48, 50, 52, 53, 55, 57,
+                                 59, 60, 62, 64, 65, 67};
+        for (int note : notes12)
+            engine.noteOn(static_cast<uint32_t>(note), 100, 0);
+        int part0 = 0;
+        for (int v = 0; v < kVoices; ++v) {
+            const auto* state = engine.state();
+            if (state->voice_gate[v] && state->voice_part[v] == 0)
+                ++part0;
+        }
+        check(part0 == 12, "twelve notes fill twelve voices on part one");
+
+        for (int note : notes12)
+            engine.noteOn(static_cast<uint32_t>(note), 100, 1);
+        int part1 = 0;
+        part0 = 0;
+        for (int v = 0; v < kVoices; ++v) {
+            const auto* state = engine.state();
+            if (!state->voice_gate[v])
+                continue;
+            if (state->voice_part[v] == 0)
+                ++part0;
+            else
+                ++part1;
+        }
+        check(part0 == 12 && part1 == 12,
+              "two twelve-note chords fill all 24 voices");
     }
 
     engine.reset();

@@ -126,6 +126,14 @@ inline juce::String opSpecMorph(int op, int part)
 {
     return withPart(opBase(op, "_spec_morph"), part);
 }
+inline juce::String opSpecRangeA(int op, int part)
+{
+    return withPart(opBase(op, "_spec_range_a"), part);
+}
+inline juce::String opSpecRangeB(int op, int part)
+{
+    return withPart(opBase(op, "_spec_range_b"), part);
+}
 inline juce::String opSpecEnvRate(int op, int index, int part)
 {
     return withPart(opBase(op, "_spec_env_r") + juce::String(index + 1), part);

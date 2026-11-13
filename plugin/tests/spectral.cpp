@@ -212,18 +212,70 @@ bool checkTable()
 {
     int16_t bank[P1_SPEC_BANK] = {0};
     int32_t a[16] = {99};
-    p1_spectral_table(bank + P1_SPEC_SHADOW(0), a);
+    p1_spectral_table(bank + P1_SPEC_SHADOW(0), a, 1);
     p1_spectral_copy(bank + P1_SPEC_A(0), bank + P1_SPEC_SHADOW(0));
     const int32_t v = p1_spectral_read(bank, 0, 0x20000000u, 0, 0);
-    return v > 1000;
+
+    int16_t shifted[P1_SPEC_BANK] = {0};
+    p1_spectral_table(shifted + P1_SPEC_SHADOW(0), a, 17);
+    const bool differs =
+        std::memcmp(shifted + P1_SPEC_SHADOW(0),
+                    bank + P1_SPEC_SHADOW(0),
+                    P1_SPEC_TABLE * sizeof(int16_t)) != 0;
+    const bool hashesDiffer = p1_spectral_hash(a, 1) != p1_spectral_hash(a, 17);
+    if (v <= 1000 || !differs || !hashesDiffer) {
+        std::printf("spectral: the range did not move the table (v %d, differs %d, hash %d)\n",
+                    v, differs, hashesDiffer);
+        return false;
+    }
+    return true;
+}
+
+bool checkMip()
+{
+    const uint32_t step = static_cast<uint32_t>(
+        std::llround(kF0 / kRate * 4294967296.0));
+    const uint32_t mip = p1_wave_mip(step);
+    if (mip != 2) {
+        std::printf("spectral: note 60 selects mip %u, expected 2 for Nyquist/2.25\n",
+                    mip);
+        return false;
+    }
+    return true;
+}
+
+bool checkRange()
+{
+    p1::Engine engine;
+    engine.reset();
+    if (!setupCarrier(engine))
+        return false;
+    if (!setAll(engine, {
+            {"op1_spec_range_a.p0", 1},
+            {"op1_spec_a1.p0", 99}, {"op1_spec_a2.p0", 0},
+            {"op1_spec_b1.p0", 0}, {"op1_spec_b2.p0", 0},
+            {"op1_spec_morph.p0", 0},
+        })) {
+        return false;
+    }
+    engine.noteOn(60, 100, 0);
+    const auto out = render(engine, 22050);
+    const double h1 = magnitude(out, 22050 - 2048, 2048, kF0);
+    const double h17 = magnitude(out, 22050 - 2048, 2048, 17.0 * kF0);
+    if (!(h17 > 100.0 && h17 > h1 * 4.0)) {
+        std::printf("spectral: range 17-32 did not move the partial (h1 %.2f, h17 %.2f)\n",
+                    h1, h17);
+        return false;
+    }
+    return true;
 }
 
 int main()
 {
-    if (!checkTable())
+    if (!checkTable() || !checkMip() || !checkRange())
         return 1;
     if (!checkMorph() || !checkMorphEnvelope() || !checkMorphLfo())
         return 1;
-    std::printf("spectral: spectrum mode, morph, envelope and LFO pass\n");
+    std::printf("spectral: spectrum mode, range, mip, morph, envelope and LFO pass\n");
     return 0;
 }

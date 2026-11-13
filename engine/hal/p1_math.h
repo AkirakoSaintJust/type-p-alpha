@@ -130,15 +130,15 @@ P1_MATH_INLINE int32_t p1_sin_wave(uint32_t phase, uint32_t ws)
 }
 
 /* The band-limited-table mip index for a carrier increment `step` (Q32, samples
-   per cycle): the level whose top harmonic stays at or below Nyquist/4. The
-   harmonic count per level is 2^(8-mip) (256..1), and the selection is one octave
-   conservative, so a vibrato or detune of up to +/-1 octave never folds a harmonic
-   above Nyquist. The shift loop keeps the block-rate code small, because this runs
-   while the flash is busy. */
+   per cycle): the level whose top harmonic stays at or below Nyquist/2.25. The
+   harmonic count per level is 2^(8-mip) (256..1). The threshold is the brightness
+   setting: Nyquist/4 was the conservative choice, and Nyquist/2.25 recovers more
+   of the top octave with less alias headroom. The shift loop keeps the block-rate
+   code small, because this runs while the flash is busy. */
 P1_MATH_INLINE uint32_t p1_wave_mip(uint32_t step)
 {
     uint32_t mip = 0u;
-    while (step >= 0x00400000u && mip < 8u) {
+    while (step >= 0x0071C71Cu && mip < 8u) {
         step >>= 1;
         ++mip;
     }

@@ -33,10 +33,11 @@
 - **Platform/API/HAL changes:** none. The engine stays integer C. The rate
   adaptation stays at the output boundary.
 - **Persistence/version impact:** `PRESET_VERSION` moves from 3 to 4 and the plugin
-  state version from 2 to 3. The project has not released, so no migration is
+  state version from 2 to 3. The later harmonic range feature moves the preset
+  version to 5. The project has not released, so no migration is
   written and older test banks are regenerated. The manifest stays at 830
   parameters, the part block at 408 and the spectral block at 45 parameters per
-  operator.
+  operator. The later harmonic range feature raises these to 846, 416 and 47.
 - **MIDI/clock impact:** none. The 4 Hz LFO defaults keep their displayed value.
 
 ## Parameter and event semantics
@@ -82,13 +83,14 @@ The other rate-derived constants are:
 
 ## Bounds and resources
 
-- **Maximum voices/events/effects:** 20 voices, two parts, four operators per
-  voice, unchanged.
+- **Maximum voices/events/effects:** 24 voices, two parts, four operators per
+  voice.
 - **Per-sample and per-block operations:** unchanged. The rate change moves table
   values, not the graph.
-- **Instance memory, CPU, preset size:** the manifest, part block and preset layout
-  are unchanged. The rate bridge grows from 32 to 128 taps, so its kernel is 128
-  taps by 1024 phases.
+- **Instance memory, CPU, preset size:** the 48 kHz conversion leaves the manifest,
+  part block and preset layout unchanged. The later range feature grows them to 846
+  parameters and 416 per part. The rate bridge grows from 32 to 128 taps, so its
+  kernel is 128 taps by 1024 phases.
 - **Overflow/overload policy:** the rate transform clamps to the Q16 range, and the
   note increment table rounds each 44.1 kHz value to the nearest integer after the
   rate scale.
@@ -102,7 +104,8 @@ The other rate-derived constants are:
 - `engine/gen/math_tables.h`, `engine/gen/type_p_alpha_dsp.c`, `engine/gen/dsp.h`
   and `engine/gen/params.json`, regenerated.
 - `engine/hal/spectral.h`, for the 17-step crossfade.
-- `engine/runtime/presets.h`, for `PRESET_VERSION` 4.
+- `engine/runtime/presets.h`, for `PRESET_VERSION` 4, and 5 after the harmonic
+  range feature.
 - `synth/patch.json`, for the LFO defaults and the DC blocker.
 - `plugin/engine/RateBridge.hpp` and `RateBridge.cpp`, for the 48 kHz core, the
   128-tap kernel, the cutoff and the latency.

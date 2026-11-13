@@ -361,6 +361,9 @@ mechanical, so the table lists each family and its target.
 | `opFeedbackRate`, `opFeedbackLevel` | per-operator feedback envelope rate and signed level ids. |
 | `opFeedbackLfoRate`, `opFeedbackLfoDepth`, `opFeedbackLfoWave`, `opFeedbackLfoMode` | feedback LFO ids. |
 | `opDetuneLfoRate`, `opDetuneLfoDepth`, `opDetuneLfoWave`, `opDetuneLfoMode` | detune LFO ids. |
+| `opSpecA`, `opSpecB`, `opSpecRangeA`, `opSpecRangeB`, `opSpecMorph` | spectrum levels, range and morph ids. |
+| `opSpecEnvRate`, `opSpecEnvLevel`, `opSpecEnvDepth` | morph envelope ids. |
+| `opSpecLfoRate`, `opSpecLfoDepth`, `opSpecLfoWave`, `opSpecLfoMode` | morph LFO ids. |
 | `pitchRate`, `pitchDepth`, `pitchWave`, `pitchMode`, `pitchEnvOn`, `pitchEnvRate`, `pitchEnvLevel` | pitch LFO and pitch envelope ids. |
 | `filterCutoff`, `filterRes`, `filterType`, `filterOn`, `filterEnvDepth`, `filterRate`, `filterLevel` | filter and filter envelope ids. |
 | `FollowTarget`, `followTargets` | key and velocity follow target table. |
@@ -470,7 +473,7 @@ engine, the MIDI bridge, the rate bridge, the preset bank and the UI state.
 | `feedback_envelope.cpp` | Measure the per-operator envelope family, the flat path, the partial negative level and the peak bound. |
 | `feedback_bipolar.cpp` | Measure the positive path, the abs negative half, the signed envelope level and the peak bound. |
 | `operator_lfos.cpp` | Check the feedback and detune LFO paths at depth 0, above, and with a negative depth. |
-| `voice_alloc.cpp` | Check a three-note chord, a seven-note scale, one note's release, both part channels and recycled voices. |
+| `voice_alloc.cpp` | Check a three-note chord, a seven-note scale, two twelve-note chords across the 24 voices, one note's release, both part channels and recycled voices. |
 | `additive_bench.cpp` | Headless additive table matrix, morph read and WAV audition. It is a console target, not a ctest gate. |
 | `additive_engine_bench.cpp` | Render the build-tree additive engine prototype and write the engine audition. It is a console target, not a ctest gate. |
 | `rate_bridge_test.cpp` | Check the resampler latency and spectral behaviour. |
