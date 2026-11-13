@@ -235,11 +235,253 @@ void audition(const std::string& path)
                 path.c_str(), kHarmonics);
 }
 
+struct WaveTable {
+    int size = 0;
+    int harmonics = 0;
+    std::vector<std::vector<int16_t>> mips;
+};
+
+int mipLevels(int harmonics)
+{
+    int levels = 1;
+    while ((harmonics >> (levels - 1)) > 1)
+        ++levels;
+    return levels;
+}
+
+int mipFor(double fundamental, int harmonics, int levels)
+{
+    int mip = 0;
+    while (mip + 1 < levels && (harmonics >> mip) * fundamental > kRate * 0.25)
+        ++mip;
+    return mip;
+}
+
+WaveTable buildWaveTable(int harmonics, int size,
+                         const std::vector<int16_t>& amps)
+{
+    WaveTable table;
+    table.size = size;
+    table.harmonics = harmonics;
+    const int levels = mipLevels(harmonics);
+    const auto sine = sineTable(size);
+    table.mips.resize(static_cast<std::size_t>(levels));
+    for (int level = 0; level < levels; ++level) {
+        const int limit = std::max(1, harmonics >> level);
+        auto& mip = table.mips[static_cast<std::size_t>(level)];
+        mip.assign(static_cast<std::size_t>(size), 0);
+        uint64_t checksum = 0;
+        generateTable(mip, limit, size, amps, sine, 1, checksum);
+    }
+    return table;
+}
+
+double readWave(const WaveTable& table, int mip, double phase, bool linear)
+{
+    const auto& samples = table.mips[static_cast<std::size_t>(mip)];
+    const double position = phase * table.size;
+    const auto index = static_cast<std::size_t>(position) % table.size;
+    double value = samples[index];
+    if (linear) {
+        const auto next = (index + 1u) % table.size;
+        const double fraction = position - std::floor(position);
+        value += (samples[next] - value) * fraction;
+    }
+    return value / 32768.0;
+}
+
+double magnitude(const std::vector<double>& samples, double frequency)
+{
+    constexpr int kWindow = 4096;
+    double re = 0.0;
+    double im = 0.0;
+    double weight = 0.0;
+    for (int i = 0; i < kWindow; ++i) {
+        const double w = 0.5 - 0.5 * std::cos(2.0 * kPi * i / (kWindow - 1));
+        const double phase = 2.0 * kPi * frequency * i / kRate;
+        re += samples[static_cast<std::size_t>(i)] * w * std::cos(phase);
+        im -= samples[static_cast<std::size_t>(i)] * w * std::sin(phase);
+        weight += w;
+    }
+    return 2.0 * std::hypot(re, im) / weight;
+}
+
+double aliasFloor(const WaveTable& table, int mip, bool linear,
+                  double fundamental, int firstAlias, int harmonics)
+{
+    constexpr int kWindow = 4096;
+    std::vector<double> output(static_cast<std::size_t>(kWindow));
+    double phase = 0.0;
+    const double step = fundamental / kRate;
+    for (int i = 0; i < kWindow; ++i) {
+        output[static_cast<std::size_t>(i)] = readWave(table, mip, phase, linear);
+        phase += step;
+        if (phase >= 1.0)
+            phase -= 1.0;
+    }
+    const double fundamentalMagnitude = magnitude(output, fundamental);
+    if (fundamentalMagnitude < 1e-12)
+        return 0.0;
+    double aliasEnergy = 0.0;
+    for (int h = firstAlias; h <= harmonics; ++h) {
+        double alias = std::fmod(h * fundamental, static_cast<double>(kRate));
+        if (alias > kRate * 0.5)
+            alias = kRate - alias;
+        if (alias < 20.0)
+            continue;
+        const double m = magnitude(output, alias);
+        aliasEnergy += m * m;
+    }
+    return 10.0 * std::log10(aliasEnergy /
+                                 (fundamentalMagnitude * fundamentalMagnitude) +
+                             1e-30);
+}
+
+void aliasQuality()
+{
+    std::printf("\nalias floor at C7, dB relative to the fundamental\n");
+    std::printf("  H   N  mip  nearest  linear\n");
+    const double fundamental = 440.0 * std::pow(2.0, (96.0 - 69.0) / 12.0);
+    const int legal = static_cast<int>(kRate * 0.5 / fundamental);
+    for (int harmonics : {16, 32}) {
+        const auto amps = recipe(harmonics, 1.0, 6, 0.8);
+        for (int size : {256, 512}) {
+            const auto table = buildWaveTable(harmonics, size, amps);
+            const int levels = mipLevels(harmonics);
+            const int mip = mipFor(fundamental, harmonics, levels);
+            for (int on = 1; on >= 0; --on) {
+                const int level = on != 0 ? mip : 0;
+                const double nearest =
+                    aliasFloor(table, level, false, fundamental, legal + 1,
+                               harmonics);
+                const double linear =
+                    aliasFloor(table, level, true, fundamental, legal + 1,
+                               harmonics);
+                std::printf(" %2d %3d  %3s  %7.1f  %7.1f\n", harmonics, size,
+                            on != 0 ? "on" : "off", nearest, linear);
+            }
+        }
+    }
+}
+
+double oscillatorSeconds(bool additive)
+{
+    constexpr int kHarmonics = 16;
+    constexpr int kSize = 256;
+    constexpr int kSeconds = 10;
+    const auto dark = buildWaveTable(kHarmonics, kSize,
+                                     recipe(kHarmonics, 2.2, 0, 0.0));
+    const auto bright = buildWaveTable(kHarmonics, kSize,
+                                       recipe(kHarmonics, 0.7, 6, 1.2));
+    const int levels = mipLevels(kHarmonics);
+    std::array<uint32_t, 80> phase{};
+    std::array<uint32_t, 80> step{};
+    std::array<int, 80> mip{};
+    for (int voice = 0; voice < kVoices; ++voice) {
+        const double fundamental =
+            440.0 * std::pow(2.0, (48.0 + voice * 2.0 - 69.0) / 12.0);
+        for (int op = 0; op < kOperators; ++op) {
+            const auto index = static_cast<std::size_t>(voice * kOperators + op);
+            step[index] =
+                static_cast<uint32_t>(fundamental / kRate * 4294967296.0);
+            mip[index] = mipFor(fundamental, kHarmonics, levels);
+        }
+    }
+    const int samples = kRate * kSeconds;
+    double best = 1e9;
+    int64_t checksum = 0;
+    for (int run = 0; run < 3; ++run) {
+        phase.fill(0);
+        const auto start = std::chrono::steady_clock::now();
+        for (int i = 0; i < samples; ++i) {
+            for (int voice = 0; voice < kVoices; ++voice) {
+                for (int op = 0; op < kOperators; ++op) {
+                    const auto index =
+                        static_cast<std::size_t>(voice * kOperators + op);
+                    const double p = phase[index] / 4294967296.0;
+                    if (additive) {
+                        const double a = readWave(dark, mip[index], p, true);
+                        const double b = readWave(bright, mip[index], p, true);
+                        checksum += static_cast<int64_t>((a + b) * 1000.0);
+                    } else {
+                        checksum += static_cast<int64_t>(
+                            readWave(dark, 0, p, false) * 1000.0);
+                    }
+                    phase[index] += step[index];
+                }
+            }
+        }
+        best = std::min(best, secondsSince(start));
+    }
+    volatile int64_t sink = checksum;
+    (void)sink;
+    return best;
+}
+
+void auditionOscillator(const std::string& path)
+{
+    constexpr int kHarmonics = 16;
+    constexpr int kSize = 512;
+    constexpr double kSeconds = 4.0;
+    const auto dark = buildWaveTable(kHarmonics, kSize,
+                                     recipe(kHarmonics, 2.2, 0, 0.0));
+    const auto bright = buildWaveTable(kHarmonics, kSize,
+                                       recipe(kHarmonics, 0.7, 6, 1.2));
+    const int levels = mipLevels(kHarmonics);
+    const int notes[4] = {60, 64, 67, 71};
+    std::array<double, 4> phase{};
+    std::array<int, 4> mip{};
+    for (int n = 0; n < 4; ++n) {
+        const double f = 440.0 * std::pow(2.0, (notes[n] - 69) / 12.0);
+        mip[static_cast<std::size_t>(n)] = mipFor(f, kHarmonics, levels);
+    }
+    const int samples = static_cast<int>(kRate * kSeconds);
+    std::vector<int16_t> left(static_cast<std::size_t>(samples));
+    std::vector<int16_t> right(static_cast<std::size_t>(samples));
+    double mix = 0.0;
+    double target = 0.0;
+    int blockPosition = 0;
+    for (int i = 0; i < samples; ++i) {
+        const double t = static_cast<double>(i) / kRate;
+        if (i % 128 == 0) {
+            target = std::min(1.0, t / kSeconds);
+            blockPosition = 0;
+        }
+        const double mixNow =
+            mix + (target - mix) * std::min(1.0, blockPosition / 32.0);
+        double sum = 0.0;
+        for (int n = 0; n < 4; ++n) {
+            const double f = 440.0 * std::pow(2.0, (notes[n] - 69) / 12.0);
+            const auto index = static_cast<std::size_t>(n);
+            const double a = readWave(dark, mip[index], phase[index], true);
+            const double b = readWave(bright, mip[index], phase[index], true);
+            sum += a * (1.0 - mixNow) + b * mixNow;
+            phase[index] += f / kRate;
+            if (phase[index] >= 1.0)
+                phase[index] -= 1.0;
+        }
+        const double fade = std::min(1.0, t / 0.02) *
+                            std::min(1.0, (kSeconds - t) / 0.02);
+        const double value = sum / 4.0 * 0.7 * fade;
+        const auto pcm = static_cast<int16_t>(
+            std::max(-32768.0, std::min(32767.0, value * 32767.0)));
+        left[static_cast<std::size_t>(i)] = pcm;
+        right[static_cast<std::size_t>(i)] = pcm;
+        ++blockPosition;
+        if (blockPosition >= 128)
+            mix = target;
+    }
+    writeWav(path, left, right);
+    std::printf("audition: %s (16 harmonics, 344 Hz morph, 32-sample ramp)\n",
+                path.c_str());
+}
+
 } // namespace
 
 int main(int argc, char** argv)
 {
     const std::string wavPath = argc > 1 ? argv[1] : "additive-headless.wav";
+    const std::string oscWav = argc > 2 ? argv[2] : "additive-oscillator.wav";
     std::printf("additive synthesis headless experiment\n");
     std::printf("voices %d, operators %d, parts %d, rate %d\n", kVoices,
                 kOperators, kParts, kRate);
@@ -291,7 +533,20 @@ int main(int argc, char** argv)
                 "%.1f ms, 60 s: %.1f ms, %.2f%% of realtime\n",
                 read * 1000.0, read * 6000.0, read / 10.0 * 100.0);
 
+    const double single = oscillatorSeconds(false);
+    const double additive = oscillatorSeconds(true);
+    std::printf("\noscillator read, 20 voices, 4 operators, 16/256 tables\n");
+    std::printf("  single table, nearest: %.1f ms / 60 s, %.2f%% of realtime\n",
+                single * 6000.0, single / 10.0 * 100.0);
+    std::printf("  two tables, linear, mip: %.1f ms / 60 s, %.2f%% of realtime\n",
+                additive * 6000.0, additive / 10.0 * 100.0);
+    std::printf("  extra for the morph path: %.2f%% of realtime\n",
+                (additive - single) / 10.0 * 100.0);
+
+    aliasQuality();
+
     audition(wavPath);
+    auditionOscillator(oscWav);
     std::printf("checksum %llu\n", static_cast<unsigned long long>(checksum));
     return 0;
 }
