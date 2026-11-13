@@ -43,7 +43,7 @@ def _table(amps: list[float], level: int) -> list[int]:
         total = 0
         for h in range(1, limit + 1):
             total += int(round(amps[h - 1] * 32767.0 *
-                               math.sin(2.0 * math.pi * h * n / _SIZE))) >> 15
+                               math.sin(2.0 * math.pi * h * n / _SIZE)))
         values.append(max(-32768, min(32767, total)))
     return values
 
