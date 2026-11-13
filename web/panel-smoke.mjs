@@ -45,6 +45,15 @@ try {
   }
   console.log("pages:", counts.join(" | "));
 
+  await page.locator(".tab").nth(4).click();
+  await page.waitForTimeout(200);
+  const bars = await page.locator(".specbars").first().boundingBox();
+  await page.mouse.click(bars.x + bars.width * 0.5, bars.y + bars.height * 0.25);
+  await page.waitForTimeout(200);
+  const barValue = await page.evaluate(() => window.__p1.lastParam);
+  console.log("spectrum bar value:", barValue);
+  if (!(barValue > 0)) throw new Error("the spectrum bar did not reach the engine");
+
   await page.locator(".tab").nth(2).click();
   const box = await page.locator("#note").boundingBox();
   await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);

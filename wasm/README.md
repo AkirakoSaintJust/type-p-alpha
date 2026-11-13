@@ -51,9 +51,10 @@ the engine tap buffers for the active part.
 Open `http://localhost:8080/panel.html`. The bare page remains at
 `http://localhost:8080/` for the smallest audio and parameter smoke test.
 
-The bespoke envelope graphs, the spectrum bar editor and the patch library are the
-next visual layer. The panel currently exposes every parameter and proves the full
-message bridge and the tap path.
+The panel now carries the envelope graphs and the sixteen-bar spectrum editors with
+the `odd`, `even`, `tilt`, `formant`, `norm` and copy controls. The patch and part
+library and the final layout polish are the next layer. The panel currently exposes
+every parameter and proves the full message bridge and the tap path.
 
 The module is about 157 KB with no imports. It exports `memory` and the wrapper
 functions. Memory is fixed at 32 MB, so the worklet does not need to refresh typed

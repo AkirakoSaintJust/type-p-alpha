@@ -159,6 +159,7 @@ The module is about 157 KB, has no imports and exports `memory` plus the wrapper
 functions in `wasm/p1_wasm.c`. The AudioWorklet and the browser pages are in
 `web/`: `index.html` is the bare audio and parameter smoke test, and `panel.html`
 is the full parameter panel. The panel loads `engine/gen/params.json`, groups the
-parameters into the six tabs and sends every control through the worklet. The
-bespoke envelope graphs, the spectrum bar editor and the patch library are the next
-visual layer. The JUCE editor itself is not a browser target.
+parameters into the six tabs and sends every control through the worklet. It
+carries the envelope graphs, the sixteen-bar spectrum editors and the per-operator
+tap scopes. The patch and part library and the final layout polish are the next
+layer. The JUCE editor itself is not a browser target.

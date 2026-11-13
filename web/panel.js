@@ -34,6 +34,9 @@
   const noteButton = document.querySelector("#note");
   const scopeEl = document.querySelector("#scope");
 
+  const graphUpdaters = [];
+  const spectrumUpdaters = [];
+
   let params = [];
   let byName = new Map();
   let values = new Map();
@@ -213,6 +216,109 @@
       if (onchange) onchange(el.classList.contains("on"));
     });
     return el;
+  }
+
+  function envSvg(r, l, cls) {
+    const W = 240;
+    const H = 62;
+    const widths = r.map(function (rr) { return 8 + (99 - rr) / 99 * 26; });
+    const total = widths.reduce(function (a, b) { return a + b; }, 0);
+    const scale = (W - 12) / total;
+    let x = 6;
+    let d = "M 6 " + H;
+    const levels = [l[0], l[1], l[2], l[2]];
+    for (let i = 0; i < 4; ++i) {
+      x += widths[i] * scale;
+      const y = H - 3 - levels[i] / 99 * (H - 10);
+      d += " L " + x.toFixed(1) + " " + y.toFixed(1);
+    }
+    x += widths[3] * scale;
+    d += " L " + x.toFixed(1) + " " + H;
+    return '<svg viewBox="0 0 ' + W + " " + H + '">' +
+      '<line class="egrid" x1="6" y1="' + (H - 3) + '" x2="' + (W - 6) +
+      '" y2="' + (H - 3) + '"/>' +
+      '<path class="' + (cls || "ecurve") + '" d="' + d + '"/></svg>';
+  }
+
+  function penvSvg(r, l, scaleMax) {
+    const W = 240;
+    const H = 62;
+    const mid = H / 2;
+    const top = scaleMax || 12;
+    const widths = r.map(function (rr) { return 8 + (99 - rr) / 99 * 26; });
+    const total = widths.reduce(function (a, b) { return a + b; }, 0);
+    const scale = (W - 12) / total;
+    let x = 6;
+    let d = "M 6 " + mid;
+    const levels = l.length >= 4 ? [l[0], l[1], l[2], l[3]]
+      : [l[0], l[1], l[2], 0];
+    levels.forEach(function (level, i) {
+      x += widths[i] * scale;
+      const y = mid - level / top * (mid - 5);
+      d += " L " + x.toFixed(1) + " " + y.toFixed(1);
+    });
+    return '<svg viewBox="0 0 ' + W + " " + H + '">' +
+      '<line class="ezero" x1="6" y1="' + mid + '" x2="' + (W - 6) +
+      '" y2="' + mid + '"/>' +
+      '<path class="ecurve" d="' + d + '"/></svg>';
+  }
+
+  function makeMacro(label, options) {
+    const row = document.createElement("div");
+    row.className = "macro";
+    const name = document.createElement("span");
+    name.className = "mlabel";
+    name.textContent = label;
+    const track = document.createElement("div");
+    track.className = "mtrack";
+    if (options.min < 0) track.classList.add("bip");
+    const fill = document.createElement("i");
+    track.appendChild(fill);
+    const value = document.createElement("b");
+    value.className = "mval";
+    row.append(name);
+    if (options.extra) row.appendChild(options.extra);
+    row.append(track, value);
+    function paint(v) {
+      const f = (v - options.min) / (options.max - options.min);
+      if (options.min < 0) {
+        fill.style.left = Math.min(f, 0.5) * 100 + "%";
+        fill.style.width = Math.abs(f - 0.5) * 100 + "%";
+      } else {
+        fill.style.left = "0%";
+        fill.style.width = f * 100 + "%";
+      }
+      value.textContent = options.format ? options.format(v) : Math.round(v);
+    }
+    paint(options.value || 0);
+    function valueFrom(event) {
+      const rect = track.getBoundingClientRect();
+      const f = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width));
+      return options.min + f * (options.max - options.min);
+    }
+    track.addEventListener("pointerdown", function (event) {
+      event.preventDefault();
+      track.setPointerCapture(event.pointerId);
+      if (options.onStart) options.onStart();
+      const first = valueFrom(event);
+      paint(first);
+      options.onInput(first);
+      function move(ev) {
+        const v = valueFrom(ev);
+        paint(v);
+        options.onInput(v);
+      }
+      function up() {
+        track.removeEventListener("pointermove", move);
+        track.removeEventListener("pointerup", up);
+        track.removeEventListener("pointercancel", up);
+        if (options.onEnd) options.onEnd();
+      }
+      track.addEventListener("pointermove", move);
+      track.addEventListener("pointerup", up);
+      track.addEventListener("pointercancel", up);
+    });
+    return row;
   }
 
   function div(className) {
@@ -432,6 +538,89 @@
     return knob;
   }
 
+  function idOf(names) {
+    return names
+      .map((name) => byName.get(name))
+      .filter((spec) => spec !== undefined)
+      .map((spec) => spec.id);
+  }
+
+  function namePart(base, part) {
+    return base + ".p" + part;
+  }
+
+  function graphFor(rateNames, levelNames, options) {
+    options = options || {};
+    const rateIDs = idOf(rateNames);
+    const levelIDs = idOf(levelNames);
+    return function () {
+      const rates = rateIDs.map((id) => values.get(id) ?? 0);
+      let levels = levelIDs.map((id) => values.get(id) ?? 0);
+      if (options.transform) levels = levels.map(options.transform);
+      return options.signed
+        ? penvSvg(rates, levels, options.scaleMax)
+        : envSvg(rates, levels);
+    };
+  }
+
+  function ampRateNames(op, part) {
+    const n = op + 1;
+    return op === 0
+      ? [namePart("attack", part), namePart("op1.eg.r2", part),
+         namePart("op1.eg.r3", part), namePart("release", part)]
+      : [namePart("op" + n + ".eg.r1", part),
+         namePart("op" + n + ".eg.r2", part),
+         namePart("op" + n + ".eg.r3", part),
+         namePart("op" + n + ".eg.r4", part)];
+  }
+
+  function ampLevelNames(op, part) {
+    const n = op + 1;
+    return [namePart("op" + n + ".eg.l1", part),
+            namePart("op" + n + ".eg.l2", part),
+            namePart("op" + n + ".eg.l3", part)];
+  }
+
+  function fbRateNames(op, part) {
+    const n = op + 1;
+    return [1, 2, 3, 4].map((i) =>
+      namePart("op" + n + "_fbenv_r" + i, part));
+  }
+
+  function fbLevelNames(op, part) {
+    const n = op + 1;
+    return [1, 2, 3, 4].map((i) =>
+      namePart("op" + n + "_fbenv_l" + i, part));
+  }
+
+  function morphRateNames(op, part) {
+    const n = op + 1;
+    return [1, 2, 3, 4].map((i) =>
+      namePart("op" + n + "_spec_env_r" + i, part));
+  }
+
+  function morphLevelNames(op, part) {
+    const n = op + 1;
+    return [1, 2, 3].map((i) =>
+      namePart("op" + n + "_spec_env_l" + i, part));
+  }
+
+  function pitchRateNames(part) {
+    return [1, 2, 3, 4].map((i) => namePart("penv_r" + i, part));
+  }
+
+  function pitchLevelNames(part) {
+    return [1, 2, 3, 4].map((i) => namePart("penv_l" + i, part));
+  }
+
+  function filterRateNames(part) {
+    return [1, 2, 3, 4].map((i) => namePart("fenv_r" + i, part));
+  }
+
+  function filterLevelNames(part) {
+    return [1, 2, 3].map((i) => namePart("fenv_l" + i, part));
+  }
+
   function card(title, specs, options) {
     options = options || {};
     if (specs.length === 0) return null;
@@ -440,6 +629,15 @@
     const heading = document.createElement("h3");
     heading.textContent = title;
     el.append(heading);
+    if (options.graph) {
+      const graph = div("envbox");
+      graph.innerHTML = options.graph();
+      el.append(graph);
+      graphUpdaters.push(() => {
+        const html = options.graph();
+        if (graph.innerHTML !== html) graph.innerHTML = html;
+      });
+    }
     if (options.note) {
       const note = div("panel-card-note");
       note.textContent = options.note;
@@ -450,6 +648,156 @@
     el.append(knobs);
     return el;
   }
+
+  function clampLevel(value) {
+    return Math.max(0, Math.min(99, Math.round(value)));
+  }
+
+  function spectrumBars(specs, kind, rangeSpec) {
+    const wrap = div("specbars");
+    const fills = [];
+    for (let i = 0; i < 16; ++i) {
+      const bar = div("sbar" + (kind === "b" ? " b" : ""));
+      const fill = document.createElement("i");
+      bar.append(fill);
+      wrap.append(bar);
+      fills.push(fill);
+    }
+    const labels = div("speclabels");
+    const labelSpans = [];
+    for (let i = 0; i < 16; ++i) {
+      const span = document.createElement("span");
+      labels.append(span);
+      labelSpans.push(span);
+    }
+    function levels() {
+      return specs.map((spec) => values.get(spec.id) ?? 0);
+    }
+    function draw() {
+      const data = levels();
+      for (let i = 0; i < 16; ++i)
+        fills[i].style.height = (data[i] / 99 * 100) + "%";
+      const range = rangeSpec === undefined || rangeSpec === null
+        ? 0 : (values.get(rangeSpec.id) ?? 0);
+      const first = range * 16 + 1;
+      for (let i = 0; i < 16; ++i) {
+        labelSpans[i].textContent =
+          (i === 0 || i === 3 || i === 7 || i === 11 || i === 15)
+            ? "h" + (first + i) : "";
+      }
+    }
+    function setFrom(event) {
+      const rect = wrap.getBoundingClientRect();
+      const cell = rect.width / 16;
+      const index = Math.max(0, Math.min(15,
+        Math.floor((event.clientX - rect.left) / cell)));
+      const y = 1 - (event.clientY - rect.top) / rect.height;
+      setRaw(specs[index], clampLevel(y * 99));
+      draw();
+    }
+    wrap.addEventListener("pointerdown", function (event) {
+      event.preventDefault();
+      wrap.setPointerCapture(event.pointerId);
+      setFrom(event);
+      function move(ev) { setFrom(ev); }
+      function up() {
+        wrap.removeEventListener("pointermove", move);
+        wrap.removeEventListener("pointerup", up);
+        wrap.removeEventListener("pointercancel", up);
+      }
+      wrap.addEventListener("pointermove", move);
+      wrap.addEventListener("pointerup", up);
+      wrap.addEventListener("pointercancel", up);
+    });
+    spectrumUpdaters.push(draw);
+    draw();
+    return { el: wrap, labels: labels, draw: draw, levels: levels };
+  }
+
+  function spectrumCard(title, specs, otherSpecs, kind, rangeSpec) {
+    const cardEl = document.createElement("section");
+    cardEl.className = "card speccard";
+    const heading = document.createElement("h3");
+    heading.textContent = title;
+    cardEl.append(heading);
+    const bars = spectrumBars(specs, kind, rangeSpec);
+    cardEl.append(bars.el, bars.labels);
+
+    let base = null;
+    function begin() { base = bars.levels(); }
+    function end() { base = null; }
+    function apply(fn) {
+      if (base === null) return;
+      for (let i = 0; i < 16; ++i)
+        setRaw(specs[i], clampLevel(fn(base[i], i + 1)));
+      bars.draw();
+    }
+    const odd = makeMacro("odd", {
+      min: 0, max: 1, value: 0,
+      format: (v) => Math.round(v * 100) + "%",
+      onStart: begin, onEnd: end,
+      onInput: (a) => apply((level, n) => n % 2 === 0 ? level * (1 - a) : level),
+    });
+    const even = makeMacro("even", {
+      min: 0, max: 1, value: 0,
+      format: (v) => Math.round(v * 100) + "%",
+      onStart: begin, onEnd: end,
+      onInput: (a) => apply((level, n) =>
+        n > 1 && n % 2 === 1 ? level * (1 - a) : level),
+    });
+    const tilt = makeMacro("tilt", {
+      min: -1, max: 1, value: 0,
+      format: (v) => (v > 0 ? "+" : "") + Math.round(v * 100) + "%",
+      onStart: begin, onEnd: end,
+      onInput: (a) => apply((level, n) =>
+        level * Math.max(0, Math.min(1, 1 + a * (n - 1) / 15))),
+    });
+    let centre = 5;
+    const formantSelect = makeSelect(
+      ["h1", "h2", "h3", "h4", "h5", "h6", "h7", "h8", "h9", "h10", "h11",
+       "h12", "h13", "h14", "h15", "h16"],
+      "h5",
+      (value) => { centre = parseInt(value.slice(1), 10); });
+    formantSelect.classList.add("msel");
+    const formant = makeMacro("formant", {
+      min: 0, max: 1, value: 0, extra: formantSelect,
+      format: (v) => Math.round(v * 100) + "%",
+      onStart: begin, onEnd: end,
+      onInput: (a) => apply((level, n) =>
+        level + a * 99 * Math.exp(-Math.pow(n - centre, 2) / 4.5)),
+    });
+    const row1 = div("macro-row");
+    row1.append(odd, even);
+    const row2 = div("macro-row");
+    row2.append(tilt, formant);
+    cardEl.append(row1, row2);
+
+    const foot = div("specfoot");
+    const norm = document.createElement("button");
+    norm.className = "mini";
+    norm.textContent = "norm";
+    norm.addEventListener("click", () => {
+      const levels = bars.levels();
+      const max = Math.max(...levels);
+      if (max > 0) {
+        for (let i = 0; i < 16; ++i)
+          setRaw(specs[i], clampLevel(levels[i] * 99 / max));
+        bars.draw();
+      }
+    });
+    const to = document.createElement("button");
+    to.className = "mini";
+    to.textContent = kind === "a" ? "to b" : "to a";
+    to.addEventListener("click", () => {
+      const levels = bars.levels();
+      for (let i = 0; i < 16 && i < otherSpecs.length; ++i)
+        setRaw(otherSpecs[i], levels[i]);
+    });
+    foot.append(norm, to);
+    cardEl.append(foot);
+    return cardEl;
+  }
+
 
   function pageFor(spec) {
     return pageOf(baseName(spec.name));
@@ -529,12 +877,25 @@
       base === "breakpoint" || base === "key_sens_on" || base === "vel_sens_on");
     const rest = take(() => true);
     const grid = div("panel-grid");
-    for (const [title, specs] of [
-      ["filter", filter], ["pitch", pitch],
-      ["key and velocity follow", follow], ["other", rest],
-    ]) {
-      const item = card(title, specs);
-      if (item) grid.append(item);
+    const items = [
+      {
+        title: "filter", specs: filter,
+        graph: graphFor(filterRateNames(activePart),
+                        filterLevelNames(activePart)),
+      },
+      {
+        title: "pitch", specs: pitch,
+        graph: graphFor(pitchRateNames(activePart),
+                        pitchLevelNames(activePart),
+                        { signed: true, scaleMax: 12,
+                          transform: (value) => value * 12 / 32768 }),
+      },
+      { title: "key and velocity follow", specs: follow },
+      { title: "other", specs: rest },
+    ];
+    for (const item of items) {
+      const section = card(item.title, item.specs, { graph: item.graph });
+      if (section) grid.append(section);
     }
     page.append(grid);
   }
@@ -560,12 +921,26 @@
         /^op[1-4]\.(velamp|velfm|velrate)\.depth$/.test(base));
       const rest = take(() => true);
       const col = opColumn(op, true);
-      for (const [title, specs] of [
-        ["oscillator", osc], ["amp env", amp], ["fb env", fb],
-        ["key and velocity", follow], ["other", rest],
-      ]) {
-        const item = card(title, specs);
-        if (item) col.append(item);
+      const items = [
+        { title: "oscillator", specs: osc },
+        {
+          title: "amp env", specs: amp,
+          graph: graphFor(ampRateNames(op, activePart),
+                          ampLevelNames(op, activePart)),
+        },
+        {
+          title: "fb env", specs: fb,
+          graph: graphFor(fbRateNames(op, activePart),
+                          fbLevelNames(op, activePart),
+                          { signed: true, scaleMax: 100,
+                            transform: (value) => value / 327.67 }),
+        },
+        { title: "key and velocity", specs: follow },
+        { title: "other", specs: rest },
+      ];
+      for (const item of items) {
+        const section = card(item.title, item.specs, { graph: item.graph });
+        if (section) col.append(section);
       }
       columns.append(col);
     }
@@ -608,9 +983,15 @@
       const b = all.filter((spec) =>
         /^op[1-4]_spec_b\d+$/.test(baseName(spec.name))).sort(naturalSort);
       const col = opColumn(op, true);
+      const rangeA = all.find((spec) =>
+        baseName(spec.name) === `op${op + 1}_spec_range_a`);
+      const rangeB = all.find((spec) =>
+        baseName(spec.name) === `op${op + 1}_spec_range_b`);
       const rangeCard = card("range", range);
-      const aCard = card("spectrum a", a, { className: "spectrum-card" });
-      const bCard = card("spectrum b", b, { className: "spectrum-card" });
+      const aCard = a.length === 16
+        ? spectrumCard("spectrum a", a, b, "a", rangeA) : null;
+      const bCard = b.length === 16
+        ? spectrumCard("spectrum b", b, a, "b", rangeB) : null;
       if (rangeCard) col.append(rangeCard);
       if (aCard) col.append(aCard);
       if (bCard) col.append(bCard);
@@ -628,7 +1009,10 @@
       const lfo = all.filter((spec) =>
         /^op[1-4]_spec_lfo_/.test(baseName(spec.name)));
       const col = opColumn(op, true);
-      const envCard = card("morph env", env);
+      const envCard = card("morph env", env, {
+        graph: graphFor(morphRateNames(op, activePart),
+                        morphLevelNames(op, activePart)),
+      });
       const lfoCard = card("morph lfo", lfo);
       if (envCard) col.append(envCard);
       if (lfoCard) col.append(lfoCard);
@@ -699,6 +1083,8 @@
   }
 
   function buildPage() {
+    graphUpdaters.length = 0;
+    spectrumUpdaters.length = 0;
     bodyEl.innerHTML = "";
     const page = div("panel-page");
     if (currentPage === "patch") buildPatch(page);
@@ -826,6 +1212,11 @@
   noteButton.addEventListener("pointerleave", noteOff);
   noteButton.addEventListener("pointercancel", noteOff);
   window.addEventListener("blur", noteOff);
+
+  setInterval(function () {
+    for (const update of graphUpdaters) update();
+    for (const update of spectrumUpdaters) update();
+  }, 120);
 
   partEl.addEventListener("change", function () {
     noteOff();
