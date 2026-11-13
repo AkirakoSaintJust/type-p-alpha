@@ -21,7 +21,7 @@
 
 namespace {
 
-constexpr int kRate = 44100;
+constexpr int kRate = 48000;
 constexpr int kVoices = 20;
 constexpr int kOperators = 4;
 constexpr int kParts = 2;

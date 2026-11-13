@@ -781,8 +781,8 @@ typedef struct type_p_alpha_state {
 } type_p_alpha_state;
 
 static const uint32_t note_inc_c9[12] = {
-    815363807u, 863847862u, 915214929u, 969636441u, 1027294024u, 1088380105u,
-    1153098554u, 1221665363u, 1294309365u, 1371273005u, 1452813141u, 1539201906u};
+    749115498u, 793660223u, 840853716u, 890853480u, 943826385u, 999949221u,
+    1059409296u, 1122405052u, 1189146729u, 1259857073u, 1334772073u, 1414141751u};
 static inline __attribute__((always_inline)) uint32_t note_to_inc(uint32_t note) {
     return note_inc_c9[note % 12u] >> (10u - note / 12u);
 }
@@ -836,7 +836,7 @@ const dsp_param type_p_alpha_dsp_params[830] = {
     { 41u, "op1.eg.l1.p0", 0, 99, 99, 0u, 0u, "" },
     { 42u, "op1.eg.l2.p0", 0, 99, 93, 0u, 0u, "" },
     { 43u, "op1.eg.l3.p0", 0, 99, 87, 0u, 0u, "" },
-    { 44u, "op1_trem_rate.p0", 0, 20000000, 389566, 1u, 0u, "" },
+    { 44u, "op1_trem_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
     { 45u, "op1_trem_depth.p0", -99, 99, 0, 0u, 0u, "" },
     { 46u, "op1_trem_wave.p0", 0, 11, 0, 0u, 0u, "" },
     { 47u, "op1_trem_mode.p0", 0, 1, 1, 0u, 0u, "" },
@@ -849,11 +849,11 @@ const dsp_param type_p_alpha_dsp_params[830] = {
     { 54u, "op1_fbenv_l2.p0", -32768, 32767, 0, 0u, 0u, "" },
     { 55u, "op1_fbenv_l3.p0", -32768, 32767, 0, 0u, 0u, "" },
     { 56u, "op1_fbenv_l4.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 57u, "op1_fblfo_rate.p0", 0, 20000000, 389566, 1u, 0u, "" },
+    { 57u, "op1_fblfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
     { 58u, "op1_fblfo_depth.p0", -32767, 32767, 0, 0u, 0u, "" },
     { 59u, "op1_fblfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
     { 60u, "op1_fblfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 61u, "op1_dlfo_rate.p0", 0, 20000000, 389566, 1u, 0u, "" },
+    { 61u, "op1_dlfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
     { 62u, "op1_dlfo_depth.p0", -32768, 32768, 0, 0u, 0u, "" },
     { 63u, "op1_dlfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
     { 64u, "op1_dlfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
@@ -879,7 +879,7 @@ const dsp_param type_p_alpha_dsp_params[830] = {
     { 84u, "op1_spec_env_l1.p0", 0, 99, 99, 0u, 0u, "" },
     { 85u, "op1_spec_env_l2.p0", 0, 99, 60, 0u, 0u, "" },
     { 86u, "op1_spec_env_l3.p0", 0, 99, 0, 0u, 0u, "" },
-    { 87u, "op1_spec_lfo_rate.p0", 0, 20000000, 389566, 1u, 0u, "" },
+    { 87u, "op1_spec_lfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
     { 88u, "op1_spec_lfo_depth.p0", -99, 99, 0, 0u, 0u, "" },
     { 89u, "op1_spec_lfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
     { 90u, "op1_spec_lfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
@@ -927,7 +927,7 @@ const dsp_param type_p_alpha_dsp_params[830] = {
     { 132u, "op2.eg.l1.p0", 0, 99, 99, 0u, 0u, "" },
     { 133u, "op2.eg.l2.p0", 0, 99, 93, 0u, 0u, "" },
     { 134u, "op2.eg.l3.p0", 0, 99, 87, 0u, 0u, "" },
-    { 135u, "op2_trem_rate.p0", 0, 20000000, 486958, 1u, 0u, "" },
+    { 135u, "op2_trem_rate.p0", 0, 20000000, 447392, 1u, 0u, "" },
     { 136u, "op2_trem_depth.p0", -99, 99, 0, 0u, 0u, "" },
     { 137u, "op2_trem_wave.p0", 0, 11, 0, 0u, 0u, "" },
     { 138u, "op2_trem_mode.p0", 0, 1, 1, 0u, 0u, "" },
@@ -940,11 +940,11 @@ const dsp_param type_p_alpha_dsp_params[830] = {
     { 145u, "op2_fbenv_l2.p0", -32768, 32767, 0, 0u, 0u, "" },
     { 146u, "op2_fbenv_l3.p0", -32768, 32767, 0, 0u, 0u, "" },
     { 147u, "op2_fbenv_l4.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 148u, "op2_fblfo_rate.p0", 0, 20000000, 389566, 1u, 0u, "" },
+    { 148u, "op2_fblfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
     { 149u, "op2_fblfo_depth.p0", -32767, 32767, 0, 0u, 0u, "" },
     { 150u, "op2_fblfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
     { 151u, "op2_fblfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 152u, "op2_dlfo_rate.p0", 0, 20000000, 389566, 1u, 0u, "" },
+    { 152u, "op2_dlfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
     { 153u, "op2_dlfo_depth.p0", -32768, 32768, 0, 0u, 0u, "" },
     { 154u, "op2_dlfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
     { 155u, "op2_dlfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
@@ -970,7 +970,7 @@ const dsp_param type_p_alpha_dsp_params[830] = {
     { 175u, "op2_spec_env_l1.p0", 0, 99, 99, 0u, 0u, "" },
     { 176u, "op2_spec_env_l2.p0", 0, 99, 60, 0u, 0u, "" },
     { 177u, "op2_spec_env_l3.p0", 0, 99, 0, 0u, 0u, "" },
-    { 178u, "op2_spec_lfo_rate.p0", 0, 20000000, 389566, 1u, 0u, "" },
+    { 178u, "op2_spec_lfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
     { 179u, "op2_spec_lfo_depth.p0", -99, 99, 0, 0u, 0u, "" },
     { 180u, "op2_spec_lfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
     { 181u, "op2_spec_lfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
@@ -1031,11 +1031,11 @@ const dsp_param type_p_alpha_dsp_params[830] = {
     { 236u, "op3_fbenv_l2.p0", -32768, 32767, 0, 0u, 0u, "" },
     { 237u, "op3_fbenv_l3.p0", -32768, 32767, 0, 0u, 0u, "" },
     { 238u, "op3_fbenv_l4.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 239u, "op3_fblfo_rate.p0", 0, 20000000, 389566, 1u, 0u, "" },
+    { 239u, "op3_fblfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
     { 240u, "op3_fblfo_depth.p0", -32767, 32767, 0, 0u, 0u, "" },
     { 241u, "op3_fblfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
     { 242u, "op3_fblfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 243u, "op3_dlfo_rate.p0", 0, 20000000, 389566, 1u, 0u, "" },
+    { 243u, "op3_dlfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
     { 244u, "op3_dlfo_depth.p0", -32768, 32768, 0, 0u, 0u, "" },
     { 245u, "op3_dlfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
     { 246u, "op3_dlfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
@@ -1061,7 +1061,7 @@ const dsp_param type_p_alpha_dsp_params[830] = {
     { 266u, "op3_spec_env_l1.p0", 0, 99, 99, 0u, 0u, "" },
     { 267u, "op3_spec_env_l2.p0", 0, 99, 60, 0u, 0u, "" },
     { 268u, "op3_spec_env_l3.p0", 0, 99, 0, 0u, 0u, "" },
-    { 269u, "op3_spec_lfo_rate.p0", 0, 20000000, 389566, 1u, 0u, "" },
+    { 269u, "op3_spec_lfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
     { 270u, "op3_spec_lfo_depth.p0", -99, 99, 0, 0u, 0u, "" },
     { 271u, "op3_spec_lfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
     { 272u, "op3_spec_lfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
@@ -1122,11 +1122,11 @@ const dsp_param type_p_alpha_dsp_params[830] = {
     { 327u, "op4_fbenv_l2.p0", -32768, 32767, 0, 0u, 0u, "" },
     { 328u, "op4_fbenv_l3.p0", -32768, 32767, 0, 0u, 0u, "" },
     { 329u, "op4_fbenv_l4.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 330u, "op4_fblfo_rate.p0", 0, 20000000, 389566, 1u, 0u, "" },
+    { 330u, "op4_fblfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
     { 331u, "op4_fblfo_depth.p0", -32767, 32767, 0, 0u, 0u, "" },
     { 332u, "op4_fblfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
     { 333u, "op4_fblfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 334u, "op4_dlfo_rate.p0", 0, 20000000, 389566, 1u, 0u, "" },
+    { 334u, "op4_dlfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
     { 335u, "op4_dlfo_depth.p0", -32768, 32768, 0, 0u, 0u, "" },
     { 336u, "op4_dlfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
     { 337u, "op4_dlfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
@@ -1152,7 +1152,7 @@ const dsp_param type_p_alpha_dsp_params[830] = {
     { 357u, "op4_spec_env_l1.p0", 0, 99, 99, 0u, 0u, "" },
     { 358u, "op4_spec_env_l2.p0", 0, 99, 60, 0u, 0u, "" },
     { 359u, "op4_spec_env_l3.p0", 0, 99, 0, 0u, 0u, "" },
-    { 360u, "op4_spec_lfo_rate.p0", 0, 20000000, 389566, 1u, 0u, "" },
+    { 360u, "op4_spec_lfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
     { 361u, "op4_spec_lfo_depth.p0", -99, 99, 0, 0u, 0u, "" },
     { 362u, "op4_spec_lfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
     { 363u, "op4_spec_lfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
@@ -1169,7 +1169,7 @@ const dsp_param type_p_alpha_dsp_params[830] = {
     { 374u, "penv_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
     { 375u, "penv_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
     { 376u, "penv_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 377u, "pitch_rate.p0", 0, 20000000, 486958, 1u, 0u, "" },
+    { 377u, "pitch_rate.p0", 0, 20000000, 447392, 1u, 0u, "" },
     { 378u, "pitch_depth.p0", -32768, 32768, 273, 0u, 0u, "" },
     { 379u, "pitch_wave.p0", 0, 11, 0, 0u, 0u, "" },
     { 380u, "pitch_mode.p0", 0, 1, 1, 0u, 0u, "" },
@@ -1244,7 +1244,7 @@ const dsp_param type_p_alpha_dsp_params[830] = {
     { 449u, "op1.eg.l1.p1", 0, 99, 99, 0u, 0u, "" },
     { 450u, "op1.eg.l2.p1", 0, 99, 93, 0u, 0u, "" },
     { 451u, "op1.eg.l3.p1", 0, 99, 87, 0u, 0u, "" },
-    { 452u, "op1_trem_rate.p1", 0, 20000000, 389566, 1u, 0u, "" },
+    { 452u, "op1_trem_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
     { 453u, "op1_trem_depth.p1", -99, 99, 0, 0u, 0u, "" },
     { 454u, "op1_trem_wave.p1", 0, 11, 0, 0u, 0u, "" },
     { 455u, "op1_trem_mode.p1", 0, 1, 1, 0u, 0u, "" },
@@ -1257,11 +1257,11 @@ const dsp_param type_p_alpha_dsp_params[830] = {
     { 462u, "op1_fbenv_l2.p1", -32768, 32767, 0, 0u, 0u, "" },
     { 463u, "op1_fbenv_l3.p1", -32768, 32767, 0, 0u, 0u, "" },
     { 464u, "op1_fbenv_l4.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 465u, "op1_fblfo_rate.p1", 0, 20000000, 389566, 1u, 0u, "" },
+    { 465u, "op1_fblfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
     { 466u, "op1_fblfo_depth.p1", -32767, 32767, 0, 0u, 0u, "" },
     { 467u, "op1_fblfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
     { 468u, "op1_fblfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 469u, "op1_dlfo_rate.p1", 0, 20000000, 389566, 1u, 0u, "" },
+    { 469u, "op1_dlfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
     { 470u, "op1_dlfo_depth.p1", -32768, 32768, 0, 0u, 0u, "" },
     { 471u, "op1_dlfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
     { 472u, "op1_dlfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
@@ -1287,7 +1287,7 @@ const dsp_param type_p_alpha_dsp_params[830] = {
     { 492u, "op1_spec_env_l1.p1", 0, 99, 99, 0u, 0u, "" },
     { 493u, "op1_spec_env_l2.p1", 0, 99, 60, 0u, 0u, "" },
     { 494u, "op1_spec_env_l3.p1", 0, 99, 0, 0u, 0u, "" },
-    { 495u, "op1_spec_lfo_rate.p1", 0, 20000000, 389566, 1u, 0u, "" },
+    { 495u, "op1_spec_lfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
     { 496u, "op1_spec_lfo_depth.p1", -99, 99, 0, 0u, 0u, "" },
     { 497u, "op1_spec_lfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
     { 498u, "op1_spec_lfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
@@ -1335,7 +1335,7 @@ const dsp_param type_p_alpha_dsp_params[830] = {
     { 540u, "op2.eg.l1.p1", 0, 99, 99, 0u, 0u, "" },
     { 541u, "op2.eg.l2.p1", 0, 99, 93, 0u, 0u, "" },
     { 542u, "op2.eg.l3.p1", 0, 99, 87, 0u, 0u, "" },
-    { 543u, "op2_trem_rate.p1", 0, 20000000, 486958, 1u, 0u, "" },
+    { 543u, "op2_trem_rate.p1", 0, 20000000, 447392, 1u, 0u, "" },
     { 544u, "op2_trem_depth.p1", -99, 99, 0, 0u, 0u, "" },
     { 545u, "op2_trem_wave.p1", 0, 11, 0, 0u, 0u, "" },
     { 546u, "op2_trem_mode.p1", 0, 1, 1, 0u, 0u, "" },
@@ -1348,11 +1348,11 @@ const dsp_param type_p_alpha_dsp_params[830] = {
     { 553u, "op2_fbenv_l2.p1", -32768, 32767, 0, 0u, 0u, "" },
     { 554u, "op2_fbenv_l3.p1", -32768, 32767, 0, 0u, 0u, "" },
     { 555u, "op2_fbenv_l4.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 556u, "op2_fblfo_rate.p1", 0, 20000000, 389566, 1u, 0u, "" },
+    { 556u, "op2_fblfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
     { 557u, "op2_fblfo_depth.p1", -32767, 32767, 0, 0u, 0u, "" },
     { 558u, "op2_fblfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
     { 559u, "op2_fblfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 560u, "op2_dlfo_rate.p1", 0, 20000000, 389566, 1u, 0u, "" },
+    { 560u, "op2_dlfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
     { 561u, "op2_dlfo_depth.p1", -32768, 32768, 0, 0u, 0u, "" },
     { 562u, "op2_dlfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
     { 563u, "op2_dlfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
@@ -1378,7 +1378,7 @@ const dsp_param type_p_alpha_dsp_params[830] = {
     { 583u, "op2_spec_env_l1.p1", 0, 99, 99, 0u, 0u, "" },
     { 584u, "op2_spec_env_l2.p1", 0, 99, 60, 0u, 0u, "" },
     { 585u, "op2_spec_env_l3.p1", 0, 99, 0, 0u, 0u, "" },
-    { 586u, "op2_spec_lfo_rate.p1", 0, 20000000, 389566, 1u, 0u, "" },
+    { 586u, "op2_spec_lfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
     { 587u, "op2_spec_lfo_depth.p1", -99, 99, 0, 0u, 0u, "" },
     { 588u, "op2_spec_lfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
     { 589u, "op2_spec_lfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
@@ -1439,11 +1439,11 @@ const dsp_param type_p_alpha_dsp_params[830] = {
     { 644u, "op3_fbenv_l2.p1", -32768, 32767, 0, 0u, 0u, "" },
     { 645u, "op3_fbenv_l3.p1", -32768, 32767, 0, 0u, 0u, "" },
     { 646u, "op3_fbenv_l4.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 647u, "op3_fblfo_rate.p1", 0, 20000000, 389566, 1u, 0u, "" },
+    { 647u, "op3_fblfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
     { 648u, "op3_fblfo_depth.p1", -32767, 32767, 0, 0u, 0u, "" },
     { 649u, "op3_fblfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
     { 650u, "op3_fblfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 651u, "op3_dlfo_rate.p1", 0, 20000000, 389566, 1u, 0u, "" },
+    { 651u, "op3_dlfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
     { 652u, "op3_dlfo_depth.p1", -32768, 32768, 0, 0u, 0u, "" },
     { 653u, "op3_dlfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
     { 654u, "op3_dlfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
@@ -1469,7 +1469,7 @@ const dsp_param type_p_alpha_dsp_params[830] = {
     { 674u, "op3_spec_env_l1.p1", 0, 99, 99, 0u, 0u, "" },
     { 675u, "op3_spec_env_l2.p1", 0, 99, 60, 0u, 0u, "" },
     { 676u, "op3_spec_env_l3.p1", 0, 99, 0, 0u, 0u, "" },
-    { 677u, "op3_spec_lfo_rate.p1", 0, 20000000, 389566, 1u, 0u, "" },
+    { 677u, "op3_spec_lfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
     { 678u, "op3_spec_lfo_depth.p1", -99, 99, 0, 0u, 0u, "" },
     { 679u, "op3_spec_lfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
     { 680u, "op3_spec_lfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
@@ -1530,11 +1530,11 @@ const dsp_param type_p_alpha_dsp_params[830] = {
     { 735u, "op4_fbenv_l2.p1", -32768, 32767, 0, 0u, 0u, "" },
     { 736u, "op4_fbenv_l3.p1", -32768, 32767, 0, 0u, 0u, "" },
     { 737u, "op4_fbenv_l4.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 738u, "op4_fblfo_rate.p1", 0, 20000000, 389566, 1u, 0u, "" },
+    { 738u, "op4_fblfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
     { 739u, "op4_fblfo_depth.p1", -32767, 32767, 0, 0u, 0u, "" },
     { 740u, "op4_fblfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
     { 741u, "op4_fblfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 742u, "op4_dlfo_rate.p1", 0, 20000000, 389566, 1u, 0u, "" },
+    { 742u, "op4_dlfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
     { 743u, "op4_dlfo_depth.p1", -32768, 32768, 0, 0u, 0u, "" },
     { 744u, "op4_dlfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
     { 745u, "op4_dlfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
@@ -1560,7 +1560,7 @@ const dsp_param type_p_alpha_dsp_params[830] = {
     { 765u, "op4_spec_env_l1.p1", 0, 99, 99, 0u, 0u, "" },
     { 766u, "op4_spec_env_l2.p1", 0, 99, 60, 0u, 0u, "" },
     { 767u, "op4_spec_env_l3.p1", 0, 99, 0, 0u, 0u, "" },
-    { 768u, "op4_spec_lfo_rate.p1", 0, 20000000, 389566, 1u, 0u, "" },
+    { 768u, "op4_spec_lfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
     { 769u, "op4_spec_lfo_depth.p1", -99, 99, 0, 0u, 0u, "" },
     { 770u, "op4_spec_lfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
     { 771u, "op4_spec_lfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
@@ -1577,7 +1577,7 @@ const dsp_param type_p_alpha_dsp_params[830] = {
     { 782u, "penv_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
     { 783u, "penv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
     { 784u, "penv_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 785u, "pitch_rate.p1", 0, 20000000, 486958, 1u, 0u, "" },
+    { 785u, "pitch_rate.p1", 0, 20000000, 447392, 1u, 0u, "" },
     { 786u, "pitch_depth.p1", -32768, 32768, 273, 0u, 0u, "" },
     { 787u, "pitch_wave.p1", 0, 11, 0, 0u, 0u, "" },
     { 788u, "pitch_mode.p1", 0, 1, 1, 0u, 0u, "" },
@@ -1611,7 +1611,7 @@ const dsp_param type_p_alpha_dsp_params[830] = {
     { 816u, "breakpoint", 0, 127, 60, 0u, 0u, "" },
     { 817u, "key_sens_on", 0, 1, 1, 0u, 0u, "" },
     { 818u, "vel_sens_on", 0, 1, 1, 0u, 0u, "" },
-    { 819u, "dc.r", -32768, 32767, 32735, 0u, 0u, "" },
+    { 819u, "dc.r", -32768, 32767, 32738, 0u, 0u, "" },
     { 820u, "channel.p0", -1, 15, 0, 0u, 0u, "" },
     { 821u, "channel.p1", -1, 15, 1, 0u, 0u, "" },
     { 822u, "low.p0", 0, 127, 0, 0u, 0u, "" },
@@ -3326,7 +3326,7 @@ P1_DSP_API void type_p_alpha_render_pre_block(void) {
         uint32_t cur = voice_inc[v];
         uint32_t tgt = voice_target_inc[v];
         if (cur != tgt) {
-            uint32_t step = (uint32_t)(((uint64_t)tgt * 23777u /
+            uint32_t step = (uint32_t)(((uint64_t)tgt * 21845u /
                 (uint32_t)vm_portamento[voice_part[v]]) >> 16);
             if (step < 1u) step = 1u;
             if (tgt > cur) {
@@ -4372,7 +4372,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
         penv_r3_eff[v] = (uint32_t)p1_key_apply(penv_r3[voice_part[v]], p1_key_add(penv_ks_k_x[v], penv_vs_k_x[v]), 0, 99);
         penv_r4_eff[v] = (uint32_t)p1_key_apply(penv_r4[voice_part[v]], p1_key_add(penv_ks_k_x[v], penv_vs_k_x[v]), 0, 99);
         lp_f_eff[v] = p1_key_apply(lp_f[voice_part[v]], p1_key_add(f1_ks_k_x[v], f1_vs_k_x[v]), 0, 65535);
-        lp_fc[v] = p1_clamp16_max(lp_f_eff[v] + p1_q16_mul(lp_fenv_depth[voice_part[v]], fenv_cv_x[v] << 1), 55296);
+        lp_fc[v] = p1_q16_mul(p1_clamp16_max(lp_f_eff[v] + p1_q16_mul(lp_fenv_depth[voice_part[v]], fenv_cv_x[v] << 1), 55296), 60211);
         op4_speclfo_base[v] = ((uint32_t)p1_wave_base[((op4_speclfo_wave[voice_part[v]] > 11u) ? 0u : op4_speclfo_wave[voice_part[v]])] << 10);
         op4_specenv_r1_eff[v] = (uint32_t)p1_key_apply(op4_specenv_r1[voice_part[v]], p1_key_add(0, 0), 0, 99);
         op4_specenv_r2_eff[v] = (uint32_t)p1_key_apply(op4_specenv_r2[voice_part[v]], p1_key_add(0, 0), 0, 99);
@@ -5090,7 +5090,7 @@ P1_DSP_API void type_p_alpha_dsp_note_on_ch_s(type_p_alpha_state *state, uint32_
                 } else {
                     for (uint32_t k = count; k < part_mono_count[p]; k++) {
                         uint32_t ov = part_mono_voice[p][k];
-                        voice_gate[ov] = 0; voice_rel[ov] = 8192u;
+                        voice_gate[ov] = 0; voice_rel[ov] = 8916u;
                     }
                 }
                 part_mono_count[p] = (uint8_t)count;
@@ -5109,7 +5109,7 @@ P1_DSP_API void type_p_alpha_dsp_note_on_ch_s(type_p_alpha_state *state, uint32_
                 }
                 voice_detune[mv] = p1_q16_mul(voice_detune[mv],
                                               p1_tune_q16(vm_transpose[p] / 12, vm_transpose[p] % 12, vm_detune[p]));
-                voice_delay[mv] = (uint32_t)((part_delay[p] > 0 && !was) ? part_delay[p] * 44 : 0);
+                voice_delay[mv] = (uint32_t)((part_delay[p] > 0 && !was) ? part_delay[p] * 48 : 0);
                 voice_note[mv] = (uint8_t)active;
                 voice_age[mv] = ++ages;
                 voice_velocity[mv] = (int32_t)(velocity * 258u);
@@ -5139,7 +5139,7 @@ P1_DSP_API void type_p_alpha_dsp_note_on_ch_s(type_p_alpha_state *state, uint32_
             chosen[bp] = 1;
             voice_part[bp] = (uint8_t)p;
             voice_detune[bp] = p1_q16_mul(65536, p1_tune_q16(vm_transpose[p] / 12, vm_transpose[p] % 12, vm_detune[p]));
-            voice_delay[bp] = (uint32_t)(part_delay[p] > 0 ? part_delay[p] * 44 : 0);
+            voice_delay[bp] = (uint32_t)(part_delay[p] > 0 ? part_delay[p] * 48 : 0);
             picked[npicked++] = bp;
         }
     }
@@ -5181,7 +5181,7 @@ P1_DSP_API void type_p_alpha_dsp_note_off_s(type_p_alpha_state *state, uint32_t 
             if (active == 0xFFu) {
                 for (uint32_t k = 0; k < count; k++) {
                     uint32_t mv = part_mono_voice[p][k];
-                    voice_gate[mv] = 0; voice_rel[mv] = 8192u;
+                    voice_gate[mv] = 0; voice_rel[mv] = 8916u;
                 }
                 continue;
             }
@@ -5199,7 +5199,7 @@ P1_DSP_API void type_p_alpha_dsp_note_off_s(type_p_alpha_state *state, uint32_t 
         }
     }
     for (uint32_t v = 0; v < NVOICE; v++)
-        if (voice_note[v] == note) { voice_gate[v] = 0; voice_rel[v] = 8192u; voice_delay[v] = 0; }
+        if (voice_note[v] == note) { voice_gate[v] = 0; voice_rel[v] = 8916u; voice_delay[v] = 0; }
 }
 
 P1_DSP_API void type_p_alpha_dsp_all_notes_off_s(type_p_alpha_state *state) {

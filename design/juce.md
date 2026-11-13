@@ -239,8 +239,10 @@ restore, and the web lab must all agree.
 
 ## Audio
 
-The engine is locked at 44.1 kHz, so the plugin runs the same core and resamples the
-output to the host rate. Leave the input and the core rate untouched.
+The engine core runs at 48 kHz, so the plugin runs the same core and resamples the
+output to the host rate. At 48 kHz the processor bypasses the bridge, so the core
+stays exact there, and the 128-tap kernel covers 44.1, 96 and 192 kHz hosts. Leave
+the input and the core rate untouched.
 
 ## Licensing
 

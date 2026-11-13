@@ -42,12 +42,13 @@
 - **Other features:** the `fm_op` macro and its `osc` node, the `lfo` and
   `pitch_env` shapes, the table generator, the preset store, the editor pages, the
   analysis table and the editor snapshot set.
-- **Platform/API/HAL changes:** none. The engine stays integer C, and the plugin
-  stays at 44.1 kHz with output-only rate adaptation.
+- **Platform/API/HAL changes:** none. The engine stays integer C, the core stays at
+  48 kHz, and the plugin adapts the rate at the output.
 - **Persistence/version impact:** `rect tri` is inserted at waveform 9, so pulse,
   square and saw move to 10, 11 and 12, and `spectrum` is 13. `PRESET_VERSION`
-  moves to 3 and the old test banks are regenerated. The project has no release, so
-  no migration path is provided. The values are stable. The part block grows from
+  moves to 3 for this feature, then to 4 for the later 48 kHz core change, and the
+  old test banks are regenerated. The project has no release, so no migration path
+  is provided. The values are stable. The part block grows from
   228 to 408 parameters, the manifest from 470 to 830, and each part record by 720
   bytes. The plugin's `uiPage` needs the `part fx/mod` remap.
 - **MIDI/clock impact:** none. The new parameters are host-automatable and stay out
@@ -92,7 +93,7 @@ Selecting a wave keeps the stored spectra. The preview is not written on page op
 
 - **Maximum voices/events/effects:** 20 voices and two parts, unchanged.
 - **Per-sample and per-block operations:** two table reads and one linear blend per
-  spectral oscillator sample. The table generation runs at the 344 Hz control tick.
+  spectral oscillator sample. The table generation runs on the control tick.
   The analysis preview is a table lookup in the editor, not a runtime DFT.
 - **Instance memory, CPU, preset size:** the spectral bank is 20,480 bytes per part
   plus a 20,480-byte shadow per part, so 81,920 bytes for both parts. The part block
@@ -104,7 +105,7 @@ Selecting a wave keeps the stored spectra. The preview is not written on page op
   the blend of two normalised tables stays in range. The morph is clamped. A dirty
   operator regenerates on the control tick and crossfades, so a level change cannot
   interrupt the read. The table update and the read run on the same core, so the
-  344 Hz tick has to fit inside the block budget.
+  table update tick has to fit inside the block budget.
 - **Division, shift, and range analysis:** no per-sample division. The blend uses a
   Q15 multiply and shift. The table index is the existing 10-bit phase and mip
   layout.

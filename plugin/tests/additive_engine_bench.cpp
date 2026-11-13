@@ -22,7 +22,7 @@ extern "C" int32_t p1_additive_morph_now;
 
 namespace {
 
-constexpr int kRate = 44100;
+constexpr int kRate = 48000;
 constexpr int kVoices = 20;
 
 double secondsSince(std::chrono::steady_clock::time_point start)

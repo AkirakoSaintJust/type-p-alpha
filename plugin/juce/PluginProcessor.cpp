@@ -11,9 +11,9 @@
 
 namespace {
 
-constexpr double kCoreRate = 44100.0;
+constexpr double kCoreRate = 48000.0;
 constexpr int kControlBlock = 32;
-constexpr int kStateVersion = 2;
+constexpr int kStateVersion = 3;
 constexpr float kIntToFloat = 1.0f / 32768.0f;
 
 bool isEngineMessage(const juce::MidiMessage& message)

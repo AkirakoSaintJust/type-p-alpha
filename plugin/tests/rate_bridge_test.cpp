@@ -1,5 +1,5 @@
 /* SPDX-License-Identifier: GPL-3.0-only */
-/* Milestone 5: measure the 32-tap polyphase rate bridge. */
+/* Milestone 5: measure the 128-tap polyphase rate bridge. */
 #include <algorithm>
 #include <array>
 #include <cmath>
@@ -11,7 +11,7 @@
 
 namespace {
 
-constexpr double kCoreRate = 44100.0;
+constexpr double kCoreRate = 48000.0;
 constexpr double kPi = 3.14159265358979323846;
 constexpr double kAmplitude = 16000.0;
 
@@ -104,6 +104,12 @@ std::vector<double> imageFrequencies(double hostRate, double frequency)
             image = std::fmod(std::abs(image), hostRate);
             if (image > hostRate * 0.5)
                 image = hostRate - image;
+            /* At a host rate that is an integer multiple of the core rate some
+             * images fold onto the fundamental, where they cannot be measured
+             * apart from it. Skip those candidates rather than count the
+             * fundamental as its own image. */
+            if (std::abs(image - frequency) < 200.0)
+                continue;
             if (image > 200.0 && image < hostRate * 0.5 - 200.0)
                 images.push_back(image);
         }
@@ -122,7 +128,7 @@ bool check(bool condition, const char* what)
 int main()
 {
     bool ok = true;
-    const std::array<double, 3> rates = {48000.0, 96000.0, 192000.0};
+    const std::array<double, 4> rates = {44100.0, 48000.0, 96000.0, 192000.0};
     for (double rate : rates) {
         const int frames = static_cast<int>(rate * 0.5);
         const auto base = run(rate, 1000.0, frames);
@@ -151,18 +157,19 @@ int main()
             0.0, total * total - fundamentalRms * fundamentalRms)) /
                            std::max(1.0e-12, fundamentalRms);
         const int expectedLatency = static_cast<int>(
-            std::lround(15.5 * rate / kCoreRate));
+            std::lround(63.5 * rate / kCoreRate));
         std::printf("rate: %5.0f Hz latency=%d gain1k=%+.2f dB gain10k=%+.2f dB "
                     "gain20k=%+.2f dB alias20k=%+.1f dB thd=%+.1f dB\n",
                     rate, base.latency, gain1kDb, gain10kDb, gain20kDb, aliasDb,
                     20.0 * std::log10(std::max(1.0e-12, thd)));
         ok = check(base.latency == expectedLatency,
-                   "the reported latency matches the 15.5-sample group delay") &&
+                   "the reported latency matches the 63.5-sample group delay") &&
              ok;
         ok = check(std::abs(gain1kDb) < 0.5, "the 1 kHz gain is within 0.5 dB") && ok;
         ok = check(std::abs(gain10kDb) < 1.5, "the 10 kHz gain is within 1.5 dB") &&
              ok;
-        ok = check(aliasDb < -10.0, "the 20 kHz image is at least 10 dB down") && ok;
+        if (std::abs(rate - kCoreRate) > 0.5)
+            ok = check(aliasDb < -10.0, "the 20 kHz image is at least 10 dB down") && ok;
     }
 
     bool blocksOk = true;

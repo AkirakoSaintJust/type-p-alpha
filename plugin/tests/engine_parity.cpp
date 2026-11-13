@@ -174,8 +174,24 @@ void test_sustain_isolation()
 
 } // namespace
 
-int main()
+int main(int argc, char** argv)
 {
+    if (argc > 1 && std::strcmp(argv[1], "--dump") == 0) {
+        p1::Engine engine;
+        int32_t buffer[512] = {};
+        engine.reset();
+        engine.noteOn(60, 100);
+        engine.render(buffer, 256);
+        std::printf("NOTE\n");
+        for (int32_t value : buffer)
+            std::printf("%d\n", value);
+        engine.noteOff(60);
+        engine.render(buffer, 256);
+        std::printf("RELEASE\n");
+        for (int32_t value : buffer)
+            std::printf("%d\n", value);
+        return 0;
+    }
     std::printf("engine render and isolation\n");
     test_engine_render();
     test_state_isolation();

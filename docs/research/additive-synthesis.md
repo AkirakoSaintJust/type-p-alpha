@@ -12,9 +12,13 @@ and the current table in `engine/gen/wavetable.h`.
 
 ## The current engine
 
-The core runs at 44.1 kHz with 20 voices, two parts and four operators per voice.
+The core runs at 48 kHz with 20 voices, two parts and four operators per voice.
 That is 80 operator voices at full polyphony. A control block is 32 samples, so the
-control rate is 1,378.125 Hz.
+control rate is 1,500 Hz.
+
+The measured tables below were taken on the 44.1 kHz core, and the 1,378 Hz and
+344 Hz figures are its survey rates. The conversion is recorded in the
+[48 kHz contract](../../plugin/feature-contract-48k-core.md).
 
 Each operator has a phasor and an `osc` node that reads the `p1_wave` table
 table, which holds 1024 samples per wave as Q15 values and is read at the nearest
@@ -361,7 +365,7 @@ remaining brightness is the bright table's formant, which the standalone shares.
 The stop criteria are the current engine's exact render when the additive mode is
 off, an alias floor no worse than the band-limited waves, no click at a table
 change, and a full-polyphony cost that keeps the plugin within its CPU budget. The
-`plugin_stability` test and the 44.1 kHz parity test stay in the gate.
+`plugin_stability` test and the 48 kHz parity test stay in the gate.
 
 ## Sources
 

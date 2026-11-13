@@ -16,7 +16,7 @@
 namespace {
 
 constexpr double kPi = 3.14159265358979323846;
-constexpr double kSampleRate = 44100.0;
+constexpr double kSampleRate = 48000.0;
 constexpr double kFundamental = 261.6255653005986; /* note 60 */
 constexpr int kSamples = 16384;
 constexpr int kWindow = 2048;

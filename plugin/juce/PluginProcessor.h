@@ -100,7 +100,7 @@ private:
     std::array<std::atomic<float>*, kP1ParamCount> paramValues_{};
     std::vector<int32_t> directBuffer_;
     std::atomic<bool> paramsDirty_{false};
-    double hostRate_ = 44100.0;
+    double hostRate_ = 48000.0;
 
     ScopeRing outputScope_;
     std::array<ScopeRing, 10> tapScopes_;

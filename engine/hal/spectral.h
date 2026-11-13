@@ -115,7 +115,7 @@ static inline void p1_spectral_tick(
 
         const int16_t xfade = bank[P1_SPEC_XFADE + part];
         if (xfade > 0) {
-            const int16_t next = (int16_t)(xfade - 64);
+            const int16_t next = (int16_t)(xfade - 17);
             if (next <= 0) {
                 const int target = bank[P1_SPEC_TARGET + part];
                 int16_t *dst = bank + (target ? P1_SPEC_B(part) : P1_SPEC_A(part));

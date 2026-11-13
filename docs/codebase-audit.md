@@ -193,13 +193,13 @@ callback to the C++ object. It is safe because the bridge is fed on one thread.
 
 ### `p1::RateBridge`
 
-`plugin/engine/RateBridge.hpp` and `RateBridge.cpp` resample the 44.1 kHz core to
-the host rate. At 44.1 kHz the processor bypasses it, so the core stays exact.
+`plugin/engine/RateBridge.hpp` and `RateBridge.cpp` resample the 48 kHz core to
+the host rate. At 48 kHz the processor bypasses it, so the core stays exact.
 
 | Symbol | Purpose |
 | --- | --- |
 | `besselI0` | Kaiser window helper. |
-| `prepare` | Build the 32-tap, 1024-phase kernel and size the ring. |
+| `prepare` | Build the 128-tap, 1024-phase kernel and size the ring. |
 | `reset` | Clear the ring and the frame counters. |
 | `pushCore` | Append interleaved core frames to the ring. |
 | `pull` | Produce host-rate frames from the polyphase kernel. |

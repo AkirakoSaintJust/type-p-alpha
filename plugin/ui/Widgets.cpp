@@ -147,7 +147,7 @@ juce::String formatParamValue(const P1ParamSpec& spec, double value)
         return (st > 0.0 ? "+" : "") + juce::String(st, 2) + "st";
     }
     if (display == "hz") {
-        const double hz = value * 44100.0 / 4294967296.0;
+        const double hz = value * 48000.0 / 4294967296.0;
         return juce::String(hz, hz < 1.0 ? 2 : 1) + "Hz";
     }
     if (juce::String(spec.unit) == "cents")
@@ -179,7 +179,7 @@ double parseParamValue(const P1ParamSpec& spec, const juce::String& text)
     if (display == "hz")
         return juce::jlimit(static_cast<double>(spec.min),
                             static_cast<double>(spec.max),
-                            v * 4294967296.0 / 44100.0);
+                            v * 4294967296.0 / 48000.0);
     if (display == "pct" || display == "off_pct") {
         const double range = static_cast<double>(spec.max - spec.min);
         return juce::jlimit(static_cast<double>(spec.min),

@@ -89,10 +89,10 @@ int main()
           "the APVTS parameter ids are unique");
     check(contiguous, "the engine ids cover every manifest index");
 
-    processor.setRateAndBufferSizeDetails(44100.0, kFrames);
-    processor.prepareToPlay(44100.0, kFrames);
+    processor.setRateAndBufferSizeDetails(48000.0, kFrames);
+    processor.prepareToPlay(48000.0, kFrames);
     check(processor.getLatencySamples() == 0,
-          "44.1 kHz bypass reports zero latency");
+          "48 kHz bypass reports zero latency");
 
     juce::AudioBuffer<float> block(2, kFrames);
     juce::MidiBuffer midi;
@@ -101,7 +101,7 @@ int main()
 
     int32_t reference[kFrames * 2] = {};
     renderReference(reference, kFrames, 0, 4);
-    check(matches(block, reference, kFrames), "44.1 kHz output is bit-exact with the engine");
+    check(matches(block, reference, kFrames), "48 kHz output is bit-exact with the engine");
 
     juce::MemoryBlock state;
     processor.getStateInformation(state);
@@ -174,8 +174,8 @@ int main()
     }
 
     TypePAlphaAudioProcessor automated;
-    automated.setRateAndBufferSizeDetails(44100.0, kFrames);
-    automated.prepareToPlay(44100.0, kFrames);
+    automated.setRateAndBufferSizeDetails(48000.0, kFrames);
+    automated.prepareToPlay(48000.0, kFrames);
     auto* automatedParameter = automated.parameters().getParameter("algorithm.p0");
     if (automatedParameter != nullptr)
         automatedParameter->setValueNotifyingHost(
@@ -190,8 +190,8 @@ int main()
           "automation applies at the 32-sample control block");
 
     TypePAlphaAudioProcessor offset;
-    offset.setRateAndBufferSizeDetails(44100.0, kFrames);
-    offset.prepareToPlay(44100.0, kFrames);
+    offset.setRateAndBufferSizeDetails(48000.0, kFrames);
+    offset.prepareToPlay(48000.0, kFrames);
     juce::AudioBuffer<float> offsetBlock(2, kFrames);
     juce::MidiBuffer offsetMidi;
     offsetMidi.addEvent(
@@ -201,10 +201,10 @@ int main()
     check(matches(offsetBlock, reference, kFrames),
           "a MIDI offset applies at its 32-sample control block");
 
-    processor.setRateAndBufferSizeDetails(48000.0, kFrames);
-    processor.prepareToPlay(48000.0, kFrames);
-    check(processor.getLatencySamples() == 17,
-          "48 kHz rate bridge reports its latency");
+    processor.setRateAndBufferSizeDetails(44100.0, kFrames);
+    processor.prepareToPlay(44100.0, kFrames);
+    check(processor.getLatencySamples() == 58,
+          "44.1 kHz rate bridge reports its latency");
     juce::AudioBuffer<float> hostBlock(2, kFrames);
     juce::MidiBuffer hostMidi;
     hostMidi.addEvent(
@@ -217,7 +217,7 @@ int main()
         finite = finite && std::isfinite(sample);
         sounding = sounding || sample > 0.0f || sample < 0.0f;
     }
-    check(finite && sounding, "the 48 kHz placeholder path renders audio");
+    check(finite && sounding, "the 44.1 kHz placeholder path renders audio");
 
     {
         TypePAlphaAudioProcessor source;
@@ -248,8 +248,8 @@ int main()
 
     {
         TypePAlphaAudioProcessor chord;
-        chord.setRateAndBufferSizeDetails(44100.0, kFrames);
-        chord.prepareToPlay(44100.0, kFrames);
+        chord.setRateAndBufferSizeDetails(48000.0, kFrames);
+        chord.prepareToPlay(48000.0, kFrames);
         juce::AudioBuffer<float> chordBlock(2, kFrames);
         juce::MidiBuffer chordMidi;
         chordMidi.addEvent(
@@ -271,16 +271,18 @@ int main()
         auto tone = [&capture, start](double frequency) {
             constexpr double pi = 3.14159265358979323846;
             double sum = 0.0;
-            double weighted = 0.0;
+            double re = 0.0;
+            double im = 0.0;
             for (int i = 0; i < window; ++i) {
                 const double w = 0.5 - 0.5 * std::cos(2.0 * pi * i / (window - 1));
-                const double phase = 2.0 * pi * frequency * i / 44100.0;
+                const double phase = 2.0 * pi * frequency * i / 48000.0;
                 const auto sample =
                     static_cast<double>(capture[static_cast<std::size_t>(start + i)]);
                 sum += w;
-                weighted += sample * w * std::cos(phase);
+                re += sample * w * std::cos(phase);
+                im += sample * w * std::sin(phase);
             }
-            return std::abs(weighted) / sum;
+            return 2.0 * std::hypot(re, im) / sum;
         };
         const double c4 = tone(261.625565);
         const double e4 = tone(329.627557);

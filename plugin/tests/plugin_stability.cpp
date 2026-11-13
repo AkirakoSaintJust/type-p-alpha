@@ -182,7 +182,7 @@ int main()
 
     {
         const double rates[] = {44100.0, 48000.0, 96000.0, 192000.0, 44100.0};
-        const int latency[] = {0, 17, 34, 67, 0};
+        const int latency[] = {58, 0, 127, 254, 58};
         TypePAlphaAudioProcessor processor;
         bool ok = true;
         for (int i = 0; i < 5; ++i) {

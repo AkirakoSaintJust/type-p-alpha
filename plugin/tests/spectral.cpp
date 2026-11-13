@@ -15,7 +15,7 @@
 
 namespace {
 
-constexpr double kRate = 44100.0;
+constexpr double kRate = 48000.0;
 constexpr double kPi = 3.14159265358979323846;
 constexpr int kFrames = 44100;
 constexpr int kWindow = 4096;

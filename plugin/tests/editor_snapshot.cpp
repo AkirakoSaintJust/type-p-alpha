@@ -41,8 +41,8 @@ int main(int argc, char** argv)
         juce::File::getSpecialLocation(juce::File::tempDirectory)
             .getNonexistentChildFile("p1-editor-snapshot", ".p1lib", false);
     processor.setLibraryFileForTesting(library);
-    processor.setRateAndBufferSizeDetails(44100.0, 256);
-    processor.prepareToPlay(44100.0, 256);
+    processor.setRateAndBufferSizeDetails(48000.0, 256);
+    processor.prepareToPlay(48000.0, 256);
     {
         auto& store = processor.presets();
         const std::vector<int32_t> params(

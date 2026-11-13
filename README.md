@@ -26,7 +26,7 @@ Results so far seem to be fit for intent. I've been able to easily make rudiment
 4. Envelope design. Curves, stages, interface.
 5. Phase granulation as a layer added on top of the PM/PD one. What do I want it to do, exactly? How much does it cost? What are its parameters?
 6. Additive synthesis. How to allow for finer, but accessible, spectral design? How to enable precise control of each harmonic's amplitude over time without overwhelming the user? Is a 16-band graphic formant filter per operator, maybe at the cost of some polyphony if enabled, viable? What are the alternatives? Would it help to add waveforms with very specific harmonic spectra to the waveform list? How to balance flexibility, ease of use, and CPU/memory consumption? See the [additive synthesis survey](docs/research/additive-synthesis.md).
-7. Is the rate bridge adequate?
+7. Is the rate bridge adequate? The core moved to 48 kHz and the 128-tap output bridge covers the other host rates, with the measurements in the [48 kHz contract](plugin/feature-contract-48k-core.md).
 8. Any extra waves that would be worth it?
 9. Ring modulation algorithms?
 

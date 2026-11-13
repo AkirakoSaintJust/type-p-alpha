@@ -29,15 +29,15 @@ double besselI0(double x)
 
 void RateBridge::prepare(double hostRate, int maxBlock)
 {
-    hostRate_ = hostRate > 0.0 ? hostRate : 44100.0;
-    ratio_ = 44100.0 / hostRate_;
+    hostRate_ = hostRate > 0.0 ? hostRate : 48000.0;
+    ratio_ = 48000.0 / hostRate_;
     const int needed = static_cast<int>(std::ceil(
         static_cast<double>(std::max(1, maxBlock)) * ratio_)) + 128;
     ringSize_ = std::max(64, needed);
     ring_.assign(static_cast<std::size_t>(ringSize_) * 2, 0);
     kernel_.assign(static_cast<std::size_t>(kTaps) * kPhases, 0.0f);
 
-    const double cutoff = std::min(1.0, hostRate_ / 44100.0);
+    const double cutoff = std::min(1.0, hostRate_ / 48000.0);
     constexpr double beta = 8.6;
     const double i0Beta = besselI0(beta);
     for (int phase = 0; phase < kPhases; ++phase) {
@@ -146,7 +146,7 @@ void RateBridge::process(Engine& engine, float* left, float* right, int frames)
 int RateBridge::latencySamples() const
 {
     return static_cast<int>(
-        std::lround((kTaps - 1) * 0.5 * hostRate_ / 44100.0));
+        std::lround((kTaps - 1) * 0.5 * hostRate_ / 48000.0));
 }
 
 } // namespace p1

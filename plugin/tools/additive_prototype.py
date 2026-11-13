@@ -112,15 +112,16 @@ static inline int32_t p1_additive_wave(uint32_t phase, uint32_t mip,
 
 def _patch(source: str) -> str:
     pattern = re.compile(
-        r"int32_t (op([1-4])_osc_audio_x) = p1_wave\[op\2_osc_base\[v\]\s*\n"
+        r"(\n[ \t]*)op([1-4])_osc_audio_x = p1_wave\[op\2_osc_base\[v\]\s*\n"
         r"\s*\+ \(\(op\2_osc_bl\[v\] \? op\2_ph_mip_x : 0u\) << 10\) "
         r"\+ \(op\2_ph_phase_x >> 22\)\];"
     )
 
     def replace(match: re.Match[str]) -> str:
+        indent = match.group(1)
         op = match.group(2)
         return (
-            f"int32_t op{op}_osc_audio_x = p1_additive_wave("
+            f"{indent}op{op}_osc_audio_x = p1_additive_wave("
             f"op{op}_ph_phase_x, "
             f"p1_additive_mip(op{op}_ph_step[v], {_HARMONICS}u, "
             f"{_LEVELS}u), p1_additive_morph_now);"
