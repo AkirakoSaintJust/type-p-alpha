@@ -24,6 +24,18 @@
     [3, -1, -1, -1], [3, -1, -1, -1], [3, -1, -1, -1], [3, -1, -1, -1],
     [1, 3, -1, -1], [1, 2, 3, -1], [1, 2, 3, -1], [0, 1, 2, 3],
   ];
+  const ALG_LAYOUT = [
+    { pos: [[60, 6], [60, 34], [60, 62], [60, 90]], edges: [[0, 1], [1, 2], [2, 3]], car: [3] },
+    { pos: [[18, 6], [92, 6], [55, 44], [55, 82]], edges: [[0, 2], [1, 2], [2, 3]], car: [3] },
+    { pos: [[16, 6], [96, 6], [96, 44], [56, 82]], edges: [[1, 2], [0, 3], [2, 3]], car: [3] },
+    { pos: [[80, 6], [22, 46], [138, 46], [80, 86]], edges: [[0, 1], [0, 2], [1, 3], [2, 3]], car: [3] },
+    { pos: [[32, 10], [32, 50], [108, 10], [108, 50]], edges: [[0, 1], [2, 3]], car: [1, 3] },
+    { pos: [[80, 8], [10, 58], [80, 58], [150, 58]], edges: [[0, 1], [0, 2], [0, 3]], car: [1, 2, 3] },
+    { pos: [[24, 8], [24, 58], [90, 58], [156, 58]], edges: [[0, 1]], car: [1, 2, 3] },
+    { pos: [[16, 38], [66, 38], [116, 38], [166, 38]], edges: [], car: [0, 1, 2, 3] },
+  ];
+  const OPW = 36;
+  const OPH = 18;
 
   const tabsEl = document.querySelector("#tabs");
   const bodyEl = document.querySelector("#body");
@@ -33,6 +45,8 @@
   const startButton = document.querySelector("#start");
   const noteButton = document.querySelector("#note");
   const scopeEl = document.querySelector("#scope");
+  const algGraphEl = document.querySelector("#algGraph");
+  const visSeg = document.querySelector("#visSeg");
 
   const graphUpdaters = [];
   const spectrumUpdaters = [];
@@ -47,6 +61,8 @@
   let noteHeld = false;
   let outputSamples = null;
   let tapSamples = null;
+  let visMode = "scope";
+  let analyser = null;
 
   window.__p1 = {
     ready: false,
@@ -57,6 +73,7 @@
     lastTapPeak: 0,
     page: "patch",
     controlCount: 0,
+    visMode: "scope",
     error: null,
   };
 
@@ -76,6 +93,69 @@
     return "M " + p0[0].toFixed(2) + " " + p0[1].toFixed(2) +
       " A " + r + " " + r + " 0 " + large + " 1 " +
       p1[0].toFixed(2) + " " + p1[1].toFixed(2);
+  }
+
+  function wire(x1, y1, x2, y2) {
+    const a = Math.atan2(y2 - y1, x2 - x1);
+    const bx = x2 - 4.4 * Math.cos(a);
+    const by = y2 - 4.4 * Math.sin(a);
+    const p1x = x2 - 5.8 * Math.cos(a) + 2.4 * Math.sin(a);
+    const p1y = y2 - 5.8 * Math.sin(a) - 2.4 * Math.cos(a);
+    const p2x = x2 - 5.8 * Math.cos(a) - 2.4 * Math.sin(a);
+    const p2y = y2 - 5.8 * Math.sin(a) + 2.4 * Math.cos(a);
+    return '<line x1="' + x1 + '" y1="' + y1 + '" x2="' + bx.toFixed(1) +
+      '" y2="' + by.toFixed(1) + '" stroke="#666" stroke-width="1.2"/>' +
+      '<polygon points="' + x2 + "," + y2 + " " + p1x.toFixed(1) + "," +
+      p1y.toFixed(1) + " " + p2x.toFixed(1) + "," + p2y.toFixed(1) +
+      '" fill="#666"/>';
+  }
+
+  function arrowDown(x, y, len) {
+    return '<line x1="' + x + '" y1="' + y + '" x2="' + x + '" y2="' +
+      (y + len - 4) + '" stroke="#c780ff" stroke-width="1.6"/>' +
+      '<polygon points="' + x + "," + (y + len) + " " + (x - 3.2) + "," +
+      (y + len - 4) + " " + (x + 3.2) + "," + (y + len - 4) +
+      '" fill="#c780ff"/>';
+  }
+
+  function algSvg(algorithm) {
+    const layout = ALG_LAYOUT[algorithm] || ALG_LAYOUT[0];
+    let graph = "";
+    layout.edges.forEach((edge) => {
+      const a = layout.pos[edge[0]];
+      const b = layout.pos[edge[1]];
+      graph += wire(a[0] + OPW / 2, a[1] + OPH, b[0] + OPW / 2, b[1]);
+    });
+    let minX = Infinity;
+    let maxX = -Infinity;
+    let minY = Infinity;
+    let maxY = -Infinity;
+    function fit(x, y) {
+      minX = Math.min(minX, x);
+      maxX = Math.max(maxX, x);
+      minY = Math.min(minY, y);
+      maxY = Math.max(maxY, y);
+    }
+    layout.pos.forEach((position, index) => {
+      const isCarrier = layout.car.indexOf(index) >= 0;
+      fit(position[0], position[1]);
+      fit(position[0] + OPW, position[1] + OPH);
+      if (isCarrier) fit(position[0] + OPW / 2, position[1] + OPH + 13);
+      graph += '<rect x="' + position[0] + '" y="' + position[1] +
+        '" width="' + OPW + '" height="' + OPH + '" fill="' +
+        (isCarrier ? "#ff2e7e" : "#ffffff") + '"/>' +
+        '<text x="' + (position[0] + OPW / 2) + '" y="' +
+        (position[1] + 12.5) + '" fill="#000" font-size="9" font-weight="700" ' +
+        'text-anchor="middle" font-family="DotGothic16, monospace">op' +
+        (index + 1) + "</text>";
+      if (isCarrier)
+        graph += arrowDown(position[0] + OPW / 2, position[1] + OPH + 1, 12);
+    });
+    const dx = (240 - (maxX - minX)) / 2 - minX;
+    const dy = (128 - (maxY - minY)) / 2 - minY;
+    return '<svg viewBox="0 0 240 128" preserveAspectRatio="xMidYMid meet">' +
+      '<g transform="translate(' + dx.toFixed(1) + "," + dy.toFixed(1) + ')">' +
+      graph + "</g></svg>";
   }
 
   function makeKnob(spec) {
@@ -799,6 +879,125 @@
   }
 
 
+  function spectrumDisplay(aSpecs, bSpecs, rangeA, rangeB, morphSpec) {
+    const canvas = document.createElement("canvas");
+    canvas.className = "panel-spectrum-display";
+    canvas.width = 512;
+    canvas.height = 120;
+    function draw() {
+      const context = canvas.getContext("2d");
+      const width = canvas.width;
+      const height = canvas.height;
+      context.fillStyle = "#000000";
+      context.fillRect(0, 0, width, height);
+      const firstA = ((rangeA === undefined ? 0 : values.get(rangeA.id) ?? 0)
+        * 16) + 1;
+      const firstB = ((rangeB === undefined ? 0 : values.get(rangeB.id) ?? 0)
+        * 16) + 1;
+      const minFirst = Math.min(firstA, firstB);
+      const maxLast = Math.max(firstA + 15, firstB + 15);
+      const span = maxLast - minFirst + 1;
+      const left = 8;
+      const right = width - 8;
+      const top = 20;
+      const bottom = height - 18;
+      const graphWidth = right - left;
+      const graphHeight = bottom - top;
+      function xAt(harmonic) {
+        return left + (harmonic - minFirst + 0.5) / span * graphWidth;
+      }
+      context.strokeStyle = "#1c1c1c";
+      context.lineWidth = 1;
+      for (let i = 0; i <= 8; ++i) {
+        const x = left + graphWidth * i / 8;
+        context.beginPath();
+        context.moveTo(x, top);
+        context.lineTo(x, bottom);
+        context.stroke();
+      }
+      context.beginPath();
+      context.moveTo(left, bottom);
+      context.lineTo(right, bottom);
+      context.strokeStyle = "#2e2e2e";
+      context.stroke();
+      const aLevels = aSpecs.map((spec) => values.get(spec.id) ?? 0);
+      const bLevels = bSpecs.map((spec) => values.get(spec.id) ?? 0);
+      function outline(levels, first, color) {
+        context.beginPath();
+        context.moveTo(xAt(first), bottom);
+        for (let i = 0; i < 16; ++i) {
+          const y = bottom - levels[i] / 99 * graphHeight;
+          context.lineTo(xAt(first + i), y);
+        }
+        context.lineTo(xAt(first + 15), bottom);
+        context.closePath();
+        context.fillStyle = color + "2e";
+        context.fill();
+        context.strokeStyle = color;
+        context.lineWidth = 1.2;
+        context.stroke();
+      }
+      outline(aLevels, firstA, "#c780ff");
+      outline(bLevels, firstB, "#ff2e7e");
+      const morph = morphSpec === undefined ? 0
+        : Math.max(0, Math.min(1, (values.get(morphSpec.id) ?? 0) / 99));
+      const points = 256;
+      const wave = new Float32Array(points);
+      let peak = 0;
+      for (let i = 0; i < points; ++i) {
+        const t = i / (points - 1);
+        const phase = 2 * Math.PI * t;
+        let sumA = 0;
+        let sumB = 0;
+        for (let h = 0; h < 16; ++h) {
+          sumA += aLevels[h] * Math.sin(phase * (firstA + h));
+          sumB += bLevels[h] * Math.sin(phase * (firstB + h));
+        }
+        const sum = (1 - morph) * sumA + morph * sumB;
+        wave[i] = sum;
+        peak = Math.max(peak, Math.abs(sum));
+      }
+      if (peak > 1e-6) {
+        context.beginPath();
+        for (let i = 0; i < points; ++i) {
+          const x = left + graphWidth * i / (points - 1);
+          const y = (top + bottom) / 2 -
+            wave[i] / peak * graphHeight * 0.42;
+          if (i === 0) context.moveTo(x, y);
+          else context.lineTo(x, y);
+        }
+        context.strokeStyle = "rgba(61,255,158,0.62)";
+        context.lineWidth = 1.2;
+        context.stroke();
+      }
+      const markerX = left + morph * graphWidth;
+      context.strokeStyle = "#3dff9e";
+      context.beginPath();
+      context.moveTo(markerX, top - 3);
+      context.lineTo(markerX, bottom);
+      context.stroke();
+      context.font = '10px "DotGothic16", monospace';
+      context.textBaseline = "top";
+      context.fillStyle = "#c780ff";
+      context.fillText("spectrum a (" + firstA + "-" + (firstA + 15) + ")",
+        left, 2);
+      context.fillStyle = "#ff2e7e";
+      context.fillText("spectrum b (" + firstB + "-" + (firstB + 15) + ")",
+        left + 150, 2);
+      context.fillStyle = "rgba(61,255,158,0.8)";
+      context.fillText("waveform", left + 300, 2);
+      context.fillStyle = "#4a4a4a";
+      for (let k = 0; k < 5; ++k) {
+        const harmonic = minFirst + Math.round((span - 1) * k / 4);
+        context.fillText(String(harmonic), xAt(harmonic) - 8, bottom + 2);
+      }
+    }
+    spectrumUpdaters.push(draw);
+    draw();
+    return canvas;
+  }
+
+
   function pageFor(spec) {
     return pageOf(baseName(spec.name));
   }
@@ -832,12 +1031,19 @@
     head.append(name);
     col.append(head);
     if (withScope) {
-      const canvas = document.createElement("canvas");
-      canvas.className = "panel-opscope";
-      canvas.width = 512;
-      canvas.height = 44;
-      canvas.dataset.op = String(op);
-      col.append(canvas);
+      const vis = div("opvis");
+      const scope = document.createElement("canvas");
+      scope.className = "panel-opscope";
+      scope.width = 256;
+      scope.height = 44;
+      scope.dataset.op = String(op);
+      const spectro = document.createElement("canvas");
+      spectro.className = "panel-opspectro";
+      spectro.width = 256;
+      spectro.height = 44;
+      spectro.dataset.op = String(op);
+      vis.append(scope, spectro);
+      col.append(vis);
     }
     return col;
   }
@@ -922,14 +1128,14 @@
       const rest = take(() => true);
       const col = opColumn(op, true);
       const items = [
-        { title: "oscillator", specs: osc },
+        { title: "oscillator", specs: osc, className: "osc" },
         {
-          title: "amp env", specs: amp,
+          title: "amp env", specs: amp, className: "env",
           graph: graphFor(ampRateNames(op, activePart),
                           ampLevelNames(op, activePart)),
         },
         {
-          title: "fb env", specs: fb,
+          title: "fb env", specs: fb, className: "fbenv",
           graph: graphFor(fbRateNames(op, activePart),
                           fbLevelNames(op, activePart),
                           { signed: true, scaleMax: 100,
@@ -939,7 +1145,8 @@
         { title: "other", specs: rest },
       ];
       for (const item of items) {
-        const section = card(item.title, item.specs, { graph: item.graph });
+        const section = card(item.title, item.specs,
+          { graph: item.graph, className: item.className });
         if (section) col.append(section);
       }
       columns.append(col);
@@ -955,11 +1162,15 @@
       const fb = all.filter((spec) => /^op[1-4]_fblfo_/.test(baseName(spec.name)));
       const det = all.filter((spec) => /^op[1-4]_dlfo_/.test(baseName(spec.name)));
       const col = opColumn(op, true);
-      for (const [title, specs] of [
-        ["amp lfo", amp], ["fb lfo", fb], ["detune lfo", det],
-      ]) {
-        const item = card(title, specs);
-        if (item) col.append(item);
+      const items = [
+        { title: "amp lfo", specs: amp, className: "amplfo" },
+        { title: "fb lfo", specs: fb, className: "fblfo" },
+        { title: "detune lfo", specs: det, className: "dlfo" },
+      ];
+      for (const item of items) {
+        const section = card(item.title, item.specs,
+          { className: item.className });
+        if (section) col.append(section);
       }
       columns.append(col);
     }
@@ -1008,12 +1219,30 @@
         /^op[1-4]_spec_(env_|env_depth$)/.test(baseName(spec.name)));
       const lfo = all.filter((spec) =>
         /^op[1-4]_spec_lfo_/.test(baseName(spec.name)));
-      const col = opColumn(op, true);
+      const aSpecs = all.filter((spec) =>
+        /^op[1-4]_spec_a\d+$/.test(baseName(spec.name))).sort(naturalSort);
+      const bSpecs = all.filter((spec) =>
+        /^op[1-4]_spec_b\d+$/.test(baseName(spec.name))).sort(naturalSort);
+      const rangeA = all.find((spec) =>
+        baseName(spec.name) === `op${op + 1}_spec_range_a`);
+      const rangeB = all.find((spec) =>
+        baseName(spec.name) === `op${op + 1}_spec_range_b`);
+      const morph = all.find((spec) =>
+        baseName(spec.name) === `op${op + 1}_spec_morph`);
+      const col = opColumn(op, false);
+      const displayCard = document.createElement("section");
+      displayCard.className = "card";
+      const displayTitle = document.createElement("h3");
+      displayTitle.textContent = "spectra";
+      displayCard.append(displayTitle,
+        spectrumDisplay(aSpecs, bSpecs, rangeA, rangeB, morph));
       const envCard = card("morph env", env, {
+        className: "env",
         graph: graphFor(morphRateNames(op, activePart),
                         morphLevelNames(op, activePart)),
       });
-      const lfoCard = card("morph lfo", lfo);
+      const lfoCard = card("morph lfo", lfo, { className: "amplfo" });
+      col.append(displayCard);
       if (envCard) col.append(envCard);
       if (lfoCard) col.append(lfoCard);
       columns.append(col);
@@ -1055,7 +1284,61 @@
   }
 
   function drawOutput() {
-    drawWave(scopeEl, outputSamples);
+    if (visMode === "spectro" && analyser !== null) {
+      const data = new Uint8Array(analyser.frequencyBinCount);
+      analyser.getByteFrequencyData(data);
+      const values = [];
+      for (let i = 0; i < 32; ++i) {
+        const start = Math.floor(Math.pow(i / 32, 2) * data.length);
+        const end = Math.max(start + 1,
+          Math.floor(Math.pow((i + 1) / 32, 2) * data.length));
+        let peak = 0;
+        for (let k = start; k < end && k < data.length; ++k)
+          peak = Math.max(peak, data[k]);
+        values.push(peak / 255);
+      }
+      drawBars(scopeEl, values, 32);
+    } else {
+      drawWave(scopeEl, outputSamples);
+    }
+  }
+
+  function drawBars(canvas, values, count) {
+    const context = canvas.getContext("2d");
+    const width = canvas.width;
+    const height = canvas.height;
+    context.fillStyle = "#000000";
+    context.fillRect(0, 0, width, height);
+    const barWidth = width / count;
+    for (let i = 0; i < count; ++i) {
+      const level = Math.max(0, Math.min(1, values[i] ?? 0));
+      const barHeight = level * (height - 2);
+      context.fillStyle = i % 5 === 0 ? "#c780ff" : "#ff2e7e";
+      context.fillRect(i * barWidth + 1, height - barHeight - 1,
+        Math.max(1, barWidth - 2), barHeight);
+    }
+  }
+
+  function drawOpSpectrum(canvas, samples) {
+    const count = 22;
+    const data = samples || new Float32Array(512);
+    const values = [];
+    for (let bar = 0; bar < count; ++bar) {
+      const frequency = 40 * Math.pow(500, bar / (count - 1));
+      let re = 0;
+      let im = 0;
+      for (let i = 0; i < data.length; ++i) {
+        const window = 0.5 - 0.5 * Math.cos(
+          2 * Math.PI * i / (data.length - 1));
+        const phase = 2 * Math.PI * frequency * i / 48000;
+        re += data[i] * window * Math.cos(phase);
+        im += data[i] * window * Math.sin(phase);
+      }
+      const magnitude = Math.hypot(re, im) / Math.max(1, data.length);
+      values.push(Math.max(0.04, Math.min(1,
+        Math.log10(1 + magnitude * 360))));
+    }
+    drawBars(canvas, values, count);
   }
 
   function drawTapScopes() {
@@ -1064,6 +1347,12 @@
       const samples = tapSamples && tapSamples.channels
         ? tapSamples.channels[op] : null;
       drawWave(canvas, samples);
+    });
+    document.querySelectorAll(".panel-opspectro").forEach((canvas) => {
+      const op = Number(canvas.dataset.op);
+      const samples = tapSamples && tapSamples.channels
+        ? tapSamples.channels[op] : null;
+      drawOpSpectrum(canvas, samples);
     });
   }
 
@@ -1114,8 +1403,11 @@
       algorithmEl.append(option);
     }
     algorithmEl.value = String(rawOf(spec));
+    algGraphEl.innerHTML = algSvg(rawOf(spec));
     algorithmEl.onchange = function () {
-      setRaw(spec, Number(algorithmEl.value));
+      const value = Number(algorithmEl.value);
+      setRaw(spec, value);
+      algGraphEl.innerHTML = algSvg(value);
       buildPage();
     };
   }
@@ -1180,8 +1472,11 @@
           setStatus(`engine error: ${message.message}`);
         }
       };
-      node.connect(audioContext.destination);
       node.port.postMessage({ type: "module", bytes }, [bytes]);
+      analyser = audioContext.createAnalyser();
+      analyser.fftSize = 1024;
+      node.connect(analyser);
+      analyser.connect(audioContext.destination);
     } catch (error) {
       window.__p1.error = error.message;
       setStatus(`start failed: ${error.message}`);
@@ -1204,6 +1499,15 @@
   }
 
   startButton.addEventListener("click", startAudio);
+  visSeg.addEventListener("click", function (event) {
+    const button = event.target.closest("button");
+    if (button === null) return;
+    visMode = button.dataset.mode === "spectro" ? "spectro" : "scope";
+    window.__p1.visMode = visMode;
+    visSeg.querySelectorAll("button").forEach((item) =>
+      item.classList.toggle("active", item === button));
+    drawOutput();
+  });
   noteButton.addEventListener("pointerdown", function (event) {
     event.preventDefault();
     noteOn();

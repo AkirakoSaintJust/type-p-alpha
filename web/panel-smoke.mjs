@@ -34,6 +34,12 @@ try {
   if (ready.paramCount !== 846)
     throw new Error(`param count ${ready.paramCount}`);
 
+  await page.click('#visSeg button[data-mode="spectro"]');
+  await page.waitForTimeout(200);
+  const visMode = await page.evaluate(() => window.__p1.visMode);
+  if (visMode !== "spectro") throw new Error("output spectro did not engage");
+  await page.click('#visSeg button[data-mode="scope"]');
+
   const counts = [];
   for (let index = 0; index < tabs.length; ++index) {
     await page.locator(".tab").nth(index).click();

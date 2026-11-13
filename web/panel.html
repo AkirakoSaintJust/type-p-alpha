@@ -22,9 +22,16 @@
           <div class="lbl">ALGORITHM</div>
           <select id="algorithm" class="sel" title="Algorithm"></select>
         </div>
+        <div class="alg-svg" id="algGraph"></div>
       </div>
       <div class="out">
-        <div class="out-head"><span class="lbl">OUTPUT</span></div>
+        <div class="out-head">
+          <span class="lbl">OUTPUT</span>
+          <div class="seg" id="visSeg">
+            <button type="button" data-mode="scope" class="active">SCOPE</button>
+            <button type="button" data-mode="spectro">SPECTRO</button>
+          </div>
+        </div>
         <canvas id="scope" width="360" height="50"></canvas>
       </div>
       <div class="actions panel-actions">

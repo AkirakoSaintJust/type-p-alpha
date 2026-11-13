@@ -160,6 +160,7 @@ functions in `wasm/p1_wasm.c`. The AudioWorklet and the browser pages are in
 `web/`: `index.html` is the bare audio and parameter smoke test, and `panel.html`
 is the full parameter panel. The panel loads `engine/gen/params.json`, groups the
 parameters into the six tabs and sends every control through the worklet. It
-carries the envelope graphs, the sixteen-bar spectrum editors and the per-operator
-tap scopes. The patch and part library and the final layout polish are the next
-layer. The JUCE editor itself is not a browser target.
+carries the algorithm graph, the output scope and spectro toggle, the envelope
+graphs, the sixteen-bar spectrum editors, the `op spectra mod` A/B display and the
+per-operator tap scopes. The patch and part library and the final layout polish are
+the next layer. The JUCE editor itself is not a browser target.
