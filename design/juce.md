@@ -106,6 +106,15 @@ Every page fills the same height:
   fill the first row. Pitch envelope, key follow and velocity follow fill the second
   row. The two follow cards are separate, and each has its own on switch and wipe
   button. The pitch LFO carries its `bipolar` switch beside the wave select.
+- operator spectra: four operator columns with the oscillator card, then the
+  `spectrum a` and `spectrum b` cards. The oscillator card adds the `spec` switch in
+  the wave row and the `morph` slider below it. Each spectrum card is 220 high and
+  holds a 16-bar editor, a harmonic scale, the `odd`, `even`, `tilt` and `formant`
+  macros, and `norm` with `to b` or `to a`.
+- op spectra mod: four operator columns with the oscillator card, a `spectra`
+  display, the `morph env` card and the `morph lfo` card. The display draws the two
+  spectra and a morph marker and takes no drag. The envelope card carries the graph,
+  the depth knob, R1 to R4 and L1 to L3.
 
 ## Header
 
@@ -168,6 +177,11 @@ current state in pink and the other word faint.
 
 The level slider is a 14px track with a purple fill and a `level` caption.
 
+A spectrum bar editor draws sixteen columns and writes the level under the pointer,
+then follows a horizontal drag. A macro control is a 10px track: the drag previews
+one curve from the sixteen levels captured at pointer down, and the release writes
+the levels, so repeated gestures never compound the same curve.
+
 List dialogs fill the dialog body with 24px slot rows. Use a thin scrollbar, and
 keep names at the preset record limit of 32 characters. The multi-patch library
 carries `save` and `load` beside the scroller, and the single parts library carries
@@ -179,6 +193,8 @@ a save and a load button for each part, so the slot is chosen before the action.
 - Spectro: pink bars with a purple band every fifth band.
 - Amplitude and pitch envelopes: purple.
 - Filter envelope and pitch LFO: green.
+- Two-spectrum display: a purple filled outline for spectrum a, a pink outline for
+  spectrum b, and a green marker for the morph value.
 - Routing graph: white modulators, pink carriers, grey modulation lines, purple
   downward arrows under every carrier.
 
@@ -196,6 +212,8 @@ order.
 - patch settings: parts, keyzones, levels, delays, voice mode.
 - operators: four sets of oscillator, amplitude envelope, feedback envelope and the
   three LFO parameters.
+- operator spectra: per operator, the spectral switch, the sixteen a levels, the
+  sixteen b levels, the morph value, the morph envelope and the morph LFO.
 - fx / mod: filter, filter envelope, pitch LFO, pitch envelope, key and velocity
   follow.
 - global: algorithm and patch name.

@@ -3,11 +3,11 @@
 The shared visual language for the Type P.alpha editor. The clickable mockup at
 `design/mockup.html` is the reference implementation, and
 `tokens.json` is the machine-readable source. The CSS projection is `tokens.css`,
-and the platform notes are in `juce.md`.
+the platform notes are in `juce.md`, and the spectral control map is in
+`spectral.md`.
 
-Status: v1.2, 2026-11-09, reviewed against the editor. Revised for the JUCE
-optical type correction, the state-reading toggles, the extending tab tail, the
-card action spacing, the voice-mode knob group and the multi-patch library.
+Status: v1.3 draft, 2026-11-13. Adds the `operator spectra` and `op spectra mod`
+pages, the spectrum editor and the morph controls.
 
 ## Principles
 
@@ -201,9 +201,9 @@ and the selected part button has a green border and green text.
 
 ### Tabs
 
-`patch settings`, `operators`, `operator lfos`, `fx / mod`, with no vertical
-dividers. The active tab is a pink cut polygon rather than a rectangle. Inactive tabs
-are dim text on black.
+`patch settings`, `operators`, `operator lfos`, `fx / mod`, `operator spectra`,
+`op spectra mod`, with no vertical dividers. The active tab is a pink cut polygon
+rather than a rectangle. Inactive tabs are dim text on black.
 
 ### Patch settings
 
@@ -260,6 +260,30 @@ and above amounts, whilst velocity follow has one amount. The wipe button sets e
 target amount to 0%, so the card can be cleared without visiting each target. The
 same target set is used for both cards: operator level, feedback and amp envelope,
 pitch envelope, filter cutoff, and filter envelope.
+
+### Operator spectra
+
+Four borderless columns, each with the operator name at the left, copy and paste
+after it, the mute switch at the right, then a scope and spectro pair and three
+cards: `oscillator`, `spectrum a`, `spectrum b`. The oscillator card repeats the
+operator oscillator controls and adds the `spec` switch in the wave row and a
+`morph` slider under it. The wave select gives way to `spectral` while the
+spectral mode is on. Each spectrum card holds sixteen bars with h1, h4, h8, h12
+and h16 on the scale, then `norm` and `to b` or `to a` below the macro rows. The
+first macro row carries `odd` and `even`. The second carries `tilt` and `formant`
+with a harmonic select for the formant centre. A macro is a drag gesture: the bars
+preview the curve from the levels at the start of the drag, and the release commits
+them. The card header carries copy and paste for the whole spectrum.
+
+### Op spectra mod
+
+Four columns, each with the operator name, copy and paste, the mute switch, the
+`oscillator` card, a `spectra` display, then the `morph env` and `morph lfo` cards.
+The display draws spectrum a as a filled purple outline and spectrum b as a pink
+outline, with a marker under them that runs from `a` to `b` at the current morph
+value. The display does not take a drag. The `morph env` card holds the graph, the
+depth knob, R1 to R4 and L1 to L3. The `morph lfo` card holds rate, depth, the wave
+select and the `bipolar` switch.
 
 ### Dialogs
 

@@ -261,6 +261,55 @@
   .opvis { display: flex; gap: 6px; }
   .opvis canvas { width: 50%; height: 40px; display: block; background: #000; }
 
+  /* ---------------- spectral pages ---------------- */
+  .speccard { display: flex; flex-direction: column; flex: 1 1 220px; min-height: 200px; }
+  .specbars {
+    flex: 1 1 auto; min-height: 70px; display: flex; gap: 3px;
+    background: #000; border: 1px solid #141414; padding: 3px;
+    touch-action: none; cursor: crosshair;
+  }
+  .sbar { flex: 1; background: #0b0b0b; border: 1px solid #1b1b1b; position: relative; }
+  .sbar i { position: absolute; left: 0; right: 0; bottom: 0; height: 0; background: var(--purple); }
+  .sbar.b i { background: var(--pink); }
+  .speclabels { display: flex; gap: 3px; padding: 2px 3px 0; margin-bottom: 4px; }
+  .speclabels span { flex: 1; font-size: 9px; color: var(--faint); text-align: center; }
+  .macros { display: flex; flex-direction: column; gap: 3px; }
+  .macro-row { display: flex; gap: 8px; }
+  .macro { flex: 1; display: flex; align-items: center; gap: 4px; min-width: 0; }
+  .macro .mlabel { width: 34px; font-size: 10px; letter-spacing: .03em; color: var(--text); }
+  .macro .mtrack {
+    flex: 1; height: 10px; background: #181818; border: 1px solid #3a3a3a;
+    position: relative; cursor: ew-resize; touch-action: none; min-width: 18px;
+  }
+  .macro .mtrack.bip::before {
+    content: ""; position: absolute; left: 50%; top: 0; bottom: 0;
+    width: 1px; background: #3a3a3a;
+  }
+  .macro .mtrack i { position: absolute; top: 0; bottom: 0; left: 0; width: 0; background: var(--purple); opacity: .9; }
+  .macro .mval { width: 26px; font-size: 10px; font-weight: 400; color: var(--pink2); text-align: right; }
+  .macro .msel { width: 38px; flex: 0 0 38px; }
+  .specfoot { display: flex; justify-content: space-between; align-items: center; margin-top: 4px; }
+  .macro-row + .macro-row { margin-top: 4px; }
+  .macro-row > .macro + .macro { border-left: 1px solid #2a2a2a; padding-left: 7px; }
+  .morphrow { margin-top: 3px; }
+  .morphrow .mlabel { width: 42px; }
+  .spectoggle { margin-left: auto; }
+  .envtop { display: flex; align-items: center; gap: 6px; margin-bottom: 5px; }
+  .envtop .envbox { flex: 1; height: 50px; margin-bottom: 0; }
+  .envtop .knob { width: 46px; }
+  .specvis { display: flex; flex-direction: column; flex: 1 1 120px; min-height: 100px; }
+  .specplot { flex: 1; min-height: 40px; background: #000; }
+  .specplot svg { width: 100%; height: 100%; display: block; }
+  .specplot path { vector-effect: non-scaling-stroke; }
+  .specplot .speca { fill: rgba(167, 139, 250, .12); stroke: var(--purple); stroke-width: 1.3; }
+  .specplot .specb { fill: none; stroke: var(--pink); stroke-width: 1.3; }
+  .specplot .specgrid { stroke: #1a1a1a; stroke-width: 1; }
+  .morphmeter { display: flex; align-items: center; gap: 5px; margin-top: 4px; }
+  .morphmeter .ma, .morphmeter .mb { font-size: 9px; color: var(--dim); }
+  .morphmeter .track { flex: 1; height: 10px; border: 1px solid var(--line2); background: #111; position: relative; }
+  .morphmeter .track i { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--green); }
+  .speccol .osc .knobs { gap: 3px 0; }
+
   .patchpage { display: flex; flex-direction: column; gap: 10px; min-height: 100%; }
   .parts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; flex: 1; }
   .part .pvis { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; flex: 1; min-height: 120px; margin-top: 10px; }
@@ -612,6 +661,20 @@
     { name: "op3", role: "car", ratio: 1.0, detune: 0, level: 0, fb: 0, wave: "sine", r: [99, 40, 30, 60], l: [0, 0, 0], lfoRate: 5.0, lfoDepth: 0, lfoWave: "sine", lfoMode: true, fbOn: true, fbenvR: [80, 60, 50, 80], fbenvL: [0, 0, 0, 0], fbLfoRate: 4.0, fbLfoDepth: 0, fbLfoWave: "sine", fbLfoMode: true, detuneLfoRate: 4.0, detuneLfoDepth: 0, detuneLfoWave: "sine", detuneLfoMode: true, mute: false },
     { name: "op4", role: "mod", ratio: 3.0, detune: 0, level: 0, fb: 0, wave: "sine", r: [99, 40, 30, 60], l: [0, 0, 0], lfoRate: 5.0, lfoDepth: 0, lfoWave: "sine", lfoMode: true, fbOn: true, fbenvR: [80, 60, 50, 80], fbenvL: [0, 0, 0, 0], fbLfoRate: 4.0, fbLfoDepth: 0, fbLfoWave: "sine", fbLfoMode: true, detuneLfoRate: 4.0, detuneLfoDepth: 0, detuneLfoWave: "sine", detuneLfoMode: true, mute: false }
   ];
+  INIT_OPS.forEach(function (o) {
+    o.specOn = false;
+    o.specA = [99, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    o.specB = [99, 45, 30, 15, 55, 40, 25, 12, 8, 5, 3, 2, 1, 0, 0, 0];
+    o.specMorph = 0;
+    o.specEnvR = [80, 60, 50, 80];
+    o.specEnvL = [99, 60, 0];
+    o.specEnvDepth = 0;
+    o.specLfoRate = 4.0;
+    o.specLfoDepth = 0;
+    o.specLfoWave = "sine";
+    o.specLfoMode = true;
+    o.specFormant = 5;
+  });
   const WAVES = ["sine", "triangle", "half sine", "half tri", "2x sine", "2x tri",
     "2x half sine", "2x half tri", "rect sine", "pulse", "square", "saw"];
   const LFO_WAVES = ["sine", "triangle", "saw", "inverse saw", "square", "random"];
@@ -725,6 +788,61 @@
       kn.appendChild(knobFor(x));
     });
     return kn;
+  }
+
+  function makeMacro(label, opts) {
+    const row = document.createElement("div");
+    row.className = "macro";
+    const name = document.createElement("span");
+    name.className = "mlabel"; name.textContent = label;
+    const track = document.createElement("div");
+    track.className = "mtrack";
+    if (opts.min < 0) track.classList.add("bip");
+    const fill = document.createElement("i");
+    track.appendChild(fill);
+    const val = document.createElement("b");
+    val.className = "mval";
+    row.append(name);
+    if (opts.extra) row.appendChild(opts.extra);
+    row.append(track, val);
+    function paint(v) {
+      const f = (v - opts.min) / (opts.max - opts.min);
+      if (opts.min < 0) {
+        fill.style.left = Math.min(f, 0.5) * 100 + "%";
+        fill.style.width = Math.abs(f - 0.5) * 100 + "%";
+      } else {
+        fill.style.left = "0%";
+        fill.style.width = f * 100 + "%";
+      }
+      val.textContent = opts.format ? opts.format(v) : Math.round(v);
+    }
+    paint(opts.value || 0);
+    function valueFrom(e) {
+      const r = track.getBoundingClientRect();
+      const f = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
+      return opts.min + f * (opts.max - opts.min);
+    }
+    track.addEventListener("pointerdown", function (e) {
+      e.preventDefault();
+      track.setPointerCapture(e.pointerId);
+      if (opts.onStart) opts.onStart();
+      const first = valueFrom(e);
+      paint(first); opts.onInput(first);
+      function move(ev) {
+        const v = valueFrom(ev);
+        paint(v); opts.onInput(v);
+      }
+      function up() {
+        track.removeEventListener("pointermove", move);
+        track.removeEventListener("pointerup", up);
+        track.removeEventListener("pointercancel", up);
+        if (opts.onEnd) opts.onEnd();
+      }
+      track.addEventListener("pointermove", move);
+      track.addEventListener("pointerup", up);
+      track.addEventListener("pointercancel", up);
+    });
+    return row;
   }
 
   function makeSection(title, kind, bindings, opts) {    opts = opts || {};
@@ -1111,7 +1229,12 @@
       fbLfoRate: o.fbLfoRate, fbLfoDepth: o.fbLfoDepth,
       fbLfoWave: o.fbLfoWave, fbLfoMode: o.fbLfoMode,
       detuneLfoRate: o.detuneLfoRate, detuneLfoDepth: o.detuneLfoDepth,
-      detuneLfoWave: o.detuneLfoWave, detuneLfoMode: o.detuneLfoMode
+      detuneLfoWave: o.detuneLfoWave, detuneLfoMode: o.detuneLfoMode,
+      specOn: o.specOn, specA: o.specA.slice(), specB: o.specB.slice(),
+      specMorph: o.specMorph, specEnvR: o.specEnvR.slice(),
+      specEnvL: o.specEnvL.slice(), specEnvDepth: o.specEnvDepth,
+      specLfoRate: o.specLfoRate, specLfoDepth: o.specLfoDepth,
+      specLfoWave: o.specLfoWave, specLfoMode: o.specLfoMode
     } };
     rerender();
   }
@@ -1127,6 +1250,13 @@
     o.fbLfoWave = d.fbLfoWave; o.fbLfoMode = d.fbLfoMode;
     o.detuneLfoRate = d.detuneLfoRate; o.detuneLfoDepth = d.detuneLfoDepth;
     o.detuneLfoWave = d.detuneLfoWave; o.detuneLfoMode = d.detuneLfoMode;
+    o.specOn = d.specOn;
+    o.specA = d.specA.slice(); o.specB = d.specB.slice();
+    o.specMorph = d.specMorph;
+    o.specEnvR = d.specEnvR.slice(); o.specEnvL = d.specEnvL.slice();
+    o.specEnvDepth = d.specEnvDepth;
+    o.specLfoRate = d.specLfoRate; o.specLfoDepth = d.specLfoDepth;
+    o.specLfoWave = d.specLfoWave; o.specLfoMode = d.specLfoMode;
     rerender();
   }
 
@@ -1141,7 +1271,7 @@
     toast("part pasted");
   }
 
-  function opShell(o, i) {
+  function opShell(o, i, withVis) {
     const col = document.createElement("div");
     col.className = "opcol";
     const head = document.createElement("div");
@@ -1166,28 +1296,55 @@
     head.append(nameEl, right);
     col.appendChild(head);
 
-    const vis = document.createElement("div");
-    vis.className = "opvis";
-    const sc = document.createElement("canvas");
-    sc.className = "oscope"; sc.width = 120; sc.height = 40; sc.dataset.level = o.level;
-    const sp = document.createElement("canvas");
-    sp.className = "ospectro"; sp.width = 120; sp.height = 40; sp.dataset.level = o.level;
-    vis.append(sc, sp);
-    col.appendChild(vis);
+    if (withVis !== false) {
+      const vis = document.createElement("div");
+      vis.className = "opvis";
+      const sc = document.createElement("canvas");
+      sc.className = "oscope"; sc.width = 120; sc.height = 40; sc.dataset.level = o.level;
+      const sp = document.createElement("canvas");
+      sp.className = "ospectro"; sp.width = 120; sp.height = 40; sp.dataset.level = o.level;
+      vis.append(sc, sp);
+      col.appendChild(vis);
+    }
     return col;
   }
 
-  function oscSection(o) {
+  function oscSection(o, spectral) {
     const waveRow = document.createElement("div");
     waveRow.className = "inline";
     const wl = document.createElement("span"); wl.className = "lbl"; wl.textContent = "WAVE";
-    waveRow.append(wl, makeSelect(WAVES, o.wave, function (v) { o.wave = v; }));
+    const waveSel = makeSelect(WAVES, o.wave, function (v) { o.wave = v; });
+    const waveText = document.createElement("span");
+    waveText.className = "lbl";
+    waveText.textContent = "spectral";
+    waveRow.append(wl, waveSel);
+    const rows = [waveRow];
+    if (spectral) {
+      waveSel.disabled = o.specOn;
+      if (o.specOn) {
+        waveSel.style.display = "none";
+        waveRow.appendChild(waveText);
+      }
+      const specToggle = makeToggle("spec", o.specOn, function (v) {
+        o.specOn = v; rerender();
+      });
+      specToggle.classList.add("spectoggle");
+      waveRow.appendChild(specToggle);
+      const morphRow = document.createElement("div");
+      morphRow.className = "inline morphrow";
+      morphRow.appendChild(makeMacro("MORPH", {
+        min: 0, max: 99, value: o.specMorph,
+        format: function (v) { return Math.round(v); },
+        onInput: function (v) { o.specMorph = Math.round(v); }
+      }));
+      rows.push(morphRow);
+    }
     return makeSection("OSCILLATOR", "osc", [
       b(o, "ratio", "RATIO", 0.5, 8, function (v) { return v.toFixed(2); }, 0.01),
       b(o, "detune", "DETUNE", -50, 50, function (v) { return (v > 0 ? "+" : "") + v + "c"; }, 1),
       b(o, "level", "LEVEL", 0, 99, function (v) { return v; }, 1),
       b(o, "fb", "feedback", -100, 100, bipFmt, 1)
-    ], { after: waveRow });
+    ], { after: rows });
   }
 
   function ampEnvSection(o) {
@@ -1255,6 +1412,244 @@
     ], { after: lfoRow(o, waveKey, modeKey) });
   }
 
+  function clampLevel(v) {
+    return Math.max(0, Math.min(99, Math.round(v)));
+  }
+
+  function makeSpectrumBars(o, key) {
+    const wrap = document.createElement("div");
+    wrap.className = "specbars";
+    const bars = [];
+    for (let i = 0; i < 16; i++) {
+      const bar = document.createElement("div");
+      bar.className = "sbar" + (key === "specB" ? " b" : "");
+      const fill = document.createElement("i");
+      bar.appendChild(fill);
+      wrap.appendChild(bar);
+      bars.push(fill);
+    }
+    function draw() {
+      for (let i = 0; i < 16; i++)
+        bars[i].style.height = (o[key][i] / 99 * 100) + "%";
+    }
+    function setFrom(e) {
+      const r = wrap.getBoundingClientRect();
+      const cell = r.width / 16;
+      const idx = Math.max(0, Math.min(15, Math.floor((e.clientX - r.left) / cell)));
+      const y = 1 - (e.clientY - r.top) / r.height;
+      o[key][idx] = clampLevel(y * 99);
+      draw();
+    }
+    wrap.addEventListener("pointerdown", function (e) {
+      e.preventDefault();
+      wrap.setPointerCapture(e.pointerId);
+      setFrom(e);
+      function move(ev) { setFrom(ev); }
+      function up() {
+        wrap.removeEventListener("pointermove", move);
+        wrap.removeEventListener("pointerup", up);
+        wrap.removeEventListener("pointercancel", up);
+      }
+      wrap.addEventListener("pointermove", move);
+      wrap.addEventListener("pointerup", up);
+      wrap.addEventListener("pointercancel", up);
+    });
+    draw();
+    return { el: wrap, draw: draw };
+  }
+
+  function specCard(o, key, otherKey, title) {
+    const card = document.createElement("div");
+    card.className = "card spec speccard";
+    const head = document.createElement("div");
+    head.className = "sec-head";
+    const h = document.createElement("h3");
+    h.textContent = title;
+    const acts = document.createElement("div");
+    acts.className = "sec-actions";
+    const cpy = document.createElement("button");
+    cpy.className = "mini"; cpy.textContent = "copy";
+    cpy.addEventListener("click", function () {
+      clipboard = { kind: "spectrum", values: o[key].slice() };
+      rerender();
+    });
+    const pst = document.createElement("button");
+    pst.className = "mini"; pst.textContent = "paste";
+    pst.disabled = !(clipboard && clipboard.kind === "spectrum");
+    pst.addEventListener("click", function () {
+      if (clipboard && clipboard.kind === "spectrum") {
+        o[key] = clipboard.values.slice();
+        rerender();
+      }
+    });
+    acts.append(cpy, pst);
+    head.append(h, acts);
+    const bars = makeSpectrumBars(o, key);
+    const labels = document.createElement("div");
+    labels.className = "speclabels";
+    for (let i = 0; i < 16; i++) {
+      const s = document.createElement("span");
+      s.textContent = (i === 0 || i === 3 || i === 7 || i === 11 || i === 15)
+        ? "h" + (i + 1) : "";
+      labels.appendChild(s);
+    }
+    const macros = document.createElement("div");
+    macros.className = "macros";
+    let base = null;
+    function begin() { base = o[key].slice(); }
+    function end() { base = null; }
+    function apply(fn) {
+      if (!base) return;
+      for (let i = 0; i < 16; i++)
+        o[key][i] = clampLevel(fn(base[i], i + 1));
+      bars.draw();
+    }
+    const odd = makeMacro("odd", {
+      min: 0, max: 1, value: 0,
+      format: function (v) { return Math.round(v * 100) + "%"; },
+      onStart: begin, onEnd: end,
+      onInput: function (a) {
+        apply(function (L, n) { return n % 2 === 0 ? L * (1 - a) : L; });
+      }
+    });
+    const even = makeMacro("even", {
+      min: 0, max: 1, value: 0,
+      format: function (v) { return Math.round(v * 100) + "%"; },
+      onStart: begin, onEnd: end,
+      onInput: function (a) {
+        apply(function (L, n) { return n > 1 && n % 2 === 1 ? L * (1 - a) : L; });
+      }
+    });
+    const tilt = makeMacro("tilt", {
+      min: -1, max: 1, value: 0,
+      format: function (v) { return (v > 0 ? "+" : "") + Math.round(v * 100) + "%"; },
+      onStart: begin, onEnd: end,
+      onInput: function (a) {
+        apply(function (L, n) {
+          return L * Math.max(0, Math.min(1, 1 + a * (n - 1) / 15));
+        });
+      }
+    });
+    const formantOpts = [];
+    for (let i = 1; i <= 16; i++) formantOpts.push("h" + i);
+    const formantSel = makeSelect(formantOpts, "h" + o.specFormant, function (v) {
+      o.specFormant = parseInt(v.slice(1), 10);
+    });
+    formantSel.classList.add("msel");
+    const formant = makeMacro("formant", {
+      min: 0, max: 1, value: 0, extra: formantSel,
+      format: function (v) { return Math.round(v * 100) + "%"; },
+      onStart: begin, onEnd: end,
+      onInput: function (a) {
+        const c = o.specFormant;
+        apply(function (L, n) {
+          return L + a * 99 * Math.exp(-Math.pow(n - c, 2) / 4.5);
+        });
+      }
+    });
+    const row1 = document.createElement("div");
+    row1.className = "macro-row";
+    row1.append(odd, even);
+    const row2 = document.createElement("div");
+    row2.className = "macro-row";
+    row2.append(tilt, formant);
+    macros.append(row1, row2);
+    const foot = document.createElement("div");
+    foot.className = "specfoot";
+    const norm = document.createElement("button");
+    norm.className = "mini"; norm.textContent = "norm";
+    norm.addEventListener("click", function () {
+      const m = Math.max.apply(null, o[key]);
+      if (m > 0) {
+        for (let i = 0; i < 16; i++)
+          o[key][i] = Math.round(o[key][i] * 99 / m);
+        bars.draw();
+      }
+    });
+    const to = document.createElement("button");
+    to.className = "mini";
+    to.textContent = key === "specA" ? "to b" : "to a";
+    to.addEventListener("click", function () {
+      o[otherKey] = o[key].slice();
+      rerender();
+    });
+    foot.append(norm, to);
+    card.append(head, bars.el, labels, macros, foot);
+    return card;
+  }
+
+  function specOutline(levels, cls) {
+    const W = 240, H = 90, pad = 5, cell = (W - pad * 2) / 16;
+    let d = "M " + pad + " " + (H - pad);
+    for (let i = 0; i < 16; i++) {
+      const y = H - pad - (levels[i] / 99) * (H - pad * 2);
+      const x0 = pad + i * cell, x1 = pad + (i + 1) * cell;
+      d += " L " + x0.toFixed(1) + " " + y.toFixed(1) +
+        " L " + x1.toFixed(1) + " " + y.toFixed(1);
+    }
+    d += " L " + (W - pad) + " " + (H - pad) + " Z";
+    return '<path class="' + cls + '" d="' + d + '"/>';
+  }
+
+  function specVisual(o) {
+    const card = document.createElement("div");
+    card.className = "card specvis";
+    const head = document.createElement("div");
+    head.className = "sec-head";
+    const h = document.createElement("h3");
+    h.textContent = "SPECTRA";
+    head.appendChild(h);
+    const plot = document.createElement("div");
+    plot.className = "specplot";
+    const W = 240, H = 90;
+    let grid = "";
+    for (let i = 1; i < 4; i++) {
+      const y = 5 + (H - 10) * i / 4;
+      grid += '<line class="specgrid" x1="5" y1="' + y + '" x2="' +
+        (W - 5) + '" y2="' + y + '"/>';
+    }
+    plot.innerHTML = '<svg viewBox="0 0 ' + W + " " + H +
+      '" preserveAspectRatio="none">' + grid +
+      specOutline(o.specA, "speca") + specOutline(o.specB, "specb") + "</svg>";
+    const meter = document.createElement("div");
+    meter.className = "morphmeter";
+    const mark = 2 + (o.specMorph / 99) * 96;
+    meter.innerHTML = '<span class="ma">a</span><div class="track">' +
+      '<i style="left:' + mark.toFixed(1) + '%"></i></div>' +
+      '<span class="mb">b</span>';
+    card.append(head, plot, meter);
+    return card;
+  }
+
+  function morphEnvSection(o) {
+    const top = document.createElement("div");
+    top.className = "envtop";
+    const graph = document.createElement("div");
+    graph.className = "envbox";
+    graph.innerHTML = envSvg(o.specEnvR, o.specEnvL);
+    const depth = b(o, "specEnvDepth", "DEPTH", -99, 99, bipFmt, 1);
+    top.append(graph, knobFor(depth));
+    const rates = [
+      ba(o, "specEnvR", 0, "R1", 0, 99, function (v) { return v; }, 1),
+      ba(o, "specEnvR", 1, "R2", 0, 99, function (v) { return v; }, 1),
+      ba(o, "specEnvR", 2, "R3", 0, 99, function (v) { return v; }, 1),
+      ba(o, "specEnvR", 3, "R4", 0, 99, function (v) { return v; }, 1)
+    ];
+    const levels = [
+      ba(o, "specEnvL", 0, "L1", 0, 99, function (v) { return v; }, 1),
+      ba(o, "specEnvL", 1, "L2", 0, 99, function (v) { return v; }, 1),
+      ba(o, "specEnvL", 2, "L3", 0, 99, function (v) { return v; }, 1)
+    ];
+    return makeSection("MORPH ENV", "morphenv", rates.concat(levels, [depth]), {
+      before: top, rows: [rates, levels]
+    });
+  }
+
+  function morphLfoSection(o) {
+    return lfoSection("MORPH LFO", "morphlfo", o, "specLfoRate",
+      "specLfoDepth", "specLfoWave", "specLfoMode", -99, 99, bipFmt, 1);
+  }
+
   function viewOps() {
     const wrap = document.createElement("div");
     wrap.className = "ops-grid";
@@ -1282,6 +1677,35 @@
       col.appendChild(lfoSection("DETUNE LFO", "dlfo", o, "detuneLfoRate",
         "detuneLfoDepth", "detuneLfoWave", "detuneLfoMode", -12, 12,
         function (v) { return (v > 0 ? "+" : "") + v.toFixed(2) + "st"; }, 0.01));
+      wrap.appendChild(col);
+    });
+    return wrap;
+  }
+
+  function viewOpSpectra() {
+    const wrap = document.createElement("div");
+    wrap.className = "ops-grid";
+    OPS.forEach(function (o, i) {
+      const col = opShell(o, i);
+      col.classList.add("speccol");
+      col.appendChild(oscSection(o, true));
+      col.appendChild(specCard(o, "specA", "specB", "SPECTRUM A"));
+      col.appendChild(specCard(o, "specB", "specA", "SPECTRUM B"));
+      wrap.appendChild(col);
+    });
+    return wrap;
+  }
+
+  function viewOpSpectraMod() {
+    const wrap = document.createElement("div");
+    wrap.className = "ops-grid";
+    OPS.forEach(function (o, i) {
+      const col = opShell(o, i, false);
+      col.classList.add("speccol");
+      col.appendChild(oscSection(o, true));
+      col.appendChild(specVisual(o));
+      col.appendChild(morphEnvSection(o));
+      col.appendChild(morphLfoSection(o));
       wrap.appendChild(col);
     });
     return wrap;
@@ -1435,7 +1859,9 @@
     { id: "patch", label: "patch settings", view: viewPatch },
     { id: "ops", label: "operators", view: viewOps },
     { id: "oplfo", label: "operator lfos", view: viewOperatorLfos },
-    { id: "fxmod", label: "fx / mod", view: viewFxMod }
+    { id: "fxmod", label: "fx / mod", view: viewFxMod },
+    { id: "opspec", label: "operator spectra", view: viewOpSpectra },
+    { id: "opspecmod", label: "op spectra mod", view: viewOpSpectraMod }
   ];
   const body = document.getElementById("body");
   const tabsEl = document.getElementById("tabs");
@@ -1472,7 +1898,8 @@
   function setOpMute(name, on) {
     findOp(name).mute = on;
     buildToolbar();
-    if (current === "ops") rerender();
+    if (current === "ops" || current === "opspec" || current === "opspecmod")
+      rerender();
   }
   function setPartMute(i, on) {
     PARTS[i].mute = on;
@@ -1715,6 +2142,18 @@
       if (o.detuneLfoDepth === undefined) o.detuneLfoDepth = 0;
       if (o.detuneLfoWave === undefined) o.detuneLfoWave = "sine";
       if (o.detuneLfoMode === undefined) o.detuneLfoMode = true;
+      if (o.specOn === undefined) o.specOn = false;
+      if (!Array.isArray(o.specA)) o.specA = [99, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+      if (!Array.isArray(o.specB)) o.specB = [99, 45, 30, 15, 55, 40, 25, 12, 8, 5, 3, 2, 1, 0, 0, 0];
+      if (o.specMorph === undefined) o.specMorph = 0;
+      if (!Array.isArray(o.specEnvR)) o.specEnvR = [80, 60, 50, 80];
+      if (!Array.isArray(o.specEnvL)) o.specEnvL = [99, 60, 0];
+      if (o.specEnvDepth === undefined) o.specEnvDepth = 0;
+      if (o.specLfoRate === undefined) o.specLfoRate = 4.0;
+      if (o.specLfoDepth === undefined) o.specLfoDepth = 0;
+      if (o.specLfoWave === undefined) o.specLfoWave = "sine";
+      if (o.specLfoMode === undefined) o.specLfoMode = true;
+      if (o.specFormant === undefined) o.specFormant = 5;
     });
     if (d.pitchLfo.mode === undefined) d.pitchLfo.mode = true;
     if (i === activePart - 1) bindPart(i);
