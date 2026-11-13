@@ -207,6 +207,21 @@ the host rate. At 48 kHz the processor bypasses it, so the core stays exact.
 | `process` | Render enough core frames for the block, run the tap callback per chunk, and pull the host frames. |
 | `latencySamples` | Report the kernel delay in host samples. |
 
+## WebAssembly seam
+
+`wasm/p1_wasm.c` is the narrow web seam. It owns one static `type_p_alpha_state`
+and a fixed interleaved output buffer, then exports `p1_create`, `p1_set_param`,
+`p1_note_on`, `p1_render`, `p1_output`, `p1_tap` and the rest of the small web API.
+The state is initialised once outside the render loop. The module has no imports,
+so an AudioWorklet can instantiate it without an Emscripten runtime.
+
+| File | Purpose |
+| --- | --- |
+| `wasm/p1_wasm.c` | Static engine state and the C exports. |
+| `wasm/build.sh` | Emscripten standalone build plus the parity gate. |
+| `wasm/make_reference.py` | Convert the native capture header into JSON. |
+| `wasm/parity.mjs` | Compare the WASM note-on and release with the native 48 kHz capture. |
+
 ## Preset store
 
 ### `p1::PresetStore`

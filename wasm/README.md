@@ -1,0 +1,47 @@
+# WebAssembly engine
+
+The first web stage is the engine, not the panel. It compiles the same generated
+C engine to a standalone WASM module and gates it against the native 48 kHz
+capture before any audio or interface work.
+
+## Build and parity
+
+The Emscripten image pins the same compiler version as the parity check.
+
+```sh
+docker build -f docker/Dockerfile.wasm -t type-p-alpha-wasm .
+docker run --rm -v "$PWD:/work" -w /work type-p-alpha-wasm sh -c "./wasm/build.sh"
+```
+
+The script writes `build/web/p1.wasm` and `build/web/reference.json`, then runs
+`wasm/parity.mjs`. The test initialises the engine, plays note 60 on the omni
+channel, renders 256 frames, releases the note and renders another 256 frames. It
+compares all 1,024 interleaved samples with the native capture.
+
+The module is about 157 KB with no imports. It exports `memory` and the wrapper
+functions. Memory is fixed at 32 MB, so the worklet does not need to refresh typed
+arrays during playback.
+
+## Seam
+
+`wasm/p1_wasm.c` owns one static engine state and a fixed interleaved output
+buffer. The worklet calls:
+
+```text
+p1_create, p1_reset
+p1_set_param, p1_get_param
+p1_note_on, p1_note_off, p1_all_notes_off, p1_set_bend
+p1_render, p1_output, p1_tap
+p1_param_count
+```
+
+`p1_output` returns `frames * 2` int32 samples. `p1_tap` returns one of the ten
+256-frame tap buffers for the scopes. The parameter ids are the engine ids in
+`engine/gen/params.json`.
+
+## Next stage
+
+The AudioWorklet owns the module and the engine state. The main thread compiles the
+module, posts it to the worklet, and sends parameter and note messages. The panel
+then reuses the mockup components, driven by `engine/gen/params.json` and the
+control map, rather than the mockup’s hardcoded state.

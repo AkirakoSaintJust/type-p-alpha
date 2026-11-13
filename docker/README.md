@@ -146,16 +146,16 @@ configuration.
 ## WASM
 
 `docker/Dockerfile.wasm` pins Emscripten 6.0.13, the same version as the engine
-parity check. Build it with:
+parity check. The first web stage is in `wasm/`: the generated C engine compiles to
+`build/web/p1.wasm`, and `wasm/parity.mjs` compares its 48 kHz render with the
+native capture.
 
 ```sh
 docker build -f docker/Dockerfile.wasm -t type-p-alpha-wasm .
+docker run --rm -v "$PWD:/work" -w /work type-p-alpha-wasm sh -c "./wasm/build.sh"
 ```
 
-The web app is the generated engine compiled to WASM plus a browser panel. The
-browser panel mirrors the plugin editor from the design tokens. The JUCE editor
-itself is not a browser target. The engine parity check is the same as in my
-personal framework tooling, so the WASM output must match the host output exactly.
-
-The web build script and the panel are still to be added. Until they exist, the
-release workflow builds the native targets only.
+The module is about 157 KB, has no imports and exports `memory` plus the wrapper
+functions in `wasm/p1_wasm.c`. The AudioWorklet and the browser panel are the next
+stage. The panel will reuse the mockup components, driven by
+`engine/gen/params.json`; the JUCE editor itself is not a browser target.

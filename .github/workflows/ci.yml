@@ -35,6 +35,16 @@ jobs:
       - name: Build and test
         run: .\windows\build.ps1
 
+  wasm:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v7
+      - name: Build the Emscripten image
+        run: docker build -f docker/Dockerfile.wasm -t type-p-alpha-wasm:ci .
+      - name: Build and run the parity gate
+        run: docker run --rm -v "$PWD:/work" -w /work type-p-alpha-wasm:ci sh -c "./wasm/build.sh"
+
   macos:
     runs-on: macos-15-intel
     timeout-minutes: 60
