@@ -96,12 +96,16 @@ static inline int32_t p1_additive_wave(uint32_t phase, uint32_t mip,
     if (mip >= P1_ADDITIVE_LEVELS)
         mip = P1_ADDITIVE_LEVELS - 1u;
     const uint32_t index = (phase >> 22) & (P1_ADDITIVE_SIZE - 1u);
+    const uint32_t next = (index + 1u) & (P1_ADDITIVE_SIZE - 1u);
+    const uint32_t fraction = phase & 0x003FFFFFu;
     const int32_t mix = morph < 0 ? 0 : (morph > 32767 ? 32767 : morph);
-    const int32_t a =
-        p1_additive_dark[mip * P1_ADDITIVE_SIZE + index];
-    const int32_t b =
-        p1_additive_bright[mip * P1_ADDITIVE_SIZE + index];
-    return (a * (32768 - mix) + b * mix) >> 15;
+    const int16_t* dark = &p1_additive_dark[mip * P1_ADDITIVE_SIZE];
+    const int16_t* bright = &p1_additive_bright[mip * P1_ADDITIVE_SIZE];
+    const int32_t da = dark[index] +
+        (int32_t)(((int64_t)(dark[next] - dark[index]) * fraction) >> 22);
+    const int32_t ba = bright[index] +
+        (int32_t)(((int64_t)(bright[next] - bright[index]) * fraction) >> 22);
+    return (da * (32768 - mix) + ba * mix) >> 15;
 }}
 """
 

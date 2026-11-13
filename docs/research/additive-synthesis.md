@@ -281,19 +281,19 @@ percent, so read the shares as a range.
 | 32/512 table, 1,378 Hz | 8,491 ms | 14.15% |
 | Isolated single-table nearest read, 80 voices | 476 ms | 0.79% |
 | Isolated two-table linear and mip read, 80 voices | 1,519 ms | 2.53% |
-| Integrated additive engine, 20 voices | 1,253 ms | 2.09% |
+| Integrated additive engine, 20 voices | 1,473 ms | 2.46% |
 
 The generator sustains about 1.0 to 1.3 billion multiply-adds per second on this
 machine. The eight tables are four operators and two parts.
 
-The integrated engine is 2.09% against the 1.55% baseline, so the additive
-oscillator adds about 0.54% in the real voice graph. The isolated read model
+The integrated engine is 2.46% against the 1.55% baseline, so the additive
+oscillator adds about 0.91% in the real voice graph. The isolated read model
 overestimated the cost because its double loop differs from the inlined engine.
 The table generation adds 0.86% at 16/256 and 344 Hz. A mip set roughly doubles
-that, so the 16/256 path at 344 Hz is about 3% of one core without mips and 3.8%
-with them. The 32/512 path at 344 Hz is about 5.5% and 9% with mips. The 32/512
-path at 1,378 Hz is about 16% and 30% with mips, so the fast update remains the one
-to watch. The 32/256 path at 344 Hz is about 3.8% and 5.6% with mips.
+that, so the 16/256 path at 344 Hz is about 3.3% of one core without mips and 4.2%
+with them. The 32/512 path at 344 Hz is about 5.9% and 9.3% with mips. The 32/512
+path at 1,378 Hz is about 16.6% and 30.9% with mips, so the fast update remains the
+one to watch. The 32/256 path at 344 Hz is about 4.2% and 5.9% with mips.
 
 The table must be normalised. The first run summed the harmonics without
 normalising, the table clipped, and the alias floor read as -23 dB. The normalised
@@ -331,13 +331,16 @@ The auditions are:
 - `build/additive-oscillator.wav`: the 344 Hz control-rate morph with the mix
   interpolated across the full block.
 - `build/additive-engine.wav`: the integrated engine, four notes, a single clean
-  carrier (algorithm 7, one operator, no feedback) and the four-second time ramp.
-  The full four-operator graph remains in the 20-voice CPU row.
+  carrier (algorithm 7, one operator, no feedback), the linear table read and the
+  four-second time ramp.
 
 The first two are table oscillators. The third is the real voice graph with the
-additive oscillator. The full init patch adds its modulators and FM sidebands,
-which is why the first engine audition sounded brighter; the clean carrier
-isolates the table and the morph from that FM.
+additive oscillator. The 20-voice CPU row keeps the full four-operator graph; the
+audition uses the clean carrier. The engine prototype uses the same linear table
+read as the standalone. The first engine pass used a nearest read, and the
+sample-and-hold roughness read as noise in the upper harmonics; the linear read
+removes it. The modulators and feedback are disabled for the audition, so the
+remaining brightness is the bright table's formant, which the standalone shares.
 
 ## Remaining experiments
 
