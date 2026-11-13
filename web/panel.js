@@ -784,10 +784,47 @@
     return el;
   }
 
+  function cardActions(kind, specs) {
+    const acts = div("sec-actions");
+    const copy = document.createElement("button");
+    copy.className = "mini";
+    copy.textContent = "copy";
+    copy.addEventListener("click", () => {
+      clipboard = {
+        kind,
+        values: specs.map((spec) => values.get(spec.id) ?? spec.default),
+      };
+      buildPage();
+    });
+    const paste = document.createElement("button");
+    paste.className = "mini";
+    paste.textContent = "paste";
+    paste.disabled = clipboard === null || clipboard.kind !== kind;
+    paste.addEventListener("click", () => {
+      if (clipboard === null || clipboard.kind !== kind) return;
+      const entries = [];
+      specs.forEach((spec, index) => {
+        if (clipboard.values[index] === undefined) return;
+        entries.push([spec.id, clipboard.values[index]]);
+      });
+      applyValues(entries);
+      buildPage();
+    });
+    acts.append(copy, paste);
+    return acts;
+  }
+
   function card(title, specs, options) {
     options = options || {};
     if (specs.length === 0) return null;
-    const el = sectionCard(title, options);
+    const headExtra = options.kind
+      ? cardActions(options.kind, specs)
+      : (options.headExtra || null);
+    const el = sectionCard(title, {
+      className: options.className,
+      headExtra,
+      before: options.before,
+    });
     if (options.graph) appendGraph(el, options.graph);
     if (options.note) {
       const note = div("panel-card-note");
@@ -942,6 +979,7 @@
     options = options || {};
     const cardEl = document.createElement("section");
     cardEl.className = "card speccard";
+    const secHead = div("sec-head");
     const head = div("secheadleft");
     const heading = document.createElement("h3");
     heading.textContent = title;
@@ -953,10 +991,33 @@
       badge.textContent = "from wave";
       head.append(badge);
     }
-    cardEl.append(head);
+    secHead.append(head);
+    cardEl.append(secHead);
     const bars = spectrumBars(specs, kind, rangeSpec, options.preview,
       options.onEdit);
     cardEl.append(bars.el, bars.labels);
+    const acts = div("sec-actions");
+    const copyButton = document.createElement("button");
+    copyButton.className = "mini";
+    copyButton.textContent = "copy";
+    copyButton.addEventListener("click", () => {
+      clipboard = { kind: "spectrum", values: bars.levels().slice() };
+      buildPage();
+    });
+    const pasteButton = document.createElement("button");
+    pasteButton.className = "mini";
+    pasteButton.textContent = "paste";
+    pasteButton.disabled = clipboard === null ||
+      clipboard.kind !== "spectrum";
+    pasteButton.addEventListener("click", () => {
+      if (clipboard === null || clipboard.kind !== "spectrum") return;
+      if (options.onEdit) options.onEdit();
+      for (let i = 0; i < 16; ++i)
+        setRaw(specs[i], clampLevel(clipboard.values[i] ?? 0));
+      buildPage();
+    });
+    acts.append(copyButton, pasteButton);
+    secHead.append(acts);
 
     let base = null;
     function begin() {
@@ -1179,6 +1240,12 @@
 
   function specsForOp(part, op) {
     return specsForPart(part).filter((spec) => opOf(baseName(spec.name)) === op);
+  }
+
+  function oscillatorSpecs(op) {
+    return specsForOp(activePart, op).filter((spec) =>
+      /^op[1-4]_(ratio|detune|waveform|level|feedback|mute)$/
+        .test(baseName(spec.name)));
   }
 
   function isCarrier(algorithm, op) {
@@ -2270,25 +2337,26 @@
       const rest = take(() => true);
       const col = opColumn(op, true);
       const items = [
-        { title: "oscillator", specs: osc, className: "osc" },
+        { title: "oscillator", specs: osc, className: "osc",
+          kind: "oscillator" },
         {
-          title: "amp env", specs: amp, className: "env",
+          title: "amp env", specs: amp, className: "env", kind: "amp env",
           graph: graphFor(ampRateNames(op, activePart),
                           ampLevelNames(op, activePart)),
         },
         {
-          title: "fb env", specs: fb, className: "fbenv",
+          title: "fb env", specs: fb, className: "fbenv", kind: "fb env",
           graph: graphFor(fbRateNames(op, activePart),
                           fbLevelNames(op, activePart),
                           { signed: true, scaleMax: 100,
                             transform: (value) => value / 327.67 }),
         },
-        { title: "key and velocity", specs: follow },
-        { title: "other", specs: rest },
+        { title: "key and velocity", specs: follow, kind: "op follow" },
+        { title: "other", specs: rest, kind: "op other" },
       ];
       for (const item of items) {
         const section = card(item.title, item.specs,
-          { graph: item.graph, className: item.className });
+          { graph: item.graph, className: item.className, kind: item.kind });
         if (section) col.append(section);
       }
       columns.append(col);
@@ -2305,13 +2373,16 @@
       const det = all.filter((spec) => /^op[1-4]_dlfo_/.test(baseName(spec.name)));
       const col = opColumn(op, true);
       const items = [
-        { title: "amp lfo", specs: amp, className: "amplfo" },
-        { title: "fb lfo", specs: fb, className: "fblfo" },
-        { title: "detune lfo", specs: det, className: "dlfo" },
+        { title: "oscillator", specs: oscillatorSpecs(op), className: "osc",
+          kind: "oscillator" },
+        { title: "amp lfo", specs: amp, className: "amplfo", kind: "amp lfo" },
+        { title: "fb lfo", specs: fb, className: "fblfo", kind: "fb lfo" },
+        { title: "detune lfo", specs: det, className: "dlfo",
+          kind: "detune lfo" },
       ];
       for (const item of items) {
         const section = card(item.title, item.specs,
-          { className: item.className });
+          { className: item.className, kind: item.kind });
         if (section) col.append(section);
       }
       columns.append(col);
@@ -2342,10 +2413,23 @@
         baseName(spec.name) === `op${op + 1}_spec_range_b`);
       const preview = () => getPreview(activePart, op);
       const commit = () => commitPreview(activePart, op);
-      const rangeCard = card("range", range, {
-        beforeChange: (spec) =>
-          baseName(spec.name) === `op${op + 1}_spec_morph` ? commit : null,
+      const oscCard = card("oscillator", oscillatorSpecs(op),
+        { className: "osc", kind: "oscillator" });
+      const rangeAB = range.filter((spec) =>
+        /_spec_range_[ab]$/.test(baseName(spec.name)));
+      const rangeMorph = range.find((spec) =>
+        /_spec_morph$/.test(baseName(spec.name)));
+      const rangeCard = sectionCard("range", {
+        headExtra: cardActions("spec range", range),
       });
+      const rangeRow = div("knobs");
+      for (const spec of rangeAB) rangeRow.append(controlFor(spec));
+      rangeCard.append(rangeRow);
+      if (rangeMorph !== undefined) {
+        const morphRow = div("knobs");
+        morphRow.append(controlFor(rangeMorph, null, commit));
+        rangeCard.append(morphRow);
+      }
       const aCard = a.length === 16
         ? spectrumCard("spectrum a", a, b, "a", rangeA,
                        { fromWave: true, preview, onEdit: commit })
@@ -2354,6 +2438,7 @@
         ? spectrumCard("spectrum b", b, a, "b", rangeB,
                        { onEdit: commit })
         : null;
+      if (oscCard) col.append(oscCard);
       if (rangeCard) col.append(rangeCard);
       if (aCard) col.append(aCard);
       if (bCard) col.append(bCard);
@@ -2367,8 +2452,12 @@
     const columns = div("panel-opcols");
     for (let op = 0; op < 4; ++op) {
       const all = specsForOp(activePart, op);
-      const env = all.filter((spec) =>
+      const envAll = all.filter((spec) =>
         /^op[1-4]_spec_(env_|env_depth$)/.test(baseName(spec.name)));
+      const envDepth = envAll.filter((spec) =>
+        baseName(spec.name).endsWith("_spec_env_depth"));
+      const env = envAll.filter((spec) =>
+        !baseName(spec.name).endsWith("_spec_env_depth")).concat(envDepth);
       const lfo = all.filter((spec) =>
         /^op[1-4]_spec_lfo_/.test(baseName(spec.name)));
       const aSpecs = all.filter((spec) =>
@@ -2382,6 +2471,8 @@
       const morph = all.find((spec) =>
         baseName(spec.name) === `op${op + 1}_spec_morph`);
       const col = opColumn(op, false);
+      const oscCard = card("oscillator", oscillatorSpecs(op),
+        { className: "osc", kind: "oscillator" });
       const displayCard = document.createElement("section");
       displayCard.className = "card";
       const displayTitle = document.createElement("h3");
@@ -2392,10 +2483,15 @@
       requestPreview(activePart, op);
       const envCard = card("morph env", env, {
         className: "env",
+        kind: "morph env",
         graph: graphFor(morphRateNames(op, activePart),
                         morphLevelNames(op, activePart)),
       });
-      const lfoCard = card("morph lfo", lfo, { className: "amplfo" });
+      const lfoCard = card("morph lfo", lfo, {
+        className: "amplfo",
+        kind: "morph lfo",
+      });
+      if (oscCard) col.append(oscCard);
       col.append(displayCard);
       if (envCard) col.append(envCard);
       if (lfoCard) col.append(lfoCard);

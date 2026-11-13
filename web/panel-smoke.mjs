@@ -52,6 +52,30 @@ try {
   }
   console.log("pages:", counts.join(" | "));
 
+  for (const [index, name] of [[3, "lfos"], [4, "spectra"], [5, "mod"]]) {
+    await page.locator(".tab").nth(index).click();
+    await page.waitForTimeout(120);
+    const oscCount = await page.locator(".opcol .card.osc").count();
+    console.log(`${name} oscillator cards:`, oscCount);
+    if (oscCount !== 4)
+      throw new Error(`expected 4 oscillator cards on ${name}`);
+  }
+
+  await page.locator(".tab").nth(3).click();
+  await page.waitForTimeout(120);
+  await page.locator(".opcol").first()
+    .locator(".card.amplfo .sec-actions button", { hasText: "copy" }).click();
+  await page.locator(".opcol").nth(1)
+    .locator(".card.amplfo .sec-actions button", { hasText: "paste" }).click();
+  await page.waitForTimeout(200);
+  const lfoRates = await page.evaluate(() => [
+    window.__p1.paramValue("op1_trem_rate.p0"),
+    window.__p1.paramValue("op2_trem_rate.p0"),
+  ]);
+  console.log("amp lfo copy:", lfoRates[0], lfoRates[1]);
+  if (lfoRates[0] !== lfoRates[1])
+    throw new Error("the lfo card paste did not copy the values");
+
   await page.locator(".tab").nth(2).click();
   await page.waitForTimeout(100);
   const waveSelect = page.locator(".opcol").first()
@@ -68,6 +92,7 @@ try {
   await page.waitForTimeout(200);
   const badgeVisible = await page.locator(".fromwave").first().isVisible();
   if (!badgeVisible) throw new Error("the from wave badge is not visible");
+  await page.locator(".specbars").first().scrollIntoViewIfNeeded();
   const bars = await page.locator(".specbars").first().boundingBox();
   await page.mouse.click(bars.x + bars.width * 0.5, bars.y + bars.height * 0.25);
   await page.waitForTimeout(200);
@@ -92,6 +117,7 @@ try {
   await page.waitForTimeout(200);
   const morphKnob = page.locator(".knob:has(.knob-name:text-is('morph'))")
     .first();
+  await morphKnob.scrollIntoViewIfNeeded();
   const morphBox = await morphKnob.locator(".dial").boundingBox();
   await page.mouse.move(morphBox.x + morphBox.width / 2,
     morphBox.y + morphBox.height / 2);
@@ -107,6 +133,21 @@ try {
   console.log("morph knob:", morphValue, "waveform:", morphWave);
   if (morphWave !== 13)
     throw new Error("the morph knob did not commit the preview");
+
+  await page.locator(".opcol").first()
+    .locator(".speccard .sec-actions button", { hasText: "copy" }).first()
+    .click();
+  await page.locator(".opcol").nth(1)
+    .locator(".speccard .sec-actions button", { hasText: "paste" }).first()
+    .click();
+  await page.waitForTimeout(250);
+  const spectrumCopy = await page.evaluate(() => [
+    window.__p1.paramValue("op1_spec_a1.p0"),
+    window.__p1.paramValue("op2_spec_a1.p0"),
+  ]);
+  console.log("spectrum copy:", spectrumCopy[0], spectrumCopy[1]);
+  if (spectrumCopy[0] !== spectrumCopy[1])
+    throw new Error("the spectrum paste did not copy the levels");
 
   await page.locator(".tab").nth(2).click();
   const box = await page.locator("#note").boundingBox();
