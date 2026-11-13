@@ -13,7 +13,7 @@
 - **Owner / date:** P1Onken, 2026-11-13.
 - **Disposition:** complete for the web target. The panel exposes every manifest
   parameter across the six tabs. The browser smokes pass on the local build, and the
-  GitHub browser job is in place. The Linux browser job has not run on GitHub yet.
+  GitHub `wasm` job passed on commit `8704b1d` with both browser smokes.
 
 ## Player outcome
 
@@ -130,8 +130,7 @@ and `error`.
   manifest, the tokens and the pages. The app is served with
   `python3 -m http.server 8080 --directory build/web`.
 - **Host timing and platform check:** the local Windows smokes use the installed
-  Edge. The Linux Chromium run belongs to the `wasm` CI job and has not run on GitHub
-  yet.
+  Edge. The Linux Chromium run passed in the `wasm` CI job on commit `8704b1d`.
 - **Tolerance/metric:** the 48 kHz output is sample exact against the native capture.
   The browser checks are thresholds rather than exact audio: a scope peak, tap peak
   and route peak above 0.0001, a preview whose second harmonic is above 10, a
@@ -154,7 +153,8 @@ and `error`.
    rebuilt, six FX cards with two follow cards, part and multi slots 1, patch name
    `smoke patch`, persisted name and slots after reload, 44.1 kHz context with the
    resampler and a peak of 0.0861.
-4. **Release evidence:** the GitHub `wasm` job and the package screenshots remain.
+4. **Release evidence:** the GitHub `wasm` job passed with the bare and panel
+   smokes on Chromium. The release package and its binaries remain.
 
 ## Risks and fallback
 
