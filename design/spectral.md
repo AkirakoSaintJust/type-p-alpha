@@ -1,8 +1,8 @@
 # Spectral oscillators
 
-The engine carries twelve waveforms per operator. This feature adds a second
-oscillator mode: sixteen harmonic levels per spectrum, two spectra per operator,
-and a morph between them. The mode is optional. It is off by default, so a patch
+The engine carries thirteen waveform tables per operator. This feature adds a
+second oscillator mode: sixteen harmonic levels per spectrum, two spectra per
+operator, and a morph between them. The mode is optional. It is off by default, so a patch
 that does not enable it renders through the existing waveform path without a
 sample change.
 

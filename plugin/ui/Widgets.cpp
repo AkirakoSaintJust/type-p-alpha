@@ -16,9 +16,10 @@ KnobLookAndFeel& knobLookAndFeel()
     return lnf;
 }
 
-const char* const waveNames[12] = {
+const char* const waveNames[13] = {
     "sine",      "triangle", "half sine", "half tri", "2x sine", "2x tri",
-    "2x half sine", "2x half tri", "rect sine", "pulse", "square", "saw"};
+    "2x half sine", "2x half tri", "rect sine", "rect tri", "pulse", "square",
+    "saw"};
 
 juce::String signedNumber(int value)
 {
@@ -99,7 +100,7 @@ juce::String formatParamValue(const P1ParamSpec& spec, double value)
     if (display == "semitones")
         return signedNumber(v) + "st";
     if (display == "wave") {
-        if (v >= 0 && v < 12)
+        if (v >= 0 && v < 13)
             return waveNames[v];
         return juce::String(v);
     }

@@ -215,7 +215,8 @@ inline std::array<FollowTarget, 15> followTargets(int part)
 inline juce::StringArray waveNames()
 {
     return {"sine", "triangle", "half sine", "half tri", "2x sine", "2x tri",
-            "2x half sine", "2x half tri", "rect sine", "pulse", "square", "saw"};
+            "2x half sine", "2x half tri", "rect sine", "rect tri", "pulse",
+            "square", "saw"};
 }
 
 inline juce::StringArray lfoWaveNames()

@@ -126,6 +126,10 @@ target_include_directories(voice_alloc PRIVATE "${P1_GENERATED_DIR}")
 add_dependencies(voice_alloc p1_params)
 add_test(NAME voice_alloc COMMAND voice_alloc)
 
+add_executable(wavetable tests/wavetable.cpp)
+target_include_directories(wavetable PRIVATE "${P1_SYNTH_GEN}")
+add_test(NAME wavetable COMMAND wavetable)
+
 add_executable(additive_bench tests/additive_bench.cpp)
 target_link_libraries(additive_bench PRIVATE p1_engine)
 target_include_directories(additive_bench PRIVATE "${P1_GENERATED_DIR}")

@@ -16,7 +16,7 @@ The core runs at 44.1 kHz with 20 voices, two parts and four operators per voice
 That is 80 operator voices at full polyphony. A control block is 32 samples, so the
 control rate is 1,378.125 Hz.
 
-Each operator has a phasor and an `osc` node that reads the 12-wave `p1_wave`
+Each operator has a phasor and an `osc` node that reads the `p1_wave` table
 table, which holds 1024 samples per wave as Q15 values and is read at the nearest
 sample from the top ten bits of the phase, whilst waves 9 to 11 carry nine mip
 levels whose harmonic counts fall from 256 to 1 and whose level is chosen by the

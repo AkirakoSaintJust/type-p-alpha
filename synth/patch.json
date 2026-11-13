@@ -912,28 +912,28 @@
     "op1_waveform": {
       "target": "op1.osc.waveform",
       "min": 0,
-      "max": 11,
+      "max": 12,
       "curve": "linear",
       "display": "wave"
     },
     "op2_waveform": {
       "target": "op2.osc.waveform",
       "min": 0,
-      "max": 11,
+      "max": 12,
       "curve": "linear",
       "display": "wave"
     },
     "op3_waveform": {
       "target": "op3.osc.waveform",
       "min": 0,
-      "max": 11,
+      "max": 12,
       "curve": "linear",
       "display": "wave"
     },
     "op4_waveform": {
       "target": "op4.osc.waveform",
       "min": 0,
-      "max": 11,
+      "max": 12,
       "curve": "linear",
       "display": "wave"
     },

@@ -562,7 +562,7 @@ typedef struct { uint32_t id; const char *name; int32_t min, max, def;
 const dsp_param type_p_alpha_dsp_params[470] = {
     { 0u, "op1_ratio.p0", 32768, 1048576, 65536, 0u, 0u, "" },
     { 1u, "op1_detune.p0", -50, 50, 0, 0u, 0u, "" },
-    { 2u, "op1_waveform.p0", 0, 11, 0, 0u, 0u, "" },
+    { 2u, "op1_waveform.p0", 0, 12, 0, 0u, 0u, "" },
     { 3u, "attack.p0", 0, 99, 80, 0u, 0u, "" },
     { 4u, "op1.eg.r2.p0", 0, 99, 60, 0u, 0u, "" },
     { 5u, "op1.eg.r3.p0", 0, 99, 50, 0u, 0u, "" },
@@ -608,7 +608,7 @@ const dsp_param type_p_alpha_dsp_params[470] = {
     { 45u, "op1_mute.p0", 0, 1, 0, 0u, 0u, "" },
     { 46u, "op2_ratio.p0", 32768, 1048576, 65536, 0u, 0u, "" },
     { 47u, "op2_detune.p0", -50, 50, 0, 0u, 0u, "" },
-    { 48u, "op2_waveform.p0", 0, 11, 0, 0u, 0u, "" },
+    { 48u, "op2_waveform.p0", 0, 12, 0, 0u, 0u, "" },
     { 49u, "op2.eg.r1.p0", 0, 99, 80, 0u, 0u, "" },
     { 50u, "op2.eg.r2.p0", 0, 99, 60, 0u, 0u, "" },
     { 51u, "op2.eg.r3.p0", 0, 99, 50, 0u, 0u, "" },
@@ -654,7 +654,7 @@ const dsp_param type_p_alpha_dsp_params[470] = {
     { 91u, "op2_mute.p0", 0, 1, 0, 0u, 0u, "" },
     { 92u, "op3_ratio.p0", 32768, 1048576, 196608, 0u, 0u, "" },
     { 93u, "op3_detune.p0", -50, 50, 0, 0u, 0u, "" },
-    { 94u, "op3_waveform.p0", 0, 11, 0, 0u, 0u, "" },
+    { 94u, "op3_waveform.p0", 0, 12, 0, 0u, 0u, "" },
     { 95u, "op3.eg.r1.p0", 0, 99, 80, 0u, 0u, "" },
     { 96u, "op3.eg.r2.p0", 0, 99, 60, 0u, 0u, "" },
     { 97u, "op3.eg.r3.p0", 0, 99, 50, 0u, 0u, "" },
@@ -700,7 +700,7 @@ const dsp_param type_p_alpha_dsp_params[470] = {
     { 137u, "op3_mute.p0", 0, 1, 0, 0u, 0u, "" },
     { 138u, "op4_ratio.p0", 32768, 1048576, 131072, 0u, 0u, "" },
     { 139u, "op4_detune.p0", -50, 50, 0, 0u, 0u, "" },
-    { 140u, "op4_waveform.p0", 0, 11, 0, 0u, 0u, "" },
+    { 140u, "op4_waveform.p0", 0, 12, 0, 0u, 0u, "" },
     { 141u, "op4.eg.r1.p0", 0, 99, 80, 0u, 0u, "" },
     { 142u, "op4.eg.r2.p0", 0, 99, 60, 0u, 0u, "" },
     { 143u, "op4.eg.r3.p0", 0, 99, 50, 0u, 0u, "" },
@@ -790,7 +790,7 @@ const dsp_param type_p_alpha_dsp_params[470] = {
     { 227u, "note_priority.p0", 0, 2, 0, 0u, 0u, "" },
     { 228u, "op1_ratio.p1", 32768, 1048576, 65536, 0u, 0u, "" },
     { 229u, "op1_detune.p1", -50, 50, 0, 0u, 0u, "" },
-    { 230u, "op1_waveform.p1", 0, 11, 0, 0u, 0u, "" },
+    { 230u, "op1_waveform.p1", 0, 12, 0, 0u, 0u, "" },
     { 231u, "attack.p1", 0, 99, 80, 0u, 0u, "" },
     { 232u, "op1.eg.r2.p1", 0, 99, 60, 0u, 0u, "" },
     { 233u, "op1.eg.r3.p1", 0, 99, 50, 0u, 0u, "" },
@@ -836,7 +836,7 @@ const dsp_param type_p_alpha_dsp_params[470] = {
     { 273u, "op1_mute.p1", 0, 1, 0, 0u, 0u, "" },
     { 274u, "op2_ratio.p1", 32768, 1048576, 65536, 0u, 0u, "" },
     { 275u, "op2_detune.p1", -50, 50, 0, 0u, 0u, "" },
-    { 276u, "op2_waveform.p1", 0, 11, 0, 0u, 0u, "" },
+    { 276u, "op2_waveform.p1", 0, 12, 0, 0u, 0u, "" },
     { 277u, "op2.eg.r1.p1", 0, 99, 80, 0u, 0u, "" },
     { 278u, "op2.eg.r2.p1", 0, 99, 60, 0u, 0u, "" },
     { 279u, "op2.eg.r3.p1", 0, 99, 50, 0u, 0u, "" },
@@ -882,7 +882,7 @@ const dsp_param type_p_alpha_dsp_params[470] = {
     { 319u, "op2_mute.p1", 0, 1, 0, 0u, 0u, "" },
     { 320u, "op3_ratio.p1", 32768, 1048576, 196608, 0u, 0u, "" },
     { 321u, "op3_detune.p1", -50, 50, 0, 0u, 0u, "" },
-    { 322u, "op3_waveform.p1", 0, 11, 0, 0u, 0u, "" },
+    { 322u, "op3_waveform.p1", 0, 12, 0, 0u, 0u, "" },
     { 323u, "op3.eg.r1.p1", 0, 99, 80, 0u, 0u, "" },
     { 324u, "op3.eg.r2.p1", 0, 99, 60, 0u, 0u, "" },
     { 325u, "op3.eg.r3.p1", 0, 99, 50, 0u, 0u, "" },
@@ -928,7 +928,7 @@ const dsp_param type_p_alpha_dsp_params[470] = {
     { 365u, "op3_mute.p1", 0, 1, 0, 0u, 0u, "" },
     { 366u, "op4_ratio.p1", 32768, 1048576, 131072, 0u, 0u, "" },
     { 367u, "op4_detune.p1", -50, 50, 0, 0u, 0u, "" },
-    { 368u, "op4_waveform.p1", 0, 11, 0, 0u, 0u, "" },
+    { 368u, "op4_waveform.p1", 0, 12, 0, 0u, 0u, "" },
     { 369u, "op4.eg.r1.p1", 0, 99, 80, 0u, 0u, "" },
     { 370u, "op4.eg.r2.p1", 0, 99, 60, 0u, 0u, "" },
     { 371u, "op4.eg.r3.p1", 0, 99, 50, 0u, 0u, "" },
@@ -2930,9 +2930,9 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
         op4_dlfo_base[v] = ((uint32_t)p1_wave_base[((op4_dlfo_wave[voice_part[v]] > 11u) ? 0u : op4_dlfo_wave[voice_part[v]])] << 10);
         op4_ph_step[v] = (uint32_t)(((int64_t)op4_ph_inc[v] * (32768 + op4_dsum_cv_x[v] + p1_detune_pitch[op4_ph_detune[voice_part[v]] + 50])) >> 15);
         op4_ph_mip[v] = p1_wave_mip(op4_ph_step[v]);
-        op4_osc_wave[v] = ((op4_osc_waveform[voice_part[v]] > 11u) ? 0u : op4_osc_waveform[voice_part[v]]);
+        op4_osc_wave[v] = ((op4_osc_waveform[voice_part[v]] > 12u) ? 0u : op4_osc_waveform[voice_part[v]]);
         op4_osc_base[v] = ((uint32_t)p1_wave_base[op4_osc_wave[v]] << 10);
-        op4_osc_bl[v] = ((op4_osc_wave[v] >= 9u) ? 1u : 0u);
+        op4_osc_bl[v] = ((op4_osc_wave[v] >= 10u) ? 1u : 0u);
         op4_fblfo_base[v] = ((uint32_t)p1_wave_base[((op4_fblfo_wave[voice_part[v]] > 11u) ? 0u : op4_fblfo_wave[voice_part[v]])] << 10);
         op4_fbenv_r1_eff[v] = (uint32_t)p1_key_apply(op4_fbenv_r1[voice_part[v]], p1_key_add(0, 0), 0, 99);
         op4_fbenv_r2_eff[v] = (uint32_t)p1_key_apply(op4_fbenv_r2[voice_part[v]], p1_key_add(0, 0), 0, 99);
@@ -2956,9 +2956,9 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
         op3_dlfo_base[v] = ((uint32_t)p1_wave_base[((op3_dlfo_wave[voice_part[v]] > 11u) ? 0u : op3_dlfo_wave[voice_part[v]])] << 10);
         op3_ph_step[v] = (uint32_t)(((int64_t)op3_ph_inc[v] * (32768 + op3_dsum_cv_x[v] + p1_detune_pitch[op3_ph_detune[voice_part[v]] + 50])) >> 15);
         op3_ph_mip[v] = p1_wave_mip(op3_ph_step[v]);
-        op3_osc_wave[v] = ((op3_osc_waveform[voice_part[v]] > 11u) ? 0u : op3_osc_waveform[voice_part[v]]);
+        op3_osc_wave[v] = ((op3_osc_waveform[voice_part[v]] > 12u) ? 0u : op3_osc_waveform[voice_part[v]]);
         op3_osc_base[v] = ((uint32_t)p1_wave_base[op3_osc_wave[v]] << 10);
-        op3_osc_bl[v] = ((op3_osc_wave[v] >= 9u) ? 1u : 0u);
+        op3_osc_bl[v] = ((op3_osc_wave[v] >= 10u) ? 1u : 0u);
         op3_fblfo_base[v] = ((uint32_t)p1_wave_base[((op3_fblfo_wave[voice_part[v]] > 11u) ? 0u : op3_fblfo_wave[voice_part[v]])] << 10);
         op3_fbenv_r1_eff[v] = (uint32_t)p1_key_apply(op3_fbenv_r1[voice_part[v]], p1_key_add(0, 0), 0, 99);
         op3_fbenv_r2_eff[v] = (uint32_t)p1_key_apply(op3_fbenv_r2[voice_part[v]], p1_key_add(0, 0), 0, 99);
@@ -2982,9 +2982,9 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
         op2_dlfo_base[v] = ((uint32_t)p1_wave_base[((op2_dlfo_wave[voice_part[v]] > 11u) ? 0u : op2_dlfo_wave[voice_part[v]])] << 10);
         op2_ph_step[v] = (uint32_t)(((int64_t)op2_ph_inc[v] * (32768 + op2_dsum_cv_x[v] + p1_detune_pitch[op2_ph_detune[voice_part[v]] + 50])) >> 15);
         op2_ph_mip[v] = p1_wave_mip(op2_ph_step[v]);
-        op2_osc_wave[v] = ((op2_osc_waveform[voice_part[v]] > 11u) ? 0u : op2_osc_waveform[voice_part[v]]);
+        op2_osc_wave[v] = ((op2_osc_waveform[voice_part[v]] > 12u) ? 0u : op2_osc_waveform[voice_part[v]]);
         op2_osc_base[v] = ((uint32_t)p1_wave_base[op2_osc_wave[v]] << 10);
-        op2_osc_bl[v] = ((op2_osc_wave[v] >= 9u) ? 1u : 0u);
+        op2_osc_bl[v] = ((op2_osc_wave[v] >= 10u) ? 1u : 0u);
         op2_fblfo_base[v] = ((uint32_t)p1_wave_base[((op2_fblfo_wave[voice_part[v]] > 11u) ? 0u : op2_fblfo_wave[voice_part[v]])] << 10);
         op2_fbenv_r1_eff[v] = (uint32_t)p1_key_apply(op2_fbenv_r1[voice_part[v]], p1_key_add(0, 0), 0, 99);
         op2_fbenv_r2_eff[v] = (uint32_t)p1_key_apply(op2_fbenv_r2[voice_part[v]], p1_key_add(0, 0), 0, 99);
@@ -3008,9 +3008,9 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
         op1_dlfo_base[v] = ((uint32_t)p1_wave_base[((op1_dlfo_wave[voice_part[v]] > 11u) ? 0u : op1_dlfo_wave[voice_part[v]])] << 10);
         op1_ph_step[v] = (uint32_t)(((int64_t)op1_ph_inc[v] * (32768 + op1_dsum_cv_x[v] + p1_detune_pitch[op1_ph_detune[voice_part[v]] + 50])) >> 15);
         op1_ph_mip[v] = p1_wave_mip(op1_ph_step[v]);
-        op1_osc_wave[v] = ((op1_osc_waveform[voice_part[v]] > 11u) ? 0u : op1_osc_waveform[voice_part[v]]);
+        op1_osc_wave[v] = ((op1_osc_waveform[voice_part[v]] > 12u) ? 0u : op1_osc_waveform[voice_part[v]]);
         op1_osc_base[v] = ((uint32_t)p1_wave_base[op1_osc_wave[v]] << 10);
-        op1_osc_bl[v] = ((op1_osc_wave[v] >= 9u) ? 1u : 0u);
+        op1_osc_bl[v] = ((op1_osc_wave[v] >= 10u) ? 1u : 0u);
         op1_fblfo_base[v] = ((uint32_t)p1_wave_base[((op1_fblfo_wave[voice_part[v]] > 11u) ? 0u : op1_fblfo_wave[voice_part[v]])] << 10);
         op1_fbenv_r1_eff[v] = (uint32_t)p1_key_apply(op1_fbenv_r1[voice_part[v]], p1_key_add(0, 0), 0, 99);
         op1_fbenv_r2_eff[v] = (uint32_t)p1_key_apply(op1_fbenv_r2[voice_part[v]], p1_key_add(0, 0), 0, 99);
@@ -3206,12 +3206,12 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
             uint32_t op4_ph_phase_x = op4_ph_phase[v] + ((uint32_t)op4_sum_audio_x << 20) + (uint32_t)0;
             op4_ph_phase[v] += op4_ph_step[v];
             uint32_t op4_ph_mip_x = op4_ph_mip[v];
-            /* Wave reader: one load from the precomputed 12-wave table (`p1_wave`). The
+            /* Wave reader: one load from the precomputed 13-wave table (`p1_wave`). The
                `waveform` param is not modulatable, so its `(p1_wave_base[waveform] << 10)`
                base is recomputed only each block (the node's block_derived), and the per-sample
-               work is the phase index plus the load. For the band-limited waves (9/10/11), the
+               work is the phase index plus the load. For the band-limited waves (10/11/12), the
                `mip` level from the phasor is added to the base, so the top octaves read a
-               table with fewer harmonics and stop aliasing. Waves 0-8 ignore it. */
+               table with fewer harmonics and stop aliasing. Waves 0-9 ignore it. */
             int32_t op4_osc_audio_x = p1_wave[op4_osc_base[v]
                 + ((op4_osc_bl[v] ? op4_ph_mip_x : 0u) << 10) + (op4_ph_phase_x >> 22)];
             /* Yamaha total-level gain: audio × cv × gain(level_eff). `level` is 0..99, the
@@ -3281,12 +3281,12 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
             uint32_t op3_ph_phase_x = op3_ph_phase[v] + ((uint32_t)op3_sum_audio_x << 20) + (uint32_t)0;
             op3_ph_phase[v] += op3_ph_step[v];
             uint32_t op3_ph_mip_x = op3_ph_mip[v];
-            /* Wave reader: one load from the precomputed 12-wave table (`p1_wave`). The
+            /* Wave reader: one load from the precomputed 13-wave table (`p1_wave`). The
                `waveform` param is not modulatable, so its `(p1_wave_base[waveform] << 10)`
                base is recomputed only each block (the node's block_derived), and the per-sample
-               work is the phase index plus the load. For the band-limited waves (9/10/11), the
+               work is the phase index plus the load. For the band-limited waves (10/11/12), the
                `mip` level from the phasor is added to the base, so the top octaves read a
-               table with fewer harmonics and stop aliasing. Waves 0-8 ignore it. */
+               table with fewer harmonics and stop aliasing. Waves 0-9 ignore it. */
             int32_t op3_osc_audio_x = p1_wave[op3_osc_base[v]
                 + ((op3_osc_bl[v] ? op3_ph_mip_x : 0u) << 10) + (op3_ph_phase_x >> 22)];
             /* Yamaha total-level gain: audio × cv × gain(level_eff). `level` is 0..99, the
@@ -3356,12 +3356,12 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
             uint32_t op2_ph_phase_x = op2_ph_phase[v] + ((uint32_t)op2_sum_audio_x << 20) + (uint32_t)0;
             op2_ph_phase[v] += op2_ph_step[v];
             uint32_t op2_ph_mip_x = op2_ph_mip[v];
-            /* Wave reader: one load from the precomputed 12-wave table (`p1_wave`). The
+            /* Wave reader: one load from the precomputed 13-wave table (`p1_wave`). The
                `waveform` param is not modulatable, so its `(p1_wave_base[waveform] << 10)`
                base is recomputed only each block (the node's block_derived), and the per-sample
-               work is the phase index plus the load. For the band-limited waves (9/10/11), the
+               work is the phase index plus the load. For the band-limited waves (10/11/12), the
                `mip` level from the phasor is added to the base, so the top octaves read a
-               table with fewer harmonics and stop aliasing. Waves 0-8 ignore it. */
+               table with fewer harmonics and stop aliasing. Waves 0-9 ignore it. */
             int32_t op2_osc_audio_x = p1_wave[op2_osc_base[v]
                 + ((op2_osc_bl[v] ? op2_ph_mip_x : 0u) << 10) + (op2_ph_phase_x >> 22)];
             /* Yamaha total-level gain: audio × cv × gain(level_eff). `level` is 0..99, the
@@ -3431,12 +3431,12 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
             uint32_t op1_ph_phase_x = op1_ph_phase[v] + ((uint32_t)op1_sum_audio_x << 20) + (uint32_t)0;
             op1_ph_phase[v] += op1_ph_step[v];
             uint32_t op1_ph_mip_x = op1_ph_mip[v];
-            /* Wave reader: one load from the precomputed 12-wave table (`p1_wave`). The
+            /* Wave reader: one load from the precomputed 13-wave table (`p1_wave`). The
                `waveform` param is not modulatable, so its `(p1_wave_base[waveform] << 10)`
                base is recomputed only each block (the node's block_derived), and the per-sample
-               work is the phase index plus the load. For the band-limited waves (9/10/11), the
+               work is the phase index plus the load. For the band-limited waves (10/11/12), the
                `mip` level from the phasor is added to the base, so the top octaves read a
-               table with fewer harmonics and stop aliasing. Waves 0-8 ignore it. */
+               table with fewer harmonics and stop aliasing. Waves 0-9 ignore it. */
             int32_t op1_osc_audio_x = p1_wave[op1_osc_base[v]
                 + ((op1_osc_bl[v] ? op1_ph_mip_x : 0u) << 10) + (op1_ph_phase_x >> 22)];
             /* Yamaha total-level gain: audio × cv × gain(level_eff). `level` is 0..99, the

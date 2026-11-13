@@ -35,15 +35,13 @@ Value 13 is the spectrum mode, not a table. The engine reads the additive bank f
 
 ## Rect tri
 
-`rect tri` is the full-wave rectified triangle in the OPZ family: `abs(tri(p))`,
-with `tri(p)` the `sin × |sin|` triangle. In Q15 it is `q15_mul(a, a)` where `a` is
-`|sin|`, so it is the square of the rectified sine. The shape carries the
-fundamental and the even harmonics, which places it between the triangle and the
-saw in brightness.
-
-The table is Q15, 1024 samples, peak normalised, with the same phase convention as
-`rect sine`. It is a single table at value 9. The shape is smooth. The pulse, square
-and saw at 10 to 12 keep the nine-level band-limited mip sets.
+`rect tri` is the full-wave rectified linear triangle:
+`abs(1 - 4|((p + 0.25) mod 1) - 0.5|)`. It starts at zero, peaks at the quarter
+point and folds positive. The table is Q15, 1024 samples, peak normalised, with the
+same phase convention as `rect sine`. It is a single table at value 9. The shape
+carries h2 and the higher even harmonics, so it sounds an octave above the phase
+rate with a soft edge. The pulse, square and saw at 10 to 12 keep the nine-level
+band-limited mip sets.
 
 ## The generator
 
