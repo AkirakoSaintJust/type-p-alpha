@@ -18,6 +18,28 @@ The script writes `build/web/p1.wasm` and `build/web/reference.json`, then runs
 channel, renders 256 frames, releases the note and renders another 256 frames. It
 compares all 1,024 interleaved samples with the native capture.
 
+It also copies the bare page, the AudioWorklet and the manifest into `build/web`.
+Serve that directory to try the audio path:
+
+```sh
+python3 -m http.server 8080 --directory build/web
+```
+
+Open `http://localhost:8080`, press `start audio`, then hold `note 60`. The level
+slider writes `op1_level.p0` through the same message bridge the full panel will
+use. The status line reports the context rate, so a context that refuses 48 kHz is
+visible rather than silent.
+
+The browser smoke test uses Playwright. On Windows, run it against the installed
+Edge:
+
+```sh
+npm install playwright
+PLAYWRIGHT_CHANNEL=msedge node web/smoke.mjs
+```
+
+On Linux, install Playwright’s Chromium and run it without a channel.
+
 The module is about 157 KB with no imports. It exports `memory` and the wrapper
 functions. Memory is fixed at 32 MB, so the worklet does not need to refresh typed
 arrays during playback.

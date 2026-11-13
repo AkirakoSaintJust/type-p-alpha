@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Type P.alpha web engine</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="tokens.css">
+  <style>
+    :root { color-scheme: dark; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--p1-bg, #000);
+      color: var(--p1-text, #d2d2d2);
+      font-family: var(--p1-font-ui, monospace);
+      display: grid;
+      place-items: center;
+    }
+    main {
+      width: min(1040px, 96vw);
+      border: 1px solid var(--p1-line-strong, #2e2e2e);
+      background: var(--p1-panel, #070707);
+      padding: 24px;
+    }
+    h1 {
+      margin: 0 0 4px;
+      font-family: var(--p1-font-display, monospace);
+      font-size: 28px;
+      color: var(--p1-white, #fff);
+    }
+    .tag {
+      margin: 0 0 24px;
+      color: var(--p1-dim, #7d7d7d);
+      font-size: 13px;
+    }
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+    button {
+      border: 1px solid var(--p1-pink, #ff2e7e);
+      background: transparent;
+      color: var(--p1-pink, #ff2e7e);
+      font: inherit;
+      padding: 10px 18px;
+      cursor: pointer;
+    }
+    button:disabled {
+      border-color: var(--p1-line-strong, #2e2e2e);
+      color: var(--p1-faint, #4a4a4a);
+      cursor: default;
+    }
+    button:not(:disabled):active {
+      background: var(--p1-pink, #ff2e7e);
+      color: #000;
+    }
+    .param {
+      display: grid;
+      grid-template-columns: 120px 1fr 56px;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 18px;
+      font-size: 13px;
+    }
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--p1-green, #3dff9e);
+    }
+    output {
+      color: var(--p1-green, #3dff9e);
+      text-align: right;
+    }
+    canvas {
+      display: block;
+      width: 100%;
+      height: 180px;
+      background: #000;
+      border: 1px solid var(--p1-line, #1c1c1c);
+    }
+    #status {
+      margin-top: 12px;
+      color: var(--p1-dim, #7d7d7d);
+      font-size: 12px;
+      min-height: 16px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Type P.alpha</h1>
+    <p class="tag">web engine · 48 kHz · one operator, one parameter, one scope</p>
+    <div class="row">
+      <button id="start" type="button">start audio</button>
+      <button id="note" type="button">hold note 60</button>
+    </div>
+    <div class="param">
+      <label for="level">op1 level</label>
+      <input id="level" type="range" min="0" max="99" value="75" step="1">
+      <output id="readout" for="level">75</output>
+    </div>
+    <canvas id="scope" width="1024" height="180"></canvas>
+    <div id="status">press start audio, then hold the note</div>
+  </main>
+  <script type="module" src="main.js"></script>
+</body>
+</html>
