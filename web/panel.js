@@ -56,11 +56,14 @@
   let values = new Map();
   let activePart = 0;
   let currentPage = "patch";
+  const partMuted = [false, false];
+  const partLevelBeforeMute = [99, 99];
   let audioContext = null;
   let node = null;
   let noteHeld = false;
   let outputSamples = null;
   let tapSamples = null;
+  let tapRoutes = null;
   let visMode = "scope";
   let analyser = null;
 
@@ -71,6 +74,7 @@
     lastParam: null,
     lastScopeMax: 0,
     lastTapPeak: 0,
+    lastRoutePeak: 0,
     page: "patch",
     controlCount: 0,
     visMode: "scope",
@@ -416,6 +420,7 @@
   }
 
   function opOf(base) {
+    if (base === "attack" || base === "release") return 0;
     const match = base.match(/^op([1-4])/);
     return match === null ? -1 : Number(match[1]) - 1;
   }
@@ -425,6 +430,7 @@
   }
 
   function pageOf(base) {
+    if (base === "attack" || base === "release") return "envs";
     if (/^op[1-4]_spec_(env_|lfo_)/.test(base) ||
         /^op[1-4]_spec_env_depth$/.test(base))
       return "mod";
@@ -476,7 +482,7 @@
       f1_cutoff_vs: "cut vs", fenv_ks_lo: "env lo",
       fenv_ks_hi: "env hi", fenv_vs: "env vs",
       pitch_ks_lo: "pitch lo", pitch_ks_hi: "pitch hi", pitch_vs: "pitch vs",
-      "dc.r": "dc r",
+      "lp.comp": "comp", "dc.r": "dc r",
     };
     if (names[base] !== undefined) return names[base];
     return base.replace(/_/g, " ");
@@ -490,6 +496,12 @@
 
   function userSpec(spec) {
     const display = spec.display;
+    if (baseName(spec.name).startsWith("channel")) {
+      return {
+        min: spec.min + 1, max: spec.max + 1, step: 1,
+        toUser: (raw) => raw + 1, toRaw: (user) => user - 1,
+      };
+    }
     if (display === "ratio") {
       return {
         min: spec.min / 65536, max: spec.max / 65536, step: 0.01,
@@ -1048,21 +1060,108 @@
     return col;
   }
 
+  function selectPart(part) {
+    part = part === 1 ? 1 : 0;
+    if (part === activePart) return;
+    noteOff();
+    activePart = part;
+    partEl.value = String(part);
+    tapSamples = null;
+    tapRoutes = null;
+    buildAlgorithm();
+    buildPage();
+    if (node !== null)
+      node.port.postMessage({ type: "part", part: activePart });
+  }
+
+  function togglePartMute(part, muted) {
+    const levelSpec = byName.get("level.p" + part);
+    if (levelSpec === undefined) return;
+    if (muted) {
+      partLevelBeforeMute[part] = values.get(levelSpec.id) ?? 99;
+      partMuted[part] = true;
+      setRaw(levelSpec, 0);
+    } else {
+      partMuted[part] = false;
+      setRaw(levelSpec, partLevelBeforeMute[part]);
+    }
+    buildPage();
+  }
+
   function buildPatch(page) {
-    const all = specsForPart(activePart).filter((spec) =>
-      pageFor(spec) === "patch" && baseName(spec.name) !== "algorithm");
     const voiceNames = new Set([
       "mode", "legato", "unison_count", "unison_detune", "portamento",
       "note_priority",
     ]);
-    const part = all.filter((spec) => !voiceNames.has(baseName(spec.name)));
-    const voice = all.filter((spec) => voiceNames.has(baseName(spec.name)));
-    const grid = div("panel-grid");
-    const partCard = card("part " + (activePart + 1), part);
-    const voiceCard = card("voice mode", voice);
-    if (partCard) grid.append(partCard);
-    if (voiceCard) grid.append(voiceCard);
-    page.append(grid);
+    const parts = div("parts");
+    for (let part = 0; part < 2; ++part) {
+      const cardEl = div("part" + (activePart === part ? " active" : ""));
+      const header = div("ph");
+      const nameWrap = div("");
+      nameWrap.style.cursor = "pointer";
+      nameWrap.innerHTML = '<span class="pn">part ' + (part + 1) +
+        ": init</span>";
+      nameWrap.addEventListener("click", () => selectPart(part));
+      const acts = div("pacts");
+      const mute = makeToggle("active", !partMuted[part], (on) =>
+        togglePartMute(part, !on));
+      acts.append(mute);
+      header.append(nameWrap, acts);
+      cardEl.append(header);
+
+      const knobNames = ["channel", "low", "high", "detune", "delay"];
+      const partSpecs = specsForPart(part);
+      const knobSpecs = knobNames
+        .map((name) => partSpecs.find((spec) =>
+          baseName(spec.name) === name))
+        .filter((spec) => spec !== undefined);
+      const knobs = div("knobs");
+      for (const spec of knobSpecs) knobs.append(controlFor(spec));
+      cardEl.append(knobs);
+
+      const levelSpec = byName.get("level.p" + part);
+      if (levelSpec !== undefined) {
+        const levelRow = div("panel-level-row");
+        const label = document.createElement("span");
+        label.textContent = "level";
+        const slider = document.createElement("input");
+        slider.type = "range";
+        slider.min = String(levelSpec.min);
+        slider.max = String(levelSpec.max);
+        slider.step = "1";
+        slider.value = String(values.get(levelSpec.id) ?? levelSpec.default);
+        const output = document.createElement("output");
+        output.textContent = slider.value;
+        slider.addEventListener("input", () => {
+          partMuted[part] = false;
+          setRaw(levelSpec, Number(slider.value));
+          output.textContent = slider.value;
+        });
+        levelRow.append(label, slider, output);
+        cardEl.append(levelRow);
+      }
+
+      const vis = div("pvis");
+      for (const className of ["pscope", "pspectro"]) {
+        const cell = div("pcell");
+        const canvas = document.createElement("canvas");
+        canvas.className = className;
+        canvas.width = 320;
+        canvas.height = 200;
+        canvas.dataset.part = String(part);
+        cell.append(canvas);
+        vis.append(cell);
+      }
+      cardEl.append(vis);
+      parts.append(cardEl);
+    }
+    page.append(parts);
+
+    const voiceSpecs = specsForPart(activePart).filter((spec) =>
+      pageFor(spec) === "patch" &&
+      voiceNames.has(baseName(spec.name)));
+    const voiceCard = card("voice mode", voiceSpecs);
+    if (voiceCard) page.append(voiceCard);
   }
 
   function buildFx(page) {
@@ -1075,7 +1174,8 @@
       return true;
     });
     const filter = take((base) =>
-      !/_(ks_lo|ks_hi|vs)$/.test(base) && /cutoff|res|filter|fenv_/.test(base));
+      !/_(ks_lo|ks_hi|vs)$/.test(base) &&
+      /cutoff|res|filter|fenv_|lp\.comp/.test(base));
     const pitch = take((base) =>
       !/_(ks_lo|ks_hi|vs)$/.test(base) && /^(pitch_|penv_)/.test(base));
     const follow = take((base) =>
@@ -1097,7 +1197,7 @@
                           transform: (value) => value * 12 / 32768 }),
       },
       { title: "key and velocity follow", specs: follow },
-      { title: "other", specs: rest },
+      { title: "output", specs: rest },
     ];
     for (const item of items) {
       const section = card(item.title, item.specs, { graph: item.graph });
@@ -1120,7 +1220,9 @@
       });
       const osc = take((base) =>
         /^op[1-4]_(ratio|detune|waveform|level|feedback|mute)$/.test(base));
-      const amp = take((base) => /^op[1-4]\.eg\./.test(base));
+      const amp = take((base) =>
+        /^op[1-4]\.eg\./.test(base) ||
+        (op === 0 && (base === "attack" || base === "release")));
       const fb = take((base) => /^op[1-4]_fbenv_/.test(base));
       const follow = take((base) =>
         /^op[1-4]_.*_(ks_lo|ks_hi|vs)$/.test(base) ||
@@ -1354,6 +1456,14 @@
         ? tapSamples.channels[op] : null;
       drawOpSpectrum(canvas, samples);
     });
+    document.querySelectorAll(".pscope").forEach((canvas) => {
+      const part = Number(canvas.dataset.part);
+      drawWave(canvas, tapRoutes ? tapRoutes[part] : null);
+    });
+    document.querySelectorAll(".pspectro").forEach((canvas) => {
+      const part = Number(canvas.dataset.part);
+      drawOpSpectrum(canvas, tapRoutes ? tapRoutes[part] : null);
+    });
   }
 
   function buildTabs() {
@@ -1463,6 +1573,14 @@
               for (const sample of channel)
                 peak = Math.max(peak, Math.abs(sample));
             window.__p1.lastTapPeak = peak;
+            if (message.routes) {
+              tapRoutes = message.routes;
+              let routePeak = 0;
+              for (const channel of message.routes)
+                for (const sample of channel)
+                  routePeak = Math.max(routePeak, Math.abs(sample));
+              window.__p1.lastRoutePeak = routePeak;
+            }
             drawTapScopes();
           }
         } else if (message.type === "param") {
@@ -1523,13 +1641,7 @@
   }, 120);
 
   partEl.addEventListener("change", function () {
-    noteOff();
-    activePart = Number(partEl.value) === 1 ? 1 : 0;
-    tapSamples = null;
-    buildAlgorithm();
-    buildPage();
-    if (node !== null)
-      node.port.postMessage({ type: "part", part: activePart });
+    selectPart(Number(partEl.value));
   });
 
   async function init() {

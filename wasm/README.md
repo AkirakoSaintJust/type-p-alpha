@@ -18,16 +18,17 @@ The script writes `build/web/p1.wasm` and `build/web/reference.json`, then runs
 channel, renders 256 frames, releases the note and renders another 256 frames. It
 compares all 1,024 interleaved samples with the native capture.
 
-It also copies the bare page, the AudioWorklet and the manifest into `build/web`.
+It also copies the app pages, the AudioWorklet and the manifest into `build/web`.
 Serve that directory to try the audio path:
 
 ```sh
 python3 -m http.server 8080 --directory build/web
 ```
 
-Open `http://localhost:8080`, press `start audio`, then hold `note 60`. The level
-slider writes `op1_level.p0` through the same message bridge the full panel will
-use. The status line reports the context rate, so a context that refuses 48 kHz is
+The root `index.html` redirects to `panel.html`. The bare page is at
+`http://localhost:8080/bare.html`; press `start audio`, then hold `note 60`. The
+level slider writes `op1_level.p0` through the same message bridge the full panel
+uses. The status line reports the context rate, so a context that refuses 48 kHz is
 visible rather than silent.
 
 The browser smoke test uses Playwright. On Windows, run it against the installed
@@ -38,7 +39,8 @@ npm install playwright
 PLAYWRIGHT_CHANNEL=msedge node web/smoke.mjs
 ```
 
-On Linux, install Playwright’s Chromium and run it without a channel.
+The bare page is at `bare.html`; the panel smoke is at `panel.html`. On Linux,
+install Playwright’s Chromium and run both without a channel.
 
 ## Panel
 
@@ -48,8 +50,9 @@ the mockup’s CSS, extracted into `panel.css`, and the generic cards group the
 parameters by page. The operator pages carry a per-operator tap scope, taken from
 the engine tap buffers for the active part.
 
-Open `http://localhost:8080/panel.html`. The bare page remains at
-`http://localhost:8080/` for the smallest audio and parameter smoke test.
+Open `http://localhost:8080/panel.html`. The root redirects there. The bare page
+remains at `http://localhost:8080/bare.html` for the smallest audio and parameter
+smoke test.
 
 The panel now carries the algorithm graph, the output scope and spectro toggle,
 the envelope graphs, the sixteen-bar spectrum editors and the `op spectra mod`

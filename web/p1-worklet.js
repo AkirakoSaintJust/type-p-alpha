@@ -7,6 +7,7 @@ class P1Processor extends AudioWorkletProcessor {
     this.scopePosition = 0;
     this.activePart = 0;
     this.tapRings = [];
+    this.routeRings = [new Float32Array(512), new Float32Array(512)];
     this.tapPosition = 0;
     this.tapBlocks = 0;
     this.resetTapRings();
@@ -15,6 +16,7 @@ class P1Processor extends AudioWorkletProcessor {
 
   resetTapRings() {
     this.tapRings = Array.from({ length: 5 }, () => new Float32Array(512));
+    this.routeRings = [new Float32Array(512), new Float32Array(512)];
     this.tapPosition = 0;
     this.tapBlocks = 0;
   }
@@ -114,6 +116,13 @@ class P1Processor extends AudioWorkletProcessor {
       for (let i = 0; i < frames; ++i)
         ring[this.tapPosition + i] = tap[i] / 32768;
     }
+    for (let part = 0; part < 2; ++part) {
+      const pointer = this.exports.p1_tap(8 + part);
+      const tap = new Int32Array(this.exports.memory.buffer, pointer, frames);
+      const ring = this.routeRings[part];
+      for (let i = 0; i < frames; ++i)
+        ring[this.tapPosition + i] = tap[i] / 32768;
+    }
     this.tapPosition += frames;
     if (this.tapPosition >= 512) {
       this.tapPosition = 0;
@@ -123,6 +132,7 @@ class P1Processor extends AudioWorkletProcessor {
           type: "taps",
           part: this.activePart,
           channels: this.tapRings.map((ring) => ring.slice()),
+          routes: this.routeRings.map((ring) => ring.slice()),
         });
         this.tapBlocks = 0;
       }

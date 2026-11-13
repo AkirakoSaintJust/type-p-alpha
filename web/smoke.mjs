@@ -1,6 +1,6 @@
 import { chromium } from "playwright";
 
-const url = process.argv[2] ?? "http://127.0.0.1:8080/";
+const url = process.argv[2] ?? "http://127.0.0.1:8080/bare.html";
 const channel = process.env.PLAYWRIGHT_CHANNEL || undefined;
 const browser = await chromium.launch({
   ...(channel === undefined ? {} : { channel }),

@@ -1,6 +1,6 @@
 import { chromium } from "playwright";
 
-const url = process.argv[2] ?? "http://127.0.0.1:8080/panel.html";
+const url = process.argv[2] ?? "http://127.0.0.1:8080/";
 const channel = process.env.PLAYWRIGHT_CHANNEL || undefined;
 const browser = await chromium.launch({
   ...(channel === undefined ? {} : { channel }),
@@ -16,7 +16,8 @@ page.on("console", (message) => {
 
 try {
   await page.goto(url, { waitUntil: "load" });
-  await page.waitForFunction(() => window.__p1.paramCount === 846, {
+  await page.waitForFunction(
+    () => window.__p1 && window.__p1.paramCount === 846, {
     timeout: 20000,
   });
   const tabs = await page.locator(".tab").allTextContents();
@@ -67,10 +68,13 @@ try {
   await page.waitForTimeout(1000);
   const peak = await page.evaluate(() => window.__p1.lastScopeMax);
   const tapPeak = await page.evaluate(() => window.__p1.lastTapPeak);
+  const routePeak = await page.evaluate(() => window.__p1.lastRoutePeak);
   await page.mouse.up();
-  console.log("scope peak:", peak, "tap peak:", tapPeak);
+  console.log("scope peak:", peak, "tap peak:", tapPeak,
+    "route peak:", routePeak);
   if (!(peak > 0.0001)) throw new Error("the panel scope stayed silent");
   if (!(tapPeak > 0.0001)) throw new Error("the operator tap scopes stayed silent");
+  if (!(routePeak > 0.0001)) throw new Error("the part route scopes stayed silent");
 
   await page.selectOption("#algorithm", "7");
   await page.waitForFunction(() => window.__p1.lastParam === 7, {
