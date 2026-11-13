@@ -703,6 +703,34 @@ private:
 
 } // namespace
 
+void commitWaveToSpectrum(PluginEditor& editor, int op, int part)
+{
+    const auto waveID = params::opWaveform(op, part);
+    int wave = 13;
+    if (auto* value = editor.state().getRawParameterValue(waveID))
+        wave = static_cast<int>(std::lround(value->load()));
+    if (wave < 0 || wave > 12)
+        return;
+    int range = 0;
+    if (auto* value = editor.state().getRawParameterValue(
+            params::opSpecRangeA(op, part))) {
+        range = static_cast<int>(std::lround(value->load()));
+    }
+    range = juce::jlimit(0, 7, range);
+    const auto levels = analyseWaveTable(wave, range * 16 + 1);
+    for (int h = 0; h < 16; ++h) {
+        if (auto* parameter =
+                editor.state().getParameter(params::opSpecA(op, h + 1, part))) {
+            parameter->setValueNotifyingHost(parameter->convertTo0to1(
+                static_cast<float>(levels[static_cast<std::size_t>(h)])));
+        }
+    }
+    if (auto* parameter = editor.state().getParameter(waveID)) {
+        parameter->setValueNotifyingHost(
+            parameter->convertTo0to1(13.0f));
+    }
+}
+
 std::unique_ptr<PageBase> makeOperatorSpectraPage(PluginEditor& editor)
 {
     return std::make_unique<OperatorSpectraPage>(editor);

@@ -7,7 +7,6 @@
 #include "Pages.h"
 #include "ParamIDs.h"
 #include "PluginProcessor.h"
-#include "SpectrumAnalysis.h"
 
 namespace {
 
@@ -1170,27 +1169,11 @@ void PluginEditor::pasteOperatorSection(int op, int part,
             parameter->setValueNotifyingHost(
                 parameter->convertTo0to1(static_cast<float>(value)));
     }
+    if (section == OperatorSection::spectrumB)
+        p1::ui::commitWaveToSpectrum(*this, op, part);
     if (section == OperatorSection::spectrumA ||
         section == OperatorSection::spectrumB) {
         const auto waveID = params::opWaveform(op, part);
-        int wave = 13;
-        if (auto* value = state().getRawParameterValue(waveID))
-            wave = static_cast<int>(std::lround(value->load()));
-        if (section == OperatorSection::spectrumB && wave >= 0 && wave <= 12) {
-            int range = 0;
-            if (auto* value = state().getRawParameterValue(
-                    params::opSpecRangeA(op, part)))
-                range = static_cast<int>(std::lround(value->load()));
-            const auto levels =
-                p1::ui::analyseWaveTable(wave, range * 16 + 1);
-            for (int h = 0; h < 16; ++h) {
-                if (auto* parameter = state().getParameter(
-                        params::opSpecA(op, h + 1, part))) {
-                    parameter->setValueNotifyingHost(parameter->convertTo0to1(
-                        static_cast<float>(levels[static_cast<std::size_t>(h)])));
-                }
-            }
-        }
         if (auto* parameter = state().getParameter(waveID)) {
             parameter->setValueNotifyingHost(
                 parameter->convertTo0to1(13.0f));

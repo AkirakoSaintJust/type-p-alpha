@@ -22,6 +22,10 @@ inline double getParam(PluginEditor& editor, const juce::String& id)
     return 0.0;
 }
 
+/* Write the current wave analysis into spectrum a and set the waveform to 13.
+ * Used by the first morph drag and by a spectrum b paste. */
+void commitWaveToSpectrum(PluginEditor& editor, int op, int part);
+
 class InlineMuteSwitch : public juce::Component {
 public:
     InlineMuteSwitch(std::function<bool()> getMuted,
@@ -142,6 +146,9 @@ public:
             morph_ = std::make_unique<ParamKnob>(editor.state(),
                                                  params::opSpecMorph(op, part),
                                                  "morph", 24.0f);
+            morph_->onUserEdit = [&ed = editor, op, part] {
+                commitWaveToSpectrum(ed, op, part);
+            };
             addAndMakeVisible(*morph_);
         }
     }

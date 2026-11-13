@@ -31,6 +31,10 @@ public:
     void resized() override;
     void paint(juce::Graphics& g) override;
 
+    /* Runs once when a user starts dragging the knob. Host automation does not
+     * call it. */
+    std::function<void()> onUserEdit;
+
 private:
     /* Arrow keys step a detented ratio knob to the next detent instead of
        nudging the raw value, which would snap straight back to where it was. */

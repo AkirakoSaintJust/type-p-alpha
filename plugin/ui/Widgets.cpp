@@ -238,6 +238,10 @@ ParamKnob::ParamKnob(APVTS& state, juce::String paramID, juce::String label,
     slider_.onDetentKey = [this](const juce::KeyPress& key) {
         return stepRatio(key);
     };
+    slider_.onDragStart = [this] {
+        if (onUserEdit)
+            onUserEdit();
+    };
     slider_.onValueChange = [this] {
         snapValue();
         updateValueText();
@@ -754,12 +758,16 @@ void P1SpectralBars::setFromMouse(const juce::MouseEvent& event)
     auto bars = area.withTrimmedBottom(12);
     if (bars.isEmpty())
         return;
+    const float barsWidth = static_cast<float>(bars.getWidth());
+    const float barsHeight = static_cast<float>(bars.getHeight());
+    const float barsLeft = static_cast<float>(bars.getX());
+    const float barsTop = static_cast<float>(bars.getY());
     const int index = juce::jlimit(
-        0, 15, static_cast<int>((event.position.x - bars.getX()) /
-                                (bars.getWidth() / 16.0f)));
+        0, 15, static_cast<int>((event.position.x - barsLeft) /
+                                (barsWidth / 16.0f)));
     const double level = juce::jlimit(
-        0.0, 99.0, 99.0 * (bars.getBottom() - event.position.y) /
-                        static_cast<double>(bars.getHeight()));
+        0.0, 99.0, 99.0 * (barsTop + barsHeight - event.position.y) /
+                        static_cast<double>(barsHeight));
     setLevel(index, level);
     repaint();
 }
@@ -791,7 +799,7 @@ void P1SpectralBars::paint(juce::Graphics& g)
     auto bars = area.withTrimmedBottom(12);
     if (bars.isEmpty())
         return;
-    const float slot = bars.getWidth() / 16.0f;
+    const float slot = static_cast<float>(bars.getWidth()) / 16.0f;
     for (int i = 0; i < 16; ++i) {
         const float level = static_cast<float>(displayLevelAt(i)) / 99.0f;
         const float height = level * static_cast<float>(bars.getHeight());
@@ -882,17 +890,32 @@ void P1SpectrumDisplay::paint(juce::Graphics& g)
                    static_cast<float>(span) * graph.getWidth();
     };
 
-    g.setFont(uiFont(tokens::textLegend));
+    const juce::String aText = "spectrum a (" + juce::String(firstA) + "-" +
+                               juce::String(firstA + 15) + ")";
+    const juce::String bText = "spectrum b (" + juce::String(firstB) + "-" +
+                               juce::String(firstB + 15) + ")";
+    const juce::String waveText = "waveform";
+    juce::Font legendFont = uiFont(tokens::textLegend);
+    auto legendWidths = [&] {
+        return std::array<float, 3>{
+            textWidth(legendFont, aText) + 8.0f,
+            textWidth(legendFont, bText) + 8.0f,
+            textWidth(legendFont, waveText) + 4.0f};
+    };
+    auto widths = legendWidths();
+    if (widths[0] + widths[1] + widths[2] > legend.getWidth()) {
+        legendFont = uiFont(tokens::textLegend - 1.0f);
+        widths = legendWidths();
+    }
+    g.setFont(legendFont);
     g.setColour(aColour_);
-    g.drawText("a " + juce::String(firstA) + "-" + juce::String(firstA + 15),
-               legend.removeFromLeft(54.0f), juce::Justification::centredLeft,
-               false);
+    g.drawText(aText, legend.removeFromLeft(widths[0]),
+               juce::Justification::centredLeft, false);
     g.setColour(bColour_);
-    g.drawText("b " + juce::String(firstB) + "-" + juce::String(firstB + 15),
-               legend.removeFromLeft(54.0f), juce::Justification::centredLeft,
-               false);
+    g.drawText(bText, legend.removeFromLeft(widths[1]),
+               juce::Justification::centredLeft, false);
     g.setColour(colour(tokens::green).withAlpha(0.72f));
-    g.drawText("wave", legend.removeFromLeft(40.0f),
+    g.drawText(waveText, legend.removeFromLeft(widths[2]),
                juce::Justification::centredLeft, false);
 
     /* The grid follows the visible harmonic span, so two different ranges zoom
