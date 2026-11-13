@@ -111,15 +111,16 @@ Selecting a wave keeps the stored spectra. The preview is not written on page op
 
 ## Files and interfaces
 
-- **Engine:** `tools/gen_wavetable.py`, `engine/gen/wavetable.h`,
-  `engine/gen/wave_harmonics.h`, `synth/patch.json`,
-  `modules/nodes/osc/node.json` and `node.c` (local generator modules), the new
-  spectral node or macro, `engine/gen/*`, `engine/runtime/presets.c`.
+- **Engine:** `tools/gen_wavetable.py`, `tools/audit_modules.py`,
+  `engine/gen/wavetable.h`, `engine/gen/wave_harmonics.h`, `engine/hal/spectral.h`,
+  `synth/patch.json`, `modules/nodes/osc/node.json` and `node.c`,
+  `modules/macros/fm_op/macro.json` (local generator modules), `engine/gen/*` and
+  `engine/runtime/presets.c`.
 - **Editor:** `plugin/ui/ParamIDs.h`, `plugin/ui/Widgets.cpp`,
   `plugin/juce/Pages.h`, `plugin/juce/PagesOperators.cpp`,
   `plugin/juce/PluginEditor.cpp`, `plugin/juce/PluginEditor.h`,
   `plugin/juce/CMakeLists.txt`, and new spectrum components.
-- **Tests:** a new wave table test, a spectral table test, an analysis test,
+- **Tests:** `plugin/tests/wavetable.cpp`, `plugin/tests/spectral.cpp`,
   `engine_parity`, `plugin_smoke`, `plugin_stability`, `preset_smoke` and
   `editor_snapshot`.
 - **Design:** `design/spectral.md`, `design/waveforms.md`, `design/README.md`,
@@ -130,7 +131,9 @@ Selecting a wave keeps the stored spectra. The preview is not written on page op
 ## Verification
 
 - **Host vector(s):** build the VST3 and standalone on Windows, run `ctest`, load
-  the VST3 in two DAWs and run pluginval.
+  the VST3 in two DAWs and run pluginval. The local `tools/audit_modules.py` check
+  confirms that every Type P type and node parameter resolves to the `.dev` module
+  library, and the Windows `ctest` run is 12 of 12.
 - **Browser vector:** the mockup at `#opspec` and `#opspecmod`, with the `from wave`
   preview and the `spectrum` wave.
 - **Target package check:** the Linux build and the pluginval pass.
