@@ -8,6 +8,11 @@ The experiments are recorded one per file:
   `feedback-shaper/`
 - [Bipolar feedback](feedback-bipolar.md)
 
+Further research:
+
+- [Additive synthesis](additive-synthesis.md): a survey of 16 and 32 harmonic
+  operator spectra, table generation and control-rate costs.
+
 This is the design note for lines 1 and 2 of the research list:
 
 1. Feedback envelopes. Are they worth it, and where do they belong without
