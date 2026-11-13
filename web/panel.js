@@ -50,6 +50,8 @@
 
   const graphUpdaters = [];
   const spectrumUpdaters = [];
+  const previewCache = new Map();
+  const previewRequests = new Set();
 
   let params = [];
   let byName = new Map();
@@ -60,6 +62,7 @@
   const partLevelBeforeMute = [99, 99];
   let audioContext = null;
   let node = null;
+  let workletReady = false;
   let noteHeld = false;
   let outputSamples = null;
   let tapSamples = null;
@@ -75,10 +78,16 @@
     lastScopeMax: 0,
     lastTapPeak: 0,
     lastRoutePeak: 0,
+    lastAnalysis: null,
     page: "patch",
     controlCount: 0,
     visMode: "scope",
     error: null,
+    paramValue: (name) => {
+      const spec = byName.get(name);
+      return spec === undefined ? null : values.get(spec.id) ?? null;
+    },
+    analysisFor: (part, op) => getPreview(part, op),
   };
 
   const A0 = 135;
@@ -450,7 +459,8 @@
     const opMatch = base.match(/^op[1-4]_(.+)$/);
     if (opMatch !== null) {
       const tail = opMatch[1];
-      if (/^spec_range_[ab]$/.test(tail)) return tail.replace("_", " ");
+      if (/^spec_range_[ab]$/.test(tail))
+        return "range " + tail.slice(-1);
       if (/^spec_[ab]\d+$/.test(tail)) return "h" + tail.match(/\d+/)[0];
       if (/^spec_env_/.test(tail)) return tail.replace("spec_env_", "");
       if (/^spec_lfo_/.test(tail)) return tail.replace("spec_lfo_", "");
@@ -745,7 +755,72 @@
     return Math.max(0, Math.min(99, Math.round(value)));
   }
 
-  function spectrumBars(specs, kind, rangeSpec) {
+  function previewKey(part, op) {
+    return part + ":" + op;
+  }
+
+  function previewSpecs(part, op) {
+    return specsForOp(part, op)
+      .filter((spec) => /^op[1-4]_spec_a\d+$/.test(baseName(spec.name)))
+      .sort(naturalSort);
+  }
+
+  function requestPreview(part, op) {
+    if (!workletReady || node === null) return;
+    const waveSpec = byName.get(`op${op + 1}_waveform.p${part}`);
+    const rangeSpec = byName.get(`op${op + 1}_spec_range_a.p${part}`);
+    if (waveSpec === undefined || rangeSpec === undefined) return;
+    const wave = values.get(waveSpec.id) ?? 0;
+    const key = previewKey(part, op);
+    if (wave === 13) {
+      previewCache.delete(key);
+      return;
+    }
+    const first = ((values.get(rangeSpec.id) ?? 0) * 16) + 1;
+    const cached = previewCache.get(key);
+    if (cached !== undefined && cached.wave === wave &&
+        cached.first === first)
+      return;
+    const request = `${key}:${wave}:${first}`;
+    if (previewRequests.has(request))
+      return;
+    previewRequests.add(request);
+    node.port.postMessage({ type: "analyze", key, wave, first, request });
+  }
+
+  function getPreview(part, op) {
+    const key = previewKey(part, op);
+    const cached = previewCache.get(key);
+    if (cached === undefined) return null;
+    const waveSpec = byName.get(`op${op + 1}_waveform.p${part}`);
+    const rangeSpec = byName.get(`op${op + 1}_spec_range_a.p${part}`);
+    if (waveSpec === undefined || rangeSpec === undefined) return null;
+    const wave = values.get(waveSpec.id) ?? 0;
+    const first = ((values.get(rangeSpec.id) ?? 0) * 16) + 1;
+    if (wave === 13 || cached.wave !== wave || cached.first !== first)
+      return null;
+    return cached.levels;
+  }
+
+  function commitPreview(part, op) {
+    const key = previewKey(part, op);
+    const preview = previewCache.get(key);
+    if (preview === undefined) return;
+    const aSpecs = previewSpecs(part, op);
+    if (aSpecs.length !== 16) {
+      previewCache.delete(key);
+      return;
+    }
+    for (let i = 0; i < 16; ++i)
+      setRaw(aSpecs[i], preview.levels[i]);
+    const waveSpec = byName.get(`op${op + 1}_waveform.p${part}`);
+    if (waveSpec !== undefined)
+      setRaw(waveSpec, 13);
+    previewCache.delete(key);
+    for (const update of spectrumUpdaters) update();
+  }
+
+  function spectrumBars(specs, kind, rangeSpec, previewLevels, onEdit) {
     const wrap = div("specbars");
     const fills = [];
     for (let i = 0; i < 16; ++i) {
@@ -763,6 +838,8 @@
       labelSpans.push(span);
     }
     function levels() {
+      const preview = previewLevels ? previewLevels() : null;
+      if (preview !== null && preview !== undefined) return preview;
       return specs.map((spec) => values.get(spec.id) ?? 0);
     }
     function draw() {
@@ -789,6 +866,7 @@
     }
     wrap.addEventListener("pointerdown", function (event) {
       event.preventDefault();
+      if (onEdit) onEdit();
       wrap.setPointerCapture(event.pointerId);
       setFrom(event);
       function move(ev) { setFrom(ev); }
@@ -806,17 +884,31 @@
     return { el: wrap, labels: labels, draw: draw, levels: levels };
   }
 
-  function spectrumCard(title, specs, otherSpecs, kind, rangeSpec) {
+  function spectrumCard(title, specs, otherSpecs, kind, rangeSpec, options) {
+    options = options || {};
     const cardEl = document.createElement("section");
     cardEl.className = "card speccard";
+    const head = div("secheadleft");
     const heading = document.createElement("h3");
     heading.textContent = title;
-    cardEl.append(heading);
-    const bars = spectrumBars(specs, kind, rangeSpec);
+    head.append(heading);
+    let badge = null;
+    if (options.fromWave) {
+      badge = document.createElement("span");
+      badge.className = "fromwave";
+      badge.textContent = "from wave";
+      head.append(badge);
+    }
+    cardEl.append(head);
+    const bars = spectrumBars(specs, kind, rangeSpec, options.preview,
+      options.onEdit);
     cardEl.append(bars.el, bars.labels);
 
     let base = null;
-    function begin() { base = bars.levels(); }
+    function begin() {
+      if (options.onEdit) options.onEdit();
+      base = bars.levels();
+    }
     function end() { base = null; }
     function apply(fn) {
       if (base === null) return;
@@ -869,6 +961,7 @@
     norm.className = "mini";
     norm.textContent = "norm";
     norm.addEventListener("click", () => {
+      if (options.onEdit) options.onEdit();
       const levels = bars.levels();
       const max = Math.max(...levels);
       if (max > 0) {
@@ -881,17 +974,24 @@
     to.className = "mini";
     to.textContent = kind === "a" ? "to b" : "to a";
     to.addEventListener("click", () => {
+      if (options.onEdit) options.onEdit();
       const levels = bars.levels();
       for (let i = 0; i < 16 && i < otherSpecs.length; ++i)
         setRaw(otherSpecs[i], levels[i]);
     });
     foot.append(norm, to);
     cardEl.append(foot);
+    if (badge !== null) {
+      spectrumUpdaters.push(() => {
+        badge.style.display = options.preview && options.preview() ? "" : "none";
+      });
+    }
     return cardEl;
   }
 
 
-  function spectrumDisplay(aSpecs, bSpecs, rangeA, rangeB, morphSpec) {
+  function spectrumDisplay(aSpecs, bSpecs, rangeA, rangeB, morphSpec,
+                           previewLevels) {
     const canvas = document.createElement("canvas");
     canvas.className = "panel-spectrum-display";
     canvas.width = 512;
@@ -932,7 +1032,8 @@
       context.lineTo(right, bottom);
       context.strokeStyle = "#2e2e2e";
       context.stroke();
-      const aLevels = aSpecs.map((spec) => values.get(spec.id) ?? 0);
+      const aLevels = (previewLevels && previewLevels()) ||
+        aSpecs.map((spec) => values.get(spec.id) ?? 0);
       const bLevels = bSpecs.map((spec) => values.get(spec.id) ?? 0);
       function outline(levels, first, color) {
         context.beginPath();
@@ -1301,13 +1402,20 @@
       const rangeB = all.find((spec) =>
         baseName(spec.name) === `op${op + 1}_spec_range_b`);
       const rangeCard = card("range", range);
+      const preview = () => getPreview(activePart, op);
+      const commit = () => commitPreview(activePart, op);
       const aCard = a.length === 16
-        ? spectrumCard("spectrum a", a, b, "a", rangeA) : null;
+        ? spectrumCard("spectrum a", a, b, "a", rangeA,
+                       { fromWave: true, preview, onEdit: commit })
+        : null;
       const bCard = b.length === 16
-        ? spectrumCard("spectrum b", b, a, "b", rangeB) : null;
+        ? spectrumCard("spectrum b", b, a, "b", rangeB,
+                       { onEdit: commit })
+        : null;
       if (rangeCard) col.append(rangeCard);
       if (aCard) col.append(aCard);
       if (bCard) col.append(bCard);
+      requestPreview(activePart, op);
       columns.append(col);
     }
     page.append(columns);
@@ -1337,7 +1445,9 @@
       const displayTitle = document.createElement("h3");
       displayTitle.textContent = "spectra";
       displayCard.append(displayTitle,
-        spectrumDisplay(aSpecs, bSpecs, rangeA, rangeB, morph));
+        spectrumDisplay(aSpecs, bSpecs, rangeA, rangeB, morph,
+                        () => getPreview(activePart, op)));
+      requestPreview(activePart, op);
       const envCard = card("morph env", env, {
         className: "env",
         graph: graphFor(morphRateNames(op, activePart),
@@ -1530,6 +1640,7 @@
     if (params.length === 0) return;
     startButton.disabled = true;
     setStatus("starting audio");
+    workletReady = false;
     try {
       audioContext = new AudioContext({
         sampleRate: 48000,
@@ -1547,6 +1658,7 @@
         const message = event.data;
         if (message.type === "ready") {
           const rate = audioContext.sampleRate;
+          workletReady = true;
           window.__p1.ready = true;
           window.__p1.rate = rate;
           window.__p1.paramCount = message.paramCount;
@@ -1558,6 +1670,8 @@
             values: Array.from(values.entries()),
           });
           node.port.postMessage({ type: "part", part: activePart });
+          for (let op = 0; op < 4; ++op)
+            requestPreview(activePart, op);
         } else if (message.type === "scope") {
           outputSamples = message.samples;
           let peak = 0;
@@ -1585,6 +1699,15 @@
           }
         } else if (message.type === "param") {
           window.__p1.lastParam = message.value;
+        } else if (message.type === "analysis") {
+          previewCache.set(message.key, {
+            wave: message.wave,
+            first: message.first,
+            levels: message.levels,
+          });
+          previewRequests.delete(message.request);
+          window.__p1.lastAnalysis = message;
+          for (const update of spectrumUpdaters) update();
         } else if (message.type === "error") {
           window.__p1.error = message.message;
           setStatus(`engine error: ${message.message}`);
@@ -1597,6 +1720,7 @@
       analyser.connect(audioContext.destination);
     } catch (error) {
       window.__p1.error = error.message;
+      workletReady = false;
       setStatus(`start failed: ${error.message}`);
       startButton.disabled = false;
     }
@@ -1638,6 +1762,8 @@
   setInterval(function () {
     for (const update of graphUpdaters) update();
     for (const update of spectrumUpdaters) update();
+    for (let op = 0; op < 4; ++op)
+      requestPreview(activePart, op);
   }, 120);
 
   partEl.addEventListener("change", function () {

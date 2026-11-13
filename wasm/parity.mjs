@@ -33,6 +33,20 @@ e.p1_create();
 if (e.p1_param_count() !== 846)
   fail(`parameter count is ${e.p1_param_count()}, expected 846`);
 
+function analysis(wave, first) {
+  e.p1_analyze(wave, first);
+  return Array.from(new Int32Array(e.memory.buffer, e.p1_analysis(), 16));
+}
+const sine = analysis(0, 1);
+if (sine[0] < 90 || sine[1] > 5)
+  fail(`the sine analysis is wrong: ${sine.slice(0, 3)}`);
+const saw = analysis(12, 1);
+if (saw[0] < 80 || saw[1] < 20)
+  fail(`the saw analysis is wrong: ${saw.slice(0, 3)}`);
+const sawHigh = analysis(12, 17);
+if (sawHigh[0] < 50)
+  fail(`the high saw range is wrong: ${sawHigh.slice(0, 3)}`);
+
 e.p1_reset();
 /* The native capture uses the omni channel, so the parity call does too. */
 e.p1_note_on(60, 100, 0xFFFFFFFF);

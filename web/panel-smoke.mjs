@@ -52,13 +52,31 @@ try {
   }
   console.log("pages:", counts.join(" | "));
 
+  await page.locator(".tab").nth(2).click();
+  await page.waitForTimeout(100);
+  const waveSelect = page.locator(".opcol").first()
+    .locator(".param-enum").filter({ hasText: "wave" }).locator("select");
+  await waveSelect.selectOption({ label: "saw" });
+  await page.waitForFunction(() => {
+    const preview = window.__p1.analysisFor(0, 0);
+    return preview && preview[1] > 10;
+  }, { timeout: 5000 });
+  const preview = await page.evaluate(() => window.__p1.analysisFor(0, 0));
+  console.log("from wave preview:", preview ? preview.slice(0, 3) : null);
+
   await page.locator(".tab").nth(4).click();
   await page.waitForTimeout(200);
+  const badgeVisible = await page.locator(".fromwave").first().isVisible();
+  if (!badgeVisible) throw new Error("the from wave badge is not visible");
   const bars = await page.locator(".specbars").first().boundingBox();
   await page.mouse.click(bars.x + bars.width * 0.5, bars.y + bars.height * 0.25);
   await page.waitForTimeout(200);
+  const waveform = await page.evaluate(() =>
+    window.__p1.paramValue("op1_waveform.p0"));
   const barValue = await page.evaluate(() => window.__p1.lastParam);
-  console.log("spectrum bar value:", barValue);
+  console.log("spectrum bar value:", barValue, "waveform:", waveform);
+  if (waveform !== 13)
+    throw new Error("the first bar edit did not commit the preview");
   if (!(barValue > 0)) throw new Error("the spectrum bar did not reach the engine");
 
   await page.locator(".tab").nth(2).click();

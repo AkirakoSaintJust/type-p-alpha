@@ -59,6 +59,21 @@ class P1Processor extends AudioWorkletProcessor {
       case "bend":
         e.p1_set_bend(message.value);
         break;
+      case "analyze": {
+        e.p1_analyze(message.wave, message.first);
+        const pointer = e.p1_analysis();
+        const levels = Array.from(
+          new Int32Array(e.memory.buffer, pointer, 16));
+        this.port.postMessage({
+          type: "analysis",
+          key: message.key,
+          request: message.request,
+          wave: message.wave,
+          first: message.first,
+          levels,
+        });
+        break;
+      }
       case "part":
         this.activePart = message.part === 1 ? 1 : 0;
         this.resetTapRings();

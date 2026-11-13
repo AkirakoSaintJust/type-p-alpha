@@ -55,12 +55,13 @@ remains at `http://localhost:8080/bare.html` for the smallest audio and paramete
 smoke test.
 
 The panel now carries the algorithm graph, the output scope and spectro toggle,
-the envelope graphs, the sixteen-bar spectrum editors and the `op spectra mod`
-A/B display with the waveform overlay and morph marker. The patch and part
-library and the final layout polish are the next layer. The panel currently
-exposes every parameter and proves the full message bridge and the tap path.
+the envelope graphs, the sixteen-bar spectrum editors, the `from wave` preview and
+the `op spectra mod` A/B display with the waveform overlay and morph marker. The
+patch and part library and the final layout polish are the next layer. The panel
+currently exposes every parameter and proves the full message bridge and the tap
+path.
 
-The module is about 157 KB with no imports. It exports `memory` and the wrapper
+The module is about 164 KB with no imports. It exports `memory` and the wrapper
 functions. Memory is fixed at 32 MB, so the worklet does not need to refresh typed
 arrays during playback.
 
@@ -75,11 +76,13 @@ p1_set_param, p1_get_param
 p1_note_on, p1_note_off, p1_all_notes_off, p1_set_bend
 p1_render, p1_output, p1_tap
 p1_param_count
+p1_analyze, p1_analysis
 ```
 
 `p1_output` returns `frames * 2` int32 samples. `p1_tap` returns one of the ten
-256-frame tap buffers for the scopes. The parameter ids are the engine ids in
-`engine/gen/params.json`.
+256-frame tap buffers for the scopes. `p1_analyze` turns one mip-0 wave table into
+sixteen normalized harmonic magnitudes for the `from wave` preview. The parameter
+ids are the engine ids in `engine/gen/params.json`.
 
 ## Next stage
 

@@ -155,13 +155,13 @@ docker build -f docker/Dockerfile.wasm -t type-p-alpha-wasm .
 docker run --rm -v "$PWD:/work" -w /work type-p-alpha-wasm sh -c "./wasm/build.sh"
 ```
 
-The module is about 157 KB, has no imports and exports `memory` plus the wrapper
+The module is about 164 KB, has no imports and exports `memory` plus the wrapper
 functions in `wasm/p1_wasm.c`. The AudioWorklet and the browser pages are in
 `web/`: `index.html` redirects to `panel.html`, the full parameter panel, and
 `bare.html` is the bare audio and parameter smoke test. The panel loads
 `engine/gen/params.json`, groups the parameters into the six tabs and sends every
 control through the worklet. It carries the algorithm graph, the output scope and
-spectro toggle, the envelope graphs, the sixteen-bar spectrum editors, the
-`op spectra mod` A/B display and the per-operator tap scopes. The patch and part
-library and the final layout polish are the next layer. The JUCE editor itself is
-not a browser target.
+spectro toggle, the envelope graphs, the sixteen-bar spectrum editors, the live
+`from wave` preview, the `op spectra mod` A/B display and the per-operator tap
+scopes. The patch and part library and the final layout polish are the next layer.
+The JUCE editor itself is not a browser target.
