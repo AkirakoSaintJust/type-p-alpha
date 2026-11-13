@@ -52,15 +52,22 @@ std::vector<int16_t> sineTable(int size)
 
 std::vector<int16_t> recipe(int harmonics, double tilt, int formant, double peak)
 {
-    std::vector<int16_t> amps(static_cast<std::size_t>(harmonics));
+    std::vector<double> raw(static_cast<std::size_t>(harmonics));
+    double total = 0.0;
     for (int h = 1; h <= harmonics; ++h) {
         double value = std::pow(static_cast<double>(h), -tilt);
         if (formant > 0) {
             const double distance = static_cast<double>(h - formant);
             value += peak * std::exp(-distance * distance / 8.0);
         }
-        amps[static_cast<std::size_t>(h - 1)] =
-            static_cast<int16_t>(std::lround(std::min(1.0, value) * 32767.0));
+        raw[static_cast<std::size_t>(h - 1)] = value;
+        total += value;
+    }
+    const double scale = total > 0.0 ? 0.95 / total : 0.0;
+    std::vector<int16_t> amps(static_cast<std::size_t>(harmonics));
+    for (int h = 1; h <= harmonics; ++h) {
+        amps[static_cast<std::size_t>(h - 1)] = static_cast<int16_t>(
+            std::lround(raw[static_cast<std::size_t>(h - 1)] * scale * 32767.0));
     }
     return amps;
 }
@@ -364,6 +371,111 @@ void aliasQuality()
     }
 }
 
+int mipForBright(double fundamental, int harmonics, int levels)
+{
+    int mip = 0;
+    while (mip + 1 < levels && (harmonics >> mip) * fundamental > kRate * 0.5)
+        ++mip;
+    return mip;
+}
+
+double harmonicEnergy(const WaveTable& table, int mip, bool linear,
+                      double fundamental, int first, int last)
+{
+    constexpr int kWindow = 4096;
+    std::vector<double> output(static_cast<std::size_t>(kWindow));
+    double phase = 0.0;
+    const double step = fundamental / kRate;
+    for (int i = 0; i < kWindow; ++i) {
+        output[static_cast<std::size_t>(i)] = readWave(table, mip, phase, linear);
+        phase += step;
+        if (phase >= 1.0)
+            phase -= 1.0;
+    }
+    const double base = magnitude(output, fundamental);
+    if (base < 1e-12)
+        return -120.0;
+    double energy = 0.0;
+    for (int h = first; h <= last; ++h) {
+        const double m = magnitude(output, h * fundamental);
+        energy += m * m;
+    }
+    if (energy < 1e-24)
+        return -120.0;
+    return 10.0 * std::log10(energy / (base * base));
+}
+
+double tableError(const WaveTable& table, int mip, bool linear,
+                  double fundamental, const std::vector<int16_t>& amps,
+                  int limit)
+{
+    constexpr int kWindow = 4096;
+    std::vector<double> output(static_cast<std::size_t>(kWindow));
+    double phase = 0.0;
+    const double step = fundamental / kRate;
+    for (int i = 0; i < kWindow; ++i) {
+        output[static_cast<std::size_t>(i)] = readWave(table, mip, phase, linear);
+        phase += step;
+        if (phase >= 1.0)
+            phase -= 1.0;
+    }
+    double difference = 0.0;
+    double ideal = 0.0;
+    phase = 0.0;
+    for (int i = 0; i < kWindow; ++i) {
+        double reference = 0.0;
+        for (int h = 1; h <= limit; ++h) {
+            reference += amps[static_cast<std::size_t>(h - 1)] / 32768.0 *
+                         std::sin(2.0 * kPi * h * phase);
+        }
+        const double error = output[static_cast<std::size_t>(i)] - reference;
+        difference += error * error;
+        ideal += reference * reference;
+        phase += step;
+        if (phase >= 1.0)
+            phase -= 1.0;
+    }
+    if (ideal < 1e-24)
+        return -120.0;
+    return 10.0 * std::log10(difference / ideal + 1e-30);
+}
+
+void qualityExtras()
+{
+    std::printf("\nmip brightness at C7, dB relative to the fundamental\n");
+    std::printf("  H   N  conservative  bright\n");
+    const double c7 = 440.0 * std::pow(2.0, (96.0 - 69.0) / 12.0);
+    for (int harmonics : {16, 32}) {
+        const auto amps = recipe(harmonics, 1.0, 6, 0.8);
+        for (int size : {256, 512}) {
+            const auto table = buildWaveTable(harmonics, size, amps);
+            const int levels = mipLevels(harmonics);
+            const int conservative = mipFor(c7, harmonics, levels);
+            const int bright = mipForBright(c7, harmonics, levels);
+            const double c = harmonicEnergy(table, conservative, true, c7, 5, 8);
+            const double b = harmonicEnergy(table, bright, true, c7, 5, 8);
+            std::printf(" %2d %3d  %7.1f       %7.1f\n", harmonics, size, c, b);
+        }
+    }
+
+    std::printf("\nlow-note interpolation, 32/256, dB relative to the ideal\n");
+    std::printf(" note  nearest  linear\n");
+    const auto amps = recipe(32, 1.0, 6, 0.8);
+    const auto table = buildWaveTable(32, 256, amps);
+    const int levels = mipLevels(32);
+    for (int note : {48, 60}) {
+        const double fundamental =
+            440.0 * std::pow(2.0, (note - 69) / 12.0);
+        const int mip = mipFor(fundamental, 32, levels);
+        const int limit = 32 >> mip;
+        const double nearest =
+            tableError(table, mip, false, fundamental, amps, limit);
+        const double linear =
+            tableError(table, mip, true, fundamental, amps, limit);
+        std::printf(" %4d  %7.1f  %7.1f\n", note, nearest, linear);
+    }
+}
+
 double oscillatorSeconds(bool additive)
 {
     constexpr int kHarmonics = 16;
@@ -545,6 +657,7 @@ int main(int argc, char** argv)
                 (additive - single) / 10.0 * 100.0);
 
     aliasQuality();
+    qualityExtras();
 
     audition(wavPath);
     auditionOscillator(oscWav);

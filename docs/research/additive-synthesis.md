@@ -257,85 +257,94 @@ A 16 harmonic table at 256 samples for a four-operator part:
 
 ## Headless measurement
 
-The benchmark is `plugin/tests/additive_bench.cpp`. It is a console target, not a
-ctest gate. The baseline is the real engine at 20 voices and four operators. The
-generator is the proposed shared-part algorithm measured in isolation. The
-oscillator prototype measures the single-table nearest read and the two-table
-linear and mip read at 80 operator voices, with the same 16/256 tables. The
-auditions are simple table oscillators.
+The standalone harness is `plugin/tests/additive_bench.cpp`. It is a console
+target, not a ctest gate. The baseline is the real engine at 20 voices and four
+operators. The generator is the proposed shared-part algorithm measured in
+isolation. The oscillator prototype measures the single-table nearest read and the
+two-table linear and mip read at 80 operator voices, with the same 16/256 tables.
+The integrated prototype is `plugin/tools/additive_prototype.py` and
+`plugin/tests/additive_engine_bench.cpp`; the script copies the generated engine
+into the build tree and replaces the four operator reads with the additive pair.
 
 Platform: Windows 11 build 26300, AMD Ryzen 7 5825U (8 cores, 16 threads), clang
-23.1.5, Release. The figures are the minimum of three runs, which removes most of
-the background noise; the run-to-run spread was a few percent.
+23.1.5, Release. The figures are one representative run and the minimum of three
+iterations inside each measurement. The CPU clock moved the run totals by up to 25
+percent, so read the shares as a range.
 
 | Work | Time for 60 s | Share of one core |
 | --- | --- | --- |
-| Baseline, 20 voices, four operators | 1,030 ms | 1.72% |
-| 16/256 table, eight tables, 344 Hz | 560 ms | 0.93% |
-| 16/256 table, 1,378 Hz | 2,283 ms | 3.80% |
-| 32/256 table, 344 Hz | 1,276 ms | 2.13% |
-| 32/512 table, 344 Hz | 2,650 ms | 4.42% |
-| 32/512 table, 1,378 Hz | 10,831 ms | 18.05% |
-| Single-table nearest read, 80 voices | 657 ms | 1.10% |
-| Two-table linear and mip read, 80 voices | 2,084 ms | 3.47% |
+| Baseline, 20 voices, four operators | 931 ms | 1.55% |
+| 16/256 table, eight tables, 344 Hz | 515 ms | 0.86% |
+| 16/256 table, 1,378 Hz | 2,063 ms | 3.44% |
+| 32/256 table, 344 Hz | 1,039 ms | 1.73% |
+| 32/512 table, 344 Hz | 2,065 ms | 3.44% |
+| 32/512 table, 1,378 Hz | 8,491 ms | 14.15% |
+| Isolated single-table nearest read, 80 voices | 476 ms | 0.79% |
+| Isolated two-table linear and mip read, 80 voices | 1,519 ms | 2.53% |
+| Integrated additive engine, 20 voices | 1,253 ms | 2.09% |
 
-The generator sustains about 1.0 to 1.2 billion multiply-adds per second on this
-machine. The table sizes are 256 and 512 samples; the eight tables are four
-operators and two parts.
+The generator sustains about 1.0 to 1.3 billion multiply-adds per second on this
+machine. The eight tables are four operators and two parts.
 
-The 16/256 path at 344 Hz adds 0.93% to the baseline. The two-table read costs
-2.38% more than the single-table nearest read, so the read path is the larger new
-cost. A mip set roughly doubles the generation, so the 16/256 path at 344 Hz lands
-near 5.9% of one core with the baseline and the read. The 32/512 path at 344 Hz is
-about 12.9% with mips, which is possible but no longer cheap. The 32/512 path at
-1,378 Hz is about 40%, so the fast update is the one to watch, as the estimates
-suggested. The 32/256 path at 344 Hz is about 8.4%; its eight samples per cycle at
-the top harmonic are the next thing to check.
+The integrated engine is 2.09% against the 1.55% baseline, so the additive
+oscillator adds about 0.54% in the real voice graph. The isolated read model
+overestimated the cost because its double loop differs from the inlined engine.
+The table generation adds 0.86% at 16/256 and 344 Hz. A mip set roughly doubles
+that, so the 16/256 path at 344 Hz is about 3% of one core without mips and 3.8%
+with them. The 32/512 path at 344 Hz is about 5.5% and 9% with mips. The 32/512
+path at 1,378 Hz is about 16% and 30% with mips, so the fast update remains the one
+to watch. The 32/256 path at 344 Hz is about 3.8% and 5.6% with mips.
 
-These figures are a cost model. The generator is isolated and the oscillator read
-is a prototype; the baseline is the real engine. The next step is one integrated
-table and one morph in the engine graph, then the same 20-voice render through the
-real oscillator.
+The table must be normalised. The first run summed the harmonics without
+normalising, the table clipped, and the alias floor read as -23 dB. The normalised
+table gives a table error at C3 and C4 of -22.1 dB with a nearest read and -47.9 dB
+with linear interpolation. The alias floor at C7 is:
 
-The oscillator prototype also measures the alias floor at C7, 2093 Hz, for the 16
-and 32 harmonic tables. The number is the energy at the first folded frequencies
-relative to the fundamental.
+| H/N | Mip on, nearest | Mip on, linear | Mip off, nearest | Mip off, linear |
+| --- | --- | --- | --- | --- |
+| 16/256 | -61.6 dB | -87.3 dB | -13.9 dB | -13.9 dB |
+| 16/512 | -61.6 dB | -90.3 dB | -13.9 dB | -13.9 dB |
+| 32/256 | -57.4 dB | -72.3 dB | -11.7 dB | -11.8 dB |
+| 32/512 | -57.5 dB | -72.6 dB | -11.6 dB | -11.6 dB |
 
-| Table at C7 | Mip on | Mip off |
+The mip removes 43 to 76 dB of folded energy, and the linear read adds 13 to 29 dB
+at the mip. The linear read is the clear choice. The 256 and 512 sample sizes do
+not change the alias floor at C7.
+
+The conservative mip costs brightness. The fifth to eighth harmonics at C7 measure:
+
+| H/N | Conservative mip | Bright mip |
 | --- | --- | --- |
-| 16/256, nearest | -23.4 dB | -12.3 dB |
-| 16/256, linear | -23.4 dB | -12.4 dB |
-| 16/512, linear | -23.3 dB | -12.3 dB |
-| 32/256, linear | -22.9 dB | -12.1 dB |
-| 32/512, linear | -22.9 dB | -12.0 dB |
+| 16/256 | -91.6 dB | +4.2 dB |
+| 16/512 | -94.0 dB | +4.2 dB |
+| 32/256 | -88.8 dB | +4.2 dB |
+| 32/512 | -89.5 dB | +4.2 dB |
 
-The mip removes about 11 dB of the folded energy. The nearest and linear reads and
-the 256 and 512 samples do not move the floor, which suggests the remaining -23 dB
-is the analysis window rather than the table. The conservative mip keeps the top
-harmonic an octave below Nyquist, so the top octave is duller; the alias test does
-not measure that loss. The brightness trade-off is the next mip experiment.
+The bright mip puts the top harmonic just below Nyquist and recovers the group;
+the conservative mip keeps it an octave below and loses it. A production policy can
+sit between the two, or the table can carry more mip levels.
 
-The first audition, `build/additive-headless.wav`, morphs per sample from the dark
-to the bright table. The second, `build/additive-oscillator.wav`, uses the 344 Hz
-morph with the mix interpolated across the full 128-sample block. The first pass
-used a 32-sample ramp and then held the mix for the remaining 96 samples, and the
-staircase was audible around three seconds, where the bright table's formant
-enters. The full-block interpolation keeps the control-rate update continuous. The
-engine's 1,378 Hz control block would interpolate over 32 samples, so the 344 Hz
-file is the stress case.
+The auditions are:
+
+- `build/additive-headless.wav`: the per-sample morph from the standalone table
+  oscillator.
+- `build/additive-oscillator.wav`: the 344 Hz control-rate morph with the mix
+  interpolated across the full block.
+- `build/additive-engine.wav`: the integrated engine, four notes, with the
+  operator amplitude envelope as the morph.
+
+The first two are table oscillators. The third is the real voice graph with the
+additive oscillator.
 
 ## Remaining experiments
 
-- **Integrated table:** add one table and one morph to the engine graph and repeat
-  the 20-voice baseline, including the oscillator read, the mip selection and the
-  envelopes.
-- **Mip brightness:** compare the conservative mip with a less conservative level at
-  the top octave, measuring both the recovered harmonics and the alias risk.
-- **Low-note interpolation:** compare nearest and linear reads on the 32/256 table
-  at C3 to C5, where the table quantisation rather than the alias dominates.
+- **Dynamic table generation:** regenerate the shared table at 344 or 1,378 Hz in
+  the engine and crossfade, with the parameter surface and the normalisation.
+- **Mip policy:** choose a level between the conservative and the Nyquist edge,
+  and measure the alias risk under vibrato and detune.
 - **Formant hybrid:** four per-voice peaks on the table output. Check the fixed
   formants across two octaves and the CPU cost.
-- **Perceptual:** the two auditions, a formant peak and a 32 harmonic saw, judged
+- **Perceptual:** the three auditions, a formant peak and a 32 harmonic saw, judged
   against the spectral character and the envelope, LFO and modulation timing.
 
 The stop criteria are the current engine's exact render when the additive mode is

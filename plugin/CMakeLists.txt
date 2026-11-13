@@ -131,6 +131,37 @@ target_link_libraries(additive_bench PRIVATE p1_engine)
 target_include_directories(additive_bench PRIVATE "${P1_GENERATED_DIR}")
 add_dependencies(additive_bench p1_params)
 
+set(P1_ADDITIVE_DIR "${CMAKE_BINARY_DIR}/additive-prototype")
+set(P1_ADDITIVE_C "${P1_ADDITIVE_DIR}/type_p_alpha_dsp.c")
+set(P1_ADDITIVE_H "${P1_ADDITIVE_DIR}/additive_tables.h")
+add_custom_command(
+    OUTPUT "${P1_ADDITIVE_C}" "${P1_ADDITIVE_H}"
+    COMMAND "${CMAKE_COMMAND}" -E make_directory "${P1_ADDITIVE_DIR}"
+    COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tools/additive_prototype.py"
+            --engine "${P1_SYNTH_GEN}" --out "${P1_ADDITIVE_DIR}"
+    DEPENDS "${P1_SYNTH_GEN}/type_p_alpha_dsp.c"
+            "${CMAKE_CURRENT_SOURCE_DIR}/tools/additive_prototype.py"
+    VERBATIM
+)
+add_library(p1_engine_additive STATIC
+    engine/Engine.cpp
+    "${P1_ADDITIVE_C}"
+    "${P1_SYNTH_GEN}/tables.c"
+)
+target_include_directories(p1_engine_additive PUBLIC
+    "${CMAKE_CURRENT_SOURCE_DIR}/engine"
+    "${P1_SYNTH_GEN}"
+    "${P1_GENERATED_DIR}"
+    "${P1_ENGINE}/hal"
+    PRIVATE "${P1_ADDITIVE_DIR}"
+)
+add_dependencies(p1_engine_additive p1_params)
+
+add_executable(additive_engine_bench tests/additive_engine_bench.cpp)
+target_link_libraries(additive_engine_bench PRIVATE p1_engine_additive)
+target_include_directories(additive_engine_bench PRIVATE "${P1_GENERATED_DIR}")
+add_dependencies(additive_engine_bench p1_params)
+
 add_executable(rate_bridge_test tests/rate_bridge_test.cpp)
 target_link_libraries(rate_bridge_test PRIVATE p1_engine)
 add_test(NAME rate_bridge COMMAND rate_bridge_test)
