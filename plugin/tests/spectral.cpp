@@ -206,6 +206,78 @@ bool checkMorphLfo()
     return true;
 }
 
+bool checkColdCommit()
+{
+    p1::Engine engine;
+    engine.reset();
+    if (!setupCarrier(engine))
+        return false;
+    if (!setAll(engine, {
+            {"op1_spec_a1.p0", 0}, {"op1_spec_a2.p0", 99},
+            {"op1_spec_b1.p0", 0}, {"op1_spec_b2.p0", 0},
+            {"op1_spec_morph.p0", 0},
+        })) {
+        return false;
+    }
+    render(engine, 64); /* build the first table with the part silent */
+    if (!setAll(engine, {
+            {"op1_spec_a1.p0", 99}, {"op1_spec_a2.p0", 0},
+        })) {
+        return false;
+    }
+    render(engine, 32); /* one control tick, committed without a crossfade */
+    engine.noteOn(60, 100, 0);
+    const auto out = render(engine, 1024);
+    const double h1 = magnitude(out, 0, 1024, kF0);
+    const double h2 = magnitude(out, 0, 1024, 2.0 * kF0);
+    if (!(h1 > h2 * 4.0)) {
+        std::printf("spectral: the cold spectrum waited for a crossfade "
+                    "(h1 %.2f, h2 %.2f)\n", h1, h2);
+        return false;
+    }
+    return true;
+}
+
+bool checkCrossfadeDirection()
+{
+    p1::Engine engine;
+    engine.reset();
+    if (!setupCarrier(engine))
+        return false;
+    if (!setAll(engine, {
+            {"op1_spec_a1.p0", 99}, {"op1_spec_a2.p0", 0},
+            {"op1_spec_b1.p0", 0}, {"op1_spec_b2.p0", 0},
+            {"op1_spec_morph.p0", 0},
+        })) {
+        return false;
+    }
+    engine.noteOn(60, 100, 0);
+    render(engine, 4096); /* settle on h1 */
+    if (!setAll(engine, {
+            {"op1_spec_a1.p0", 0}, {"op1_spec_a2.p0", 99},
+        })) {
+        return false;
+    }
+    const auto first = render(engine, 256);
+    const double firstH1 = magnitude(first, 0, 256, kF0);
+    const double firstH2 = magnitude(first, 0, 256, 2.0 * kF0);
+    if (!(firstH1 > firstH2)) {
+        std::printf("spectral: the crossfade jumped to the new table "
+                    "(h1 %.2f, h2 %.2f)\n", firstH1, firstH2);
+        return false;
+    }
+    render(engine, 2048);
+    const auto settled = render(engine, 256);
+    const double settledH1 = magnitude(settled, 0, 256, kF0);
+    const double settledH2 = magnitude(settled, 0, 256, 2.0 * kF0);
+    if (!(settledH2 > settledH1 * 2.0)) {
+        std::printf("spectral: the crossfade did not reach the new table "
+                    "(h1 %.2f, h2 %.2f)\n", settledH1, settledH2);
+        return false;
+    }
+    return true;
+}
+
 } // namespace
 
 bool checkTable()
@@ -272,7 +344,8 @@ bool checkRange()
 
 int main()
 {
-    if (!checkTable() || !checkMip() || !checkRange())
+    if (!checkTable() || !checkMip() || !checkRange() || !checkColdCommit() ||
+        !checkCrossfadeDirection())
         return 1;
     if (!checkMorph() || !checkMorphEnvelope() || !checkMorphLfo())
         return 1;

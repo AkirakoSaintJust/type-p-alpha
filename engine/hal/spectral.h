@@ -7,6 +7,11 @@
  * blends them with the per-voice morph; the bank is regenerated at the control
  * rate when a level changes.
  *
+ * The oscillator marks each part as read on every sample. When a part has not
+ * been read since the last control tick, a new table goes straight into place
+ * without the crossfade, so a cold operator has the new spectrum before its
+ * next note starts.
+ *
  * The bank is one int16_t[8192] per operator. A 256-sample table is used for
  * every mip, and the levels carry 16, 8, 4, 2 and 1 harmonics.
  */
@@ -31,6 +36,7 @@
 #define P1_SPEC_TARGET 2
 #define P1_SPEC_HASH 4
 #define P1_SPEC_TARGET_HASH 8
+#define P1_SPEC_USED 12
 
 static inline int16_t p1_spectral_clamp16(int32_t v)
 {
@@ -104,7 +110,9 @@ static inline void p1_spectral_copy(int16_t *dst, const int16_t *src)
 }
 
 /* Generate or advance the bank for both parts. Called once per control block
- * at the first voice. One spectrum changes at a time per part. */
+ * at the first voice. One spectrum changes at a time per part. The oscillator
+ * sets the used flag on every read, so a silent part commits its new table at
+ * once and an audible part crossfades over 256 ticks. */
 static inline void p1_spectral_tick(
     int16_t *bank, const int32_t *waveform, const int32_t *range_a,
     const int32_t *range_b,
@@ -121,23 +129,40 @@ static inline void p1_spectral_tick(
     const int32_t *b15, const int32_t *b16)
 {
     for (int part = 0; part < P1_SPEC_PARTS; ++part) {
+        /* The oscillator sets this on every read. A clear flag means no voice
+         * read this part's bank since the last tick, so a new table can go
+         * straight into place. */
+        const int used = bank[P1_SPEC_USED + part] != 0;
+        bank[P1_SPEC_USED + part] = 0;
         if (waveform[part] != 13)
             continue;
 
-        const int16_t xfade = bank[P1_SPEC_XFADE + part];
-        if (xfade > 0) {
-            const int16_t next = (int16_t)(xfade - 17);
-            if (next <= 0) {
+        if (bank[P1_SPEC_XFADE + part] > 0) {
+            if (!used) {
+                /* The part went cold mid-crossfade. No reader can hear the old
+                 * table, so commit the shadow now. */
                 const int target = bank[P1_SPEC_TARGET + part];
-                int16_t *dst = bank + (target ? P1_SPEC_B(part) : P1_SPEC_A(part));
+                int16_t *dst = bank +
+                    (target ? P1_SPEC_B(part) : P1_SPEC_A(part));
                 p1_spectral_copy(dst, bank + P1_SPEC_SHADOW(part));
                 bank[P1_SPEC_HASH + part * 2 + target] =
                     bank[P1_SPEC_TARGET_HASH + part * 2 + target];
                 bank[P1_SPEC_XFADE + part] = 0;
             } else {
-                bank[P1_SPEC_XFADE + part] = next;
+                const int16_t next = (int16_t)(bank[P1_SPEC_XFADE + part] - 17);
+                if (next <= 0) {
+                    const int target = bank[P1_SPEC_TARGET + part];
+                    int16_t *dst = bank +
+                        (target ? P1_SPEC_B(part) : P1_SPEC_A(part));
+                    p1_spectral_copy(dst, bank + P1_SPEC_SHADOW(part));
+                    bank[P1_SPEC_HASH + part * 2 + target] =
+                        bank[P1_SPEC_TARGET_HASH + part * 2 + target];
+                    bank[P1_SPEC_XFADE + part] = 0;
+                } else {
+                    bank[P1_SPEC_XFADE + part] = next;
+                }
+                continue;
             }
-            continue;
         }
 
         const int32_t *const sets[2][16] = {
@@ -158,6 +183,15 @@ static inline void p1_spectral_tick(
                 continue;
             p1_spectral_table(bank + P1_SPEC_SHADOW(part), levels,
                               first[spectrum]);
+            if (!used) {
+                /* No reader, so skip the crossfade and make the table current
+                 * before the next note starts. */
+                int16_t *dst = bank +
+                    (spectrum ? P1_SPEC_B(part) : P1_SPEC_A(part));
+                p1_spectral_copy(dst, bank + P1_SPEC_SHADOW(part));
+                bank[P1_SPEC_HASH + part * 2 + spectrum] = (int16_t)hash;
+                break;
+            }
             bank[P1_SPEC_TARGET + part] = (int16_t)spectrum;
             bank[P1_SPEC_TARGET_HASH + part * 2 + spectrum] = (int16_t)hash;
             bank[P1_SPEC_XFADE + part] = 256;
@@ -187,10 +221,12 @@ static inline int32_t p1_spectral_blend(int32_t a, int32_t b, int32_t weight)
 /* Read the a and b tables at the mip and blend them with the morph. The mip
  * input is the phasor's nine-level selector: 0..4 use the 16-harmonic table,
  * 5 uses 8, 6 uses 4, 7 uses 2 and 8 uses 1. */
-static inline int32_t p1_spectral_read(const int16_t *bank, int part,
+static inline int32_t p1_spectral_read(int16_t *bank, int part,
                                        uint32_t phase, uint32_t mip,
                                        int32_t morph)
 {
+    if (bank[P1_SPEC_USED + part] == 0)
+        bank[P1_SPEC_USED + part] = 1;
     const int level = mip > 8u ? 4 : (mip > 4u ? (int)(mip - 4u) : 0);
     const int16_t *a = bank + P1_SPEC_A(part) + level * P1_SPEC_SIZE;
     const int16_t *b = bank + P1_SPEC_B(part) + level * P1_SPEC_SIZE;
@@ -203,7 +239,10 @@ static inline int32_t p1_spectral_read(const int16_t *bank, int part,
         const int16_t *shadow =
             bank + P1_SPEC_SHADOW(part) + level * P1_SPEC_SIZE;
         const int32_t sv = p1_spectral_lerp(shadow, phase);
-        const int32_t xw = xfade * 128;
+        /* xfade counts down from 256, so the weight ramps from the old table
+         * (0) to the shadow table (32640 at xfade 1). The tick copies the
+         * shadow into place when the count reaches zero. */
+        const int32_t xw = (256 - xfade) * 128;
         if (target == 0)
             av = p1_spectral_blend(av, sv, xw);
         else

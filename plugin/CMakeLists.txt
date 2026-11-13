@@ -136,6 +136,11 @@ target_include_directories(spectral PRIVATE "${P1_GENERATED_DIR}")
 add_dependencies(spectral p1_params)
 add_test(NAME spectral COMMAND spectral)
 
+add_executable(spectral_bench tests/spectral_bench.cpp)
+target_link_libraries(spectral_bench PRIVATE p1_engine)
+target_include_directories(spectral_bench PRIVATE "${P1_GENERATED_DIR}")
+add_dependencies(spectral_bench p1_params)
+
 add_executable(additive_bench tests/additive_bench.cpp)
 target_link_libraries(additive_bench PRIVATE p1_engine)
 target_include_directories(additive_bench PRIVATE "${P1_GENERATED_DIR}")

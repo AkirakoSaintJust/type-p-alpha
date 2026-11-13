@@ -102,18 +102,30 @@ stored spectra. The preview is not written on page open.
 - **Per-sample and per-block operations:** two table reads and one linear blend per
   spectral oscillator sample. The table generation runs on the control tick.
   The analysis preview is a table lookup in the editor, not a runtime DFT.
-- **Instance memory, CPU, preset size:** the spectral bank is 20,480 bytes per part
-  plus a 20,480-byte shadow per part, so 81,920 bytes for both parts. The part block
-  grows by 180 spectral parameters, 720 bytes per part; the harmonic range adds 8
-  more, for 752 bytes per part. The measured costs are 1.7% of one
-  core for 16 tables at 344 Hz without mips, 3.4% with five mips, and 2.46% for the
-  full 20-voice graph with the linear read. The 13-wave table is 37,888 samples,
-  75,776 bytes. The bank is bounded.
+- **Instance memory, CPU, preset size:** the spectral bank is 8,192 signed 16-bit
+  samples per operator, so 16,384 bytes per operator and 65,536 bytes for four
+  operators. Each part reads its two tables and the shadow at the selected mip, so a
+  voice touches 3 x 256 samples for the operator. The part block grows by 180
+  spectral parameters, 720 bytes per part; the harmonic range adds 8 more, for 752
+  bytes per part. The measured costs are 1.7% of one core for 16 tables at 344 Hz
+  without mips, 3.4% with five mips, and 2.46% for the full 20-voice graph with the
+  linear read. The 13-wave table is 37,888 samples, 75,776 bytes. The bank is
+  bounded.
+- **Table update schedule:** `spectral_bench` measures about 9 µs to generate one
+  spectrum (five mips, 31 harmonic sums per sample) on the Windows clang-cl build.
+  A block that changes all eight spectra costs about 45 µs mean and 90 µs worst with
+  one part playing, against 11 µs steady. With both parts playing it costs about
+  17 µs mean and 93 µs worst, because the crossfade spreads the generation across
+  ticks. The spike is generation work, not cache thrash: a voice reads 1.5 KB of
+  tables and a generation writes 2.5 KB of shadow plus 2.5 KB of target.
 - **Overflow/overload policy:** the generated table is peak normalised to Q15, so
   the blend of two normalised tables stays in range. The morph is clamped. A dirty
-  operator regenerates on the control tick and crossfades, so a level change cannot
-  interrupt the read. The table update and the read run on the same core, so the
-  table update tick has to fit inside the block budget.
+  operator regenerates on the control tick. An audible part crossfades from the old
+  table to the new one over 256 ticks (about 10 ms), then copies the shadow into
+  place. A part that has not been read since the last tick commits the new table at
+  once, without the crossfade, so a cold operator's next note starts on the new
+  spectrum. The table update and the read run on the same core, so the table update
+  tick has to fit inside the block budget.
 - **Division, shift, and range analysis:** no per-sample division. The blend uses a
   Q15 multiply and shift. The table index is the existing 10-bit phase and mip
   layout.
@@ -133,8 +145,8 @@ stored spectra. The preview is not written on page open.
   `plugin/juce/PluginProcessor.cpp`, `plugin/juce/PluginProcessor.h` and
   `plugin/juce/CMakeLists.txt`.
 - **Tests:** `plugin/tests/wavetable.cpp`, `plugin/tests/spectral.cpp`,
-  `engine_parity`, `plugin_smoke`, `plugin_stability`, `preset_smoke` and
-  `editor_snapshot`.
+  `plugin/tests/spectral_bench.cpp`, `engine_parity`, `plugin_smoke`,
+  `plugin_stability`, `preset_smoke` and `editor_snapshot`.
 - **Design:** `design/spectral.md`, `design/waveforms.md`, `design/README.md`,
   `design/juce.md` and `design/mockup.html`.
 - **Public contract:** `kP1ParamSpecs`, the generated `p1_wave_base` and
@@ -158,8 +170,9 @@ stored spectra. The preview is not written on page open.
   until the first A-card edit, and the mod display must show both outlines and the
   morph marker. The part block and manifest counts must match 416 and 846.
 - **Evidence artefact:** a wave table checksum test, a spectral table and morph
-  test, an editor page snapshot, a `ctest` log, a pluginval log and the measured
-  table/CPU figures. The golden images are regenerated in the Linux pass.
+  test, a cold-commit and crossfade-direction test, the schedule bench, an editor
+  page snapshot, a `ctest` log, a pluginval log and the measured table/CPU figures.
+  The golden images are regenerated in the Linux pass.
 
 ### Staged evidence
 
@@ -172,6 +185,10 @@ stored spectra. The preview is not written on page open.
    are in. The 256-sample table reads with a
    24-bit phase fraction; the first pass used the 1024-sample shift and played the
    table four times too high. The Windows `ctest` run is 12 of 12.
+   The cold commit and the crossfade direction are in: a silent part commits at
+   once, and an audible part ramps from the old table to the new one over 256 ticks.
+   `spectral_bench` measures about 9 µs per generated spectrum and under 100 µs
+   worst for a block that changes all eight spectra.
 3. **Editor pages:** in. The two tabs, the six-tab bar, the bar editor, the macros,
    the selected-wave preview with the `from wave` badge, the first A-card edit
    commit, the copy and paste, and the page index remap. The saw preview snapshot
