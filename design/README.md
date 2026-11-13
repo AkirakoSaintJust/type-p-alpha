@@ -3,11 +3,11 @@
 The shared visual language for the Type P.alpha editor. The clickable mockup at
 `design/mockup.html` is the reference implementation, and
 `tokens.json` is the machine-readable source. The CSS projection is `tokens.css`,
-the platform notes are in `juce.md`, and the spectral control map is in
-`spectral.md`.
+the platform notes are in `juce.md`, the spectral control map is in `spectral.md`,
+and the waveform list and analysis are in `waveforms.md`.
 
-Status: v1.3 draft, 2026-11-13. Adds the `operator spectra` and `op spectra mod`
-pages, the spectrum editor and the morph controls.
+Status: v1.4 draft, 2026-11-13. Adds the spectral pages, the waveform preview and
+the `part fx/mod` tab move.
 
 ## Principles
 
@@ -201,7 +201,7 @@ and the selected part button has a green border and green text.
 
 ### Tabs
 
-`patch settings`, `operators`, `operator lfos`, `fx / mod`, `operator spectra`,
+`patch settings`, `part fx/mod`, `operators`, `operator lfos`, `operator spectra`,
 `op spectra mod`, with no vertical dividers. The active tab is a pink cut polygon
 rather than a rectangle. Inactive tabs are dim text on black.
 
@@ -217,12 +217,32 @@ where `tune` is the part detune in cents. Then a voice mode block with `poly`,
 `mono`, `legato`, `unison` and the unison, detune and porta knobs. The three knobs
 sit next to the mode buttons with a 32px gap rather than at the card edge.
 
+### Part fx/mod
+
+One page, a three by two grid that fills the window. Filter 1, the filter envelope
+and the pitch LFO fill the first row. Pitch envelope, key follow and velocity follow
+fill the second row. The filter card has cutoff, resonance and env amount, whilst
+key and velocity tracking sit in the two follow cards rather than on the filter
+card. The filter, its envelope and its two follow targets address the active part,
+because each part has its own filter and its own envelope.
+
+The pitch LFO card carries rate, depth, the wave select and the `bipolar` switch.
+
+Key follow and velocity follow are separate cards. Each has an on switch, a
+`wipe all` button and its own target selector. Key follow has a breakpoint and below
+and above amounts, whilst velocity follow has one amount. The wipe button sets every
+target amount to 0%, so the card can be cleared without visiting each target. The
+same target set is used for both cards: operator level, feedback and amp envelope,
+pitch envelope, filter cutoff, and filter envelope.
+
 ### Operators
 
 Four borderless columns, each with the operator name at the left, copy and paste
 after it, and the mute switch at the right with a 16px gap before it, then a scope
 and spectro pair, and three cards: `oscillator`, `amp env`, `fb env`. The
-oscillator card holds ratio, detune, level, feedback and the wave select. The `amp
+oscillator card holds ratio, detune, level, feedback and the wave select. The wave
+select lists sine, triangle, half sine, half tri, 2x sine, 2x tri, 2x half sine,
+2x half tri, rect sine, rect tri, pulse, square and saw. The `amp
 env` card holds R1 to R4 on the first row and L1 to L3 on the second row. The `fb
 env` card holds its own R1 to R4 and L1 to L4 rows, with signed levels in feedback
 units and an `on` switch in the card header. The signed sum of the feedback knob,
@@ -243,24 +263,6 @@ its header. The amplitude LFO depth is in level steps, the feedback LFO depth is
 percentage of the feedback range, and the detune LFO depth is in semitones. A
 negative depth in bipolar mode inverts the LFO phase.
 
-### FX / MOD
-
-One page, a three by two grid that fills the window. Filter 1, the filter envelope
-and the pitch LFO fill the first row. Pitch envelope, key follow and velocity follow
-fill the second row. The filter card has cutoff, resonance and env amount, whilst
-key and velocity tracking sit in the two follow cards rather than on the filter
-card. The filter, its envelope and its two follow targets address the active part,
-because each part has its own filter and its own envelope.
-
-The pitch LFO card carries rate, depth, the wave select and the `bipolar` switch.
-
-Key follow and velocity follow are separate cards. Each has an on switch, a
-`wipe all` button and its own target selector. Key follow has a breakpoint and below
-and above amounts, whilst velocity follow has one amount. The wipe button sets every
-target amount to 0%, so the card can be cleared without visiting each target. The
-same target set is used for both cards: operator level, feedback and amp envelope,
-pitch envelope, filter cutoff, and filter envelope.
-
 ### Operator spectra
 
 Four borderless columns, each with the operator name at the left, copy and paste
@@ -268,7 +270,9 @@ after it, the mute switch at the right, then a scope and spectro pair and three
 cards: `oscillator`, `spectrum a`, `spectrum b`. The oscillator card repeats the
 operator oscillator controls and adds the `spec` switch in the wave row and a
 `morph` slider under it. The wave select gives way to `spectral` while the
-spectral mode is on. Each spectrum card holds sixteen bars with h1, h4, h8, h12
+spectral mode is on. While the mode is off, the a card shows the analysis of the
+selected wave with a `from wave` badge. The first edit commits that analysis and
+turns the mode on. Each spectrum card holds sixteen bars with h1, h4, h8, h12
 and h16 on the scale, then `norm` and `to b` or `to a` below the macro rows. The
 first macro row carries `odd` and `even`. The second carries `tilt` and `formant`
 with a harmonic select for the formant centre. A macro is a drag gesture: the bars
@@ -279,11 +283,12 @@ them. The card header carries copy and paste for the whole spectrum.
 
 Four columns, each with the operator name, copy and paste, the mute switch, the
 `oscillator` card, a `spectra` display, then the `morph env` and `morph lfo` cards.
-The display draws spectrum a as a filled purple outline and spectrum b as a pink
-outline, with a marker under them that runs from `a` to `b` at the current morph
-value. The display does not take a drag. The `morph env` card holds the graph, the
-depth knob, R1 to R4 and L1 to L3. The `morph lfo` card holds rate, depth, the wave
-select and the `bipolar` switch.
+The display draws the selected wave's analysis in spectrum a while the mode is off,
+and the stored spectrum a while it is on. Spectrum a is a filled purple outline and
+spectrum b is a pink outline, with a marker under them that runs from `a` to `b` at
+the current morph value. The display does not take a drag. The `morph env` card
+holds the graph, the depth knob, R1 to R4 and L1 to L3. The `morph lfo` card holds
+rate, depth, the wave select and the `bipolar` switch.
 
 ### Dialogs
 

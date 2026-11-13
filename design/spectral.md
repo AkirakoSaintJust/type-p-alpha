@@ -12,24 +12,25 @@ carries the morph envelope and the morph LFO.
 
 ## Tabs and page indices
 
-The two pages fit the existing editor. The tab indices run from 0 to 5, appended
-after the four current tabs:
+The tab bar keeps six tabs, with `part fx/mod` next to `patch settings`:
 
 | Index | Tab |
 | --- | --- |
 | 0 | patch settings |
-| 1 | operators |
-| 2 | operator lfos |
-| 3 | fx / mod |
+| 1 | part fx/mod |
+| 2 | operators |
+| 3 | operator lfos |
 | 4 | operator spectra |
 | 5 | op spectra mod |
 
-Appending keeps the stored `uiPage` value meaningful for an existing session. A
-session saved on `fx / mod` still opens `fx / mod`. The page index survives.
+The move shifts the stored page index. A session saved with the old order needs a
+remap of 1 to 2, 2 to 3 and 3 to 1 on restore, or it opens the wrong page once.
+The patch and multi data are unaffected. The restore can key the remap on a new
+`uiPageLayout` property.
 
 The current tab bar lays each label out at `textWidth(displayFont(textTab)) + 32`.
-The six labels take about 993 px in the 1,238 px strip at the 16 px JUCE tab font,
-so 245 px remain. The bar does not scroll or clip.
+The six labels take about 1,030 px of the 1,238 px strip at the 16 px JUCE tab
+font, so 208 px remain. The bar does not scroll or clip.
 
 Four clamps change from 3 to 5:
 
@@ -38,7 +39,8 @@ Four clamps change from 3 to 5:
 - `PluginProcessor.h`, `setUiPage`.
 - `PluginProcessor.cpp`, the state restore.
 
-`showTab` gains cases 4 and 5, and `buildPage` gains the two factories.
+`showTab` renumbers `part fx/mod`, `operators` and `operator lfos` to 1, 2 and 3,
+and gains cases 4 and 5. `buildPage` gains the two factories.
 
 The editor window and page area do not move. The page is 1206 by 685 at (17, 255),
 and each operator column is 294 px wide with 278 px of inner width, the same as
@@ -96,8 +98,8 @@ layout is unchanged.
 | detune | oscillator detune in cents, as now |
 | level | operator output level, as now |
 | feedback | operator feedback, as now |
-| wave | waveform used while the spectral mode is off |
-| spec | enables the spectral oscillator for this operator |
+| wave | waveform used while the spectral mode is off, and the spectral pages analyse it |
+| spec | enables the spectral oscillator. The first spectral edit or the first morph move also enables it |
 | morph | blend from spectrum a at 0 to spectrum b at 99 |
 
 When `spec` is on, the wave select gives way to the word `spectral`. The classic
@@ -116,10 +118,48 @@ sample = (1 - m) * tableA + m * tableB
 The envelope and the LFO run per voice. The tables are shared per part, because
 the levels are part parameters and do not vary per voice.
 
+## Starting from the waveform
+
+The spectral page opens on the operator's current wave. The editor analyses the
+selected waveform's 1024-sample mip-0 table into sixteen harmonic magnitudes, drops
+the DC term, scales the largest harmonic to 99, and shows the result as spectrum a.
+The analysis is a forward transform. The engine still rebuilds the time table from
+the levels.
+
+The analysis is a preview. While `spec` is off, the operator sounds through the
+selected waveform, the stored a and b levels are untouched, and the a card carries
+a `from wave` badge. Opening the page does not dirty the patch.
+
+The first edit of a spectral control commits the preview. The controls are the
+sixteen a bars, the sixteen b bars, the four macros, `norm`, `to a` and `to b`, the
+morph value, and an envelope or LFO depth moved above zero. The editor writes the
+sixteen a levels, leaves b as stored, then writes `opN_spec_on`, in that order, so
+the engine never reads the new mode against the old table. The mode switch
+crossfades over 10 ms. A first edit on the b card or the morph also commits the a
+preview, because the engine needs the analysed a as soon as the mode is on.
+
+The first edit writes seventeen parameters, and a host undo may not group them.
+The switch is the explicit way back. Host automation of a level does not engage the
+mode either, because `opN_spec_on` is the gate.
+
+Once `spec` is on, the pages show the stored spectra. Switching `spec` off keeps
+the stored levels and returns the a card to the live waveform analysis. Switching
+it on restores the stored spectra without re-analysing.
+
+The analysis is a starting point. A sine, triangle or half sine survives the
+sixteen-harmonic limit closely. A saw, square, pulse or rectified shape loses its
+upper harmonics, so the spectral version is audibly duller at low notes than the
+full-band table. The transform also drops phase, so the waveform shape, the peak
+factor and the oscilloscope trace change even when the harmonic magnitudes match.
+The half-wave and rectified shapes carry a DC term, which the table drops. The
+thirty-two harmonic mode later closes part of the gap.
+
 ## Spectrum cards
 
 Each operator has two cards, `spectrum a` and `spectrum b`, with the same
-controls. The sixteen stored levels are the only spectrum state.
+controls. The sixteen stored levels per spectrum are the only saved spectrum state.
+While `spec` is off, the a card shows the live waveform analysis. Once the mode is
+on, both cards show the stored levels.
 
 | Control | Meaning |
 | --- | --- |
@@ -226,10 +266,9 @@ The spectral mode is off, so the init patch and every existing patch stay exact.
 | lfo wave | sine |
 | lfo mode | bipolar |
 
-Spectrum a is a sine, so enabling the mode on an init patch keeps the sine
-timbre until the player edits a level or raises the morph. Spectrum b is a
-formant shape at h5, which gives the morph an audible direction and shows the
-formant macro in context.
+The stored spectrum a is a sine. The page shows the selected wave while the mode is
+off, and the first edit commits that analysis. Spectrum b is a formant shape at h5,
+which gives the morph an audible direction and shows the formant macro in context.
 
 ## Parameters
 
@@ -307,6 +346,9 @@ covers the off state, and a new table test covers the on state.
 
 ## Open items
 
+- Confirm the preview and commit rule, and the control list that engages the mode.
+- Generate the thirteen by sixteen harmonic analysis table from the wavetable bank
+  and test it against a DFT of the checked-in table.
 - Confirm the four macro curves and the formant width by ear.
 - Choose the mip brightness policy after the C7 listening test.
 - Decide whether the thirty-two harmonic mode earns its parameter count after

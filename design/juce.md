@@ -94,6 +94,10 @@ Every page fills the same height:
 - patch settings: two part cards, each with five knobs, a level slider and a
   scope and spectro, which grow to fill the remaining card height, followed by the
   voice mode block.
+- part fx/mod: a three by two grid. Filter 1, the filter envelope and the pitch LFO
+  fill the first row. Pitch envelope, key follow and velocity follow fill the second
+  row. The two follow cards are separate, and each has its own on switch and wipe
+  button. The pitch LFO carries its `bipolar` switch beside the wave select.
 - operators: four columns with oscillator, `amp env` and `fb env`. The amplitude
   envelope uses one row for R1 to R4 and a second row for L1 to L3. The feedback
   envelope uses R1 to R4 and L1 to L4, with signed levels and an on switch in the
@@ -102,19 +106,22 @@ Every page fills the same height:
 - operator lfos: four operator columns with the oscillator, then the `amp lfo`,
   `fb lfo` and `detune lfo` cards. Each LFO card carries copy and paste in its
   header, and its `bipolar` switch beside the wave select.
-- fx / mod: a three by two grid. Filter 1, the filter envelope and the pitch LFO
-  fill the first row. Pitch envelope, key follow and velocity follow fill the second
-  row. The two follow cards are separate, and each has its own on switch and wipe
-  button. The pitch LFO carries its `bipolar` switch beside the wave select.
 - operator spectra: four operator columns with the oscillator card, then the
   `spectrum a` and `spectrum b` cards. The oscillator card adds the `spec` switch in
   the wave row and the `morph` slider below it. Each spectrum card is 220 high and
   holds a 16-bar editor, a harmonic scale, the `odd`, `even`, `tilt` and `formant`
-  macros, and `norm` with `to b` or `to a`.
+  macros, and `norm` with `to b` or `to a`. While the spectral mode is off, the a
+  card shows the analysis of the selected wave with a `from wave` badge. The first
+  edit commits that analysis and turns the mode on.
 - op spectra mod: four operator columns with the oscillator card, a `spectra`
-  display, the `morph env` card and the `morph lfo` card. The display draws the two
-  spectra and a morph marker and takes no drag. The envelope card carries the graph,
-  the depth knob, R1 to R4 and L1 to L3.
+  display, the `morph env` card and the `morph lfo` card. The display draws the
+  selected wave's analysis in a while the mode is off, and the stored a while it is
+  on, plus b and a morph marker. It takes no drag. The envelope card carries the
+  graph, the depth knob, R1 to R4 and L1 to L3.
+
+Moving `part fx/mod` next to `patch settings` shifts the stored `uiPage` index. The
+processor remaps old 1 to 2, 2 to 3 and 3 to 1 when an old state has no
+`uiPageLayout` property.
 
 ## Header
 
@@ -180,7 +187,14 @@ The level slider is a 14px track with a purple fill and a `level` caption.
 A spectrum bar editor draws sixteen columns and writes the level under the pointer,
 then follows a horizontal drag. A macro control is a 10px track: the drag previews
 one curve from the sixteen levels captured at pointer down, and the release writes
-the levels, so repeated gestures never compound the same curve.
+the levels, so repeated gestures never compound the same curve. While the spectral
+mode is off, the a card shows a sixteen-level preview of the selected wave, and the
+first edit writes those levels before it writes the spectral switch.
+
+The wave select lists thirteen names in the visible order in `waveforms.md`. The
+display order map writes stored values, so `rect tri` is value 12 after `rect sine`
+and every existing patch keeps its index. The `wave` display reads the stored
+value.
 
 List dialogs fill the dialog body with 24px slot rows. Use a thin scrollbar, and
 keep names at the preset record limit of 32 characters. The multi-patch library
@@ -194,7 +208,8 @@ a save and a load button for each part, so the slot is chosen before the action.
 - Amplitude and pitch envelopes: purple.
 - Filter envelope and pitch LFO: green.
 - Two-spectrum display: a purple filled outline for spectrum a, a pink outline for
-  spectrum b, and a green marker for the morph value.
+  spectrum b, and a green marker for the morph value. While the spectral mode is
+  off, the a outline is the selected wave's analysis.
 - Routing graph: white modulators, pink carriers, grey modulation lines, purple
   downward arrows under every carrier.
 
@@ -210,12 +225,12 @@ parameter set and the same ranges, grouped to match the pages rather than the JS
 order.
 
 - patch settings: parts, keyzones, levels, delays, voice mode.
+- part fx/mod: filter, filter envelope, pitch LFO, pitch envelope, key and velocity
+  follow.
 - operators: four sets of oscillator, amplitude envelope, feedback envelope and the
   three LFO parameters.
 - operator spectra: per operator, the spectral switch, the sixteen a levels, the
   sixteen b levels, the morph value, the morph envelope and the morph LFO.
-- fx / mod: filter, filter envelope, pitch LFO, pitch envelope, key and velocity
-  follow.
 - global: algorithm and patch name.
 
 Use stable parameter IDs derived from the manifest. Host automation, state save and

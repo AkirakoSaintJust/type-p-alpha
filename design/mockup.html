@@ -273,6 +273,8 @@
   .sbar.b i { background: var(--pink); }
   .speclabels { display: flex; gap: 3px; padding: 2px 3px 0; margin-bottom: 4px; }
   .speclabels span { flex: 1; font-size: 9px; color: var(--faint); text-align: center; }
+  .secheadleft { display: flex; align-items: center; gap: 8px; min-width: 0; }
+  .fromwave { font-size: 9px; letter-spacing: .04em; color: var(--green); }
   .macros { display: flex; flex-direction: column; gap: 3px; }
   .macro-row { display: flex; gap: 8px; }
   .macro { flex: 1; display: flex; align-items: center; gap: 4px; min-width: 0; }
@@ -676,7 +678,7 @@
     o.specFormant = 5;
   });
   const WAVES = ["sine", "triangle", "half sine", "half tri", "2x sine", "2x tri",
-    "2x half sine", "2x half tri", "rect sine", "pulse", "square", "saw"];
+    "2x half sine", "2x half tri", "rect sine", "rect tri", "pulse", "square", "saw"];
   const LFO_WAVES = ["sine", "triangle", "saw", "inverse saw", "square", "random"];
   const PARTS = [
     { name: "init", midi: 1, low: 0, high: 127, level: 99, tune: 0, delay: 0, mute: false },
@@ -1319,14 +1321,16 @@
     waveText.textContent = "spectral";
     waveRow.append(wl, waveSel);
     const rows = [waveRow];
+    if (o.specOn) {
+      waveSel.disabled = true;
+      waveSel.style.display = "none";
+      waveRow.appendChild(waveText);
+    }
     if (spectral) {
-      waveSel.disabled = o.specOn;
-      if (o.specOn) {
-        waveSel.style.display = "none";
-        waveRow.appendChild(waveText);
-      }
       const specToggle = makeToggle("spec", o.specOn, function (v) {
-        o.specOn = v; rerender();
+        if (v) commitSpecPreview(o);
+        else o.specOn = false;
+        rerender();
       });
       specToggle.classList.add("spectoggle");
       waveRow.appendChild(specToggle);
@@ -1335,6 +1339,8 @@
       morphRow.appendChild(makeMacro("MORPH", {
         min: 0, max: 99, value: o.specMorph,
         format: function (v) { return Math.round(v); },
+        onStart: function () { commitSpecPreview(o); },
+        onEnd: function () { rerender(); },
         onInput: function (v) { o.specMorph = Math.round(v); }
       }));
       rows.push(morphRow);
@@ -1416,6 +1422,71 @@
     return Math.max(0, Math.min(99, Math.round(v)));
   }
 
+  function waveShape(name, p) {
+    p = p - Math.floor(p);
+    const tau = Math.PI * 2;
+    function tri(x) {
+      x = x - Math.floor(x);
+      return 1 - 4 * Math.abs(x - 0.5);
+    }
+    switch (name) {
+      case "sine": return Math.sin(tau * p);
+      case "triangle": return tri(p);
+      case "half sine": return Math.max(0, Math.sin(tau * p));
+      case "half tri": return Math.max(0, tri(p));
+      case "2x sine": return Math.sin(2 * tau * p);
+      case "2x tri": return tri(2 * p);
+      case "2x half sine": return Math.max(0, Math.sin(2 * tau * p));
+      case "2x half tri": return Math.max(0, tri(2 * p));
+      case "rect sine": return Math.abs(Math.sin(tau * p));
+      case "rect tri": return Math.abs(tri(p));
+      case "pulse": return p < 0.25 ? 1 : -1;
+      case "square": return p < 0.5 ? 1 : -1;
+      case "saw": return 2 * p - 1;
+    }
+    return 0;
+  }
+
+  function analyseWave(name) {
+    const N = 256, out = [];
+    for (let h = 1; h <= 16; h++) {
+      let re = 0, im = 0;
+      for (let n = 0; n < N; n++) {
+        const x = waveShape(name, n / N);
+        const a = 2 * Math.PI * h * n / N;
+        re += x * Math.cos(a);
+        im -= x * Math.sin(a);
+      }
+      out.push(Math.sqrt(re * re + im * im) * 2 / N);
+    }
+    const max = Math.max.apply(null, out) || 1;
+    return out.map(function (v) {
+      return Math.max(0, Math.min(99, Math.round(v / max * 99)));
+    });
+  }
+
+  function specPreview(o) {
+    if (!o.specPreview || o.specPreviewWave !== o.wave) {
+      o.specPreview = analyseWave(o.wave);
+      o.specPreviewWave = o.wave;
+    }
+    return o.specPreview;
+  }
+
+  function specLevels(o, key) {
+    if (key === "specA" && !o.specOn) return specPreview(o);
+    return o[key];
+  }
+
+  function commitSpecPreview(o) {
+    if (o.specOn) return false;
+    o.specA = specPreview(o).slice();
+    o.specOn = true;
+    o.specPreview = null;
+    o.specPreviewWave = null;
+    return true;
+  }
+
   function makeSpectrumBars(o, key) {
     const wrap = document.createElement("div");
     wrap.className = "specbars";
@@ -1429,19 +1500,21 @@
       bars.push(fill);
     }
     function draw() {
+      const levels = specLevels(o, key);
       for (let i = 0; i < 16; i++)
-        bars[i].style.height = (o[key][i] / 99 * 100) + "%";
+        bars[i].style.height = (levels[i] / 99 * 100) + "%";
     }
     function setFrom(e) {
       const r = wrap.getBoundingClientRect();
       const cell = r.width / 16;
       const idx = Math.max(0, Math.min(15, Math.floor((e.clientX - r.left) / cell)));
       const y = 1 - (e.clientY - r.top) / r.height;
-      o[key][idx] = clampLevel(y * 99);
+      specLevels(o, key)[idx] = clampLevel(y * 99);
       draw();
     }
     wrap.addEventListener("pointerdown", function (e) {
       e.preventDefault();
+      const engaged = commitSpecPreview(o);
       wrap.setPointerCapture(e.pointerId);
       setFrom(e);
       function move(ev) { setFrom(ev); }
@@ -1449,6 +1522,7 @@
         wrap.removeEventListener("pointermove", move);
         wrap.removeEventListener("pointerup", up);
         wrap.removeEventListener("pointercancel", up);
+        if (engaged) rerender();
       }
       wrap.addEventListener("pointermove", move);
       wrap.addEventListener("pointerup", up);
@@ -1470,7 +1544,7 @@
     const cpy = document.createElement("button");
     cpy.className = "mini"; cpy.textContent = "copy";
     cpy.addEventListener("click", function () {
-      clipboard = { kind: "spectrum", values: o[key].slice() };
+      clipboard = { kind: "spectrum", values: specLevels(o, key).slice() };
       rerender();
     });
     const pst = document.createElement("button");
@@ -1478,12 +1552,22 @@
     pst.disabled = !(clipboard && clipboard.kind === "spectrum");
     pst.addEventListener("click", function () {
       if (clipboard && clipboard.kind === "spectrum") {
+        commitSpecPreview(o);
         o[key] = clipboard.values.slice();
         rerender();
       }
     });
     acts.append(cpy, pst);
-    head.append(h, acts);
+    const left = document.createElement("div");
+    left.className = "secheadleft";
+    left.appendChild(h);
+    if (key === "specA" && !o.specOn) {
+      const badge = document.createElement("span");
+      badge.className = "fromwave";
+      badge.textContent = "from wave";
+      left.appendChild(badge);
+    }
+    head.append(left, acts);
     const bars = makeSpectrumBars(o, key);
     const labels = document.createElement("div");
     labels.className = "speclabels";
@@ -1496,8 +1580,15 @@
     const macros = document.createElement("div");
     macros.className = "macros";
     let base = null;
-    function begin() { base = o[key].slice(); }
-    function end() { base = null; }
+    let engaged = false;
+    function begin() {
+      if (commitSpecPreview(o)) engaged = true;
+      base = specLevels(o, key).slice();
+    }
+    function end() {
+      base = null;
+      if (engaged) { engaged = false; rerender(); }
+    }
     function apply(fn) {
       if (!base) return;
       for (let i = 0; i < 16; i++)
@@ -1559,18 +1650,22 @@
     const norm = document.createElement("button");
     norm.className = "mini"; norm.textContent = "norm";
     norm.addEventListener("click", function () {
-      const m = Math.max.apply(null, o[key]);
+      const committed = commitSpecPreview(o);
+      const levels = specLevels(o, key);
+      const m = Math.max.apply(null, levels);
       if (m > 0) {
         for (let i = 0; i < 16; i++)
-          o[key][i] = Math.round(o[key][i] * 99 / m);
+          levels[i] = Math.round(levels[i] * 99 / m);
         bars.draw();
       }
+      if (committed) rerender();
     });
     const to = document.createElement("button");
     to.className = "mini";
     to.textContent = key === "specA" ? "to b" : "to a";
     to.addEventListener("click", function () {
-      o[otherKey] = o[key].slice();
+      commitSpecPreview(o);
+      o[otherKey] = specLevels(o, key).slice();
       rerender();
     });
     foot.append(norm, to);
@@ -1598,7 +1693,16 @@
     head.className = "sec-head";
     const h = document.createElement("h3");
     h.textContent = "SPECTRA";
-    head.appendChild(h);
+    const left = document.createElement("div");
+    left.className = "secheadleft";
+    left.appendChild(h);
+    if (!o.specOn) {
+      const badge = document.createElement("span");
+      badge.className = "fromwave";
+      badge.textContent = "from wave";
+      left.appendChild(badge);
+    }
+    head.appendChild(left);
     const plot = document.createElement("div");
     plot.className = "specplot";
     const W = 240, H = 90;
@@ -1610,7 +1714,8 @@
     }
     plot.innerHTML = '<svg viewBox="0 0 ' + W + " " + H +
       '" preserveAspectRatio="none">' + grid +
-      specOutline(o.specA, "speca") + specOutline(o.specB, "specb") + "</svg>";
+      specOutline(o.specOn ? o.specA : specPreview(o), "speca") +
+      specOutline(o.specB, "specb") + "</svg>";
     const meter = document.createElement("div");
     meter.className = "morphmeter";
     const mark = 2 + (o.specMorph / 99) * 96;
@@ -1857,9 +1962,9 @@
   /* ---------------- tabs ---------------- */
   const TABS = [
     { id: "patch", label: "patch settings", view: viewPatch },
+    { id: "partfx", label: "part fx/mod", view: viewFxMod },
     { id: "ops", label: "operators", view: viewOps },
     { id: "oplfo", label: "operator lfos", view: viewOperatorLfos },
-    { id: "fxmod", label: "fx / mod", view: viewFxMod },
     { id: "opspec", label: "operator spectra", view: viewOpSpectra },
     { id: "opspecmod", label: "op spectra mod", view: viewOpSpectraMod }
   ];
@@ -2556,7 +2661,7 @@
     if (h === "menu") { showTab("patch"); openSingleParts(); return; }
     if (h === "alg") { showTab("patch"); openAlgPicker(); return; }
     if (h === "rename") { showTab("patch"); renamePart(0); return; }
-    if (h === "fx" || h === "mod") { showTab("fxmod"); return; }
+    if (h === "fx" || h === "mod") { showTab("partfx"); return; }
     if (TABS.some(function (x) { return x.id === h; })) showTab(h);
     else showTab("patch");
   }
