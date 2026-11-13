@@ -12,9 +12,9 @@
   [`../design/juce.md`](../design/juce.md).
 - **Owner / date:** P1Onken, 2026-11-13.
 - **Disposition:** complete for the engine and the six-tab editor pages. The A card
-  shows the selected wave's analysis, and the first A-card edit commits it. The
-  morph knob does not commit the preview by itself; the first morph move commit is
-  a refinement. The Linux snapshot goldens need the Linux pass.
+  shows the selected wave's analysis, the first A-card edit commits it, and the
+  first morph knob move commits it too. The Linux snapshot goldens were regenerated
+  for the range and waveform changes.
 
 ## Player outcome
 
@@ -33,9 +33,9 @@
   1 to 16, 17 to 32, up to 113 to 128. The mod display zooms to the union of the two
   spans when a and b differ. While the waveform is not `spectrum`, the a card shows
   the analysis of the selected wave with a `from wave` badge. The first a-card edit
-  writes the levels and then the waveform as 13. The morph knob does not commit the
-  preview by itself, so the first morph move commit remains a refinement. Selecting
-  `spectrum` uses the stored a and b spectra. The mode switch crossfades over 10 ms.
+  writes the levels and then the waveform as 13. The first morph knob move commits
+  the preview the same way. Selecting `spectrum` uses the stored a and b spectra.
+  The mode switch crossfades over 10 ms.
 - **Failure mode:** the additive table clips, the morph leaks between voices, the
   preview writes the patch on open, the wave values shift again, a stored spectrum
   is overwritten by a mode change, or the existing waves change their samples.
@@ -92,9 +92,9 @@ spectrum has its own 16-harmonic range. The wave values are the mode: 13 reads t
 additive bank, and 0 to 12 read the wave table.
 
 The editor commits the analysis preview by writing the sixteen a levels, then the
-waveform value 13. The b card's `to a` commits the a preview first; a b-card bar
-edit does not. Selecting a wave keeps the stored spectra. The preview is not
-written on page open.
+waveform value 13. The first morph knob move does the same. The b card's `to a`
+commits the a preview first; a b-card bar edit does not. Selecting a wave keeps the
+stored spectra. The preview is not written on page open.
 
 ## Bounds and resources
 

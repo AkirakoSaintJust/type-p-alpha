@@ -40,13 +40,17 @@
   const tabsEl = document.querySelector("#tabs");
   const bodyEl = document.querySelector("#body");
   const statusEl = document.querySelector("#status");
-  const partEl = document.querySelector("#part");
   const algorithmEl = document.querySelector("#algorithm");
   const startButton = document.querySelector("#start");
   const noteButton = document.querySelector("#note");
   const scopeEl = document.querySelector("#scope");
   const algGraphEl = document.querySelector("#algGraph");
   const visSeg = document.querySelector("#visSeg");
+  const toolbarEl = document.querySelector("#toolbar");
+  const patchNameEl = document.querySelector("#patchName");
+  const patchButton = document.querySelector("#patchBtn");
+  const patchRenameButton = document.querySelector("#patchRename");
+  const toolbarNodes = [];
 
   const graphUpdaters = [];
   const spectrumUpdaters = [];
@@ -82,12 +86,17 @@
     page: "patch",
     controlCount: 0,
     visMode: "scope",
+    resampled: false,
     error: null,
     paramValue: (name) => {
       const spec = byName.get(name);
       return spec === undefined ? null : values.get(spec.id) ?? null;
     },
     analysisFor: (part, op) => getPreview(part, op),
+    patchName: () => patchName,
+    partName: (part) => partNames[part],
+    partSlots: () => partLibrary.filter((slot) => slot !== null).length,
+    multiSlots: () => multiLibrary.filter((multi) => multi.used).length,
   };
 
   const A0 = 135;
@@ -216,6 +225,7 @@
         if (commit) {
           const n = parseFloat(input.value);
           if (isFinite(n)) {
+            if (spec.onStart) spec.onStart();
             const step = stepFor();
             let v = Math.max(spec.min, Math.min(spec.max, n));
             v = Math.round(v / step) * step;
@@ -240,6 +250,7 @@
     dial.addEventListener("pointerdown", function (event) {
       event.preventDefault();
       dial.setPointerCapture(event.pointerId);
+      if (spec.onStart) spec.onStart();
       const startY = event.clientY;
       const startVal = spec.val;
       const range = spec.max - spec.min;
@@ -354,6 +365,25 @@
       '<line class="ezero" x1="6" y1="' + mid + '" x2="' + (W - 6) +
       '" y2="' + mid + '"/>' +
       '<path class="ecurve" d="' + d + '"/></svg>';
+  }
+
+  function lfoSvg(wave) {
+    let d = "M 4 31";
+    const N = 232;
+    for (let x = 0; x <= N; ++x) {
+      const p = x / N;
+      const phase = (p * 2) % 1;
+      let v;
+      if (wave === "triangle") v = 1 - 4 * Math.abs(phase - 0.5);
+      else if (wave === "saw") v = 1 - 2 * phase;
+      else if (wave === "inverse saw") v = 2 * phase - 1;
+      else if (wave === "square") v = phase < 0.5 ? 1 : -1;
+      else if (wave === "random") v = Math.sin(x * 1.7) * Math.cos(x * 0.37);
+      else v = Math.sin(p * Math.PI * 4);
+      d += " L " + (4 + x) + " " + (31 - v * 22).toFixed(1);
+    }
+    return '<svg viewBox="0 0 240 62"><path d="' + d +
+      '" fill="none" stroke="#3dff9e" stroke-width="1.4"/></svg>';
   }
 
   function makeMacro(label, options) {
@@ -595,20 +625,21 @@
     }
   }
 
-  function controlFor(spec) {
+  function controlFor(spec, labelOverride, onStart, formatOverride) {
     const base = baseName(spec.name);
     const raw = rawOf(spec);
     const enums = enumValues(spec);
+    const label = labelOverride || humanLabel(base);
     if (enums !== null) {
       const wrapper = div("param-enum");
-      const label = div("knob-name");
-      label.textContent = humanLabel(base);
-      label.title = base;
+      const name = div("knob-name");
+      name.textContent = label;
+      name.title = base;
       const select = makeSelect(enums, enums[raw] ?? enums[0], function (choice) {
         setRaw(spec, enums.indexOf(choice));
       });
       wrapper.title = base;
-      wrapper.append(label, select);
+      wrapper.append(name, select);
       return wrapper;
     }
     if (spec.display === "onoff" || spec.display === "onoff_inv") {
@@ -626,13 +657,14 @@
     }
     const range = userSpec(spec);
     const knob = makeKnob({
-      name: humanLabel(base),
+      name: label,
       title: base,
       min: range.min,
       max: range.max,
       val: range.toUser(raw),
       step: range.step,
-      fmt: function (value) { return formatUser(value, spec); },
+      fmt: formatOverride || function (value) { return formatUser(value, spec); },
+      onStart: onStart,
       onChange: function (value) {
         setRaw(spec, range.toRaw(value));
       },
@@ -661,7 +693,7 @@
       if (options.transform) levels = levels.map(options.transform);
       return options.signed
         ? penvSvg(rates, levels, options.scaleMax)
-        : envSvg(rates, levels);
+        : envSvg(rates, levels, options.curve);
     };
   }
 
@@ -723,30 +755,52 @@
     return [1, 2, 3].map((i) => namePart("fenv_l" + i, part));
   }
 
+  function appendGraph(el, graph) {
+    const box = div("envbox");
+    box.innerHTML = graph();
+    el.append(box);
+    graphUpdaters.push(() => {
+      const html = graph();
+      if (box.innerHTML !== html) box.innerHTML = html;
+    });
+  }
+
+  function sectionCard(title, options) {
+    options = options || {};
+    const el = document.createElement("section");
+    el.className = "card" + (options.className ? " " + options.className : "");
+    if (options.headExtra) {
+      const head = div("sec-head");
+      const heading = document.createElement("h3");
+      heading.textContent = title;
+      head.append(heading, options.headExtra);
+      el.append(head);
+    } else {
+      const heading = document.createElement("h3");
+      heading.textContent = title;
+      el.append(heading);
+    }
+    if (options.before) el.append(options.before);
+    return el;
+  }
+
   function card(title, specs, options) {
     options = options || {};
     if (specs.length === 0) return null;
-    const el = document.createElement("section");
-    el.className = "card" + (options.className ? " " + options.className : "");
-    const heading = document.createElement("h3");
-    heading.textContent = title;
-    el.append(heading);
-    if (options.graph) {
-      const graph = div("envbox");
-      graph.innerHTML = options.graph();
-      el.append(graph);
-      graphUpdaters.push(() => {
-        const html = options.graph();
-        if (graph.innerHTML !== html) graph.innerHTML = html;
-      });
-    }
+    const el = sectionCard(title, options);
+    if (options.graph) appendGraph(el, options.graph);
     if (options.note) {
       const note = div("panel-card-note");
       note.textContent = options.note;
       el.append(note);
     }
     const knobs = div("knobs");
-    for (const spec of specs) knobs.append(controlFor(spec));
+    for (const spec of specs) {
+      const before = options.beforeChange
+        ? options.beforeChange(spec) : null;
+      knobs.append(controlFor(spec,
+        options.label ? options.label(spec) : null, before));
+    }
     el.append(knobs);
     return el;
   }
@@ -1079,8 +1133,8 @@
           if (i === 0) context.moveTo(x, y);
           else context.lineTo(x, y);
         }
-        context.strokeStyle = "rgba(61,255,158,0.62)";
-        context.lineWidth = 1.2;
+        context.strokeStyle = "rgba(61,255,158,0.85)";
+        context.lineWidth = 1.5;
         context.stroke();
       }
       const markerX = left + morph * graphWidth;
@@ -1142,6 +1196,18 @@
     name.style.color = isCarrier(algorithm, op) ? "var(--pink)" : "var(--white)";
     name.textContent = "op" + (op + 1);
     head.append(name);
+    const acts = div("opcol-acts");
+    const copy = document.createElement("button");
+    copy.className = "mini";
+    copy.textContent = "copy";
+    copy.addEventListener("click", () => copyOp(activePart, op));
+    const paste = document.createElement("button");
+    paste.className = "mini";
+    paste.textContent = "paste";
+    paste.disabled = clipboard === null || clipboard.kind !== "op";
+    paste.addEventListener("click", () => pasteOp(activePart, op));
+    acts.append(copy, paste);
+    head.append(acts);
     col.append(head);
     if (withScope) {
       const vis = div("opvis");
@@ -1166,10 +1232,10 @@
     if (part === activePart) return;
     noteOff();
     activePart = part;
-    partEl.value = String(part);
     tapSamples = null;
     tapRoutes = null;
     buildAlgorithm();
+    buildToolbar();
     buildPage();
     if (node !== null)
       node.port.postMessage({ type: "part", part: activePart });
@@ -1187,60 +1253,778 @@
       setRaw(levelSpec, partLevelBeforeMute[part]);
     }
     buildPage();
+    buildToolbar();
+  }
+
+  /* ---------------- patch and part library ---------------- */
+  const PATCH_SAVE_MODES = [
+    "discard edits to parts",
+    "save as new parts",
+    "mutate parts in place",
+  ];
+  const PART_SLOT_COUNT = 128;
+  const MULTI_SLOT_COUNT = 64;
+  const LIBRARY_KEY = "type-p-alpha-web-library";
+  const partNames = ["init", "init"];
+  const partSource = [-1, -1];
+  const partLibrary = new Array(PART_SLOT_COUNT).fill(null);
+  const multiLibrary = new Array(MULTI_SLOT_COUNT).fill(null).map(() => ({
+    used: false, name: "empty", partSlots: [-1, -1], routing: [],
+  }));
+  let patchName = "init patch";
+  let currentMulti = -1;
+  let clipboard = null;
+
+  function partSnapshot(part) {
+    const entries = [];
+    for (const spec of params) {
+      if (!spec.name.endsWith(".p" + part)) continue;
+      entries.push([spec.id, values.get(spec.id) ?? spec.default]);
+    }
+    return { name: partNames[part], params: entries };
+  }
+
+  function applyValues(entries) {
+    for (const [id, value] of entries) values.set(id, value);
+    if (node !== null)
+      node.port.postMessage({ type: "params", values: entries });
+  }
+
+  function applyPartSnapshot(part, snapshot) {
+    if (snapshot === null || !Array.isArray(snapshot.params)) return;
+    if (typeof snapshot.name === "string") partNames[part] = snapshot.name;
+    applyValues(snapshot.params);
+  }
+
+  function defaultPartEntries(part) {
+    const entries = [];
+    for (const spec of params) {
+      if (!spec.name.endsWith(".p" + part)) continue;
+      entries.push([spec.id, spec.default]);
+    }
+    return entries;
+  }
+
+  function initPart(part) {
+    applyValues(defaultPartEntries(part));
+    partNames[part] = "init";
+    partSource[part] = -1;
+    partMuted[part] = false;
+    buildAlgorithm();
+    buildToolbar();
+    buildPage();
+  }
+
+  function initMulti() {
+    initPart(0);
+    initPart(1);
+    patchName = "init multi";
+    currentMulti = -1;
+    showPatchName();
+    saveLibrary();
+    if (typeof toast === "function") toast("multi-patch initialised");
+  }
+
+  function showPatchName() {
+    if (patchNameEl !== null) patchNameEl.textContent = patchName;
+  }
+
+  function routingFor(part) {
+    const read = (base) => {
+      const spec = byName.get(base + ".p" + part);
+      return spec === undefined ? 0 : (values.get(spec.id) ?? spec.default);
+    };
+    return {
+      channel: read("channel"), low: read("low"), high: read("high"),
+      level: read("level"), delay: read("delay"),
+    };
+  }
+
+  function multiSnapshot() {
+    return {
+      used: true,
+      name: patchName,
+      partSlots: partSource.slice(),
+      routing: [routingFor(0), routingFor(1)],
+    };
+  }
+
+  function findFreePartSlot() {
+    return partLibrary.findIndex((slot) => slot === null);
+  }
+
+  function saveMulti(slot, mode) {
+    for (let part = 0; part < 2; ++part) {
+      let source = partSource[part];
+      if (mode !== 0) {
+        if (mode === 1 || source < 0 || partLibrary[source] === null) {
+          source = findFreePartSlot();
+          if (source < 0) {
+            toast("no free part slot");
+            return;
+          }
+        }
+        partLibrary[source] = partSnapshot(part);
+        partSource[part] = source;
+      }
+    }
+    multiLibrary[slot] = multiSnapshot();
+    currentMulti = slot;
+    showPatchName();
+    saveLibrary();
+    if (typeof toast === "function")
+      toast("saved to multi slot " + String(slot + 1).padStart(2, "0") +
+        " (" + PATCH_SAVE_MODES[mode] + ")");
+  }
+
+  function applyMulti(slot) {
+    const multi = multiLibrary[slot];
+    if (!multi || !multi.used) return false;
+    patchName = multi.name;
+    currentMulti = slot;
+    for (let part = 0; part < 2; ++part) {
+      const source = Number.isInteger(multi.partSlots[part])
+        ? multi.partSlots[part] : -1;
+      partSource[part] = source;
+      if (source >= 0 && partLibrary[source] !== null)
+        applyPartSnapshot(part, partLibrary[source]);
+      const routing = multi.routing[part] || {};
+      for (const base of ["channel", "low", "high", "level", "delay"]) {
+        if (routing[base] === undefined) continue;
+        const spec = byName.get(base + ".p" + part);
+        if (spec !== undefined) setRaw(spec, routing[base]);
+      }
+      partMuted[part] = false;
+    }
+    return true;
+  }
+
+  function loadMulti(slot) {
+    if (!applyMulti(slot)) return;
+    showPatchName();
+    buildAlgorithm();
+    buildToolbar();
+    buildPage();
+    saveLibrary();
+    toast("loaded " + patchName);
+  }
+
+  function savePartToSlot(index, part) {
+    partLibrary[index] = partSnapshot(part);
+    partSource[part] = index;
+    saveLibrary();
+    toast("part saved to slot " + String(index + 1).padStart(2, "0"));
+  }
+
+  function loadPartFromSlot(index, part) {
+    const snapshot = partLibrary[index];
+    if (snapshot === null) return;
+    applyPartSnapshot(part, snapshot);
+    partSource[part] = index;
+    buildAlgorithm();
+    buildToolbar();
+    buildPage();
+    saveLibrary();
+    toast("part loaded from slot " + String(index + 1).padStart(2, "0"));
+  }
+
+  function libraryData() {
+    return {
+      format: "type-p-alpha-library",
+      version: 1,
+      partSlots: partLibrary,
+      multis: multiLibrary,
+      patchName,
+      currentMulti,
+      partNames,
+      partSource,
+    };
+  }
+
+  function applyLibrary(data) {
+    if (!data || data.format !== "type-p-alpha-library")
+      throw new Error("not a type P.alpha library");
+    if (Array.isArray(data.partSlots)) {
+      for (let i = 0; i < PART_SLOT_COUNT; ++i)
+        partLibrary[i] = data.partSlots[i] || null;
+    }
+    if (Array.isArray(data.multis)) {
+      for (let i = 0; i < MULTI_SLOT_COUNT; ++i) {
+        const multi = data.multis[i];
+        multiLibrary[i] = multi && multi.used ? multi
+          : { used: false, name: "empty", partSlots: [-1, -1], routing: [] };
+      }
+    }
+    if (typeof data.patchName === "string") patchName = data.patchName;
+    if (Number.isInteger(data.currentMulti)) currentMulti = data.currentMulti;
+    if (Array.isArray(data.partNames)) {
+      for (let i = 0; i < 2; ++i) {
+        if (typeof data.partNames[i] === "string")
+          partNames[i] = data.partNames[i];
+      }
+    }
+  }
+
+  function saveLibrary() {
+    try {
+      localStorage.setItem(LIBRARY_KEY, JSON.stringify(libraryData()));
+    } catch (error) {
+      window.__p1.libraryError = String(error);
+    }
+  }
+
+  function loadLibrary() {
+    try {
+      const raw = localStorage.getItem(LIBRARY_KEY);
+      if (raw) applyLibrary(JSON.parse(raw));
+    } catch (error) {
+      window.__p1.libraryError = String(error);
+    }
+    showPatchName();
+  }
+
+  function exportLibrary() {
+    const blob = new Blob([JSON.stringify(libraryData(), null, 2)],
+      { type: "application/json" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "type-p-alpha-library.json";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(link.href);
+    toast("library exported");
+  }
+
+  function importLibrary() {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = ".json,.p1lib,application/json";
+    input.addEventListener("change", function () {
+      const file = input.files && input.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function () {
+        try {
+          applyLibrary(JSON.parse(String(reader.result)));
+          saveLibrary();
+          showPatchName();
+          buildToolbar();
+          buildPage();
+          toast("library imported");
+        } catch (error) {
+          toast("library import failed");
+        }
+      };
+      reader.readAsText(file);
+    });
+    input.click();
+  }
+
+  /* ---------------- dialogs ---------------- */
+  function openDialog(title, bodyNode, buttons, wide) {
+    const back = div("backdrop");
+    const dialog = div("dialog" + (wide ? " wide" : ""));
+    const head = div("dialog-head");
+    const heading = document.createElement("span");
+    heading.textContent = title;
+    const closeButton = document.createElement("span");
+    closeButton.className = "x";
+    closeButton.textContent = "X";
+    head.append(heading, closeButton);
+    const body = div("dialog-body");
+    body.append(bodyNode);
+    const foot = div("dialog-foot");
+    for (const button of buttons) {
+      const el = document.createElement("button");
+      el.textContent = button.label;
+      if (button.primary) el.className = "primary";
+      el.addEventListener("click", () => button.onClick(close));
+      foot.append(el);
+    }
+    dialog.append(head, body, foot);
+    back.append(dialog);
+    closeButton.addEventListener("click", () => close());
+    back.addEventListener("click", (event) => {
+      if (event.target === back) close();
+    });
+    document.body.append(back);
+    function close() { back.remove(); }
+    return close;
+  }
+
+  function toast(message) {
+    const el = div("toast");
+    el.textContent = message;
+    document.body.append(el);
+    setTimeout(() => el.remove(), 1600);
+  }
+
+  function openRename(title, current, onSave) {
+    const body = div("");
+    const input = document.createElement("input");
+    input.className = "textin";
+    input.value = current;
+    input.maxLength = 32;
+    body.append(input);
+    const note = div("note");
+    note.textContent = "max 32 characters.";
+    body.append(note);
+    openDialog(title, body, [
+      {
+        label: "save", primary: true, onClick: (close) => {
+          const value = input.value.trim();
+          close();
+          if (value) onSave(value);
+        },
+      },
+      { label: "cancel", onClick: (close) => close() },
+    ]);
+    setTimeout(() => { input.focus(); input.select(); }, 30);
+  }
+
+  function renamePart(part) {
+    openRename("rename part", partNames[part], (value) => {
+      partNames[part] = value;
+      if (partSource[part] >= 0)
+        partLibrary[partSource[part]] = partSnapshot(part);
+      saveLibrary();
+      buildPage();
+      toast("part " + (part + 1) + " renamed");
+    });
+  }
+
+  function copyPart(part) {
+    clipboard = { kind: "part", part, data: partSnapshot(part) };
+    buildPage();
+    toast("part " + (part + 1) + " copied");
+  }
+
+  function pastePart(part) {
+    if (clipboard === null || clipboard.kind !== "part") return;
+    applyPartSnapshot(part, clipboard.data);
+    partNames[part] = clipboard.data.name;
+    buildAlgorithm();
+    buildPage();
+    toast("part " + (part + 1) + " pasted");
+  }
+
+  function copyOp(part, op) {
+    const entries = specsForOp(part, op).map((spec) =>
+      [spec.name, values.get(spec.id) ?? spec.default]);
+    clipboard = { kind: "op", part, op, data: entries };
+    buildPage();
+    toast("op" + (op + 1) + " copied");
+  }
+
+  function pasteOp(part, op) {
+    if (clipboard === null || clipboard.kind !== "op") return;
+    const entries = [];
+    for (const [name, value] of clipboard.data) {
+      if (op !== 0 && !/^op[1-4][_.]/.test(name)) continue;
+      const renamed = name
+        .replace(/^op[1-4]([_.])/, "op" + (op + 1) + "$1")
+        .replace(/\.p[01]$/, ".p" + part);
+      const spec = byName.get(renamed);
+      if (spec !== undefined) entries.push([spec.id, value]);
+    }
+    applyValues(entries);
+    buildAlgorithm();
+    buildPage();
+    toast("op" + (op + 1) + " pasted");
+  }
+
+  function openMultiInitConfirm() {
+    const body = div("");
+    body.textContent = "init multi-patch? this wipes the current patch.";
+    openDialog("init multi-patch", body, [
+      { label: "init", primary: true, onClick: (close) => {
+        close();
+        initMulti();
+      } },
+      { label: "cancel", onClick: (close) => close() },
+    ]);
+  }
+
+  function openMultiBrowser() {
+    let selection = currentMulti >= 0 ? currentMulti : 0;
+    const body = div("");
+    const list = div("patchlist");
+    function render() {
+      list.innerHTML = "";
+      multiLibrary.forEach((multi, index) => {
+        const row = div("preset-row" + (index === selection ? " sel" : "") +
+          (multi.used ? "" : " empty"));
+        const number = document.createElement("span");
+        number.className = "pno";
+        number.textContent = String(index + 1).padStart(2, "0");
+        const name = document.createElement("span");
+        name.className = "pname";
+        name.textContent = multi.used ? multi.name : "empty";
+        if (index === currentMulti) {
+          const tag = document.createElement("span");
+          tag.className = "tag";
+          tag.textContent = "active";
+          name.append(" ", tag);
+        }
+        row.append(number, name);
+        row.addEventListener("click", () => {
+          selection = index;
+          render();
+        });
+        list.append(row);
+      });
+    }
+    render();
+    body.append(list);
+    openDialog("multi-patches", body, [
+      { label: "export bank", onClick: (close) => { close(); exportLibrary(); } },
+      { label: "import bank", onClick: (close) => { close(); importLibrary(); } },
+      { label: "init multi-patch", onClick: (close) => {
+        close();
+        openMultiInitConfirm();
+      } },
+      { label: "save", onClick: (close) => { close(); openMultiSave(selection); } },
+      { label: "load", primary: true, onClick: (close) => {
+        close();
+        loadMulti(selection);
+      } },
+      { label: "cancel", onClick: (close) => close() },
+    ], true);
+  }
+
+  function openMultiSave(slot) {
+    let mode = 0;
+    const body = div("");
+    const list = div("partlist");
+    const cells = [];
+    PATCH_SAVE_MODES.forEach((label, index) => {
+      const cell = document.createElement("button");
+      cell.className = "slotrow" + (index === mode ? " sel" : "");
+      const name = document.createElement("span");
+      name.className = "sname";
+      name.textContent = label;
+      cell.append(name);
+      cell.addEventListener("click", () => {
+        mode = index;
+        cells.forEach((item, i) => item.classList.toggle("sel", i === mode));
+      });
+      list.append(cell);
+      cells.push(cell);
+    });
+    body.append(list);
+    openDialog("save multi-patch", body, [
+      { label: "save", primary: true, onClick: (close) => {
+        close();
+        if (multiLibrary[slot].used) openMultiOverwrite(slot, mode);
+        else saveMulti(slot, mode);
+      } },
+      { label: "cancel", onClick: (close) => close() },
+    ]);
+  }
+
+  function openMultiOverwrite(slot, mode) {
+    const body = div("");
+    body.innerHTML = "overwrite multi-patch slot <b>" +
+      String(slot + 1).padStart(2, "0") + "</b>?";
+    openDialog("confirm save", body, [
+      { label: "save", primary: true, onClick: (close) => {
+        close();
+        saveMulti(slot, mode);
+      } },
+      { label: "cancel", onClick: (close) => close() },
+    ]);
+  }
+
+  function openSingleParts() {
+    let selection = partSource[activePart] >= 0 ? partSource[activePart] : 0;
+    const body = div("");
+    const list = div("partlist bank");
+    const cells = [];
+    for (let i = 0; i < PART_SLOT_COUNT; ++i) {
+      const slot = partLibrary[i];
+      const cell = document.createElement("button");
+      cell.className = "slotrow" + (i === selection ? " sel" : "") +
+        (slot === null ? " dead" : "");
+      const number = document.createElement("span");
+      number.className = "pno";
+      number.textContent = String(i + 1).padStart(2, "0");
+      const name = document.createElement("span");
+      name.className = "sname";
+      name.textContent = slot === null ? "empty" : slot.name;
+      cell.append(number, name);
+      cell.addEventListener("click", () => {
+        selection = i;
+        cells.forEach((item, index) => item.classList.toggle("sel",
+          index === selection));
+      });
+      list.append(cell);
+      cells.push(cell);
+    }
+    body.append(list);
+    const save = (part) => {
+      if (partLibrary[selection] !== null) openPartOverwrite(selection, part);
+      else {
+        savePartToSlot(selection, part);
+        buildPage();
+      }
+    };
+    openDialog("single parts", body, [
+      { label: "export bank", onClick: (close) => { close(); exportLibrary(); } },
+      { label: "import bank", onClick: (close) => { close(); importLibrary(); } },
+      { label: "init single part 1", onClick: (close) => {
+        close();
+        openPartInitConfirm(1);
+      } },
+      { label: "init single part 2", onClick: (close) => {
+        close();
+        openPartInitConfirm(2);
+      } },
+      { label: "save single part 1", onClick: (close) => { close(); save(0); } },
+      { label: "save single part 2", onClick: (close) => { close(); save(1); } },
+      { label: "load single part 1", onClick: (close) => {
+        close();
+        if (partLibrary[selection] !== null) loadPartFromSlot(selection, 0);
+      } },
+      { label: "load single part 2", onClick: (close) => {
+        close();
+        if (partLibrary[selection] !== null) loadPartFromSlot(selection, 1);
+      } },
+      { label: "cancel", onClick: (close) => close() },
+    ], true);
+  }
+
+  function openPartOverwrite(index, part) {
+    const body = div("");
+    body.innerHTML = "overwrite part slot <b>" +
+      String(index + 1).padStart(2, "0") + "</b>?";
+    openDialog("confirm save", body, [
+      { label: "save", primary: true, onClick: (close) => {
+        close();
+        savePartToSlot(index, part);
+        buildPage();
+      } },
+      { label: "cancel", onClick: (close) => close() },
+    ]);
+  }
+
+  function openPartInitConfirm(part) {
+    const body = div("");
+    body.innerHTML = "init part <b>" + part + "</b>? this wipes the current part.";
+    openDialog("init part", body, [
+      { label: "init", primary: true, onClick: (close) => {
+        close();
+        initPart(part - 1);
+        toast("part initialised");
+      } },
+      { label: "cancel", onClick: (close) => close() },
+    ]);
+  }
+
+  function buildToolbar() {
+    if (toolbarEl === null) return;
+    for (const node of toolbarNodes.splice(0)) node.remove();
+    const legend = div("legend");
+    legend.innerHTML = '<span class="sq muted">\u732b</span>' +
+      '<span class="lbl">muted</span>' +
+      '<span class="sq active">\u732b</span><span class="lbl">active</span>';
+
+    const group = div("tgroup");
+    for (let op = 0; op < 4; ++op) {
+      const spec = byName.get("op" + (op + 1) + "_mute.p" + activePart);
+      const muted = spec !== undefined &&
+        (values.get(spec.id) ?? spec.default) === 1;
+      const button = document.createElement("button");
+      button.className = "mutebox" + (muted ? " muted" : "");
+      button.textContent = "op" + (op + 1);
+      button.title = (muted ? "unmute " : "mute ") + "op" + (op + 1);
+      button.addEventListener("click", () => {
+        if (spec === undefined) return;
+        const current = values.get(spec.id) ?? spec.default;
+        setRaw(spec, current === 1 ? 0 : 1);
+        buildToolbar();
+      });
+      group.append(button);
+    }
+    group.append(div("tdiv"));
+    for (let part = 0; part < 2; ++part) {
+      const button = document.createElement("button");
+      button.className = "mutebox" + (partMuted[part] ? " muted" : "");
+      button.textContent = "p" + (part + 1);
+      button.title = (partMuted[part] ? "unmute " : "mute ") +
+        "part " + (part + 1);
+      button.addEventListener("click", () =>
+        togglePartMute(part, !partMuted[part]));
+      group.append(button);
+    }
+
+    const editing = div("tgroup");
+    const label = document.createElement("span");
+    label.className = "tlabel";
+    label.textContent = "now editing part:";
+    editing.append(label);
+    for (let part = 0; part < 2; ++part) {
+      const button = document.createElement("button");
+      button.className = "tbtn partsel" +
+        (activePart === part ? " active" : "");
+      button.textContent = "part " + (part + 1);
+      button.addEventListener("click", () => selectPart(part));
+      editing.append(button);
+    }
+    const library = document.createElement("button");
+    library.className = "tbtn partlib";
+    library.id = "partLibrary";
+    library.textContent = "part library actions...";
+    library.title = "Single part library";
+    library.addEventListener("click", openSingleParts);
+    editing.append(library);
+
+    const nodes = [legend, group, editing];
+    toolbarEl.append(...nodes);
+    toolbarNodes.push(...nodes);
+  }
+
+  function levelSlider(part, spec) {
+    const wrap = div("lvl");
+    const cap = div("lvlcap");
+    const label = document.createElement("span");
+    label.textContent = "level";
+    const value = document.createElement("span");
+    value.className = "lvlval";
+    cap.append(label, value);
+    const track = div("lvltrack");
+    const fill = document.createElement("i");
+    track.append(fill);
+    function paint(raw) {
+      value.textContent = String(raw);
+      fill.style.width = ((raw - spec.min) / (spec.max - spec.min) * 100) + "%";
+    }
+    paint(values.get(spec.id) ?? spec.default);
+    track.addEventListener("pointerdown", (event) => {
+      event.preventDefault();
+      track.setPointerCapture(event.pointerId);
+      function set(ev) {
+        const rect = track.getBoundingClientRect();
+        const fraction = Math.max(0,
+          Math.min(1, (ev.clientX - rect.left) / rect.width));
+        const raw = Math.round(spec.min + fraction * (spec.max - spec.min));
+        partMuted[part] = false;
+        setRaw(spec, raw);
+        paint(raw);
+      }
+      set(event);
+      function move(ev) { set(ev); }
+      function up() {
+        track.removeEventListener("pointermove", move);
+        track.removeEventListener("pointerup", up);
+        track.removeEventListener("pointercancel", up);
+      }
+      track.addEventListener("pointermove", move);
+      track.addEventListener("pointerup", up);
+      track.addEventListener("pointercancel", up);
+    });
+    wrap.append(cap, track);
+    return wrap;
+  }
+
+  function voiceModeBar(part) {
+    const bar = div("vmode");
+    const head = div("vh");
+    const title = document.createElement("h3");
+    title.textContent = "voice mode";
+    head.append(title);
+    const legato = byName.get("legato.p" + part);
+    if (legato !== undefined) {
+      head.append(makeToggle("legato", rawOf(legato) === 1,
+        (on) => setRaw(legato, on ? 1 : 0)));
+    }
+    bar.append(head);
+    const row = div("vrow");
+    const buttons = div("vbtns");
+    const mode = byName.get("mode.p" + part);
+    if (mode !== undefined) {
+      MODES.forEach((name, index) => {
+        const button = document.createElement("button");
+        button.textContent = name;
+        if (rawOf(mode) === index) button.className = "active";
+        button.addEventListener("click", () => {
+          setRaw(mode, index);
+          buildPage();
+        });
+        buttons.append(button);
+      });
+    }
+    row.append(buttons);
+    const knobs = div("knobs");
+    const voiceKnobs = [
+      { base: "unison_count", label: "unison" },
+      { base: "unison_detune", label: "detune" },
+      { base: "portamento", label: "porta" },
+      { base: "note_priority", label: "priority" },
+    ];
+    for (const item of voiceKnobs) {
+      const spec = byName.get(item.base + ".p" + part);
+      if (spec !== undefined) knobs.append(controlFor(spec, item.label));
+    }
+    row.append(knobs);
+    bar.append(row);
+    return bar;
   }
 
   function buildPatch(page) {
-    const voiceNames = new Set([
-      "mode", "legato", "unison_count", "unison_detune", "portamento",
-      "note_priority",
-    ]);
+    const wrap = div("patchpage");
     const parts = div("parts");
+    const partKnobs = [
+      { base: "channel", label: "midi channel" },
+      { base: "low", label: "keyzone start",
+        format: (value) => Math.round(value) + "/" + noteName(value) },
+      { base: "high", label: "keyzone end",
+        format: (value) => Math.round(value) + "/" + noteName(value) },
+      { base: "detune", label: "tune" },
+      { base: "transpose", label: "transpose" },
+      { base: "delay", label: "delay",
+        format: (value) => Math.round(value) + "ms" },
+    ];
     for (let part = 0; part < 2; ++part) {
       const cardEl = div("part" + (activePart === part ? " active" : ""));
       const header = div("ph");
       const nameWrap = div("");
       nameWrap.style.cursor = "pointer";
-      nameWrap.innerHTML = '<span class="pn">part ' + (part + 1) +
-        ": init</span>";
+      const partLabel = document.createElement("span");
+      partLabel.className = "pn";
+      partLabel.textContent = "part " + (part + 1) + ": " + partNames[part];
+      nameWrap.append(partLabel);
       nameWrap.addEventListener("click", () => selectPart(part));
       const acts = div("pacts");
+      const rename = document.createElement("button");
+      rename.className = "mini";
+      rename.textContent = "rename";
+      rename.addEventListener("click", () => renamePart(part));
+      const copy = document.createElement("button");
+      copy.className = "mini";
+      copy.textContent = "copy";
+      copy.addEventListener("click", () => copyPart(part));
+      const paste = document.createElement("button");
+      paste.className = "mini";
+      paste.textContent = "paste";
+      paste.disabled = clipboard === null || clipboard.kind !== "part";
+      paste.addEventListener("click", () => pastePart(part));
       const mute = makeToggle("active", !partMuted[part], (on) =>
         togglePartMute(part, !on));
-      acts.append(mute);
+      acts.append(rename, copy, paste, mute);
       header.append(nameWrap, acts);
       cardEl.append(header);
 
-      const knobNames = ["channel", "low", "high", "detune", "delay"];
-      const partSpecs = specsForPart(part);
-      const knobSpecs = knobNames
-        .map((name) => partSpecs.find((spec) =>
-          baseName(spec.name) === name))
-        .filter((spec) => spec !== undefined);
       const knobs = div("knobs");
-      for (const spec of knobSpecs) knobs.append(controlFor(spec));
+      for (const item of partKnobs) {
+        const spec = byName.get(item.base + ".p" + part);
+        if (spec !== undefined)
+          knobs.append(controlFor(spec, item.label, null, item.format));
+      }
       cardEl.append(knobs);
 
       const levelSpec = byName.get("level.p" + part);
-      if (levelSpec !== undefined) {
-        const levelRow = div("panel-level-row");
-        const label = document.createElement("span");
-        label.textContent = "level";
-        const slider = document.createElement("input");
-        slider.type = "range";
-        slider.min = String(levelSpec.min);
-        slider.max = String(levelSpec.max);
-        slider.step = "1";
-        slider.value = String(values.get(levelSpec.id) ?? levelSpec.default);
-        const output = document.createElement("output");
-        output.textContent = slider.value;
-        slider.addEventListener("input", () => {
-          partMuted[part] = false;
-          setRaw(levelSpec, Number(slider.value));
-          output.textContent = slider.value;
-        });
-        levelRow.append(label, slider, output);
-        cardEl.append(levelRow);
-      }
+      if (levelSpec !== undefined) cardEl.append(levelSlider(part, levelSpec));
 
       const vis = div("pvis");
       for (const className of ["pscope", "pspectro"]) {
@@ -1256,54 +2040,209 @@
       cardEl.append(vis);
       parts.append(cardEl);
     }
-    page.append(parts);
+    wrap.append(parts, voiceModeBar(activePart));
+    page.append(wrap);
+  }
 
-    const voiceSpecs = specsForPart(activePart).filter((spec) =>
-      pageFor(spec) === "patch" &&
-      voiceNames.has(baseName(spec.name)));
-    const voiceCard = card("voice mode", voiceSpecs);
-    if (voiceCard) page.append(voiceCard);
+  const FOLLOW_TARGETS = (() => {
+    const list = [];
+    for (let op = 1; op <= 4; ++op) {
+      list.push({
+        name: "op" + op + " level",
+        lo: "op" + op + "_level_ks_lo",
+        hi: "op" + op + "_level_ks_hi",
+        vs: "op" + op + "_level_vs",
+      });
+      list.push({
+        name: "op" + op + " feedback",
+        lo: "op" + op + "_fb_ks_lo",
+        hi: "op" + op + "_fb_ks_hi",
+        vs: "op" + op + "_fb_vs",
+      });
+      list.push({
+        name: "op" + op + " amp env",
+        lo: "op" + op + "_aenv_ks_lo",
+        hi: "op" + op + "_aenv_ks_hi",
+        vs: "op" + op + "_aenv_vs",
+      });
+    }
+    list.push({
+      name: "pitch envelope",
+      lo: "penv_ks_lo", hi: "penv_ks_hi", vs: "penv_vs",
+    });
+    list.push({
+      name: "filter 1 cutoff",
+      lo: "f1_cutoff_ks_lo", hi: "f1_cutoff_ks_hi", vs: "f1_cutoff_vs",
+    });
+    list.push({
+      name: "filter env",
+      lo: "fenv_ks_lo", hi: "fenv_ks_hi", vs: "fenv_vs",
+    });
+    return list;
+  })();
+
+  const followSelection = { key: 0, vel: 0 };
+
+  function specByBase(base) {
+    return byName.get(base + ".p" + activePart) ?? byName.get(base);
   }
 
   function buildFx(page) {
-    const all = specsForPart(activePart).filter((spec) => pageFor(spec) === "fx");
-    const used = new Set();
-    const take = (test) => all.filter((spec) => {
-      const base = baseName(spec.name);
-      if (used.has(spec.name) || !test(base)) return false;
-      used.add(spec.name);
-      return true;
-    });
-    const filter = take((base) =>
-      !/_(ks_lo|ks_hi|vs)$/.test(base) &&
-      /cutoff|res|filter|fenv_|lp\.comp/.test(base));
-    const pitch = take((base) =>
-      !/_(ks_lo|ks_hi|vs)$/.test(base) && /^(pitch_|penv_)/.test(base));
-    const follow = take((base) =>
-      /_(ks_lo|ks_hi|vs)$/.test(base) ||
-      base === "breakpoint" || base === "key_sens_on" || base === "vel_sens_on");
-    const rest = take(() => true);
-    const grid = div("panel-grid");
-    const items = [
-      {
-        title: "filter", specs: filter,
-        graph: graphFor(filterRateNames(activePart),
-                        filterLevelNames(activePart)),
-      },
-      {
-        title: "pitch", specs: pitch,
-        graph: graphFor(pitchRateNames(activePart),
-                        pitchLevelNames(activePart),
-                        { signed: true, scaleMax: 12,
-                          transform: (value) => value * 12 / 32768 }),
-      },
-      { title: "key and velocity follow", specs: follow },
-      { title: "output", specs: rest },
-    ];
-    for (const item of items) {
-      const section = card(item.title, item.specs, { graph: item.graph });
-      if (section) grid.append(section);
+    const grid = div("fxmod-grid");
+
+    const filterCard = sectionCard("filter 1");
+    const filterKnobs = div("knobs");
+    for (const base of ["cutoff", "res", "fenv_depth", "lp.comp", "dc.r"]) {
+      const spec = specByBase(base);
+      if (spec !== undefined) filterKnobs.append(controlFor(spec));
     }
+    filterCard.append(filterKnobs);
+    const typeSpec = specByBase("filter_type");
+    if (typeSpec !== undefined) {
+      const typeRow = div("inline");
+      const typeLabel = document.createElement("span");
+      typeLabel.className = "lbl";
+      typeLabel.textContent = "type";
+      const typeSelect = makeSelect(FILTERS,
+        FILTERS[rawOf(typeSpec)] ?? FILTERS[0],
+        (choice) => setRaw(typeSpec, FILTERS.indexOf(choice)));
+      typeRow.append(typeLabel, typeSelect);
+      filterCard.append(typeRow);
+    }
+    const filterOn = specByBase("filter_on");
+    if (filterOn !== undefined) {
+      const toggle = makeToggle("on", rawOf(filterOn) === 1,
+        (on) => setRaw(filterOn, on ? 1 : 0));
+      toggle.style.marginTop = "10px";
+      filterCard.append(toggle);
+    }
+    grid.append(filterCard);
+
+    const fenvSpecs = ["fenv_r1", "fenv_r2", "fenv_r3", "fenv_r4",
+      "fenv_l1", "fenv_l2", "fenv_l3"]
+      .map(specByBase).filter((spec) => spec !== undefined);
+    const fenvCard = card("filter envelope", fenvSpecs, {
+      graph: graphFor(filterRateNames(activePart), filterLevelNames(activePart),
+        { curve: "ecurve2" }),
+    });
+    if (fenvCard) grid.append(fenvCard);
+
+    const pitchWave = specByBase("pitch_wave");
+    const plfoGraph = pitchWave === undefined
+      ? null : () => lfoSvg(LFO_WAVES[rawOf(pitchWave)] ?? "sine");
+    const plfoCard = sectionCard("pitch lfo");
+    if (plfoGraph) appendGraph(plfoCard, plfoGraph);
+    const plfoKnobs = div("knobs");
+    for (const base of ["pitch_rate", "pitch_depth"]) {
+      const spec = specByBase(base);
+      if (spec !== undefined) plfoKnobs.append(controlFor(spec));
+    }
+    plfoCard.append(plfoKnobs);
+    if (pitchWave !== undefined) {
+      const waveRow = div("inline");
+      const waveLabel = document.createElement("span");
+      waveLabel.className = "lbl";
+      waveLabel.textContent = "wave";
+      waveRow.append(waveLabel, makeSelect(LFO_WAVES,
+        LFO_WAVES[rawOf(pitchWave)] ?? LFO_WAVES[0],
+        (choice) => setRaw(pitchWave, LFO_WAVES.indexOf(choice))));
+      const modeSpec = specByBase("pitch_mode");
+      if (modeSpec !== undefined) {
+        const bipolar = makeToggle("bipolar", rawOf(modeSpec) === 1,
+          (on) => setRaw(modeSpec, on ? 1 : 0));
+        bipolar.style.marginLeft = "auto";
+        waveRow.append(bipolar);
+      }
+      plfoCard.append(waveRow);
+    }
+    grid.append(plfoCard);
+
+    const penvOn = specByBase("penv_on");
+    const penvHead = div("follow-actions");
+    if (penvOn !== undefined) {
+      penvHead.append(makeToggle("on", rawOf(penvOn) === 1,
+        (on) => setRaw(penvOn, on ? 1 : 0)));
+    }
+    const penvCard = sectionCard("pitch envelope", {
+      className: "penvcard",
+      headExtra: penvHead.childElementCount > 0 ? penvHead : null,
+    });
+    appendGraph(penvCard, graphFor(pitchRateNames(activePart),
+      pitchLevelNames(activePart),
+      { signed: true, scaleMax: 12,
+        transform: (value) => value * 12 / 32768 }));
+    const penvKnobs = div("knobs");
+    for (const base of ["penv_r1", "penv_r2", "penv_r3", "penv_r4",
+      "penv_l1", "penv_l2", "penv_l3", "penv_l4"]) {
+      const spec = specByBase(base);
+      if (spec !== undefined) penvKnobs.append(controlFor(spec));
+    }
+    penvCard.append(penvKnobs);
+    grid.append(penvCard);
+
+    function followCard(kind) {
+      const isKey = kind === "key";
+      const onSpec = specByBase(isKey ? "key_sens_on" : "vel_sens_on");
+      const actions = div("follow-actions");
+      const wipe = document.createElement("button");
+      wipe.className = "mini";
+      wipe.textContent = isKey ? "wipe all key" : "wipe all vel";
+      wipe.addEventListener("click", () => {
+        for (const target of FOLLOW_TARGETS) {
+          const lo = specByBase(isKey ? target.lo : target.vs);
+          if (lo !== undefined) setRaw(lo, 0);
+          if (isKey) {
+            const hi = specByBase(target.hi);
+            if (hi !== undefined) setRaw(hi, 0);
+          }
+        }
+        buildPage();
+      });
+      actions.append(wipe);
+      if (onSpec !== undefined) {
+        actions.append(makeToggle("on", rawOf(onSpec) === 1, (on) => {
+          setRaw(onSpec, on ? 1 : 0);
+          buildPage();
+        }));
+      }
+      const cardEl = sectionCard(isKey ? "key follow" : "velocity follow", {
+        className: "followcard" +
+          (onSpec !== undefined && rawOf(onSpec) === 0 ? " off" : ""),
+        headExtra: actions,
+      });
+
+      const targetRow = div("inline");
+      const targetLabel = document.createElement("span");
+      targetLabel.className = "lbl";
+      targetLabel.textContent = "target";
+      const names = FOLLOW_TARGETS.map((target) => target.name);
+      const selection = followSelection[kind];
+      targetRow.append(targetLabel, makeSelect(names, names[selection],
+        (value) => {
+          followSelection[kind] = Math.max(0, names.indexOf(value));
+          buildPage();
+        }));
+      cardEl.append(targetRow);
+
+      const target = FOLLOW_TARGETS[selection];
+      const knobs = div("knobs");
+      if (isKey) {
+        const breakpoint = specByBase("breakpoint");
+        if (breakpoint !== undefined) knobs.append(controlFor(breakpoint));
+        const lo = specByBase(target.lo);
+        const hi = specByBase(target.hi);
+        if (lo !== undefined) knobs.append(controlFor(lo, "below"));
+        if (hi !== undefined) knobs.append(controlFor(hi, "above"));
+      } else {
+        const amount = specByBase(target.vs);
+        if (amount !== undefined) knobs.append(controlFor(amount, "amount"));
+      }
+      cardEl.append(knobs);
+      return cardEl;
+    }
+    grid.append(followCard("key"));
+    grid.append(followCard("vel"));
+
     page.append(grid);
   }
 
@@ -1401,9 +2340,12 @@
         baseName(spec.name) === `op${op + 1}_spec_range_a`);
       const rangeB = all.find((spec) =>
         baseName(spec.name) === `op${op + 1}_spec_range_b`);
-      const rangeCard = card("range", range);
       const preview = () => getPreview(activePart, op);
       const commit = () => commitPreview(activePart, op);
+      const rangeCard = card("range", range, {
+        beforeChange: (spec) =>
+          baseName(spec.name) === `op${op + 1}_spec_morph` ? commit : null,
+      });
       const aCard = a.length === 16
         ? spectrumCard("spectrum a", a, b, "a", rangeA,
                        { fromWave: true, preview, onEdit: commit })
@@ -1642,8 +2584,10 @@
     setStatus("starting audio");
     workletReady = false;
     try {
+      const requested = Number(
+        new URLSearchParams(location.search).get("rate")) || 48000;
       audioContext = new AudioContext({
-        sampleRate: 48000,
+        sampleRate: requested,
         latencyHint: "interactive",
       });
       await audioContext.resume();
@@ -1662,9 +2606,10 @@
           window.__p1.ready = true;
           window.__p1.rate = rate;
           window.__p1.paramCount = message.paramCount;
-          const warning = rate === 48000
-            ? "" : ` · context is ${rate} Hz, engine is 48000 Hz`;
-          setStatus(`ready · ${rate} Hz · ${message.paramCount} parameters${warning}`);
+          const rateNote = rate === 48000
+            ? "" : ` · engine 48000 Hz resampled to ${rate} Hz`;
+          window.__p1.resampled = rate !== 48000;
+          setStatus(`ready · ${rate} Hz · ${message.paramCount} parameters${rateNote}`);
           node.port.postMessage({
             type: "params",
             values: Array.from(values.entries()),
@@ -1741,6 +2686,18 @@
   }
 
   startButton.addEventListener("click", startAudio);
+  if (patchButton !== null)
+    patchButton.addEventListener("click", openMultiBrowser);
+  if (patchRenameButton !== null) {
+    patchRenameButton.addEventListener("click", () => {
+      openRename("rename patch", patchName, (value) => {
+        patchName = value;
+        showPatchName();
+        saveLibrary();
+        toast("patch renamed");
+      });
+    });
+  }
   visSeg.addEventListener("click", function (event) {
     const button = event.target.closest("button");
     if (button === null) return;
@@ -1766,10 +2723,6 @@
       requestPreview(activePart, op);
   }, 120);
 
-  partEl.addEventListener("change", function () {
-    selectPart(Number(partEl.value));
-  });
-
   async function init() {
     try {
       const response = await fetch("params.json");
@@ -1779,10 +2732,13 @@
       byName = new Map(params.map((spec) => [spec.name, spec]));
       values = new Map(params.map((spec) => [spec.id, spec.default]));
       window.__p1.paramCount = params.length;
-      partEl.value = "0";
+      loadLibrary();
+      if (currentMulti >= 0) applyMulti(currentMulti);
       buildAlgorithm();
       buildTabs();
+      buildToolbar();
       buildPage();
+      showPatchName();
       drawOutput();
       setStatus(`loaded ${params.length} parameters; press start audio`);
     } catch (error) {

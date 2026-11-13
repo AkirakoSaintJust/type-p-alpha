@@ -1,0 +1,176 @@
+# Feature contract: web panel on the WASM engine
+
+## Identity
+
+- **Feature:** A browser panel that drives the same generated C engine through a
+  narrow WebAssembly seam, with the mockup's CSS and six-tab layout, the two-part
+  patch page, the six-card FX page, the spectral editors, a patch and part library,
+  and an output resampler for context rates other than 48 kHz.
+- **Brief section:** [`../design/README.md`](../design/README.md),
+  [`../design/mockup.html`](../design/mockup.html),
+  [`../design/juce.md`](../design/juce.md) and
+  [`../plugin/feature-contract-spectral.md`](feature-contract-spectral.md).
+- **Owner / date:** P1Onken, 2026-11-13.
+- **Disposition:** complete for the web target. The panel exposes every manifest
+  parameter across the six tabs. The browser smokes pass on the local build, and the
+  GitHub browser job is in place. The Linux browser job has not run on GitHub yet.
+
+## Player outcome
+
+- **New player action:** open the app, press `start audio`, and play the hold note or
+  a host that feeds the page. Choose a part, edit its patch, FX, operator, LFO,
+  spectrum and morph settings, watch the real output and tap scopes, then save the
+  patch to a multi slot or the part to a part slot. Export the library as JSON and
+  import it in another browser.
+- **Sound and behaviour:** the engine renders at 48 kHz. At a context rate of 48 kHz
+  the worklet copies the engine output with no resampling. At another rate the
+  worklet advances through the engine stream at `48000 / rate` and linearly
+  interpolates, so pitch and envelope time stay correct at 44.1, 96 and 192 kHz.
+  Pasting a wave analysis commits the sixteen a levels and then waveform 13. The
+  first bar, macro, norm or copy edit of the A card commits the preview, and the
+  first move of the morph knob commits it as well.
+- **Failure mode:** a context rate other than 48 kHz plays flat or slow, the panel
+  drops a manifest parameter, a stored part or multi loses its routing, the library
+  fails to survive a reload, the preview writes the patch on page open, or the
+  48 kHz path starts to resample.
+
+## Dependencies and interactions
+
+- **Other features:** the 48 kHz core, the 24-voice allocator, the harmonic ranges,
+  the wavetable mip policy, the preset store shape and the editor page grouping.
+- **Platform/API/HAL changes:** none in the engine. The new surface is the WASM seam
+  in `wasm/p1_wasm.c` and the AudioWorklet in `web/p1-worklet.js`. The module imports
+  nothing and uses 32 MB of fixed memory.
+- **Persistence/version impact:** none in the engine. The web library is JSON in
+  `localStorage` under `type-p-alpha-web-library`, with the mockup's
+  `type-p-alpha-library` shape, 64 multi slots and 128 part slots. A slot stores the
+  part parameters by engine id, so it follows the manifest.
+- **MIDI/clock impact:** none. The page sends note, all-notes-off and bend messages
+  through the worklet.
+
+## Parameter and event semantics
+
+The panel reads `engine/gen/params.json` at load. Every control writes the raw value
+of one manifest parameter through the worklet, and the worklet returns the engine's
+stored value. The page groups the 846 parameters as:
+
+| Page | Controls |
+| --- | --- |
+| patch settings | 16 |
+| part fx/mod | 26 |
+| operator envs | 136 |
+| operator lfos | 48 |
+| operator spectra | 12 |
+| op spectra mod | 48 |
+
+The FX page keeps the six mockup cards. Filter cutoff, resonance, envelope amount,
+compensation and the DC blocker sit in the filter card with the type select and the
+on switch. The filter envelope, pitch LFO and pitch envelope keep their graphs. The
+key follow and velocity follow cards select one target at a time from fifteen
+targets and wipe every amount at once. The breakpoint, key sensitivity and velocity
+sensitivity are global parameters and appear once.
+
+The patch page carries the two part cards with channel, key zone start and end,
+tune, transpose, delay and level, plus rename, copy and paste. The voice mode bar
+carries the poly and mono buttons, legato, unison count, unison detune, portamento
+and note priority.
+
+The library snapshots a part as `{ name, params }`, where `params` is a list of
+`[id, value]` pairs for every parameter with that part suffix. A multi snapshots
+`{ used, name, partSlots, routing }`. Loading a multi applies the two part slots and
+then the stored routing, so the multi wins over the part's own routing.
+
+The worklet messages are `module`, `params`, `param`, `part`, `note`, `allNotesOff`,
+`bend` and `analyze`. It answers with `ready`, `param`, `scope`, `taps`, `analysis`
+and `error`.
+
+## Bounds and resources
+
+- **Maximum voices/events/effects:** 24 voices, two parts, ten tap buffers.
+- **Per-sample and per-block operations:** the 48 kHz path does one engine render
+  and one copy. The resampled path does one engine render, one linear interpolation
+  per output sample and one array compaction per block. Taps are copied at the engine
+  block size and posted every eight ring fills.
+- **Instance memory, CPU, preset size:** the module is 164,298 bytes with no imports
+  and 32 MB of fixed memory. The part snapshot is one number per part parameter,
+  about 400 pairs. The library bound is 64 multis and 128 part slots.
+- **Overflow/overload policy:** the resampler needs `ceil(frames * 48000 / rate) + 1`
+  engine samples per block, which stays under the 4,096-frame seam buffer at 128- or
+  256-frame blocks. The tap ring caps each copy at 512 samples. A full ring starts a
+  new fill and counts a block.
+- **Division, shift, and range analysis:** one division per block for the rate ratio
+  and one multiply-add per output sample. No engine arithmetic changes.
+
+## Files and interfaces
+
+- **Seam:** `wasm/p1_wasm.c`, `wasm/build.sh`, `wasm/parity.mjs` and
+  `wasm/README.md`.
+- **Web:** `web/panel.html`, `web/panel.js`, `web/panel.css`, `web/p1-worklet.js`,
+  `web/bare.html`, `web/main.js`, `web/smoke.mjs` and `web/panel-smoke.mjs`.
+- **Manifest and tokens:** `engine/gen/params.json` and `design/tokens.css`.
+- **Design:** `design/mockup.html`, `design/README.md` and `design/juce.md`.
+- **CI:** `.github/workflows/ci.yml`, job `wasm`.
+- **Public contract:** the WASM exports `p1_create`, `p1_reset`, `p1_set_param`,
+  `p1_get_param`, `p1_note_on`, `p1_note_off`, `p1_all_notes_off`, `p1_set_bend`,
+  `p1_render`, `p1_output`, `p1_tap`, `p1_param_count`, `p1_analyze` and
+  `p1_analysis`.
+
+## Verification
+
+- **Host vector(s):** the WASM parity gate renders note-on and release at 48 kHz and
+  compares all 1,024 interleaved samples with the native capture. It also checks the
+  sine, saw and high-range analyses. The module reports 846 parameters.
+- **Browser vector:** `web/smoke.mjs` drives the bare page and checks a level round
+  trip. `web/panel-smoke.mjs` drives the root redirect and checks the six tabs, the
+  saw preview, the bar commit, the morph commit, the output and tap peaks, the
+  algorithm round trip, the operator copy and paste, the part switch, the six FX
+  cards, the part rename and paste, the part and multi library save, the patch
+  rename, the reload persistence and the 44.1 kHz resampled path.
+- **Target package check:** `wasm/build.sh` writes `build/web` with the module, the
+  manifest, the tokens and the pages. The app is served with
+  `python3 -m http.server 8080 --directory build/web`.
+- **Host timing and platform check:** the local Windows smokes use the installed
+  Edge. The Linux Chromium run belongs to the `wasm` CI job and has not run on GitHub
+  yet.
+- **Tolerance/metric:** the 48 kHz output is sample exact against the native capture.
+  The browser checks are thresholds rather than exact audio: a scope peak, tap peak
+  and route peak above 0.0001, a preview whose second harmonic is above 10, a
+  spectrum bar value above 0, waveform 13 after the first edit, and the six page
+  control counts.
+- **Evidence artefact:** the parity log, the two smoke logs, the measured page
+  counts and the four screenshots in `build/web` from the local run.
+
+### Measured evidence
+
+1. **WASM parity:** 846 parameters, note-on and release match the 48 kHz capture,
+   the sine analysis passes with the first harmonic at least 90 and the second at
+   most 5, the saw analysis passes with the first harmonic at least 80 and the
+   second at least 20, and the high range passes at 50 or more. Module size 164,298
+   bytes, no imports.
+2. **Bare smoke:** 48 kHz, scope peak 0.089, `op1_level.p0` round trip 42.
+3. **Panel smoke:** pages `patch:16 fx:26 envs:136 lfos:48 spectra:12 mod:48`,
+   preview `[99, 49, 33]`, bar value 74, morph 15, output peak 0.0907, operator tap
+   peak 0.0909, route peak 0.0909, algorithm 7, operator copy 75 to 75, part two
+   rebuilt, six FX cards with two follow cards, part and multi slots 1, patch name
+   `smoke patch`, persisted name and slots after reload, 44.1 kHz context with the
+   resampler and a peak of 0.0861.
+4. **Release evidence:** the GitHub `wasm` job and the package screenshots remain.
+
+## Risks and fallback
+
+- **Range and aliasing:** the resampler is linear, so a 44.1 kHz context adds a small
+  high-frequency roll-off and some aliasing above 20 kHz. The intended quality is the
+  48 kHz path. A windowed-sinc resampler is the refinement if a listening test asks
+  for it.
+- **Top range edge:** the panel shows the same 113-128 limit as the native editor.
+- **Assumptions/open research:** the browser library is JSON, not the plugin's
+  `.p1lib` bank. The export/import shape is the mockup's JSON, so the browser and the
+  plugin do not share files yet.
+- **Safe experiment and stop criterion:** the panel reads the manifest at load and
+  reports a missing parameter rather than hard-coding a list. If the WASM parity gate
+  fails, the web build stops and the last module stays.
+- **Smaller alternative:** ship the bare page and the tap scopes without the library
+  if the JSON persistence cannot be made durable, which keeps the audio path and the
+  parameter bridge and leaves the library out of the release.
+- **Rollback:** restore `web/` and `wasm/` from the previous commit, remove the
+  `wasm` CI job and rebuild the image. The engine and plugin targets are unaffected.

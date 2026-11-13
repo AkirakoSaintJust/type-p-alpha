@@ -28,8 +28,13 @@ python3 -m http.server 8080 --directory build/web
 The root `index.html` redirects to `panel.html`. The bare page is at
 `http://localhost:8080/bare.html`; press `start audio`, then hold `note 60`. The
 level slider writes `op1_level.p0` through the same message bridge the full panel
-uses. The status line reports the context rate, so a context that refuses 48 kHz is
-visible rather than silent.
+uses.
+
+The engine always runs at 48 kHz. When the context reports another rate, the
+worklet resamples at the output boundary. At 48 kHz the path bypasses the
+resampler and stays exact. The status line reports the context rate. Open
+`panel.html?rate=44100` to force the fallback and see the resampled path. The
+browser smoke uses that query to check the 44.1 kHz output.
 
 The browser smoke test uses Playwright. On Windows, run it against the installed
 Edge:
@@ -46,20 +51,32 @@ install Playwright’s Chromium and run both without a channel.
 
 `panel.html` is the full parameter panel. It loads `params.json`, builds the six
 tabs from the manifest, and sends every knob through the worklet. The page uses
-the mockup’s CSS, extracted into `panel.css`, and the generic cards group the
-parameters by page. The operator pages carry a per-operator tap scope, taken from
-the engine tap buffers for the active part.
+the mockup’s CSS, extracted into `panel.css`. The header carries the algorithm
+graph, the output scope and spectro toggle, and the patch name. The toolbar
+carries the operator and part mutes, the part switch and the part library action.
+
+The patch settings page has the two part cards with routing, tune, transpose,
+delay, level, rename, copy and paste. The FX page splits into the six mockup cards:
+filter, filter envelope, pitch LFO, pitch envelope, key follow and velocity
+follow. The follow cards list every target in a selector and wipe all key or
+velocity amounts at once.
+
+The patch and part library keeps 64 multi-patches and 128 part slots. A
+multi-patch stores two part slots and the routing, so loading one restores both
+parts and their MIDI routing. The library lives in `localStorage` and exports to
+or imports from a JSON wrapper with the mockup's `type-p-alpha-library` name and
+slot arrays. The operator pages carry a
+copy and paste pair in each column header, and the operator scopes come from the
+engine tap buffers for the active part.
+
+The panel also carries the envelope graphs, the sixteen-bar spectrum editors, the
+`from wave` preview and the `op spectra mod` A/B display with the waveform overlay
+and morph marker. The first edit of a spectrum card or the first morph knob move
+commits the preview and switches the waveform to spectrum.
 
 Open `http://localhost:8080/panel.html`. The root redirects there. The bare page
 remains at `http://localhost:8080/bare.html` for the smallest audio and parameter
 smoke test.
-
-The panel now carries the algorithm graph, the output scope and spectro toggle,
-the envelope graphs, the sixteen-bar spectrum editors, the `from wave` preview and
-the `op spectra mod` A/B display with the waveform overlay and morph marker. The
-patch and part library and the final layout polish are the next layer. The panel
-currently exposes every parameter and proves the full message bridge and the tap
-path.
 
 The module is about 164 KB with no imports. It exports `memory` and the wrapper
 functions. Memory is fixed at 32 MB, so the worklet does not need to refresh typed
@@ -86,7 +103,8 @@ ids are the engine ids in `engine/gen/params.json`.
 
 ## Next stage
 
-The AudioWorklet owns the module and the engine state. The main thread compiles the
-module, posts it to the worklet, and sends parameter and note messages. The panel
-then reuses the mockup components, driven by `engine/gen/params.json` and the
-control map, rather than the mockup’s hardcoded state.
+The AudioWorklet owns the module and the engine state. The main thread compiles
+the module, posts it to the worklet, and sends parameter and note messages. The
+open work is the cosmetic pass against `design/mockup.html` and the operator and
+spectrum copy and paste pairs. The panel is served from the same build tree, so a
+change to `web/` needs a rebuild to reach `build/web`.

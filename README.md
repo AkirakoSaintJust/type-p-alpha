@@ -34,7 +34,7 @@ Results so far seem to be fit for intent. I've been able to easily make rudiment
 
 1. More precise spectrograms, with clear differentiation of odd and even harmonics, and maybe some numbers for easier reading. Being able to reliably see the spectra is essential for additive-style synthesis.
 2. Exploiting parallelism if possible!
-3. A web app made from the same engine and a panel from the editor design.
+3. A web app made from the same engine and a panel from the editor design, with the build and browser evidence in the [web panel contract](plugin/feature-contract-web-panel.md).
 
 ## Experiments I'd like to try
 

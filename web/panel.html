@@ -20,7 +20,10 @@
       <div class="alg">
         <div class="alg-meta">
           <div class="lbl">ALGORITHM</div>
-          <select id="algorithm" class="sel" title="Algorithm"></select>
+          <div class="alg-val">
+            <select id="algorithm" class="sel" title="Algorithm"></select>
+            <span class="caret">&#9662;</span>
+          </div>
         </div>
         <div class="alg-svg" id="algGraph"></div>
       </div>
@@ -34,15 +37,23 @@
         </div>
         <canvas id="scope" width="360" height="50"></canvas>
       </div>
-      <div class="actions panel-actions">
-        <button class="btn" id="start" type="button">start audio</button>
-        <button class="btn" id="note" type="button">hold note 60</button>
-        <select id="part" class="sel" title="Editing part">
-          <option value="0">part 1</option>
-          <option value="1">part 2</option>
-        </select>
+      <div class="actions">
+        <div class="patch-buttons">
+          <button class="btn patch" id="patchBtn" type="button">
+            <span class="k">multi</span><span id="patchName">init patch</span>
+          </button>
+          <button class="btn renamer" id="patchRename" type="button"
+            title="Rename patch">rename</button>
+        </div>
+        <div class="patch-hint">click above for multi-patch library actions</div>
       </div>
     </header>
+    <div class="toolbar" id="toolbar">
+      <div class="tgroup panel-transport">
+        <button class="btn" id="start" type="button">start audio</button>
+        <button class="btn" id="note" type="button">hold note 60</button>
+      </div>
+    </div>
     <nav class="tabs" id="tabs"></nav>
     <div class="panel-status" id="status">loading parameters</div>
     <main class="body" id="body"></main>
