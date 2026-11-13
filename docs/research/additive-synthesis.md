@@ -317,8 +317,12 @@ not measure that loss. The brightness trade-off is the next mip experiment.
 
 The first audition, `build/additive-headless.wav`, morphs per sample from the dark
 to the bright table. The second, `build/additive-oscillator.wav`, uses the 344 Hz
-morph and a 32-sample ramp that the control-rate path would use. Comparing the two
-isolates the step at the table update.
+morph with the mix interpolated across the full 128-sample block. The first pass
+used a 32-sample ramp and then held the mix for the remaining 96 samples, and the
+staircase was audible around three seconds, where the bright table's formant
+enters. The full-block interpolation keeps the control-rate update continuous. The
+engine's 1,378 Hz control block would interpolate over 32 samples, so the 344 Hz
+file is the stress case.
 
 ## Remaining experiments
 

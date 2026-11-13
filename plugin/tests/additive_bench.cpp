@@ -440,15 +440,18 @@ void auditionOscillator(const std::string& path)
     std::vector<int16_t> right(static_cast<std::size_t>(samples));
     double mix = 0.0;
     double target = 0.0;
+    double start = 0.0;
     int blockPosition = 0;
     for (int i = 0; i < samples; ++i) {
         const double t = static_cast<double>(i) / kRate;
         if (i % 128 == 0) {
+            start = mix;
             target = std::min(1.0, t / kSeconds);
             blockPosition = 0;
         }
         const double mixNow =
-            mix + (target - mix) * std::min(1.0, blockPosition / 32.0);
+            start + (target - start) * (blockPosition / 128.0);
+        mix = mixNow;
         double sum = 0.0;
         for (int n = 0; n < 4; ++n) {
             const double f = 440.0 * std::pow(2.0, (notes[n] - 69) / 12.0);
@@ -468,11 +471,9 @@ void auditionOscillator(const std::string& path)
         left[static_cast<std::size_t>(i)] = pcm;
         right[static_cast<std::size_t>(i)] = pcm;
         ++blockPosition;
-        if (blockPosition >= 128)
-            mix = target;
     }
     writeWav(path, left, right);
-    std::printf("audition: %s (16 harmonics, 344 Hz morph, 32-sample ramp)\n",
+    std::printf("audition: %s (16 harmonics, 344 Hz morph, 128-sample ramp)\n",
                 path.c_str());
 }
 
