@@ -156,6 +156,9 @@ docker run --rm -v "$PWD:/work" -w /work type-p-alpha-wasm sh -c "./wasm/build.s
 ```
 
 The module is about 157 KB, has no imports and exports `memory` plus the wrapper
-functions in `wasm/p1_wasm.c`. The AudioWorklet and the browser panel are the next
-stage. The panel will reuse the mockup components, driven by
-`engine/gen/params.json`; the JUCE editor itself is not a browser target.
+functions in `wasm/p1_wasm.c`. The AudioWorklet and the browser pages are in
+`web/`: `index.html` is the bare audio and parameter smoke test, and `panel.html`
+is the full parameter panel. The panel loads `engine/gen/params.json`, groups the
+parameters into the six tabs and sends every control through the worklet. The
+bespoke envelope graphs, the spectrum bar editor and the patch library are the next
+visual layer. The JUCE editor itself is not a browser target.

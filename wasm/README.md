@@ -40,6 +40,21 @@ PLAYWRIGHT_CHANNEL=msedge node web/smoke.mjs
 
 On Linux, install Playwright’s Chromium and run it without a channel.
 
+## Panel
+
+`panel.html` is the full parameter panel. It loads `params.json`, builds the six
+tabs from the manifest, and sends every knob through the worklet. The page uses
+the mockup’s CSS, extracted into `panel.css`, and the generic cards group the
+parameters by page. The operator pages carry a per-operator tap scope, taken from
+the engine tap buffers for the active part.
+
+Open `http://localhost:8080/panel.html`. The bare page remains at
+`http://localhost:8080/` for the smallest audio and parameter smoke test.
+
+The bespoke envelope graphs, the spectrum bar editor and the patch library are the
+next visual layer. The panel currently exposes every parameter and proves the full
+message bridge and the tap path.
+
 The module is about 157 KB with no imports. It exports `memory` and the wrapper
 functions. Memory is fixed at 32 MB, so the worklet does not need to refresh typed
 arrays during playback.

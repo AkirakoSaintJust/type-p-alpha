@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Type P.alpha web panel</title>
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Unbounded&family=Zen+Dots&display=swap">
+  <link rel="stylesheet" href="panel.css">
+</head>
+<body>
+  <div class="plugin">
+    <header class="hdr">
+      <div class="brand">
+        <div class="logo">type P<span class="dot">.</span><span class="alpha">a</span></div>
+        <div class="brand-sub">p1onken // パンク派第１音響合成研究班</div>
+      </div>
+      <div class="alg">
+        <div class="alg-meta">
+          <div class="lbl">ALGORITHM</div>
+          <select id="algorithm" class="sel" title="Algorithm"></select>
+        </div>
+      </div>
+      <div class="out">
+        <div class="out-head"><span class="lbl">OUTPUT</span></div>
+        <canvas id="scope" width="360" height="50"></canvas>
+      </div>
+      <div class="actions panel-actions">
+        <button class="btn" id="start" type="button">start audio</button>
+        <button class="btn" id="note" type="button">hold note 60</button>
+        <select id="part" class="sel" title="Editing part">
+          <option value="0">part 1</option>
+          <option value="1">part 2</option>
+        </select>
+      </div>
+    </header>
+    <nav class="tabs" id="tabs"></nav>
+    <div class="panel-status" id="status">loading parameters</div>
+    <main class="body" id="body"></main>
+    <div class="status">
+      <div class="leds"><span class="led on"></span>web audio <span class="led on"></span>wasm</div>
+    </div>
+  </div>
+  <script src="panel.js"></script>
+</body>
+</html>

@@ -221,6 +221,10 @@ so an AudioWorklet can instantiate it without an Emscripten runtime.
 | `wasm/build.sh` | Emscripten standalone build plus the parity gate. |
 | `wasm/make_reference.py` | Convert the native capture header into JSON. |
 | `wasm/parity.mjs` | Compare the WASM note-on and release with the native 48 kHz capture. |
+| `web/p1-worklet.js` | Own the module, render the output and post the output and tap scopes. |
+| `web/main.js`, `web/index.html` | The bare audio and parameter page. |
+| `web/panel.js`, `web/panel.html` | The manifest-driven six-page panel. |
+| `web/smoke.mjs`, `web/panel-smoke.mjs` | Browser smoke tests. |
 
 ## Preset store
 

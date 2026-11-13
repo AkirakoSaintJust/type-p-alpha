@@ -5,7 +5,18 @@ class P1Processor extends AudioWorkletProcessor {
     this.exports = null;
     this.scope = new Float32Array(1024);
     this.scopePosition = 0;
+    this.activePart = 0;
+    this.tapRings = [];
+    this.tapPosition = 0;
+    this.tapBlocks = 0;
+    this.resetTapRings();
     this.port.onmessage = (event) => this.handle(event.data);
+  }
+
+  resetTapRings() {
+    this.tapRings = Array.from({ length: 5 }, () => new Float32Array(512));
+    this.tapPosition = 0;
+    this.tapBlocks = 0;
   }
 
   async handle(message) {
@@ -46,6 +57,14 @@ class P1Processor extends AudioWorkletProcessor {
       case "bend":
         e.p1_set_bend(message.value);
         break;
+      case "part":
+        this.activePart = message.part === 1 ? 1 : 0;
+        this.resetTapRings();
+        break;
+      case "params":
+        for (const [id, value] of message.values)
+          e.p1_set_param(id, value);
+        break;
       default:
         break;
     }
@@ -79,6 +98,33 @@ class P1Processor extends AudioWorkletProcessor {
           samples: this.scope.slice(512),
         });
         this.scopePosition = 0;
+      }
+    }
+    const tapChannels = [
+      this.activePart,
+      2 + this.activePart,
+      4 + this.activePart,
+      6 + this.activePart,
+      8 + this.activePart,
+    ];
+    for (let c = 0; c < tapChannels.length; ++c) {
+      const pointer = this.exports.p1_tap(tapChannels[c]);
+      const tap = new Int32Array(this.exports.memory.buffer, pointer, frames);
+      const ring = this.tapRings[c];
+      for (let i = 0; i < frames; ++i)
+        ring[this.tapPosition + i] = tap[i] / 32768;
+    }
+    this.tapPosition += frames;
+    if (this.tapPosition >= 512) {
+      this.tapPosition = 0;
+      ++this.tapBlocks;
+      if (this.tapBlocks >= 8) {
+        this.port.postMessage({
+          type: "taps",
+          part: this.activePart,
+          channels: this.tapRings.map((ring) => ring.slice()),
+        });
+        this.tapBlocks = 0;
       }
     }
     return true;

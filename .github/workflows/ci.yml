@@ -44,6 +44,21 @@ jobs:
         run: docker build -f docker/Dockerfile.wasm -t type-p-alpha-wasm:ci .
       - name: Build and run the parity gate
         run: docker run --rm -v "$PWD:/work" -w /work type-p-alpha-wasm:ci sh -c "./wasm/build.sh"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - name: Install the browser test
+        run: |
+          npm install --no-save playwright@1.65.0
+          npx playwright install --with-deps chromium
+      - name: Run the browser smoke tests
+        run: |
+          python3 -m http.server 8080 --directory build/web &
+          server=$!
+          sleep 1
+          node web/smoke.mjs
+          node web/panel-smoke.mjs
+          kill "$server"
 
   macos:
     runs-on: macos-15-intel

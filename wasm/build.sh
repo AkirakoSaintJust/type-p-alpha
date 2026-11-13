@@ -18,5 +18,6 @@ python3 wasm/make_reference.py > "$out/reference.json"
 node wasm/parity.mjs "$out/p1.wasm" "$out/reference.json"
 
 cp web/index.html web/main.js web/p1-worklet.js "$out"/
+cp web/panel.html web/panel.js web/panel.css "$out"/
 cp engine/gen/params.json "$out/params.json"
 cp design/tokens.css "$out/tokens.css"
