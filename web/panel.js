@@ -322,6 +322,20 @@
     return el;
   }
 
+  function makeMuteSwitch(muted, onchange) {
+    const el = document.createElement("div");
+    el.className = "toggle mute" + (muted ? " muted" : "");
+    el.innerHTML = '<span class="tname l">active</span>' +
+      '<div class="trk"><div class="thb"></div></div>' +
+      '<span class="tname r">mute</span>';
+    el.addEventListener("click", function () {
+      const nowMuted = !el.classList.contains("muted");
+      el.classList.toggle("muted", nowMuted);
+      if (onchange) onchange(nowMuted);
+    });
+    return el;
+  }
+
   function envSvg(r, l, cls) {
     const W = 240;
     const H = 62;
@@ -1244,13 +1258,25 @@
 
   function oscillatorSpecs(op) {
     return specsForOp(activePart, op).filter((spec) =>
-      /^op[1-4]_(ratio|detune|waveform|level|feedback|mute)$/
+      /^op[1-4]_(ratio|detune|waveform|level|feedback)$/
         .test(baseName(spec.name)));
   }
 
   function isCarrier(algorithm, op) {
     const row = CARRIERS[Math.max(0, Math.min(7, algorithm))];
     return row.includes(op);
+  }
+
+  function opMuteSpec(op) {
+    return byName.get("op" + (op + 1) + "_mute.p" + activePart);
+  }
+
+  function setOpMute(op, muted) {
+    const spec = opMuteSpec(op);
+    if (spec === undefined) return;
+    setRaw(spec, muted ? 1 : 0);
+    buildToolbar();
+    buildPage();
   }
 
   function opColumn(op, withScope) {
@@ -1273,7 +1299,11 @@
     paste.textContent = "paste";
     paste.disabled = clipboard === null || clipboard.kind !== "op";
     paste.addEventListener("click", () => pasteOp(activePart, op));
-    acts.append(copy, paste);
+    const muteSpec = opMuteSpec(op);
+    const muted = muteSpec !== undefined &&
+      (values.get(muteSpec.id) ?? muteSpec.default) === 1;
+    acts.append(copy, paste,
+      makeMuteSwitch(muted, (value) => setOpMute(op, value)));
     head.append(acts);
     col.append(head);
     if (withScope) {
@@ -1672,13 +1702,15 @@
     applyPartSnapshot(part, clipboard.data);
     partNames[part] = clipboard.data.name;
     buildAlgorithm();
+    buildToolbar();
     buildPage();
     toast("part " + (part + 1) + " pasted");
   }
 
   function copyOp(part, op) {
-    const entries = specsForOp(part, op).map((spec) =>
-      [spec.name, values.get(spec.id) ?? spec.default]);
+    const entries = specsForOp(part, op)
+      .filter((spec) => !/_mute$/.test(baseName(spec.name)))
+      .map((spec) => [spec.name, values.get(spec.id) ?? spec.default]);
     clipboard = { kind: "op", part, op, data: entries };
     buildPage();
     toast("op" + (op + 1) + " copied");
@@ -1907,9 +1939,7 @@
       button.title = (muted ? "unmute " : "mute ") + "op" + (op + 1);
       button.addEventListener("click", () => {
         if (spec === undefined) return;
-        const current = values.get(spec.id) ?? spec.default;
-        setRaw(spec, current === 1 ? 0 : 1);
-        buildToolbar();
+        setOpMute(op, !muted);
       });
       group.append(button);
     }
@@ -2076,8 +2106,8 @@
       paste.textContent = "paste";
       paste.disabled = clipboard === null || clipboard.kind !== "part";
       paste.addEventListener("click", () => pastePart(part));
-      const mute = makeToggle("active", !partMuted[part], (on) =>
-        togglePartMute(part, !on));
+      const mute = makeMuteSwitch(partMuted[part], (muted) =>
+        togglePartMute(part, muted));
       acts.append(rename, copy, paste, mute);
       header.append(nameWrap, acts);
       cardEl.append(header);
@@ -2316,8 +2346,10 @@
   function buildEnvs(page) {
     const columns = div("panel-opcols");
     for (let op = 0; op < 4; ++op) {
+      const muteName = "op" + (op + 1) + "_mute";
       const all = specsForOp(activePart, op)
-        .filter((spec) => pageFor(spec) === "envs");
+        .filter((spec) => pageFor(spec) === "envs" &&
+          baseName(spec.name) !== muteName);
       const used = new Set();
       const take = (test) => all.filter((spec) => {
         const base = baseName(spec.name);
@@ -2326,7 +2358,7 @@
         return true;
       });
       const osc = take((base) =>
-        /^op[1-4]_(ratio|detune|waveform|level|feedback|mute)$/.test(base));
+        /^op[1-4]_(ratio|detune|waveform|level|feedback)$/.test(base));
       const amp = take((base) =>
         /^op[1-4]\.eg\./.test(base) ||
         (op === 0 && (base === "attack" || base === "release")));

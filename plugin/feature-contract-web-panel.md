@@ -58,7 +58,7 @@ stored value. The page groups the 846 parameters as:
 | --- | --- |
 | patch settings | 16 |
 | part fx/mod | 26 |
-| operator envs | 136 |
+| operator envs | 132 |
 | operator lfos | 72 |
 | operator spectra | 36 |
 | op spectra mod | 72 |
@@ -76,11 +76,12 @@ carries the poly and mono buttons, legato, unison count, unison detune, portamen
 and note priority.
 
 Each operator column carries its oscillator card on the operator envs, operator
-lfos, operator spectra and op spectra mod pages. Every operator sub-card has a copy
-and paste pair in its header, so a card copies across operators and parts. The
-spectrum a and b cards copy their sixteen levels for another operator, which is the
-way to move a spectrum across the four operators. The range card copies both ranges
-and the morph.
+lfos, operator spectra and op spectra mod pages. The operator header carries the
+active and mute switch, and it writes the same operator mute as the toolbar box.
+Every operator sub-card has a copy and paste pair in its header, so a card copies
+across operators and parts. The spectrum a and b cards copy their sixteen levels
+for another operator, which is the way to move a spectrum across the four
+operators. The range card copies both ranges and the morph.
 
 The library snapshots a part as `{ name, params }`, where `params` is a list of
 `[id, value]` pairs for every parameter with that part suffix. A multi snapshots
@@ -130,11 +131,11 @@ and `error`.
 - **Browser vector:** `web/smoke.mjs` drives the bare page and checks a level round
   trip. `web/panel-smoke.mjs` drives the root redirect and checks the six tabs, the
   saw preview, the bar commit, the morph commit, the output and tap peaks, the
-  algorithm round trip, the operator copy and paste, the four oscillator cards on
-  each operator page, the card copy and paste, the spectrum copy across operators,
-  the part switch, the six FX cards, the part rename and paste, the part and multi
-  library save, the patch rename, the reload persistence and the 44.1 kHz resampled
-  path.
+  algorithm round trip, the operator copy and paste, the operator mute switch and
+  its toolbar box, the four oscillator cards on each operator page, the card copy
+  and paste, the spectrum copy across operators, the part switch, the six FX cards,
+  the part rename and paste, the part and multi library save, the patch rename, the
+  reload persistence and the 44.1 kHz resampled path.
 - **Target package check:** `wasm/build.sh` writes `build/web` with the module, the
   manifest, the tokens and the pages. The app is served with
   `python3 -m http.server 8080 --directory build/web`.
@@ -156,14 +157,14 @@ and `error`.
    second at least 20, and the high range passes at 50 or more. Module size 164,298
    bytes, no imports.
 2. **Bare smoke:** 48 kHz, scope peak 0.089, `op1_level.p0` round trip 42.
-3. **Panel smoke:** pages `patch:16 fx:26 envs:136 lfos:72 spectra:36 mod:72`,
+3. **Panel smoke:** pages `patch:16 fx:26 envs:132 lfos:72 spectra:36 mod:72`,
    preview `[99, 49, 33]`, bar value 74, morph 15, a card copy that copied the amp
    LFO rate to the second operator, a spectrum copy from op1 to op2, output peak
    0.063, operator tap peak 0.064, route peak 0.064, algorithm 7, operator copy 75
-   to 75, part two rebuilt, six FX cards with two follow cards, four oscillator cards
-   on each operator page, part and multi slots 1, patch name `smoke patch`, persisted
-   name and slots after reload, 44.1 kHz context with the resampler and a peak of
-   0.0863.
+   to 75, operator mute 1 with the toolbar box marked muted, part two rebuilt, six FX
+   cards with two follow cards, four oscillator cards on each operator page, part
+   and multi slots 1, patch name `smoke patch`, persisted name and slots after
+   reload, 44.1 kHz context with the resampler and a peak of 0.0867.
 4. **Release evidence:** the GitHub `wasm` job passed with the bare and panel
    smokes on Chromium. The release package and its binaries remain.
 

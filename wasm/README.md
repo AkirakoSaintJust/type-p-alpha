@@ -75,9 +75,11 @@ and morph marker. The first edit of a spectrum card or the first morph knob move
 commits the preview and switches the waveform to spectrum.
 
 Every operator column carries its oscillator card on the operator envs, LFO,
-spectra and mod pages. Each operator sub-card has a copy and paste pair in its
-header, so a card copies across operators. The spectrum cards copy their sixteen
-levels for another operator, and the range card copies both ranges and the morph.
+spectra and mod pages. The operator header carries the active and mute switch, and
+it shares its state with the toolbar mute box. Each operator sub-card has a copy
+and paste pair in its header, so a card copies across operators. The spectrum cards
+copy their sixteen levels for another operator, and the range card copies both
+ranges and the morph.
 
 Open `http://localhost:8080/panel.html`. The root redirects there. The bare page
 remains at `http://localhost:8080/bare.html` for the smallest audio and parameter

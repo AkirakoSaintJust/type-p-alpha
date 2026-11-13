@@ -185,6 +185,22 @@ try {
   if (opOneLevel !== opTwoLevel)
     throw new Error("the operator paste did not apply");
 
+  await page.locator(".opcol").first().locator(".toggle.mute").click();
+  await page.waitForTimeout(150);
+  const mutedValue = await page.evaluate(() =>
+    window.__p1.paramValue("op1_mute.p0"));
+  const toolbarClass = await page.locator(".toolbar .mutebox").first()
+    .getAttribute("class");
+  console.log("op mute:", mutedValue, toolbarClass);
+  if (mutedValue !== 1 || !toolbarClass.includes("muted"))
+    throw new Error("the operator mute did not reach the toolbar");
+  await page.locator(".opcol").first().locator(".toggle.mute").click();
+  await page.waitForTimeout(150);
+  const unmutedValue = await page.evaluate(() =>
+    window.__p1.paramValue("op1_mute.p0"));
+  if (unmutedValue !== 0)
+    throw new Error("the operator unmute did not apply");
+
   await page.locator(".tbtn.partsel", { hasText: "part 2" }).click();
   await page.waitForTimeout(200);
   const partState = await page.evaluate(() => window.__p1);
