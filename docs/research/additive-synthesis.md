@@ -328,6 +328,12 @@ The bright mip puts the top harmonic just below Nyquist and recovers the group;
 the conservative mip keeps it an octave below and loses it. A production policy can
 sit between the two, or the table can carry more mip levels.
 
+For the current 256-harmonic banks the conservative selector keeps the top harmonic
+at or below Nyquist/4. At note 60 that is the 32-harmonic table, so the top sits at
+about 8.4 kHz; across the mip band it runs from about 6 to 12 kHz. That is the
+rolloff a bright saw patch shows around 10 to 12 kHz. The bright policy would move
+it to Nyquist/2.
+
 The auditions are:
 
 - `build/additive-headless.wav`: the per-sample morph from the standalone table

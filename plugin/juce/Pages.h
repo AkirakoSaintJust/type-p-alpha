@@ -115,7 +115,7 @@ private:
 
 class OscillatorCard : public P1Card {
 public:
-    OscillatorCard(PluginEditor& editor, int op, int part)
+    OscillatorCard(PluginEditor& editor, int op, int part, bool withMorph = false)
         : P1Card("oscillator",
                  [&ed = editor, op, part] {
                      ed.copyOperatorSection(
@@ -138,6 +138,12 @@ public:
         addAndMakeVisible(level_);
         addAndMakeVisible(feedback_);
         addAndMakeVisible(wave_);
+        if (withMorph) {
+            morph_ = std::make_unique<ParamKnob>(editor.state(),
+                                                 params::opSpecMorph(op, part),
+                                                 "morph", 24.0f);
+            addAndMakeVisible(*morph_);
+        }
     }
 
     void resized() override
@@ -145,12 +151,15 @@ public:
         P1Card::resized();
         auto area = contentArea();
         area.removeFromTop(8);
-        auto row = area.removeFromTop(70);
-        const int cell = row.getWidth() / 4;
+        auto row = area.removeFromTop(morph_ != nullptr ? 66 : 70);
+        const int cells = morph_ != nullptr ? 5 : 4;
+        const int cell = row.getWidth() / cells;
         ratio_.setBounds(row.removeFromLeft(cell));
         detune_.setBounds(row.removeFromLeft(cell));
         level_.setBounds(row.removeFromLeft(cell));
-        feedback_.setBounds(row);
+        feedback_.setBounds(row.removeFromLeft(cell));
+        if (morph_ != nullptr)
+            morph_->setBounds(row);
         wave_.setBounds(area.removeFromTop(18).withTrimmedTop(2).withWidth(150));
     }
 
@@ -160,6 +169,7 @@ private:
     ParamKnob level_;
     ParamKnob feedback_;
     ParamChoice wave_;
+    std::unique_ptr<ParamKnob> morph_;
 };
 
 class AmplitudeEnvelopeCard : public P1Card {
@@ -340,5 +350,7 @@ std::unique_ptr<PageBase> makePatchPage(PluginEditor& editor);
 std::unique_ptr<PageBase> makeOperatorsPage(PluginEditor& editor);
 std::unique_ptr<PageBase> makeFxModPage(PluginEditor& editor);
 std::unique_ptr<PageBase> makeOperatorLfosPage(PluginEditor& editor);
+std::unique_ptr<PageBase> makeOperatorSpectraPage(PluginEditor& editor);
+std::unique_ptr<PageBase> makeOperatorSpectraModPage(PluginEditor& editor);
 
 } // namespace p1::ui

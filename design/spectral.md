@@ -18,7 +18,7 @@ The tab bar keeps six tabs, with `part fx/mod` next to `patch settings`:
 | --- | --- |
 | 0 | patch settings |
 | 1 | part fx/mod |
-| 2 | operators |
+| 2 | operator envs |
 | 3 | operator lfos |
 | 4 | operator spectra |
 | 5 | op spectra mod |
@@ -39,8 +39,8 @@ Four clamps change from 3 to 5:
 - `PluginProcessor.h`, `setUiPage`.
 - `PluginProcessor.cpp`, the state restore.
 
-`showTab` renumbers `part fx/mod`, `operators` and `operator lfos` to 1, 2 and 3,
-and gains cases 4 and 5. `buildPage` gains the two factories.
+`showTab` renumbers `part fx/mod`, `operator envs` and `operator lfos` to 1, 2
+and 3, and gains cases 4 and 5. `buildPage` gains the two factories.
 
 The editor window and page area do not move. The page is 1206 by 685 at (17, 255),
 and each operator column is 294 px wide with 278 px of inner width, the same as
@@ -89,7 +89,7 @@ the page needs the height for the envelope and the LFO.
 
 The mode is per operator. The wave select carries the mode, so there is no separate
 switch. It lists fourteen entries: the thirteen waves and `spectrum` at the end.
-The two spectral pages add a `morph` slider under the wave select. The operators
+The two spectral pages add a `morph` knob to the oscillator row. The operators
 and operator lfos pages keep the current card and show the same wave select, so
 `spectrum` is visible and selectable there too.
 
@@ -129,13 +129,13 @@ The analysis is a preview. The operator sounds through the selected waveform, th
 stored a and b levels are untouched, and the a card carries a `from wave` badge.
 Opening the page does not dirty the patch.
 
-The first edit of a spectral control commits the preview. The controls are the
-sixteen a bars, the sixteen b bars, the four macros, `norm`, `to a` and `to b`, the
-morph value, and an envelope or LFO depth moved above zero. The editor writes the
+The first edit of an A-card control commits the preview. The controls are the
+sixteen a bars, the four macros, `norm` and `to b`.
+The morph knob does not commit by itself in this pass. The editor writes the
 sixteen a levels, leaves b as stored, then writes `opN_waveform` as 13, in that
 order, so the engine never reads the new mode against the old table. The mode
-switch crossfades over 10 ms. A first edit on the b card or the morph also commits
-the a preview, because the engine needs the analysed a as soon as the mode is on.
+switch crossfades over 10 ms. A first edit on the b card or the morph does not
+commit the a preview; select `spectrum` or edit the a card.
 
 The first edit writes seventeen parameters, and a host undo may not group them.
 Selecting a wave is the explicit way back. Host automation of a level does not

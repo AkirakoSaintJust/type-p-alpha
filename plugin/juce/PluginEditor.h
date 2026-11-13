@@ -40,6 +40,10 @@ public:
         amplitudeLfo,
         feedbackLfo,
         detuneLfo,
+        spectrumA,
+        spectrumB,
+        spectrumEnvelope,
+        spectrumLfo,
     };
 
     explicit PluginEditor(TypePAlphaAudioProcessor& audioProcessor);

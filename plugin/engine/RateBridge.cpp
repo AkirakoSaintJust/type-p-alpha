@@ -124,22 +124,26 @@ void RateBridge::pull(float* left, float* right, int frames)
     }
 }
 
-void RateBridge::renderChunk(Engine& engine, int frames)
+void RateBridge::renderChunk(Engine& engine, int frames, CoreTapCallback onCore,
+                             void* context)
 {
     int32_t chunk[2 * 32] = {};
     const int count = std::min(frames, 32);
     engine.render(chunk, static_cast<uint32_t>(count));
     pushCore(chunk, count);
+    if (onCore != nullptr)
+        onCore(context, engine, count);
 }
 
-void RateBridge::process(Engine& engine, float* left, float* right, int frames)
+void RateBridge::process(Engine& engine, float* left, float* right, int frames,
+                         CoreTapCallback onCore, void* context)
 {
     if (frames <= 0)
         return;
     const int64_t last = static_cast<int64_t>(std::floor(
         static_cast<double>(outputIndex_ + frames - 1) * ratio_));
     while (coreGenerated_ <= last)
-        renderChunk(engine, 32);
+        renderChunk(engine, 32, onCore, context);
     pull(left, right, frames);
 }
 

@@ -51,8 +51,10 @@ set(P1_UI_SOURCES
     Pages.cpp
     PagesOperators.cpp
     PagesFxMod.cpp
+    PagesSpectral.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../ui/Theme.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../ui/Widgets.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../ui/SpectrumAnalysis.cpp
 )
 
 add_library(p1_editor STATIC ${P1_UI_SOURCES})

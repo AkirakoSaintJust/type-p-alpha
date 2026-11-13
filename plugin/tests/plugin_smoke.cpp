@@ -220,6 +220,30 @@ int main()
     check(finite && sounding, "the 44.1 kHz placeholder path renders audio");
 
     {
+        /* The bridge renders several core chunks per host block. The tap scope
+         * must collect every chunk, not only the last one, or the first half of
+         * the display window is zero and the trace breaks at each block edge. */
+        juce::AudioBuffer<float> tapBlock(2, kFrames);
+        juce::MidiBuffer empty;
+        for (int i = 0; i < 8; ++i) {
+            tapBlock.clear();
+            processor.processBlock(tapBlock, empty);
+        }
+        std::array<float, 512> taps{};
+        processor.readTapScope(8, taps.data(), static_cast<int>(taps.size()));
+        auto energy = [&taps](int start) {
+            double sum = 0.0;
+            for (int i = 0; i < 256; ++i) {
+                const double value = taps[static_cast<std::size_t>(start + i)];
+                sum += value * value;
+            }
+            return sum / 256.0;
+        };
+        check(energy(0) > 1.0e-8 && energy(256) > 1.0e-8,
+              "the 44.1 kHz tap scope fills the whole window");
+    }
+
+    {
         TypePAlphaAudioProcessor source;
         TypePAlphaAudioProcessor restored;
         for (int i = 0; i < kP1ParamCount; ++i) {

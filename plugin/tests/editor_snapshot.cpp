@@ -83,14 +83,40 @@ int main(int argc, char** argv)
     bool ok = saveSnapshot(*editor, directory.getChildFile("editor-patch.png"));
     p1editor->showTab(1);
     fill();
-    ok = saveSnapshot(*editor, directory.getChildFile("editor-operators.png")) && ok;
+    ok = saveSnapshot(*editor, directory.getChildFile("editor-fxmod.png")) && ok;
     p1editor->showTab(2);
     fill();
     ok = saveSnapshot(*editor,
-                      directory.getChildFile("editor-operator-lfos.png")) && ok;
+                      directory.getChildFile("editor-operator-envs.png")) && ok;
     p1editor->showTab(3);
     fill();
-    ok = saveSnapshot(*editor, directory.getChildFile("editor-fxmod.png")) && ok;
+    ok = saveSnapshot(*editor,
+                      directory.getChildFile("editor-operator-lfos.png")) && ok;
+    p1editor->showTab(4);
+    fill();
+    ok = saveSnapshot(*editor,
+                      directory.getChildFile("editor-operator-spectra.png")) && ok;
+    if (auto* wave = p1editor->state().getParameter("op1_waveform.p0")) {
+        wave->setValueNotifyingHost(wave->convertTo0to1(12.0f));
+        p1editor->updateVisualizers();
+        ok = saveSnapshot(
+                 *editor,
+                 directory.getChildFile("editor-operator-spectra-saw.png")) &&
+             ok;
+        p1editor->showTab(5);
+        p1editor->updateVisualizers();
+        ok = saveSnapshot(
+                 *editor,
+                 directory.getChildFile("editor-op-spectra-mod-saw.png")) &&
+             ok;
+        p1editor->showTab(4);
+        wave->setValueNotifyingHost(wave->convertTo0to1(0.0f));
+        p1editor->updateVisualizers();
+    }
+    p1editor->showTab(5);
+    fill();
+    ok = saveSnapshot(*editor,
+                      directory.getChildFile("editor-op-spectra-mod.png")) && ok;
     p1editor->showTab(0);
     fill();
     p1editor->showAlgorithmPicker();

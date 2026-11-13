@@ -159,6 +159,53 @@ private:
     std::vector<float> samples_;
 };
 
+class P1SpectralBars : public juce::Component {
+public:
+    P1SpectralBars(APVTS& state, juce::StringArray parameterIDs,
+                   juce::Colour barColour);
+    void paint(juce::Graphics& g) override;
+    void mouseDown(const juce::MouseEvent& event) override;
+    void mouseDrag(const juce::MouseEvent& event) override;
+
+    std::vector<double> levels() const;
+    void setLevels(const std::vector<double>& levels);
+    void setPreviewLevels(const std::vector<double>& levels);
+    void clearPreview();
+    bool hasPreview() const { return !preview_.empty(); }
+    std::function<void()> onEdit;
+
+private:
+    void setFromMouse(const juce::MouseEvent& event);
+    double levelAt(int index) const;
+    double displayLevelAt(int index) const;
+    void setLevel(int index, double value);
+
+    APVTS& state_;
+    juce::StringArray parameterIDs_;
+    juce::Colour colour_;
+    std::vector<double> preview_;
+};
+
+class P1SpectrumDisplay : public juce::Component {
+public:
+    P1SpectrumDisplay(APVTS& state, juce::StringArray aIDs,
+                      juce::StringArray bIDs, juce::String morphID,
+                      juce::String waveformID, juce::Colour aColour,
+                      juce::Colour bColour);
+    void paint(juce::Graphics& g) override;
+
+private:
+    double levelAt(const juce::StringArray& ids, int index) const;
+
+    APVTS& state_;
+    juce::StringArray aIDs_;
+    juce::StringArray bIDs_;
+    juce::String morphID_;
+    juce::String waveformID_;
+    juce::Colour aColour_;
+    juce::Colour bColour_;
+};
+
 class P1Envelope : public juce::Component {
 public:
     P1Envelope(APVTS& state, juce::StringArray rateIDs,

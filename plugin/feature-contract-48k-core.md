@@ -7,8 +7,9 @@
 - **Brief section:** README line of research 7, the rate bridge, and the audio
   section of [`../design/juce.md`](../design/juce.md).
 - **Owner / date:** P1Onken, 2026-11-13.
-- **Disposition:** complete. The Windows CTest gate passes. The editor panel is
-  unchanged, so the Linux golden set keeps its current images.
+- **Disposition:** complete. The Windows CTest gate passes. This conversion did not
+  change the panel. The later spectral UI pass does, and that pass needs the Linux
+  golden set regenerated.
 
 ## Player outcome
 
@@ -123,19 +124,21 @@ float, file access or display enters the audio path.
 - **Host vector:** `engine_parity` renders note 60 at velocity 100 for 256 frames,
   then the release, and compares the 48 kHz capture with
   `engine_render_reference.h`. `spectral` runs at 48 kHz. `rate_bridge_test` runs
-  44.1, 48, 96 and 192 kHz, and `plugin_smoke` checks the 48 kHz bypass and the
-  44.1 kHz bridge. `plugin_stability` walks 44.1, 48, 96, 192 and back to 44.1.
+  44.1, 48, 96 and 192 kHz, and `plugin_smoke` checks the 48 kHz bypass, the
+  44.1 kHz bridge and the tap scope window. `plugin_stability` walks 44.1, 48, 96,
+  192 and back to 44.1.
 - **Tolerance/metric:** the 1 kHz gain stays within 0.5 dB, the 10 kHz gain within
   1.5 dB, and the 20 kHz image at least 10 dB down at every non-core host rate. The
   measured image is -95.9 dB at 44.1, -108.0 dB at 96 and -104.3 dB at 192 kHz.
   The bridge latency is 58 host samples at 44.1, 0 at the 48 kHz bypass, 127 at 96
   and 254 at 192, from the 63.5 core-sample kernel delay.
 - **Target package check:** the VST3, CLAP and standalone targets build, and the
-  editor snapshot test passes. The panel did not change, so the golden images
-  stay.
+  editor snapshot test passes at this commit. The later spectral UI pass changes
+  the panel and needs new goldens.
 - **Host timing and platform check:** the Windows clang-cl/lld build passes all 12
   CTest entries. The Linux DAW matrix is not run in this tree; it belongs to the
-  Linux container. The editor panel did not change, so the golden images stay.
+  Linux container. The panel changes in the later spectral UI pass, so that pass
+  also needs the Linux goldens.
 - **Evidence artefact:** this contract, the regenerated 48 kHz reference, and the
   measured rate table in `rate_bridge_test`. The feedback research notes keep their
   44.1 kHz measurements as the historical evidence for that rate.
@@ -157,6 +160,14 @@ float, file access or display enters the audio path.
   which preserves the old exact path but keeps two musical bases.
 - **Rollback:** restore the 44.1 kHz tables and the 32-tap bridge, return
   `PRESET_VERSION` to 3 and the state version to 2, and regenerate the test banks.
+
+## Tap scope capture
+
+The 128-tap bridge renders more than one 32-sample core chunk per host block. The
+old processor copied only the last chunk into the ten tap rings, so the scope window
+was mostly zeros and the trace broke at the block edges. `RateBridge::process` now
+takes a per-chunk callback, and the processor copies every tap chunk. `plugin_smoke`
+checks that the 44.1 kHz tap window has energy in both halves.
 
 ## Measured feedback change
 

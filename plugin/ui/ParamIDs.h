@@ -114,6 +114,47 @@ inline juce::String opMute(int op, int part)
     return withPart(opBase(op, "_mute"), part);
 }
 
+inline juce::String opSpecA(int op, int harmonic, int part)
+{
+    return withPart(opBase(op, "_spec_a") + juce::String(harmonic), part);
+}
+inline juce::String opSpecB(int op, int harmonic, int part)
+{
+    return withPart(opBase(op, "_spec_b") + juce::String(harmonic), part);
+}
+inline juce::String opSpecMorph(int op, int part)
+{
+    return withPart(opBase(op, "_spec_morph"), part);
+}
+inline juce::String opSpecEnvRate(int op, int index, int part)
+{
+    return withPart(opBase(op, "_spec_env_r") + juce::String(index + 1), part);
+}
+inline juce::String opSpecEnvLevel(int op, int index, int part)
+{
+    return withPart(opBase(op, "_spec_env_l") + juce::String(index + 1), part);
+}
+inline juce::String opSpecEnvDepth(int op, int part)
+{
+    return withPart(opBase(op, "_spec_env_depth"), part);
+}
+inline juce::String opSpecLfoRate(int op, int part)
+{
+    return withPart(opBase(op, "_spec_lfo_rate"), part);
+}
+inline juce::String opSpecLfoDepth(int op, int part)
+{
+    return withPart(opBase(op, "_spec_lfo_depth"), part);
+}
+inline juce::String opSpecLfoWave(int op, int part)
+{
+    return withPart(opBase(op, "_spec_lfo_wave"), part);
+}
+inline juce::String opSpecLfoMode(int op, int part)
+{
+    return withPart(opBase(op, "_spec_lfo_mode"), part);
+}
+
 inline juce::String opEnvRate(int op, int index, int part)
 {
     if (op == 0 && index == 0)

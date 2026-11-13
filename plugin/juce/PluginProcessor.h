@@ -83,7 +83,7 @@ public:
     int getUiPage() const { return uiPage_; }
     void setUiPage(int page)
     {
-        uiPage_ = juce::jlimit(0, 3, page);
+        uiPage_ = juce::jlimit(0, 5, page);
     }
 
 private:
@@ -91,6 +91,7 @@ private:
     static void feedMessage(p1::MidiBridge& midi, const juce::MidiMessage& message);
     void syncParams();
     void renderCore(int32_t* out, int frames);
+    void pushTapScopes(p1::Engine& engine, int frames);
 
     p1::Engine engine_;
     p1::MidiBridge midi_;

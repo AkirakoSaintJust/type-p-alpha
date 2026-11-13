@@ -201,7 +201,7 @@ and the selected part button has a green border and green text.
 
 ### Tabs
 
-`patch settings`, `part fx/mod`, `operators`, `operator lfos`, `operator spectra`,
+`patch settings`, `part fx/mod`, `operator envs`, `operator lfos`, `operator spectra`,
 `op spectra mod`, with no vertical dividers. The active tab is a pink cut polygon
 rather than a rectangle. Inactive tabs are dim text on black.
 

@@ -98,7 +98,7 @@ Every page fills the same height:
   fill the first row. Pitch envelope, key follow and velocity follow fill the second
   row. The two follow cards are separate, and each has its own on switch and wipe
   button. The pitch LFO carries its `bipolar` switch beside the wave select.
-- operators: four columns with oscillator, `amp env` and `fb env`. The amplitude
+- operator envs: four columns with oscillator, `amp env` and `fb env`. The amplitude
   envelope uses one row for R1 to R4 and a second row for L1 to L3. The feedback
   envelope uses R1 to R4 and L1 to L4, with signed levels and an on switch in the
   card header. The signed sum of the feedback knob, the envelope and the LFO picks
@@ -107,8 +107,8 @@ Every page fills the same height:
   `fb lfo` and `detune lfo` cards. Each LFO card carries copy and paste in its
   header, and its `bipolar` switch beside the wave select.
 - operator spectra: four operator columns with the oscillator card, then the
-  `spectrum a` and `spectrum b` cards. The oscillator card adds the `morph` slider
-  below the wave select, and the wave select carries `spectrum` at 13. Each spectrum
+  `spectrum a` and `spectrum b` cards. The oscillator card adds the `morph` knob to
+  the knob row, and the wave select carries `spectrum` at 13. Each spectrum
   card is 220 high and holds a 16-bar editor, a harmonic scale, the `odd`, `even`,
   `tilt` and `formant` macros, and `norm` with `to b` or `to a`. While the waveform
   is not `spectrum`, the a card shows the analysis of the selected wave with a
@@ -227,8 +227,8 @@ order.
 - patch settings: parts, keyzones, levels, delays, voice mode.
 - part fx/mod: filter, filter envelope, pitch LFO, pitch envelope, key and velocity
   follow.
-- operators: four sets of oscillator, amplitude envelope, feedback envelope and the
-  three LFO parameters.
+- operator envs: four sets of oscillator, amplitude envelope, feedback envelope and
+  the three LFO parameters.
 - operator spectra: per operator, the sixteen a levels, the sixteen b levels, the
   morph value, the morph envelope and the morph LFO. The waveform parameter grows
   to 0 to 13, with `spectrum` at 13.

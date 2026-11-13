@@ -14,11 +14,15 @@ class Engine;
  * processor bypasses it so the core output stays bit-exact there. */
 class RateBridge {
 public:
+    using CoreTapCallback = void (*)(void* context, Engine& engine, int frames);
+
     void prepare(double hostRate, int maxBlock);
     void reset();
 
-    /* The engine path: render core chunks, then pull host frames. */
-    void process(Engine& engine, float* left, float* right, int frames);
+    /* The engine path: render core chunks, then pull host frames. The callback
+     * runs after each core chunk, before the tap state is overwritten. */
+    void process(Engine& engine, float* left, float* right, int frames,
+                 CoreTapCallback onCore = nullptr, void* context = nullptr);
 
     /* Test and offline path that pushes interleaved int32 core frames and pulls
      * host frames. The ring keeps the history the 128-tap kernel needs. */
@@ -32,7 +36,8 @@ private:
     static constexpr int kTaps = 128;
     static constexpr int kPhases = 1024;
 
-    void renderChunk(Engine& engine, int frames);
+    void renderChunk(Engine& engine, int frames, CoreTapCallback onCore,
+                     void* context);
 
     double hostRate_ = 48000.0;
     double ratio_ = 1.0;

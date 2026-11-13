@@ -14,6 +14,7 @@ namespace {
 constexpr double kCoreRate = 48000.0;
 constexpr int kControlBlock = 32;
 constexpr int kStateVersion = 3;
+constexpr int kUiPageLayout = 2;
 constexpr float kIntToFloat = 1.0f / 32768.0f;
 
 bool isEngineMessage(const juce::MidiMessage& message)
@@ -183,6 +184,21 @@ void TypePAlphaAudioProcessor::renderCore(int32_t* out, int frames)
     engine_.render(out, static_cast<uint32_t>(frames));
 }
 
+void TypePAlphaAudioProcessor::pushTapScopes(p1::Engine& engine, int frames)
+{
+    const int count = std::min(frames, 32);
+    if (count <= 0)
+        return;
+    float tapData[32] = {};
+    for (int channel = 0; channel < static_cast<int>(tapScopes_.size());
+         ++channel) {
+        const int32_t* tap = engine.tap(static_cast<uint32_t>(channel));
+        for (int i = 0; i < count; ++i)
+            tapData[i] = static_cast<float>(tap[i]) * kIntToFloat;
+        tapScopes_[static_cast<std::size_t>(channel)].push(tapData, count);
+    }
+}
+
 void TypePAlphaAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
                                           juce::MidiBuffer& midi)
 {
@@ -227,13 +243,7 @@ void TypePAlphaAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
                         static_cast<float>(directBuffer_[index + 1u]) * kIntToFloat;
             }
             outputScope_.push(left + pos, length);
-            float tapData[32] = {};
-            for (int channel = 0; channel < 10; ++channel) {
-                const int32_t* tap = engine_.tap(static_cast<uint32_t>(channel));
-                for (int i = 0; i < length; ++i)
-                    tapData[i] = static_cast<float>(tap[i]) * kIntToFloat;
-                tapScopes_[static_cast<size_t>(channel)].push(tapData, length);
-            }
+            pushTapScopes(engine_, length);
             pos = end;
         }
 
@@ -252,15 +262,14 @@ void TypePAlphaAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
         syncParams();
         float* left = buffer.getWritePointer(0);
         float* right = channels > 1 ? buffer.getWritePointer(1) : left;
-        rateBridge_.process(engine_, left, right, frames);
+        rateBridge_.process(
+            engine_, left, right, frames,
+            [](void* context, p1::Engine& engine, int count) {
+                static_cast<TypePAlphaAudioProcessor*>(context)->pushTapScopes(
+                    engine, count);
+            },
+            this);
         outputScope_.push(left, frames);
-        float tapData[32] = {};
-        for (int channel = 0; channel < 10; ++channel) {
-            const int32_t* tap = engine_.tap(static_cast<uint32_t>(channel));
-            for (int i = 0; i < 32; ++i)
-                tapData[i] = static_cast<float>(tap[i]) * kIntToFloat;
-            tapScopes_[static_cast<size_t>(channel)].push(tapData, 32);
-        }
     }
 
     midi.clear();
@@ -324,6 +333,7 @@ void TypePAlphaAudioProcessor::getStateInformation(juce::MemoryBlock& destData)
     state.setProperty("part2Name", partNames_[1], nullptr);
     state.setProperty("uiActivePart", uiActivePart_, nullptr);
     state.setProperty("uiPage", uiPage_, nullptr);
+    state.setProperty("uiPageLayout", kUiPageLayout, nullptr);
     state.setProperty("currentMulti", presets_.currentMulti(), nullptr);
     for (int part = 0; part < kP1PartCount; ++part) {
         state.setProperty("partSource" + juce::String(part),
@@ -355,8 +365,20 @@ void TypePAlphaAudioProcessor::setStateInformation(const void* data, int sizeInB
     partNames_[0] = state.getProperty("part1Name", "init").toString();
     partNames_[1] = state.getProperty("part2Name", "init").toString();
     uiActivePart_ = juce::jlimit(0, 1, static_cast<int>(state.getProperty("uiActivePart", 0)));
-    uiPage_ = juce::jlimit(0, 3,
-                           static_cast<int>(state.getProperty("uiPage", 0)));
+    int page = static_cast<int>(state.getProperty("uiPage", 0));
+    const int pageLayout =
+        static_cast<int>(state.getProperty("uiPageLayout", 0));
+    if (pageLayout < kUiPageLayout) {
+        /* The four-tab layout had operators at 1, operator lfos at 2 and
+         * fx/mod at 3. The six-tab layout moves fx/mod to 1. */
+        if (page == 1)
+            page = 2;
+        else if (page == 2)
+            page = 3;
+        else if (page == 3)
+            page = 1;
+    }
+    uiPage_ = juce::jlimit(0, 5, page);
     presets_.setCurrentMulti(static_cast<int>(state.getProperty("currentMulti", -1)));
     for (int part = 0; part < kP1PartCount; ++part) {
         presets_.setPartSource(

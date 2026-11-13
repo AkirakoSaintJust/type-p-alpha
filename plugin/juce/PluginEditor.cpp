@@ -755,12 +755,14 @@ void PluginEditor::buildUi()
     canvas_.addAndMakeVisible(*toolbar_);
     toolbar_->setBounds(1, 160, 1238, 44);
     tabs_.setBounds(1, 204, 1238, 37);
-    activeTab_ = juce::jlimit(0, 3, activeTab_);
+    activeTab_ = juce::jlimit(0, 5, activeTab_);
     juce::StringArray labels;
     labels.add("patch settings");
-    labels.add("operators");
+    labels.add("part fx/mod");
+    labels.add("operator envs");
     labels.add("operator lfos");
-    labels.add("fx / mod");
+    labels.add("operator spectra");
+    labels.add("op spectra mod");
     tabs_.setLabels(labels);
     switchingTab_ = true;
     tabs_.setActive(activeTab_);
@@ -781,13 +783,19 @@ void PluginEditor::buildPage()
     }
     switch (activeTab_) {
     case 1:
-        page_ = p1::ui::makeOperatorsPage(*this);
+        page_ = p1::ui::makeFxModPage(*this);
         break;
     case 2:
-        page_ = p1::ui::makeOperatorLfosPage(*this);
+        page_ = p1::ui::makeOperatorsPage(*this);
         break;
     case 3:
-        page_ = p1::ui::makeFxModPage(*this);
+        page_ = p1::ui::makeOperatorLfosPage(*this);
+        break;
+    case 4:
+        page_ = p1::ui::makeOperatorSpectraPage(*this);
+        break;
+    case 5:
+        page_ = p1::ui::makeOperatorSpectraModPage(*this);
         break;
     default:
         page_ = p1::ui::makePatchPage(*this);
@@ -809,7 +817,7 @@ void PluginEditor::setActivePart(int part)
 
 void PluginEditor::showTab(int tab)
 {
-    tab = juce::jlimit(0, 3, tab);
+    tab = juce::jlimit(0, 5, tab);
     if (tab == activeTab_)
         return;
     activeTab_ = tab;
@@ -1097,7 +1105,8 @@ void PluginEditor::copyOperatorSection(int op, int part,
                       base == prefix + "_detune" ||
                       base == prefix + "_waveform" ||
                       base == prefix + "_level" ||
-                      base == prefix + "_feedback";
+                      base == prefix + "_feedback" ||
+                      base == prefix + "_spec_morph";
             break;
         case OperatorSection::amplitudeEnvelope:
             matches = base.startsWith(prefix + ".eg.");
@@ -1113,6 +1122,18 @@ void PluginEditor::copyOperatorSection(int op, int part,
             break;
         case OperatorSection::detuneLfo:
             matches = base.startsWith(prefix + "_dlfo_");
+            break;
+        case OperatorSection::spectrumA:
+            matches = base.startsWith(prefix + "_spec_a");
+            break;
+        case OperatorSection::spectrumB:
+            matches = base.startsWith(prefix + "_spec_b");
+            break;
+        case OperatorSection::spectrumEnvelope:
+            matches = base.startsWith(prefix + "_spec_env_");
+            break;
+        case OperatorSection::spectrumLfo:
+            matches = base.startsWith(prefix + "_spec_lfo_");
             break;
         }
         if (!matches)

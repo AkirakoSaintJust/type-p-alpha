@@ -11,9 +11,10 @@
   [`../design/README.md`](../design/README.md) and
   [`../design/juce.md`](../design/juce.md).
 - **Owner / date:** P1Onken, 2026-11-13.
-- **Disposition:** accepted, in progress. The work is staged: the wave table and
-  `rect tri` first, then the engine bank and the spectrum mode, then the editor
-  pages and the snapshot pass.
+- **Disposition:** complete for the engine and the six-tab editor pages. The A card
+  shows the selected wave's analysis, and the first A-card edit commits it. The
+  morph knob does not commit the preview by itself; the first morph move commit is
+  a refinement. The Linux snapshot goldens need the Linux pass.
 
 ## Player outcome
 
@@ -28,11 +29,11 @@
   analysed preview is written only when a spectral control changes, so the player can
   move between the wave table and the additive bank without losing either sound. The
   operator morph blends spectrum a and b, and the envelope and LFO move the blend per
-  voice. While the waveform is not `spectrum`, the spectral pages show a preview of
-  the selected wave's sixteen harmonic levels. The first edit or morph move commits
-  that preview, writes the levels and then the waveform as 13. Selecting `spectrum`
-  without an edit uses the stored a and b spectra. The mode switch crossfades over
-  10 ms.
+  voice. While the waveform is not `spectrum`, the a card shows the analysis of the
+  selected wave with a `from wave` badge. The first a-card edit writes the levels and
+  then the waveform as 13. The morph knob does not commit the preview by itself, so
+  the first morph move commit remains a refinement. Selecting `spectrum` uses the
+  stored a and b spectra. The mode switch crossfades over 10 ms.
 - **Failure mode:** the additive table clips, the morph leaks between voices, the
   preview writes the patch on open, the wave values shift again, a stored spectrum
   is overwritten by a mode change, or the existing waves change their samples.
@@ -117,10 +118,11 @@ Selecting a wave keeps the stored spectra. The preview is not written on page op
   `synth/patch.json`, `modules/nodes/osc/node.json` and `node.c`,
   `modules/macros/fm_op/macro.json` (local generator modules), `engine/gen/*` and
   `engine/runtime/presets.c`.
-- **Editor:** `plugin/ui/ParamIDs.h`, `plugin/ui/Widgets.cpp`,
-  `plugin/juce/Pages.h`, `plugin/juce/PagesOperators.cpp`,
-  `plugin/juce/PluginEditor.cpp`, `plugin/juce/PluginEditor.h`,
-  `plugin/juce/CMakeLists.txt`, and new spectrum components.
+- **Editor:** `plugin/ui/ParamIDs.h`, `plugin/ui/Widgets.h`,
+  `plugin/ui/Widgets.cpp`, `plugin/juce/Pages.h`, `plugin/juce/PagesOperators.cpp`,
+  `plugin/juce/PagesSpectral.cpp`, `plugin/juce/PluginEditor.cpp`,
+  `plugin/juce/PluginEditor.h`, `plugin/juce/PluginProcessor.cpp`,
+  `plugin/juce/PluginProcessor.h` and `plugin/juce/CMakeLists.txt`.
 - **Tests:** `plugin/tests/wavetable.cpp`, `plugin/tests/spectral.cpp`,
   `engine_parity`, `plugin_smoke`, `plugin_stability`, `preset_smoke` and
   `editor_snapshot`.
@@ -131,19 +133,21 @@ Selecting a wave keeps the stored spectra. The preview is not written on page op
 
 ## Verification
 
-- **Host vector(s):** build the VST3 and standalone on Windows, run `ctest`, load
-  the VST3 in two DAWs and run pluginval. The local `tools/audit_modules.py` check
-  confirms that every Type P type and node parameter resolves to the `.dev` module
-  library, and the Windows `ctest` run is 12 of 12.
-- **Browser vector:** the mockup at `#opspec` and `#opspecmod`, with the `from wave`
-  preview and the `spectrum` wave.
-- **Target package check:** the Linux build and the pluginval pass.
+- **Host vector(s):** build the VST3, CLAP and standalone on Windows and run
+  `ctest`. The local `tools/audit_modules.py` check confirms that every Type P type
+  and node parameter resolves to the `.dev` module library, and the Windows `ctest`
+  run is 12 of 12. pluginval and the Linux DAW matrix remain for the platform pass.
+- **Browser vector:** the mockup at `#opspec` and `#opspecmod` is the design
+  reference. The editor snapshot covers both pages.
+- **Target package check:** the Windows VST3, CLAP and standalone build. The Linux
+  build and the pluginval pass remain.
 - **Host timing and platform check:** the 20-voice benchmark and a real Linux and
-  Windows DAW pass.
+  Windows DAW pass remain.
 - **Tolerance/metric:** the existing waves 0 to 8 and the shifted pulse, square and
   saw must match the current header sample for sample. The checks are exact. The
-  spectra page must render the analysis preview without writing a parameter. The
-  part block and manifest counts must match 408 and 830.
+  spectra page must render the selected wave analysis without writing a parameter
+  until the first A-card edit, and the mod display must show both outlines and the
+  morph marker. The part block and manifest counts must match 408 and 830.
 - **Evidence artefact:** a wave table checksum test, a spectral table and morph
   test, an editor page snapshot, a `ctest` log, a pluginval log and the measured
   table/CPU figures. The golden images are regenerated in the Linux pass.
@@ -158,8 +162,11 @@ Selecting a wave keeps the stored spectra. The preview is not written on page op
    the morph, the envelope and the LFO are in. The 256-sample table reads with a
    24-bit phase fraction; the first pass used the 1024-sample shift and played the
    table four times too high. The Windows `ctest` run is 12 of 12.
-3. **Editor pages:** the two tabs, the bar editor, the macros, the preview and the
-   copy and paste. The snapshots and the page index remap are in this stage.
+3. **Editor pages:** in. The two tabs, the six-tab bar, the bar editor, the macros,
+   the selected-wave preview with the `from wave` badge, the first A-card edit
+   commit, the copy and paste, and the page index remap. The saw preview snapshot
+   is `editor-operator-spectra-saw.png`, and the mod display snapshot is
+   `editor-op-spectra-mod-saw.png`.
 4. **Release evidence:** the Linux goldens, the DAW pass and the pluginval report.
 
 ## Risks and fallback
