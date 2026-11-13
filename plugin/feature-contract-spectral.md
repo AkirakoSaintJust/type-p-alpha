@@ -13,8 +13,9 @@
 - **Owner / date:** P1Onken, 2026-11-13.
 - **Disposition:** complete for the engine and the six-tab editor pages. The A card
   shows the selected wave's analysis, the first A-card edit commits it, and the
-  first morph knob move commits it too. The Linux snapshot goldens were regenerated
-  for the range and waveform changes.
+  first morph knob move commits it too. The cold commit and the crossfade direction
+  are in, with the schedule bench in `plugin/tests/spectral_bench.cpp`. The Linux
+  snapshot goldens were regenerated for the range and waveform changes.
 
 ## Player outcome
 
@@ -35,7 +36,9 @@
   the analysis of the selected wave with a `from wave` badge. The first a-card edit
   writes the levels and then the waveform as 13. The first morph knob move commits
   the preview the same way. Selecting `spectrum` uses the stored a and b spectra.
-  The mode switch crossfades over 10 ms.
+  The mode switch crossfades over 10 ms. A silent part commits a new spectrum at
+  once, so its next note starts on the new table. An audible part ramps from the
+  old table to the new one.
 - **Failure mode:** the additive table clips, the morph leaks between voices, the
   preview writes the patch on open, the wave values shift again, a stored spectrum
   is overwritten by a mode change, or the existing waves change their samples.
@@ -157,7 +160,8 @@ stored spectra. The preview is not written on page open.
 - **Host vector(s):** build the VST3, CLAP and standalone on Windows and run
   `ctest`. The local `tools/audit_modules.py` check confirms that every Type P type
   and node parameter resolves to the `.dev` module library, and the Windows `ctest`
-  run is 12 of 12. pluginval and the Linux DAW matrix remain for the platform pass.
+  run is 12 of 12. The Linux CI build and ctest also pass on commit `fbb28b6`.
+  pluginval and the Linux DAW matrix remain for the platform pass.
 - **Browser vector:** the mockup at `#opspec` and `#opspecmod` is the design
   reference. The editor snapshot covers both pages.
 - **Target package check:** the Windows VST3, CLAP and standalone build. The Linux
