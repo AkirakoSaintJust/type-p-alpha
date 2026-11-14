@@ -10,7 +10,7 @@ The experiments are recorded one per file:
 
 Further research:
 
-- [Additive synthesis](additive-synthesis.md): a survey of 16 and 32 harmonic
+- [Additive synthesis](additive-synthesis.md): a survey of 16, 32 and 64 harmonic
   operator spectra, table generation and control-rate costs.
 
 This is the design note for lines 1 and 2 of the research list:

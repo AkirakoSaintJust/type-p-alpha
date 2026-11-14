@@ -169,6 +169,35 @@ BlockResult runEngineChanges(int blocks, int parts)
     return result;
 }
 
+/* A 64-harmonic spectrum with seven mips (64, 32, 16, 8, 4, 2, 1). This is
+ * the proposed wider bank; the production generator still uses 16 harmonics and
+ * five mips. */
+void generateWide(int16_t *out, const int32_t *levels, int first, int size,
+                  int shift)
+{
+    for (int level = 0; level < 7; ++level) {
+        const int harmonics = 64 >> level;
+        int32_t raw[512];
+        int32_t peak = 0;
+        for (int i = 0; i < size; ++i) {
+            int32_t sum = 0;
+            for (int n = 0; n < harmonics; ++n)
+                sum += levels[n] *
+                       p1_sin((uint32_t)(i * (first + n)) << shift);
+            raw[i] = sum;
+            const int32_t magnitude = sum < 0 ? -sum : sum;
+            if (magnitude > peak)
+                peak = magnitude;
+        }
+        const int32_t scale =
+            peak > 0 ? (int32_t)((32767LL << 16) / peak) : 0;
+        for (int i = 0; i < size; ++i) {
+            const int64_t value = (int64_t)raw[i] * scale >> 16;
+            out[level * size + i] = p1_spectral_clamp16((int32_t)value);
+        }
+    }
+}
+
 } // namespace
 
 int main()
@@ -193,6 +222,28 @@ int main()
     }
     std::printf("table generation: %.1f us per spectrum (5 mips)\n",
                 best / kTables * 1e6);
+
+    int32_t wide[64];
+    for (int i = 0; i < 64; ++i)
+        wide[i] = (i * 29 + 7) % 100;
+    int16_t wideTable[7 * 512] = {0};
+    for (const int size : {256, 512}) {
+        const int shift = size == 256 ? 24 : 23;
+        double wideBest = 1e9;
+        for (int run = 0; run < 3; ++run) {
+            const auto start = std::chrono::steady_clock::now();
+            for (int n = 0; n < 500; ++n) {
+                wide[n % 64] = (n * 13 + 9) % 100;
+                generateWide(wideTable, wide, 1, size, shift);
+                checksum += static_cast<uint16_t>(wideTable[n % (size - 1)]);
+            }
+            wideBest = std::min(wideBest, secondsSince(start));
+        }
+        const double perTable = wideBest / 500.0;
+        std::printf("64 harmonics, %d samples, 7 mips: %.1f us per spectrum, "
+                    "%.1f us for eight\n",
+                    size, perTable * 1e6, perTable * 8.0 * 1e6);
+    }
 
     for (const bool reads : {false, true}) {
         const TickResult tick = runTickSeries(20000, reads);
