@@ -69,7 +69,7 @@ class P1Processor extends AudioWorkletProcessor {
         e.p1_analyze(message.wave, message.first);
         const pointer = e.p1_analysis();
         const levels = Array.from(
-          new Int32Array(e.memory.buffer, pointer, 16));
+          new Int32Array(e.memory.buffer, pointer, 64));
         this.port.postMessage({
           type: "analysis",
           key: message.key,

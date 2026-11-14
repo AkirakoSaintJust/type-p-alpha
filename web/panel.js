@@ -8,7 +8,7 @@
     "saw", "spectrum",
   ];
   const LFO_WAVES = ["sine", "triangle", "saw", "inverse saw", "square", "random"];
-  const RANGES = ["1-16", "17-32", "33-48", "49-64", "65-80", "81-96", "97-112", "113-128"];
+  const RANGES = ["1-64", "65-128"];
   const SPEC_MASKS = ["live", "dead", "both"];
 
   function specSeries(base) {
@@ -63,7 +63,8 @@
     ["fx", "part fx/mod"],
     ["envs", "operator envs"],
     ["lfos", "operator lfos"],
-    ["spectra", "operator spectra"],
+    ["spectra-a", "op spectra a"],
+    ["spectra-b", "op spectra b"],
     ["mod", "op spectra mod"],
   ];
   const CARRIERS = [
@@ -527,7 +528,13 @@
     if (/^op[1-4]_spec_(env_|lfo_)/.test(base) ||
         /^op[1-4]_spec_env_depth$/.test(base))
       return "mod";
-    if (/^op[1-4]_spec_(a|b|range|morph)/.test(base)) return "spectra";
+    if (/^op[1-4]_spec_a\d+$/.test(base) ||
+        /^op[1-4]_spec_range_a$/.test(base) ||
+        /^op[1-4]_spec_morph$/.test(base))
+      return "spectra-a";
+    if (/^op[1-4]_spec_b\d+$/.test(base) ||
+        /^op[1-4]_spec_range_b$/.test(base))
+      return "spectra-b";
     if (/^op[1-4]_(trem_|fblfo_|dlfo_)/.test(base)) return "lfos";
     if (/^op[1-4]_/.test(base) || /^op[1-4]\./.test(base)) return "envs";
     if (/^(algorithm|channel|low|high|level|delay|detune|transpose|mode|legato|unison_count|unison_detune|portamento|note_priority)$/.test(base))
@@ -921,7 +928,7 @@
       previewCache.delete(key);
       return;
     }
-    const first = ((values.get(rangeSpec.id) ?? 0) * 16) + 1;
+    const first = ((values.get(rangeSpec.id) ?? 0) * 64) + 1;
     const cached = previewCache.get(key);
     if (cached !== undefined && cached.wave === wave &&
         cached.first === first)
@@ -941,7 +948,7 @@
     const rangeSpec = byName.get(`op${op + 1}_spec_range_a.p${part}`);
     if (waveSpec === undefined || rangeSpec === undefined) return null;
     const wave = values.get(waveSpec.id) ?? 0;
-    const first = ((values.get(rangeSpec.id) ?? 0) * 16) + 1;
+    const first = ((values.get(rangeSpec.id) ?? 0) * 64) + 1;
     if (wave === 13 || cached.wave !== wave || cached.first !== first)
       return null;
     return cached.levels;
@@ -952,11 +959,11 @@
     const preview = previewCache.get(key);
     if (preview === undefined) return;
     const aSpecs = previewSpecs(part, op);
-    if (aSpecs.length !== 16) {
+    if (aSpecs.length !== 64) {
       previewCache.delete(key);
       return;
     }
-    for (let i = 0; i < 16; ++i)
+    for (let i = 0; i < 64; ++i)
       setRaw(aSpecs[i], preview.levels[i]);
     const waveSpec = byName.get(`op${op + 1}_waveform.p${part}`);
     if (waveSpec !== undefined)
@@ -967,10 +974,11 @@
 
   function spectrumBars(specs, kind, rangeSpec, previewLevels, onEdit,
                         groupTest) {
+    const count = specs.length;
     const wrap = div("specbars");
     const fills = [];
     const barEls = [];
-    for (let i = 0; i < 16; ++i) {
+    for (let i = 0; i < count; ++i) {
       const bar = div("sbar" + (kind === "b" ? " b" : ""));
       const fill = document.createElement("i");
       bar.append(fill);
@@ -980,7 +988,7 @@
     }
     const labels = div("speclabels");
     const labelSpans = [];
-    for (let i = 0; i < 16; ++i) {
+    for (let i = 0; i < count; ++i) {
       const span = document.createElement("span");
       labels.append(span);
       labelSpans.push(span);
@@ -993,24 +1001,25 @@
     function currentFirst() {
       const range = rangeSpec === undefined || rangeSpec === null
         ? 0 : (values.get(rangeSpec.id) ?? 0);
-      return range * 16 + 1;
+      return range * 64 + 1;
     }
     function draw() {
       const data = levels();
-      for (let i = 0; i < 16; ++i)
+      for (let i = 0; i < count; ++i)
         fills[i].style.height = (data[i] / 99 * 100) + "%";
       const first = currentFirst();
-      for (let i = 0; i < 16; ++i) {
+      for (let i = 0; i < count; ++i) {
         const inGroup = groupTest !== undefined && groupTest(first + i);
-        labelSpans[i].textContent = String(first + i);
+        labelSpans[i].textContent = (i % 8 === 0 || i === count - 1 || inGroup)
+          ? String(first + i) : "";
         labelSpans[i].classList.toggle("in-group", inGroup);
         barEls[i].classList.toggle("in-group", inGroup);
       }
     }
     function setFrom(event) {
       const rect = wrap.getBoundingClientRect();
-      const cell = rect.width / 16;
-      const index = Math.max(0, Math.min(15,
+      const cell = rect.width / count;
+      const index = Math.max(0, Math.min(count - 1,
         Math.floor((event.clientX - rect.left) / cell)));
       const y = 1 - (event.clientY - rect.top) / rect.height;
       setRaw(specs[index], clampLevel(y * 99));
@@ -1034,13 +1043,16 @@
     spectrumUpdaters.push(draw);
     draw();
     return { el: wrap, labels: labels, draw: draw, levels: levels,
-      currentFirst: currentFirst };
+      currentFirst: currentFirst, count: count };
   }
 
-  function spectrumCard(title, specs, otherSpecs, kind, rangeSpec, options) {
+  function spectrumRangeRow(title, specs, rangeSpec, options) {
     options = options || {};
+    const tools = options.tools || { group: 0, mask: 2 };
+    const markTest = (harmonic) =>
+      tools.group !== 0 && SPEC_GROUPS[tools.group].test(harmonic);
     const cardEl = document.createElement("section");
-    cardEl.className = "card speccard";
+    cardEl.className = "card spectrum-row";
     const secHead = div("sec-head");
     const head = div("secheadleft");
     const heading = document.createElement("h3");
@@ -1054,13 +1066,22 @@
       head.append(badge);
     }
     secHead.append(head);
-    cardEl.append(secHead);
-    const tools = options.tools || { group: 0, mask: 2 };
-    const groupTest = (harmonic) => SPEC_GROUPS[tools.group].test(harmonic);
-    const bars = spectrumBars(specs, kind, rangeSpec, options.preview,
-      options.onEdit, groupTest);
-    cardEl.append(bars.el, bars.labels);
-    const acts = div("sec-actions");
+    const acts = div("sec-actions spectrum-row-acts");
+    if (rangeSpec !== undefined) {
+      const rangeLabel = document.createElement("span");
+      rangeLabel.className = "row-range-label";
+      rangeLabel.textContent = "range";
+      const current = values.get(rangeSpec.id) ?? 0;
+      const rangeSelect = makeSelect(RANGES, RANGES[current] ?? RANGES[0],
+        (choice) => {
+          const index = RANGES.indexOf(choice);
+          setRaw(rangeSpec, index < 0 ? 0 : index);
+          bars.draw();
+          updateLegend();
+        });
+      rangeSelect.classList.add("row-range");
+      acts.append(rangeLabel, rangeSelect);
+    }
     const copyButton = document.createElement("button");
     copyButton.className = "mini";
     copyButton.textContent = "copy";
@@ -1076,18 +1097,67 @@
     pasteButton.addEventListener("click", () => {
       if (clipboard === null || clipboard.kind !== "spectrum") return;
       if (options.onEdit) options.onEdit();
-      for (let i = 0; i < 16; ++i)
+      for (let i = 0; i < specs.length; ++i)
         setRaw(specs[i], clampLevel(clipboard.values[i] ?? 0));
       buildPage();
     });
     acts.append(copyButton, pasteButton);
     secHead.append(acts);
+    cardEl.append(secHead);
+    const bars = spectrumBars(specs, options.kind, rangeSpec, options.preview,
+      options.onEdit, markTest);
+    cardEl.append(bars.el, bars.labels);
+    const legend = div("speclegend");
+    const legendName = document.createElement("span");
+    legendName.className = "legend-name";
+    const legendItems = document.createElement("span");
+    legendItems.className = "legend-items";
+    legend.append(legendName, " ", legendItems);
+    cardEl.append(legend);
+    let lastLegendKey = "";
+    function updateLegend() {
+      const first = bars.currentFirst();
+      const key = tools.group + ":" + tools.mask + ":" + first;
+      if (key === lastLegendKey) return;
+      lastLegendKey = key;
+      const group = SPEC_GROUPS[tools.group];
+      legendName.textContent = group.name + " · " + SPEC_MASKS[tools.mask];
+      legendItems.textContent = "";
+      let count = 0;
+      for (let i = 0; i < specs.length; ++i) {
+        const harmonic = first + i;
+        if (!group.test(harmonic)) continue;
+        ++count;
+        if (count > 24) continue;
+        const chip = document.createElement("b");
+        chip.textContent = String(harmonic);
+        legendItems.append(chip, " ");
+      }
+      if (count === 0) legendItems.textContent = "none in range";
+      else if (count > 24) legendItems.textContent = count + " members";
+    }
+    updateLegend();
+    spectrumUpdaters.push(updateLegend);
+    if (badge !== null) {
+      spectrumUpdaters.push(() => {
+        badge.style.display = options.preview && options.preview() ? "" : "none";
+      });
+    }
+    return {
+      el: cardEl, bars: bars, tools: tools, specs: specs,
+      otherSpecs: options.otherSpecs || [], kind: options.kind,
+      onEdit: options.onEdit, updateLegend: updateLegend,
+    };
+  }
 
+  function spectrumControls(title, row) {
+    const cardEl = sectionCard(title);
+    const tools = row.tools;
     let base = null;
     let centre = 5;
     function begin() {
-      if (options.onEdit) options.onEdit();
-      base = bars.levels().slice();
+      if (row.onEdit) row.onEdit();
+      base = row.bars.levels().slice();
     }
     function end() { base = null; }
     function selected(index, first) {
@@ -1098,29 +1168,28 @@
       return tools.mask === 0 ? live : !live;
     }
     function write(levels) {
-      for (let i = 0; i < 16; ++i)
-        setRaw(specs[i], clampLevel(levels[i]));
-      bars.draw();
+      for (let i = 0; i < row.specs.length; ++i)
+        setRaw(row.specs[i], clampLevel(levels[i]));
+      row.bars.draw();
     }
     function apply(transform) {
       if (base === null) return;
-      const first = bars.currentFirst();
+      const first = row.bars.currentFirst();
       write(base.map((level, index) =>
         selected(index, first) ? transform(level, index) : level));
     }
     const tilt = makeSpring("tilt", {
       onStart: begin, onEnd: end,
       onInput: (amount) => apply((level, index) =>
-        Math.round(level * (1 + amount * index / 15))),
+        Math.round(level * (1 + amount * index / (row.specs.length - 1)))),
     });
     const level = makeSpring("level", {
       onStart: begin, onEnd: end,
       onInput: (amount) => apply((value) => Math.round(value + amount * 99)),
     });
-    const formantSelect = makeSelect(
-      ["h1", "h2", "h3", "h4", "h5", "h6", "h7", "h8", "h9", "h10", "h11",
-       "h12", "h13", "h14", "h15", "h16"],
-      "h5",
+    const harmonicNames = Array.from({ length: 64 },
+      (_, index) => "h" + (index + 1));
+    const formantSelect = makeSelect(harmonicNames, "h5",
       (value) => { centre = parseInt(value.slice(1), 10); });
     formantSelect.classList.add("spring-select");
     const formant = makeSpring("formant", {
@@ -1134,33 +1203,6 @@
       },
     });
 
-    const legend = div("speclegend");
-    const legendName = document.createElement("span");
-    legendName.className = "legend-name";
-    const legendItems = document.createElement("span");
-    legendItems.className = "legend-items";
-    legend.append(legendName, " ", legendItems);
-    let lastLegendKey = "";
-    function updateLegend() {
-      const first = bars.currentFirst();
-      const key = tools.group + ":" + tools.mask + ":" + first;
-      if (key === lastLegendKey) return;
-      lastLegendKey = key;
-      const group = SPEC_GROUPS[tools.group];
-      legendName.textContent = group.name + " · " + SPEC_MASKS[tools.mask];
-      legendItems.textContent = "";
-      let count = 0;
-      for (let i = 0; i < 16; ++i) {
-        const harmonic = first + i;
-        if (!group.test(harmonic)) continue;
-        const chip = document.createElement("b");
-        chip.textContent = String(harmonic);
-        legendItems.append(chip, " ");
-        ++count;
-      }
-      if (count === 0) legendItems.textContent = "none in range";
-    }
-
     const groupRow = div("specgroup");
     const groupLabel = document.createElement("span");
     groupLabel.className = "lbl";
@@ -1171,8 +1213,8 @@
       (label) => {
         const index = SPEC_GROUPS.findIndex((group) => group.label === label);
         tools.group = index < 0 ? 0 : index;
-        bars.draw();
-        updateLegend();
+        row.bars.draw();
+        row.updateLegend();
       });
     groupRow.append(groupLabel, groupSelect);
 
@@ -1189,7 +1231,7 @@
         tools.mask = index;
         maskSeg.querySelectorAll("button").forEach((item, position) =>
           item.classList.toggle("active", position === index));
-        updateLegend();
+        row.updateLegend();
       });
       maskSeg.append(button);
     });
@@ -1197,43 +1239,35 @@
 
     const springs = div("springs");
     springs.append(tilt, level, formant);
-    cardEl.append(legend, groupRow, maskRow, springs);
-    updateLegend();
-    spectrumUpdaters.push(updateLegend);
+    cardEl.append(groupRow, maskRow, springs);
 
     const foot = div("specfoot");
     const norm = document.createElement("button");
     norm.className = "mini";
     norm.textContent = "norm";
     norm.addEventListener("click", () => {
-      if (options.onEdit) options.onEdit();
-      const levels = bars.levels();
+      if (row.onEdit) row.onEdit();
+      const levels = row.bars.levels();
       const max = Math.max(...levels);
       if (max > 0) {
-        for (let i = 0; i < 16; ++i)
-          setRaw(specs[i], clampLevel(levels[i] * 99 / max));
-        bars.draw();
+        for (let i = 0; i < row.specs.length; ++i)
+          setRaw(row.specs[i], clampLevel(levels[i] * 99 / max));
+        row.bars.draw();
       }
     });
     const to = document.createElement("button");
     to.className = "mini";
-    to.textContent = kind === "a" ? "to b" : "to a";
+    to.textContent = row.kind === "a" ? "to b" : "to a";
     to.addEventListener("click", () => {
-      if (options.onEdit) options.onEdit();
-      const levels = bars.levels();
-      for (let i = 0; i < 16 && i < otherSpecs.length; ++i)
-        setRaw(otherSpecs[i], levels[i]);
+      if (row.onEdit) row.onEdit();
+      const levels = row.bars.levels();
+      for (let i = 0; i < row.specs.length && i < row.otherSpecs.length; ++i)
+        setRaw(row.otherSpecs[i], levels[i]);
     });
     foot.append(norm, to);
     cardEl.append(foot);
-    if (badge !== null) {
-      spectrumUpdaters.push(() => {
-        badge.style.display = options.preview && options.preview() ? "" : "none";
-      });
-    }
     return cardEl;
   }
-
 
   function spectrumDisplay(aSpecs, bSpecs, rangeA, rangeB, morphSpec,
                            previewLevels) {
@@ -1248,11 +1282,11 @@
       context.fillStyle = "#000000";
       context.fillRect(0, 0, width, height);
       const firstA = ((rangeA === undefined ? 0 : values.get(rangeA.id) ?? 0)
-        * 16) + 1;
+        * 64) + 1;
       const firstB = ((rangeB === undefined ? 0 : values.get(rangeB.id) ?? 0)
-        * 16) + 1;
+        * 64) + 1;
       const minFirst = Math.min(firstA, firstB);
-      const maxLast = Math.max(firstA + 15, firstB + 15);
+      const maxLast = Math.max(firstA + 63, firstB + 63);
       const span = maxLast - minFirst + 1;
       const left = 8;
       const right = width - 8;
@@ -1283,11 +1317,11 @@
       function outline(levels, first, color) {
         context.beginPath();
         context.moveTo(xAt(first), bottom);
-        for (let i = 0; i < 16; ++i) {
+        for (let i = 0; i < levels.length; ++i) {
           const y = bottom - levels[i] / 99 * graphHeight;
           context.lineTo(xAt(first + i), y);
         }
-        context.lineTo(xAt(first + 15), bottom);
+        context.lineTo(xAt(first + levels.length - 1), bottom);
         context.closePath();
         context.fillStyle = color + "2e";
         context.fill();
@@ -1307,7 +1341,7 @@
         const phase = 2 * Math.PI * t;
         let sumA = 0;
         let sumB = 0;
-        for (let h = 0; h < 16; ++h) {
+        for (let h = 0; h < aLevels.length; ++h) {
           sumA += aLevels[h] * Math.sin(phase * (firstA + h));
           sumB += bLevels[h] * Math.sin(phase * (firstB + h));
         }
@@ -1337,10 +1371,10 @@
       context.font = '10px "DotGothic16", monospace';
       context.textBaseline = "top";
       context.fillStyle = "#c780ff";
-      context.fillText("spectrum a (" + firstA + "-" + (firstA + 15) + ")",
+      context.fillText("spectrum a (" + firstA + "-" + (firstA + 63) + ")",
         left, 2);
       context.fillStyle = "#ff2e7e";
-      context.fillText("spectrum b (" + firstB + "-" + (firstB + 15) + ")",
+      context.fillText("spectrum b (" + firstB + "-" + (firstB + 63) + ")",
         left + 150, 2);
       context.fillStyle = "rgba(61,255,158,0.8)";
       context.fillText("waveform", left + 300, 2);
@@ -1645,7 +1679,7 @@
   function libraryData() {
     return {
       format: "type-p-alpha-library",
-      version: 1,
+      version: 2,
       partSlots: partLibrary,
       multis: multiLibrary,
       patchName,
@@ -1658,6 +1692,8 @@
   function validateLibrary(data) {
     if (!data || data.format !== "type-p-alpha-library")
       throw new Error("not a type P.alpha library");
+    if (data.version !== 2)
+      throw new Error("library version is not 2");
     const parts = Array.isArray(data.partSlots) ? data.partSlots : [];
     const multis = Array.isArray(data.multis) ? data.multis : [];
     for (const multi of multis) {
@@ -2562,58 +2598,54 @@
     return na - nb;
   }
 
-  function buildSpectra(page) {
-    const columns = div("panel-opcols");
+  function buildSpectra(page, letter) {
+    const isA = letter === "a";
+    const wrapper = div("spectra-page");
+    const strip = div("panel-opcols spectra-strip");
+    const runs = div("spectrum-runs");
+    const controls = div("panel-opcols spectrum-controls");
     for (let op = 0; op < 4; ++op) {
       const all = specsForOp(activePart, op);
-      const range = all.filter((spec) =>
-        /^op[1-4]_spec_(range_a|range_b|morph)$/.test(baseName(spec.name)));
       const a = all.filter((spec) =>
         /^op[1-4]_spec_a\d+$/.test(baseName(spec.name))).sort(naturalSort);
       const b = all.filter((spec) =>
         /^op[1-4]_spec_b\d+$/.test(baseName(spec.name))).sort(naturalSort);
-      const col = opColumn(op, true);
       const rangeA = all.find((spec) =>
         baseName(spec.name) === `op${op + 1}_spec_range_a`);
       const rangeB = all.find((spec) =>
         baseName(spec.name) === `op${op + 1}_spec_range_b`);
+      const morph = all.find((spec) =>
+        baseName(spec.name) === `op${op + 1}_spec_morph`);
       const preview = () => getPreview(activePart, op);
       const commit = () => commitPreview(activePart, op);
+      const col = opColumn(op, true);
       const oscCard = card("oscillator", oscillatorSpecs(op),
         { className: "osc", kind: "oscillator" });
-      const rangeAB = range.filter((spec) =>
-        /_spec_range_[ab]$/.test(baseName(spec.name)));
-      const rangeMorph = range.find((spec) =>
-        /_spec_morph$/.test(baseName(spec.name)));
-      const rangeCard = sectionCard("range", {
-        headExtra: cardActions("spec range", range),
-      });
-      const rangeRow = div("knobs");
-      for (const spec of rangeAB) rangeRow.append(controlFor(spec));
-      rangeCard.append(rangeRow);
-      if (rangeMorph !== undefined) {
-        const morphRow = div("knobs");
-        morphRow.append(controlFor(rangeMorph, null, commit));
-        rangeCard.append(morphRow);
+      if (oscCard && morph !== undefined) {
+        const knobs = oscCard.querySelector(".knobs");
+        if (knobs !== null) knobs.append(controlFor(morph, null, commit));
       }
-      const aCard = a.length === 16
-        ? spectrumCard("spectrum a", a, b, "a", rangeA,
-                       { fromWave: true, preview, onEdit: commit,
-                         tools: spectrumToolState(activePart, op, true) })
-        : null;
-      const bCard = b.length === 16
-        ? spectrumCard("spectrum b", b, a, "b", rangeB,
-                       { onEdit: commit,
-                         tools: spectrumToolState(activePart, op, false) })
-        : null;
       if (oscCard) col.append(oscCard);
-      if (rangeCard) col.append(rangeCard);
-      if (aCard) col.append(aCard);
-      if (bCard) col.append(bCard);
+      strip.append(col);
+
+      const specs = isA ? a : b;
+      const range = isA ? rangeA : rangeB;
+      const other = isA ? b : a;
+      const row = spectrumRangeRow(
+        `op${op + 1} spectrum ${letter}`, specs, range, {
+          tools: spectrumToolState(activePart, op, isA),
+          kind: letter,
+          preview: isA ? preview : null,
+          onEdit: commit,
+          fromWave: isA,
+          otherSpecs: other,
+        });
+      runs.append(row.el);
+      controls.append(spectrumControls(`op${op + 1} controls`, row));
       requestPreview(activePart, op);
-      columns.append(col);
     }
-    page.append(columns);
+    wrapper.append(strip, runs, controls);
+    page.append(wrapper);
   }
 
   function buildMod(page) {
@@ -2806,7 +2838,8 @@
     else if (currentPage === "fx") buildFx(page);
     else if (currentPage === "envs") buildEnvs(page);
     else if (currentPage === "lfos") buildLfos(page);
-    else if (currentPage === "spectra") buildSpectra(page);
+    else if (currentPage === "spectra-a") buildSpectra(page, "a");
+    else if (currentPage === "spectra-b") buildSpectra(page, "b");
     else buildMod(page);
     bodyEl.append(page);
     window.__p1.page = currentPage;

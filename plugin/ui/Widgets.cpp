@@ -152,9 +152,9 @@ juce::String formatParamValue(const P1ParamSpec& spec, double value)
         return juce::String(hz, hz < 1.0 ? 2 : 1) + "Hz";
     }
     if (display == "range") {
-        const int index = juce::jlimit(0, 7, v);
-        const int first = index * 16 + 1;
-        return juce::String(first) + "-" + juce::String(first + 15);
+        const int index = juce::jlimit(0, 1, v);
+        const int first = index * 64 + 1;
+        return juce::String(first) + "-" + juce::String(first + 63);
     }
     if (juce::String(spec.unit) == "cents")
         return juce::String(v) + "c";
@@ -187,10 +187,10 @@ double parseParamValue(const P1ParamSpec& spec, const juce::String& text)
                             static_cast<double>(spec.max),
                             v * 4294967296.0 / 48000.0);
     if (display == "range") {
-        if (v >= 0.0 && v <= 7.0)
+        if (v >= 0.0 && v <= 1.0)
             return v;
-        const int first = (static_cast<int>(v) - 1) / 16;
-        return juce::jlimit(0, 7, first);
+        const int first = (static_cast<int>(v) - 1) / 64;
+        return juce::jlimit(0, 1, first);
     }
     if (display == "pct" || display == "off_pct") {
         const double range = static_cast<double>(spec.max - spec.min);
@@ -771,9 +771,10 @@ void P1SpectralBars::setFromMouse(const juce::MouseEvent& event)
     const float barsHeight = static_cast<float>(bars.getHeight());
     const float barsLeft = static_cast<float>(bars.getX());
     const float barsTop = static_cast<float>(bars.getY());
+    const int count = juce::jmax(1, parameterIDs_.size());
     const int index = juce::jlimit(
-        0, 15, static_cast<int>((event.position.x - barsLeft) /
-                                (barsWidth / 16.0f)));
+        0, count - 1, static_cast<int>((event.position.x - barsLeft) /
+                                       (barsWidth / static_cast<float>(count))));
     const double level = juce::jlimit(
         0.0, 99.0, 99.0 * (barsTop + barsHeight - event.position.y) /
                         static_cast<double>(barsHeight));
@@ -808,8 +809,10 @@ void P1SpectralBars::paint(juce::Graphics& g)
     auto bars = area.withTrimmedBottom(12);
     if (bars.isEmpty())
         return;
-    const float slot = static_cast<float>(bars.getWidth()) / 16.0f;
-    for (int i = 0; i < 16; ++i) {
+    const int count = juce::jmax(1, parameterIDs_.size());
+    const float slot = static_cast<float>(bars.getWidth()) /
+                       static_cast<float>(count);
+    for (int i = 0; i < count; ++i) {
         const float level = static_cast<float>(displayLevelAt(i)) / 99.0f;
         const float height = level * static_cast<float>(bars.getHeight());
         g.setColour(colour(i % 2 == 0 ? tokens::purple : tokens::pink));
@@ -822,7 +825,7 @@ void P1SpectralBars::paint(juce::Graphics& g)
                          static_cast<float>(bars.getRight()));
     if (groupTest_) {
         g.setColour(colour(tokens::green));
-        for (int i = 0; i < 16; ++i) {
+        for (int i = 0; i < count; ++i) {
             if (!groupTest_(firstHarmonic_ + i))
                 continue;
             g.drawRect(juce::Rectangle<float>(
@@ -836,8 +839,11 @@ void P1SpectralBars::paint(juce::Graphics& g)
     }
     g.setFont(uiFont(tokens::textLegend));
     g.setColour(colour(tokens::dim));
-    for (int k : {0, 3, 7, 11, 15}) {
+    for (int k = 0; k < count; ++k) {
         const int h = firstHarmonic_ + k;
+        const bool member = groupTest_ && groupTest_(h);
+        if (k % 8 != 0 && !member)
+            continue;
         const float x = static_cast<float>(bars.getX()) +
                         (static_cast<float>(k) + 0.5f) * slot;
         g.drawText(juce::String(h), juce::Rectangle<float>(
@@ -891,21 +897,21 @@ void P1SpectrumDisplay::paint(juce::Graphics& g)
         return;
 
     const int rangeA = juce::jlimit(
-        0, 7, static_cast<int>(std::lround(
+        0, 1, static_cast<int>(std::lround(
                   state_.getRawParameterValue(rangeAID_) != nullptr
                       ? static_cast<double>(
                             state_.getRawParameterValue(rangeAID_)->load())
                       : 0.0)));
     const int rangeB = juce::jlimit(
-        0, 7, static_cast<int>(std::lround(
+        0, 1, static_cast<int>(std::lround(
                   state_.getRawParameterValue(rangeBID_) != nullptr
                       ? static_cast<double>(
                             state_.getRawParameterValue(rangeBID_)->load())
                       : 0.0)));
-    const int firstA = rangeA * 16 + 1;
-    const int firstB = rangeB * 16 + 1;
+    const int firstA = rangeA * 64 + 1;
+    const int firstB = rangeB * 64 + 1;
     const int minFirst = juce::jmin(firstA, firstB);
-    const int maxLast = juce::jmax(firstA + 15, firstB + 15);
+    const int maxLast = juce::jmax(firstA + 63, firstB + 63);
     const int span = maxLast - minFirst + 1;
     auto xAt = [&](int harmonic) {
         return graph.getX() +
@@ -914,9 +920,9 @@ void P1SpectrumDisplay::paint(juce::Graphics& g)
     };
 
     const juce::String aText = "spectrum a (" + juce::String(firstA) + "-" +
-                               juce::String(firstA + 15) + ")";
+                               juce::String(firstA + 63) + ")";
     const juce::String bText = "spectrum b (" + juce::String(firstB) + "-" +
-                               juce::String(firstB + 15) + ")";
+                               juce::String(firstB + 63) + ")";
     const juce::String waveText = "waveform";
     juce::Font legendFont = uiFont(tokens::textLegend);
     auto legendWidths = [&] {
@@ -960,11 +966,13 @@ void P1SpectrumDisplay::paint(juce::Graphics& g)
                                         ->load())))
                               : 13;
     const bool fromWave = waveIndex >= 0 && waveIndex <= 12;
-    const std::array<double, 16> preview =
-        fromWave ? analyseWaveTable(waveIndex, firstA)
-                 : std::array<double, 16>{};
+    if (fromWave && (waveIndex != previewWave_ || firstA != previewFirst_)) {
+        preview_ = analyseWaveTable(waveIndex, firstA);
+        previewWave_ = waveIndex;
+        previewFirst_ = firstA;
+    }
     auto aLevel = [&](int index) {
-        return fromWave ? preview[static_cast<std::size_t>(index)]
+        return fromWave ? preview_[static_cast<std::size_t>(index)]
                         : levelAt(aIDs_, index);
     };
     auto bLevel = [&](int index) { return levelAt(bIDs_, index); };
@@ -973,13 +981,14 @@ void P1SpectrumDisplay::paint(juce::Graphics& g)
                             juce::Colour lineColour) {
         juce::Path path;
         path.startNewSubPath(xAt(first), graph.getBottom());
-        for (int i = 0; i < 16; ++i) {
+        const int count = aIDs_.size();
+        for (int i = 0; i < count; ++i) {
             const float y = graph.getBottom() -
                             static_cast<float>(level(i)) / 99.0f *
                                 graph.getHeight();
             path.lineTo(xAt(first + i), y);
         }
-        path.lineTo(xAt(first + 15), graph.getBottom());
+        path.lineTo(xAt(first + count - 1), graph.getBottom());
         path.closeSubPath();
         g.setColour(lineColour.withAlpha(0.18f));
         g.fillPath(path);
@@ -1007,7 +1016,7 @@ void P1SpectrumDisplay::paint(juce::Graphics& g)
         const double t = static_cast<double>(i) / (points - 1);
         double sumA = 0.0;
         double sumB = 0.0;
-        for (int h = 0; h < 16; ++h) {
+        for (int h = 0; h < aIDs_.size(); ++h) {
             const double phase =
                 2.0 * juce::MathConstants<double>::pi * t;
             sumA += aLevel(h) * std::sin(phase * (firstA + h));

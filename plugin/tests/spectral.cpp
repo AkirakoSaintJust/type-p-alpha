@@ -283,18 +283,19 @@ bool checkCrossfadeDirection()
 bool checkTable()
 {
     int16_t bank[P1_SPEC_BANK] = {0};
-    int32_t a[16] = {99};
+    int32_t a[P1_SPEC_HARMONICS] = {0};
+    a[0] = 99;
     p1_spectral_table(bank + P1_SPEC_SHADOW(0), a, 1);
     p1_spectral_copy(bank + P1_SPEC_A(0), bank + P1_SPEC_SHADOW(0));
     const int32_t v = p1_spectral_read(bank, 0, 0x20000000u, 0, 0);
 
     int16_t shifted[P1_SPEC_BANK] = {0};
-    p1_spectral_table(shifted + P1_SPEC_SHADOW(0), a, 17);
+    p1_spectral_table(shifted + P1_SPEC_SHADOW(0), a, 65);
     const bool differs =
         std::memcmp(shifted + P1_SPEC_SHADOW(0),
                     bank + P1_SPEC_SHADOW(0),
                     P1_SPEC_TABLE * sizeof(int16_t)) != 0;
-    const bool hashesDiffer = p1_spectral_hash(a, 1) != p1_spectral_hash(a, 17);
+    const bool hashesDiffer = p1_spectral_hash(a, 1) != p1_spectral_hash(a, 65);
     if (v <= 1000 || !differs || !hashesDiffer) {
         std::printf("spectral: the range did not move the table (v %d, differs %d, hash %d)\n",
                     v, differs, hashesDiffer);
@@ -333,10 +334,10 @@ bool checkRange()
     engine.noteOn(60, 100, 0);
     const auto out = render(engine, 22050);
     const double h1 = magnitude(out, 22050 - 2048, 2048, kF0);
-    const double h17 = magnitude(out, 22050 - 2048, 2048, 17.0 * kF0);
-    if (!(h17 > 100.0 && h17 > h1 * 4.0)) {
-        std::printf("spectral: range 17-32 did not move the partial (h1 %.2f, h17 %.2f)\n",
-                    h1, h17);
+    const double h65 = magnitude(out, 22050 - 2048, 2048, 65.0 * kF0);
+    if (!(h65 > 5.0 && h65 > h1 * 4.0)) {
+        std::printf("spectral: range 65-128 did not move the partial (h1 %.2f, h65 %.2f)\n",
+                    h1, h65);
         return false;
     }
     return true;

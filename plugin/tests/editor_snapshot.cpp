@@ -107,19 +107,25 @@ int main(int argc, char** argv)
         p1editor->updateVisualizers();
         ok = saveSnapshot(
                  *editor,
+                 directory.getChildFile("editor-operator-spectra-b.png")) &&
+             ok;
+        p1editor->showTab(6);
+        p1editor->updateVisualizers();
+        ok = saveSnapshot(
+                 *editor,
                  directory.getChildFile("editor-op-spectra-mod-saw.png")) &&
              ok;
         p1editor->showTab(4);
         wave->setValueNotifyingHost(wave->convertTo0to1(0.0f));
         p1editor->updateVisualizers();
     }
-    p1editor->showTab(5);
+    p1editor->showTab(6);
     fill();
     ok = saveSnapshot(*editor,
                       directory.getChildFile("editor-op-spectra-mod.png")) && ok;
     if (auto* rangeB =
             p1editor->state().getParameter("op1_spec_range_b.p0")) {
-        rangeB->setValueNotifyingHost(rangeB->convertTo0to1(7.0f));
+        rangeB->setValueNotifyingHost(rangeB->convertTo0to1(1.0f));
         p1editor->updateVisualizers();
         ok = saveSnapshot(
                  *editor,
@@ -200,7 +206,7 @@ int main(int argc, char** argv)
         const float srcWave = readRaw("op1_waveform.p0");
         const float dstWave = readRaw("op2_waveform.p0");
         setRaw("op1_spec_a1.p0", 77.0f);
-        setRaw("op1_spec_range_a.p0", 2.0f);
+        setRaw("op1_spec_range_a.p0", 1.0f);
         setRaw("op1_waveform.p0", 0.0f);
         setRaw("op2_waveform.p0", 0.0f);
         p1editor->copyOperatorSection(
@@ -208,7 +214,7 @@ int main(int argc, char** argv)
         p1editor->pasteOperatorSection(
             1, 0, PluginEditor::OperatorSection::spectrumA);
         if (std::lround(readRaw("op2_spec_a1.p0")) != 77 ||
-            std::lround(readRaw("op2_spec_range_a.p0")) != 2 ||
+            std::lround(readRaw("op2_spec_range_a.p0")) != 1 ||
             std::lround(readRaw("op2_waveform.p0")) != 13) {
             std::printf("editor snapshot: spectrum paste did not activate the mode\n");
             ok = false;

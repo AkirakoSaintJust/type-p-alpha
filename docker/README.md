@@ -159,10 +159,10 @@ The module is about 164 KB, has no imports and exports `memory` plus the wrapper
 functions in `wasm/p1_wasm.c`. The AudioWorklet and the browser pages are in
 `web/`: `index.html` redirects to `panel.html`, the full parameter panel, and
 `bare.html` is the bare audio and parameter smoke test. The panel loads
-`engine/gen/params.json`, groups the parameters into the six tabs and sends every
+`engine/gen/params.json`, groups the parameters into the seven tabs and sends every
 control through the worklet. It carries the algorithm graph, the output scope and
 spectro toggle, the two-part patch page, the six-card FX page, the envelope graphs,
-the sixteen-bar spectrum editors, the live `from wave` preview, the `op spectra mod`
+the 64-bar spectrum editors, the live `from wave` preview, the `op spectra mod`
 A/B display and the per-operator tap scopes. A patch and part library keeps 64
 multi-patches and 128 part slots in `localStorage` and exports them as JSON. The
 engine runs at 48 kHz and the worklet resamples at the output boundary when the

@@ -755,13 +755,14 @@ void PluginEditor::buildUi()
     canvas_.addAndMakeVisible(*toolbar_);
     toolbar_->setBounds(1, 160, 1238, 44);
     tabs_.setBounds(1, 204, 1238, 37);
-    activeTab_ = juce::jlimit(0, 5, activeTab_);
+    activeTab_ = juce::jlimit(0, 6, activeTab_);
     juce::StringArray labels;
     labels.add("patch settings");
     labels.add("part fx/mod");
     labels.add("operator envs");
     labels.add("operator lfos");
-    labels.add("operator spectra");
+    labels.add("op spectra a");
+    labels.add("op spectra b");
     labels.add("op spectra mod");
     tabs_.setLabels(labels);
     switchingTab_ = true;
@@ -792,9 +793,12 @@ void PluginEditor::buildPage()
         page_ = p1::ui::makeOperatorLfosPage(*this);
         break;
     case 4:
-        page_ = p1::ui::makeOperatorSpectraPage(*this);
+        page_ = p1::ui::makeOperatorSpectraPage(*this, true);
         break;
     case 5:
+        page_ = p1::ui::makeOperatorSpectraPage(*this, false);
+        break;
+    case 6:
         page_ = p1::ui::makeOperatorSpectraModPage(*this);
         break;
     default:

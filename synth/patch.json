@@ -1680,6 +1680,294 @@
       "max": 99,
       "curve": "linear"
     },
+    "op1_spec_a17": {
+      "target": "op1.osc.spec_a17",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_a18": {
+      "target": "op1.osc.spec_a18",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_a19": {
+      "target": "op1.osc.spec_a19",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_a20": {
+      "target": "op1.osc.spec_a20",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_a21": {
+      "target": "op1.osc.spec_a21",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_a22": {
+      "target": "op1.osc.spec_a22",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_a23": {
+      "target": "op1.osc.spec_a23",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_a24": {
+      "target": "op1.osc.spec_a24",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_a25": {
+      "target": "op1.osc.spec_a25",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_a26": {
+      "target": "op1.osc.spec_a26",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_a27": {
+      "target": "op1.osc.spec_a27",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_a28": {
+      "target": "op1.osc.spec_a28",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_a29": {
+      "target": "op1.osc.spec_a29",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_a30": {
+      "target": "op1.osc.spec_a30",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_a31": {
+      "target": "op1.osc.spec_a31",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_a32": {
+      "target": "op1.osc.spec_a32",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_a33": {
+      "target": "op1.osc.spec_a33",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_a34": {
+      "target": "op1.osc.spec_a34",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_a35": {
+      "target": "op1.osc.spec_a35",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_a36": {
+      "target": "op1.osc.spec_a36",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_a37": {
+      "target": "op1.osc.spec_a37",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_a38": {
+      "target": "op1.osc.spec_a38",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_a39": {
+      "target": "op1.osc.spec_a39",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_a40": {
+      "target": "op1.osc.spec_a40",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_a41": {
+      "target": "op1.osc.spec_a41",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_a42": {
+      "target": "op1.osc.spec_a42",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_a43": {
+      "target": "op1.osc.spec_a43",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_a44": {
+      "target": "op1.osc.spec_a44",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_a45": {
+      "target": "op1.osc.spec_a45",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_a46": {
+      "target": "op1.osc.spec_a46",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_a47": {
+      "target": "op1.osc.spec_a47",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_a48": {
+      "target": "op1.osc.spec_a48",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_a49": {
+      "target": "op1.osc.spec_a49",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_a50": {
+      "target": "op1.osc.spec_a50",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_a51": {
+      "target": "op1.osc.spec_a51",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_a52": {
+      "target": "op1.osc.spec_a52",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_a53": {
+      "target": "op1.osc.spec_a53",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_a54": {
+      "target": "op1.osc.spec_a54",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_a55": {
+      "target": "op1.osc.spec_a55",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_a56": {
+      "target": "op1.osc.spec_a56",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_a57": {
+      "target": "op1.osc.spec_a57",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_a58": {
+      "target": "op1.osc.spec_a58",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_a59": {
+      "target": "op1.osc.spec_a59",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_a60": {
+      "target": "op1.osc.spec_a60",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_a61": {
+      "target": "op1.osc.spec_a61",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_a62": {
+      "target": "op1.osc.spec_a62",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_a63": {
+      "target": "op1.osc.spec_a63",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_a64": {
+      "target": "op1.osc.spec_a64",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
     "op1_spec_b1": {
       "target": "op1.osc.spec_b1",
       "min": 0,
@@ -1776,6 +2064,294 @@
       "max": 99,
       "curve": "linear"
     },
+    "op1_spec_b17": {
+      "target": "op1.osc.spec_b17",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_b18": {
+      "target": "op1.osc.spec_b18",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_b19": {
+      "target": "op1.osc.spec_b19",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_b20": {
+      "target": "op1.osc.spec_b20",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_b21": {
+      "target": "op1.osc.spec_b21",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_b22": {
+      "target": "op1.osc.spec_b22",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_b23": {
+      "target": "op1.osc.spec_b23",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_b24": {
+      "target": "op1.osc.spec_b24",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_b25": {
+      "target": "op1.osc.spec_b25",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_b26": {
+      "target": "op1.osc.spec_b26",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_b27": {
+      "target": "op1.osc.spec_b27",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_b28": {
+      "target": "op1.osc.spec_b28",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_b29": {
+      "target": "op1.osc.spec_b29",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_b30": {
+      "target": "op1.osc.spec_b30",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_b31": {
+      "target": "op1.osc.spec_b31",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_b32": {
+      "target": "op1.osc.spec_b32",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_b33": {
+      "target": "op1.osc.spec_b33",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_b34": {
+      "target": "op1.osc.spec_b34",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_b35": {
+      "target": "op1.osc.spec_b35",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_b36": {
+      "target": "op1.osc.spec_b36",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_b37": {
+      "target": "op1.osc.spec_b37",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_b38": {
+      "target": "op1.osc.spec_b38",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_b39": {
+      "target": "op1.osc.spec_b39",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_b40": {
+      "target": "op1.osc.spec_b40",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_b41": {
+      "target": "op1.osc.spec_b41",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_b42": {
+      "target": "op1.osc.spec_b42",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_b43": {
+      "target": "op1.osc.spec_b43",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_b44": {
+      "target": "op1.osc.spec_b44",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_b45": {
+      "target": "op1.osc.spec_b45",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_b46": {
+      "target": "op1.osc.spec_b46",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_b47": {
+      "target": "op1.osc.spec_b47",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_b48": {
+      "target": "op1.osc.spec_b48",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_b49": {
+      "target": "op1.osc.spec_b49",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_b50": {
+      "target": "op1.osc.spec_b50",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_b51": {
+      "target": "op1.osc.spec_b51",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_b52": {
+      "target": "op1.osc.spec_b52",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_b53": {
+      "target": "op1.osc.spec_b53",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_b54": {
+      "target": "op1.osc.spec_b54",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_b55": {
+      "target": "op1.osc.spec_b55",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_b56": {
+      "target": "op1.osc.spec_b56",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_b57": {
+      "target": "op1.osc.spec_b57",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_b58": {
+      "target": "op1.osc.spec_b58",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_b59": {
+      "target": "op1.osc.spec_b59",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_b60": {
+      "target": "op1.osc.spec_b60",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_b61": {
+      "target": "op1.osc.spec_b61",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_b62": {
+      "target": "op1.osc.spec_b62",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_b63": {
+      "target": "op1.osc.spec_b63",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_b64": {
+      "target": "op1.osc.spec_b64",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
     "op1_spec_morph": {
       "target": "op1.osc.spec_morph",
       "min": 0,
@@ -1860,14 +2436,14 @@
     "op1_spec_range_a": {
       "target": "op1.osc.spec_range_a",
       "min": 0,
-      "max": 7,
+      "max": 1,
       "curve": "linear",
       "display": "range"
     },
     "op1_spec_range_b": {
       "target": "op1.osc.spec_range_b",
       "min": 0,
-      "max": 7,
+      "max": 1,
       "curve": "linear",
       "display": "range"
     },
@@ -1963,6 +2539,294 @@
     },
     "op2_spec_a16": {
       "target": "op2.osc.spec_a16",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_a17": {
+      "target": "op2.osc.spec_a17",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_a18": {
+      "target": "op2.osc.spec_a18",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_a19": {
+      "target": "op2.osc.spec_a19",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_a20": {
+      "target": "op2.osc.spec_a20",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_a21": {
+      "target": "op2.osc.spec_a21",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_a22": {
+      "target": "op2.osc.spec_a22",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_a23": {
+      "target": "op2.osc.spec_a23",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_a24": {
+      "target": "op2.osc.spec_a24",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_a25": {
+      "target": "op2.osc.spec_a25",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_a26": {
+      "target": "op2.osc.spec_a26",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_a27": {
+      "target": "op2.osc.spec_a27",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_a28": {
+      "target": "op2.osc.spec_a28",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_a29": {
+      "target": "op2.osc.spec_a29",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_a30": {
+      "target": "op2.osc.spec_a30",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_a31": {
+      "target": "op2.osc.spec_a31",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_a32": {
+      "target": "op2.osc.spec_a32",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_a33": {
+      "target": "op2.osc.spec_a33",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_a34": {
+      "target": "op2.osc.spec_a34",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_a35": {
+      "target": "op2.osc.spec_a35",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_a36": {
+      "target": "op2.osc.spec_a36",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_a37": {
+      "target": "op2.osc.spec_a37",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_a38": {
+      "target": "op2.osc.spec_a38",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_a39": {
+      "target": "op2.osc.spec_a39",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_a40": {
+      "target": "op2.osc.spec_a40",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_a41": {
+      "target": "op2.osc.spec_a41",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_a42": {
+      "target": "op2.osc.spec_a42",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_a43": {
+      "target": "op2.osc.spec_a43",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_a44": {
+      "target": "op2.osc.spec_a44",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_a45": {
+      "target": "op2.osc.spec_a45",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_a46": {
+      "target": "op2.osc.spec_a46",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_a47": {
+      "target": "op2.osc.spec_a47",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_a48": {
+      "target": "op2.osc.spec_a48",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_a49": {
+      "target": "op2.osc.spec_a49",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_a50": {
+      "target": "op2.osc.spec_a50",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_a51": {
+      "target": "op2.osc.spec_a51",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_a52": {
+      "target": "op2.osc.spec_a52",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_a53": {
+      "target": "op2.osc.spec_a53",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_a54": {
+      "target": "op2.osc.spec_a54",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_a55": {
+      "target": "op2.osc.spec_a55",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_a56": {
+      "target": "op2.osc.spec_a56",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_a57": {
+      "target": "op2.osc.spec_a57",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_a58": {
+      "target": "op2.osc.spec_a58",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_a59": {
+      "target": "op2.osc.spec_a59",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_a60": {
+      "target": "op2.osc.spec_a60",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_a61": {
+      "target": "op2.osc.spec_a61",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_a62": {
+      "target": "op2.osc.spec_a62",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_a63": {
+      "target": "op2.osc.spec_a63",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_a64": {
+      "target": "op2.osc.spec_a64",
       "min": 0,
       "max": 99,
       "curve": "linear"
@@ -2063,6 +2927,294 @@
       "max": 99,
       "curve": "linear"
     },
+    "op2_spec_b17": {
+      "target": "op2.osc.spec_b17",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_b18": {
+      "target": "op2.osc.spec_b18",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_b19": {
+      "target": "op2.osc.spec_b19",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_b20": {
+      "target": "op2.osc.spec_b20",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_b21": {
+      "target": "op2.osc.spec_b21",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_b22": {
+      "target": "op2.osc.spec_b22",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_b23": {
+      "target": "op2.osc.spec_b23",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_b24": {
+      "target": "op2.osc.spec_b24",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_b25": {
+      "target": "op2.osc.spec_b25",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_b26": {
+      "target": "op2.osc.spec_b26",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_b27": {
+      "target": "op2.osc.spec_b27",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_b28": {
+      "target": "op2.osc.spec_b28",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_b29": {
+      "target": "op2.osc.spec_b29",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_b30": {
+      "target": "op2.osc.spec_b30",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_b31": {
+      "target": "op2.osc.spec_b31",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_b32": {
+      "target": "op2.osc.spec_b32",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_b33": {
+      "target": "op2.osc.spec_b33",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_b34": {
+      "target": "op2.osc.spec_b34",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_b35": {
+      "target": "op2.osc.spec_b35",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_b36": {
+      "target": "op2.osc.spec_b36",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_b37": {
+      "target": "op2.osc.spec_b37",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_b38": {
+      "target": "op2.osc.spec_b38",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_b39": {
+      "target": "op2.osc.spec_b39",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_b40": {
+      "target": "op2.osc.spec_b40",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_b41": {
+      "target": "op2.osc.spec_b41",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_b42": {
+      "target": "op2.osc.spec_b42",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_b43": {
+      "target": "op2.osc.spec_b43",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_b44": {
+      "target": "op2.osc.spec_b44",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_b45": {
+      "target": "op2.osc.spec_b45",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_b46": {
+      "target": "op2.osc.spec_b46",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_b47": {
+      "target": "op2.osc.spec_b47",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_b48": {
+      "target": "op2.osc.spec_b48",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_b49": {
+      "target": "op2.osc.spec_b49",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_b50": {
+      "target": "op2.osc.spec_b50",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_b51": {
+      "target": "op2.osc.spec_b51",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_b52": {
+      "target": "op2.osc.spec_b52",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_b53": {
+      "target": "op2.osc.spec_b53",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_b54": {
+      "target": "op2.osc.spec_b54",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_b55": {
+      "target": "op2.osc.spec_b55",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_b56": {
+      "target": "op2.osc.spec_b56",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_b57": {
+      "target": "op2.osc.spec_b57",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_b58": {
+      "target": "op2.osc.spec_b58",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_b59": {
+      "target": "op2.osc.spec_b59",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_b60": {
+      "target": "op2.osc.spec_b60",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_b61": {
+      "target": "op2.osc.spec_b61",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_b62": {
+      "target": "op2.osc.spec_b62",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_b63": {
+      "target": "op2.osc.spec_b63",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_b64": {
+      "target": "op2.osc.spec_b64",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
     "op2_spec_morph": {
       "target": "op2.osc.spec_morph",
       "min": 0,
@@ -2147,14 +3299,14 @@
     "op2_spec_range_a": {
       "target": "op2.osc.spec_range_a",
       "min": 0,
-      "max": 7,
+      "max": 1,
       "curve": "linear",
       "display": "range"
     },
     "op2_spec_range_b": {
       "target": "op2.osc.spec_range_b",
       "min": 0,
-      "max": 7,
+      "max": 1,
       "curve": "linear",
       "display": "range"
     },
@@ -2250,6 +3402,294 @@
     },
     "op3_spec_a16": {
       "target": "op3.osc.spec_a16",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_a17": {
+      "target": "op3.osc.spec_a17",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_a18": {
+      "target": "op3.osc.spec_a18",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_a19": {
+      "target": "op3.osc.spec_a19",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_a20": {
+      "target": "op3.osc.spec_a20",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_a21": {
+      "target": "op3.osc.spec_a21",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_a22": {
+      "target": "op3.osc.spec_a22",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_a23": {
+      "target": "op3.osc.spec_a23",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_a24": {
+      "target": "op3.osc.spec_a24",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_a25": {
+      "target": "op3.osc.spec_a25",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_a26": {
+      "target": "op3.osc.spec_a26",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_a27": {
+      "target": "op3.osc.spec_a27",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_a28": {
+      "target": "op3.osc.spec_a28",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_a29": {
+      "target": "op3.osc.spec_a29",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_a30": {
+      "target": "op3.osc.spec_a30",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_a31": {
+      "target": "op3.osc.spec_a31",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_a32": {
+      "target": "op3.osc.spec_a32",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_a33": {
+      "target": "op3.osc.spec_a33",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_a34": {
+      "target": "op3.osc.spec_a34",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_a35": {
+      "target": "op3.osc.spec_a35",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_a36": {
+      "target": "op3.osc.spec_a36",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_a37": {
+      "target": "op3.osc.spec_a37",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_a38": {
+      "target": "op3.osc.spec_a38",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_a39": {
+      "target": "op3.osc.spec_a39",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_a40": {
+      "target": "op3.osc.spec_a40",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_a41": {
+      "target": "op3.osc.spec_a41",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_a42": {
+      "target": "op3.osc.spec_a42",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_a43": {
+      "target": "op3.osc.spec_a43",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_a44": {
+      "target": "op3.osc.spec_a44",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_a45": {
+      "target": "op3.osc.spec_a45",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_a46": {
+      "target": "op3.osc.spec_a46",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_a47": {
+      "target": "op3.osc.spec_a47",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_a48": {
+      "target": "op3.osc.spec_a48",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_a49": {
+      "target": "op3.osc.spec_a49",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_a50": {
+      "target": "op3.osc.spec_a50",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_a51": {
+      "target": "op3.osc.spec_a51",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_a52": {
+      "target": "op3.osc.spec_a52",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_a53": {
+      "target": "op3.osc.spec_a53",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_a54": {
+      "target": "op3.osc.spec_a54",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_a55": {
+      "target": "op3.osc.spec_a55",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_a56": {
+      "target": "op3.osc.spec_a56",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_a57": {
+      "target": "op3.osc.spec_a57",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_a58": {
+      "target": "op3.osc.spec_a58",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_a59": {
+      "target": "op3.osc.spec_a59",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_a60": {
+      "target": "op3.osc.spec_a60",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_a61": {
+      "target": "op3.osc.spec_a61",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_a62": {
+      "target": "op3.osc.spec_a62",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_a63": {
+      "target": "op3.osc.spec_a63",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_a64": {
+      "target": "op3.osc.spec_a64",
       "min": 0,
       "max": 99,
       "curve": "linear"
@@ -2350,6 +3790,294 @@
       "max": 99,
       "curve": "linear"
     },
+    "op3_spec_b17": {
+      "target": "op3.osc.spec_b17",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_b18": {
+      "target": "op3.osc.spec_b18",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_b19": {
+      "target": "op3.osc.spec_b19",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_b20": {
+      "target": "op3.osc.spec_b20",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_b21": {
+      "target": "op3.osc.spec_b21",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_b22": {
+      "target": "op3.osc.spec_b22",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_b23": {
+      "target": "op3.osc.spec_b23",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_b24": {
+      "target": "op3.osc.spec_b24",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_b25": {
+      "target": "op3.osc.spec_b25",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_b26": {
+      "target": "op3.osc.spec_b26",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_b27": {
+      "target": "op3.osc.spec_b27",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_b28": {
+      "target": "op3.osc.spec_b28",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_b29": {
+      "target": "op3.osc.spec_b29",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_b30": {
+      "target": "op3.osc.spec_b30",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_b31": {
+      "target": "op3.osc.spec_b31",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_b32": {
+      "target": "op3.osc.spec_b32",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_b33": {
+      "target": "op3.osc.spec_b33",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_b34": {
+      "target": "op3.osc.spec_b34",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_b35": {
+      "target": "op3.osc.spec_b35",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_b36": {
+      "target": "op3.osc.spec_b36",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_b37": {
+      "target": "op3.osc.spec_b37",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_b38": {
+      "target": "op3.osc.spec_b38",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_b39": {
+      "target": "op3.osc.spec_b39",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_b40": {
+      "target": "op3.osc.spec_b40",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_b41": {
+      "target": "op3.osc.spec_b41",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_b42": {
+      "target": "op3.osc.spec_b42",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_b43": {
+      "target": "op3.osc.spec_b43",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_b44": {
+      "target": "op3.osc.spec_b44",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_b45": {
+      "target": "op3.osc.spec_b45",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_b46": {
+      "target": "op3.osc.spec_b46",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_b47": {
+      "target": "op3.osc.spec_b47",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_b48": {
+      "target": "op3.osc.spec_b48",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_b49": {
+      "target": "op3.osc.spec_b49",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_b50": {
+      "target": "op3.osc.spec_b50",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_b51": {
+      "target": "op3.osc.spec_b51",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_b52": {
+      "target": "op3.osc.spec_b52",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_b53": {
+      "target": "op3.osc.spec_b53",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_b54": {
+      "target": "op3.osc.spec_b54",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_b55": {
+      "target": "op3.osc.spec_b55",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_b56": {
+      "target": "op3.osc.spec_b56",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_b57": {
+      "target": "op3.osc.spec_b57",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_b58": {
+      "target": "op3.osc.spec_b58",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_b59": {
+      "target": "op3.osc.spec_b59",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_b60": {
+      "target": "op3.osc.spec_b60",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_b61": {
+      "target": "op3.osc.spec_b61",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_b62": {
+      "target": "op3.osc.spec_b62",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_b63": {
+      "target": "op3.osc.spec_b63",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_b64": {
+      "target": "op3.osc.spec_b64",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
     "op3_spec_morph": {
       "target": "op3.osc.spec_morph",
       "min": 0,
@@ -2434,14 +4162,14 @@
     "op3_spec_range_a": {
       "target": "op3.osc.spec_range_a",
       "min": 0,
-      "max": 7,
+      "max": 1,
       "curve": "linear",
       "display": "range"
     },
     "op3_spec_range_b": {
       "target": "op3.osc.spec_range_b",
       "min": 0,
-      "max": 7,
+      "max": 1,
       "curve": "linear",
       "display": "range"
     },
@@ -2537,6 +4265,294 @@
     },
     "op4_spec_a16": {
       "target": "op4.osc.spec_a16",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_a17": {
+      "target": "op4.osc.spec_a17",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_a18": {
+      "target": "op4.osc.spec_a18",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_a19": {
+      "target": "op4.osc.spec_a19",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_a20": {
+      "target": "op4.osc.spec_a20",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_a21": {
+      "target": "op4.osc.spec_a21",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_a22": {
+      "target": "op4.osc.spec_a22",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_a23": {
+      "target": "op4.osc.spec_a23",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_a24": {
+      "target": "op4.osc.spec_a24",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_a25": {
+      "target": "op4.osc.spec_a25",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_a26": {
+      "target": "op4.osc.spec_a26",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_a27": {
+      "target": "op4.osc.spec_a27",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_a28": {
+      "target": "op4.osc.spec_a28",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_a29": {
+      "target": "op4.osc.spec_a29",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_a30": {
+      "target": "op4.osc.spec_a30",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_a31": {
+      "target": "op4.osc.spec_a31",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_a32": {
+      "target": "op4.osc.spec_a32",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_a33": {
+      "target": "op4.osc.spec_a33",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_a34": {
+      "target": "op4.osc.spec_a34",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_a35": {
+      "target": "op4.osc.spec_a35",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_a36": {
+      "target": "op4.osc.spec_a36",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_a37": {
+      "target": "op4.osc.spec_a37",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_a38": {
+      "target": "op4.osc.spec_a38",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_a39": {
+      "target": "op4.osc.spec_a39",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_a40": {
+      "target": "op4.osc.spec_a40",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_a41": {
+      "target": "op4.osc.spec_a41",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_a42": {
+      "target": "op4.osc.spec_a42",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_a43": {
+      "target": "op4.osc.spec_a43",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_a44": {
+      "target": "op4.osc.spec_a44",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_a45": {
+      "target": "op4.osc.spec_a45",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_a46": {
+      "target": "op4.osc.spec_a46",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_a47": {
+      "target": "op4.osc.spec_a47",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_a48": {
+      "target": "op4.osc.spec_a48",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_a49": {
+      "target": "op4.osc.spec_a49",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_a50": {
+      "target": "op4.osc.spec_a50",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_a51": {
+      "target": "op4.osc.spec_a51",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_a52": {
+      "target": "op4.osc.spec_a52",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_a53": {
+      "target": "op4.osc.spec_a53",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_a54": {
+      "target": "op4.osc.spec_a54",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_a55": {
+      "target": "op4.osc.spec_a55",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_a56": {
+      "target": "op4.osc.spec_a56",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_a57": {
+      "target": "op4.osc.spec_a57",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_a58": {
+      "target": "op4.osc.spec_a58",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_a59": {
+      "target": "op4.osc.spec_a59",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_a60": {
+      "target": "op4.osc.spec_a60",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_a61": {
+      "target": "op4.osc.spec_a61",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_a62": {
+      "target": "op4.osc.spec_a62",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_a63": {
+      "target": "op4.osc.spec_a63",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_a64": {
+      "target": "op4.osc.spec_a64",
       "min": 0,
       "max": 99,
       "curve": "linear"
@@ -2637,6 +4653,294 @@
       "max": 99,
       "curve": "linear"
     },
+    "op4_spec_b17": {
+      "target": "op4.osc.spec_b17",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_b18": {
+      "target": "op4.osc.spec_b18",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_b19": {
+      "target": "op4.osc.spec_b19",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_b20": {
+      "target": "op4.osc.spec_b20",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_b21": {
+      "target": "op4.osc.spec_b21",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_b22": {
+      "target": "op4.osc.spec_b22",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_b23": {
+      "target": "op4.osc.spec_b23",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_b24": {
+      "target": "op4.osc.spec_b24",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_b25": {
+      "target": "op4.osc.spec_b25",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_b26": {
+      "target": "op4.osc.spec_b26",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_b27": {
+      "target": "op4.osc.spec_b27",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_b28": {
+      "target": "op4.osc.spec_b28",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_b29": {
+      "target": "op4.osc.spec_b29",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_b30": {
+      "target": "op4.osc.spec_b30",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_b31": {
+      "target": "op4.osc.spec_b31",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_b32": {
+      "target": "op4.osc.spec_b32",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_b33": {
+      "target": "op4.osc.spec_b33",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_b34": {
+      "target": "op4.osc.spec_b34",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_b35": {
+      "target": "op4.osc.spec_b35",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_b36": {
+      "target": "op4.osc.spec_b36",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_b37": {
+      "target": "op4.osc.spec_b37",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_b38": {
+      "target": "op4.osc.spec_b38",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_b39": {
+      "target": "op4.osc.spec_b39",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_b40": {
+      "target": "op4.osc.spec_b40",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_b41": {
+      "target": "op4.osc.spec_b41",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_b42": {
+      "target": "op4.osc.spec_b42",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_b43": {
+      "target": "op4.osc.spec_b43",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_b44": {
+      "target": "op4.osc.spec_b44",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_b45": {
+      "target": "op4.osc.spec_b45",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_b46": {
+      "target": "op4.osc.spec_b46",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_b47": {
+      "target": "op4.osc.spec_b47",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_b48": {
+      "target": "op4.osc.spec_b48",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_b49": {
+      "target": "op4.osc.spec_b49",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_b50": {
+      "target": "op4.osc.spec_b50",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_b51": {
+      "target": "op4.osc.spec_b51",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_b52": {
+      "target": "op4.osc.spec_b52",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_b53": {
+      "target": "op4.osc.spec_b53",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_b54": {
+      "target": "op4.osc.spec_b54",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_b55": {
+      "target": "op4.osc.spec_b55",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_b56": {
+      "target": "op4.osc.spec_b56",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_b57": {
+      "target": "op4.osc.spec_b57",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_b58": {
+      "target": "op4.osc.spec_b58",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_b59": {
+      "target": "op4.osc.spec_b59",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_b60": {
+      "target": "op4.osc.spec_b60",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_b61": {
+      "target": "op4.osc.spec_b61",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_b62": {
+      "target": "op4.osc.spec_b62",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_b63": {
+      "target": "op4.osc.spec_b63",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_b64": {
+      "target": "op4.osc.spec_b64",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
     "op4_spec_morph": {
       "target": "op4.osc.spec_morph",
       "min": 0,
@@ -2721,14 +5025,14 @@
     "op4_spec_range_a": {
       "target": "op4.osc.spec_range_a",
       "min": 0,
-      "max": 7,
+      "max": 1,
       "curve": "linear",
       "display": "range"
     },
     "op4_spec_range_b": {
       "target": "op4.osc.spec_range_b",
       "min": 0,
-      "max": 7,
+      "max": 1,
       "curve": "linear",
       "display": "range"
     }

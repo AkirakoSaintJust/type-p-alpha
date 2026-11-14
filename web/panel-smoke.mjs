@@ -17,12 +17,12 @@ page.on("console", (message) => {
 try {
   await page.goto(url, { waitUntil: "load" });
   await page.waitForFunction(
-    () => window.__p1 && window.__p1.paramCount === 846, {
+    () => window.__p1 && window.__p1.paramCount === 1614, {
     timeout: 20000,
   });
   const tabs = await page.locator(".tab").allTextContents();
   console.log("tabs:", tabs.join(" | "));
-  if (tabs.length !== 6) throw new Error(`expected 6 tabs, got ${tabs.length}`);
+  if (tabs.length !== 7) throw new Error(`expected 7 tabs, got ${tabs.length}`);
 
   await page.click("#start");
   await page.waitForFunction(
@@ -32,7 +32,7 @@ try {
   const ready = await page.evaluate(() => window.__p1);
   console.log("ready:", ready);
   if (!ready.ready) throw new Error(ready.error || "engine did not start");
-  if (ready.paramCount !== 846)
+  if (ready.paramCount !== 1614)
     throw new Error(`param count ${ready.paramCount}`);
 
   await page.click('#visSeg button[data-mode="spectro"]');
@@ -52,7 +52,7 @@ try {
   }
   console.log("pages:", counts.join(" | "));
 
-  for (const [index, name] of [[3, "lfos"], [4, "spectra"], [5, "mod"]]) {
+  for (const [index, name] of [[3, "lfos"], [4, "spectra a"], [5, "spectra b"], [6, "mod"]]) {
     await page.locator(".tab").nth(index).click();
     await page.waitForTimeout(120);
     const oscCount = await page.locator(".opcol .card.osc").count();
@@ -134,12 +134,10 @@ try {
   if (morphWave !== 13)
     throw new Error("the morph knob did not commit the preview");
 
-  await page.locator(".opcol").first()
-    .locator(".speccard .sec-actions button", { hasText: "copy" }).first()
-    .click();
-  await page.locator(".opcol").nth(1)
-    .locator(".speccard .sec-actions button", { hasText: "paste" }).first()
-    .click();
+  await page.locator(".spectrum-row").first()
+    .locator(".sec-actions button", { hasText: "copy" }).click();
+  await page.locator(".spectrum-row").nth(1)
+    .locator(".sec-actions button", { hasText: "paste" }).click();
   await page.waitForTimeout(250);
   const spectrumCopy = await page.evaluate(() => [
     window.__p1.paramValue("op1_spec_a1.p0"),
@@ -149,30 +147,30 @@ try {
   if (spectrumCopy[0] !== spectrumCopy[1])
     throw new Error("the spectrum paste did not copy the levels");
 
-  const firstCard = page.locator(".opcol").first()
-    .locator(".speccard").first();
-  await firstCard.locator(".specbars").scrollIntoViewIfNeeded();
-  const zeroBars = await firstCard.locator(".specbars").boundingBox();
+  const firstRow = page.locator(".spectrum-row").first();
+  const firstControls = page.locator(".spectrum-controls .card").first();
+  await firstRow.locator(".specbars").scrollIntoViewIfNeeded();
+  const zeroBars = await firstRow.locator(".specbars").boundingBox();
   await page.mouse.move(zeroBars.x + 2, zeroBars.y + zeroBars.height - 2);
   await page.mouse.down();
-  for (let index = 0; index < 16; ++index) {
+  for (let index = 0; index < 64; ++index) {
     await page.mouse.move(
-      zeroBars.x + (index + 0.5) / 16 * zeroBars.width,
+      zeroBars.x + (index + 0.5) / 64 * zeroBars.width,
       zeroBars.y + zeroBars.height + 2);
   }
   await page.mouse.up();
   await page.waitForTimeout(150);
-  const zeroed = await page.evaluate(() => Array.from({ length: 16 },
+  const zeroed = await page.evaluate(() => Array.from({ length: 64 },
     (_, index) => window.__p1.paramValue("op1_spec_a" + (index + 1) + ".p0")));
   console.log("zeroed spectrum:", zeroed.join(" "));
   if (zeroed.some((level) => level !== 0))
     throw new Error("the bar editor did not clear the spectrum");
-  await firstCard.locator(".specgroup select").first()
+  await firstControls.locator(".specgroup select").first()
     .selectOption({ label: "third P5" });
   await page.waitForTimeout(150);
-  const legendText = (await firstCard.locator(".speclegend").textContent())
+  const legendText = (await firstRow.locator(".speclegend").textContent())
     .replace(/\s+/g, " ").trim();
-  const members = await firstCard.locator(".speclabels span.in-group")
+  const members = await firstRow.locator(".speclabels span.in-group")
     .allTextContents();
   console.log("group legend:", legendText, "members:", members.join(" "));
   if (!legendText.includes("harmonic third (P5)"))
@@ -181,8 +179,8 @@ try {
       !members.includes("12"))
     throw new Error("the select group did not mark its harmonics");
 
-  await firstCard.locator(".specmask button", { hasText: "dead" }).click();
-  const levelSpring = firstCard.locator(".spring").nth(1);
+  await firstControls.locator(".specmask button", { hasText: "dead" }).click();
+  const levelSpring = firstControls.locator(".spring").nth(1);
   const levelTrack = levelSpring.locator(".spring-track");
   await levelTrack.scrollIntoViewIfNeeded();
   const levelBox = await levelTrack.boundingBox();
@@ -205,7 +203,7 @@ try {
   if (springValue !== "0%")
     throw new Error("the level spring did not return to centre");
 
-  const formantSpring = firstCard.locator(".spring").nth(2);
+  const formantSpring = firstControls.locator(".spring").nth(2);
   const formantTrack = formantSpring.locator(".spring-track");
   const formantBox = await formantTrack.boundingBox();
   await page.mouse.move(formantBox.x + formantBox.width / 2,
@@ -221,10 +219,10 @@ try {
   if (!(formantLevel > 0))
     throw new Error("the formant spring did not reach its harmonic");
 
-  await firstCard.locator(".specmask button", { hasText: "both" }).click();
+  await firstControls.locator(".specmask button", { hasText: "both" }).click();
   const tiltBefore = await page.evaluate(() => [3, 12].map((h) =>
     window.__p1.paramValue("op1_spec_a" + h + ".p0")));
-  const tiltSpring = firstCard.locator(".spring").first();
+  const tiltSpring = firstControls.locator(".spring").first();
   const tiltTrack = tiltSpring.locator(".spring-track");
   const tiltBox = await tiltTrack.boundingBox();
   await page.mouse.move(tiltBox.x + tiltBox.width / 2,
@@ -372,7 +370,7 @@ try {
 
   await page.reload({ waitUntil: "load" });
   await page.waitForFunction(
-    () => window.__p1 && window.__p1.paramCount === 846, {
+    () => window.__p1 && window.__p1.paramCount === 1614, {
     timeout: 20000,
   });
   const persisted = await page.evaluate(() => window.__p1.patchName());
@@ -390,7 +388,7 @@ try {
   const fallback = await browser.newPage();
   await fallback.goto(fallbackUrl.toString(), { waitUntil: "load" });
   await fallback.waitForFunction(
-    () => window.__p1 && window.__p1.paramCount === 846, {
+    () => window.__p1 && window.__p1.paramCount === 1614, {
     timeout: 20000,
   });
   await fallback.click("#start");

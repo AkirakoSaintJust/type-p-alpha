@@ -13,13 +13,13 @@ constexpr double kPi = 3.14159265358979323846;
 
 } // namespace
 
-std::array<double, 16> analyseWaveTable(int wave, int firstHarmonic)
+std::array<double, 64> analyseWaveTable(int wave, int firstHarmonic)
 {
-    std::array<double, 16> levels{};
+    std::array<double, 64> levels{};
     if (wave < 0 || wave > 12)
         return levels;
     const int base = static_cast<int>(p1_wave_base[wave]) << 10;
-    for (int h = 0; h < 16; ++h) {
+    for (int h = 0; h < 64; ++h) {
         const int harmonic = firstHarmonic + h;
         const double step = 2.0 * kPi * harmonic / 1024.0;
         double re = 0.0;

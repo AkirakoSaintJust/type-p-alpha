@@ -39,9 +39,9 @@ TickResult runTickSeries(int ticks, bool reads)
     int32_t waveform[2] = {13, 13};
     int32_t rangeA[2] = {0, 0};
     int32_t rangeB[2] = {0, 0};
-    int32_t a[16][2] = {};
-    int32_t b[16][2] = {};
-    for (int i = 0; i < 16; ++i) {
+    int32_t a[P1_SPEC_HARMONICS][2] = {};
+    int32_t b[P1_SPEC_HARMONICS][2] = {};
+    for (int i = 0; i < P1_SPEC_HARMONICS; ++i) {
         a[i][0] = a[i][1] = (i * 7 + 3) % 100;
         b[i][0] = b[i][1] = (i * 11 + 5) % 100;
     }
@@ -50,8 +50,8 @@ TickResult runTickSeries(int ticks, bool reads)
     double total = 0.0;
     for (int tick = 0; tick < ticks; ++tick) {
         if (tick % 16 == 0) {
-            a[(tick / 16) % 16][0] = (tick * 13) % 100;
-            a[(tick * 5) % 16][1] = (tick * 17) % 100;
+            a[(tick / 16) % P1_SPEC_HARMONICS][0] = (tick * 13) % 100;
+            a[(tick * 5) % P1_SPEC_HARMONICS][1] = (tick * 17) % 100;
         }
         if (reads) {
             p1_spectral_read(bank, 0, 0x20000000u, 0, 0);
@@ -60,10 +60,8 @@ TickResult runTickSeries(int ticks, bool reads)
         const auto start = std::chrono::steady_clock::now();
         p1_spectral_tick(
             bank, waveform, rangeA, rangeB,
-            a[0], a[1], a[2], a[3], a[4], a[5], a[6], a[7],
-            a[8], a[9], a[10], a[11], a[12], a[13], a[14], a[15],
-            b[0], b[1], b[2], b[3], b[4], b[5], b[6], b[7],
-            b[8], b[9], b[10], b[11], b[12], b[13], b[14], b[15]);
+            a[0], a[1], a[2], a[3], a[4], a[5], a[6], a[7], a[8], a[9], a[10], a[11], a[12], a[13], a[14], a[15], a[16], a[17], a[18], a[19], a[20], a[21], a[22], a[23], a[24], a[25], a[26], a[27], a[28], a[29], a[30], a[31], a[32], a[33], a[34], a[35], a[36], a[37], a[38], a[39], a[40], a[41], a[42], a[43], a[44], a[45], a[46], a[47], a[48], a[49], a[50], a[51], a[52], a[53], a[54], a[55], a[56], a[57], a[58], a[59], a[60], a[61], a[62], a[63],
+            b[0], b[1], b[2], b[3], b[4], b[5], b[6], b[7], b[8], b[9], b[10], b[11], b[12], b[13], b[14], b[15], b[16], b[17], b[18], b[19], b[20], b[21], b[22], b[23], b[24], b[25], b[26], b[27], b[28], b[29], b[30], b[31], b[32], b[33], b[34], b[35], b[36], b[37], b[38], b[39], b[40], b[41], b[42], b[43], b[44], b[45], b[46], b[47], b[48], b[49], b[50], b[51], b[52], b[53], b[54], b[55], b[56], b[57], b[58], b[59], b[60], b[61], b[62], b[63]);
         const double elapsed = secondsSince(start);
         total += elapsed;
         result.worst = std::max(result.worst, elapsed);
@@ -206,8 +204,8 @@ int main()
     std::printf("rate %d, control block %d samples\n", kRate, kControlBlock);
 
     int16_t table[P1_SPEC_TABLE] = {0};
-    int32_t levels[16];
-    for (int i = 0; i < 16; ++i)
+    int32_t levels[P1_SPEC_HARMONICS];
+    for (int i = 0; i < P1_SPEC_HARMONICS; ++i)
         levels[i] = (i * 37 + 11) % 100;
     constexpr int kTables = 2000;
     uint64_t checksum = 0;
@@ -215,19 +213,19 @@ int main()
     for (int run = 0; run < 3; ++run) {
         const auto start = std::chrono::steady_clock::now();
         for (int n = 0; n < kTables; ++n) {
-            p1_spectral_table(table, levels, 1 + (n & 7) * 16);
+            p1_spectral_table(table, levels, (n & 1) ? 65 : 1);
             checksum += static_cast<uint16_t>(table[n & (P1_SPEC_SIZE - 1)]);
         }
         best = std::min(best, secondsSince(start));
     }
-    std::printf("table generation: %.1f us per spectrum (5 mips)\n",
+    std::printf("table generation: %.1f us per spectrum (64 harmonics, 256 samples, 7 mips)\n",
                 best / kTables * 1e6);
 
     int32_t wide[64];
     for (int i = 0; i < 64; ++i)
         wide[i] = (i * 29 + 7) % 100;
     int16_t wideTable[7 * 512] = {0};
-    for (const int size : {256, 512}) {
+    for (const int size : {512}) {
         const int shift = size == 256 ? 24 : 23;
         double wideBest = 1e9;
         for (int run = 0; run < 3; ++run) {

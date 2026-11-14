@@ -14,7 +14,7 @@
 typedef struct {
     type_p_alpha_state dsp;
     int32_t out[P1_WEB_MAX_FRAMES * 2];
-    int32_t analysis[16];
+    int32_t analysis[64];
 } p1_web_state;
 
 static p1_web_state g_state;
@@ -89,13 +89,13 @@ const int32_t *p1_analysis(void)
 
 void p1_analyze(uint32_t wave, uint32_t first)
 {
-    for (int i = 0; i < 16; ++i)
+    for (int i = 0; i < 64; ++i)
         g_state.analysis[i] = 0;
     if (wave > 12u)
         return;
     const int16_t *table = p1_wave + ((int)p1_wave_base[wave] << 10);
     double peak = 0.0;
-    for (int h = 0; h < 16; ++h) {
+    for (int h = 0; h < 64; ++h) {
         const int harmonic = (int)first + h;
         double re = 0.0;
         double im = 0.0;
@@ -112,7 +112,7 @@ void p1_analyze(uint32_t wave, uint32_t first)
             peak = magnitude;
     }
     if (peak > 0.0) {
-        for (int h = 0; h < 16; ++h)
+        for (int h = 0; h < 64; ++h)
             g_state.analysis[h] =
                 (int32_t)(g_state.analysis[h] * 99.0 / peak + 0.5);
     }

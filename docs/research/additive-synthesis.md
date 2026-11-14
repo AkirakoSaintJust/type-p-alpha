@@ -371,8 +371,8 @@ from five to seven mips.
 
 The table size is the real choice. A 256-sample table carries 64 harmonics with
 room below Nyquist, but harmonic 128 in the 65-128 range sits at the table's
-Nyquist and comes out silent, as harmonic 128 already does in the current 113-128
-range. A 512-sample table represents harmonic 128 and interpolates the top octave
+Nyquist and comes out silent, as harmonic 128 already did in the previous 113-128
+range and now does in 65-128. A 512-sample table represents harmonic 128 and interpolates the top octave
 better. It doubles the bank and the generation.
 
 The bank is shared by every voice of the part, so the read side is unchanged: two
@@ -386,16 +386,20 @@ bank is 65,536 bytes, and the WASM memory is fixed at 32 MB.
 
 | Bank | Per spectrum | Eight spectra |
 | --- | --- | --- |
-| 16 harmonics, 256 samples, five mips | 9.0 µs | 72 µs |
-| 64 harmonics, 256 samples, seven mips | 37.3 µs | 298.6 µs |
-| 64 harmonics, 512 samples, seven mips | 98.9 µs | 791.2 µs |
+| 16 harmonics, 256 samples, five mips | 9.0 µs | about 72 µs |
+| 64 harmonics, 256 samples, seven mips | 60.3 µs | 482 µs |
+| 64 harmonics, 512 samples, seven mips | 119.9 µs | 959 µs |
 
 The eight-spectrum column is the worst case, where all four operators and both
 parts change in one control tick. A normal edit changes one spectrum, which is
-37.3 or 98.9 µs. The control block is 32 samples, or 667 µs at 48 kHz, and the audio
-callback is larger than that. The 256-sample bank stays under the control block in
-the worst case. The 512-sample bank goes over it, so it needs the generation spread
-across ticks or a larger control block to stay safe on a 32 or 64 frame callback.
+60.3 or 119.9 µs. The whole engine block that changes all eight spectra, with the
+copies and the voice work, measured about 850 µs. That is 32 percent of a 128
+frame callback at 48 kHz, or 64 percent of a 64 frame callback. The control block is 32 samples, or 667 µs at 48 kHz, and the audio
+callback is larger than that. The 256-sample generation for eight spectra is under
+the control block; the 512-sample generation is over it. The whole block, not just
+the generation, is about 850 µs for the 256-sample bank, so a 32 frame callback
+would not hold it. It is safe at 128 frames and above. The 512-sample bank needs
+the generation spread across ticks or a larger control block.
 The cold commit and the 10 ms crossfade do not change, so the edit-to-audio latency
 is the same as the 16-harmonic case. The spike is CPU in the audio callback, not a
 delayed parameter.

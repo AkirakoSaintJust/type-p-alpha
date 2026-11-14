@@ -2,7 +2,7 @@
 
 ## Identity
 
-- **Feature:** A per-operator additive oscillator with two sixteen-harmonic spectra,
+- **Feature:** A per-operator additive oscillator with two 64-harmonic spectra,
   a morph, a morph envelope and a morph LFO, reached through the `spectrum` entry in
   the wave list, with two editor pages and a starting spectrum analysed from the
   current wave.
@@ -11,7 +11,7 @@
   [`../design/README.md`](../design/README.md) and
   [`../design/juce.md`](../design/juce.md).
 - **Owner / date:** P1Onken, 2026-11-13.
-- **Disposition:** complete for the engine and the six-tab editor pages. The A card
+- **Disposition:** complete for the engine and the seven-tab editor pages. The A card
   shows the selected wave's analysis, the first A-card edit commits it, and the
   first morph knob move commits it too. The cold commit and the crossfade direction
   are in, with the schedule bench in `plugin/tests/spectral_bench.cpp`. The Linux
@@ -20,7 +20,7 @@
 ## Player outcome
 
 - **New player action:** open `spectrum a` or `spectrum b` on the operator spectra
-  page, draw sixteen harmonic levels, use the `odd`, `even`, `tilt` and `formant`
+  page, draw 64 harmonic levels, use the select group, mask and spring controls
   macros, and choose `spectrum` in the wave select. The `op spectra mod` page carries
   the spectrum display, the morph, the morph envelope and the morph LFO.
 - **Sound and behaviour:** the wave select is the mode. Values 0 to 12 read the wave
@@ -30,8 +30,8 @@
   analysed preview is written only when a spectral control changes, so the player can
   move between the wave table and the additive bank without losing either sound. The
   operator morph blends spectrum a and b, and the envelope and LFO move the blend per
-  voice. Each spectrum carries its own 16-harmonic range, so a spectrum can address
-  1 to 16, 17 to 32, up to 113 to 128. The mod display zooms to the union of the two
+  voice. Each spectrum carries its own 64-harmonic range, so it addresses 1 to 64
+  or 65 to 128. The mod display zooms to the union of the two
   spans when a and b differ. While the waveform is not `spectrum`, the a card shows
   the analysis of the selected wave with a `from wave` badge. The first a-card edit
   writes the levels and then the waveform as 13. The first morph knob move commits
@@ -52,11 +52,12 @@
   48 kHz, and the plugin adapts the rate at the output.
 - **Persistence/version impact:** `rect tri` is inserted at waveform 9, so pulse,
   square and saw move to 10, 11 and 12, and `spectrum` is 13. `PRESET_VERSION`
-  moves to 3 for this feature, to 4 for the 48 kHz core change, and to 5 for the
-  harmonic range change, and the old test banks are regenerated. The project has no
+  moves to 3 for this feature, to 4 for the 48 kHz core change, to 5 for the
+  harmonic range change, and to 6 for the 64-harmonic change, and the old test
+  banks are regenerated. The plugin state version moves to 4. The project has no
   release, so no migration path is provided. The values are stable. The part block
-  grows from 228 to 416 parameters, the manifest from 470 to 846, and each part
-  record by 752 bytes. The plugin's `uiPage` needs the `part fx/mod` remap.
+  grows from 416 to 800 parameters, the manifest from 846 to 1,614, and each part
+  record by 1,536 bytes. The plugin's `uiPage` needs the `part fx/mod` remap.
 - **MIDI/clock impact:** none. The new parameters are host-automatable and stay out
   of the default CC map. The spectrum mode is the waveform parameter, so a host can
   automate the mode.
@@ -69,10 +70,10 @@ waveform parameter grows from 0 to 11 to 0 to 13.
 | Parameter | Target | Range | Default | Display |
 | --- | --- | --- | --- | --- |
 | `opN_waveform` | `opN.osc.waveform` | 0..13 | 0 | `wave` |
-| `opN_spec_range_a` | `opN.osc.spec_range_a` | 0..7 | 0 | `range` |
-| `opN_spec_range_b` | `opN.osc.spec_range_b` | 0..7 | 0 | `range` |
-| `opN_spec_a1` ... `opN_spec_a16` | `opN.osc.spec_a1` ... `a16` | 0..99 | 99, then 0 | raw |
-| `opN_spec_b1` ... `opN_spec_b16` | `opN.osc.spec_b1` ... `b16` | 0..99 | formant at h5 | raw |
+| `opN_spec_range_a` | `opN.osc.spec_range_a` | 0..1 | 0 | `range` |
+| `opN_spec_range_b` | `opN.osc.spec_range_b` | 0..1 | 0 | `range` |
+| `opN_spec_a1` ... `opN_spec_a64` | `opN.osc.spec_a1` ... `a64` | 0..99 | 99, then 0 | raw |
+| `opN_spec_b1` ... `opN_spec_b64` | `opN.osc.spec_b1` ... `b64` | 0..99 | formant at h5 | raw |
 | `opN_spec_morph` | `opN.osc.spec_morph` | 0..99 | 0 | raw |
 | `opN_spec_env_r1` ... `r4` | `opN.specenv.r1` ... `r4` | 0..99 | 80, 60, 50, 80 | raw |
 | `opN_spec_env_l1` ... `l3` | `opN.specenv.l1` ... `l3` | 0..99 | 99, 60, 0 | raw |
@@ -91,10 +92,10 @@ sample = ((1 - m) * tableA + m * tableB) >> 15;
 ```
 
 The envelope and LFO run per voice. The a and b tables are per part, and each
-spectrum has its own 16-harmonic range. The wave values are the mode: 13 reads the
+spectrum has its own 64-harmonic range. The wave values are the mode: 13 reads the
 additive bank, and 0 to 12 read the wave table.
 
-The editor commits the analysis preview by writing the sixteen a levels, then the
+The editor commits the analysis preview by writing the 64 a levels, then the
 waveform value 13. The first morph knob move does the same. The b card's `to a`
 commits the a preview first; a b-card bar edit does not. Selecting a wave keeps the
 stored spectra. The preview is not written on page open.
@@ -105,22 +106,20 @@ stored spectra. The preview is not written on page open.
 - **Per-sample and per-block operations:** two table reads and one linear blend per
   spectral oscillator sample. The table generation runs on the control tick.
   The analysis preview is a table lookup in the editor, not a runtime DFT.
-- **Instance memory, CPU, preset size:** the spectral bank is 8,192 signed 16-bit
-  samples per operator, so 16,384 bytes per operator and 65,536 bytes for four
-  operators. Each part reads its two tables and the shadow at the selected mip, so a
-  voice touches 3 x 256 samples for the operator. The part block grows by 180
-  spectral parameters, 720 bytes per part; the harmonic range adds 8 more, for 752
-  bytes per part. The measured costs are 1.7% of one core for 16 tables at 344 Hz
-  without mips, 3.4% with five mips, and 2.46% for the full 20-voice graph with the
-  linear read. The 13-wave table is 37,888 samples, 75,776 bytes. The bank is
-  bounded.
-- **Table update schedule:** `spectral_bench` measures about 9 µs to generate one
-  spectrum (five mips, 31 harmonic sums per sample) on the Windows clang-cl build.
-  A block that changes all eight spectra costs about 45 µs mean and 90 µs worst with
-  one part playing, against 11 µs steady. With both parts playing it costs about
-  17 µs mean and 93 µs worst, because the crossfade spreads the generation across
-  ticks. The spike is generation work, not cache thrash: a voice reads 1.5 KB of
-  tables and a generation writes 2.5 KB of shadow plus 2.5 KB of target.
+- **Instance memory, CPU, preset size:** the spectral bank is 10,880 signed
+  16-bit samples per operator, so 21,760 bytes per operator and 87,040 bytes for
+  four operators. Each part reads its two tables and the shadow at the selected mip,
+  so a voice touches 3 x 256 samples for the operator. The part block grows by 384
+  spectral parameters, 1,536 bytes per part, and reaches 800 parameters. The
+  13-wave table is 37,888 samples, 75,776 bytes. The bank is bounded.
+- **Table update schedule:** `spectral_bench` measures about 60 µs to generate one
+  spectrum (seven mips, 127 harmonic sums per sample) on the Windows clang-cl build.
+  A block that changes all eight spectra costs about 482 µs of generation, and about
+  850 µs with the copies and the voice work. A 512-sample table is about 120 µs per
+  spectrum and 959 µs for eight. The control block is 667 µs, so the 256-sample
+  generation fits but the whole block needs a 128 frame callback or larger. A voice
+  reads 1.5 KB of tables and a generation writes 3.5 KB of shadow plus 3.5 KB of
+  target. The edit-to-audio path and the 10 ms crossfade are unchanged.
 - **Overflow/overload policy:** the generated table is peak normalised to Q15, so
   the blend of two normalised tables stays in range. The morph is clamped. A dirty
   operator regenerates on the control tick. An audible part crossfades from the old
@@ -172,7 +171,7 @@ stored spectra. The preview is not written on page open.
   saw must match the current header sample for sample. The checks are exact. The
   spectra page must render the selected wave analysis without writing a parameter
   until the first A-card edit, and the mod display must show both outlines and the
-  morph marker. The part block and manifest counts must match 416 and 846.
+  morph marker. The part block and manifest counts must match 800 and 1,614.
 - **Evidence artefact:** a wave table checksum test, a spectral table and morph
   test, a cold-commit and crossfade-direction test, the schedule bench, an editor
   page snapshot, a `ctest` log, a pluginval log and the measured table/CPU figures.
@@ -184,7 +183,7 @@ stored spectra. The preview is not written on page open.
    node limits, the waveform range, the wave names, the preset version and the
    wavetable test are in. The Windows `ctest` run is 11 of 11, and the table test
    confirms the current waves byte for byte.
-2. **Spectral engine:** in. The 180 spectral parameters and the two range controls
+2. **Spectral engine:** in. The 64 levels per spectrum and the two range controls
    per operator, the bank, the spectrum mode 13, the morph, the envelope and the LFO
    are in. The 256-sample table reads with a
    24-bit phase fraction; the first pass used the 1024-sample shift and played the
@@ -193,14 +192,17 @@ stored spectra. The preview is not written on page open.
    once, and an audible part ramps from the old table to the new one over 256 ticks.
    `spectral_bench` measures about 9 µs per generated spectrum and under 100 µs
    worst for a block that changes all eight spectra.
-3. **Editor pages:** in. The two tabs, the six-tab bar, the bar editor, the group and
-   mask selectors, the select-group legend, the spring-loaded tilt, level and
-   formant controls, the selected-wave preview with the `from wave` badge, the first
-   A-card edit commit, the copy and paste, and the page index remap. The saw preview
-   snapshot is `editor-operator-spectra-saw.png`, and the mod display snapshot is
-   `editor-op-spectra-mod-saw.png`. The Linux goldens for the spectra page were
-   regenerated for the group and spring controls.
-4. **Library:** in. The part record carries the sixteen levels of both spectra, and
+3. **Editor pages:** in. The two spectrum tabs (`op spectra a` and `op spectra b`),
+   the seven-tab bar, the 64-bar editor, the group and mask selectors, the
+   select-group legend, the spring-loaded tilt, level and formant controls, the
+   selected-wave preview with the `from wave` badge, the first A-card edit commit,
+   the copy and paste, and the page index remap. The A and B tabs each carry four
+   wide rows and four control cards in a scroll view. The saw preview snapshot is
+   `editor-operator-spectra-saw.png`, the B page snapshot is
+   `editor-operator-spectra-b.png`, and the mod display snapshot is
+   `editor-op-spectra-mod-saw.png`. The Linux goldens were regenerated for the tab
+   bar and the 64-bar layout.
+4. **Library:** in. The part record carries the 64 levels of both spectra, and
    the `.p1lib` library packs the part bank and the multi bank in one file. A multi
    save materialises any part that has no slot, and an import rejects a used multi
    whose part reference is empty or out of range. `preset_smoke` checks the spectrum
@@ -209,14 +211,14 @@ stored spectra. The preview is not written on page open.
 
 ## Risks and fallback
 
-- **Range and aliasing:** the bank shifts the sixteen partials by the range offset,
+- **Range and aliasing:** the bank shifts the 64 partials by the range offset,
   but the read still chooses its mip from the note step. A high range at a high note
   can fold because the top partial passes Nyquist. The intended use is a high range
   on low notes. A range-aware harmonic limit in the read is the next refinement.
 - **Top range edge:** the bank table is 256 samples, so harmonic 128 sits exactly at
-  that table's Nyquist and comes out silent. The rest of the 113-128 range is
+  that table's Nyquist and comes out silent. The rest of the 65-128 range is
   representable. A 512-sample bank would close the last bar.
-- **Assumptions/open research:** the spectrum starting analysis is a sixteen
+- **Assumptions/open research:** the spectrum starting analysis is a 64
   harmonic truncation, so a saw or square is darker than its full-band table. The
   half and rectified shapes lose DC, and the transform drops phase.
 - **Safe experiment and stop criterion:** the wave table and the analysis table are

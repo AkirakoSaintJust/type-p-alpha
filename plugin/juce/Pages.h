@@ -357,7 +357,7 @@ std::unique_ptr<PageBase> makePatchPage(PluginEditor& editor);
 std::unique_ptr<PageBase> makeOperatorsPage(PluginEditor& editor);
 std::unique_ptr<PageBase> makeFxModPage(PluginEditor& editor);
 std::unique_ptr<PageBase> makeOperatorLfosPage(PluginEditor& editor);
-std::unique_ptr<PageBase> makeOperatorSpectraPage(PluginEditor& editor);
+std::unique_ptr<PageBase> makeOperatorSpectraPage(PluginEditor& editor, bool a);
 std::unique_ptr<PageBase> makeOperatorSpectraModPage(PluginEditor& editor);
 
 } // namespace p1::ui

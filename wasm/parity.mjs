@@ -30,12 +30,12 @@ if (typeof e.memory !== "object")
   fail("the module does not export memory");
 
 e.p1_create();
-if (e.p1_param_count() !== 846)
-  fail(`parameter count is ${e.p1_param_count()}, expected 846`);
+if (e.p1_param_count() !== 1614)
+  fail(`parameter count is ${e.p1_param_count()}, expected 1614`);
 
 function analysis(wave, first) {
   e.p1_analyze(wave, first);
-  return Array.from(new Int32Array(e.memory.buffer, e.p1_analysis(), 16));
+  return Array.from(new Int32Array(e.memory.buffer, e.p1_analysis(), 64));
 }
 const sine = analysis(0, 1);
 if (sine[0] < 90 || sine[1] > 5)
@@ -43,7 +43,7 @@ if (sine[0] < 90 || sine[1] > 5)
 const saw = analysis(12, 1);
 if (saw[0] < 80 || saw[1] < 20)
   fail(`the saw analysis is wrong: ${saw.slice(0, 3)}`);
-const sawHigh = analysis(12, 17);
+const sawHigh = analysis(12, 65);
 if (sawHigh[0] < 50)
   fail(`the high saw range is wrong: ${sawHigh.slice(0, 3)}`);
 
@@ -69,4 +69,4 @@ for (let i = 0; i < release.length; ++i) {
     fail(`release sample ${i}: ${release[i]} != ${reference.release[i]}`);
 }
 
-console.log("wasm: 846 parameters, note-on and release match the 48 kHz capture");
+console.log("wasm: 1614 parameters, note-on and release match the 48 kHz capture");

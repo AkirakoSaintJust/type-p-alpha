@@ -340,7 +340,7 @@ and the panel readouts.
 | `P1TabBar::paint` | Draw the tab baseline. |
 | `P1Scope` | Green scope widget. |
 | `P1Spectro` | Pink and purple spectrum widget. |
-| `P1SpectralBars` | Editable sixteen-harmonic bar editor for one spectrum. |
+| `P1SpectralBars` | Editable 64-harmonic bar editor for one spectrum. |
 | `P1SpectrumDisplay` | Two spectrum outlines, a faint phase-zero waveform and the morph marker. |
 | `P1Envelope` | Four-rate, three-level envelope curve. |
 | `P1Wave` | Waveform shape widget. |
@@ -353,13 +353,13 @@ and the panel readouts.
 | `P1Dialog` | Modal dialog with a body and wrapping buttons. |
 | `drawAlgorithmGraph` | Draw one of the eight routing graphs. |
 
-`plugin/juce/PagesSpectral.cpp` holds the `operator spectra` and `op spectra mod`
-pages. The spectra page pairs the scope and spectro with the oscillator and two
-sixteen-bar cards. The mod page shows the two spectra, a faint phase-zero waveform
+`plugin/juce/PagesSpectral.cpp` holds the `op spectra a`, `op spectra b` and
+`op spectra mod` pages. Each spectrum page has four wide 64-bar rows and four
+control cards in a scroll viewport below the operator and oscillator strip. The mod page shows the two spectra, a faint phase-zero waveform
 and the morph marker, followed by the morph envelope and the morph LFO.
 
 The tab bar has six pages: patch settings, part fx/mod, operator envs, operator
-lfos, operator spectra and op spectra mod. The processor writes `uiPageLayout` 2
+lfos, op spectra a, op spectra b and op spectra mod. The processor writes `uiPageLayout` 2
 with the page and remaps the old four-page order when it restores a state without
 that property.
 

@@ -216,6 +216,9 @@ private:
     juce::String rangeBID_;
     juce::Colour aColour_;
     juce::Colour bColour_;
+    std::array<double, 64> preview_{};
+    int previewWave_ = -1;
+    int previewFirst_ = 0;
 };
 
 class P1Envelope : public juce::Component {

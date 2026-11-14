@@ -72,7 +72,7 @@ the shared `wave` display reads the stored value. The LFO list is separate.
 
 ## Harmonic analysis
 
-The spectral pages analyse a wave from 0 to 12 into sixteen harmonic magnitudes. The
+The spectral pages analyse a wave from 0 to 12 into 64 harmonic magnitudes. The
 analysis reads the mip-0 table, drops DC, and scales the largest harmonic to 99.
 The result is a preview while the waveform is not `spectrum`, and the first edit
 commits it. The `spectrum` entry has no analysis. It uses the stored a and b

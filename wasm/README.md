@@ -49,7 +49,7 @@ install Playwright’s Chromium and run both without a channel.
 
 ## Panel
 
-`panel.html` is the full parameter panel. It loads `params.json`, builds the six
+`panel.html` is the full parameter panel. It loads `params.json`, builds the seven
 tabs from the manifest, and sends every knob through the worklet. The page uses
 the mockup’s CSS, extracted into `panel.css`. The header carries the algorithm
 graph, the output scope and spectro toggle, and the patch name. The toolbar
@@ -71,7 +71,7 @@ mockup's `type-p-alpha-library` name and slot arrays. The operator pages carry a
 copy and paste pair in each column header, and the operator scopes come from the
 engine tap buffers for the active part.
 
-The panel also carries the envelope graphs, the sixteen-bar spectrum editors, the
+The panel also carries the envelope graphs, the 64-bar spectrum editors, the
 `from wave` preview and the `op spectra mod` A/B display with the waveform overlay
 and morph marker. The first edit of a spectrum card or the first morph knob move
 commits the preview and switches the waveform to spectrum.
@@ -81,24 +81,23 @@ picks a harmonic series from all, odd, even, octave, or the third, fifth, sevent
 fifteenth, eleventh, thirteenth, ninth, twenty-first, nineteenth and seventeenth
 series. The bar labels show every harmonic in the range and mark the group members
 in green, and the legend names the group, the mask and the members in range. The
-tilt, level and formant controls are spring loaded: they write the sixteen levels
+tilt, level and formant controls are spring loaded: they write the 64 levels
 while held and return to centre on release. Tilt and level use the group and mask;
 formant uses the selected harmonic and ignores both. The group and mask are editor
-state, so a gesture only writes the existing `opN_spec_a1` to `a16` and `b1` to
-`b16` parameters of the `osc` node.
+state, so a gesture only writes the existing `opN_spec_a1` to `a64` and `b1` to
+`b64` parameters of the `osc` node.
 
 Every operator column carries its oscillator card on the operator envs, LFO,
 spectra and mod pages. The operator header carries the active and mute switch, and
 it shares its state with the toolbar mute box. Each operator sub-card has a copy
 and paste pair in its header, so a card copies across operators. The spectrum cards
-copy their sixteen levels for another operator, and the range card copies both
-ranges and the morph.
+copy their 64 levels for another operator, and each row carries its range.
 
 Open `http://localhost:8080/panel.html`. The root redirects there. The bare page
 remains at `http://localhost:8080/bare.html` for the smallest audio and parameter
 smoke test.
 
-The module is about 164 KB with no imports. It exports `memory` and the wrapper
+The module is about 205 KB with no imports. It exports `memory` and the wrapper
 functions. Memory is fixed at 32 MB, so the worklet does not need to refresh typed
 arrays during playback.
 
@@ -118,7 +117,7 @@ p1_analyze, p1_analysis
 
 `p1_output` returns `frames * 2` int32 samples. `p1_tap` returns one of the ten
 256-frame tap buffers for the scopes. `p1_analyze` turns one mip-0 wave table into
-sixteen normalized harmonic magnitudes for the `from wave` preview. The parameter
+64 normalized harmonic magnitudes for the `from wave` preview. The parameter
 ids are the engine ids in `engine/gen/params.json`.
 
 ## Next stage

@@ -1,8 +1,8 @@
 /* SPDX-License-Identifier: GPL-3.0-only
  * Copyright (C) 2026 P1Onken
  *
- * The per-operator additive bank. The bank holds two sixteen-harmonic spectra
- * for each part, five mip levels of 256 signed 16-bit samples, plus one shadow
+ * The per-operator additive bank. The bank holds two 64-harmonic spectra
+ * for each part, seven mip levels of 256 signed 16-bit samples, plus one shadow
  * spectrum for the 10 ms crossfade. The oscillator reads the a and b tables and
  * blends them with the per-voice morph; the bank is regenerated at the control
  * rate when a level changes.
@@ -12,18 +12,19 @@
  * without the crossfade, so a cold operator has the new spectrum before its
  * next note starts.
  *
- * The bank is one int16_t[8192] per operator. A 256-sample table is used for
- * every mip, and the levels carry 16, 8, 4, 2 and 1 harmonics.
+ * The bank is one int16_t[P1_SPEC_BANK] per operator. A 256-sample table is
+ * used for every mip, and the levels carry 64, 32, 16, 8, 4, 2 and 1 harmonics.
  */
 #pragma once
 #include <stdint.h>
 
 #define P1_SPEC_PARTS 2
+#define P1_SPEC_HARMONICS 64
 #define P1_SPEC_SIZE 256
-#define P1_SPEC_LEVELS 5
+#define P1_SPEC_LEVELS 7
 #define P1_SPEC_TABLE (P1_SPEC_LEVELS * P1_SPEC_SIZE)
 #define P1_SPEC_HEADER 128
-#define P1_SPEC_BANK 8192
+#define P1_SPEC_BANK 10880
 
 #define P1_SPEC_A(p) (P1_SPEC_HEADER + (p) * P1_SPEC_TABLE)
 #define P1_SPEC_B(p) \
@@ -59,15 +60,15 @@ static inline int32_t p1_spectral_morph(int32_t base, int32_t depth,
     return p1_spectral_clamp99(base + env_contrib + lfo);
 }
 
-/* One spectrum, all five mips, peak normalised to Q15. The levels are the
- * sixteen harmonic amplitudes in 0..99, starting at `firstHarmonic` (1, 17, ...,
- * 113). The range shifts every partial by the same offset. */
+/* One spectrum, all seven mips, peak normalised to Q15. The levels are the
+ * sixty-four harmonic amplitudes in 0..99, starting at `firstHarmonic` (1 or
+ * 65). The range shifts every partial by the same offset. */
 static inline void p1_spectral_table(int16_t *out, const int32_t *levels,
                                      int firstHarmonic)
 {
     int32_t raw[P1_SPEC_SIZE];
     for (int level = 0; level < P1_SPEC_LEVELS; ++level) {
-        const int harmonics = 16 >> level;
+        const int harmonics = P1_SPEC_HARMONICS >> level;
         int32_t peak = 0;
         for (int i = 0; i < P1_SPEC_SIZE; ++i) {
             int32_t sum = 0;
@@ -90,15 +91,15 @@ static inline void p1_spectral_table(int16_t *out, const int32_t *levels,
 
 static inline int p1_spectral_range_first(int32_t range)
 {
-    const int32_t r = range < 0 ? 0 : (range > 7 ? 7 : range);
-    return (int)r * 16 + 1;
+    const int32_t r = range < 0 ? 0 : (range > 1 ? 1 : range);
+    return (int)r * P1_SPEC_HARMONICS + 1;
 }
 
 static inline uint16_t p1_spectral_hash(const int32_t *levels,
                                         int firstHarmonic)
 {
     uint32_t h = (uint32_t)firstHarmonic & 0xffffu;
-    for (int i = 0; i < 16; ++i)
+    for (int i = 0; i < P1_SPEC_HARMONICS; ++i)
         h = (h * 31u + (uint32_t)levels[i]) & 0xffffu;
     return (uint16_t)h;
 }
@@ -121,12 +122,45 @@ static inline void p1_spectral_tick(
     const int32_t *a7, const int32_t *a8, const int32_t *a9,
     const int32_t *a10, const int32_t *a11, const int32_t *a12,
     const int32_t *a13, const int32_t *a14, const int32_t *a15,
-    const int32_t *a16, const int32_t *b1, const int32_t *b2,
-    const int32_t *b3, const int32_t *b4, const int32_t *b5,
-    const int32_t *b6, const int32_t *b7, const int32_t *b8,
-    const int32_t *b9, const int32_t *b10, const int32_t *b11,
-    const int32_t *b12, const int32_t *b13, const int32_t *b14,
-    const int32_t *b15, const int32_t *b16)
+    const int32_t *a16, const int32_t *a17, const int32_t *a18,
+    const int32_t *a19, const int32_t *a20, const int32_t *a21,
+    const int32_t *a22, const int32_t *a23, const int32_t *a24,
+    const int32_t *a25, const int32_t *a26, const int32_t *a27,
+    const int32_t *a28, const int32_t *a29, const int32_t *a30,
+    const int32_t *a31, const int32_t *a32, const int32_t *a33,
+    const int32_t *a34, const int32_t *a35, const int32_t *a36,
+    const int32_t *a37, const int32_t *a38, const int32_t *a39,
+    const int32_t *a40, const int32_t *a41, const int32_t *a42,
+    const int32_t *a43, const int32_t *a44, const int32_t *a45,
+    const int32_t *a46, const int32_t *a47, const int32_t *a48,
+    const int32_t *a49, const int32_t *a50, const int32_t *a51,
+    const int32_t *a52, const int32_t *a53, const int32_t *a54,
+    const int32_t *a55, const int32_t *a56, const int32_t *a57,
+    const int32_t *a58, const int32_t *a59, const int32_t *a60,
+    const int32_t *a61, const int32_t *a62, const int32_t *a63,
+    const int32_t *a64,
+    const int32_t *b1, const int32_t *b2, const int32_t *b3,
+    const int32_t *b4, const int32_t *b5, const int32_t *b6,
+    const int32_t *b7, const int32_t *b8, const int32_t *b9,
+    const int32_t *b10, const int32_t *b11, const int32_t *b12,
+    const int32_t *b13, const int32_t *b14, const int32_t *b15,
+    const int32_t *b16, const int32_t *b17, const int32_t *b18,
+    const int32_t *b19, const int32_t *b20, const int32_t *b21,
+    const int32_t *b22, const int32_t *b23, const int32_t *b24,
+    const int32_t *b25, const int32_t *b26, const int32_t *b27,
+    const int32_t *b28, const int32_t *b29, const int32_t *b30,
+    const int32_t *b31, const int32_t *b32, const int32_t *b33,
+    const int32_t *b34, const int32_t *b35, const int32_t *b36,
+    const int32_t *b37, const int32_t *b38, const int32_t *b39,
+    const int32_t *b40, const int32_t *b41, const int32_t *b42,
+    const int32_t *b43, const int32_t *b44, const int32_t *b45,
+    const int32_t *b46, const int32_t *b47, const int32_t *b48,
+    const int32_t *b49, const int32_t *b50, const int32_t *b51,
+    const int32_t *b52, const int32_t *b53, const int32_t *b54,
+    const int32_t *b55, const int32_t *b56, const int32_t *b57,
+    const int32_t *b58, const int32_t *b59, const int32_t *b60,
+    const int32_t *b61, const int32_t *b62, const int32_t *b63,
+    const int32_t *b64)
 {
     for (int part = 0; part < P1_SPEC_PARTS; ++part) {
         /* The oscillator sets this on every read. A clear flag means no voice
@@ -165,16 +199,24 @@ static inline void p1_spectral_tick(
             }
         }
 
-        const int32_t *const sets[2][16] = {
+        const int32_t *const sets[2][P1_SPEC_HARMONICS] = {
             {a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14,
-             a15, a16},
+             a15, a16, a17, a18, a19, a20, a21, a22, a23, a24, a25, a26,
+             a27, a28, a29, a30, a31, a32, a33, a34, a35, a36, a37, a38,
+             a39, a40, a41, a42, a43, a44, a45, a46, a47, a48, a49, a50,
+             a51, a52, a53, a54, a55, a56, a57, a58, a59, a60, a61, a62,
+             a63, a64},
             {b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14,
-             b15, b16}};
+             b15, b16, b17, b18, b19, b20, b21, b22, b23, b24, b25, b26,
+             b27, b28, b29, b30, b31, b32, b33, b34, b35, b36, b37, b38,
+             b39, b40, b41, b42, b43, b44, b45, b46, b47, b48, b49, b50,
+             b51, b52, b53, b54, b55, b56, b57, b58, b59, b60, b61, b62,
+             b63, b64}};
         const int first[2] = {p1_spectral_range_first(range_a[part]),
                               p1_spectral_range_first(range_b[part])};
         for (int spectrum = 0; spectrum < 2; ++spectrum) {
-            int32_t levels[16];
-            for (int i = 0; i < 16; ++i)
+            int32_t levels[P1_SPEC_HARMONICS];
+            for (int i = 0; i < P1_SPEC_HARMONICS; ++i)
                 levels[i] = sets[spectrum][i][part];
             const uint16_t hash = p1_spectral_hash(levels, first[spectrum]);
             const uint16_t committed = (uint16_t)bank[P1_SPEC_HASH +
@@ -202,7 +244,8 @@ static inline void p1_spectral_tick(
 
 /* The table is 256 samples, so the phase fraction is 24 bits. The 1024-sample
  * wave table uses 22 bits; using that shift here plays the table four times too
- * high. */
+ * high. The mip is the phasor's nine-level selector. Mips 0 to 2 keep all 64
+ * harmonics; mips 3 to 8 carry 32, 16, 8, 4, 2 and 1. */
 static inline int32_t p1_spectral_lerp(const int16_t *table, uint32_t phase)
 {
     const uint32_t index = phase >> 24;
@@ -218,18 +261,18 @@ static inline int32_t p1_spectral_blend(int32_t a, int32_t b, int32_t weight)
     return (a * (32768 - weight) + b * weight) >> 15;
 }
 
-/* Read the a and b tables at the mip and blend them with the morph. The mip
- * input is the phasor's nine-level selector: 0..4 use the 16-harmonic table,
- * 5 uses 8, 6 uses 4, 7 uses 2 and 8 uses 1. */
+/* Read the a and b tables at the mip and blend them with the morph. */
 static inline int32_t p1_spectral_read(int16_t *bank, int part,
                                        uint32_t phase, uint32_t mip,
                                        int32_t morph)
 {
     if (bank[P1_SPEC_USED + part] == 0)
         bank[P1_SPEC_USED + part] = 1;
-    const int level = mip > 8u ? 4 : (mip > 4u ? (int)(mip - 4u) : 0);
-    const int16_t *a = bank + P1_SPEC_A(part) + level * P1_SPEC_SIZE;
-    const int16_t *b = bank + P1_SPEC_B(part) + level * P1_SPEC_SIZE;
+    const int level = mip > 2u ? (int)(mip - 2u) : 0;
+    const int safeLevel = level > P1_SPEC_LEVELS - 1
+        ? P1_SPEC_LEVELS - 1 : level;
+    const int16_t *a = bank + P1_SPEC_A(part) + safeLevel * P1_SPEC_SIZE;
+    const int16_t *b = bank + P1_SPEC_B(part) + safeLevel * P1_SPEC_SIZE;
     int32_t av = p1_spectral_lerp(a, phase);
     int32_t bv = p1_spectral_lerp(b, phase);
 
@@ -237,7 +280,7 @@ static inline int32_t p1_spectral_read(int16_t *bank, int part,
     if (xfade > 0) {
         const int target = bank[P1_SPEC_TARGET + part];
         const int16_t *shadow =
-            bank + P1_SPEC_SHADOW(part) + level * P1_SPEC_SIZE;
+            bank + P1_SPEC_SHADOW(part) + safeLevel * P1_SPEC_SIZE;
         const int32_t sv = p1_spectral_lerp(shadow, phase);
         /* xfade counts down from 256, so the weight ramps from the old table
          * (0) to the shadow table (32640 at xfade 1). The tick copies the

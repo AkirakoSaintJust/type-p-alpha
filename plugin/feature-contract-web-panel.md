@@ -3,7 +3,7 @@
 ## Identity
 
 - **Feature:** A browser panel that drives the same generated C engine through a
-  narrow WebAssembly seam, with the mockup's CSS and six-tab layout, the two-part
+  narrow WebAssembly seam, with the mockup's CSS and seven-tab layout, the two-part
   patch page, the six-card FX page, the spectral editors, a patch and part library,
   and an output resampler for context rates other than 48 kHz.
 - **Brief section:** [`../design/README.md`](../design/README.md),
@@ -12,7 +12,7 @@
   [`../plugin/feature-contract-spectral.md`](feature-contract-spectral.md).
 - **Owner / date:** P1Onken, 2026-11-13.
 - **Disposition:** complete for the web target. The panel exposes every manifest
-  parameter across the six tabs. The browser smokes pass on the local build, and the
+  parameter across the seven tabs. The browser smokes pass on the local build, and the
   GitHub `wasm` job passed on commit `4ecbcb5` with both browser smokes.
 
 ## Player outcome
@@ -53,7 +53,7 @@
 
 The panel reads `engine/gen/params.json` at load. Every control writes the raw value
 of one manifest parameter through the worklet, and the worklet returns the engine's
-stored value. The page groups the 846 parameters as:
+stored value. The page groups the 1,614 parameters as:
 
 | Page | Controls |
 | --- | --- |
@@ -61,7 +61,8 @@ stored value. The page groups the 846 parameters as:
 | part fx/mod | 26 |
 | operator envs | 132 |
 | operator lfos | 68 |
-| operator spectra | 32 |
+| operator spectra a | 24 |
+| operator spectra b | 24 |
 | op spectra mod | 68 |
 
 The FX page keeps the six mockup cards. Filter cutoff, resonance, envelope amount,
@@ -120,9 +121,9 @@ and `error`.
   and one copy. The resampled path does one engine render, one linear interpolation
   per output sample and one array compaction per block. Taps are copied at the engine
   block size and posted every eight ring fills.
-- **Instance memory, CPU, preset size:** the module is 164,298 bytes with no imports
+- **Instance memory, CPU, preset size:** the module is 205,203 bytes with no imports
   and 32 MB of fixed memory. The part snapshot is one number per part parameter,
-  about 400 pairs. The library bound is 64 multis and 128 part slots.
+  about 800 pairs. The library bound is 64 multis and 128 part slots.
 - **Overflow/overload policy:** the resampler needs `ceil(frames * 48000 / rate) + 1`
   engine samples per block, which stays under the 4,096-frame seam buffer at 128- or
   256-frame blocks. The tap ring caps each copy at 512 samples. A full ring starts a
@@ -148,9 +149,9 @@ and `error`.
 
 - **Host vector(s):** the WASM parity gate renders note-on and release at 48 kHz and
   compares all 1,024 interleaved samples with the native capture. It also checks the
-  sine, saw and high-range analyses. The module reports 846 parameters.
+  sine, saw and high-range analyses. The module reports 1,614 parameters.
 - **Browser vector:** `web/smoke.mjs` drives the bare page and checks a level round
-  trip. `web/panel-smoke.mjs` drives the root redirect and checks the six tabs, the
+  trip. `web/panel-smoke.mjs` drives the root redirect and checks the seven tabs, the
   saw preview, the bar commit, the morph commit, the select group legend, the mask,
   the level, formant and tilt springs and their return to centre, the output and tap
   peaks, the algorithm round trip, the operator copy and paste, the operator mute
@@ -174,24 +175,24 @@ and `error`.
 
 ### Measured evidence
 
-1. **WASM parity:** 846 parameters, note-on and release match the 48 kHz capture,
+1. **WASM parity:** 1,614 parameters, note-on and release match the 48 kHz capture,
    the sine analysis passes with the first harmonic at least 90 and the second at
    most 5, the saw analysis passes with the first harmonic at least 80 and the
-   second at least 20, and the high range passes at 50 or more. Module size 164,298
+   second at least 20, and the high range passes at 50 or more. Module size 205,203
    bytes, no imports.
 2. **Bare smoke:** 48 kHz, scope peak 0.089, `op1_level.p0` round trip 42.
-3. **Panel smoke:** pages `patch:16 fx:26 envs:132 lfos:68 spectra:32 mod:68`,
+3. **Panel smoke:** pages `patch:16 fx:26 envs:132 lfos:68 spectra-a:24 spectra-b:24 mod:68`,
    preview `[99, 49, 33]`, bar value 74, morph 15, a card copy that copied the amp
    LFO rate to the second operator, a spectrum copy from op1 to op2, the `third P5`
-   legend with members 3, 6 and 12, a dead-mask level spring that set those three to
-   66 and left h4 at 0, a formant spring that set h5 to 66, a tilt spring that took
-   h3 from 93 to 85 and h12 from 66 to 34, every spring back at 0%, output peak
-   0.079, operator tap peak 0.078, route peak 0.078, algorithm 7, operator copy 75
+   legend with members 3, 6, 12, 24 and 48, a dead-mask level spring that set those
+   members to 66 and left h4 at 0, a formant spring that set h5 to 66, a tilt spring
+   that took h3 from 93 to 91 and h12 from 66 to 58, every spring back at 0%, output
+   peak 0.077, operator tap peak 0.078, route peak 0.078, algorithm 7, operator copy 75
    to 75, operator mute 1 with the toolbar box marked muted, part two rebuilt, six FX
    cards with two follow cards, four oscillator cards on each operator page, the
    multi save materialising both parts (2 part slots), the spectrum h3 at 85 after
    the reload, patch name `smoke patch`, persisted name and slots after reload,
-   44.1 kHz context with the resampler and a peak of 0.0861.
+   44.1 kHz context with the resampler and a peak of 0.0865.
 4. **Release evidence:** the GitHub `wasm` job passed with the bare and panel
    smokes on Chromium. The release package and its binaries remain.
 
@@ -201,7 +202,7 @@ and `error`.
   high-frequency roll-off and some aliasing above 20 kHz. The intended quality is the
   48 kHz path. A windowed-sinc resampler is the refinement if a listening test asks
   for it.
-- **Top range edge:** the panel shows the same 113-128 limit as the native editor.
+- **Top range edge:** the panel shows the same 65-128 limit as the native editor, and harmonic 128 is silent in the 256-sample table.
 - **Assumptions/open research:** the browser library is JSON, not the plugin's
   `.p1lib` bank. The export/import shape is the mockup's JSON, so the browser and the
   plugin do not share files yet.

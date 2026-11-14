@@ -291,6 +291,54 @@ typedef struct type_p_alpha_state {
     int32_t op1_osc_spec_a14[2];
     int32_t op1_osc_spec_a15[2];
     int32_t op1_osc_spec_a16[2];
+    int32_t op1_osc_spec_a17[2];
+    int32_t op1_osc_spec_a18[2];
+    int32_t op1_osc_spec_a19[2];
+    int32_t op1_osc_spec_a20[2];
+    int32_t op1_osc_spec_a21[2];
+    int32_t op1_osc_spec_a22[2];
+    int32_t op1_osc_spec_a23[2];
+    int32_t op1_osc_spec_a24[2];
+    int32_t op1_osc_spec_a25[2];
+    int32_t op1_osc_spec_a26[2];
+    int32_t op1_osc_spec_a27[2];
+    int32_t op1_osc_spec_a28[2];
+    int32_t op1_osc_spec_a29[2];
+    int32_t op1_osc_spec_a30[2];
+    int32_t op1_osc_spec_a31[2];
+    int32_t op1_osc_spec_a32[2];
+    int32_t op1_osc_spec_a33[2];
+    int32_t op1_osc_spec_a34[2];
+    int32_t op1_osc_spec_a35[2];
+    int32_t op1_osc_spec_a36[2];
+    int32_t op1_osc_spec_a37[2];
+    int32_t op1_osc_spec_a38[2];
+    int32_t op1_osc_spec_a39[2];
+    int32_t op1_osc_spec_a40[2];
+    int32_t op1_osc_spec_a41[2];
+    int32_t op1_osc_spec_a42[2];
+    int32_t op1_osc_spec_a43[2];
+    int32_t op1_osc_spec_a44[2];
+    int32_t op1_osc_spec_a45[2];
+    int32_t op1_osc_spec_a46[2];
+    int32_t op1_osc_spec_a47[2];
+    int32_t op1_osc_spec_a48[2];
+    int32_t op1_osc_spec_a49[2];
+    int32_t op1_osc_spec_a50[2];
+    int32_t op1_osc_spec_a51[2];
+    int32_t op1_osc_spec_a52[2];
+    int32_t op1_osc_spec_a53[2];
+    int32_t op1_osc_spec_a54[2];
+    int32_t op1_osc_spec_a55[2];
+    int32_t op1_osc_spec_a56[2];
+    int32_t op1_osc_spec_a57[2];
+    int32_t op1_osc_spec_a58[2];
+    int32_t op1_osc_spec_a59[2];
+    int32_t op1_osc_spec_a60[2];
+    int32_t op1_osc_spec_a61[2];
+    int32_t op1_osc_spec_a62[2];
+    int32_t op1_osc_spec_a63[2];
+    int32_t op1_osc_spec_a64[2];
     int32_t op1_osc_spec_b1[2];
     int32_t op1_osc_spec_b2[2];
     int32_t op1_osc_spec_b3[2];
@@ -307,6 +355,54 @@ typedef struct type_p_alpha_state {
     int32_t op1_osc_spec_b14[2];
     int32_t op1_osc_spec_b15[2];
     int32_t op1_osc_spec_b16[2];
+    int32_t op1_osc_spec_b17[2];
+    int32_t op1_osc_spec_b18[2];
+    int32_t op1_osc_spec_b19[2];
+    int32_t op1_osc_spec_b20[2];
+    int32_t op1_osc_spec_b21[2];
+    int32_t op1_osc_spec_b22[2];
+    int32_t op1_osc_spec_b23[2];
+    int32_t op1_osc_spec_b24[2];
+    int32_t op1_osc_spec_b25[2];
+    int32_t op1_osc_spec_b26[2];
+    int32_t op1_osc_spec_b27[2];
+    int32_t op1_osc_spec_b28[2];
+    int32_t op1_osc_spec_b29[2];
+    int32_t op1_osc_spec_b30[2];
+    int32_t op1_osc_spec_b31[2];
+    int32_t op1_osc_spec_b32[2];
+    int32_t op1_osc_spec_b33[2];
+    int32_t op1_osc_spec_b34[2];
+    int32_t op1_osc_spec_b35[2];
+    int32_t op1_osc_spec_b36[2];
+    int32_t op1_osc_spec_b37[2];
+    int32_t op1_osc_spec_b38[2];
+    int32_t op1_osc_spec_b39[2];
+    int32_t op1_osc_spec_b40[2];
+    int32_t op1_osc_spec_b41[2];
+    int32_t op1_osc_spec_b42[2];
+    int32_t op1_osc_spec_b43[2];
+    int32_t op1_osc_spec_b44[2];
+    int32_t op1_osc_spec_b45[2];
+    int32_t op1_osc_spec_b46[2];
+    int32_t op1_osc_spec_b47[2];
+    int32_t op1_osc_spec_b48[2];
+    int32_t op1_osc_spec_b49[2];
+    int32_t op1_osc_spec_b50[2];
+    int32_t op1_osc_spec_b51[2];
+    int32_t op1_osc_spec_b52[2];
+    int32_t op1_osc_spec_b53[2];
+    int32_t op1_osc_spec_b54[2];
+    int32_t op1_osc_spec_b55[2];
+    int32_t op1_osc_spec_b56[2];
+    int32_t op1_osc_spec_b57[2];
+    int32_t op1_osc_spec_b58[2];
+    int32_t op1_osc_spec_b59[2];
+    int32_t op1_osc_spec_b60[2];
+    int32_t op1_osc_spec_b61[2];
+    int32_t op1_osc_spec_b62[2];
+    int32_t op1_osc_spec_b63[2];
+    int32_t op1_osc_spec_b64[2];
     int32_t op1_osc_spec_morph[2];
     int32_t op1_osc_spec_env_depth[2];
     int32_t op1_eg_r1[2];
@@ -384,6 +480,54 @@ typedef struct type_p_alpha_state {
     int32_t op2_osc_spec_a14[2];
     int32_t op2_osc_spec_a15[2];
     int32_t op2_osc_spec_a16[2];
+    int32_t op2_osc_spec_a17[2];
+    int32_t op2_osc_spec_a18[2];
+    int32_t op2_osc_spec_a19[2];
+    int32_t op2_osc_spec_a20[2];
+    int32_t op2_osc_spec_a21[2];
+    int32_t op2_osc_spec_a22[2];
+    int32_t op2_osc_spec_a23[2];
+    int32_t op2_osc_spec_a24[2];
+    int32_t op2_osc_spec_a25[2];
+    int32_t op2_osc_spec_a26[2];
+    int32_t op2_osc_spec_a27[2];
+    int32_t op2_osc_spec_a28[2];
+    int32_t op2_osc_spec_a29[2];
+    int32_t op2_osc_spec_a30[2];
+    int32_t op2_osc_spec_a31[2];
+    int32_t op2_osc_spec_a32[2];
+    int32_t op2_osc_spec_a33[2];
+    int32_t op2_osc_spec_a34[2];
+    int32_t op2_osc_spec_a35[2];
+    int32_t op2_osc_spec_a36[2];
+    int32_t op2_osc_spec_a37[2];
+    int32_t op2_osc_spec_a38[2];
+    int32_t op2_osc_spec_a39[2];
+    int32_t op2_osc_spec_a40[2];
+    int32_t op2_osc_spec_a41[2];
+    int32_t op2_osc_spec_a42[2];
+    int32_t op2_osc_spec_a43[2];
+    int32_t op2_osc_spec_a44[2];
+    int32_t op2_osc_spec_a45[2];
+    int32_t op2_osc_spec_a46[2];
+    int32_t op2_osc_spec_a47[2];
+    int32_t op2_osc_spec_a48[2];
+    int32_t op2_osc_spec_a49[2];
+    int32_t op2_osc_spec_a50[2];
+    int32_t op2_osc_spec_a51[2];
+    int32_t op2_osc_spec_a52[2];
+    int32_t op2_osc_spec_a53[2];
+    int32_t op2_osc_spec_a54[2];
+    int32_t op2_osc_spec_a55[2];
+    int32_t op2_osc_spec_a56[2];
+    int32_t op2_osc_spec_a57[2];
+    int32_t op2_osc_spec_a58[2];
+    int32_t op2_osc_spec_a59[2];
+    int32_t op2_osc_spec_a60[2];
+    int32_t op2_osc_spec_a61[2];
+    int32_t op2_osc_spec_a62[2];
+    int32_t op2_osc_spec_a63[2];
+    int32_t op2_osc_spec_a64[2];
     int32_t op2_osc_spec_b1[2];
     int32_t op2_osc_spec_b2[2];
     int32_t op2_osc_spec_b3[2];
@@ -400,6 +544,54 @@ typedef struct type_p_alpha_state {
     int32_t op2_osc_spec_b14[2];
     int32_t op2_osc_spec_b15[2];
     int32_t op2_osc_spec_b16[2];
+    int32_t op2_osc_spec_b17[2];
+    int32_t op2_osc_spec_b18[2];
+    int32_t op2_osc_spec_b19[2];
+    int32_t op2_osc_spec_b20[2];
+    int32_t op2_osc_spec_b21[2];
+    int32_t op2_osc_spec_b22[2];
+    int32_t op2_osc_spec_b23[2];
+    int32_t op2_osc_spec_b24[2];
+    int32_t op2_osc_spec_b25[2];
+    int32_t op2_osc_spec_b26[2];
+    int32_t op2_osc_spec_b27[2];
+    int32_t op2_osc_spec_b28[2];
+    int32_t op2_osc_spec_b29[2];
+    int32_t op2_osc_spec_b30[2];
+    int32_t op2_osc_spec_b31[2];
+    int32_t op2_osc_spec_b32[2];
+    int32_t op2_osc_spec_b33[2];
+    int32_t op2_osc_spec_b34[2];
+    int32_t op2_osc_spec_b35[2];
+    int32_t op2_osc_spec_b36[2];
+    int32_t op2_osc_spec_b37[2];
+    int32_t op2_osc_spec_b38[2];
+    int32_t op2_osc_spec_b39[2];
+    int32_t op2_osc_spec_b40[2];
+    int32_t op2_osc_spec_b41[2];
+    int32_t op2_osc_spec_b42[2];
+    int32_t op2_osc_spec_b43[2];
+    int32_t op2_osc_spec_b44[2];
+    int32_t op2_osc_spec_b45[2];
+    int32_t op2_osc_spec_b46[2];
+    int32_t op2_osc_spec_b47[2];
+    int32_t op2_osc_spec_b48[2];
+    int32_t op2_osc_spec_b49[2];
+    int32_t op2_osc_spec_b50[2];
+    int32_t op2_osc_spec_b51[2];
+    int32_t op2_osc_spec_b52[2];
+    int32_t op2_osc_spec_b53[2];
+    int32_t op2_osc_spec_b54[2];
+    int32_t op2_osc_spec_b55[2];
+    int32_t op2_osc_spec_b56[2];
+    int32_t op2_osc_spec_b57[2];
+    int32_t op2_osc_spec_b58[2];
+    int32_t op2_osc_spec_b59[2];
+    int32_t op2_osc_spec_b60[2];
+    int32_t op2_osc_spec_b61[2];
+    int32_t op2_osc_spec_b62[2];
+    int32_t op2_osc_spec_b63[2];
+    int32_t op2_osc_spec_b64[2];
     int32_t op2_osc_spec_morph[2];
     int32_t op2_osc_spec_env_depth[2];
     int32_t op2_eg_r1[2];
@@ -477,6 +669,54 @@ typedef struct type_p_alpha_state {
     int32_t op3_osc_spec_a14[2];
     int32_t op3_osc_spec_a15[2];
     int32_t op3_osc_spec_a16[2];
+    int32_t op3_osc_spec_a17[2];
+    int32_t op3_osc_spec_a18[2];
+    int32_t op3_osc_spec_a19[2];
+    int32_t op3_osc_spec_a20[2];
+    int32_t op3_osc_spec_a21[2];
+    int32_t op3_osc_spec_a22[2];
+    int32_t op3_osc_spec_a23[2];
+    int32_t op3_osc_spec_a24[2];
+    int32_t op3_osc_spec_a25[2];
+    int32_t op3_osc_spec_a26[2];
+    int32_t op3_osc_spec_a27[2];
+    int32_t op3_osc_spec_a28[2];
+    int32_t op3_osc_spec_a29[2];
+    int32_t op3_osc_spec_a30[2];
+    int32_t op3_osc_spec_a31[2];
+    int32_t op3_osc_spec_a32[2];
+    int32_t op3_osc_spec_a33[2];
+    int32_t op3_osc_spec_a34[2];
+    int32_t op3_osc_spec_a35[2];
+    int32_t op3_osc_spec_a36[2];
+    int32_t op3_osc_spec_a37[2];
+    int32_t op3_osc_spec_a38[2];
+    int32_t op3_osc_spec_a39[2];
+    int32_t op3_osc_spec_a40[2];
+    int32_t op3_osc_spec_a41[2];
+    int32_t op3_osc_spec_a42[2];
+    int32_t op3_osc_spec_a43[2];
+    int32_t op3_osc_spec_a44[2];
+    int32_t op3_osc_spec_a45[2];
+    int32_t op3_osc_spec_a46[2];
+    int32_t op3_osc_spec_a47[2];
+    int32_t op3_osc_spec_a48[2];
+    int32_t op3_osc_spec_a49[2];
+    int32_t op3_osc_spec_a50[2];
+    int32_t op3_osc_spec_a51[2];
+    int32_t op3_osc_spec_a52[2];
+    int32_t op3_osc_spec_a53[2];
+    int32_t op3_osc_spec_a54[2];
+    int32_t op3_osc_spec_a55[2];
+    int32_t op3_osc_spec_a56[2];
+    int32_t op3_osc_spec_a57[2];
+    int32_t op3_osc_spec_a58[2];
+    int32_t op3_osc_spec_a59[2];
+    int32_t op3_osc_spec_a60[2];
+    int32_t op3_osc_spec_a61[2];
+    int32_t op3_osc_spec_a62[2];
+    int32_t op3_osc_spec_a63[2];
+    int32_t op3_osc_spec_a64[2];
     int32_t op3_osc_spec_b1[2];
     int32_t op3_osc_spec_b2[2];
     int32_t op3_osc_spec_b3[2];
@@ -493,6 +733,54 @@ typedef struct type_p_alpha_state {
     int32_t op3_osc_spec_b14[2];
     int32_t op3_osc_spec_b15[2];
     int32_t op3_osc_spec_b16[2];
+    int32_t op3_osc_spec_b17[2];
+    int32_t op3_osc_spec_b18[2];
+    int32_t op3_osc_spec_b19[2];
+    int32_t op3_osc_spec_b20[2];
+    int32_t op3_osc_spec_b21[2];
+    int32_t op3_osc_spec_b22[2];
+    int32_t op3_osc_spec_b23[2];
+    int32_t op3_osc_spec_b24[2];
+    int32_t op3_osc_spec_b25[2];
+    int32_t op3_osc_spec_b26[2];
+    int32_t op3_osc_spec_b27[2];
+    int32_t op3_osc_spec_b28[2];
+    int32_t op3_osc_spec_b29[2];
+    int32_t op3_osc_spec_b30[2];
+    int32_t op3_osc_spec_b31[2];
+    int32_t op3_osc_spec_b32[2];
+    int32_t op3_osc_spec_b33[2];
+    int32_t op3_osc_spec_b34[2];
+    int32_t op3_osc_spec_b35[2];
+    int32_t op3_osc_spec_b36[2];
+    int32_t op3_osc_spec_b37[2];
+    int32_t op3_osc_spec_b38[2];
+    int32_t op3_osc_spec_b39[2];
+    int32_t op3_osc_spec_b40[2];
+    int32_t op3_osc_spec_b41[2];
+    int32_t op3_osc_spec_b42[2];
+    int32_t op3_osc_spec_b43[2];
+    int32_t op3_osc_spec_b44[2];
+    int32_t op3_osc_spec_b45[2];
+    int32_t op3_osc_spec_b46[2];
+    int32_t op3_osc_spec_b47[2];
+    int32_t op3_osc_spec_b48[2];
+    int32_t op3_osc_spec_b49[2];
+    int32_t op3_osc_spec_b50[2];
+    int32_t op3_osc_spec_b51[2];
+    int32_t op3_osc_spec_b52[2];
+    int32_t op3_osc_spec_b53[2];
+    int32_t op3_osc_spec_b54[2];
+    int32_t op3_osc_spec_b55[2];
+    int32_t op3_osc_spec_b56[2];
+    int32_t op3_osc_spec_b57[2];
+    int32_t op3_osc_spec_b58[2];
+    int32_t op3_osc_spec_b59[2];
+    int32_t op3_osc_spec_b60[2];
+    int32_t op3_osc_spec_b61[2];
+    int32_t op3_osc_spec_b62[2];
+    int32_t op3_osc_spec_b63[2];
+    int32_t op3_osc_spec_b64[2];
     int32_t op3_osc_spec_morph[2];
     int32_t op3_osc_spec_env_depth[2];
     int32_t op3_eg_r1[2];
@@ -570,6 +858,54 @@ typedef struct type_p_alpha_state {
     int32_t op4_osc_spec_a14[2];
     int32_t op4_osc_spec_a15[2];
     int32_t op4_osc_spec_a16[2];
+    int32_t op4_osc_spec_a17[2];
+    int32_t op4_osc_spec_a18[2];
+    int32_t op4_osc_spec_a19[2];
+    int32_t op4_osc_spec_a20[2];
+    int32_t op4_osc_spec_a21[2];
+    int32_t op4_osc_spec_a22[2];
+    int32_t op4_osc_spec_a23[2];
+    int32_t op4_osc_spec_a24[2];
+    int32_t op4_osc_spec_a25[2];
+    int32_t op4_osc_spec_a26[2];
+    int32_t op4_osc_spec_a27[2];
+    int32_t op4_osc_spec_a28[2];
+    int32_t op4_osc_spec_a29[2];
+    int32_t op4_osc_spec_a30[2];
+    int32_t op4_osc_spec_a31[2];
+    int32_t op4_osc_spec_a32[2];
+    int32_t op4_osc_spec_a33[2];
+    int32_t op4_osc_spec_a34[2];
+    int32_t op4_osc_spec_a35[2];
+    int32_t op4_osc_spec_a36[2];
+    int32_t op4_osc_spec_a37[2];
+    int32_t op4_osc_spec_a38[2];
+    int32_t op4_osc_spec_a39[2];
+    int32_t op4_osc_spec_a40[2];
+    int32_t op4_osc_spec_a41[2];
+    int32_t op4_osc_spec_a42[2];
+    int32_t op4_osc_spec_a43[2];
+    int32_t op4_osc_spec_a44[2];
+    int32_t op4_osc_spec_a45[2];
+    int32_t op4_osc_spec_a46[2];
+    int32_t op4_osc_spec_a47[2];
+    int32_t op4_osc_spec_a48[2];
+    int32_t op4_osc_spec_a49[2];
+    int32_t op4_osc_spec_a50[2];
+    int32_t op4_osc_spec_a51[2];
+    int32_t op4_osc_spec_a52[2];
+    int32_t op4_osc_spec_a53[2];
+    int32_t op4_osc_spec_a54[2];
+    int32_t op4_osc_spec_a55[2];
+    int32_t op4_osc_spec_a56[2];
+    int32_t op4_osc_spec_a57[2];
+    int32_t op4_osc_spec_a58[2];
+    int32_t op4_osc_spec_a59[2];
+    int32_t op4_osc_spec_a60[2];
+    int32_t op4_osc_spec_a61[2];
+    int32_t op4_osc_spec_a62[2];
+    int32_t op4_osc_spec_a63[2];
+    int32_t op4_osc_spec_a64[2];
     int32_t op4_osc_spec_b1[2];
     int32_t op4_osc_spec_b2[2];
     int32_t op4_osc_spec_b3[2];
@@ -586,6 +922,54 @@ typedef struct type_p_alpha_state {
     int32_t op4_osc_spec_b14[2];
     int32_t op4_osc_spec_b15[2];
     int32_t op4_osc_spec_b16[2];
+    int32_t op4_osc_spec_b17[2];
+    int32_t op4_osc_spec_b18[2];
+    int32_t op4_osc_spec_b19[2];
+    int32_t op4_osc_spec_b20[2];
+    int32_t op4_osc_spec_b21[2];
+    int32_t op4_osc_spec_b22[2];
+    int32_t op4_osc_spec_b23[2];
+    int32_t op4_osc_spec_b24[2];
+    int32_t op4_osc_spec_b25[2];
+    int32_t op4_osc_spec_b26[2];
+    int32_t op4_osc_spec_b27[2];
+    int32_t op4_osc_spec_b28[2];
+    int32_t op4_osc_spec_b29[2];
+    int32_t op4_osc_spec_b30[2];
+    int32_t op4_osc_spec_b31[2];
+    int32_t op4_osc_spec_b32[2];
+    int32_t op4_osc_spec_b33[2];
+    int32_t op4_osc_spec_b34[2];
+    int32_t op4_osc_spec_b35[2];
+    int32_t op4_osc_spec_b36[2];
+    int32_t op4_osc_spec_b37[2];
+    int32_t op4_osc_spec_b38[2];
+    int32_t op4_osc_spec_b39[2];
+    int32_t op4_osc_spec_b40[2];
+    int32_t op4_osc_spec_b41[2];
+    int32_t op4_osc_spec_b42[2];
+    int32_t op4_osc_spec_b43[2];
+    int32_t op4_osc_spec_b44[2];
+    int32_t op4_osc_spec_b45[2];
+    int32_t op4_osc_spec_b46[2];
+    int32_t op4_osc_spec_b47[2];
+    int32_t op4_osc_spec_b48[2];
+    int32_t op4_osc_spec_b49[2];
+    int32_t op4_osc_spec_b50[2];
+    int32_t op4_osc_spec_b51[2];
+    int32_t op4_osc_spec_b52[2];
+    int32_t op4_osc_spec_b53[2];
+    int32_t op4_osc_spec_b54[2];
+    int32_t op4_osc_spec_b55[2];
+    int32_t op4_osc_spec_b56[2];
+    int32_t op4_osc_spec_b57[2];
+    int32_t op4_osc_spec_b58[2];
+    int32_t op4_osc_spec_b59[2];
+    int32_t op4_osc_spec_b60[2];
+    int32_t op4_osc_spec_b61[2];
+    int32_t op4_osc_spec_b62[2];
+    int32_t op4_osc_spec_b63[2];
+    int32_t op4_osc_spec_b64[2];
     int32_t op4_osc_spec_morph[2];
     int32_t op4_osc_spec_env_depth[2];
     int32_t op4_eg_r1[2];
@@ -774,10 +1158,10 @@ typedef struct type_p_alpha_state {
     int32_t type_p_alpha_render_bus1[CONTROL_BLOCK];
     int32_t type_p_alpha_tap0[N_TAP_CH][DSP_TAP_FRAMES];
     int32_t type_p_alpha_tap1[N_TAP_CH][DSP_TAP_FRAMES];
-    int16_t op1_osc_bank[8192];
-    int16_t op2_osc_bank[8192];
-    int16_t op3_osc_bank[8192];
-    int16_t op4_osc_bank[8192];
+    int16_t op1_osc_bank[10880];
+    int16_t op2_osc_bank[10880];
+    int16_t op3_osc_bank[10880];
+    int16_t op4_osc_bank[10880];
     uint16_t voice_rel[NVOICE];
     uint8_t voice_gate[NVOICE];
     uint8_t voice_note[NVOICE];
@@ -795,16 +1179,16 @@ static inline __attribute__((always_inline)) uint32_t note_to_inc(uint32_t note)
     return note_inc_c9[note % 12u] >> (10u - note / 12u);
 }
 
-#define PARAM_COUNT 846
+#define PARAM_COUNT 1614
 
 typedef struct { uint32_t id; const char *name; int32_t min, max, def;
                  uint8_t curve; uint8_t rate; const char *unit; } dsp_param;
-const dsp_param type_p_alpha_dsp_params[846] = {
+const dsp_param type_p_alpha_dsp_params[1614] = {
     { 0u, "op1_ratio.p0", 32768, 1048576, 65536, 0u, 0u, "" },
     { 1u, "op1_detune.p0", -50, 50, 0, 0u, 0u, "" },
     { 2u, "op1_waveform.p0", 0, 13, 0, 0u, 0u, "" },
-    { 3u, "op1_spec_range_a.p0", 0, 7, 0, 0u, 0u, "" },
-    { 4u, "op1_spec_range_b.p0", 0, 7, 0, 0u, 0u, "" },
+    { 3u, "op1_spec_range_a.p0", 0, 1, 0, 0u, 0u, "" },
+    { 4u, "op1_spec_range_b.p0", 0, 1, 0, 0u, 0u, "" },
     { 5u, "op1_spec_a1.p0", 0, 99, 99, 0u, 0u, "" },
     { 6u, "op1_spec_a2.p0", 0, 99, 0, 0u, 0u, "" },
     { 7u, "op1_spec_a3.p0", 0, 99, 0, 0u, 0u, "" },
@@ -821,834 +1205,1602 @@ const dsp_param type_p_alpha_dsp_params[846] = {
     { 18u, "op1_spec_a14.p0", 0, 99, 0, 0u, 0u, "" },
     { 19u, "op1_spec_a15.p0", 0, 99, 0, 0u, 0u, "" },
     { 20u, "op1_spec_a16.p0", 0, 99, 0, 0u, 0u, "" },
-    { 21u, "op1_spec_b1.p0", 0, 99, 99, 0u, 0u, "" },
-    { 22u, "op1_spec_b2.p0", 0, 99, 45, 0u, 0u, "" },
-    { 23u, "op1_spec_b3.p0", 0, 99, 30, 0u, 0u, "" },
-    { 24u, "op1_spec_b4.p0", 0, 99, 15, 0u, 0u, "" },
-    { 25u, "op1_spec_b5.p0", 0, 99, 55, 0u, 0u, "" },
-    { 26u, "op1_spec_b6.p0", 0, 99, 40, 0u, 0u, "" },
-    { 27u, "op1_spec_b7.p0", 0, 99, 25, 0u, 0u, "" },
-    { 28u, "op1_spec_b8.p0", 0, 99, 12, 0u, 0u, "" },
-    { 29u, "op1_spec_b9.p0", 0, 99, 8, 0u, 0u, "" },
-    { 30u, "op1_spec_b10.p0", 0, 99, 5, 0u, 0u, "" },
-    { 31u, "op1_spec_b11.p0", 0, 99, 3, 0u, 0u, "" },
-    { 32u, "op1_spec_b12.p0", 0, 99, 2, 0u, 0u, "" },
-    { 33u, "op1_spec_b13.p0", 0, 99, 1, 0u, 0u, "" },
-    { 34u, "op1_spec_b14.p0", 0, 99, 0, 0u, 0u, "" },
-    { 35u, "op1_spec_b15.p0", 0, 99, 0, 0u, 0u, "" },
-    { 36u, "op1_spec_b16.p0", 0, 99, 0, 0u, 0u, "" },
-    { 37u, "op1_spec_morph.p0", 0, 99, 0, 0u, 0u, "" },
-    { 38u, "op1_spec_env_depth.p0", -99, 99, 0, 0u, 0u, "" },
-    { 39u, "attack.p0", 0, 99, 80, 0u, 0u, "" },
-    { 40u, "op1.eg.r2.p0", 0, 99, 60, 0u, 0u, "" },
-    { 41u, "op1.eg.r3.p0", 0, 99, 50, 0u, 0u, "" },
-    { 42u, "release.p0", 0, 99, 80, 0u, 0u, "" },
-    { 43u, "op1.eg.l1.p0", 0, 99, 99, 0u, 0u, "" },
-    { 44u, "op1.eg.l2.p0", 0, 99, 93, 0u, 0u, "" },
-    { 45u, "op1.eg.l3.p0", 0, 99, 87, 0u, 0u, "" },
-    { 46u, "op1_trem_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
-    { 47u, "op1_trem_depth.p0", -99, 99, 0, 0u, 0u, "" },
-    { 48u, "op1_trem_wave.p0", 0, 11, 0, 0u, 0u, "" },
-    { 49u, "op1_trem_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 50u, "op1_fbenv_on.p0", 0, 1, 1, 0u, 0u, "" },
-    { 51u, "op1_fbenv_r1.p0", 0, 99, 80, 0u, 0u, "" },
-    { 52u, "op1_fbenv_r2.p0", 0, 99, 60, 0u, 0u, "" },
-    { 53u, "op1_fbenv_r3.p0", 0, 99, 50, 0u, 0u, "" },
-    { 54u, "op1_fbenv_r4.p0", 0, 99, 80, 0u, 0u, "" },
-    { 55u, "op1_fbenv_l1.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 56u, "op1_fbenv_l2.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 57u, "op1_fbenv_l3.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 58u, "op1_fbenv_l4.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 59u, "op1_fblfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
-    { 60u, "op1_fblfo_depth.p0", -32767, 32767, 0, 0u, 0u, "" },
-    { 61u, "op1_fblfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
-    { 62u, "op1_fblfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 63u, "op1_dlfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
-    { 64u, "op1_dlfo_depth.p0", -32768, 32768, 0, 0u, 0u, "" },
-    { 65u, "op1_dlfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
-    { 66u, "op1_dlfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 67u, "op1.velamp.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 68u, "op1.velfm.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 69u, "op1.velrate.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 70u, "op1_level.p0", 0, 99, 75, 0u, 0u, "" },
-    { 71u, "op1_feedback.p0", -32767, 32767, 0, 0u, 0u, "" },
-    { 72u, "op1_level_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
-    { 73u, "op1_level_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
-    { 74u, "op1_fb_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
-    { 75u, "op1_fb_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
-    { 76u, "op1_aenv_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
-    { 77u, "op1_aenv_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
-    { 78u, "op1_level_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 79u, "op1_fb_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 80u, "op1_aenv_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 81u, "op1_mute.p0", 0, 1, 0, 0u, 0u, "" },
-    { 82u, "op1_spec_env_r1.p0", 0, 99, 80, 0u, 0u, "" },
-    { 83u, "op1_spec_env_r2.p0", 0, 99, 60, 0u, 0u, "" },
-    { 84u, "op1_spec_env_r3.p0", 0, 99, 50, 0u, 0u, "" },
-    { 85u, "op1_spec_env_r4.p0", 0, 99, 80, 0u, 0u, "" },
-    { 86u, "op1_spec_env_l1.p0", 0, 99, 99, 0u, 0u, "" },
-    { 87u, "op1_spec_env_l2.p0", 0, 99, 60, 0u, 0u, "" },
-    { 88u, "op1_spec_env_l3.p0", 0, 99, 0, 0u, 0u, "" },
-    { 89u, "op1_spec_lfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
-    { 90u, "op1_spec_lfo_depth.p0", -99, 99, 0, 0u, 0u, "" },
-    { 91u, "op1_spec_lfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
-    { 92u, "op1_spec_lfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 93u, "op2_ratio.p0", 32768, 1048576, 65536, 0u, 0u, "" },
-    { 94u, "op2_detune.p0", -50, 50, 0, 0u, 0u, "" },
-    { 95u, "op2_waveform.p0", 0, 13, 0, 0u, 0u, "" },
-    { 96u, "op2_spec_range_a.p0", 0, 7, 0, 0u, 0u, "" },
-    { 97u, "op2_spec_range_b.p0", 0, 7, 0, 0u, 0u, "" },
-    { 98u, "op2_spec_a1.p0", 0, 99, 99, 0u, 0u, "" },
-    { 99u, "op2_spec_a2.p0", 0, 99, 0, 0u, 0u, "" },
-    { 100u, "op2_spec_a3.p0", 0, 99, 0, 0u, 0u, "" },
-    { 101u, "op2_spec_a4.p0", 0, 99, 0, 0u, 0u, "" },
-    { 102u, "op2_spec_a5.p0", 0, 99, 0, 0u, 0u, "" },
-    { 103u, "op2_spec_a6.p0", 0, 99, 0, 0u, 0u, "" },
-    { 104u, "op2_spec_a7.p0", 0, 99, 0, 0u, 0u, "" },
-    { 105u, "op2_spec_a8.p0", 0, 99, 0, 0u, 0u, "" },
-    { 106u, "op2_spec_a9.p0", 0, 99, 0, 0u, 0u, "" },
-    { 107u, "op2_spec_a10.p0", 0, 99, 0, 0u, 0u, "" },
-    { 108u, "op2_spec_a11.p0", 0, 99, 0, 0u, 0u, "" },
-    { 109u, "op2_spec_a12.p0", 0, 99, 0, 0u, 0u, "" },
-    { 110u, "op2_spec_a13.p0", 0, 99, 0, 0u, 0u, "" },
-    { 111u, "op2_spec_a14.p0", 0, 99, 0, 0u, 0u, "" },
-    { 112u, "op2_spec_a15.p0", 0, 99, 0, 0u, 0u, "" },
-    { 113u, "op2_spec_a16.p0", 0, 99, 0, 0u, 0u, "" },
-    { 114u, "op2_spec_b1.p0", 0, 99, 99, 0u, 0u, "" },
-    { 115u, "op2_spec_b2.p0", 0, 99, 45, 0u, 0u, "" },
-    { 116u, "op2_spec_b3.p0", 0, 99, 30, 0u, 0u, "" },
-    { 117u, "op2_spec_b4.p0", 0, 99, 15, 0u, 0u, "" },
-    { 118u, "op2_spec_b5.p0", 0, 99, 55, 0u, 0u, "" },
-    { 119u, "op2_spec_b6.p0", 0, 99, 40, 0u, 0u, "" },
-    { 120u, "op2_spec_b7.p0", 0, 99, 25, 0u, 0u, "" },
-    { 121u, "op2_spec_b8.p0", 0, 99, 12, 0u, 0u, "" },
-    { 122u, "op2_spec_b9.p0", 0, 99, 8, 0u, 0u, "" },
-    { 123u, "op2_spec_b10.p0", 0, 99, 5, 0u, 0u, "" },
-    { 124u, "op2_spec_b11.p0", 0, 99, 3, 0u, 0u, "" },
-    { 125u, "op2_spec_b12.p0", 0, 99, 2, 0u, 0u, "" },
-    { 126u, "op2_spec_b13.p0", 0, 99, 1, 0u, 0u, "" },
-    { 127u, "op2_spec_b14.p0", 0, 99, 0, 0u, 0u, "" },
-    { 128u, "op2_spec_b15.p0", 0, 99, 0, 0u, 0u, "" },
-    { 129u, "op2_spec_b16.p0", 0, 99, 0, 0u, 0u, "" },
-    { 130u, "op2_spec_morph.p0", 0, 99, 0, 0u, 0u, "" },
-    { 131u, "op2_spec_env_depth.p0", -99, 99, 0, 0u, 0u, "" },
-    { 132u, "op2.eg.r1.p0", 0, 99, 80, 0u, 0u, "" },
-    { 133u, "op2.eg.r2.p0", 0, 99, 60, 0u, 0u, "" },
-    { 134u, "op2.eg.r3.p0", 0, 99, 50, 0u, 0u, "" },
-    { 135u, "op2.eg.r4.p0", 0, 99, 80, 0u, 0u, "" },
-    { 136u, "op2.eg.l1.p0", 0, 99, 99, 0u, 0u, "" },
-    { 137u, "op2.eg.l2.p0", 0, 99, 93, 0u, 0u, "" },
-    { 138u, "op2.eg.l3.p0", 0, 99, 87, 0u, 0u, "" },
-    { 139u, "op2_trem_rate.p0", 0, 20000000, 447392, 1u, 0u, "" },
-    { 140u, "op2_trem_depth.p0", -99, 99, 0, 0u, 0u, "" },
-    { 141u, "op2_trem_wave.p0", 0, 11, 0, 0u, 0u, "" },
-    { 142u, "op2_trem_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 143u, "op2_fbenv_on.p0", 0, 1, 1, 0u, 0u, "" },
-    { 144u, "op2_fbenv_r1.p0", 0, 99, 80, 0u, 0u, "" },
-    { 145u, "op2_fbenv_r2.p0", 0, 99, 60, 0u, 0u, "" },
-    { 146u, "op2_fbenv_r3.p0", 0, 99, 50, 0u, 0u, "" },
-    { 147u, "op2_fbenv_r4.p0", 0, 99, 80, 0u, 0u, "" },
-    { 148u, "op2_fbenv_l1.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 149u, "op2_fbenv_l2.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 150u, "op2_fbenv_l3.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 151u, "op2_fbenv_l4.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 152u, "op2_fblfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
-    { 153u, "op2_fblfo_depth.p0", -32767, 32767, 0, 0u, 0u, "" },
-    { 154u, "op2_fblfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
-    { 155u, "op2_fblfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 156u, "op2_dlfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
-    { 157u, "op2_dlfo_depth.p0", -32768, 32768, 0, 0u, 0u, "" },
-    { 158u, "op2_dlfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
-    { 159u, "op2_dlfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 160u, "op2.velamp.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 161u, "op2.velfm.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 162u, "op2.velrate.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 163u, "op2_level.p0", 0, 99, 85, 0u, 0u, "" },
-    { 164u, "op2_feedback.p0", -32767, 32767, 0, 0u, 0u, "" },
-    { 165u, "op2_level_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
-    { 166u, "op2_level_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
-    { 167u, "op2_fb_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
-    { 168u, "op2_fb_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
-    { 169u, "op2_aenv_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
-    { 170u, "op2_aenv_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
-    { 171u, "op2_level_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 172u, "op2_fb_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 173u, "op2_aenv_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 174u, "op2_mute.p0", 0, 1, 0, 0u, 0u, "" },
-    { 175u, "op2_spec_env_r1.p0", 0, 99, 80, 0u, 0u, "" },
-    { 176u, "op2_spec_env_r2.p0", 0, 99, 60, 0u, 0u, "" },
-    { 177u, "op2_spec_env_r3.p0", 0, 99, 50, 0u, 0u, "" },
-    { 178u, "op2_spec_env_r4.p0", 0, 99, 80, 0u, 0u, "" },
-    { 179u, "op2_spec_env_l1.p0", 0, 99, 99, 0u, 0u, "" },
-    { 180u, "op2_spec_env_l2.p0", 0, 99, 60, 0u, 0u, "" },
-    { 181u, "op2_spec_env_l3.p0", 0, 99, 0, 0u, 0u, "" },
-    { 182u, "op2_spec_lfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
-    { 183u, "op2_spec_lfo_depth.p0", -99, 99, 0, 0u, 0u, "" },
-    { 184u, "op2_spec_lfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
-    { 185u, "op2_spec_lfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 186u, "op3_ratio.p0", 32768, 1048576, 196608, 0u, 0u, "" },
-    { 187u, "op3_detune.p0", -50, 50, 0, 0u, 0u, "" },
-    { 188u, "op3_waveform.p0", 0, 13, 0, 0u, 0u, "" },
-    { 189u, "op3_spec_range_a.p0", 0, 7, 0, 0u, 0u, "" },
-    { 190u, "op3_spec_range_b.p0", 0, 7, 0, 0u, 0u, "" },
-    { 191u, "op3_spec_a1.p0", 0, 99, 99, 0u, 0u, "" },
-    { 192u, "op3_spec_a2.p0", 0, 99, 0, 0u, 0u, "" },
-    { 193u, "op3_spec_a3.p0", 0, 99, 0, 0u, 0u, "" },
-    { 194u, "op3_spec_a4.p0", 0, 99, 0, 0u, 0u, "" },
-    { 195u, "op3_spec_a5.p0", 0, 99, 0, 0u, 0u, "" },
-    { 196u, "op3_spec_a6.p0", 0, 99, 0, 0u, 0u, "" },
-    { 197u, "op3_spec_a7.p0", 0, 99, 0, 0u, 0u, "" },
-    { 198u, "op3_spec_a8.p0", 0, 99, 0, 0u, 0u, "" },
-    { 199u, "op3_spec_a9.p0", 0, 99, 0, 0u, 0u, "" },
-    { 200u, "op3_spec_a10.p0", 0, 99, 0, 0u, 0u, "" },
-    { 201u, "op3_spec_a11.p0", 0, 99, 0, 0u, 0u, "" },
-    { 202u, "op3_spec_a12.p0", 0, 99, 0, 0u, 0u, "" },
-    { 203u, "op3_spec_a13.p0", 0, 99, 0, 0u, 0u, "" },
-    { 204u, "op3_spec_a14.p0", 0, 99, 0, 0u, 0u, "" },
-    { 205u, "op3_spec_a15.p0", 0, 99, 0, 0u, 0u, "" },
-    { 206u, "op3_spec_a16.p0", 0, 99, 0, 0u, 0u, "" },
-    { 207u, "op3_spec_b1.p0", 0, 99, 99, 0u, 0u, "" },
-    { 208u, "op3_spec_b2.p0", 0, 99, 45, 0u, 0u, "" },
-    { 209u, "op3_spec_b3.p0", 0, 99, 30, 0u, 0u, "" },
-    { 210u, "op3_spec_b4.p0", 0, 99, 15, 0u, 0u, "" },
-    { 211u, "op3_spec_b5.p0", 0, 99, 55, 0u, 0u, "" },
-    { 212u, "op3_spec_b6.p0", 0, 99, 40, 0u, 0u, "" },
-    { 213u, "op3_spec_b7.p0", 0, 99, 25, 0u, 0u, "" },
-    { 214u, "op3_spec_b8.p0", 0, 99, 12, 0u, 0u, "" },
-    { 215u, "op3_spec_b9.p0", 0, 99, 8, 0u, 0u, "" },
-    { 216u, "op3_spec_b10.p0", 0, 99, 5, 0u, 0u, "" },
-    { 217u, "op3_spec_b11.p0", 0, 99, 3, 0u, 0u, "" },
-    { 218u, "op3_spec_b12.p0", 0, 99, 2, 0u, 0u, "" },
-    { 219u, "op3_spec_b13.p0", 0, 99, 1, 0u, 0u, "" },
-    { 220u, "op3_spec_b14.p0", 0, 99, 0, 0u, 0u, "" },
-    { 221u, "op3_spec_b15.p0", 0, 99, 0, 0u, 0u, "" },
-    { 222u, "op3_spec_b16.p0", 0, 99, 0, 0u, 0u, "" },
-    { 223u, "op3_spec_morph.p0", 0, 99, 0, 0u, 0u, "" },
-    { 224u, "op3_spec_env_depth.p0", -99, 99, 0, 0u, 0u, "" },
-    { 225u, "op3.eg.r1.p0", 0, 99, 80, 0u, 0u, "" },
-    { 226u, "op3.eg.r2.p0", 0, 99, 60, 0u, 0u, "" },
-    { 227u, "op3.eg.r3.p0", 0, 99, 50, 0u, 0u, "" },
-    { 228u, "op3.eg.r4.p0", 0, 99, 80, 0u, 0u, "" },
-    { 229u, "op3.eg.l1.p0", 0, 99, 99, 0u, 0u, "" },
-    { 230u, "op3.eg.l2.p0", 0, 99, 93, 0u, 0u, "" },
-    { 231u, "op3.eg.l3.p0", 0, 99, 87, 0u, 0u, "" },
-    { 232u, "op3_trem_rate.p0", 0, 20000000, 292174, 1u, 0u, "" },
-    { 233u, "op3_trem_depth.p0", -99, 99, 0, 0u, 0u, "" },
-    { 234u, "op3_trem_wave.p0", 0, 11, 0, 0u, 0u, "" },
-    { 235u, "op3_trem_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 236u, "op3_fbenv_on.p0", 0, 1, 1, 0u, 0u, "" },
-    { 237u, "op3_fbenv_r1.p0", 0, 99, 80, 0u, 0u, "" },
-    { 238u, "op3_fbenv_r2.p0", 0, 99, 60, 0u, 0u, "" },
-    { 239u, "op3_fbenv_r3.p0", 0, 99, 50, 0u, 0u, "" },
-    { 240u, "op3_fbenv_r4.p0", 0, 99, 80, 0u, 0u, "" },
-    { 241u, "op3_fbenv_l1.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 242u, "op3_fbenv_l2.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 243u, "op3_fbenv_l3.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 244u, "op3_fbenv_l4.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 245u, "op3_fblfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
-    { 246u, "op3_fblfo_depth.p0", -32767, 32767, 0, 0u, 0u, "" },
-    { 247u, "op3_fblfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
-    { 248u, "op3_fblfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 249u, "op3_dlfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
-    { 250u, "op3_dlfo_depth.p0", -32768, 32768, 0, 0u, 0u, "" },
-    { 251u, "op3_dlfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
-    { 252u, "op3_dlfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 253u, "op3.velamp.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 254u, "op3.velfm.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 255u, "op3.velrate.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 256u, "op3_level.p0", 0, 99, 70, 0u, 0u, "" },
-    { 257u, "op3_feedback.p0", -32767, 32767, 0, 0u, 0u, "" },
-    { 258u, "op3_level_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
-    { 259u, "op3_level_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
-    { 260u, "op3_fb_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
-    { 261u, "op3_fb_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
-    { 262u, "op3_aenv_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
-    { 263u, "op3_aenv_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
-    { 264u, "op3_level_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 265u, "op3_fb_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 266u, "op3_aenv_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 267u, "op3_mute.p0", 0, 1, 0, 0u, 0u, "" },
-    { 268u, "op3_spec_env_r1.p0", 0, 99, 80, 0u, 0u, "" },
-    { 269u, "op3_spec_env_r2.p0", 0, 99, 60, 0u, 0u, "" },
-    { 270u, "op3_spec_env_r3.p0", 0, 99, 50, 0u, 0u, "" },
-    { 271u, "op3_spec_env_r4.p0", 0, 99, 80, 0u, 0u, "" },
-    { 272u, "op3_spec_env_l1.p0", 0, 99, 99, 0u, 0u, "" },
-    { 273u, "op3_spec_env_l2.p0", 0, 99, 60, 0u, 0u, "" },
-    { 274u, "op3_spec_env_l3.p0", 0, 99, 0, 0u, 0u, "" },
-    { 275u, "op3_spec_lfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
-    { 276u, "op3_spec_lfo_depth.p0", -99, 99, 0, 0u, 0u, "" },
-    { 277u, "op3_spec_lfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
-    { 278u, "op3_spec_lfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 279u, "op4_ratio.p0", 32768, 1048576, 131072, 0u, 0u, "" },
-    { 280u, "op4_detune.p0", -50, 50, 0, 0u, 0u, "" },
-    { 281u, "op4_waveform.p0", 0, 13, 0, 0u, 0u, "" },
-    { 282u, "op4_spec_range_a.p0", 0, 7, 0, 0u, 0u, "" },
-    { 283u, "op4_spec_range_b.p0", 0, 7, 0, 0u, 0u, "" },
-    { 284u, "op4_spec_a1.p0", 0, 99, 99, 0u, 0u, "" },
-    { 285u, "op4_spec_a2.p0", 0, 99, 0, 0u, 0u, "" },
-    { 286u, "op4_spec_a3.p0", 0, 99, 0, 0u, 0u, "" },
-    { 287u, "op4_spec_a4.p0", 0, 99, 0, 0u, 0u, "" },
-    { 288u, "op4_spec_a5.p0", 0, 99, 0, 0u, 0u, "" },
-    { 289u, "op4_spec_a6.p0", 0, 99, 0, 0u, 0u, "" },
-    { 290u, "op4_spec_a7.p0", 0, 99, 0, 0u, 0u, "" },
-    { 291u, "op4_spec_a8.p0", 0, 99, 0, 0u, 0u, "" },
-    { 292u, "op4_spec_a9.p0", 0, 99, 0, 0u, 0u, "" },
-    { 293u, "op4_spec_a10.p0", 0, 99, 0, 0u, 0u, "" },
-    { 294u, "op4_spec_a11.p0", 0, 99, 0, 0u, 0u, "" },
-    { 295u, "op4_spec_a12.p0", 0, 99, 0, 0u, 0u, "" },
-    { 296u, "op4_spec_a13.p0", 0, 99, 0, 0u, 0u, "" },
-    { 297u, "op4_spec_a14.p0", 0, 99, 0, 0u, 0u, "" },
-    { 298u, "op4_spec_a15.p0", 0, 99, 0, 0u, 0u, "" },
-    { 299u, "op4_spec_a16.p0", 0, 99, 0, 0u, 0u, "" },
-    { 300u, "op4_spec_b1.p0", 0, 99, 99, 0u, 0u, "" },
-    { 301u, "op4_spec_b2.p0", 0, 99, 45, 0u, 0u, "" },
-    { 302u, "op4_spec_b3.p0", 0, 99, 30, 0u, 0u, "" },
-    { 303u, "op4_spec_b4.p0", 0, 99, 15, 0u, 0u, "" },
-    { 304u, "op4_spec_b5.p0", 0, 99, 55, 0u, 0u, "" },
-    { 305u, "op4_spec_b6.p0", 0, 99, 40, 0u, 0u, "" },
-    { 306u, "op4_spec_b7.p0", 0, 99, 25, 0u, 0u, "" },
-    { 307u, "op4_spec_b8.p0", 0, 99, 12, 0u, 0u, "" },
-    { 308u, "op4_spec_b9.p0", 0, 99, 8, 0u, 0u, "" },
-    { 309u, "op4_spec_b10.p0", 0, 99, 5, 0u, 0u, "" },
-    { 310u, "op4_spec_b11.p0", 0, 99, 3, 0u, 0u, "" },
-    { 311u, "op4_spec_b12.p0", 0, 99, 2, 0u, 0u, "" },
-    { 312u, "op4_spec_b13.p0", 0, 99, 1, 0u, 0u, "" },
-    { 313u, "op4_spec_b14.p0", 0, 99, 0, 0u, 0u, "" },
-    { 314u, "op4_spec_b15.p0", 0, 99, 0, 0u, 0u, "" },
-    { 315u, "op4_spec_b16.p0", 0, 99, 0, 0u, 0u, "" },
-    { 316u, "op4_spec_morph.p0", 0, 99, 0, 0u, 0u, "" },
-    { 317u, "op4_spec_env_depth.p0", -99, 99, 0, 0u, 0u, "" },
-    { 318u, "op4.eg.r1.p0", 0, 99, 80, 0u, 0u, "" },
-    { 319u, "op4.eg.r2.p0", 0, 99, 60, 0u, 0u, "" },
-    { 320u, "op4.eg.r3.p0", 0, 99, 50, 0u, 0u, "" },
-    { 321u, "op4.eg.r4.p0", 0, 99, 80, 0u, 0u, "" },
-    { 322u, "op4.eg.l1.p0", 0, 99, 99, 0u, 0u, "" },
-    { 323u, "op4.eg.l2.p0", 0, 99, 93, 0u, 0u, "" },
-    { 324u, "op4.eg.l3.p0", 0, 99, 87, 0u, 0u, "" },
-    { 325u, "op4_trem_rate.p0", 0, 20000000, 340870, 1u, 0u, "" },
-    { 326u, "op4_trem_depth.p0", -99, 99, 0, 0u, 0u, "" },
-    { 327u, "op4_trem_wave.p0", 0, 11, 0, 0u, 0u, "" },
-    { 328u, "op4_trem_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 329u, "op4_fbenv_on.p0", 0, 1, 1, 0u, 0u, "" },
-    { 330u, "op4_fbenv_r1.p0", 0, 99, 80, 0u, 0u, "" },
-    { 331u, "op4_fbenv_r2.p0", 0, 99, 60, 0u, 0u, "" },
-    { 332u, "op4_fbenv_r3.p0", 0, 99, 50, 0u, 0u, "" },
-    { 333u, "op4_fbenv_r4.p0", 0, 99, 80, 0u, 0u, "" },
-    { 334u, "op4_fbenv_l1.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 335u, "op4_fbenv_l2.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 336u, "op4_fbenv_l3.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 337u, "op4_fbenv_l4.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 338u, "op4_fblfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
-    { 339u, "op4_fblfo_depth.p0", -32767, 32767, 0, 0u, 0u, "" },
-    { 340u, "op4_fblfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
-    { 341u, "op4_fblfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 342u, "op4_dlfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
-    { 343u, "op4_dlfo_depth.p0", -32768, 32768, 0, 0u, 0u, "" },
-    { 344u, "op4_dlfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
-    { 345u, "op4_dlfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 346u, "op4.velamp.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 347u, "op4.velfm.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 348u, "op4.velrate.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 349u, "op4_level.p0", 0, 99, 85, 0u, 0u, "" },
-    { 350u, "op4_feedback.p0", -32767, 32767, 0, 0u, 0u, "" },
-    { 351u, "op4_level_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
-    { 352u, "op4_level_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
-    { 353u, "op4_fb_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
-    { 354u, "op4_fb_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
-    { 355u, "op4_aenv_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
-    { 356u, "op4_aenv_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
-    { 357u, "op4_level_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 358u, "op4_fb_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 359u, "op4_aenv_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 360u, "op4_mute.p0", 0, 1, 0, 0u, 0u, "" },
-    { 361u, "op4_spec_env_r1.p0", 0, 99, 80, 0u, 0u, "" },
-    { 362u, "op4_spec_env_r2.p0", 0, 99, 60, 0u, 0u, "" },
-    { 363u, "op4_spec_env_r3.p0", 0, 99, 50, 0u, 0u, "" },
-    { 364u, "op4_spec_env_r4.p0", 0, 99, 80, 0u, 0u, "" },
-    { 365u, "op4_spec_env_l1.p0", 0, 99, 99, 0u, 0u, "" },
-    { 366u, "op4_spec_env_l2.p0", 0, 99, 60, 0u, 0u, "" },
-    { 367u, "op4_spec_env_l3.p0", 0, 99, 0, 0u, 0u, "" },
-    { 368u, "op4_spec_lfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
-    { 369u, "op4_spec_lfo_depth.p0", -99, 99, 0, 0u, 0u, "" },
-    { 370u, "op4_spec_lfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
-    { 371u, "op4_spec_lfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 372u, "algorithm.p0", 0, 7, 4, 0u, 0u, "" },
-    { 373u, "penv_on.p0", 0, 1, 0, 0u, 0u, "" },
-    { 374u, "penv_r1.p0", 0, 99, 80, 0u, 0u, "" },
-    { 375u, "penv_r2.p0", 0, 99, 60, 0u, 0u, "" },
-    { 376u, "penv_r3.p0", 0, 99, 50, 0u, 0u, "" },
-    { 377u, "penv_r4.p0", 0, 99, 80, 0u, 0u, "" },
-    { 378u, "penv_l1.p0", -32768, 32767, 5461, 0u, 0u, "" },
-    { 379u, "penv_l2.p0", -32768, 32767, 2731, 0u, 0u, "" },
-    { 380u, "penv_l3.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 381u, "penv_l4.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 382u, "penv_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
-    { 383u, "penv_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
-    { 384u, "penv_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 385u, "pitch_rate.p0", 0, 20000000, 447392, 1u, 0u, "" },
-    { 386u, "pitch_depth.p0", -32768, 32768, 273, 0u, 0u, "" },
-    { 387u, "pitch_wave.p0", 0, 11, 0, 0u, 0u, "" },
-    { 388u, "pitch_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 389u, "f1_cutoff_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
-    { 390u, "f1_cutoff_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
-    { 391u, "fenv_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
-    { 392u, "fenv_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
-    { 393u, "f1_cutoff_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 394u, "fenv_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 395u, "cutoff.p0", 0, 55296, 8000, 1u, 0u, "" },
-    { 396u, "res.p0", 0, 41942, 16000, 1u, 0u, "" },
-    { 397u, "lp.comp.p0", -32768, 32767, 32767, 0u, 0u, "" },
-    { 398u, "filter_type.p0", 0, 2, 0, 0u, 0u, "" },
-    { 399u, "filter_on.p0", 0, 1, 0, 0u, 0u, "" },
-    { 400u, "fenv_depth.p0", 0, 65535, 0, 0u, 0u, "" },
-    { 401u, "fenv_r1.p0", 0, 99, 80, 0u, 0u, "" },
-    { 402u, "fenv_r2.p0", 0, 99, 60, 0u, 0u, "" },
-    { 403u, "fenv_r3.p0", 0, 99, 50, 0u, 0u, "" },
-    { 404u, "fenv_r4.p0", 0, 99, 80, 0u, 0u, "" },
-    { 405u, "fenv_l1.p0", 0, 99, 99, 0u, 0u, "" },
-    { 406u, "fenv_l2.p0", 0, 99, 93, 0u, 0u, "" },
-    { 407u, "fenv_l3.p0", 0, 99, 87, 0u, 0u, "" },
-    { 408u, "mode.p0", 0, 1, 0, 0u, 0u, "" },
-    { 409u, "unison_count.p0", 1, 8, 1, 0u, 0u, "" },
-    { 410u, "unison_detune.p0", 0, 200, 0, 0u, 0u, "cents" },
-    { 411u, "detune.p0", -50, 50, 0, 0u, 0u, "cents" },
-    { 412u, "transpose.p0", -24, 24, 0, 0u, 0u, "st" },
-    { 413u, "legato.p0", 0, 1, 0, 0u, 0u, "" },
-    { 414u, "portamento.p0", 0, 5000, 0, 1u, 0u, "" },
-    { 415u, "note_priority.p0", 0, 2, 0, 0u, 0u, "" },
-    { 416u, "op1_ratio.p1", 32768, 1048576, 65536, 0u, 0u, "" },
-    { 417u, "op1_detune.p1", -50, 50, 0, 0u, 0u, "" },
-    { 418u, "op1_waveform.p1", 0, 13, 0, 0u, 0u, "" },
-    { 419u, "op1_spec_range_a.p1", 0, 7, 0, 0u, 0u, "" },
-    { 420u, "op1_spec_range_b.p1", 0, 7, 0, 0u, 0u, "" },
-    { 421u, "op1_spec_a1.p1", 0, 99, 99, 0u, 0u, "" },
-    { 422u, "op1_spec_a2.p1", 0, 99, 0, 0u, 0u, "" },
-    { 423u, "op1_spec_a3.p1", 0, 99, 0, 0u, 0u, "" },
-    { 424u, "op1_spec_a4.p1", 0, 99, 0, 0u, 0u, "" },
-    { 425u, "op1_spec_a5.p1", 0, 99, 0, 0u, 0u, "" },
-    { 426u, "op1_spec_a6.p1", 0, 99, 0, 0u, 0u, "" },
-    { 427u, "op1_spec_a7.p1", 0, 99, 0, 0u, 0u, "" },
-    { 428u, "op1_spec_a8.p1", 0, 99, 0, 0u, 0u, "" },
-    { 429u, "op1_spec_a9.p1", 0, 99, 0, 0u, 0u, "" },
-    { 430u, "op1_spec_a10.p1", 0, 99, 0, 0u, 0u, "" },
-    { 431u, "op1_spec_a11.p1", 0, 99, 0, 0u, 0u, "" },
-    { 432u, "op1_spec_a12.p1", 0, 99, 0, 0u, 0u, "" },
-    { 433u, "op1_spec_a13.p1", 0, 99, 0, 0u, 0u, "" },
-    { 434u, "op1_spec_a14.p1", 0, 99, 0, 0u, 0u, "" },
-    { 435u, "op1_spec_a15.p1", 0, 99, 0, 0u, 0u, "" },
-    { 436u, "op1_spec_a16.p1", 0, 99, 0, 0u, 0u, "" },
-    { 437u, "op1_spec_b1.p1", 0, 99, 99, 0u, 0u, "" },
-    { 438u, "op1_spec_b2.p1", 0, 99, 45, 0u, 0u, "" },
-    { 439u, "op1_spec_b3.p1", 0, 99, 30, 0u, 0u, "" },
-    { 440u, "op1_spec_b4.p1", 0, 99, 15, 0u, 0u, "" },
-    { 441u, "op1_spec_b5.p1", 0, 99, 55, 0u, 0u, "" },
-    { 442u, "op1_spec_b6.p1", 0, 99, 40, 0u, 0u, "" },
-    { 443u, "op1_spec_b7.p1", 0, 99, 25, 0u, 0u, "" },
-    { 444u, "op1_spec_b8.p1", 0, 99, 12, 0u, 0u, "" },
-    { 445u, "op1_spec_b9.p1", 0, 99, 8, 0u, 0u, "" },
-    { 446u, "op1_spec_b10.p1", 0, 99, 5, 0u, 0u, "" },
-    { 447u, "op1_spec_b11.p1", 0, 99, 3, 0u, 0u, "" },
-    { 448u, "op1_spec_b12.p1", 0, 99, 2, 0u, 0u, "" },
-    { 449u, "op1_spec_b13.p1", 0, 99, 1, 0u, 0u, "" },
-    { 450u, "op1_spec_b14.p1", 0, 99, 0, 0u, 0u, "" },
-    { 451u, "op1_spec_b15.p1", 0, 99, 0, 0u, 0u, "" },
-    { 452u, "op1_spec_b16.p1", 0, 99, 0, 0u, 0u, "" },
-    { 453u, "op1_spec_morph.p1", 0, 99, 0, 0u, 0u, "" },
-    { 454u, "op1_spec_env_depth.p1", -99, 99, 0, 0u, 0u, "" },
-    { 455u, "attack.p1", 0, 99, 80, 0u, 0u, "" },
-    { 456u, "op1.eg.r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 457u, "op1.eg.r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 458u, "release.p1", 0, 99, 80, 0u, 0u, "" },
-    { 459u, "op1.eg.l1.p1", 0, 99, 99, 0u, 0u, "" },
-    { 460u, "op1.eg.l2.p1", 0, 99, 93, 0u, 0u, "" },
-    { 461u, "op1.eg.l3.p1", 0, 99, 87, 0u, 0u, "" },
-    { 462u, "op1_trem_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
-    { 463u, "op1_trem_depth.p1", -99, 99, 0, 0u, 0u, "" },
-    { 464u, "op1_trem_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 465u, "op1_trem_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 466u, "op1_fbenv_on.p1", 0, 1, 1, 0u, 0u, "" },
-    { 467u, "op1_fbenv_r1.p1", 0, 99, 80, 0u, 0u, "" },
-    { 468u, "op1_fbenv_r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 469u, "op1_fbenv_r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 470u, "op1_fbenv_r4.p1", 0, 99, 80, 0u, 0u, "" },
-    { 471u, "op1_fbenv_l1.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 472u, "op1_fbenv_l2.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 473u, "op1_fbenv_l3.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 474u, "op1_fbenv_l4.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 475u, "op1_fblfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
-    { 476u, "op1_fblfo_depth.p1", -32767, 32767, 0, 0u, 0u, "" },
-    { 477u, "op1_fblfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 478u, "op1_fblfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 479u, "op1_dlfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
-    { 480u, "op1_dlfo_depth.p1", -32768, 32768, 0, 0u, 0u, "" },
-    { 481u, "op1_dlfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 482u, "op1_dlfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 483u, "op1.velamp.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 484u, "op1.velfm.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 485u, "op1.velrate.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 486u, "op1_level.p1", 0, 99, 75, 0u, 0u, "" },
-    { 487u, "op1_feedback.p1", -32767, 32767, 0, 0u, 0u, "" },
-    { 488u, "op1_level_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 489u, "op1_level_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 490u, "op1_fb_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 491u, "op1_fb_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 492u, "op1_aenv_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 493u, "op1_aenv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 494u, "op1_level_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 495u, "op1_fb_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 496u, "op1_aenv_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 497u, "op1_mute.p1", 0, 1, 0, 0u, 0u, "" },
-    { 498u, "op1_spec_env_r1.p1", 0, 99, 80, 0u, 0u, "" },
-    { 499u, "op1_spec_env_r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 500u, "op1_spec_env_r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 501u, "op1_spec_env_r4.p1", 0, 99, 80, 0u, 0u, "" },
-    { 502u, "op1_spec_env_l1.p1", 0, 99, 99, 0u, 0u, "" },
-    { 503u, "op1_spec_env_l2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 504u, "op1_spec_env_l3.p1", 0, 99, 0, 0u, 0u, "" },
-    { 505u, "op1_spec_lfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
-    { 506u, "op1_spec_lfo_depth.p1", -99, 99, 0, 0u, 0u, "" },
-    { 507u, "op1_spec_lfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 508u, "op1_spec_lfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 509u, "op2_ratio.p1", 32768, 1048576, 65536, 0u, 0u, "" },
-    { 510u, "op2_detune.p1", -50, 50, 0, 0u, 0u, "" },
-    { 511u, "op2_waveform.p1", 0, 13, 0, 0u, 0u, "" },
-    { 512u, "op2_spec_range_a.p1", 0, 7, 0, 0u, 0u, "" },
-    { 513u, "op2_spec_range_b.p1", 0, 7, 0, 0u, 0u, "" },
-    { 514u, "op2_spec_a1.p1", 0, 99, 99, 0u, 0u, "" },
-    { 515u, "op2_spec_a2.p1", 0, 99, 0, 0u, 0u, "" },
-    { 516u, "op2_spec_a3.p1", 0, 99, 0, 0u, 0u, "" },
-    { 517u, "op2_spec_a4.p1", 0, 99, 0, 0u, 0u, "" },
-    { 518u, "op2_spec_a5.p1", 0, 99, 0, 0u, 0u, "" },
-    { 519u, "op2_spec_a6.p1", 0, 99, 0, 0u, 0u, "" },
-    { 520u, "op2_spec_a7.p1", 0, 99, 0, 0u, 0u, "" },
-    { 521u, "op2_spec_a8.p1", 0, 99, 0, 0u, 0u, "" },
-    { 522u, "op2_spec_a9.p1", 0, 99, 0, 0u, 0u, "" },
-    { 523u, "op2_spec_a10.p1", 0, 99, 0, 0u, 0u, "" },
-    { 524u, "op2_spec_a11.p1", 0, 99, 0, 0u, 0u, "" },
-    { 525u, "op2_spec_a12.p1", 0, 99, 0, 0u, 0u, "" },
-    { 526u, "op2_spec_a13.p1", 0, 99, 0, 0u, 0u, "" },
-    { 527u, "op2_spec_a14.p1", 0, 99, 0, 0u, 0u, "" },
-    { 528u, "op2_spec_a15.p1", 0, 99, 0, 0u, 0u, "" },
-    { 529u, "op2_spec_a16.p1", 0, 99, 0, 0u, 0u, "" },
-    { 530u, "op2_spec_b1.p1", 0, 99, 99, 0u, 0u, "" },
-    { 531u, "op2_spec_b2.p1", 0, 99, 45, 0u, 0u, "" },
-    { 532u, "op2_spec_b3.p1", 0, 99, 30, 0u, 0u, "" },
-    { 533u, "op2_spec_b4.p1", 0, 99, 15, 0u, 0u, "" },
-    { 534u, "op2_spec_b5.p1", 0, 99, 55, 0u, 0u, "" },
-    { 535u, "op2_spec_b6.p1", 0, 99, 40, 0u, 0u, "" },
-    { 536u, "op2_spec_b7.p1", 0, 99, 25, 0u, 0u, "" },
-    { 537u, "op2_spec_b8.p1", 0, 99, 12, 0u, 0u, "" },
-    { 538u, "op2_spec_b9.p1", 0, 99, 8, 0u, 0u, "" },
-    { 539u, "op2_spec_b10.p1", 0, 99, 5, 0u, 0u, "" },
-    { 540u, "op2_spec_b11.p1", 0, 99, 3, 0u, 0u, "" },
-    { 541u, "op2_spec_b12.p1", 0, 99, 2, 0u, 0u, "" },
-    { 542u, "op2_spec_b13.p1", 0, 99, 1, 0u, 0u, "" },
-    { 543u, "op2_spec_b14.p1", 0, 99, 0, 0u, 0u, "" },
-    { 544u, "op2_spec_b15.p1", 0, 99, 0, 0u, 0u, "" },
-    { 545u, "op2_spec_b16.p1", 0, 99, 0, 0u, 0u, "" },
-    { 546u, "op2_spec_morph.p1", 0, 99, 0, 0u, 0u, "" },
-    { 547u, "op2_spec_env_depth.p1", -99, 99, 0, 0u, 0u, "" },
-    { 548u, "op2.eg.r1.p1", 0, 99, 80, 0u, 0u, "" },
-    { 549u, "op2.eg.r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 550u, "op2.eg.r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 551u, "op2.eg.r4.p1", 0, 99, 80, 0u, 0u, "" },
-    { 552u, "op2.eg.l1.p1", 0, 99, 99, 0u, 0u, "" },
-    { 553u, "op2.eg.l2.p1", 0, 99, 93, 0u, 0u, "" },
-    { 554u, "op2.eg.l3.p1", 0, 99, 87, 0u, 0u, "" },
-    { 555u, "op2_trem_rate.p1", 0, 20000000, 447392, 1u, 0u, "" },
-    { 556u, "op2_trem_depth.p1", -99, 99, 0, 0u, 0u, "" },
-    { 557u, "op2_trem_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 558u, "op2_trem_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 559u, "op2_fbenv_on.p1", 0, 1, 1, 0u, 0u, "" },
-    { 560u, "op2_fbenv_r1.p1", 0, 99, 80, 0u, 0u, "" },
-    { 561u, "op2_fbenv_r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 562u, "op2_fbenv_r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 563u, "op2_fbenv_r4.p1", 0, 99, 80, 0u, 0u, "" },
-    { 564u, "op2_fbenv_l1.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 565u, "op2_fbenv_l2.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 566u, "op2_fbenv_l3.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 567u, "op2_fbenv_l4.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 568u, "op2_fblfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
-    { 569u, "op2_fblfo_depth.p1", -32767, 32767, 0, 0u, 0u, "" },
-    { 570u, "op2_fblfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 571u, "op2_fblfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 572u, "op2_dlfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
-    { 573u, "op2_dlfo_depth.p1", -32768, 32768, 0, 0u, 0u, "" },
-    { 574u, "op2_dlfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 575u, "op2_dlfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 576u, "op2.velamp.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 577u, "op2.velfm.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 578u, "op2.velrate.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 579u, "op2_level.p1", 0, 99, 85, 0u, 0u, "" },
-    { 580u, "op2_feedback.p1", -32767, 32767, 0, 0u, 0u, "" },
-    { 581u, "op2_level_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 582u, "op2_level_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 583u, "op2_fb_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 584u, "op2_fb_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 585u, "op2_aenv_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 586u, "op2_aenv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 587u, "op2_level_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 588u, "op2_fb_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 589u, "op2_aenv_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 590u, "op2_mute.p1", 0, 1, 0, 0u, 0u, "" },
-    { 591u, "op2_spec_env_r1.p1", 0, 99, 80, 0u, 0u, "" },
-    { 592u, "op2_spec_env_r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 593u, "op2_spec_env_r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 594u, "op2_spec_env_r4.p1", 0, 99, 80, 0u, 0u, "" },
-    { 595u, "op2_spec_env_l1.p1", 0, 99, 99, 0u, 0u, "" },
-    { 596u, "op2_spec_env_l2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 597u, "op2_spec_env_l3.p1", 0, 99, 0, 0u, 0u, "" },
-    { 598u, "op2_spec_lfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
-    { 599u, "op2_spec_lfo_depth.p1", -99, 99, 0, 0u, 0u, "" },
-    { 600u, "op2_spec_lfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 601u, "op2_spec_lfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 602u, "op3_ratio.p1", 32768, 1048576, 196608, 0u, 0u, "" },
-    { 603u, "op3_detune.p1", -50, 50, 0, 0u, 0u, "" },
-    { 604u, "op3_waveform.p1", 0, 13, 0, 0u, 0u, "" },
-    { 605u, "op3_spec_range_a.p1", 0, 7, 0, 0u, 0u, "" },
-    { 606u, "op3_spec_range_b.p1", 0, 7, 0, 0u, 0u, "" },
-    { 607u, "op3_spec_a1.p1", 0, 99, 99, 0u, 0u, "" },
-    { 608u, "op3_spec_a2.p1", 0, 99, 0, 0u, 0u, "" },
-    { 609u, "op3_spec_a3.p1", 0, 99, 0, 0u, 0u, "" },
-    { 610u, "op3_spec_a4.p1", 0, 99, 0, 0u, 0u, "" },
-    { 611u, "op3_spec_a5.p1", 0, 99, 0, 0u, 0u, "" },
-    { 612u, "op3_spec_a6.p1", 0, 99, 0, 0u, 0u, "" },
-    { 613u, "op3_spec_a7.p1", 0, 99, 0, 0u, 0u, "" },
-    { 614u, "op3_spec_a8.p1", 0, 99, 0, 0u, 0u, "" },
-    { 615u, "op3_spec_a9.p1", 0, 99, 0, 0u, 0u, "" },
-    { 616u, "op3_spec_a10.p1", 0, 99, 0, 0u, 0u, "" },
-    { 617u, "op3_spec_a11.p1", 0, 99, 0, 0u, 0u, "" },
-    { 618u, "op3_spec_a12.p1", 0, 99, 0, 0u, 0u, "" },
-    { 619u, "op3_spec_a13.p1", 0, 99, 0, 0u, 0u, "" },
-    { 620u, "op3_spec_a14.p1", 0, 99, 0, 0u, 0u, "" },
-    { 621u, "op3_spec_a15.p1", 0, 99, 0, 0u, 0u, "" },
-    { 622u, "op3_spec_a16.p1", 0, 99, 0, 0u, 0u, "" },
-    { 623u, "op3_spec_b1.p1", 0, 99, 99, 0u, 0u, "" },
-    { 624u, "op3_spec_b2.p1", 0, 99, 45, 0u, 0u, "" },
-    { 625u, "op3_spec_b3.p1", 0, 99, 30, 0u, 0u, "" },
-    { 626u, "op3_spec_b4.p1", 0, 99, 15, 0u, 0u, "" },
-    { 627u, "op3_spec_b5.p1", 0, 99, 55, 0u, 0u, "" },
-    { 628u, "op3_spec_b6.p1", 0, 99, 40, 0u, 0u, "" },
-    { 629u, "op3_spec_b7.p1", 0, 99, 25, 0u, 0u, "" },
-    { 630u, "op3_spec_b8.p1", 0, 99, 12, 0u, 0u, "" },
-    { 631u, "op3_spec_b9.p1", 0, 99, 8, 0u, 0u, "" },
-    { 632u, "op3_spec_b10.p1", 0, 99, 5, 0u, 0u, "" },
-    { 633u, "op3_spec_b11.p1", 0, 99, 3, 0u, 0u, "" },
-    { 634u, "op3_spec_b12.p1", 0, 99, 2, 0u, 0u, "" },
-    { 635u, "op3_spec_b13.p1", 0, 99, 1, 0u, 0u, "" },
-    { 636u, "op3_spec_b14.p1", 0, 99, 0, 0u, 0u, "" },
-    { 637u, "op3_spec_b15.p1", 0, 99, 0, 0u, 0u, "" },
-    { 638u, "op3_spec_b16.p1", 0, 99, 0, 0u, 0u, "" },
-    { 639u, "op3_spec_morph.p1", 0, 99, 0, 0u, 0u, "" },
-    { 640u, "op3_spec_env_depth.p1", -99, 99, 0, 0u, 0u, "" },
-    { 641u, "op3.eg.r1.p1", 0, 99, 80, 0u, 0u, "" },
-    { 642u, "op3.eg.r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 643u, "op3.eg.r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 644u, "op3.eg.r4.p1", 0, 99, 80, 0u, 0u, "" },
-    { 645u, "op3.eg.l1.p1", 0, 99, 99, 0u, 0u, "" },
-    { 646u, "op3.eg.l2.p1", 0, 99, 93, 0u, 0u, "" },
-    { 647u, "op3.eg.l3.p1", 0, 99, 87, 0u, 0u, "" },
-    { 648u, "op3_trem_rate.p1", 0, 20000000, 292174, 1u, 0u, "" },
-    { 649u, "op3_trem_depth.p1", -99, 99, 0, 0u, 0u, "" },
-    { 650u, "op3_trem_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 651u, "op3_trem_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 652u, "op3_fbenv_on.p1", 0, 1, 1, 0u, 0u, "" },
-    { 653u, "op3_fbenv_r1.p1", 0, 99, 80, 0u, 0u, "" },
-    { 654u, "op3_fbenv_r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 655u, "op3_fbenv_r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 656u, "op3_fbenv_r4.p1", 0, 99, 80, 0u, 0u, "" },
-    { 657u, "op3_fbenv_l1.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 658u, "op3_fbenv_l2.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 659u, "op3_fbenv_l3.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 660u, "op3_fbenv_l4.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 661u, "op3_fblfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
-    { 662u, "op3_fblfo_depth.p1", -32767, 32767, 0, 0u, 0u, "" },
-    { 663u, "op3_fblfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 664u, "op3_fblfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 665u, "op3_dlfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
-    { 666u, "op3_dlfo_depth.p1", -32768, 32768, 0, 0u, 0u, "" },
-    { 667u, "op3_dlfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 668u, "op3_dlfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 669u, "op3.velamp.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 670u, "op3.velfm.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 671u, "op3.velrate.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 672u, "op3_level.p1", 0, 99, 70, 0u, 0u, "" },
-    { 673u, "op3_feedback.p1", -32767, 32767, 0, 0u, 0u, "" },
-    { 674u, "op3_level_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 675u, "op3_level_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 676u, "op3_fb_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 677u, "op3_fb_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 678u, "op3_aenv_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 679u, "op3_aenv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 680u, "op3_level_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 681u, "op3_fb_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 682u, "op3_aenv_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 683u, "op3_mute.p1", 0, 1, 0, 0u, 0u, "" },
-    { 684u, "op3_spec_env_r1.p1", 0, 99, 80, 0u, 0u, "" },
-    { 685u, "op3_spec_env_r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 686u, "op3_spec_env_r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 687u, "op3_spec_env_r4.p1", 0, 99, 80, 0u, 0u, "" },
-    { 688u, "op3_spec_env_l1.p1", 0, 99, 99, 0u, 0u, "" },
-    { 689u, "op3_spec_env_l2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 690u, "op3_spec_env_l3.p1", 0, 99, 0, 0u, 0u, "" },
-    { 691u, "op3_spec_lfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
-    { 692u, "op3_spec_lfo_depth.p1", -99, 99, 0, 0u, 0u, "" },
-    { 693u, "op3_spec_lfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 694u, "op3_spec_lfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 695u, "op4_ratio.p1", 32768, 1048576, 131072, 0u, 0u, "" },
-    { 696u, "op4_detune.p1", -50, 50, 0, 0u, 0u, "" },
-    { 697u, "op4_waveform.p1", 0, 13, 0, 0u, 0u, "" },
-    { 698u, "op4_spec_range_a.p1", 0, 7, 0, 0u, 0u, "" },
-    { 699u, "op4_spec_range_b.p1", 0, 7, 0, 0u, 0u, "" },
-    { 700u, "op4_spec_a1.p1", 0, 99, 99, 0u, 0u, "" },
-    { 701u, "op4_spec_a2.p1", 0, 99, 0, 0u, 0u, "" },
-    { 702u, "op4_spec_a3.p1", 0, 99, 0, 0u, 0u, "" },
-    { 703u, "op4_spec_a4.p1", 0, 99, 0, 0u, 0u, "" },
-    { 704u, "op4_spec_a5.p1", 0, 99, 0, 0u, 0u, "" },
-    { 705u, "op4_spec_a6.p1", 0, 99, 0, 0u, 0u, "" },
-    { 706u, "op4_spec_a7.p1", 0, 99, 0, 0u, 0u, "" },
-    { 707u, "op4_spec_a8.p1", 0, 99, 0, 0u, 0u, "" },
-    { 708u, "op4_spec_a9.p1", 0, 99, 0, 0u, 0u, "" },
-    { 709u, "op4_spec_a10.p1", 0, 99, 0, 0u, 0u, "" },
-    { 710u, "op4_spec_a11.p1", 0, 99, 0, 0u, 0u, "" },
-    { 711u, "op4_spec_a12.p1", 0, 99, 0, 0u, 0u, "" },
-    { 712u, "op4_spec_a13.p1", 0, 99, 0, 0u, 0u, "" },
-    { 713u, "op4_spec_a14.p1", 0, 99, 0, 0u, 0u, "" },
-    { 714u, "op4_spec_a15.p1", 0, 99, 0, 0u, 0u, "" },
-    { 715u, "op4_spec_a16.p1", 0, 99, 0, 0u, 0u, "" },
-    { 716u, "op4_spec_b1.p1", 0, 99, 99, 0u, 0u, "" },
-    { 717u, "op4_spec_b2.p1", 0, 99, 45, 0u, 0u, "" },
-    { 718u, "op4_spec_b3.p1", 0, 99, 30, 0u, 0u, "" },
-    { 719u, "op4_spec_b4.p1", 0, 99, 15, 0u, 0u, "" },
-    { 720u, "op4_spec_b5.p1", 0, 99, 55, 0u, 0u, "" },
-    { 721u, "op4_spec_b6.p1", 0, 99, 40, 0u, 0u, "" },
-    { 722u, "op4_spec_b7.p1", 0, 99, 25, 0u, 0u, "" },
-    { 723u, "op4_spec_b8.p1", 0, 99, 12, 0u, 0u, "" },
-    { 724u, "op4_spec_b9.p1", 0, 99, 8, 0u, 0u, "" },
-    { 725u, "op4_spec_b10.p1", 0, 99, 5, 0u, 0u, "" },
-    { 726u, "op4_spec_b11.p1", 0, 99, 3, 0u, 0u, "" },
-    { 727u, "op4_spec_b12.p1", 0, 99, 2, 0u, 0u, "" },
-    { 728u, "op4_spec_b13.p1", 0, 99, 1, 0u, 0u, "" },
-    { 729u, "op4_spec_b14.p1", 0, 99, 0, 0u, 0u, "" },
-    { 730u, "op4_spec_b15.p1", 0, 99, 0, 0u, 0u, "" },
-    { 731u, "op4_spec_b16.p1", 0, 99, 0, 0u, 0u, "" },
-    { 732u, "op4_spec_morph.p1", 0, 99, 0, 0u, 0u, "" },
-    { 733u, "op4_spec_env_depth.p1", -99, 99, 0, 0u, 0u, "" },
-    { 734u, "op4.eg.r1.p1", 0, 99, 80, 0u, 0u, "" },
-    { 735u, "op4.eg.r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 736u, "op4.eg.r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 737u, "op4.eg.r4.p1", 0, 99, 80, 0u, 0u, "" },
-    { 738u, "op4.eg.l1.p1", 0, 99, 99, 0u, 0u, "" },
-    { 739u, "op4.eg.l2.p1", 0, 99, 93, 0u, 0u, "" },
-    { 740u, "op4.eg.l3.p1", 0, 99, 87, 0u, 0u, "" },
-    { 741u, "op4_trem_rate.p1", 0, 20000000, 340870, 1u, 0u, "" },
-    { 742u, "op4_trem_depth.p1", -99, 99, 0, 0u, 0u, "" },
-    { 743u, "op4_trem_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 744u, "op4_trem_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 745u, "op4_fbenv_on.p1", 0, 1, 1, 0u, 0u, "" },
-    { 746u, "op4_fbenv_r1.p1", 0, 99, 80, 0u, 0u, "" },
-    { 747u, "op4_fbenv_r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 748u, "op4_fbenv_r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 749u, "op4_fbenv_r4.p1", 0, 99, 80, 0u, 0u, "" },
-    { 750u, "op4_fbenv_l1.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 751u, "op4_fbenv_l2.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 752u, "op4_fbenv_l3.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 753u, "op4_fbenv_l4.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 754u, "op4_fblfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
-    { 755u, "op4_fblfo_depth.p1", -32767, 32767, 0, 0u, 0u, "" },
-    { 756u, "op4_fblfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 757u, "op4_fblfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 758u, "op4_dlfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
-    { 759u, "op4_dlfo_depth.p1", -32768, 32768, 0, 0u, 0u, "" },
-    { 760u, "op4_dlfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 761u, "op4_dlfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 762u, "op4.velamp.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 763u, "op4.velfm.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 764u, "op4.velrate.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 765u, "op4_level.p1", 0, 99, 85, 0u, 0u, "" },
-    { 766u, "op4_feedback.p1", -32767, 32767, 0, 0u, 0u, "" },
-    { 767u, "op4_level_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 768u, "op4_level_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 769u, "op4_fb_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 770u, "op4_fb_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 771u, "op4_aenv_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 772u, "op4_aenv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 773u, "op4_level_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 774u, "op4_fb_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 775u, "op4_aenv_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 776u, "op4_mute.p1", 0, 1, 0, 0u, 0u, "" },
-    { 777u, "op4_spec_env_r1.p1", 0, 99, 80, 0u, 0u, "" },
-    { 778u, "op4_spec_env_r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 779u, "op4_spec_env_r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 780u, "op4_spec_env_r4.p1", 0, 99, 80, 0u, 0u, "" },
-    { 781u, "op4_spec_env_l1.p1", 0, 99, 99, 0u, 0u, "" },
-    { 782u, "op4_spec_env_l2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 783u, "op4_spec_env_l3.p1", 0, 99, 0, 0u, 0u, "" },
-    { 784u, "op4_spec_lfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
-    { 785u, "op4_spec_lfo_depth.p1", -99, 99, 0, 0u, 0u, "" },
-    { 786u, "op4_spec_lfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 787u, "op4_spec_lfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 788u, "algorithm.p1", 0, 7, 4, 0u, 0u, "" },
-    { 789u, "penv_on.p1", 0, 1, 0, 0u, 0u, "" },
-    { 790u, "penv_r1.p1", 0, 99, 80, 0u, 0u, "" },
-    { 791u, "penv_r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 792u, "penv_r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 793u, "penv_r4.p1", 0, 99, 80, 0u, 0u, "" },
-    { 794u, "penv_l1.p1", -32768, 32767, 5461, 0u, 0u, "" },
-    { 795u, "penv_l2.p1", -32768, 32767, 2731, 0u, 0u, "" },
-    { 796u, "penv_l3.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 797u, "penv_l4.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 798u, "penv_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 799u, "penv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 800u, "penv_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 801u, "pitch_rate.p1", 0, 20000000, 447392, 1u, 0u, "" },
-    { 802u, "pitch_depth.p1", -32768, 32768, 273, 0u, 0u, "" },
-    { 803u, "pitch_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 804u, "pitch_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 805u, "f1_cutoff_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 806u, "f1_cutoff_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 807u, "fenv_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 808u, "fenv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 809u, "f1_cutoff_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 810u, "fenv_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 811u, "cutoff.p1", 0, 55296, 8000, 1u, 0u, "" },
-    { 812u, "res.p1", 0, 41942, 16000, 1u, 0u, "" },
-    { 813u, "lp.comp.p1", -32768, 32767, 32767, 0u, 0u, "" },
-    { 814u, "filter_type.p1", 0, 2, 0, 0u, 0u, "" },
-    { 815u, "filter_on.p1", 0, 1, 0, 0u, 0u, "" },
-    { 816u, "fenv_depth.p1", 0, 65535, 0, 0u, 0u, "" },
-    { 817u, "fenv_r1.p1", 0, 99, 80, 0u, 0u, "" },
-    { 818u, "fenv_r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 819u, "fenv_r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 820u, "fenv_r4.p1", 0, 99, 80, 0u, 0u, "" },
-    { 821u, "fenv_l1.p1", 0, 99, 99, 0u, 0u, "" },
-    { 822u, "fenv_l2.p1", 0, 99, 93, 0u, 0u, "" },
-    { 823u, "fenv_l3.p1", 0, 99, 87, 0u, 0u, "" },
-    { 824u, "mode.p1", 0, 1, 0, 0u, 0u, "" },
-    { 825u, "unison_count.p1", 1, 8, 1, 0u, 0u, "" },
-    { 826u, "unison_detune.p1", 0, 200, 0, 0u, 0u, "cents" },
-    { 827u, "detune.p1", -50, 50, 0, 0u, 0u, "cents" },
-    { 828u, "transpose.p1", -24, 24, 0, 0u, 0u, "st" },
-    { 829u, "legato.p1", 0, 1, 0, 0u, 0u, "" },
-    { 830u, "portamento.p1", 0, 5000, 0, 1u, 0u, "" },
-    { 831u, "note_priority.p1", 0, 2, 0, 0u, 0u, "" },
-    { 832u, "breakpoint", 0, 127, 60, 0u, 0u, "" },
-    { 833u, "key_sens_on", 0, 1, 1, 0u, 0u, "" },
-    { 834u, "vel_sens_on", 0, 1, 1, 0u, 0u, "" },
-    { 835u, "dc.r", -32768, 32767, 32738, 0u, 0u, "" },
-    { 836u, "channel.p0", -1, 15, 0, 0u, 0u, "" },
-    { 837u, "channel.p1", -1, 15, 1, 0u, 0u, "" },
-    { 838u, "low.p0", 0, 127, 0, 0u, 0u, "" },
-    { 839u, "low.p1", 0, 127, 0, 0u, 0u, "" },
-    { 840u, "high.p0", 0, 127, 127, 0u, 0u, "" },
-    { 841u, "high.p1", 0, 127, 127, 0u, 0u, "" },
-    { 842u, "level.p0", 0, 99, 99, 0u, 0u, "" },
-    { 843u, "level.p1", 0, 99, 99, 0u, 0u, "" },
-    { 844u, "delay.p0", 0, 1000, 0, 0u, 0u, "ms" },
-    { 845u, "delay.p1", 0, 1000, 0, 0u, 0u, "ms" },
+    { 21u, "op1_spec_a17.p0", 0, 99, 0, 0u, 0u, "" },
+    { 22u, "op1_spec_a18.p0", 0, 99, 0, 0u, 0u, "" },
+    { 23u, "op1_spec_a19.p0", 0, 99, 0, 0u, 0u, "" },
+    { 24u, "op1_spec_a20.p0", 0, 99, 0, 0u, 0u, "" },
+    { 25u, "op1_spec_a21.p0", 0, 99, 0, 0u, 0u, "" },
+    { 26u, "op1_spec_a22.p0", 0, 99, 0, 0u, 0u, "" },
+    { 27u, "op1_spec_a23.p0", 0, 99, 0, 0u, 0u, "" },
+    { 28u, "op1_spec_a24.p0", 0, 99, 0, 0u, 0u, "" },
+    { 29u, "op1_spec_a25.p0", 0, 99, 0, 0u, 0u, "" },
+    { 30u, "op1_spec_a26.p0", 0, 99, 0, 0u, 0u, "" },
+    { 31u, "op1_spec_a27.p0", 0, 99, 0, 0u, 0u, "" },
+    { 32u, "op1_spec_a28.p0", 0, 99, 0, 0u, 0u, "" },
+    { 33u, "op1_spec_a29.p0", 0, 99, 0, 0u, 0u, "" },
+    { 34u, "op1_spec_a30.p0", 0, 99, 0, 0u, 0u, "" },
+    { 35u, "op1_spec_a31.p0", 0, 99, 0, 0u, 0u, "" },
+    { 36u, "op1_spec_a32.p0", 0, 99, 0, 0u, 0u, "" },
+    { 37u, "op1_spec_a33.p0", 0, 99, 0, 0u, 0u, "" },
+    { 38u, "op1_spec_a34.p0", 0, 99, 0, 0u, 0u, "" },
+    { 39u, "op1_spec_a35.p0", 0, 99, 0, 0u, 0u, "" },
+    { 40u, "op1_spec_a36.p0", 0, 99, 0, 0u, 0u, "" },
+    { 41u, "op1_spec_a37.p0", 0, 99, 0, 0u, 0u, "" },
+    { 42u, "op1_spec_a38.p0", 0, 99, 0, 0u, 0u, "" },
+    { 43u, "op1_spec_a39.p0", 0, 99, 0, 0u, 0u, "" },
+    { 44u, "op1_spec_a40.p0", 0, 99, 0, 0u, 0u, "" },
+    { 45u, "op1_spec_a41.p0", 0, 99, 0, 0u, 0u, "" },
+    { 46u, "op1_spec_a42.p0", 0, 99, 0, 0u, 0u, "" },
+    { 47u, "op1_spec_a43.p0", 0, 99, 0, 0u, 0u, "" },
+    { 48u, "op1_spec_a44.p0", 0, 99, 0, 0u, 0u, "" },
+    { 49u, "op1_spec_a45.p0", 0, 99, 0, 0u, 0u, "" },
+    { 50u, "op1_spec_a46.p0", 0, 99, 0, 0u, 0u, "" },
+    { 51u, "op1_spec_a47.p0", 0, 99, 0, 0u, 0u, "" },
+    { 52u, "op1_spec_a48.p0", 0, 99, 0, 0u, 0u, "" },
+    { 53u, "op1_spec_a49.p0", 0, 99, 0, 0u, 0u, "" },
+    { 54u, "op1_spec_a50.p0", 0, 99, 0, 0u, 0u, "" },
+    { 55u, "op1_spec_a51.p0", 0, 99, 0, 0u, 0u, "" },
+    { 56u, "op1_spec_a52.p0", 0, 99, 0, 0u, 0u, "" },
+    { 57u, "op1_spec_a53.p0", 0, 99, 0, 0u, 0u, "" },
+    { 58u, "op1_spec_a54.p0", 0, 99, 0, 0u, 0u, "" },
+    { 59u, "op1_spec_a55.p0", 0, 99, 0, 0u, 0u, "" },
+    { 60u, "op1_spec_a56.p0", 0, 99, 0, 0u, 0u, "" },
+    { 61u, "op1_spec_a57.p0", 0, 99, 0, 0u, 0u, "" },
+    { 62u, "op1_spec_a58.p0", 0, 99, 0, 0u, 0u, "" },
+    { 63u, "op1_spec_a59.p0", 0, 99, 0, 0u, 0u, "" },
+    { 64u, "op1_spec_a60.p0", 0, 99, 0, 0u, 0u, "" },
+    { 65u, "op1_spec_a61.p0", 0, 99, 0, 0u, 0u, "" },
+    { 66u, "op1_spec_a62.p0", 0, 99, 0, 0u, 0u, "" },
+    { 67u, "op1_spec_a63.p0", 0, 99, 0, 0u, 0u, "" },
+    { 68u, "op1_spec_a64.p0", 0, 99, 0, 0u, 0u, "" },
+    { 69u, "op1_spec_b1.p0", 0, 99, 99, 0u, 0u, "" },
+    { 70u, "op1_spec_b2.p0", 0, 99, 45, 0u, 0u, "" },
+    { 71u, "op1_spec_b3.p0", 0, 99, 30, 0u, 0u, "" },
+    { 72u, "op1_spec_b4.p0", 0, 99, 15, 0u, 0u, "" },
+    { 73u, "op1_spec_b5.p0", 0, 99, 55, 0u, 0u, "" },
+    { 74u, "op1_spec_b6.p0", 0, 99, 40, 0u, 0u, "" },
+    { 75u, "op1_spec_b7.p0", 0, 99, 25, 0u, 0u, "" },
+    { 76u, "op1_spec_b8.p0", 0, 99, 12, 0u, 0u, "" },
+    { 77u, "op1_spec_b9.p0", 0, 99, 8, 0u, 0u, "" },
+    { 78u, "op1_spec_b10.p0", 0, 99, 5, 0u, 0u, "" },
+    { 79u, "op1_spec_b11.p0", 0, 99, 3, 0u, 0u, "" },
+    { 80u, "op1_spec_b12.p0", 0, 99, 2, 0u, 0u, "" },
+    { 81u, "op1_spec_b13.p0", 0, 99, 1, 0u, 0u, "" },
+    { 82u, "op1_spec_b14.p0", 0, 99, 0, 0u, 0u, "" },
+    { 83u, "op1_spec_b15.p0", 0, 99, 0, 0u, 0u, "" },
+    { 84u, "op1_spec_b16.p0", 0, 99, 0, 0u, 0u, "" },
+    { 85u, "op1_spec_b17.p0", 0, 99, 0, 0u, 0u, "" },
+    { 86u, "op1_spec_b18.p0", 0, 99, 0, 0u, 0u, "" },
+    { 87u, "op1_spec_b19.p0", 0, 99, 0, 0u, 0u, "" },
+    { 88u, "op1_spec_b20.p0", 0, 99, 0, 0u, 0u, "" },
+    { 89u, "op1_spec_b21.p0", 0, 99, 0, 0u, 0u, "" },
+    { 90u, "op1_spec_b22.p0", 0, 99, 0, 0u, 0u, "" },
+    { 91u, "op1_spec_b23.p0", 0, 99, 0, 0u, 0u, "" },
+    { 92u, "op1_spec_b24.p0", 0, 99, 0, 0u, 0u, "" },
+    { 93u, "op1_spec_b25.p0", 0, 99, 0, 0u, 0u, "" },
+    { 94u, "op1_spec_b26.p0", 0, 99, 0, 0u, 0u, "" },
+    { 95u, "op1_spec_b27.p0", 0, 99, 0, 0u, 0u, "" },
+    { 96u, "op1_spec_b28.p0", 0, 99, 0, 0u, 0u, "" },
+    { 97u, "op1_spec_b29.p0", 0, 99, 0, 0u, 0u, "" },
+    { 98u, "op1_spec_b30.p0", 0, 99, 0, 0u, 0u, "" },
+    { 99u, "op1_spec_b31.p0", 0, 99, 0, 0u, 0u, "" },
+    { 100u, "op1_spec_b32.p0", 0, 99, 0, 0u, 0u, "" },
+    { 101u, "op1_spec_b33.p0", 0, 99, 0, 0u, 0u, "" },
+    { 102u, "op1_spec_b34.p0", 0, 99, 0, 0u, 0u, "" },
+    { 103u, "op1_spec_b35.p0", 0, 99, 0, 0u, 0u, "" },
+    { 104u, "op1_spec_b36.p0", 0, 99, 0, 0u, 0u, "" },
+    { 105u, "op1_spec_b37.p0", 0, 99, 0, 0u, 0u, "" },
+    { 106u, "op1_spec_b38.p0", 0, 99, 0, 0u, 0u, "" },
+    { 107u, "op1_spec_b39.p0", 0, 99, 0, 0u, 0u, "" },
+    { 108u, "op1_spec_b40.p0", 0, 99, 0, 0u, 0u, "" },
+    { 109u, "op1_spec_b41.p0", 0, 99, 0, 0u, 0u, "" },
+    { 110u, "op1_spec_b42.p0", 0, 99, 0, 0u, 0u, "" },
+    { 111u, "op1_spec_b43.p0", 0, 99, 0, 0u, 0u, "" },
+    { 112u, "op1_spec_b44.p0", 0, 99, 0, 0u, 0u, "" },
+    { 113u, "op1_spec_b45.p0", 0, 99, 0, 0u, 0u, "" },
+    { 114u, "op1_spec_b46.p0", 0, 99, 0, 0u, 0u, "" },
+    { 115u, "op1_spec_b47.p0", 0, 99, 0, 0u, 0u, "" },
+    { 116u, "op1_spec_b48.p0", 0, 99, 0, 0u, 0u, "" },
+    { 117u, "op1_spec_b49.p0", 0, 99, 0, 0u, 0u, "" },
+    { 118u, "op1_spec_b50.p0", 0, 99, 0, 0u, 0u, "" },
+    { 119u, "op1_spec_b51.p0", 0, 99, 0, 0u, 0u, "" },
+    { 120u, "op1_spec_b52.p0", 0, 99, 0, 0u, 0u, "" },
+    { 121u, "op1_spec_b53.p0", 0, 99, 0, 0u, 0u, "" },
+    { 122u, "op1_spec_b54.p0", 0, 99, 0, 0u, 0u, "" },
+    { 123u, "op1_spec_b55.p0", 0, 99, 0, 0u, 0u, "" },
+    { 124u, "op1_spec_b56.p0", 0, 99, 0, 0u, 0u, "" },
+    { 125u, "op1_spec_b57.p0", 0, 99, 0, 0u, 0u, "" },
+    { 126u, "op1_spec_b58.p0", 0, 99, 0, 0u, 0u, "" },
+    { 127u, "op1_spec_b59.p0", 0, 99, 0, 0u, 0u, "" },
+    { 128u, "op1_spec_b60.p0", 0, 99, 0, 0u, 0u, "" },
+    { 129u, "op1_spec_b61.p0", 0, 99, 0, 0u, 0u, "" },
+    { 130u, "op1_spec_b62.p0", 0, 99, 0, 0u, 0u, "" },
+    { 131u, "op1_spec_b63.p0", 0, 99, 0, 0u, 0u, "" },
+    { 132u, "op1_spec_b64.p0", 0, 99, 0, 0u, 0u, "" },
+    { 133u, "op1_spec_morph.p0", 0, 99, 0, 0u, 0u, "" },
+    { 134u, "op1_spec_env_depth.p0", -99, 99, 0, 0u, 0u, "" },
+    { 135u, "attack.p0", 0, 99, 80, 0u, 0u, "" },
+    { 136u, "op1.eg.r2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 137u, "op1.eg.r3.p0", 0, 99, 50, 0u, 0u, "" },
+    { 138u, "release.p0", 0, 99, 80, 0u, 0u, "" },
+    { 139u, "op1.eg.l1.p0", 0, 99, 99, 0u, 0u, "" },
+    { 140u, "op1.eg.l2.p0", 0, 99, 93, 0u, 0u, "" },
+    { 141u, "op1.eg.l3.p0", 0, 99, 87, 0u, 0u, "" },
+    { 142u, "op1_trem_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
+    { 143u, "op1_trem_depth.p0", -99, 99, 0, 0u, 0u, "" },
+    { 144u, "op1_trem_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 145u, "op1_trem_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 146u, "op1_fbenv_on.p0", 0, 1, 1, 0u, 0u, "" },
+    { 147u, "op1_fbenv_r1.p0", 0, 99, 80, 0u, 0u, "" },
+    { 148u, "op1_fbenv_r2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 149u, "op1_fbenv_r3.p0", 0, 99, 50, 0u, 0u, "" },
+    { 150u, "op1_fbenv_r4.p0", 0, 99, 80, 0u, 0u, "" },
+    { 151u, "op1_fbenv_l1.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 152u, "op1_fbenv_l2.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 153u, "op1_fbenv_l3.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 154u, "op1_fbenv_l4.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 155u, "op1_fblfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
+    { 156u, "op1_fblfo_depth.p0", -32767, 32767, 0, 0u, 0u, "" },
+    { 157u, "op1_fblfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 158u, "op1_fblfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 159u, "op1_dlfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
+    { 160u, "op1_dlfo_depth.p0", -32768, 32768, 0, 0u, 0u, "" },
+    { 161u, "op1_dlfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 162u, "op1_dlfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 163u, "op1.velamp.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 164u, "op1.velfm.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 165u, "op1.velrate.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 166u, "op1_level.p0", 0, 99, 75, 0u, 0u, "" },
+    { 167u, "op1_feedback.p0", -32767, 32767, 0, 0u, 0u, "" },
+    { 168u, "op1_level_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 169u, "op1_level_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 170u, "op1_fb_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 171u, "op1_fb_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 172u, "op1_aenv_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 173u, "op1_aenv_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 174u, "op1_level_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 175u, "op1_fb_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 176u, "op1_aenv_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 177u, "op1_mute.p0", 0, 1, 0, 0u, 0u, "" },
+    { 178u, "op1_spec_env_r1.p0", 0, 99, 80, 0u, 0u, "" },
+    { 179u, "op1_spec_env_r2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 180u, "op1_spec_env_r3.p0", 0, 99, 50, 0u, 0u, "" },
+    { 181u, "op1_spec_env_r4.p0", 0, 99, 80, 0u, 0u, "" },
+    { 182u, "op1_spec_env_l1.p0", 0, 99, 99, 0u, 0u, "" },
+    { 183u, "op1_spec_env_l2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 184u, "op1_spec_env_l3.p0", 0, 99, 0, 0u, 0u, "" },
+    { 185u, "op1_spec_lfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
+    { 186u, "op1_spec_lfo_depth.p0", -99, 99, 0, 0u, 0u, "" },
+    { 187u, "op1_spec_lfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 188u, "op1_spec_lfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 189u, "op2_ratio.p0", 32768, 1048576, 65536, 0u, 0u, "" },
+    { 190u, "op2_detune.p0", -50, 50, 0, 0u, 0u, "" },
+    { 191u, "op2_waveform.p0", 0, 13, 0, 0u, 0u, "" },
+    { 192u, "op2_spec_range_a.p0", 0, 1, 0, 0u, 0u, "" },
+    { 193u, "op2_spec_range_b.p0", 0, 1, 0, 0u, 0u, "" },
+    { 194u, "op2_spec_a1.p0", 0, 99, 99, 0u, 0u, "" },
+    { 195u, "op2_spec_a2.p0", 0, 99, 0, 0u, 0u, "" },
+    { 196u, "op2_spec_a3.p0", 0, 99, 0, 0u, 0u, "" },
+    { 197u, "op2_spec_a4.p0", 0, 99, 0, 0u, 0u, "" },
+    { 198u, "op2_spec_a5.p0", 0, 99, 0, 0u, 0u, "" },
+    { 199u, "op2_spec_a6.p0", 0, 99, 0, 0u, 0u, "" },
+    { 200u, "op2_spec_a7.p0", 0, 99, 0, 0u, 0u, "" },
+    { 201u, "op2_spec_a8.p0", 0, 99, 0, 0u, 0u, "" },
+    { 202u, "op2_spec_a9.p0", 0, 99, 0, 0u, 0u, "" },
+    { 203u, "op2_spec_a10.p0", 0, 99, 0, 0u, 0u, "" },
+    { 204u, "op2_spec_a11.p0", 0, 99, 0, 0u, 0u, "" },
+    { 205u, "op2_spec_a12.p0", 0, 99, 0, 0u, 0u, "" },
+    { 206u, "op2_spec_a13.p0", 0, 99, 0, 0u, 0u, "" },
+    { 207u, "op2_spec_a14.p0", 0, 99, 0, 0u, 0u, "" },
+    { 208u, "op2_spec_a15.p0", 0, 99, 0, 0u, 0u, "" },
+    { 209u, "op2_spec_a16.p0", 0, 99, 0, 0u, 0u, "" },
+    { 210u, "op2_spec_a17.p0", 0, 99, 0, 0u, 0u, "" },
+    { 211u, "op2_spec_a18.p0", 0, 99, 0, 0u, 0u, "" },
+    { 212u, "op2_spec_a19.p0", 0, 99, 0, 0u, 0u, "" },
+    { 213u, "op2_spec_a20.p0", 0, 99, 0, 0u, 0u, "" },
+    { 214u, "op2_spec_a21.p0", 0, 99, 0, 0u, 0u, "" },
+    { 215u, "op2_spec_a22.p0", 0, 99, 0, 0u, 0u, "" },
+    { 216u, "op2_spec_a23.p0", 0, 99, 0, 0u, 0u, "" },
+    { 217u, "op2_spec_a24.p0", 0, 99, 0, 0u, 0u, "" },
+    { 218u, "op2_spec_a25.p0", 0, 99, 0, 0u, 0u, "" },
+    { 219u, "op2_spec_a26.p0", 0, 99, 0, 0u, 0u, "" },
+    { 220u, "op2_spec_a27.p0", 0, 99, 0, 0u, 0u, "" },
+    { 221u, "op2_spec_a28.p0", 0, 99, 0, 0u, 0u, "" },
+    { 222u, "op2_spec_a29.p0", 0, 99, 0, 0u, 0u, "" },
+    { 223u, "op2_spec_a30.p0", 0, 99, 0, 0u, 0u, "" },
+    { 224u, "op2_spec_a31.p0", 0, 99, 0, 0u, 0u, "" },
+    { 225u, "op2_spec_a32.p0", 0, 99, 0, 0u, 0u, "" },
+    { 226u, "op2_spec_a33.p0", 0, 99, 0, 0u, 0u, "" },
+    { 227u, "op2_spec_a34.p0", 0, 99, 0, 0u, 0u, "" },
+    { 228u, "op2_spec_a35.p0", 0, 99, 0, 0u, 0u, "" },
+    { 229u, "op2_spec_a36.p0", 0, 99, 0, 0u, 0u, "" },
+    { 230u, "op2_spec_a37.p0", 0, 99, 0, 0u, 0u, "" },
+    { 231u, "op2_spec_a38.p0", 0, 99, 0, 0u, 0u, "" },
+    { 232u, "op2_spec_a39.p0", 0, 99, 0, 0u, 0u, "" },
+    { 233u, "op2_spec_a40.p0", 0, 99, 0, 0u, 0u, "" },
+    { 234u, "op2_spec_a41.p0", 0, 99, 0, 0u, 0u, "" },
+    { 235u, "op2_spec_a42.p0", 0, 99, 0, 0u, 0u, "" },
+    { 236u, "op2_spec_a43.p0", 0, 99, 0, 0u, 0u, "" },
+    { 237u, "op2_spec_a44.p0", 0, 99, 0, 0u, 0u, "" },
+    { 238u, "op2_spec_a45.p0", 0, 99, 0, 0u, 0u, "" },
+    { 239u, "op2_spec_a46.p0", 0, 99, 0, 0u, 0u, "" },
+    { 240u, "op2_spec_a47.p0", 0, 99, 0, 0u, 0u, "" },
+    { 241u, "op2_spec_a48.p0", 0, 99, 0, 0u, 0u, "" },
+    { 242u, "op2_spec_a49.p0", 0, 99, 0, 0u, 0u, "" },
+    { 243u, "op2_spec_a50.p0", 0, 99, 0, 0u, 0u, "" },
+    { 244u, "op2_spec_a51.p0", 0, 99, 0, 0u, 0u, "" },
+    { 245u, "op2_spec_a52.p0", 0, 99, 0, 0u, 0u, "" },
+    { 246u, "op2_spec_a53.p0", 0, 99, 0, 0u, 0u, "" },
+    { 247u, "op2_spec_a54.p0", 0, 99, 0, 0u, 0u, "" },
+    { 248u, "op2_spec_a55.p0", 0, 99, 0, 0u, 0u, "" },
+    { 249u, "op2_spec_a56.p0", 0, 99, 0, 0u, 0u, "" },
+    { 250u, "op2_spec_a57.p0", 0, 99, 0, 0u, 0u, "" },
+    { 251u, "op2_spec_a58.p0", 0, 99, 0, 0u, 0u, "" },
+    { 252u, "op2_spec_a59.p0", 0, 99, 0, 0u, 0u, "" },
+    { 253u, "op2_spec_a60.p0", 0, 99, 0, 0u, 0u, "" },
+    { 254u, "op2_spec_a61.p0", 0, 99, 0, 0u, 0u, "" },
+    { 255u, "op2_spec_a62.p0", 0, 99, 0, 0u, 0u, "" },
+    { 256u, "op2_spec_a63.p0", 0, 99, 0, 0u, 0u, "" },
+    { 257u, "op2_spec_a64.p0", 0, 99, 0, 0u, 0u, "" },
+    { 258u, "op2_spec_b1.p0", 0, 99, 99, 0u, 0u, "" },
+    { 259u, "op2_spec_b2.p0", 0, 99, 45, 0u, 0u, "" },
+    { 260u, "op2_spec_b3.p0", 0, 99, 30, 0u, 0u, "" },
+    { 261u, "op2_spec_b4.p0", 0, 99, 15, 0u, 0u, "" },
+    { 262u, "op2_spec_b5.p0", 0, 99, 55, 0u, 0u, "" },
+    { 263u, "op2_spec_b6.p0", 0, 99, 40, 0u, 0u, "" },
+    { 264u, "op2_spec_b7.p0", 0, 99, 25, 0u, 0u, "" },
+    { 265u, "op2_spec_b8.p0", 0, 99, 12, 0u, 0u, "" },
+    { 266u, "op2_spec_b9.p0", 0, 99, 8, 0u, 0u, "" },
+    { 267u, "op2_spec_b10.p0", 0, 99, 5, 0u, 0u, "" },
+    { 268u, "op2_spec_b11.p0", 0, 99, 3, 0u, 0u, "" },
+    { 269u, "op2_spec_b12.p0", 0, 99, 2, 0u, 0u, "" },
+    { 270u, "op2_spec_b13.p0", 0, 99, 1, 0u, 0u, "" },
+    { 271u, "op2_spec_b14.p0", 0, 99, 0, 0u, 0u, "" },
+    { 272u, "op2_spec_b15.p0", 0, 99, 0, 0u, 0u, "" },
+    { 273u, "op2_spec_b16.p0", 0, 99, 0, 0u, 0u, "" },
+    { 274u, "op2_spec_b17.p0", 0, 99, 0, 0u, 0u, "" },
+    { 275u, "op2_spec_b18.p0", 0, 99, 0, 0u, 0u, "" },
+    { 276u, "op2_spec_b19.p0", 0, 99, 0, 0u, 0u, "" },
+    { 277u, "op2_spec_b20.p0", 0, 99, 0, 0u, 0u, "" },
+    { 278u, "op2_spec_b21.p0", 0, 99, 0, 0u, 0u, "" },
+    { 279u, "op2_spec_b22.p0", 0, 99, 0, 0u, 0u, "" },
+    { 280u, "op2_spec_b23.p0", 0, 99, 0, 0u, 0u, "" },
+    { 281u, "op2_spec_b24.p0", 0, 99, 0, 0u, 0u, "" },
+    { 282u, "op2_spec_b25.p0", 0, 99, 0, 0u, 0u, "" },
+    { 283u, "op2_spec_b26.p0", 0, 99, 0, 0u, 0u, "" },
+    { 284u, "op2_spec_b27.p0", 0, 99, 0, 0u, 0u, "" },
+    { 285u, "op2_spec_b28.p0", 0, 99, 0, 0u, 0u, "" },
+    { 286u, "op2_spec_b29.p0", 0, 99, 0, 0u, 0u, "" },
+    { 287u, "op2_spec_b30.p0", 0, 99, 0, 0u, 0u, "" },
+    { 288u, "op2_spec_b31.p0", 0, 99, 0, 0u, 0u, "" },
+    { 289u, "op2_spec_b32.p0", 0, 99, 0, 0u, 0u, "" },
+    { 290u, "op2_spec_b33.p0", 0, 99, 0, 0u, 0u, "" },
+    { 291u, "op2_spec_b34.p0", 0, 99, 0, 0u, 0u, "" },
+    { 292u, "op2_spec_b35.p0", 0, 99, 0, 0u, 0u, "" },
+    { 293u, "op2_spec_b36.p0", 0, 99, 0, 0u, 0u, "" },
+    { 294u, "op2_spec_b37.p0", 0, 99, 0, 0u, 0u, "" },
+    { 295u, "op2_spec_b38.p0", 0, 99, 0, 0u, 0u, "" },
+    { 296u, "op2_spec_b39.p0", 0, 99, 0, 0u, 0u, "" },
+    { 297u, "op2_spec_b40.p0", 0, 99, 0, 0u, 0u, "" },
+    { 298u, "op2_spec_b41.p0", 0, 99, 0, 0u, 0u, "" },
+    { 299u, "op2_spec_b42.p0", 0, 99, 0, 0u, 0u, "" },
+    { 300u, "op2_spec_b43.p0", 0, 99, 0, 0u, 0u, "" },
+    { 301u, "op2_spec_b44.p0", 0, 99, 0, 0u, 0u, "" },
+    { 302u, "op2_spec_b45.p0", 0, 99, 0, 0u, 0u, "" },
+    { 303u, "op2_spec_b46.p0", 0, 99, 0, 0u, 0u, "" },
+    { 304u, "op2_spec_b47.p0", 0, 99, 0, 0u, 0u, "" },
+    { 305u, "op2_spec_b48.p0", 0, 99, 0, 0u, 0u, "" },
+    { 306u, "op2_spec_b49.p0", 0, 99, 0, 0u, 0u, "" },
+    { 307u, "op2_spec_b50.p0", 0, 99, 0, 0u, 0u, "" },
+    { 308u, "op2_spec_b51.p0", 0, 99, 0, 0u, 0u, "" },
+    { 309u, "op2_spec_b52.p0", 0, 99, 0, 0u, 0u, "" },
+    { 310u, "op2_spec_b53.p0", 0, 99, 0, 0u, 0u, "" },
+    { 311u, "op2_spec_b54.p0", 0, 99, 0, 0u, 0u, "" },
+    { 312u, "op2_spec_b55.p0", 0, 99, 0, 0u, 0u, "" },
+    { 313u, "op2_spec_b56.p0", 0, 99, 0, 0u, 0u, "" },
+    { 314u, "op2_spec_b57.p0", 0, 99, 0, 0u, 0u, "" },
+    { 315u, "op2_spec_b58.p0", 0, 99, 0, 0u, 0u, "" },
+    { 316u, "op2_spec_b59.p0", 0, 99, 0, 0u, 0u, "" },
+    { 317u, "op2_spec_b60.p0", 0, 99, 0, 0u, 0u, "" },
+    { 318u, "op2_spec_b61.p0", 0, 99, 0, 0u, 0u, "" },
+    { 319u, "op2_spec_b62.p0", 0, 99, 0, 0u, 0u, "" },
+    { 320u, "op2_spec_b63.p0", 0, 99, 0, 0u, 0u, "" },
+    { 321u, "op2_spec_b64.p0", 0, 99, 0, 0u, 0u, "" },
+    { 322u, "op2_spec_morph.p0", 0, 99, 0, 0u, 0u, "" },
+    { 323u, "op2_spec_env_depth.p0", -99, 99, 0, 0u, 0u, "" },
+    { 324u, "op2.eg.r1.p0", 0, 99, 80, 0u, 0u, "" },
+    { 325u, "op2.eg.r2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 326u, "op2.eg.r3.p0", 0, 99, 50, 0u, 0u, "" },
+    { 327u, "op2.eg.r4.p0", 0, 99, 80, 0u, 0u, "" },
+    { 328u, "op2.eg.l1.p0", 0, 99, 99, 0u, 0u, "" },
+    { 329u, "op2.eg.l2.p0", 0, 99, 93, 0u, 0u, "" },
+    { 330u, "op2.eg.l3.p0", 0, 99, 87, 0u, 0u, "" },
+    { 331u, "op2_trem_rate.p0", 0, 20000000, 447392, 1u, 0u, "" },
+    { 332u, "op2_trem_depth.p0", -99, 99, 0, 0u, 0u, "" },
+    { 333u, "op2_trem_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 334u, "op2_trem_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 335u, "op2_fbenv_on.p0", 0, 1, 1, 0u, 0u, "" },
+    { 336u, "op2_fbenv_r1.p0", 0, 99, 80, 0u, 0u, "" },
+    { 337u, "op2_fbenv_r2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 338u, "op2_fbenv_r3.p0", 0, 99, 50, 0u, 0u, "" },
+    { 339u, "op2_fbenv_r4.p0", 0, 99, 80, 0u, 0u, "" },
+    { 340u, "op2_fbenv_l1.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 341u, "op2_fbenv_l2.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 342u, "op2_fbenv_l3.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 343u, "op2_fbenv_l4.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 344u, "op2_fblfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
+    { 345u, "op2_fblfo_depth.p0", -32767, 32767, 0, 0u, 0u, "" },
+    { 346u, "op2_fblfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 347u, "op2_fblfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 348u, "op2_dlfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
+    { 349u, "op2_dlfo_depth.p0", -32768, 32768, 0, 0u, 0u, "" },
+    { 350u, "op2_dlfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 351u, "op2_dlfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 352u, "op2.velamp.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 353u, "op2.velfm.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 354u, "op2.velrate.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 355u, "op2_level.p0", 0, 99, 85, 0u, 0u, "" },
+    { 356u, "op2_feedback.p0", -32767, 32767, 0, 0u, 0u, "" },
+    { 357u, "op2_level_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 358u, "op2_level_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 359u, "op2_fb_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 360u, "op2_fb_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 361u, "op2_aenv_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 362u, "op2_aenv_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 363u, "op2_level_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 364u, "op2_fb_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 365u, "op2_aenv_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 366u, "op2_mute.p0", 0, 1, 0, 0u, 0u, "" },
+    { 367u, "op2_spec_env_r1.p0", 0, 99, 80, 0u, 0u, "" },
+    { 368u, "op2_spec_env_r2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 369u, "op2_spec_env_r3.p0", 0, 99, 50, 0u, 0u, "" },
+    { 370u, "op2_spec_env_r4.p0", 0, 99, 80, 0u, 0u, "" },
+    { 371u, "op2_spec_env_l1.p0", 0, 99, 99, 0u, 0u, "" },
+    { 372u, "op2_spec_env_l2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 373u, "op2_spec_env_l3.p0", 0, 99, 0, 0u, 0u, "" },
+    { 374u, "op2_spec_lfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
+    { 375u, "op2_spec_lfo_depth.p0", -99, 99, 0, 0u, 0u, "" },
+    { 376u, "op2_spec_lfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 377u, "op2_spec_lfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 378u, "op3_ratio.p0", 32768, 1048576, 196608, 0u, 0u, "" },
+    { 379u, "op3_detune.p0", -50, 50, 0, 0u, 0u, "" },
+    { 380u, "op3_waveform.p0", 0, 13, 0, 0u, 0u, "" },
+    { 381u, "op3_spec_range_a.p0", 0, 1, 0, 0u, 0u, "" },
+    { 382u, "op3_spec_range_b.p0", 0, 1, 0, 0u, 0u, "" },
+    { 383u, "op3_spec_a1.p0", 0, 99, 99, 0u, 0u, "" },
+    { 384u, "op3_spec_a2.p0", 0, 99, 0, 0u, 0u, "" },
+    { 385u, "op3_spec_a3.p0", 0, 99, 0, 0u, 0u, "" },
+    { 386u, "op3_spec_a4.p0", 0, 99, 0, 0u, 0u, "" },
+    { 387u, "op3_spec_a5.p0", 0, 99, 0, 0u, 0u, "" },
+    { 388u, "op3_spec_a6.p0", 0, 99, 0, 0u, 0u, "" },
+    { 389u, "op3_spec_a7.p0", 0, 99, 0, 0u, 0u, "" },
+    { 390u, "op3_spec_a8.p0", 0, 99, 0, 0u, 0u, "" },
+    { 391u, "op3_spec_a9.p0", 0, 99, 0, 0u, 0u, "" },
+    { 392u, "op3_spec_a10.p0", 0, 99, 0, 0u, 0u, "" },
+    { 393u, "op3_spec_a11.p0", 0, 99, 0, 0u, 0u, "" },
+    { 394u, "op3_spec_a12.p0", 0, 99, 0, 0u, 0u, "" },
+    { 395u, "op3_spec_a13.p0", 0, 99, 0, 0u, 0u, "" },
+    { 396u, "op3_spec_a14.p0", 0, 99, 0, 0u, 0u, "" },
+    { 397u, "op3_spec_a15.p0", 0, 99, 0, 0u, 0u, "" },
+    { 398u, "op3_spec_a16.p0", 0, 99, 0, 0u, 0u, "" },
+    { 399u, "op3_spec_a17.p0", 0, 99, 0, 0u, 0u, "" },
+    { 400u, "op3_spec_a18.p0", 0, 99, 0, 0u, 0u, "" },
+    { 401u, "op3_spec_a19.p0", 0, 99, 0, 0u, 0u, "" },
+    { 402u, "op3_spec_a20.p0", 0, 99, 0, 0u, 0u, "" },
+    { 403u, "op3_spec_a21.p0", 0, 99, 0, 0u, 0u, "" },
+    { 404u, "op3_spec_a22.p0", 0, 99, 0, 0u, 0u, "" },
+    { 405u, "op3_spec_a23.p0", 0, 99, 0, 0u, 0u, "" },
+    { 406u, "op3_spec_a24.p0", 0, 99, 0, 0u, 0u, "" },
+    { 407u, "op3_spec_a25.p0", 0, 99, 0, 0u, 0u, "" },
+    { 408u, "op3_spec_a26.p0", 0, 99, 0, 0u, 0u, "" },
+    { 409u, "op3_spec_a27.p0", 0, 99, 0, 0u, 0u, "" },
+    { 410u, "op3_spec_a28.p0", 0, 99, 0, 0u, 0u, "" },
+    { 411u, "op3_spec_a29.p0", 0, 99, 0, 0u, 0u, "" },
+    { 412u, "op3_spec_a30.p0", 0, 99, 0, 0u, 0u, "" },
+    { 413u, "op3_spec_a31.p0", 0, 99, 0, 0u, 0u, "" },
+    { 414u, "op3_spec_a32.p0", 0, 99, 0, 0u, 0u, "" },
+    { 415u, "op3_spec_a33.p0", 0, 99, 0, 0u, 0u, "" },
+    { 416u, "op3_spec_a34.p0", 0, 99, 0, 0u, 0u, "" },
+    { 417u, "op3_spec_a35.p0", 0, 99, 0, 0u, 0u, "" },
+    { 418u, "op3_spec_a36.p0", 0, 99, 0, 0u, 0u, "" },
+    { 419u, "op3_spec_a37.p0", 0, 99, 0, 0u, 0u, "" },
+    { 420u, "op3_spec_a38.p0", 0, 99, 0, 0u, 0u, "" },
+    { 421u, "op3_spec_a39.p0", 0, 99, 0, 0u, 0u, "" },
+    { 422u, "op3_spec_a40.p0", 0, 99, 0, 0u, 0u, "" },
+    { 423u, "op3_spec_a41.p0", 0, 99, 0, 0u, 0u, "" },
+    { 424u, "op3_spec_a42.p0", 0, 99, 0, 0u, 0u, "" },
+    { 425u, "op3_spec_a43.p0", 0, 99, 0, 0u, 0u, "" },
+    { 426u, "op3_spec_a44.p0", 0, 99, 0, 0u, 0u, "" },
+    { 427u, "op3_spec_a45.p0", 0, 99, 0, 0u, 0u, "" },
+    { 428u, "op3_spec_a46.p0", 0, 99, 0, 0u, 0u, "" },
+    { 429u, "op3_spec_a47.p0", 0, 99, 0, 0u, 0u, "" },
+    { 430u, "op3_spec_a48.p0", 0, 99, 0, 0u, 0u, "" },
+    { 431u, "op3_spec_a49.p0", 0, 99, 0, 0u, 0u, "" },
+    { 432u, "op3_spec_a50.p0", 0, 99, 0, 0u, 0u, "" },
+    { 433u, "op3_spec_a51.p0", 0, 99, 0, 0u, 0u, "" },
+    { 434u, "op3_spec_a52.p0", 0, 99, 0, 0u, 0u, "" },
+    { 435u, "op3_spec_a53.p0", 0, 99, 0, 0u, 0u, "" },
+    { 436u, "op3_spec_a54.p0", 0, 99, 0, 0u, 0u, "" },
+    { 437u, "op3_spec_a55.p0", 0, 99, 0, 0u, 0u, "" },
+    { 438u, "op3_spec_a56.p0", 0, 99, 0, 0u, 0u, "" },
+    { 439u, "op3_spec_a57.p0", 0, 99, 0, 0u, 0u, "" },
+    { 440u, "op3_spec_a58.p0", 0, 99, 0, 0u, 0u, "" },
+    { 441u, "op3_spec_a59.p0", 0, 99, 0, 0u, 0u, "" },
+    { 442u, "op3_spec_a60.p0", 0, 99, 0, 0u, 0u, "" },
+    { 443u, "op3_spec_a61.p0", 0, 99, 0, 0u, 0u, "" },
+    { 444u, "op3_spec_a62.p0", 0, 99, 0, 0u, 0u, "" },
+    { 445u, "op3_spec_a63.p0", 0, 99, 0, 0u, 0u, "" },
+    { 446u, "op3_spec_a64.p0", 0, 99, 0, 0u, 0u, "" },
+    { 447u, "op3_spec_b1.p0", 0, 99, 99, 0u, 0u, "" },
+    { 448u, "op3_spec_b2.p0", 0, 99, 45, 0u, 0u, "" },
+    { 449u, "op3_spec_b3.p0", 0, 99, 30, 0u, 0u, "" },
+    { 450u, "op3_spec_b4.p0", 0, 99, 15, 0u, 0u, "" },
+    { 451u, "op3_spec_b5.p0", 0, 99, 55, 0u, 0u, "" },
+    { 452u, "op3_spec_b6.p0", 0, 99, 40, 0u, 0u, "" },
+    { 453u, "op3_spec_b7.p0", 0, 99, 25, 0u, 0u, "" },
+    { 454u, "op3_spec_b8.p0", 0, 99, 12, 0u, 0u, "" },
+    { 455u, "op3_spec_b9.p0", 0, 99, 8, 0u, 0u, "" },
+    { 456u, "op3_spec_b10.p0", 0, 99, 5, 0u, 0u, "" },
+    { 457u, "op3_spec_b11.p0", 0, 99, 3, 0u, 0u, "" },
+    { 458u, "op3_spec_b12.p0", 0, 99, 2, 0u, 0u, "" },
+    { 459u, "op3_spec_b13.p0", 0, 99, 1, 0u, 0u, "" },
+    { 460u, "op3_spec_b14.p0", 0, 99, 0, 0u, 0u, "" },
+    { 461u, "op3_spec_b15.p0", 0, 99, 0, 0u, 0u, "" },
+    { 462u, "op3_spec_b16.p0", 0, 99, 0, 0u, 0u, "" },
+    { 463u, "op3_spec_b17.p0", 0, 99, 0, 0u, 0u, "" },
+    { 464u, "op3_spec_b18.p0", 0, 99, 0, 0u, 0u, "" },
+    { 465u, "op3_spec_b19.p0", 0, 99, 0, 0u, 0u, "" },
+    { 466u, "op3_spec_b20.p0", 0, 99, 0, 0u, 0u, "" },
+    { 467u, "op3_spec_b21.p0", 0, 99, 0, 0u, 0u, "" },
+    { 468u, "op3_spec_b22.p0", 0, 99, 0, 0u, 0u, "" },
+    { 469u, "op3_spec_b23.p0", 0, 99, 0, 0u, 0u, "" },
+    { 470u, "op3_spec_b24.p0", 0, 99, 0, 0u, 0u, "" },
+    { 471u, "op3_spec_b25.p0", 0, 99, 0, 0u, 0u, "" },
+    { 472u, "op3_spec_b26.p0", 0, 99, 0, 0u, 0u, "" },
+    { 473u, "op3_spec_b27.p0", 0, 99, 0, 0u, 0u, "" },
+    { 474u, "op3_spec_b28.p0", 0, 99, 0, 0u, 0u, "" },
+    { 475u, "op3_spec_b29.p0", 0, 99, 0, 0u, 0u, "" },
+    { 476u, "op3_spec_b30.p0", 0, 99, 0, 0u, 0u, "" },
+    { 477u, "op3_spec_b31.p0", 0, 99, 0, 0u, 0u, "" },
+    { 478u, "op3_spec_b32.p0", 0, 99, 0, 0u, 0u, "" },
+    { 479u, "op3_spec_b33.p0", 0, 99, 0, 0u, 0u, "" },
+    { 480u, "op3_spec_b34.p0", 0, 99, 0, 0u, 0u, "" },
+    { 481u, "op3_spec_b35.p0", 0, 99, 0, 0u, 0u, "" },
+    { 482u, "op3_spec_b36.p0", 0, 99, 0, 0u, 0u, "" },
+    { 483u, "op3_spec_b37.p0", 0, 99, 0, 0u, 0u, "" },
+    { 484u, "op3_spec_b38.p0", 0, 99, 0, 0u, 0u, "" },
+    { 485u, "op3_spec_b39.p0", 0, 99, 0, 0u, 0u, "" },
+    { 486u, "op3_spec_b40.p0", 0, 99, 0, 0u, 0u, "" },
+    { 487u, "op3_spec_b41.p0", 0, 99, 0, 0u, 0u, "" },
+    { 488u, "op3_spec_b42.p0", 0, 99, 0, 0u, 0u, "" },
+    { 489u, "op3_spec_b43.p0", 0, 99, 0, 0u, 0u, "" },
+    { 490u, "op3_spec_b44.p0", 0, 99, 0, 0u, 0u, "" },
+    { 491u, "op3_spec_b45.p0", 0, 99, 0, 0u, 0u, "" },
+    { 492u, "op3_spec_b46.p0", 0, 99, 0, 0u, 0u, "" },
+    { 493u, "op3_spec_b47.p0", 0, 99, 0, 0u, 0u, "" },
+    { 494u, "op3_spec_b48.p0", 0, 99, 0, 0u, 0u, "" },
+    { 495u, "op3_spec_b49.p0", 0, 99, 0, 0u, 0u, "" },
+    { 496u, "op3_spec_b50.p0", 0, 99, 0, 0u, 0u, "" },
+    { 497u, "op3_spec_b51.p0", 0, 99, 0, 0u, 0u, "" },
+    { 498u, "op3_spec_b52.p0", 0, 99, 0, 0u, 0u, "" },
+    { 499u, "op3_spec_b53.p0", 0, 99, 0, 0u, 0u, "" },
+    { 500u, "op3_spec_b54.p0", 0, 99, 0, 0u, 0u, "" },
+    { 501u, "op3_spec_b55.p0", 0, 99, 0, 0u, 0u, "" },
+    { 502u, "op3_spec_b56.p0", 0, 99, 0, 0u, 0u, "" },
+    { 503u, "op3_spec_b57.p0", 0, 99, 0, 0u, 0u, "" },
+    { 504u, "op3_spec_b58.p0", 0, 99, 0, 0u, 0u, "" },
+    { 505u, "op3_spec_b59.p0", 0, 99, 0, 0u, 0u, "" },
+    { 506u, "op3_spec_b60.p0", 0, 99, 0, 0u, 0u, "" },
+    { 507u, "op3_spec_b61.p0", 0, 99, 0, 0u, 0u, "" },
+    { 508u, "op3_spec_b62.p0", 0, 99, 0, 0u, 0u, "" },
+    { 509u, "op3_spec_b63.p0", 0, 99, 0, 0u, 0u, "" },
+    { 510u, "op3_spec_b64.p0", 0, 99, 0, 0u, 0u, "" },
+    { 511u, "op3_spec_morph.p0", 0, 99, 0, 0u, 0u, "" },
+    { 512u, "op3_spec_env_depth.p0", -99, 99, 0, 0u, 0u, "" },
+    { 513u, "op3.eg.r1.p0", 0, 99, 80, 0u, 0u, "" },
+    { 514u, "op3.eg.r2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 515u, "op3.eg.r3.p0", 0, 99, 50, 0u, 0u, "" },
+    { 516u, "op3.eg.r4.p0", 0, 99, 80, 0u, 0u, "" },
+    { 517u, "op3.eg.l1.p0", 0, 99, 99, 0u, 0u, "" },
+    { 518u, "op3.eg.l2.p0", 0, 99, 93, 0u, 0u, "" },
+    { 519u, "op3.eg.l3.p0", 0, 99, 87, 0u, 0u, "" },
+    { 520u, "op3_trem_rate.p0", 0, 20000000, 292174, 1u, 0u, "" },
+    { 521u, "op3_trem_depth.p0", -99, 99, 0, 0u, 0u, "" },
+    { 522u, "op3_trem_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 523u, "op3_trem_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 524u, "op3_fbenv_on.p0", 0, 1, 1, 0u, 0u, "" },
+    { 525u, "op3_fbenv_r1.p0", 0, 99, 80, 0u, 0u, "" },
+    { 526u, "op3_fbenv_r2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 527u, "op3_fbenv_r3.p0", 0, 99, 50, 0u, 0u, "" },
+    { 528u, "op3_fbenv_r4.p0", 0, 99, 80, 0u, 0u, "" },
+    { 529u, "op3_fbenv_l1.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 530u, "op3_fbenv_l2.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 531u, "op3_fbenv_l3.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 532u, "op3_fbenv_l4.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 533u, "op3_fblfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
+    { 534u, "op3_fblfo_depth.p0", -32767, 32767, 0, 0u, 0u, "" },
+    { 535u, "op3_fblfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 536u, "op3_fblfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 537u, "op3_dlfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
+    { 538u, "op3_dlfo_depth.p0", -32768, 32768, 0, 0u, 0u, "" },
+    { 539u, "op3_dlfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 540u, "op3_dlfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 541u, "op3.velamp.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 542u, "op3.velfm.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 543u, "op3.velrate.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 544u, "op3_level.p0", 0, 99, 70, 0u, 0u, "" },
+    { 545u, "op3_feedback.p0", -32767, 32767, 0, 0u, 0u, "" },
+    { 546u, "op3_level_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 547u, "op3_level_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 548u, "op3_fb_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 549u, "op3_fb_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 550u, "op3_aenv_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 551u, "op3_aenv_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 552u, "op3_level_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 553u, "op3_fb_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 554u, "op3_aenv_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 555u, "op3_mute.p0", 0, 1, 0, 0u, 0u, "" },
+    { 556u, "op3_spec_env_r1.p0", 0, 99, 80, 0u, 0u, "" },
+    { 557u, "op3_spec_env_r2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 558u, "op3_spec_env_r3.p0", 0, 99, 50, 0u, 0u, "" },
+    { 559u, "op3_spec_env_r4.p0", 0, 99, 80, 0u, 0u, "" },
+    { 560u, "op3_spec_env_l1.p0", 0, 99, 99, 0u, 0u, "" },
+    { 561u, "op3_spec_env_l2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 562u, "op3_spec_env_l3.p0", 0, 99, 0, 0u, 0u, "" },
+    { 563u, "op3_spec_lfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
+    { 564u, "op3_spec_lfo_depth.p0", -99, 99, 0, 0u, 0u, "" },
+    { 565u, "op3_spec_lfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 566u, "op3_spec_lfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 567u, "op4_ratio.p0", 32768, 1048576, 131072, 0u, 0u, "" },
+    { 568u, "op4_detune.p0", -50, 50, 0, 0u, 0u, "" },
+    { 569u, "op4_waveform.p0", 0, 13, 0, 0u, 0u, "" },
+    { 570u, "op4_spec_range_a.p0", 0, 1, 0, 0u, 0u, "" },
+    { 571u, "op4_spec_range_b.p0", 0, 1, 0, 0u, 0u, "" },
+    { 572u, "op4_spec_a1.p0", 0, 99, 99, 0u, 0u, "" },
+    { 573u, "op4_spec_a2.p0", 0, 99, 0, 0u, 0u, "" },
+    { 574u, "op4_spec_a3.p0", 0, 99, 0, 0u, 0u, "" },
+    { 575u, "op4_spec_a4.p0", 0, 99, 0, 0u, 0u, "" },
+    { 576u, "op4_spec_a5.p0", 0, 99, 0, 0u, 0u, "" },
+    { 577u, "op4_spec_a6.p0", 0, 99, 0, 0u, 0u, "" },
+    { 578u, "op4_spec_a7.p0", 0, 99, 0, 0u, 0u, "" },
+    { 579u, "op4_spec_a8.p0", 0, 99, 0, 0u, 0u, "" },
+    { 580u, "op4_spec_a9.p0", 0, 99, 0, 0u, 0u, "" },
+    { 581u, "op4_spec_a10.p0", 0, 99, 0, 0u, 0u, "" },
+    { 582u, "op4_spec_a11.p0", 0, 99, 0, 0u, 0u, "" },
+    { 583u, "op4_spec_a12.p0", 0, 99, 0, 0u, 0u, "" },
+    { 584u, "op4_spec_a13.p0", 0, 99, 0, 0u, 0u, "" },
+    { 585u, "op4_spec_a14.p0", 0, 99, 0, 0u, 0u, "" },
+    { 586u, "op4_spec_a15.p0", 0, 99, 0, 0u, 0u, "" },
+    { 587u, "op4_spec_a16.p0", 0, 99, 0, 0u, 0u, "" },
+    { 588u, "op4_spec_a17.p0", 0, 99, 0, 0u, 0u, "" },
+    { 589u, "op4_spec_a18.p0", 0, 99, 0, 0u, 0u, "" },
+    { 590u, "op4_spec_a19.p0", 0, 99, 0, 0u, 0u, "" },
+    { 591u, "op4_spec_a20.p0", 0, 99, 0, 0u, 0u, "" },
+    { 592u, "op4_spec_a21.p0", 0, 99, 0, 0u, 0u, "" },
+    { 593u, "op4_spec_a22.p0", 0, 99, 0, 0u, 0u, "" },
+    { 594u, "op4_spec_a23.p0", 0, 99, 0, 0u, 0u, "" },
+    { 595u, "op4_spec_a24.p0", 0, 99, 0, 0u, 0u, "" },
+    { 596u, "op4_spec_a25.p0", 0, 99, 0, 0u, 0u, "" },
+    { 597u, "op4_spec_a26.p0", 0, 99, 0, 0u, 0u, "" },
+    { 598u, "op4_spec_a27.p0", 0, 99, 0, 0u, 0u, "" },
+    { 599u, "op4_spec_a28.p0", 0, 99, 0, 0u, 0u, "" },
+    { 600u, "op4_spec_a29.p0", 0, 99, 0, 0u, 0u, "" },
+    { 601u, "op4_spec_a30.p0", 0, 99, 0, 0u, 0u, "" },
+    { 602u, "op4_spec_a31.p0", 0, 99, 0, 0u, 0u, "" },
+    { 603u, "op4_spec_a32.p0", 0, 99, 0, 0u, 0u, "" },
+    { 604u, "op4_spec_a33.p0", 0, 99, 0, 0u, 0u, "" },
+    { 605u, "op4_spec_a34.p0", 0, 99, 0, 0u, 0u, "" },
+    { 606u, "op4_spec_a35.p0", 0, 99, 0, 0u, 0u, "" },
+    { 607u, "op4_spec_a36.p0", 0, 99, 0, 0u, 0u, "" },
+    { 608u, "op4_spec_a37.p0", 0, 99, 0, 0u, 0u, "" },
+    { 609u, "op4_spec_a38.p0", 0, 99, 0, 0u, 0u, "" },
+    { 610u, "op4_spec_a39.p0", 0, 99, 0, 0u, 0u, "" },
+    { 611u, "op4_spec_a40.p0", 0, 99, 0, 0u, 0u, "" },
+    { 612u, "op4_spec_a41.p0", 0, 99, 0, 0u, 0u, "" },
+    { 613u, "op4_spec_a42.p0", 0, 99, 0, 0u, 0u, "" },
+    { 614u, "op4_spec_a43.p0", 0, 99, 0, 0u, 0u, "" },
+    { 615u, "op4_spec_a44.p0", 0, 99, 0, 0u, 0u, "" },
+    { 616u, "op4_spec_a45.p0", 0, 99, 0, 0u, 0u, "" },
+    { 617u, "op4_spec_a46.p0", 0, 99, 0, 0u, 0u, "" },
+    { 618u, "op4_spec_a47.p0", 0, 99, 0, 0u, 0u, "" },
+    { 619u, "op4_spec_a48.p0", 0, 99, 0, 0u, 0u, "" },
+    { 620u, "op4_spec_a49.p0", 0, 99, 0, 0u, 0u, "" },
+    { 621u, "op4_spec_a50.p0", 0, 99, 0, 0u, 0u, "" },
+    { 622u, "op4_spec_a51.p0", 0, 99, 0, 0u, 0u, "" },
+    { 623u, "op4_spec_a52.p0", 0, 99, 0, 0u, 0u, "" },
+    { 624u, "op4_spec_a53.p0", 0, 99, 0, 0u, 0u, "" },
+    { 625u, "op4_spec_a54.p0", 0, 99, 0, 0u, 0u, "" },
+    { 626u, "op4_spec_a55.p0", 0, 99, 0, 0u, 0u, "" },
+    { 627u, "op4_spec_a56.p0", 0, 99, 0, 0u, 0u, "" },
+    { 628u, "op4_spec_a57.p0", 0, 99, 0, 0u, 0u, "" },
+    { 629u, "op4_spec_a58.p0", 0, 99, 0, 0u, 0u, "" },
+    { 630u, "op4_spec_a59.p0", 0, 99, 0, 0u, 0u, "" },
+    { 631u, "op4_spec_a60.p0", 0, 99, 0, 0u, 0u, "" },
+    { 632u, "op4_spec_a61.p0", 0, 99, 0, 0u, 0u, "" },
+    { 633u, "op4_spec_a62.p0", 0, 99, 0, 0u, 0u, "" },
+    { 634u, "op4_spec_a63.p0", 0, 99, 0, 0u, 0u, "" },
+    { 635u, "op4_spec_a64.p0", 0, 99, 0, 0u, 0u, "" },
+    { 636u, "op4_spec_b1.p0", 0, 99, 99, 0u, 0u, "" },
+    { 637u, "op4_spec_b2.p0", 0, 99, 45, 0u, 0u, "" },
+    { 638u, "op4_spec_b3.p0", 0, 99, 30, 0u, 0u, "" },
+    { 639u, "op4_spec_b4.p0", 0, 99, 15, 0u, 0u, "" },
+    { 640u, "op4_spec_b5.p0", 0, 99, 55, 0u, 0u, "" },
+    { 641u, "op4_spec_b6.p0", 0, 99, 40, 0u, 0u, "" },
+    { 642u, "op4_spec_b7.p0", 0, 99, 25, 0u, 0u, "" },
+    { 643u, "op4_spec_b8.p0", 0, 99, 12, 0u, 0u, "" },
+    { 644u, "op4_spec_b9.p0", 0, 99, 8, 0u, 0u, "" },
+    { 645u, "op4_spec_b10.p0", 0, 99, 5, 0u, 0u, "" },
+    { 646u, "op4_spec_b11.p0", 0, 99, 3, 0u, 0u, "" },
+    { 647u, "op4_spec_b12.p0", 0, 99, 2, 0u, 0u, "" },
+    { 648u, "op4_spec_b13.p0", 0, 99, 1, 0u, 0u, "" },
+    { 649u, "op4_spec_b14.p0", 0, 99, 0, 0u, 0u, "" },
+    { 650u, "op4_spec_b15.p0", 0, 99, 0, 0u, 0u, "" },
+    { 651u, "op4_spec_b16.p0", 0, 99, 0, 0u, 0u, "" },
+    { 652u, "op4_spec_b17.p0", 0, 99, 0, 0u, 0u, "" },
+    { 653u, "op4_spec_b18.p0", 0, 99, 0, 0u, 0u, "" },
+    { 654u, "op4_spec_b19.p0", 0, 99, 0, 0u, 0u, "" },
+    { 655u, "op4_spec_b20.p0", 0, 99, 0, 0u, 0u, "" },
+    { 656u, "op4_spec_b21.p0", 0, 99, 0, 0u, 0u, "" },
+    { 657u, "op4_spec_b22.p0", 0, 99, 0, 0u, 0u, "" },
+    { 658u, "op4_spec_b23.p0", 0, 99, 0, 0u, 0u, "" },
+    { 659u, "op4_spec_b24.p0", 0, 99, 0, 0u, 0u, "" },
+    { 660u, "op4_spec_b25.p0", 0, 99, 0, 0u, 0u, "" },
+    { 661u, "op4_spec_b26.p0", 0, 99, 0, 0u, 0u, "" },
+    { 662u, "op4_spec_b27.p0", 0, 99, 0, 0u, 0u, "" },
+    { 663u, "op4_spec_b28.p0", 0, 99, 0, 0u, 0u, "" },
+    { 664u, "op4_spec_b29.p0", 0, 99, 0, 0u, 0u, "" },
+    { 665u, "op4_spec_b30.p0", 0, 99, 0, 0u, 0u, "" },
+    { 666u, "op4_spec_b31.p0", 0, 99, 0, 0u, 0u, "" },
+    { 667u, "op4_spec_b32.p0", 0, 99, 0, 0u, 0u, "" },
+    { 668u, "op4_spec_b33.p0", 0, 99, 0, 0u, 0u, "" },
+    { 669u, "op4_spec_b34.p0", 0, 99, 0, 0u, 0u, "" },
+    { 670u, "op4_spec_b35.p0", 0, 99, 0, 0u, 0u, "" },
+    { 671u, "op4_spec_b36.p0", 0, 99, 0, 0u, 0u, "" },
+    { 672u, "op4_spec_b37.p0", 0, 99, 0, 0u, 0u, "" },
+    { 673u, "op4_spec_b38.p0", 0, 99, 0, 0u, 0u, "" },
+    { 674u, "op4_spec_b39.p0", 0, 99, 0, 0u, 0u, "" },
+    { 675u, "op4_spec_b40.p0", 0, 99, 0, 0u, 0u, "" },
+    { 676u, "op4_spec_b41.p0", 0, 99, 0, 0u, 0u, "" },
+    { 677u, "op4_spec_b42.p0", 0, 99, 0, 0u, 0u, "" },
+    { 678u, "op4_spec_b43.p0", 0, 99, 0, 0u, 0u, "" },
+    { 679u, "op4_spec_b44.p0", 0, 99, 0, 0u, 0u, "" },
+    { 680u, "op4_spec_b45.p0", 0, 99, 0, 0u, 0u, "" },
+    { 681u, "op4_spec_b46.p0", 0, 99, 0, 0u, 0u, "" },
+    { 682u, "op4_spec_b47.p0", 0, 99, 0, 0u, 0u, "" },
+    { 683u, "op4_spec_b48.p0", 0, 99, 0, 0u, 0u, "" },
+    { 684u, "op4_spec_b49.p0", 0, 99, 0, 0u, 0u, "" },
+    { 685u, "op4_spec_b50.p0", 0, 99, 0, 0u, 0u, "" },
+    { 686u, "op4_spec_b51.p0", 0, 99, 0, 0u, 0u, "" },
+    { 687u, "op4_spec_b52.p0", 0, 99, 0, 0u, 0u, "" },
+    { 688u, "op4_spec_b53.p0", 0, 99, 0, 0u, 0u, "" },
+    { 689u, "op4_spec_b54.p0", 0, 99, 0, 0u, 0u, "" },
+    { 690u, "op4_spec_b55.p0", 0, 99, 0, 0u, 0u, "" },
+    { 691u, "op4_spec_b56.p0", 0, 99, 0, 0u, 0u, "" },
+    { 692u, "op4_spec_b57.p0", 0, 99, 0, 0u, 0u, "" },
+    { 693u, "op4_spec_b58.p0", 0, 99, 0, 0u, 0u, "" },
+    { 694u, "op4_spec_b59.p0", 0, 99, 0, 0u, 0u, "" },
+    { 695u, "op4_spec_b60.p0", 0, 99, 0, 0u, 0u, "" },
+    { 696u, "op4_spec_b61.p0", 0, 99, 0, 0u, 0u, "" },
+    { 697u, "op4_spec_b62.p0", 0, 99, 0, 0u, 0u, "" },
+    { 698u, "op4_spec_b63.p0", 0, 99, 0, 0u, 0u, "" },
+    { 699u, "op4_spec_b64.p0", 0, 99, 0, 0u, 0u, "" },
+    { 700u, "op4_spec_morph.p0", 0, 99, 0, 0u, 0u, "" },
+    { 701u, "op4_spec_env_depth.p0", -99, 99, 0, 0u, 0u, "" },
+    { 702u, "op4.eg.r1.p0", 0, 99, 80, 0u, 0u, "" },
+    { 703u, "op4.eg.r2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 704u, "op4.eg.r3.p0", 0, 99, 50, 0u, 0u, "" },
+    { 705u, "op4.eg.r4.p0", 0, 99, 80, 0u, 0u, "" },
+    { 706u, "op4.eg.l1.p0", 0, 99, 99, 0u, 0u, "" },
+    { 707u, "op4.eg.l2.p0", 0, 99, 93, 0u, 0u, "" },
+    { 708u, "op4.eg.l3.p0", 0, 99, 87, 0u, 0u, "" },
+    { 709u, "op4_trem_rate.p0", 0, 20000000, 340870, 1u, 0u, "" },
+    { 710u, "op4_trem_depth.p0", -99, 99, 0, 0u, 0u, "" },
+    { 711u, "op4_trem_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 712u, "op4_trem_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 713u, "op4_fbenv_on.p0", 0, 1, 1, 0u, 0u, "" },
+    { 714u, "op4_fbenv_r1.p0", 0, 99, 80, 0u, 0u, "" },
+    { 715u, "op4_fbenv_r2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 716u, "op4_fbenv_r3.p0", 0, 99, 50, 0u, 0u, "" },
+    { 717u, "op4_fbenv_r4.p0", 0, 99, 80, 0u, 0u, "" },
+    { 718u, "op4_fbenv_l1.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 719u, "op4_fbenv_l2.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 720u, "op4_fbenv_l3.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 721u, "op4_fbenv_l4.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 722u, "op4_fblfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
+    { 723u, "op4_fblfo_depth.p0", -32767, 32767, 0, 0u, 0u, "" },
+    { 724u, "op4_fblfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 725u, "op4_fblfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 726u, "op4_dlfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
+    { 727u, "op4_dlfo_depth.p0", -32768, 32768, 0, 0u, 0u, "" },
+    { 728u, "op4_dlfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 729u, "op4_dlfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 730u, "op4.velamp.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 731u, "op4.velfm.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 732u, "op4.velrate.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 733u, "op4_level.p0", 0, 99, 85, 0u, 0u, "" },
+    { 734u, "op4_feedback.p0", -32767, 32767, 0, 0u, 0u, "" },
+    { 735u, "op4_level_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 736u, "op4_level_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 737u, "op4_fb_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 738u, "op4_fb_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 739u, "op4_aenv_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 740u, "op4_aenv_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 741u, "op4_level_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 742u, "op4_fb_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 743u, "op4_aenv_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 744u, "op4_mute.p0", 0, 1, 0, 0u, 0u, "" },
+    { 745u, "op4_spec_env_r1.p0", 0, 99, 80, 0u, 0u, "" },
+    { 746u, "op4_spec_env_r2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 747u, "op4_spec_env_r3.p0", 0, 99, 50, 0u, 0u, "" },
+    { 748u, "op4_spec_env_r4.p0", 0, 99, 80, 0u, 0u, "" },
+    { 749u, "op4_spec_env_l1.p0", 0, 99, 99, 0u, 0u, "" },
+    { 750u, "op4_spec_env_l2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 751u, "op4_spec_env_l3.p0", 0, 99, 0, 0u, 0u, "" },
+    { 752u, "op4_spec_lfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
+    { 753u, "op4_spec_lfo_depth.p0", -99, 99, 0, 0u, 0u, "" },
+    { 754u, "op4_spec_lfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 755u, "op4_spec_lfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 756u, "algorithm.p0", 0, 7, 4, 0u, 0u, "" },
+    { 757u, "penv_on.p0", 0, 1, 0, 0u, 0u, "" },
+    { 758u, "penv_r1.p0", 0, 99, 80, 0u, 0u, "" },
+    { 759u, "penv_r2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 760u, "penv_r3.p0", 0, 99, 50, 0u, 0u, "" },
+    { 761u, "penv_r4.p0", 0, 99, 80, 0u, 0u, "" },
+    { 762u, "penv_l1.p0", -32768, 32767, 5461, 0u, 0u, "" },
+    { 763u, "penv_l2.p0", -32768, 32767, 2731, 0u, 0u, "" },
+    { 764u, "penv_l3.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 765u, "penv_l4.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 766u, "penv_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 767u, "penv_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 768u, "penv_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 769u, "pitch_rate.p0", 0, 20000000, 447392, 1u, 0u, "" },
+    { 770u, "pitch_depth.p0", -32768, 32768, 273, 0u, 0u, "" },
+    { 771u, "pitch_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 772u, "pitch_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 773u, "f1_cutoff_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 774u, "f1_cutoff_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 775u, "fenv_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 776u, "fenv_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 777u, "f1_cutoff_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 778u, "fenv_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 779u, "cutoff.p0", 0, 55296, 8000, 1u, 0u, "" },
+    { 780u, "res.p0", 0, 41942, 16000, 1u, 0u, "" },
+    { 781u, "lp.comp.p0", -32768, 32767, 32767, 0u, 0u, "" },
+    { 782u, "filter_type.p0", 0, 2, 0, 0u, 0u, "" },
+    { 783u, "filter_on.p0", 0, 1, 0, 0u, 0u, "" },
+    { 784u, "fenv_depth.p0", 0, 65535, 0, 0u, 0u, "" },
+    { 785u, "fenv_r1.p0", 0, 99, 80, 0u, 0u, "" },
+    { 786u, "fenv_r2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 787u, "fenv_r3.p0", 0, 99, 50, 0u, 0u, "" },
+    { 788u, "fenv_r4.p0", 0, 99, 80, 0u, 0u, "" },
+    { 789u, "fenv_l1.p0", 0, 99, 99, 0u, 0u, "" },
+    { 790u, "fenv_l2.p0", 0, 99, 93, 0u, 0u, "" },
+    { 791u, "fenv_l3.p0", 0, 99, 87, 0u, 0u, "" },
+    { 792u, "mode.p0", 0, 1, 0, 0u, 0u, "" },
+    { 793u, "unison_count.p0", 1, 8, 1, 0u, 0u, "" },
+    { 794u, "unison_detune.p0", 0, 200, 0, 0u, 0u, "cents" },
+    { 795u, "detune.p0", -50, 50, 0, 0u, 0u, "cents" },
+    { 796u, "transpose.p0", -24, 24, 0, 0u, 0u, "st" },
+    { 797u, "legato.p0", 0, 1, 0, 0u, 0u, "" },
+    { 798u, "portamento.p0", 0, 5000, 0, 1u, 0u, "" },
+    { 799u, "note_priority.p0", 0, 2, 0, 0u, 0u, "" },
+    { 800u, "op1_ratio.p1", 32768, 1048576, 65536, 0u, 0u, "" },
+    { 801u, "op1_detune.p1", -50, 50, 0, 0u, 0u, "" },
+    { 802u, "op1_waveform.p1", 0, 13, 0, 0u, 0u, "" },
+    { 803u, "op1_spec_range_a.p1", 0, 1, 0, 0u, 0u, "" },
+    { 804u, "op1_spec_range_b.p1", 0, 1, 0, 0u, 0u, "" },
+    { 805u, "op1_spec_a1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 806u, "op1_spec_a2.p1", 0, 99, 0, 0u, 0u, "" },
+    { 807u, "op1_spec_a3.p1", 0, 99, 0, 0u, 0u, "" },
+    { 808u, "op1_spec_a4.p1", 0, 99, 0, 0u, 0u, "" },
+    { 809u, "op1_spec_a5.p1", 0, 99, 0, 0u, 0u, "" },
+    { 810u, "op1_spec_a6.p1", 0, 99, 0, 0u, 0u, "" },
+    { 811u, "op1_spec_a7.p1", 0, 99, 0, 0u, 0u, "" },
+    { 812u, "op1_spec_a8.p1", 0, 99, 0, 0u, 0u, "" },
+    { 813u, "op1_spec_a9.p1", 0, 99, 0, 0u, 0u, "" },
+    { 814u, "op1_spec_a10.p1", 0, 99, 0, 0u, 0u, "" },
+    { 815u, "op1_spec_a11.p1", 0, 99, 0, 0u, 0u, "" },
+    { 816u, "op1_spec_a12.p1", 0, 99, 0, 0u, 0u, "" },
+    { 817u, "op1_spec_a13.p1", 0, 99, 0, 0u, 0u, "" },
+    { 818u, "op1_spec_a14.p1", 0, 99, 0, 0u, 0u, "" },
+    { 819u, "op1_spec_a15.p1", 0, 99, 0, 0u, 0u, "" },
+    { 820u, "op1_spec_a16.p1", 0, 99, 0, 0u, 0u, "" },
+    { 821u, "op1_spec_a17.p1", 0, 99, 0, 0u, 0u, "" },
+    { 822u, "op1_spec_a18.p1", 0, 99, 0, 0u, 0u, "" },
+    { 823u, "op1_spec_a19.p1", 0, 99, 0, 0u, 0u, "" },
+    { 824u, "op1_spec_a20.p1", 0, 99, 0, 0u, 0u, "" },
+    { 825u, "op1_spec_a21.p1", 0, 99, 0, 0u, 0u, "" },
+    { 826u, "op1_spec_a22.p1", 0, 99, 0, 0u, 0u, "" },
+    { 827u, "op1_spec_a23.p1", 0, 99, 0, 0u, 0u, "" },
+    { 828u, "op1_spec_a24.p1", 0, 99, 0, 0u, 0u, "" },
+    { 829u, "op1_spec_a25.p1", 0, 99, 0, 0u, 0u, "" },
+    { 830u, "op1_spec_a26.p1", 0, 99, 0, 0u, 0u, "" },
+    { 831u, "op1_spec_a27.p1", 0, 99, 0, 0u, 0u, "" },
+    { 832u, "op1_spec_a28.p1", 0, 99, 0, 0u, 0u, "" },
+    { 833u, "op1_spec_a29.p1", 0, 99, 0, 0u, 0u, "" },
+    { 834u, "op1_spec_a30.p1", 0, 99, 0, 0u, 0u, "" },
+    { 835u, "op1_spec_a31.p1", 0, 99, 0, 0u, 0u, "" },
+    { 836u, "op1_spec_a32.p1", 0, 99, 0, 0u, 0u, "" },
+    { 837u, "op1_spec_a33.p1", 0, 99, 0, 0u, 0u, "" },
+    { 838u, "op1_spec_a34.p1", 0, 99, 0, 0u, 0u, "" },
+    { 839u, "op1_spec_a35.p1", 0, 99, 0, 0u, 0u, "" },
+    { 840u, "op1_spec_a36.p1", 0, 99, 0, 0u, 0u, "" },
+    { 841u, "op1_spec_a37.p1", 0, 99, 0, 0u, 0u, "" },
+    { 842u, "op1_spec_a38.p1", 0, 99, 0, 0u, 0u, "" },
+    { 843u, "op1_spec_a39.p1", 0, 99, 0, 0u, 0u, "" },
+    { 844u, "op1_spec_a40.p1", 0, 99, 0, 0u, 0u, "" },
+    { 845u, "op1_spec_a41.p1", 0, 99, 0, 0u, 0u, "" },
+    { 846u, "op1_spec_a42.p1", 0, 99, 0, 0u, 0u, "" },
+    { 847u, "op1_spec_a43.p1", 0, 99, 0, 0u, 0u, "" },
+    { 848u, "op1_spec_a44.p1", 0, 99, 0, 0u, 0u, "" },
+    { 849u, "op1_spec_a45.p1", 0, 99, 0, 0u, 0u, "" },
+    { 850u, "op1_spec_a46.p1", 0, 99, 0, 0u, 0u, "" },
+    { 851u, "op1_spec_a47.p1", 0, 99, 0, 0u, 0u, "" },
+    { 852u, "op1_spec_a48.p1", 0, 99, 0, 0u, 0u, "" },
+    { 853u, "op1_spec_a49.p1", 0, 99, 0, 0u, 0u, "" },
+    { 854u, "op1_spec_a50.p1", 0, 99, 0, 0u, 0u, "" },
+    { 855u, "op1_spec_a51.p1", 0, 99, 0, 0u, 0u, "" },
+    { 856u, "op1_spec_a52.p1", 0, 99, 0, 0u, 0u, "" },
+    { 857u, "op1_spec_a53.p1", 0, 99, 0, 0u, 0u, "" },
+    { 858u, "op1_spec_a54.p1", 0, 99, 0, 0u, 0u, "" },
+    { 859u, "op1_spec_a55.p1", 0, 99, 0, 0u, 0u, "" },
+    { 860u, "op1_spec_a56.p1", 0, 99, 0, 0u, 0u, "" },
+    { 861u, "op1_spec_a57.p1", 0, 99, 0, 0u, 0u, "" },
+    { 862u, "op1_spec_a58.p1", 0, 99, 0, 0u, 0u, "" },
+    { 863u, "op1_spec_a59.p1", 0, 99, 0, 0u, 0u, "" },
+    { 864u, "op1_spec_a60.p1", 0, 99, 0, 0u, 0u, "" },
+    { 865u, "op1_spec_a61.p1", 0, 99, 0, 0u, 0u, "" },
+    { 866u, "op1_spec_a62.p1", 0, 99, 0, 0u, 0u, "" },
+    { 867u, "op1_spec_a63.p1", 0, 99, 0, 0u, 0u, "" },
+    { 868u, "op1_spec_a64.p1", 0, 99, 0, 0u, 0u, "" },
+    { 869u, "op1_spec_b1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 870u, "op1_spec_b2.p1", 0, 99, 45, 0u, 0u, "" },
+    { 871u, "op1_spec_b3.p1", 0, 99, 30, 0u, 0u, "" },
+    { 872u, "op1_spec_b4.p1", 0, 99, 15, 0u, 0u, "" },
+    { 873u, "op1_spec_b5.p1", 0, 99, 55, 0u, 0u, "" },
+    { 874u, "op1_spec_b6.p1", 0, 99, 40, 0u, 0u, "" },
+    { 875u, "op1_spec_b7.p1", 0, 99, 25, 0u, 0u, "" },
+    { 876u, "op1_spec_b8.p1", 0, 99, 12, 0u, 0u, "" },
+    { 877u, "op1_spec_b9.p1", 0, 99, 8, 0u, 0u, "" },
+    { 878u, "op1_spec_b10.p1", 0, 99, 5, 0u, 0u, "" },
+    { 879u, "op1_spec_b11.p1", 0, 99, 3, 0u, 0u, "" },
+    { 880u, "op1_spec_b12.p1", 0, 99, 2, 0u, 0u, "" },
+    { 881u, "op1_spec_b13.p1", 0, 99, 1, 0u, 0u, "" },
+    { 882u, "op1_spec_b14.p1", 0, 99, 0, 0u, 0u, "" },
+    { 883u, "op1_spec_b15.p1", 0, 99, 0, 0u, 0u, "" },
+    { 884u, "op1_spec_b16.p1", 0, 99, 0, 0u, 0u, "" },
+    { 885u, "op1_spec_b17.p1", 0, 99, 0, 0u, 0u, "" },
+    { 886u, "op1_spec_b18.p1", 0, 99, 0, 0u, 0u, "" },
+    { 887u, "op1_spec_b19.p1", 0, 99, 0, 0u, 0u, "" },
+    { 888u, "op1_spec_b20.p1", 0, 99, 0, 0u, 0u, "" },
+    { 889u, "op1_spec_b21.p1", 0, 99, 0, 0u, 0u, "" },
+    { 890u, "op1_spec_b22.p1", 0, 99, 0, 0u, 0u, "" },
+    { 891u, "op1_spec_b23.p1", 0, 99, 0, 0u, 0u, "" },
+    { 892u, "op1_spec_b24.p1", 0, 99, 0, 0u, 0u, "" },
+    { 893u, "op1_spec_b25.p1", 0, 99, 0, 0u, 0u, "" },
+    { 894u, "op1_spec_b26.p1", 0, 99, 0, 0u, 0u, "" },
+    { 895u, "op1_spec_b27.p1", 0, 99, 0, 0u, 0u, "" },
+    { 896u, "op1_spec_b28.p1", 0, 99, 0, 0u, 0u, "" },
+    { 897u, "op1_spec_b29.p1", 0, 99, 0, 0u, 0u, "" },
+    { 898u, "op1_spec_b30.p1", 0, 99, 0, 0u, 0u, "" },
+    { 899u, "op1_spec_b31.p1", 0, 99, 0, 0u, 0u, "" },
+    { 900u, "op1_spec_b32.p1", 0, 99, 0, 0u, 0u, "" },
+    { 901u, "op1_spec_b33.p1", 0, 99, 0, 0u, 0u, "" },
+    { 902u, "op1_spec_b34.p1", 0, 99, 0, 0u, 0u, "" },
+    { 903u, "op1_spec_b35.p1", 0, 99, 0, 0u, 0u, "" },
+    { 904u, "op1_spec_b36.p1", 0, 99, 0, 0u, 0u, "" },
+    { 905u, "op1_spec_b37.p1", 0, 99, 0, 0u, 0u, "" },
+    { 906u, "op1_spec_b38.p1", 0, 99, 0, 0u, 0u, "" },
+    { 907u, "op1_spec_b39.p1", 0, 99, 0, 0u, 0u, "" },
+    { 908u, "op1_spec_b40.p1", 0, 99, 0, 0u, 0u, "" },
+    { 909u, "op1_spec_b41.p1", 0, 99, 0, 0u, 0u, "" },
+    { 910u, "op1_spec_b42.p1", 0, 99, 0, 0u, 0u, "" },
+    { 911u, "op1_spec_b43.p1", 0, 99, 0, 0u, 0u, "" },
+    { 912u, "op1_spec_b44.p1", 0, 99, 0, 0u, 0u, "" },
+    { 913u, "op1_spec_b45.p1", 0, 99, 0, 0u, 0u, "" },
+    { 914u, "op1_spec_b46.p1", 0, 99, 0, 0u, 0u, "" },
+    { 915u, "op1_spec_b47.p1", 0, 99, 0, 0u, 0u, "" },
+    { 916u, "op1_spec_b48.p1", 0, 99, 0, 0u, 0u, "" },
+    { 917u, "op1_spec_b49.p1", 0, 99, 0, 0u, 0u, "" },
+    { 918u, "op1_spec_b50.p1", 0, 99, 0, 0u, 0u, "" },
+    { 919u, "op1_spec_b51.p1", 0, 99, 0, 0u, 0u, "" },
+    { 920u, "op1_spec_b52.p1", 0, 99, 0, 0u, 0u, "" },
+    { 921u, "op1_spec_b53.p1", 0, 99, 0, 0u, 0u, "" },
+    { 922u, "op1_spec_b54.p1", 0, 99, 0, 0u, 0u, "" },
+    { 923u, "op1_spec_b55.p1", 0, 99, 0, 0u, 0u, "" },
+    { 924u, "op1_spec_b56.p1", 0, 99, 0, 0u, 0u, "" },
+    { 925u, "op1_spec_b57.p1", 0, 99, 0, 0u, 0u, "" },
+    { 926u, "op1_spec_b58.p1", 0, 99, 0, 0u, 0u, "" },
+    { 927u, "op1_spec_b59.p1", 0, 99, 0, 0u, 0u, "" },
+    { 928u, "op1_spec_b60.p1", 0, 99, 0, 0u, 0u, "" },
+    { 929u, "op1_spec_b61.p1", 0, 99, 0, 0u, 0u, "" },
+    { 930u, "op1_spec_b62.p1", 0, 99, 0, 0u, 0u, "" },
+    { 931u, "op1_spec_b63.p1", 0, 99, 0, 0u, 0u, "" },
+    { 932u, "op1_spec_b64.p1", 0, 99, 0, 0u, 0u, "" },
+    { 933u, "op1_spec_morph.p1", 0, 99, 0, 0u, 0u, "" },
+    { 934u, "op1_spec_env_depth.p1", -99, 99, 0, 0u, 0u, "" },
+    { 935u, "attack.p1", 0, 99, 80, 0u, 0u, "" },
+    { 936u, "op1.eg.r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 937u, "op1.eg.r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 938u, "release.p1", 0, 99, 80, 0u, 0u, "" },
+    { 939u, "op1.eg.l1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 940u, "op1.eg.l2.p1", 0, 99, 93, 0u, 0u, "" },
+    { 941u, "op1.eg.l3.p1", 0, 99, 87, 0u, 0u, "" },
+    { 942u, "op1_trem_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
+    { 943u, "op1_trem_depth.p1", -99, 99, 0, 0u, 0u, "" },
+    { 944u, "op1_trem_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 945u, "op1_trem_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 946u, "op1_fbenv_on.p1", 0, 1, 1, 0u, 0u, "" },
+    { 947u, "op1_fbenv_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 948u, "op1_fbenv_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 949u, "op1_fbenv_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 950u, "op1_fbenv_r4.p1", 0, 99, 80, 0u, 0u, "" },
+    { 951u, "op1_fbenv_l1.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 952u, "op1_fbenv_l2.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 953u, "op1_fbenv_l3.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 954u, "op1_fbenv_l4.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 955u, "op1_fblfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
+    { 956u, "op1_fblfo_depth.p1", -32767, 32767, 0, 0u, 0u, "" },
+    { 957u, "op1_fblfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 958u, "op1_fblfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 959u, "op1_dlfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
+    { 960u, "op1_dlfo_depth.p1", -32768, 32768, 0, 0u, 0u, "" },
+    { 961u, "op1_dlfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 962u, "op1_dlfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 963u, "op1.velamp.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 964u, "op1.velfm.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 965u, "op1.velrate.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 966u, "op1_level.p1", 0, 99, 75, 0u, 0u, "" },
+    { 967u, "op1_feedback.p1", -32767, 32767, 0, 0u, 0u, "" },
+    { 968u, "op1_level_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 969u, "op1_level_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 970u, "op1_fb_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 971u, "op1_fb_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 972u, "op1_aenv_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 973u, "op1_aenv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 974u, "op1_level_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 975u, "op1_fb_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 976u, "op1_aenv_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 977u, "op1_mute.p1", 0, 1, 0, 0u, 0u, "" },
+    { 978u, "op1_spec_env_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 979u, "op1_spec_env_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 980u, "op1_spec_env_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 981u, "op1_spec_env_r4.p1", 0, 99, 80, 0u, 0u, "" },
+    { 982u, "op1_spec_env_l1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 983u, "op1_spec_env_l2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 984u, "op1_spec_env_l3.p1", 0, 99, 0, 0u, 0u, "" },
+    { 985u, "op1_spec_lfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
+    { 986u, "op1_spec_lfo_depth.p1", -99, 99, 0, 0u, 0u, "" },
+    { 987u, "op1_spec_lfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 988u, "op1_spec_lfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 989u, "op2_ratio.p1", 32768, 1048576, 65536, 0u, 0u, "" },
+    { 990u, "op2_detune.p1", -50, 50, 0, 0u, 0u, "" },
+    { 991u, "op2_waveform.p1", 0, 13, 0, 0u, 0u, "" },
+    { 992u, "op2_spec_range_a.p1", 0, 1, 0, 0u, 0u, "" },
+    { 993u, "op2_spec_range_b.p1", 0, 1, 0, 0u, 0u, "" },
+    { 994u, "op2_spec_a1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 995u, "op2_spec_a2.p1", 0, 99, 0, 0u, 0u, "" },
+    { 996u, "op2_spec_a3.p1", 0, 99, 0, 0u, 0u, "" },
+    { 997u, "op2_spec_a4.p1", 0, 99, 0, 0u, 0u, "" },
+    { 998u, "op2_spec_a5.p1", 0, 99, 0, 0u, 0u, "" },
+    { 999u, "op2_spec_a6.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1000u, "op2_spec_a7.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1001u, "op2_spec_a8.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1002u, "op2_spec_a9.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1003u, "op2_spec_a10.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1004u, "op2_spec_a11.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1005u, "op2_spec_a12.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1006u, "op2_spec_a13.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1007u, "op2_spec_a14.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1008u, "op2_spec_a15.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1009u, "op2_spec_a16.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1010u, "op2_spec_a17.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1011u, "op2_spec_a18.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1012u, "op2_spec_a19.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1013u, "op2_spec_a20.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1014u, "op2_spec_a21.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1015u, "op2_spec_a22.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1016u, "op2_spec_a23.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1017u, "op2_spec_a24.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1018u, "op2_spec_a25.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1019u, "op2_spec_a26.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1020u, "op2_spec_a27.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1021u, "op2_spec_a28.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1022u, "op2_spec_a29.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1023u, "op2_spec_a30.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1024u, "op2_spec_a31.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1025u, "op2_spec_a32.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1026u, "op2_spec_a33.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1027u, "op2_spec_a34.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1028u, "op2_spec_a35.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1029u, "op2_spec_a36.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1030u, "op2_spec_a37.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1031u, "op2_spec_a38.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1032u, "op2_spec_a39.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1033u, "op2_spec_a40.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1034u, "op2_spec_a41.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1035u, "op2_spec_a42.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1036u, "op2_spec_a43.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1037u, "op2_spec_a44.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1038u, "op2_spec_a45.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1039u, "op2_spec_a46.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1040u, "op2_spec_a47.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1041u, "op2_spec_a48.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1042u, "op2_spec_a49.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1043u, "op2_spec_a50.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1044u, "op2_spec_a51.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1045u, "op2_spec_a52.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1046u, "op2_spec_a53.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1047u, "op2_spec_a54.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1048u, "op2_spec_a55.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1049u, "op2_spec_a56.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1050u, "op2_spec_a57.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1051u, "op2_spec_a58.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1052u, "op2_spec_a59.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1053u, "op2_spec_a60.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1054u, "op2_spec_a61.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1055u, "op2_spec_a62.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1056u, "op2_spec_a63.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1057u, "op2_spec_a64.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1058u, "op2_spec_b1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 1059u, "op2_spec_b2.p1", 0, 99, 45, 0u, 0u, "" },
+    { 1060u, "op2_spec_b3.p1", 0, 99, 30, 0u, 0u, "" },
+    { 1061u, "op2_spec_b4.p1", 0, 99, 15, 0u, 0u, "" },
+    { 1062u, "op2_spec_b5.p1", 0, 99, 55, 0u, 0u, "" },
+    { 1063u, "op2_spec_b6.p1", 0, 99, 40, 0u, 0u, "" },
+    { 1064u, "op2_spec_b7.p1", 0, 99, 25, 0u, 0u, "" },
+    { 1065u, "op2_spec_b8.p1", 0, 99, 12, 0u, 0u, "" },
+    { 1066u, "op2_spec_b9.p1", 0, 99, 8, 0u, 0u, "" },
+    { 1067u, "op2_spec_b10.p1", 0, 99, 5, 0u, 0u, "" },
+    { 1068u, "op2_spec_b11.p1", 0, 99, 3, 0u, 0u, "" },
+    { 1069u, "op2_spec_b12.p1", 0, 99, 2, 0u, 0u, "" },
+    { 1070u, "op2_spec_b13.p1", 0, 99, 1, 0u, 0u, "" },
+    { 1071u, "op2_spec_b14.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1072u, "op2_spec_b15.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1073u, "op2_spec_b16.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1074u, "op2_spec_b17.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1075u, "op2_spec_b18.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1076u, "op2_spec_b19.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1077u, "op2_spec_b20.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1078u, "op2_spec_b21.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1079u, "op2_spec_b22.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1080u, "op2_spec_b23.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1081u, "op2_spec_b24.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1082u, "op2_spec_b25.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1083u, "op2_spec_b26.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1084u, "op2_spec_b27.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1085u, "op2_spec_b28.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1086u, "op2_spec_b29.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1087u, "op2_spec_b30.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1088u, "op2_spec_b31.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1089u, "op2_spec_b32.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1090u, "op2_spec_b33.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1091u, "op2_spec_b34.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1092u, "op2_spec_b35.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1093u, "op2_spec_b36.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1094u, "op2_spec_b37.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1095u, "op2_spec_b38.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1096u, "op2_spec_b39.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1097u, "op2_spec_b40.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1098u, "op2_spec_b41.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1099u, "op2_spec_b42.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1100u, "op2_spec_b43.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1101u, "op2_spec_b44.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1102u, "op2_spec_b45.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1103u, "op2_spec_b46.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1104u, "op2_spec_b47.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1105u, "op2_spec_b48.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1106u, "op2_spec_b49.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1107u, "op2_spec_b50.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1108u, "op2_spec_b51.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1109u, "op2_spec_b52.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1110u, "op2_spec_b53.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1111u, "op2_spec_b54.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1112u, "op2_spec_b55.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1113u, "op2_spec_b56.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1114u, "op2_spec_b57.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1115u, "op2_spec_b58.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1116u, "op2_spec_b59.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1117u, "op2_spec_b60.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1118u, "op2_spec_b61.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1119u, "op2_spec_b62.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1120u, "op2_spec_b63.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1121u, "op2_spec_b64.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1122u, "op2_spec_morph.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1123u, "op2_spec_env_depth.p1", -99, 99, 0, 0u, 0u, "" },
+    { 1124u, "op2.eg.r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1125u, "op2.eg.r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1126u, "op2.eg.r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 1127u, "op2.eg.r4.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1128u, "op2.eg.l1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 1129u, "op2.eg.l2.p1", 0, 99, 93, 0u, 0u, "" },
+    { 1130u, "op2.eg.l3.p1", 0, 99, 87, 0u, 0u, "" },
+    { 1131u, "op2_trem_rate.p1", 0, 20000000, 447392, 1u, 0u, "" },
+    { 1132u, "op2_trem_depth.p1", -99, 99, 0, 0u, 0u, "" },
+    { 1133u, "op2_trem_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 1134u, "op2_trem_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1135u, "op2_fbenv_on.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1136u, "op2_fbenv_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1137u, "op2_fbenv_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1138u, "op2_fbenv_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 1139u, "op2_fbenv_r4.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1140u, "op2_fbenv_l1.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1141u, "op2_fbenv_l2.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1142u, "op2_fbenv_l3.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1143u, "op2_fbenv_l4.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1144u, "op2_fblfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
+    { 1145u, "op2_fblfo_depth.p1", -32767, 32767, 0, 0u, 0u, "" },
+    { 1146u, "op2_fblfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 1147u, "op2_fblfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1148u, "op2_dlfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
+    { 1149u, "op2_dlfo_depth.p1", -32768, 32768, 0, 0u, 0u, "" },
+    { 1150u, "op2_dlfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 1151u, "op2_dlfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1152u, "op2.velamp.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1153u, "op2.velfm.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1154u, "op2.velrate.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1155u, "op2_level.p1", 0, 99, 85, 0u, 0u, "" },
+    { 1156u, "op2_feedback.p1", -32767, 32767, 0, 0u, 0u, "" },
+    { 1157u, "op2_level_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1158u, "op2_level_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1159u, "op2_fb_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1160u, "op2_fb_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1161u, "op2_aenv_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1162u, "op2_aenv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1163u, "op2_level_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1164u, "op2_fb_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1165u, "op2_aenv_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1166u, "op2_mute.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1167u, "op2_spec_env_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1168u, "op2_spec_env_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1169u, "op2_spec_env_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 1170u, "op2_spec_env_r4.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1171u, "op2_spec_env_l1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 1172u, "op2_spec_env_l2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1173u, "op2_spec_env_l3.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1174u, "op2_spec_lfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
+    { 1175u, "op2_spec_lfo_depth.p1", -99, 99, 0, 0u, 0u, "" },
+    { 1176u, "op2_spec_lfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 1177u, "op2_spec_lfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1178u, "op3_ratio.p1", 32768, 1048576, 196608, 0u, 0u, "" },
+    { 1179u, "op3_detune.p1", -50, 50, 0, 0u, 0u, "" },
+    { 1180u, "op3_waveform.p1", 0, 13, 0, 0u, 0u, "" },
+    { 1181u, "op3_spec_range_a.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1182u, "op3_spec_range_b.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1183u, "op3_spec_a1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 1184u, "op3_spec_a2.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1185u, "op3_spec_a3.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1186u, "op3_spec_a4.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1187u, "op3_spec_a5.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1188u, "op3_spec_a6.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1189u, "op3_spec_a7.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1190u, "op3_spec_a8.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1191u, "op3_spec_a9.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1192u, "op3_spec_a10.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1193u, "op3_spec_a11.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1194u, "op3_spec_a12.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1195u, "op3_spec_a13.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1196u, "op3_spec_a14.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1197u, "op3_spec_a15.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1198u, "op3_spec_a16.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1199u, "op3_spec_a17.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1200u, "op3_spec_a18.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1201u, "op3_spec_a19.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1202u, "op3_spec_a20.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1203u, "op3_spec_a21.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1204u, "op3_spec_a22.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1205u, "op3_spec_a23.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1206u, "op3_spec_a24.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1207u, "op3_spec_a25.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1208u, "op3_spec_a26.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1209u, "op3_spec_a27.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1210u, "op3_spec_a28.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1211u, "op3_spec_a29.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1212u, "op3_spec_a30.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1213u, "op3_spec_a31.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1214u, "op3_spec_a32.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1215u, "op3_spec_a33.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1216u, "op3_spec_a34.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1217u, "op3_spec_a35.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1218u, "op3_spec_a36.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1219u, "op3_spec_a37.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1220u, "op3_spec_a38.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1221u, "op3_spec_a39.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1222u, "op3_spec_a40.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1223u, "op3_spec_a41.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1224u, "op3_spec_a42.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1225u, "op3_spec_a43.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1226u, "op3_spec_a44.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1227u, "op3_spec_a45.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1228u, "op3_spec_a46.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1229u, "op3_spec_a47.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1230u, "op3_spec_a48.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1231u, "op3_spec_a49.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1232u, "op3_spec_a50.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1233u, "op3_spec_a51.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1234u, "op3_spec_a52.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1235u, "op3_spec_a53.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1236u, "op3_spec_a54.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1237u, "op3_spec_a55.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1238u, "op3_spec_a56.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1239u, "op3_spec_a57.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1240u, "op3_spec_a58.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1241u, "op3_spec_a59.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1242u, "op3_spec_a60.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1243u, "op3_spec_a61.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1244u, "op3_spec_a62.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1245u, "op3_spec_a63.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1246u, "op3_spec_a64.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1247u, "op3_spec_b1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 1248u, "op3_spec_b2.p1", 0, 99, 45, 0u, 0u, "" },
+    { 1249u, "op3_spec_b3.p1", 0, 99, 30, 0u, 0u, "" },
+    { 1250u, "op3_spec_b4.p1", 0, 99, 15, 0u, 0u, "" },
+    { 1251u, "op3_spec_b5.p1", 0, 99, 55, 0u, 0u, "" },
+    { 1252u, "op3_spec_b6.p1", 0, 99, 40, 0u, 0u, "" },
+    { 1253u, "op3_spec_b7.p1", 0, 99, 25, 0u, 0u, "" },
+    { 1254u, "op3_spec_b8.p1", 0, 99, 12, 0u, 0u, "" },
+    { 1255u, "op3_spec_b9.p1", 0, 99, 8, 0u, 0u, "" },
+    { 1256u, "op3_spec_b10.p1", 0, 99, 5, 0u, 0u, "" },
+    { 1257u, "op3_spec_b11.p1", 0, 99, 3, 0u, 0u, "" },
+    { 1258u, "op3_spec_b12.p1", 0, 99, 2, 0u, 0u, "" },
+    { 1259u, "op3_spec_b13.p1", 0, 99, 1, 0u, 0u, "" },
+    { 1260u, "op3_spec_b14.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1261u, "op3_spec_b15.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1262u, "op3_spec_b16.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1263u, "op3_spec_b17.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1264u, "op3_spec_b18.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1265u, "op3_spec_b19.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1266u, "op3_spec_b20.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1267u, "op3_spec_b21.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1268u, "op3_spec_b22.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1269u, "op3_spec_b23.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1270u, "op3_spec_b24.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1271u, "op3_spec_b25.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1272u, "op3_spec_b26.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1273u, "op3_spec_b27.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1274u, "op3_spec_b28.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1275u, "op3_spec_b29.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1276u, "op3_spec_b30.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1277u, "op3_spec_b31.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1278u, "op3_spec_b32.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1279u, "op3_spec_b33.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1280u, "op3_spec_b34.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1281u, "op3_spec_b35.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1282u, "op3_spec_b36.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1283u, "op3_spec_b37.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1284u, "op3_spec_b38.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1285u, "op3_spec_b39.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1286u, "op3_spec_b40.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1287u, "op3_spec_b41.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1288u, "op3_spec_b42.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1289u, "op3_spec_b43.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1290u, "op3_spec_b44.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1291u, "op3_spec_b45.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1292u, "op3_spec_b46.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1293u, "op3_spec_b47.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1294u, "op3_spec_b48.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1295u, "op3_spec_b49.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1296u, "op3_spec_b50.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1297u, "op3_spec_b51.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1298u, "op3_spec_b52.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1299u, "op3_spec_b53.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1300u, "op3_spec_b54.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1301u, "op3_spec_b55.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1302u, "op3_spec_b56.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1303u, "op3_spec_b57.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1304u, "op3_spec_b58.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1305u, "op3_spec_b59.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1306u, "op3_spec_b60.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1307u, "op3_spec_b61.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1308u, "op3_spec_b62.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1309u, "op3_spec_b63.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1310u, "op3_spec_b64.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1311u, "op3_spec_morph.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1312u, "op3_spec_env_depth.p1", -99, 99, 0, 0u, 0u, "" },
+    { 1313u, "op3.eg.r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1314u, "op3.eg.r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1315u, "op3.eg.r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 1316u, "op3.eg.r4.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1317u, "op3.eg.l1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 1318u, "op3.eg.l2.p1", 0, 99, 93, 0u, 0u, "" },
+    { 1319u, "op3.eg.l3.p1", 0, 99, 87, 0u, 0u, "" },
+    { 1320u, "op3_trem_rate.p1", 0, 20000000, 292174, 1u, 0u, "" },
+    { 1321u, "op3_trem_depth.p1", -99, 99, 0, 0u, 0u, "" },
+    { 1322u, "op3_trem_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 1323u, "op3_trem_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1324u, "op3_fbenv_on.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1325u, "op3_fbenv_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1326u, "op3_fbenv_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1327u, "op3_fbenv_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 1328u, "op3_fbenv_r4.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1329u, "op3_fbenv_l1.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1330u, "op3_fbenv_l2.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1331u, "op3_fbenv_l3.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1332u, "op3_fbenv_l4.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1333u, "op3_fblfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
+    { 1334u, "op3_fblfo_depth.p1", -32767, 32767, 0, 0u, 0u, "" },
+    { 1335u, "op3_fblfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 1336u, "op3_fblfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1337u, "op3_dlfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
+    { 1338u, "op3_dlfo_depth.p1", -32768, 32768, 0, 0u, 0u, "" },
+    { 1339u, "op3_dlfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 1340u, "op3_dlfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1341u, "op3.velamp.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1342u, "op3.velfm.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1343u, "op3.velrate.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1344u, "op3_level.p1", 0, 99, 70, 0u, 0u, "" },
+    { 1345u, "op3_feedback.p1", -32767, 32767, 0, 0u, 0u, "" },
+    { 1346u, "op3_level_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1347u, "op3_level_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1348u, "op3_fb_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1349u, "op3_fb_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1350u, "op3_aenv_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1351u, "op3_aenv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1352u, "op3_level_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1353u, "op3_fb_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1354u, "op3_aenv_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1355u, "op3_mute.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1356u, "op3_spec_env_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1357u, "op3_spec_env_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1358u, "op3_spec_env_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 1359u, "op3_spec_env_r4.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1360u, "op3_spec_env_l1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 1361u, "op3_spec_env_l2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1362u, "op3_spec_env_l3.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1363u, "op3_spec_lfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
+    { 1364u, "op3_spec_lfo_depth.p1", -99, 99, 0, 0u, 0u, "" },
+    { 1365u, "op3_spec_lfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 1366u, "op3_spec_lfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1367u, "op4_ratio.p1", 32768, 1048576, 131072, 0u, 0u, "" },
+    { 1368u, "op4_detune.p1", -50, 50, 0, 0u, 0u, "" },
+    { 1369u, "op4_waveform.p1", 0, 13, 0, 0u, 0u, "" },
+    { 1370u, "op4_spec_range_a.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1371u, "op4_spec_range_b.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1372u, "op4_spec_a1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 1373u, "op4_spec_a2.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1374u, "op4_spec_a3.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1375u, "op4_spec_a4.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1376u, "op4_spec_a5.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1377u, "op4_spec_a6.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1378u, "op4_spec_a7.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1379u, "op4_spec_a8.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1380u, "op4_spec_a9.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1381u, "op4_spec_a10.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1382u, "op4_spec_a11.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1383u, "op4_spec_a12.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1384u, "op4_spec_a13.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1385u, "op4_spec_a14.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1386u, "op4_spec_a15.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1387u, "op4_spec_a16.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1388u, "op4_spec_a17.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1389u, "op4_spec_a18.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1390u, "op4_spec_a19.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1391u, "op4_spec_a20.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1392u, "op4_spec_a21.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1393u, "op4_spec_a22.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1394u, "op4_spec_a23.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1395u, "op4_spec_a24.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1396u, "op4_spec_a25.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1397u, "op4_spec_a26.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1398u, "op4_spec_a27.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1399u, "op4_spec_a28.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1400u, "op4_spec_a29.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1401u, "op4_spec_a30.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1402u, "op4_spec_a31.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1403u, "op4_spec_a32.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1404u, "op4_spec_a33.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1405u, "op4_spec_a34.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1406u, "op4_spec_a35.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1407u, "op4_spec_a36.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1408u, "op4_spec_a37.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1409u, "op4_spec_a38.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1410u, "op4_spec_a39.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1411u, "op4_spec_a40.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1412u, "op4_spec_a41.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1413u, "op4_spec_a42.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1414u, "op4_spec_a43.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1415u, "op4_spec_a44.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1416u, "op4_spec_a45.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1417u, "op4_spec_a46.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1418u, "op4_spec_a47.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1419u, "op4_spec_a48.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1420u, "op4_spec_a49.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1421u, "op4_spec_a50.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1422u, "op4_spec_a51.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1423u, "op4_spec_a52.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1424u, "op4_spec_a53.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1425u, "op4_spec_a54.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1426u, "op4_spec_a55.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1427u, "op4_spec_a56.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1428u, "op4_spec_a57.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1429u, "op4_spec_a58.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1430u, "op4_spec_a59.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1431u, "op4_spec_a60.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1432u, "op4_spec_a61.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1433u, "op4_spec_a62.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1434u, "op4_spec_a63.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1435u, "op4_spec_a64.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1436u, "op4_spec_b1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 1437u, "op4_spec_b2.p1", 0, 99, 45, 0u, 0u, "" },
+    { 1438u, "op4_spec_b3.p1", 0, 99, 30, 0u, 0u, "" },
+    { 1439u, "op4_spec_b4.p1", 0, 99, 15, 0u, 0u, "" },
+    { 1440u, "op4_spec_b5.p1", 0, 99, 55, 0u, 0u, "" },
+    { 1441u, "op4_spec_b6.p1", 0, 99, 40, 0u, 0u, "" },
+    { 1442u, "op4_spec_b7.p1", 0, 99, 25, 0u, 0u, "" },
+    { 1443u, "op4_spec_b8.p1", 0, 99, 12, 0u, 0u, "" },
+    { 1444u, "op4_spec_b9.p1", 0, 99, 8, 0u, 0u, "" },
+    { 1445u, "op4_spec_b10.p1", 0, 99, 5, 0u, 0u, "" },
+    { 1446u, "op4_spec_b11.p1", 0, 99, 3, 0u, 0u, "" },
+    { 1447u, "op4_spec_b12.p1", 0, 99, 2, 0u, 0u, "" },
+    { 1448u, "op4_spec_b13.p1", 0, 99, 1, 0u, 0u, "" },
+    { 1449u, "op4_spec_b14.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1450u, "op4_spec_b15.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1451u, "op4_spec_b16.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1452u, "op4_spec_b17.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1453u, "op4_spec_b18.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1454u, "op4_spec_b19.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1455u, "op4_spec_b20.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1456u, "op4_spec_b21.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1457u, "op4_spec_b22.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1458u, "op4_spec_b23.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1459u, "op4_spec_b24.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1460u, "op4_spec_b25.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1461u, "op4_spec_b26.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1462u, "op4_spec_b27.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1463u, "op4_spec_b28.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1464u, "op4_spec_b29.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1465u, "op4_spec_b30.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1466u, "op4_spec_b31.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1467u, "op4_spec_b32.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1468u, "op4_spec_b33.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1469u, "op4_spec_b34.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1470u, "op4_spec_b35.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1471u, "op4_spec_b36.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1472u, "op4_spec_b37.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1473u, "op4_spec_b38.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1474u, "op4_spec_b39.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1475u, "op4_spec_b40.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1476u, "op4_spec_b41.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1477u, "op4_spec_b42.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1478u, "op4_spec_b43.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1479u, "op4_spec_b44.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1480u, "op4_spec_b45.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1481u, "op4_spec_b46.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1482u, "op4_spec_b47.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1483u, "op4_spec_b48.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1484u, "op4_spec_b49.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1485u, "op4_spec_b50.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1486u, "op4_spec_b51.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1487u, "op4_spec_b52.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1488u, "op4_spec_b53.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1489u, "op4_spec_b54.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1490u, "op4_spec_b55.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1491u, "op4_spec_b56.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1492u, "op4_spec_b57.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1493u, "op4_spec_b58.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1494u, "op4_spec_b59.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1495u, "op4_spec_b60.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1496u, "op4_spec_b61.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1497u, "op4_spec_b62.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1498u, "op4_spec_b63.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1499u, "op4_spec_b64.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1500u, "op4_spec_morph.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1501u, "op4_spec_env_depth.p1", -99, 99, 0, 0u, 0u, "" },
+    { 1502u, "op4.eg.r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1503u, "op4.eg.r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1504u, "op4.eg.r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 1505u, "op4.eg.r4.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1506u, "op4.eg.l1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 1507u, "op4.eg.l2.p1", 0, 99, 93, 0u, 0u, "" },
+    { 1508u, "op4.eg.l3.p1", 0, 99, 87, 0u, 0u, "" },
+    { 1509u, "op4_trem_rate.p1", 0, 20000000, 340870, 1u, 0u, "" },
+    { 1510u, "op4_trem_depth.p1", -99, 99, 0, 0u, 0u, "" },
+    { 1511u, "op4_trem_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 1512u, "op4_trem_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1513u, "op4_fbenv_on.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1514u, "op4_fbenv_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1515u, "op4_fbenv_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1516u, "op4_fbenv_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 1517u, "op4_fbenv_r4.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1518u, "op4_fbenv_l1.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1519u, "op4_fbenv_l2.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1520u, "op4_fbenv_l3.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1521u, "op4_fbenv_l4.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1522u, "op4_fblfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
+    { 1523u, "op4_fblfo_depth.p1", -32767, 32767, 0, 0u, 0u, "" },
+    { 1524u, "op4_fblfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 1525u, "op4_fblfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1526u, "op4_dlfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
+    { 1527u, "op4_dlfo_depth.p1", -32768, 32768, 0, 0u, 0u, "" },
+    { 1528u, "op4_dlfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 1529u, "op4_dlfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1530u, "op4.velamp.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1531u, "op4.velfm.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1532u, "op4.velrate.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1533u, "op4_level.p1", 0, 99, 85, 0u, 0u, "" },
+    { 1534u, "op4_feedback.p1", -32767, 32767, 0, 0u, 0u, "" },
+    { 1535u, "op4_level_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1536u, "op4_level_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1537u, "op4_fb_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1538u, "op4_fb_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1539u, "op4_aenv_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1540u, "op4_aenv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1541u, "op4_level_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1542u, "op4_fb_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1543u, "op4_aenv_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1544u, "op4_mute.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1545u, "op4_spec_env_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1546u, "op4_spec_env_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1547u, "op4_spec_env_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 1548u, "op4_spec_env_r4.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1549u, "op4_spec_env_l1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 1550u, "op4_spec_env_l2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1551u, "op4_spec_env_l3.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1552u, "op4_spec_lfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
+    { 1553u, "op4_spec_lfo_depth.p1", -99, 99, 0, 0u, 0u, "" },
+    { 1554u, "op4_spec_lfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 1555u, "op4_spec_lfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1556u, "algorithm.p1", 0, 7, 4, 0u, 0u, "" },
+    { 1557u, "penv_on.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1558u, "penv_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1559u, "penv_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1560u, "penv_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 1561u, "penv_r4.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1562u, "penv_l1.p1", -32768, 32767, 5461, 0u, 0u, "" },
+    { 1563u, "penv_l2.p1", -32768, 32767, 2731, 0u, 0u, "" },
+    { 1564u, "penv_l3.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1565u, "penv_l4.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1566u, "penv_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1567u, "penv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1568u, "penv_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1569u, "pitch_rate.p1", 0, 20000000, 447392, 1u, 0u, "" },
+    { 1570u, "pitch_depth.p1", -32768, 32768, 273, 0u, 0u, "" },
+    { 1571u, "pitch_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 1572u, "pitch_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1573u, "f1_cutoff_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1574u, "f1_cutoff_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1575u, "fenv_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1576u, "fenv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1577u, "f1_cutoff_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1578u, "fenv_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1579u, "cutoff.p1", 0, 55296, 8000, 1u, 0u, "" },
+    { 1580u, "res.p1", 0, 41942, 16000, 1u, 0u, "" },
+    { 1581u, "lp.comp.p1", -32768, 32767, 32767, 0u, 0u, "" },
+    { 1582u, "filter_type.p1", 0, 2, 0, 0u, 0u, "" },
+    { 1583u, "filter_on.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1584u, "fenv_depth.p1", 0, 65535, 0, 0u, 0u, "" },
+    { 1585u, "fenv_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1586u, "fenv_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1587u, "fenv_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 1588u, "fenv_r4.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1589u, "fenv_l1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 1590u, "fenv_l2.p1", 0, 99, 93, 0u, 0u, "" },
+    { 1591u, "fenv_l3.p1", 0, 99, 87, 0u, 0u, "" },
+    { 1592u, "mode.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1593u, "unison_count.p1", 1, 8, 1, 0u, 0u, "" },
+    { 1594u, "unison_detune.p1", 0, 200, 0, 0u, 0u, "cents" },
+    { 1595u, "detune.p1", -50, 50, 0, 0u, 0u, "cents" },
+    { 1596u, "transpose.p1", -24, 24, 0, 0u, 0u, "st" },
+    { 1597u, "legato.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1598u, "portamento.p1", 0, 5000, 0, 1u, 0u, "" },
+    { 1599u, "note_priority.p1", 0, 2, 0, 0u, 0u, "" },
+    { 1600u, "breakpoint", 0, 127, 60, 0u, 0u, "" },
+    { 1601u, "key_sens_on", 0, 1, 1, 0u, 0u, "" },
+    { 1602u, "vel_sens_on", 0, 1, 1, 0u, 0u, "" },
+    { 1603u, "dc.r", -32768, 32767, 32738, 0u, 0u, "" },
+    { 1604u, "channel.p0", -1, 15, 0, 0u, 0u, "" },
+    { 1605u, "channel.p1", -1, 15, 1, 0u, 0u, "" },
+    { 1606u, "low.p0", 0, 127, 0, 0u, 0u, "" },
+    { 1607u, "low.p1", 0, 127, 0, 0u, 0u, "" },
+    { 1608u, "high.p0", 0, 127, 127, 0u, 0u, "" },
+    { 1609u, "high.p1", 0, 127, 127, 0u, 0u, "" },
+    { 1610u, "level.p0", 0, 99, 99, 0u, 0u, "" },
+    { 1611u, "level.p1", 0, 99, 99, 0u, 0u, "" },
+    { 1612u, "delay.p0", 0, 1000, 0, 0u, 0u, "ms" },
+    { 1613u, "delay.p1", 0, 1000, 0, 0u, 0u, "ms" },
 };
 typedef struct { uint32_t off; uint8_t part; } type_p_alpha_slot_t;
-static const type_p_alpha_slot_t type_p_alpha_slots[846] = {
+static const type_p_alpha_slot_t type_p_alpha_slots[1614] = {
     { (uint32_t)offsetof(type_p_alpha_state, op1_ph_inc_ratio), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_ph_detune), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_osc_waveform), 0u },
@@ -1670,6 +2822,54 @@ static const type_p_alpha_slot_t type_p_alpha_slots[846] = {
     { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a14), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a15), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a16), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a17), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a18), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a19), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a20), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a21), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a22), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a23), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a24), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a25), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a26), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a27), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a28), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a29), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a30), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a31), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a32), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a33), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a34), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a35), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a36), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a37), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a38), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a39), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a40), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a41), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a42), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a43), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a44), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a45), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a46), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a47), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a48), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a49), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a50), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a51), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a52), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a53), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a54), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a55), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a56), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a57), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a58), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a59), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a60), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a61), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a62), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a63), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a64), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b1), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b2), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b3), 0u },
@@ -1686,6 +2886,54 @@ static const type_p_alpha_slot_t type_p_alpha_slots[846] = {
     { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b14), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b15), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b16), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b17), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b18), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b19), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b20), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b21), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b22), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b23), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b24), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b25), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b26), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b27), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b28), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b29), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b30), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b31), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b32), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b33), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b34), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b35), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b36), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b37), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b38), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b39), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b40), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b41), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b42), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b43), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b44), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b45), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b46), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b47), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b48), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b49), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b50), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b51), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b52), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b53), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b54), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b55), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b56), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b57), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b58), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b59), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b60), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b61), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b62), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b63), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b64), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_morph), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_env_depth), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_eg_r1), 0u },
@@ -1763,6 +3011,54 @@ static const type_p_alpha_slot_t type_p_alpha_slots[846] = {
     { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a14), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a15), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a16), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a17), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a18), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a19), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a20), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a21), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a22), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a23), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a24), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a25), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a26), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a27), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a28), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a29), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a30), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a31), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a32), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a33), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a34), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a35), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a36), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a37), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a38), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a39), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a40), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a41), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a42), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a43), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a44), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a45), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a46), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a47), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a48), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a49), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a50), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a51), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a52), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a53), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a54), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a55), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a56), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a57), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a58), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a59), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a60), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a61), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a62), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a63), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a64), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b1), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b2), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b3), 0u },
@@ -1779,6 +3075,54 @@ static const type_p_alpha_slot_t type_p_alpha_slots[846] = {
     { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b14), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b15), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b16), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b17), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b18), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b19), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b20), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b21), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b22), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b23), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b24), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b25), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b26), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b27), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b28), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b29), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b30), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b31), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b32), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b33), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b34), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b35), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b36), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b37), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b38), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b39), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b40), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b41), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b42), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b43), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b44), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b45), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b46), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b47), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b48), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b49), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b50), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b51), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b52), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b53), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b54), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b55), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b56), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b57), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b58), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b59), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b60), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b61), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b62), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b63), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b64), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_morph), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_env_depth), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_eg_r1), 0u },
@@ -1856,6 +3200,54 @@ static const type_p_alpha_slot_t type_p_alpha_slots[846] = {
     { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a14), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a15), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a16), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a17), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a18), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a19), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a20), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a21), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a22), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a23), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a24), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a25), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a26), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a27), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a28), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a29), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a30), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a31), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a32), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a33), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a34), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a35), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a36), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a37), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a38), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a39), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a40), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a41), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a42), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a43), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a44), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a45), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a46), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a47), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a48), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a49), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a50), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a51), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a52), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a53), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a54), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a55), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a56), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a57), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a58), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a59), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a60), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a61), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a62), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a63), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a64), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b1), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b2), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b3), 0u },
@@ -1872,6 +3264,54 @@ static const type_p_alpha_slot_t type_p_alpha_slots[846] = {
     { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b14), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b15), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b16), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b17), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b18), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b19), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b20), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b21), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b22), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b23), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b24), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b25), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b26), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b27), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b28), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b29), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b30), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b31), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b32), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b33), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b34), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b35), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b36), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b37), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b38), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b39), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b40), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b41), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b42), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b43), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b44), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b45), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b46), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b47), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b48), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b49), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b50), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b51), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b52), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b53), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b54), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b55), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b56), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b57), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b58), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b59), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b60), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b61), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b62), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b63), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b64), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_morph), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_env_depth), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_eg_r1), 0u },
@@ -1949,6 +3389,54 @@ static const type_p_alpha_slot_t type_p_alpha_slots[846] = {
     { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a14), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a15), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a16), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a17), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a18), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a19), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a20), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a21), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a22), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a23), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a24), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a25), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a26), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a27), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a28), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a29), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a30), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a31), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a32), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a33), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a34), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a35), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a36), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a37), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a38), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a39), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a40), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a41), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a42), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a43), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a44), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a45), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a46), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a47), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a48), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a49), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a50), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a51), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a52), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a53), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a54), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a55), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a56), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a57), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a58), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a59), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a60), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a61), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a62), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a63), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a64), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b1), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b2), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b3), 0u },
@@ -1965,6 +3453,54 @@ static const type_p_alpha_slot_t type_p_alpha_slots[846] = {
     { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b14), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b15), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b16), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b17), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b18), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b19), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b20), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b21), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b22), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b23), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b24), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b25), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b26), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b27), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b28), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b29), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b30), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b31), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b32), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b33), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b34), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b35), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b36), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b37), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b38), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b39), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b40), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b41), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b42), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b43), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b44), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b45), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b46), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b47), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b48), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b49), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b50), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b51), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b52), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b53), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b54), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b55), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b56), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b57), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b58), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b59), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b60), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b61), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b62), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b63), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b64), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_morph), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_env_depth), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_eg_r1), 0u },
@@ -2086,6 +3622,54 @@ static const type_p_alpha_slot_t type_p_alpha_slots[846] = {
     { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a14), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a15), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a16), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a17), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a18), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a19), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a20), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a21), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a22), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a23), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a24), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a25), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a26), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a27), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a28), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a29), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a30), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a31), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a32), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a33), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a34), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a35), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a36), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a37), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a38), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a39), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a40), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a41), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a42), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a43), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a44), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a45), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a46), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a47), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a48), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a49), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a50), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a51), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a52), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a53), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a54), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a55), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a56), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a57), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a58), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a59), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a60), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a61), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a62), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a63), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_a64), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b1), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b2), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b3), 1u },
@@ -2102,6 +3686,54 @@ static const type_p_alpha_slot_t type_p_alpha_slots[846] = {
     { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b14), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b15), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b16), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b17), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b18), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b19), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b20), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b21), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b22), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b23), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b24), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b25), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b26), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b27), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b28), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b29), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b30), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b31), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b32), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b33), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b34), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b35), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b36), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b37), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b38), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b39), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b40), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b41), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b42), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b43), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b44), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b45), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b46), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b47), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b48), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b49), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b50), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b51), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b52), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b53), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b54), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b55), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b56), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b57), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b58), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b59), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b60), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b61), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b62), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b63), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_b64), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_morph), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_osc_spec_env_depth), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_eg_r1), 1u },
@@ -2179,6 +3811,54 @@ static const type_p_alpha_slot_t type_p_alpha_slots[846] = {
     { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a14), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a15), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a16), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a17), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a18), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a19), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a20), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a21), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a22), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a23), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a24), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a25), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a26), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a27), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a28), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a29), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a30), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a31), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a32), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a33), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a34), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a35), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a36), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a37), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a38), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a39), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a40), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a41), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a42), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a43), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a44), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a45), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a46), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a47), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a48), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a49), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a50), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a51), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a52), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a53), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a54), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a55), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a56), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a57), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a58), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a59), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a60), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a61), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a62), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a63), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_a64), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b1), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b2), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b3), 1u },
@@ -2195,6 +3875,54 @@ static const type_p_alpha_slot_t type_p_alpha_slots[846] = {
     { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b14), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b15), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b16), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b17), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b18), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b19), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b20), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b21), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b22), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b23), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b24), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b25), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b26), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b27), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b28), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b29), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b30), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b31), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b32), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b33), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b34), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b35), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b36), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b37), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b38), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b39), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b40), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b41), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b42), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b43), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b44), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b45), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b46), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b47), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b48), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b49), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b50), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b51), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b52), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b53), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b54), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b55), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b56), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b57), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b58), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b59), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b60), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b61), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b62), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b63), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_b64), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_morph), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_osc_spec_env_depth), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_eg_r1), 1u },
@@ -2272,6 +4000,54 @@ static const type_p_alpha_slot_t type_p_alpha_slots[846] = {
     { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a14), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a15), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a16), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a17), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a18), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a19), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a20), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a21), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a22), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a23), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a24), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a25), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a26), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a27), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a28), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a29), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a30), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a31), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a32), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a33), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a34), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a35), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a36), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a37), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a38), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a39), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a40), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a41), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a42), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a43), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a44), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a45), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a46), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a47), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a48), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a49), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a50), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a51), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a52), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a53), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a54), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a55), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a56), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a57), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a58), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a59), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a60), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a61), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a62), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a63), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_a64), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b1), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b2), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b3), 1u },
@@ -2288,6 +4064,54 @@ static const type_p_alpha_slot_t type_p_alpha_slots[846] = {
     { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b14), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b15), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b16), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b17), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b18), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b19), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b20), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b21), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b22), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b23), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b24), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b25), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b26), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b27), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b28), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b29), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b30), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b31), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b32), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b33), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b34), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b35), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b36), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b37), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b38), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b39), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b40), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b41), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b42), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b43), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b44), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b45), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b46), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b47), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b48), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b49), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b50), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b51), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b52), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b53), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b54), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b55), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b56), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b57), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b58), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b59), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b60), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b61), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b62), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b63), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_b64), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_morph), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_osc_spec_env_depth), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_eg_r1), 1u },
@@ -2365,6 +4189,54 @@ static const type_p_alpha_slot_t type_p_alpha_slots[846] = {
     { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a14), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a15), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a16), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a17), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a18), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a19), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a20), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a21), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a22), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a23), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a24), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a25), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a26), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a27), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a28), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a29), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a30), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a31), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a32), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a33), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a34), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a35), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a36), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a37), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a38), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a39), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a40), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a41), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a42), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a43), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a44), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a45), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a46), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a47), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a48), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a49), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a50), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a51), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a52), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a53), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a54), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a55), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a56), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a57), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a58), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a59), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a60), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a61), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a62), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a63), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_a64), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b1), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b2), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b3), 1u },
@@ -2381,6 +4253,54 @@ static const type_p_alpha_slot_t type_p_alpha_slots[846] = {
     { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b14), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b15), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b16), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b17), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b18), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b19), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b20), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b21), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b22), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b23), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b24), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b25), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b26), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b27), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b28), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b29), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b30), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b31), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b32), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b33), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b34), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b35), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b36), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b37), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b38), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b39), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b40), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b41), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b42), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b43), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b44), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b45), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b46), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b47), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b48), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b49), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b50), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b51), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b52), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b53), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b54), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b55), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b56), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b57), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b58), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b59), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b60), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b61), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b62), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b63), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_b64), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_morph), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_osc_spec_env_depth), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_eg_r1), 1u },
@@ -2793,6 +4713,54 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op1_osc_spec_a14 (S->op1_osc_spec_a14)
 #define op1_osc_spec_a15 (S->op1_osc_spec_a15)
 #define op1_osc_spec_a16 (S->op1_osc_spec_a16)
+#define op1_osc_spec_a17 (S->op1_osc_spec_a17)
+#define op1_osc_spec_a18 (S->op1_osc_spec_a18)
+#define op1_osc_spec_a19 (S->op1_osc_spec_a19)
+#define op1_osc_spec_a20 (S->op1_osc_spec_a20)
+#define op1_osc_spec_a21 (S->op1_osc_spec_a21)
+#define op1_osc_spec_a22 (S->op1_osc_spec_a22)
+#define op1_osc_spec_a23 (S->op1_osc_spec_a23)
+#define op1_osc_spec_a24 (S->op1_osc_spec_a24)
+#define op1_osc_spec_a25 (S->op1_osc_spec_a25)
+#define op1_osc_spec_a26 (S->op1_osc_spec_a26)
+#define op1_osc_spec_a27 (S->op1_osc_spec_a27)
+#define op1_osc_spec_a28 (S->op1_osc_spec_a28)
+#define op1_osc_spec_a29 (S->op1_osc_spec_a29)
+#define op1_osc_spec_a30 (S->op1_osc_spec_a30)
+#define op1_osc_spec_a31 (S->op1_osc_spec_a31)
+#define op1_osc_spec_a32 (S->op1_osc_spec_a32)
+#define op1_osc_spec_a33 (S->op1_osc_spec_a33)
+#define op1_osc_spec_a34 (S->op1_osc_spec_a34)
+#define op1_osc_spec_a35 (S->op1_osc_spec_a35)
+#define op1_osc_spec_a36 (S->op1_osc_spec_a36)
+#define op1_osc_spec_a37 (S->op1_osc_spec_a37)
+#define op1_osc_spec_a38 (S->op1_osc_spec_a38)
+#define op1_osc_spec_a39 (S->op1_osc_spec_a39)
+#define op1_osc_spec_a40 (S->op1_osc_spec_a40)
+#define op1_osc_spec_a41 (S->op1_osc_spec_a41)
+#define op1_osc_spec_a42 (S->op1_osc_spec_a42)
+#define op1_osc_spec_a43 (S->op1_osc_spec_a43)
+#define op1_osc_spec_a44 (S->op1_osc_spec_a44)
+#define op1_osc_spec_a45 (S->op1_osc_spec_a45)
+#define op1_osc_spec_a46 (S->op1_osc_spec_a46)
+#define op1_osc_spec_a47 (S->op1_osc_spec_a47)
+#define op1_osc_spec_a48 (S->op1_osc_spec_a48)
+#define op1_osc_spec_a49 (S->op1_osc_spec_a49)
+#define op1_osc_spec_a50 (S->op1_osc_spec_a50)
+#define op1_osc_spec_a51 (S->op1_osc_spec_a51)
+#define op1_osc_spec_a52 (S->op1_osc_spec_a52)
+#define op1_osc_spec_a53 (S->op1_osc_spec_a53)
+#define op1_osc_spec_a54 (S->op1_osc_spec_a54)
+#define op1_osc_spec_a55 (S->op1_osc_spec_a55)
+#define op1_osc_spec_a56 (S->op1_osc_spec_a56)
+#define op1_osc_spec_a57 (S->op1_osc_spec_a57)
+#define op1_osc_spec_a58 (S->op1_osc_spec_a58)
+#define op1_osc_spec_a59 (S->op1_osc_spec_a59)
+#define op1_osc_spec_a60 (S->op1_osc_spec_a60)
+#define op1_osc_spec_a61 (S->op1_osc_spec_a61)
+#define op1_osc_spec_a62 (S->op1_osc_spec_a62)
+#define op1_osc_spec_a63 (S->op1_osc_spec_a63)
+#define op1_osc_spec_a64 (S->op1_osc_spec_a64)
 #define op1_osc_spec_b1 (S->op1_osc_spec_b1)
 #define op1_osc_spec_b2 (S->op1_osc_spec_b2)
 #define op1_osc_spec_b3 (S->op1_osc_spec_b3)
@@ -2809,6 +4777,54 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op1_osc_spec_b14 (S->op1_osc_spec_b14)
 #define op1_osc_spec_b15 (S->op1_osc_spec_b15)
 #define op1_osc_spec_b16 (S->op1_osc_spec_b16)
+#define op1_osc_spec_b17 (S->op1_osc_spec_b17)
+#define op1_osc_spec_b18 (S->op1_osc_spec_b18)
+#define op1_osc_spec_b19 (S->op1_osc_spec_b19)
+#define op1_osc_spec_b20 (S->op1_osc_spec_b20)
+#define op1_osc_spec_b21 (S->op1_osc_spec_b21)
+#define op1_osc_spec_b22 (S->op1_osc_spec_b22)
+#define op1_osc_spec_b23 (S->op1_osc_spec_b23)
+#define op1_osc_spec_b24 (S->op1_osc_spec_b24)
+#define op1_osc_spec_b25 (S->op1_osc_spec_b25)
+#define op1_osc_spec_b26 (S->op1_osc_spec_b26)
+#define op1_osc_spec_b27 (S->op1_osc_spec_b27)
+#define op1_osc_spec_b28 (S->op1_osc_spec_b28)
+#define op1_osc_spec_b29 (S->op1_osc_spec_b29)
+#define op1_osc_spec_b30 (S->op1_osc_spec_b30)
+#define op1_osc_spec_b31 (S->op1_osc_spec_b31)
+#define op1_osc_spec_b32 (S->op1_osc_spec_b32)
+#define op1_osc_spec_b33 (S->op1_osc_spec_b33)
+#define op1_osc_spec_b34 (S->op1_osc_spec_b34)
+#define op1_osc_spec_b35 (S->op1_osc_spec_b35)
+#define op1_osc_spec_b36 (S->op1_osc_spec_b36)
+#define op1_osc_spec_b37 (S->op1_osc_spec_b37)
+#define op1_osc_spec_b38 (S->op1_osc_spec_b38)
+#define op1_osc_spec_b39 (S->op1_osc_spec_b39)
+#define op1_osc_spec_b40 (S->op1_osc_spec_b40)
+#define op1_osc_spec_b41 (S->op1_osc_spec_b41)
+#define op1_osc_spec_b42 (S->op1_osc_spec_b42)
+#define op1_osc_spec_b43 (S->op1_osc_spec_b43)
+#define op1_osc_spec_b44 (S->op1_osc_spec_b44)
+#define op1_osc_spec_b45 (S->op1_osc_spec_b45)
+#define op1_osc_spec_b46 (S->op1_osc_spec_b46)
+#define op1_osc_spec_b47 (S->op1_osc_spec_b47)
+#define op1_osc_spec_b48 (S->op1_osc_spec_b48)
+#define op1_osc_spec_b49 (S->op1_osc_spec_b49)
+#define op1_osc_spec_b50 (S->op1_osc_spec_b50)
+#define op1_osc_spec_b51 (S->op1_osc_spec_b51)
+#define op1_osc_spec_b52 (S->op1_osc_spec_b52)
+#define op1_osc_spec_b53 (S->op1_osc_spec_b53)
+#define op1_osc_spec_b54 (S->op1_osc_spec_b54)
+#define op1_osc_spec_b55 (S->op1_osc_spec_b55)
+#define op1_osc_spec_b56 (S->op1_osc_spec_b56)
+#define op1_osc_spec_b57 (S->op1_osc_spec_b57)
+#define op1_osc_spec_b58 (S->op1_osc_spec_b58)
+#define op1_osc_spec_b59 (S->op1_osc_spec_b59)
+#define op1_osc_spec_b60 (S->op1_osc_spec_b60)
+#define op1_osc_spec_b61 (S->op1_osc_spec_b61)
+#define op1_osc_spec_b62 (S->op1_osc_spec_b62)
+#define op1_osc_spec_b63 (S->op1_osc_spec_b63)
+#define op1_osc_spec_b64 (S->op1_osc_spec_b64)
 #define op1_osc_spec_morph (S->op1_osc_spec_morph)
 #define op1_osc_spec_env_depth (S->op1_osc_spec_env_depth)
 #define op1_eg_r1 (S->op1_eg_r1)
@@ -2886,6 +4902,54 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op2_osc_spec_a14 (S->op2_osc_spec_a14)
 #define op2_osc_spec_a15 (S->op2_osc_spec_a15)
 #define op2_osc_spec_a16 (S->op2_osc_spec_a16)
+#define op2_osc_spec_a17 (S->op2_osc_spec_a17)
+#define op2_osc_spec_a18 (S->op2_osc_spec_a18)
+#define op2_osc_spec_a19 (S->op2_osc_spec_a19)
+#define op2_osc_spec_a20 (S->op2_osc_spec_a20)
+#define op2_osc_spec_a21 (S->op2_osc_spec_a21)
+#define op2_osc_spec_a22 (S->op2_osc_spec_a22)
+#define op2_osc_spec_a23 (S->op2_osc_spec_a23)
+#define op2_osc_spec_a24 (S->op2_osc_spec_a24)
+#define op2_osc_spec_a25 (S->op2_osc_spec_a25)
+#define op2_osc_spec_a26 (S->op2_osc_spec_a26)
+#define op2_osc_spec_a27 (S->op2_osc_spec_a27)
+#define op2_osc_spec_a28 (S->op2_osc_spec_a28)
+#define op2_osc_spec_a29 (S->op2_osc_spec_a29)
+#define op2_osc_spec_a30 (S->op2_osc_spec_a30)
+#define op2_osc_spec_a31 (S->op2_osc_spec_a31)
+#define op2_osc_spec_a32 (S->op2_osc_spec_a32)
+#define op2_osc_spec_a33 (S->op2_osc_spec_a33)
+#define op2_osc_spec_a34 (S->op2_osc_spec_a34)
+#define op2_osc_spec_a35 (S->op2_osc_spec_a35)
+#define op2_osc_spec_a36 (S->op2_osc_spec_a36)
+#define op2_osc_spec_a37 (S->op2_osc_spec_a37)
+#define op2_osc_spec_a38 (S->op2_osc_spec_a38)
+#define op2_osc_spec_a39 (S->op2_osc_spec_a39)
+#define op2_osc_spec_a40 (S->op2_osc_spec_a40)
+#define op2_osc_spec_a41 (S->op2_osc_spec_a41)
+#define op2_osc_spec_a42 (S->op2_osc_spec_a42)
+#define op2_osc_spec_a43 (S->op2_osc_spec_a43)
+#define op2_osc_spec_a44 (S->op2_osc_spec_a44)
+#define op2_osc_spec_a45 (S->op2_osc_spec_a45)
+#define op2_osc_spec_a46 (S->op2_osc_spec_a46)
+#define op2_osc_spec_a47 (S->op2_osc_spec_a47)
+#define op2_osc_spec_a48 (S->op2_osc_spec_a48)
+#define op2_osc_spec_a49 (S->op2_osc_spec_a49)
+#define op2_osc_spec_a50 (S->op2_osc_spec_a50)
+#define op2_osc_spec_a51 (S->op2_osc_spec_a51)
+#define op2_osc_spec_a52 (S->op2_osc_spec_a52)
+#define op2_osc_spec_a53 (S->op2_osc_spec_a53)
+#define op2_osc_spec_a54 (S->op2_osc_spec_a54)
+#define op2_osc_spec_a55 (S->op2_osc_spec_a55)
+#define op2_osc_spec_a56 (S->op2_osc_spec_a56)
+#define op2_osc_spec_a57 (S->op2_osc_spec_a57)
+#define op2_osc_spec_a58 (S->op2_osc_spec_a58)
+#define op2_osc_spec_a59 (S->op2_osc_spec_a59)
+#define op2_osc_spec_a60 (S->op2_osc_spec_a60)
+#define op2_osc_spec_a61 (S->op2_osc_spec_a61)
+#define op2_osc_spec_a62 (S->op2_osc_spec_a62)
+#define op2_osc_spec_a63 (S->op2_osc_spec_a63)
+#define op2_osc_spec_a64 (S->op2_osc_spec_a64)
 #define op2_osc_spec_b1 (S->op2_osc_spec_b1)
 #define op2_osc_spec_b2 (S->op2_osc_spec_b2)
 #define op2_osc_spec_b3 (S->op2_osc_spec_b3)
@@ -2902,6 +4966,54 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op2_osc_spec_b14 (S->op2_osc_spec_b14)
 #define op2_osc_spec_b15 (S->op2_osc_spec_b15)
 #define op2_osc_spec_b16 (S->op2_osc_spec_b16)
+#define op2_osc_spec_b17 (S->op2_osc_spec_b17)
+#define op2_osc_spec_b18 (S->op2_osc_spec_b18)
+#define op2_osc_spec_b19 (S->op2_osc_spec_b19)
+#define op2_osc_spec_b20 (S->op2_osc_spec_b20)
+#define op2_osc_spec_b21 (S->op2_osc_spec_b21)
+#define op2_osc_spec_b22 (S->op2_osc_spec_b22)
+#define op2_osc_spec_b23 (S->op2_osc_spec_b23)
+#define op2_osc_spec_b24 (S->op2_osc_spec_b24)
+#define op2_osc_spec_b25 (S->op2_osc_spec_b25)
+#define op2_osc_spec_b26 (S->op2_osc_spec_b26)
+#define op2_osc_spec_b27 (S->op2_osc_spec_b27)
+#define op2_osc_spec_b28 (S->op2_osc_spec_b28)
+#define op2_osc_spec_b29 (S->op2_osc_spec_b29)
+#define op2_osc_spec_b30 (S->op2_osc_spec_b30)
+#define op2_osc_spec_b31 (S->op2_osc_spec_b31)
+#define op2_osc_spec_b32 (S->op2_osc_spec_b32)
+#define op2_osc_spec_b33 (S->op2_osc_spec_b33)
+#define op2_osc_spec_b34 (S->op2_osc_spec_b34)
+#define op2_osc_spec_b35 (S->op2_osc_spec_b35)
+#define op2_osc_spec_b36 (S->op2_osc_spec_b36)
+#define op2_osc_spec_b37 (S->op2_osc_spec_b37)
+#define op2_osc_spec_b38 (S->op2_osc_spec_b38)
+#define op2_osc_spec_b39 (S->op2_osc_spec_b39)
+#define op2_osc_spec_b40 (S->op2_osc_spec_b40)
+#define op2_osc_spec_b41 (S->op2_osc_spec_b41)
+#define op2_osc_spec_b42 (S->op2_osc_spec_b42)
+#define op2_osc_spec_b43 (S->op2_osc_spec_b43)
+#define op2_osc_spec_b44 (S->op2_osc_spec_b44)
+#define op2_osc_spec_b45 (S->op2_osc_spec_b45)
+#define op2_osc_spec_b46 (S->op2_osc_spec_b46)
+#define op2_osc_spec_b47 (S->op2_osc_spec_b47)
+#define op2_osc_spec_b48 (S->op2_osc_spec_b48)
+#define op2_osc_spec_b49 (S->op2_osc_spec_b49)
+#define op2_osc_spec_b50 (S->op2_osc_spec_b50)
+#define op2_osc_spec_b51 (S->op2_osc_spec_b51)
+#define op2_osc_spec_b52 (S->op2_osc_spec_b52)
+#define op2_osc_spec_b53 (S->op2_osc_spec_b53)
+#define op2_osc_spec_b54 (S->op2_osc_spec_b54)
+#define op2_osc_spec_b55 (S->op2_osc_spec_b55)
+#define op2_osc_spec_b56 (S->op2_osc_spec_b56)
+#define op2_osc_spec_b57 (S->op2_osc_spec_b57)
+#define op2_osc_spec_b58 (S->op2_osc_spec_b58)
+#define op2_osc_spec_b59 (S->op2_osc_spec_b59)
+#define op2_osc_spec_b60 (S->op2_osc_spec_b60)
+#define op2_osc_spec_b61 (S->op2_osc_spec_b61)
+#define op2_osc_spec_b62 (S->op2_osc_spec_b62)
+#define op2_osc_spec_b63 (S->op2_osc_spec_b63)
+#define op2_osc_spec_b64 (S->op2_osc_spec_b64)
 #define op2_osc_spec_morph (S->op2_osc_spec_morph)
 #define op2_osc_spec_env_depth (S->op2_osc_spec_env_depth)
 #define op2_eg_r1 (S->op2_eg_r1)
@@ -2979,6 +5091,54 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op3_osc_spec_a14 (S->op3_osc_spec_a14)
 #define op3_osc_spec_a15 (S->op3_osc_spec_a15)
 #define op3_osc_spec_a16 (S->op3_osc_spec_a16)
+#define op3_osc_spec_a17 (S->op3_osc_spec_a17)
+#define op3_osc_spec_a18 (S->op3_osc_spec_a18)
+#define op3_osc_spec_a19 (S->op3_osc_spec_a19)
+#define op3_osc_spec_a20 (S->op3_osc_spec_a20)
+#define op3_osc_spec_a21 (S->op3_osc_spec_a21)
+#define op3_osc_spec_a22 (S->op3_osc_spec_a22)
+#define op3_osc_spec_a23 (S->op3_osc_spec_a23)
+#define op3_osc_spec_a24 (S->op3_osc_spec_a24)
+#define op3_osc_spec_a25 (S->op3_osc_spec_a25)
+#define op3_osc_spec_a26 (S->op3_osc_spec_a26)
+#define op3_osc_spec_a27 (S->op3_osc_spec_a27)
+#define op3_osc_spec_a28 (S->op3_osc_spec_a28)
+#define op3_osc_spec_a29 (S->op3_osc_spec_a29)
+#define op3_osc_spec_a30 (S->op3_osc_spec_a30)
+#define op3_osc_spec_a31 (S->op3_osc_spec_a31)
+#define op3_osc_spec_a32 (S->op3_osc_spec_a32)
+#define op3_osc_spec_a33 (S->op3_osc_spec_a33)
+#define op3_osc_spec_a34 (S->op3_osc_spec_a34)
+#define op3_osc_spec_a35 (S->op3_osc_spec_a35)
+#define op3_osc_spec_a36 (S->op3_osc_spec_a36)
+#define op3_osc_spec_a37 (S->op3_osc_spec_a37)
+#define op3_osc_spec_a38 (S->op3_osc_spec_a38)
+#define op3_osc_spec_a39 (S->op3_osc_spec_a39)
+#define op3_osc_spec_a40 (S->op3_osc_spec_a40)
+#define op3_osc_spec_a41 (S->op3_osc_spec_a41)
+#define op3_osc_spec_a42 (S->op3_osc_spec_a42)
+#define op3_osc_spec_a43 (S->op3_osc_spec_a43)
+#define op3_osc_spec_a44 (S->op3_osc_spec_a44)
+#define op3_osc_spec_a45 (S->op3_osc_spec_a45)
+#define op3_osc_spec_a46 (S->op3_osc_spec_a46)
+#define op3_osc_spec_a47 (S->op3_osc_spec_a47)
+#define op3_osc_spec_a48 (S->op3_osc_spec_a48)
+#define op3_osc_spec_a49 (S->op3_osc_spec_a49)
+#define op3_osc_spec_a50 (S->op3_osc_spec_a50)
+#define op3_osc_spec_a51 (S->op3_osc_spec_a51)
+#define op3_osc_spec_a52 (S->op3_osc_spec_a52)
+#define op3_osc_spec_a53 (S->op3_osc_spec_a53)
+#define op3_osc_spec_a54 (S->op3_osc_spec_a54)
+#define op3_osc_spec_a55 (S->op3_osc_spec_a55)
+#define op3_osc_spec_a56 (S->op3_osc_spec_a56)
+#define op3_osc_spec_a57 (S->op3_osc_spec_a57)
+#define op3_osc_spec_a58 (S->op3_osc_spec_a58)
+#define op3_osc_spec_a59 (S->op3_osc_spec_a59)
+#define op3_osc_spec_a60 (S->op3_osc_spec_a60)
+#define op3_osc_spec_a61 (S->op3_osc_spec_a61)
+#define op3_osc_spec_a62 (S->op3_osc_spec_a62)
+#define op3_osc_spec_a63 (S->op3_osc_spec_a63)
+#define op3_osc_spec_a64 (S->op3_osc_spec_a64)
 #define op3_osc_spec_b1 (S->op3_osc_spec_b1)
 #define op3_osc_spec_b2 (S->op3_osc_spec_b2)
 #define op3_osc_spec_b3 (S->op3_osc_spec_b3)
@@ -2995,6 +5155,54 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op3_osc_spec_b14 (S->op3_osc_spec_b14)
 #define op3_osc_spec_b15 (S->op3_osc_spec_b15)
 #define op3_osc_spec_b16 (S->op3_osc_spec_b16)
+#define op3_osc_spec_b17 (S->op3_osc_spec_b17)
+#define op3_osc_spec_b18 (S->op3_osc_spec_b18)
+#define op3_osc_spec_b19 (S->op3_osc_spec_b19)
+#define op3_osc_spec_b20 (S->op3_osc_spec_b20)
+#define op3_osc_spec_b21 (S->op3_osc_spec_b21)
+#define op3_osc_spec_b22 (S->op3_osc_spec_b22)
+#define op3_osc_spec_b23 (S->op3_osc_spec_b23)
+#define op3_osc_spec_b24 (S->op3_osc_spec_b24)
+#define op3_osc_spec_b25 (S->op3_osc_spec_b25)
+#define op3_osc_spec_b26 (S->op3_osc_spec_b26)
+#define op3_osc_spec_b27 (S->op3_osc_spec_b27)
+#define op3_osc_spec_b28 (S->op3_osc_spec_b28)
+#define op3_osc_spec_b29 (S->op3_osc_spec_b29)
+#define op3_osc_spec_b30 (S->op3_osc_spec_b30)
+#define op3_osc_spec_b31 (S->op3_osc_spec_b31)
+#define op3_osc_spec_b32 (S->op3_osc_spec_b32)
+#define op3_osc_spec_b33 (S->op3_osc_spec_b33)
+#define op3_osc_spec_b34 (S->op3_osc_spec_b34)
+#define op3_osc_spec_b35 (S->op3_osc_spec_b35)
+#define op3_osc_spec_b36 (S->op3_osc_spec_b36)
+#define op3_osc_spec_b37 (S->op3_osc_spec_b37)
+#define op3_osc_spec_b38 (S->op3_osc_spec_b38)
+#define op3_osc_spec_b39 (S->op3_osc_spec_b39)
+#define op3_osc_spec_b40 (S->op3_osc_spec_b40)
+#define op3_osc_spec_b41 (S->op3_osc_spec_b41)
+#define op3_osc_spec_b42 (S->op3_osc_spec_b42)
+#define op3_osc_spec_b43 (S->op3_osc_spec_b43)
+#define op3_osc_spec_b44 (S->op3_osc_spec_b44)
+#define op3_osc_spec_b45 (S->op3_osc_spec_b45)
+#define op3_osc_spec_b46 (S->op3_osc_spec_b46)
+#define op3_osc_spec_b47 (S->op3_osc_spec_b47)
+#define op3_osc_spec_b48 (S->op3_osc_spec_b48)
+#define op3_osc_spec_b49 (S->op3_osc_spec_b49)
+#define op3_osc_spec_b50 (S->op3_osc_spec_b50)
+#define op3_osc_spec_b51 (S->op3_osc_spec_b51)
+#define op3_osc_spec_b52 (S->op3_osc_spec_b52)
+#define op3_osc_spec_b53 (S->op3_osc_spec_b53)
+#define op3_osc_spec_b54 (S->op3_osc_spec_b54)
+#define op3_osc_spec_b55 (S->op3_osc_spec_b55)
+#define op3_osc_spec_b56 (S->op3_osc_spec_b56)
+#define op3_osc_spec_b57 (S->op3_osc_spec_b57)
+#define op3_osc_spec_b58 (S->op3_osc_spec_b58)
+#define op3_osc_spec_b59 (S->op3_osc_spec_b59)
+#define op3_osc_spec_b60 (S->op3_osc_spec_b60)
+#define op3_osc_spec_b61 (S->op3_osc_spec_b61)
+#define op3_osc_spec_b62 (S->op3_osc_spec_b62)
+#define op3_osc_spec_b63 (S->op3_osc_spec_b63)
+#define op3_osc_spec_b64 (S->op3_osc_spec_b64)
 #define op3_osc_spec_morph (S->op3_osc_spec_morph)
 #define op3_osc_spec_env_depth (S->op3_osc_spec_env_depth)
 #define op3_eg_r1 (S->op3_eg_r1)
@@ -3072,6 +5280,54 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op4_osc_spec_a14 (S->op4_osc_spec_a14)
 #define op4_osc_spec_a15 (S->op4_osc_spec_a15)
 #define op4_osc_spec_a16 (S->op4_osc_spec_a16)
+#define op4_osc_spec_a17 (S->op4_osc_spec_a17)
+#define op4_osc_spec_a18 (S->op4_osc_spec_a18)
+#define op4_osc_spec_a19 (S->op4_osc_spec_a19)
+#define op4_osc_spec_a20 (S->op4_osc_spec_a20)
+#define op4_osc_spec_a21 (S->op4_osc_spec_a21)
+#define op4_osc_spec_a22 (S->op4_osc_spec_a22)
+#define op4_osc_spec_a23 (S->op4_osc_spec_a23)
+#define op4_osc_spec_a24 (S->op4_osc_spec_a24)
+#define op4_osc_spec_a25 (S->op4_osc_spec_a25)
+#define op4_osc_spec_a26 (S->op4_osc_spec_a26)
+#define op4_osc_spec_a27 (S->op4_osc_spec_a27)
+#define op4_osc_spec_a28 (S->op4_osc_spec_a28)
+#define op4_osc_spec_a29 (S->op4_osc_spec_a29)
+#define op4_osc_spec_a30 (S->op4_osc_spec_a30)
+#define op4_osc_spec_a31 (S->op4_osc_spec_a31)
+#define op4_osc_spec_a32 (S->op4_osc_spec_a32)
+#define op4_osc_spec_a33 (S->op4_osc_spec_a33)
+#define op4_osc_spec_a34 (S->op4_osc_spec_a34)
+#define op4_osc_spec_a35 (S->op4_osc_spec_a35)
+#define op4_osc_spec_a36 (S->op4_osc_spec_a36)
+#define op4_osc_spec_a37 (S->op4_osc_spec_a37)
+#define op4_osc_spec_a38 (S->op4_osc_spec_a38)
+#define op4_osc_spec_a39 (S->op4_osc_spec_a39)
+#define op4_osc_spec_a40 (S->op4_osc_spec_a40)
+#define op4_osc_spec_a41 (S->op4_osc_spec_a41)
+#define op4_osc_spec_a42 (S->op4_osc_spec_a42)
+#define op4_osc_spec_a43 (S->op4_osc_spec_a43)
+#define op4_osc_spec_a44 (S->op4_osc_spec_a44)
+#define op4_osc_spec_a45 (S->op4_osc_spec_a45)
+#define op4_osc_spec_a46 (S->op4_osc_spec_a46)
+#define op4_osc_spec_a47 (S->op4_osc_spec_a47)
+#define op4_osc_spec_a48 (S->op4_osc_spec_a48)
+#define op4_osc_spec_a49 (S->op4_osc_spec_a49)
+#define op4_osc_spec_a50 (S->op4_osc_spec_a50)
+#define op4_osc_spec_a51 (S->op4_osc_spec_a51)
+#define op4_osc_spec_a52 (S->op4_osc_spec_a52)
+#define op4_osc_spec_a53 (S->op4_osc_spec_a53)
+#define op4_osc_spec_a54 (S->op4_osc_spec_a54)
+#define op4_osc_spec_a55 (S->op4_osc_spec_a55)
+#define op4_osc_spec_a56 (S->op4_osc_spec_a56)
+#define op4_osc_spec_a57 (S->op4_osc_spec_a57)
+#define op4_osc_spec_a58 (S->op4_osc_spec_a58)
+#define op4_osc_spec_a59 (S->op4_osc_spec_a59)
+#define op4_osc_spec_a60 (S->op4_osc_spec_a60)
+#define op4_osc_spec_a61 (S->op4_osc_spec_a61)
+#define op4_osc_spec_a62 (S->op4_osc_spec_a62)
+#define op4_osc_spec_a63 (S->op4_osc_spec_a63)
+#define op4_osc_spec_a64 (S->op4_osc_spec_a64)
 #define op4_osc_spec_b1 (S->op4_osc_spec_b1)
 #define op4_osc_spec_b2 (S->op4_osc_spec_b2)
 #define op4_osc_spec_b3 (S->op4_osc_spec_b3)
@@ -3088,6 +5344,54 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op4_osc_spec_b14 (S->op4_osc_spec_b14)
 #define op4_osc_spec_b15 (S->op4_osc_spec_b15)
 #define op4_osc_spec_b16 (S->op4_osc_spec_b16)
+#define op4_osc_spec_b17 (S->op4_osc_spec_b17)
+#define op4_osc_spec_b18 (S->op4_osc_spec_b18)
+#define op4_osc_spec_b19 (S->op4_osc_spec_b19)
+#define op4_osc_spec_b20 (S->op4_osc_spec_b20)
+#define op4_osc_spec_b21 (S->op4_osc_spec_b21)
+#define op4_osc_spec_b22 (S->op4_osc_spec_b22)
+#define op4_osc_spec_b23 (S->op4_osc_spec_b23)
+#define op4_osc_spec_b24 (S->op4_osc_spec_b24)
+#define op4_osc_spec_b25 (S->op4_osc_spec_b25)
+#define op4_osc_spec_b26 (S->op4_osc_spec_b26)
+#define op4_osc_spec_b27 (S->op4_osc_spec_b27)
+#define op4_osc_spec_b28 (S->op4_osc_spec_b28)
+#define op4_osc_spec_b29 (S->op4_osc_spec_b29)
+#define op4_osc_spec_b30 (S->op4_osc_spec_b30)
+#define op4_osc_spec_b31 (S->op4_osc_spec_b31)
+#define op4_osc_spec_b32 (S->op4_osc_spec_b32)
+#define op4_osc_spec_b33 (S->op4_osc_spec_b33)
+#define op4_osc_spec_b34 (S->op4_osc_spec_b34)
+#define op4_osc_spec_b35 (S->op4_osc_spec_b35)
+#define op4_osc_spec_b36 (S->op4_osc_spec_b36)
+#define op4_osc_spec_b37 (S->op4_osc_spec_b37)
+#define op4_osc_spec_b38 (S->op4_osc_spec_b38)
+#define op4_osc_spec_b39 (S->op4_osc_spec_b39)
+#define op4_osc_spec_b40 (S->op4_osc_spec_b40)
+#define op4_osc_spec_b41 (S->op4_osc_spec_b41)
+#define op4_osc_spec_b42 (S->op4_osc_spec_b42)
+#define op4_osc_spec_b43 (S->op4_osc_spec_b43)
+#define op4_osc_spec_b44 (S->op4_osc_spec_b44)
+#define op4_osc_spec_b45 (S->op4_osc_spec_b45)
+#define op4_osc_spec_b46 (S->op4_osc_spec_b46)
+#define op4_osc_spec_b47 (S->op4_osc_spec_b47)
+#define op4_osc_spec_b48 (S->op4_osc_spec_b48)
+#define op4_osc_spec_b49 (S->op4_osc_spec_b49)
+#define op4_osc_spec_b50 (S->op4_osc_spec_b50)
+#define op4_osc_spec_b51 (S->op4_osc_spec_b51)
+#define op4_osc_spec_b52 (S->op4_osc_spec_b52)
+#define op4_osc_spec_b53 (S->op4_osc_spec_b53)
+#define op4_osc_spec_b54 (S->op4_osc_spec_b54)
+#define op4_osc_spec_b55 (S->op4_osc_spec_b55)
+#define op4_osc_spec_b56 (S->op4_osc_spec_b56)
+#define op4_osc_spec_b57 (S->op4_osc_spec_b57)
+#define op4_osc_spec_b58 (S->op4_osc_spec_b58)
+#define op4_osc_spec_b59 (S->op4_osc_spec_b59)
+#define op4_osc_spec_b60 (S->op4_osc_spec_b60)
+#define op4_osc_spec_b61 (S->op4_osc_spec_b61)
+#define op4_osc_spec_b62 (S->op4_osc_spec_b62)
+#define op4_osc_spec_b63 (S->op4_osc_spec_b63)
+#define op4_osc_spec_b64 (S->op4_osc_spec_b64)
 #define op4_osc_spec_morph (S->op4_osc_spec_morph)
 #define op4_osc_spec_env_depth (S->op4_osc_spec_env_depth)
 #define op4_eg_r1 (S->op4_eg_r1)
@@ -4442,7 +6746,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
         op4_osc_wave[v] = ((op4_osc_waveform[voice_part[v]] > 13u) ? 0u : op4_osc_waveform[voice_part[v]]);
         op4_osc_base[v] = ((uint32_t)p1_wave_base[(op4_osc_wave[v] > 12u) ? 0u : op4_osc_wave[v]] << 10);
         op4_osc_bl[v] = ((op4_osc_wave[v] >= 10u && op4_osc_wave[v] <= 12u) ? 1u : 0u);
-        op4_osc_tick[v] = ((v == 0) ? (p1_spectral_tick(op4_osc_bank, op4_osc_waveform, op4_osc_spec_range_a, op4_osc_spec_range_b, op4_osc_spec_a1, op4_osc_spec_a2, op4_osc_spec_a3, op4_osc_spec_a4, op4_osc_spec_a5, op4_osc_spec_a6, op4_osc_spec_a7, op4_osc_spec_a8, op4_osc_spec_a9, op4_osc_spec_a10, op4_osc_spec_a11, op4_osc_spec_a12, op4_osc_spec_a13, op4_osc_spec_a14, op4_osc_spec_a15, op4_osc_spec_a16, op4_osc_spec_b1, op4_osc_spec_b2, op4_osc_spec_b3, op4_osc_spec_b4, op4_osc_spec_b5, op4_osc_spec_b6, op4_osc_spec_b7, op4_osc_spec_b8, op4_osc_spec_b9, op4_osc_spec_b10, op4_osc_spec_b11, op4_osc_spec_b12, op4_osc_spec_b13, op4_osc_spec_b14, op4_osc_spec_b15, op4_osc_spec_b16), 0u) : 0u);
+        op4_osc_tick[v] = ((v == 0) ? (p1_spectral_tick(op4_osc_bank, op4_osc_waveform, op4_osc_spec_range_a, op4_osc_spec_range_b, op4_osc_spec_a1, op4_osc_spec_a2, op4_osc_spec_a3, op4_osc_spec_a4, op4_osc_spec_a5, op4_osc_spec_a6, op4_osc_spec_a7, op4_osc_spec_a8, op4_osc_spec_a9, op4_osc_spec_a10, op4_osc_spec_a11, op4_osc_spec_a12, op4_osc_spec_a13, op4_osc_spec_a14, op4_osc_spec_a15, op4_osc_spec_a16, op4_osc_spec_a17, op4_osc_spec_a18, op4_osc_spec_a19, op4_osc_spec_a20, op4_osc_spec_a21, op4_osc_spec_a22, op4_osc_spec_a23, op4_osc_spec_a24, op4_osc_spec_a25, op4_osc_spec_a26, op4_osc_spec_a27, op4_osc_spec_a28, op4_osc_spec_a29, op4_osc_spec_a30, op4_osc_spec_a31, op4_osc_spec_a32, op4_osc_spec_a33, op4_osc_spec_a34, op4_osc_spec_a35, op4_osc_spec_a36, op4_osc_spec_a37, op4_osc_spec_a38, op4_osc_spec_a39, op4_osc_spec_a40, op4_osc_spec_a41, op4_osc_spec_a42, op4_osc_spec_a43, op4_osc_spec_a44, op4_osc_spec_a45, op4_osc_spec_a46, op4_osc_spec_a47, op4_osc_spec_a48, op4_osc_spec_a49, op4_osc_spec_a50, op4_osc_spec_a51, op4_osc_spec_a52, op4_osc_spec_a53, op4_osc_spec_a54, op4_osc_spec_a55, op4_osc_spec_a56, op4_osc_spec_a57, op4_osc_spec_a58, op4_osc_spec_a59, op4_osc_spec_a60, op4_osc_spec_a61, op4_osc_spec_a62, op4_osc_spec_a63, op4_osc_spec_a64, op4_osc_spec_b1, op4_osc_spec_b2, op4_osc_spec_b3, op4_osc_spec_b4, op4_osc_spec_b5, op4_osc_spec_b6, op4_osc_spec_b7, op4_osc_spec_b8, op4_osc_spec_b9, op4_osc_spec_b10, op4_osc_spec_b11, op4_osc_spec_b12, op4_osc_spec_b13, op4_osc_spec_b14, op4_osc_spec_b15, op4_osc_spec_b16, op4_osc_spec_b17, op4_osc_spec_b18, op4_osc_spec_b19, op4_osc_spec_b20, op4_osc_spec_b21, op4_osc_spec_b22, op4_osc_spec_b23, op4_osc_spec_b24, op4_osc_spec_b25, op4_osc_spec_b26, op4_osc_spec_b27, op4_osc_spec_b28, op4_osc_spec_b29, op4_osc_spec_b30, op4_osc_spec_b31, op4_osc_spec_b32, op4_osc_spec_b33, op4_osc_spec_b34, op4_osc_spec_b35, op4_osc_spec_b36, op4_osc_spec_b37, op4_osc_spec_b38, op4_osc_spec_b39, op4_osc_spec_b40, op4_osc_spec_b41, op4_osc_spec_b42, op4_osc_spec_b43, op4_osc_spec_b44, op4_osc_spec_b45, op4_osc_spec_b46, op4_osc_spec_b47, op4_osc_spec_b48, op4_osc_spec_b49, op4_osc_spec_b50, op4_osc_spec_b51, op4_osc_spec_b52, op4_osc_spec_b53, op4_osc_spec_b54, op4_osc_spec_b55, op4_osc_spec_b56, op4_osc_spec_b57, op4_osc_spec_b58, op4_osc_spec_b59, op4_osc_spec_b60, op4_osc_spec_b61, op4_osc_spec_b62, op4_osc_spec_b63, op4_osc_spec_b64), 0u) : 0u);
         op4_fblfo_base[v] = ((uint32_t)p1_wave_base[((op4_fblfo_wave[voice_part[v]] > 11u) ? 0u : op4_fblfo_wave[voice_part[v]])] << 10);
         op4_fbenv_r1_eff[v] = (uint32_t)p1_key_apply(op4_fbenv_r1[voice_part[v]], p1_key_add(0, 0), 0, 99);
         op4_fbenv_r2_eff[v] = (uint32_t)p1_key_apply(op4_fbenv_r2[voice_part[v]], p1_key_add(0, 0), 0, 99);
@@ -4474,7 +6778,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
         op3_osc_wave[v] = ((op3_osc_waveform[voice_part[v]] > 13u) ? 0u : op3_osc_waveform[voice_part[v]]);
         op3_osc_base[v] = ((uint32_t)p1_wave_base[(op3_osc_wave[v] > 12u) ? 0u : op3_osc_wave[v]] << 10);
         op3_osc_bl[v] = ((op3_osc_wave[v] >= 10u && op3_osc_wave[v] <= 12u) ? 1u : 0u);
-        op3_osc_tick[v] = ((v == 0) ? (p1_spectral_tick(op3_osc_bank, op3_osc_waveform, op3_osc_spec_range_a, op3_osc_spec_range_b, op3_osc_spec_a1, op3_osc_spec_a2, op3_osc_spec_a3, op3_osc_spec_a4, op3_osc_spec_a5, op3_osc_spec_a6, op3_osc_spec_a7, op3_osc_spec_a8, op3_osc_spec_a9, op3_osc_spec_a10, op3_osc_spec_a11, op3_osc_spec_a12, op3_osc_spec_a13, op3_osc_spec_a14, op3_osc_spec_a15, op3_osc_spec_a16, op3_osc_spec_b1, op3_osc_spec_b2, op3_osc_spec_b3, op3_osc_spec_b4, op3_osc_spec_b5, op3_osc_spec_b6, op3_osc_spec_b7, op3_osc_spec_b8, op3_osc_spec_b9, op3_osc_spec_b10, op3_osc_spec_b11, op3_osc_spec_b12, op3_osc_spec_b13, op3_osc_spec_b14, op3_osc_spec_b15, op3_osc_spec_b16), 0u) : 0u);
+        op3_osc_tick[v] = ((v == 0) ? (p1_spectral_tick(op3_osc_bank, op3_osc_waveform, op3_osc_spec_range_a, op3_osc_spec_range_b, op3_osc_spec_a1, op3_osc_spec_a2, op3_osc_spec_a3, op3_osc_spec_a4, op3_osc_spec_a5, op3_osc_spec_a6, op3_osc_spec_a7, op3_osc_spec_a8, op3_osc_spec_a9, op3_osc_spec_a10, op3_osc_spec_a11, op3_osc_spec_a12, op3_osc_spec_a13, op3_osc_spec_a14, op3_osc_spec_a15, op3_osc_spec_a16, op3_osc_spec_a17, op3_osc_spec_a18, op3_osc_spec_a19, op3_osc_spec_a20, op3_osc_spec_a21, op3_osc_spec_a22, op3_osc_spec_a23, op3_osc_spec_a24, op3_osc_spec_a25, op3_osc_spec_a26, op3_osc_spec_a27, op3_osc_spec_a28, op3_osc_spec_a29, op3_osc_spec_a30, op3_osc_spec_a31, op3_osc_spec_a32, op3_osc_spec_a33, op3_osc_spec_a34, op3_osc_spec_a35, op3_osc_spec_a36, op3_osc_spec_a37, op3_osc_spec_a38, op3_osc_spec_a39, op3_osc_spec_a40, op3_osc_spec_a41, op3_osc_spec_a42, op3_osc_spec_a43, op3_osc_spec_a44, op3_osc_spec_a45, op3_osc_spec_a46, op3_osc_spec_a47, op3_osc_spec_a48, op3_osc_spec_a49, op3_osc_spec_a50, op3_osc_spec_a51, op3_osc_spec_a52, op3_osc_spec_a53, op3_osc_spec_a54, op3_osc_spec_a55, op3_osc_spec_a56, op3_osc_spec_a57, op3_osc_spec_a58, op3_osc_spec_a59, op3_osc_spec_a60, op3_osc_spec_a61, op3_osc_spec_a62, op3_osc_spec_a63, op3_osc_spec_a64, op3_osc_spec_b1, op3_osc_spec_b2, op3_osc_spec_b3, op3_osc_spec_b4, op3_osc_spec_b5, op3_osc_spec_b6, op3_osc_spec_b7, op3_osc_spec_b8, op3_osc_spec_b9, op3_osc_spec_b10, op3_osc_spec_b11, op3_osc_spec_b12, op3_osc_spec_b13, op3_osc_spec_b14, op3_osc_spec_b15, op3_osc_spec_b16, op3_osc_spec_b17, op3_osc_spec_b18, op3_osc_spec_b19, op3_osc_spec_b20, op3_osc_spec_b21, op3_osc_spec_b22, op3_osc_spec_b23, op3_osc_spec_b24, op3_osc_spec_b25, op3_osc_spec_b26, op3_osc_spec_b27, op3_osc_spec_b28, op3_osc_spec_b29, op3_osc_spec_b30, op3_osc_spec_b31, op3_osc_spec_b32, op3_osc_spec_b33, op3_osc_spec_b34, op3_osc_spec_b35, op3_osc_spec_b36, op3_osc_spec_b37, op3_osc_spec_b38, op3_osc_spec_b39, op3_osc_spec_b40, op3_osc_spec_b41, op3_osc_spec_b42, op3_osc_spec_b43, op3_osc_spec_b44, op3_osc_spec_b45, op3_osc_spec_b46, op3_osc_spec_b47, op3_osc_spec_b48, op3_osc_spec_b49, op3_osc_spec_b50, op3_osc_spec_b51, op3_osc_spec_b52, op3_osc_spec_b53, op3_osc_spec_b54, op3_osc_spec_b55, op3_osc_spec_b56, op3_osc_spec_b57, op3_osc_spec_b58, op3_osc_spec_b59, op3_osc_spec_b60, op3_osc_spec_b61, op3_osc_spec_b62, op3_osc_spec_b63, op3_osc_spec_b64), 0u) : 0u);
         op3_fblfo_base[v] = ((uint32_t)p1_wave_base[((op3_fblfo_wave[voice_part[v]] > 11u) ? 0u : op3_fblfo_wave[voice_part[v]])] << 10);
         op3_fbenv_r1_eff[v] = (uint32_t)p1_key_apply(op3_fbenv_r1[voice_part[v]], p1_key_add(0, 0), 0, 99);
         op3_fbenv_r2_eff[v] = (uint32_t)p1_key_apply(op3_fbenv_r2[voice_part[v]], p1_key_add(0, 0), 0, 99);
@@ -4506,7 +6810,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
         op2_osc_wave[v] = ((op2_osc_waveform[voice_part[v]] > 13u) ? 0u : op2_osc_waveform[voice_part[v]]);
         op2_osc_base[v] = ((uint32_t)p1_wave_base[(op2_osc_wave[v] > 12u) ? 0u : op2_osc_wave[v]] << 10);
         op2_osc_bl[v] = ((op2_osc_wave[v] >= 10u && op2_osc_wave[v] <= 12u) ? 1u : 0u);
-        op2_osc_tick[v] = ((v == 0) ? (p1_spectral_tick(op2_osc_bank, op2_osc_waveform, op2_osc_spec_range_a, op2_osc_spec_range_b, op2_osc_spec_a1, op2_osc_spec_a2, op2_osc_spec_a3, op2_osc_spec_a4, op2_osc_spec_a5, op2_osc_spec_a6, op2_osc_spec_a7, op2_osc_spec_a8, op2_osc_spec_a9, op2_osc_spec_a10, op2_osc_spec_a11, op2_osc_spec_a12, op2_osc_spec_a13, op2_osc_spec_a14, op2_osc_spec_a15, op2_osc_spec_a16, op2_osc_spec_b1, op2_osc_spec_b2, op2_osc_spec_b3, op2_osc_spec_b4, op2_osc_spec_b5, op2_osc_spec_b6, op2_osc_spec_b7, op2_osc_spec_b8, op2_osc_spec_b9, op2_osc_spec_b10, op2_osc_spec_b11, op2_osc_spec_b12, op2_osc_spec_b13, op2_osc_spec_b14, op2_osc_spec_b15, op2_osc_spec_b16), 0u) : 0u);
+        op2_osc_tick[v] = ((v == 0) ? (p1_spectral_tick(op2_osc_bank, op2_osc_waveform, op2_osc_spec_range_a, op2_osc_spec_range_b, op2_osc_spec_a1, op2_osc_spec_a2, op2_osc_spec_a3, op2_osc_spec_a4, op2_osc_spec_a5, op2_osc_spec_a6, op2_osc_spec_a7, op2_osc_spec_a8, op2_osc_spec_a9, op2_osc_spec_a10, op2_osc_spec_a11, op2_osc_spec_a12, op2_osc_spec_a13, op2_osc_spec_a14, op2_osc_spec_a15, op2_osc_spec_a16, op2_osc_spec_a17, op2_osc_spec_a18, op2_osc_spec_a19, op2_osc_spec_a20, op2_osc_spec_a21, op2_osc_spec_a22, op2_osc_spec_a23, op2_osc_spec_a24, op2_osc_spec_a25, op2_osc_spec_a26, op2_osc_spec_a27, op2_osc_spec_a28, op2_osc_spec_a29, op2_osc_spec_a30, op2_osc_spec_a31, op2_osc_spec_a32, op2_osc_spec_a33, op2_osc_spec_a34, op2_osc_spec_a35, op2_osc_spec_a36, op2_osc_spec_a37, op2_osc_spec_a38, op2_osc_spec_a39, op2_osc_spec_a40, op2_osc_spec_a41, op2_osc_spec_a42, op2_osc_spec_a43, op2_osc_spec_a44, op2_osc_spec_a45, op2_osc_spec_a46, op2_osc_spec_a47, op2_osc_spec_a48, op2_osc_spec_a49, op2_osc_spec_a50, op2_osc_spec_a51, op2_osc_spec_a52, op2_osc_spec_a53, op2_osc_spec_a54, op2_osc_spec_a55, op2_osc_spec_a56, op2_osc_spec_a57, op2_osc_spec_a58, op2_osc_spec_a59, op2_osc_spec_a60, op2_osc_spec_a61, op2_osc_spec_a62, op2_osc_spec_a63, op2_osc_spec_a64, op2_osc_spec_b1, op2_osc_spec_b2, op2_osc_spec_b3, op2_osc_spec_b4, op2_osc_spec_b5, op2_osc_spec_b6, op2_osc_spec_b7, op2_osc_spec_b8, op2_osc_spec_b9, op2_osc_spec_b10, op2_osc_spec_b11, op2_osc_spec_b12, op2_osc_spec_b13, op2_osc_spec_b14, op2_osc_spec_b15, op2_osc_spec_b16, op2_osc_spec_b17, op2_osc_spec_b18, op2_osc_spec_b19, op2_osc_spec_b20, op2_osc_spec_b21, op2_osc_spec_b22, op2_osc_spec_b23, op2_osc_spec_b24, op2_osc_spec_b25, op2_osc_spec_b26, op2_osc_spec_b27, op2_osc_spec_b28, op2_osc_spec_b29, op2_osc_spec_b30, op2_osc_spec_b31, op2_osc_spec_b32, op2_osc_spec_b33, op2_osc_spec_b34, op2_osc_spec_b35, op2_osc_spec_b36, op2_osc_spec_b37, op2_osc_spec_b38, op2_osc_spec_b39, op2_osc_spec_b40, op2_osc_spec_b41, op2_osc_spec_b42, op2_osc_spec_b43, op2_osc_spec_b44, op2_osc_spec_b45, op2_osc_spec_b46, op2_osc_spec_b47, op2_osc_spec_b48, op2_osc_spec_b49, op2_osc_spec_b50, op2_osc_spec_b51, op2_osc_spec_b52, op2_osc_spec_b53, op2_osc_spec_b54, op2_osc_spec_b55, op2_osc_spec_b56, op2_osc_spec_b57, op2_osc_spec_b58, op2_osc_spec_b59, op2_osc_spec_b60, op2_osc_spec_b61, op2_osc_spec_b62, op2_osc_spec_b63, op2_osc_spec_b64), 0u) : 0u);
         op2_fblfo_base[v] = ((uint32_t)p1_wave_base[((op2_fblfo_wave[voice_part[v]] > 11u) ? 0u : op2_fblfo_wave[voice_part[v]])] << 10);
         op2_fbenv_r1_eff[v] = (uint32_t)p1_key_apply(op2_fbenv_r1[voice_part[v]], p1_key_add(0, 0), 0, 99);
         op2_fbenv_r2_eff[v] = (uint32_t)p1_key_apply(op2_fbenv_r2[voice_part[v]], p1_key_add(0, 0), 0, 99);
@@ -4538,7 +6842,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
         op1_osc_wave[v] = ((op1_osc_waveform[voice_part[v]] > 13u) ? 0u : op1_osc_waveform[voice_part[v]]);
         op1_osc_base[v] = ((uint32_t)p1_wave_base[(op1_osc_wave[v] > 12u) ? 0u : op1_osc_wave[v]] << 10);
         op1_osc_bl[v] = ((op1_osc_wave[v] >= 10u && op1_osc_wave[v] <= 12u) ? 1u : 0u);
-        op1_osc_tick[v] = ((v == 0) ? (p1_spectral_tick(op1_osc_bank, op1_osc_waveform, op1_osc_spec_range_a, op1_osc_spec_range_b, op1_osc_spec_a1, op1_osc_spec_a2, op1_osc_spec_a3, op1_osc_spec_a4, op1_osc_spec_a5, op1_osc_spec_a6, op1_osc_spec_a7, op1_osc_spec_a8, op1_osc_spec_a9, op1_osc_spec_a10, op1_osc_spec_a11, op1_osc_spec_a12, op1_osc_spec_a13, op1_osc_spec_a14, op1_osc_spec_a15, op1_osc_spec_a16, op1_osc_spec_b1, op1_osc_spec_b2, op1_osc_spec_b3, op1_osc_spec_b4, op1_osc_spec_b5, op1_osc_spec_b6, op1_osc_spec_b7, op1_osc_spec_b8, op1_osc_spec_b9, op1_osc_spec_b10, op1_osc_spec_b11, op1_osc_spec_b12, op1_osc_spec_b13, op1_osc_spec_b14, op1_osc_spec_b15, op1_osc_spec_b16), 0u) : 0u);
+        op1_osc_tick[v] = ((v == 0) ? (p1_spectral_tick(op1_osc_bank, op1_osc_waveform, op1_osc_spec_range_a, op1_osc_spec_range_b, op1_osc_spec_a1, op1_osc_spec_a2, op1_osc_spec_a3, op1_osc_spec_a4, op1_osc_spec_a5, op1_osc_spec_a6, op1_osc_spec_a7, op1_osc_spec_a8, op1_osc_spec_a9, op1_osc_spec_a10, op1_osc_spec_a11, op1_osc_spec_a12, op1_osc_spec_a13, op1_osc_spec_a14, op1_osc_spec_a15, op1_osc_spec_a16, op1_osc_spec_a17, op1_osc_spec_a18, op1_osc_spec_a19, op1_osc_spec_a20, op1_osc_spec_a21, op1_osc_spec_a22, op1_osc_spec_a23, op1_osc_spec_a24, op1_osc_spec_a25, op1_osc_spec_a26, op1_osc_spec_a27, op1_osc_spec_a28, op1_osc_spec_a29, op1_osc_spec_a30, op1_osc_spec_a31, op1_osc_spec_a32, op1_osc_spec_a33, op1_osc_spec_a34, op1_osc_spec_a35, op1_osc_spec_a36, op1_osc_spec_a37, op1_osc_spec_a38, op1_osc_spec_a39, op1_osc_spec_a40, op1_osc_spec_a41, op1_osc_spec_a42, op1_osc_spec_a43, op1_osc_spec_a44, op1_osc_spec_a45, op1_osc_spec_a46, op1_osc_spec_a47, op1_osc_spec_a48, op1_osc_spec_a49, op1_osc_spec_a50, op1_osc_spec_a51, op1_osc_spec_a52, op1_osc_spec_a53, op1_osc_spec_a54, op1_osc_spec_a55, op1_osc_spec_a56, op1_osc_spec_a57, op1_osc_spec_a58, op1_osc_spec_a59, op1_osc_spec_a60, op1_osc_spec_a61, op1_osc_spec_a62, op1_osc_spec_a63, op1_osc_spec_a64, op1_osc_spec_b1, op1_osc_spec_b2, op1_osc_spec_b3, op1_osc_spec_b4, op1_osc_spec_b5, op1_osc_spec_b6, op1_osc_spec_b7, op1_osc_spec_b8, op1_osc_spec_b9, op1_osc_spec_b10, op1_osc_spec_b11, op1_osc_spec_b12, op1_osc_spec_b13, op1_osc_spec_b14, op1_osc_spec_b15, op1_osc_spec_b16, op1_osc_spec_b17, op1_osc_spec_b18, op1_osc_spec_b19, op1_osc_spec_b20, op1_osc_spec_b21, op1_osc_spec_b22, op1_osc_spec_b23, op1_osc_spec_b24, op1_osc_spec_b25, op1_osc_spec_b26, op1_osc_spec_b27, op1_osc_spec_b28, op1_osc_spec_b29, op1_osc_spec_b30, op1_osc_spec_b31, op1_osc_spec_b32, op1_osc_spec_b33, op1_osc_spec_b34, op1_osc_spec_b35, op1_osc_spec_b36, op1_osc_spec_b37, op1_osc_spec_b38, op1_osc_spec_b39, op1_osc_spec_b40, op1_osc_spec_b41, op1_osc_spec_b42, op1_osc_spec_b43, op1_osc_spec_b44, op1_osc_spec_b45, op1_osc_spec_b46, op1_osc_spec_b47, op1_osc_spec_b48, op1_osc_spec_b49, op1_osc_spec_b50, op1_osc_spec_b51, op1_osc_spec_b52, op1_osc_spec_b53, op1_osc_spec_b54, op1_osc_spec_b55, op1_osc_spec_b56, op1_osc_spec_b57, op1_osc_spec_b58, op1_osc_spec_b59, op1_osc_spec_b60, op1_osc_spec_b61, op1_osc_spec_b62, op1_osc_spec_b63, op1_osc_spec_b64), 0u) : 0u);
         op1_fblfo_base[v] = ((uint32_t)p1_wave_base[((op1_fblfo_wave[voice_part[v]] > 11u) ? 0u : op1_fblfo_wave[voice_part[v]])] << 10);
         op1_fbenv_r1_eff[v] = (uint32_t)p1_key_apply(op1_fbenv_r1[voice_part[v]], p1_key_add(0, 0), 0, 99);
         op1_fbenv_r2_eff[v] = (uint32_t)p1_key_apply(op1_fbenv_r2[voice_part[v]], p1_key_add(0, 0), 0, 99);

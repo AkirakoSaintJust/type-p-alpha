@@ -517,3 +517,16 @@ body { display: block; padding: 0; min-height: 100vh; }
 .speclabels span.in-group { color: var(--green); }
 .sbar.in-group { border-color: var(--green); }
 .sbar.in-group::after { content: ""; position: absolute; left: 50%; top: -1px; width: 4px; height: 2px; background: var(--green); transform: translateX(-50%); }
+
+/* split spectra pages: operator strip, wide rows, control cards */
+.spectra-page { display: flex; flex-direction: column; gap: 8px; }
+.spectrum-runs { display: flex; flex-direction: column; gap: 6px; }
+.spectrum-row { padding: 8px 10px; }
+.spectrum-row .specbars { height: 96px; gap: 2px; }
+.spectrum-row .speclabels span { font-size: 8px; }
+.spectrum-row-acts { display: flex; align-items: center; gap: 6px; }
+.row-range-label { font-size: 9px; color: var(--dim); }
+.row-range { width: 76px; flex: 0 0 76px; font-size: 10px; }
+.spectrum-controls { align-items: start; }
+.spectrum-controls .card { padding: 7px 8px; }
+.spectrum-controls .springs { margin-top: 5px; }
