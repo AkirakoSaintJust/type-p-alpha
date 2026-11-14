@@ -125,6 +125,34 @@ int main()
           "the state restores every parameter");
 
     {
+        std::unique_ptr<juce::XmlElement> oldXml(processor.getXmlFromBinary(
+            state.getData(), static_cast<int>(state.getSize())));
+        check(oldXml != nullptr, "the saved state decodes as XML");
+        if (oldXml != nullptr) {
+            auto tree = juce::ValueTree::fromXml(*oldXml);
+            tree.setProperty("uiPage", 5, nullptr);
+            tree.setProperty("uiPageLayout", 2, nullptr);
+            juce::MemoryBlock older;
+            processor.copyXmlToBinary(*tree.createXml(), older);
+            processor.setStateInformation(older.getData(),
+                                          static_cast<int>(older.getSize()));
+            check(processor.getUiPage() == 6,
+                  "the six-tab mod page moves to 6 on restore");
+
+            tree.setProperty("uiPage", 3, nullptr);
+            tree.removeProperty("uiPageLayout", nullptr);
+            juce::MemoryBlock oldest;
+            processor.copyXmlToBinary(*tree.createXml(), oldest);
+            processor.setStateInformation(oldest.getData(),
+                                          static_cast<int>(oldest.getSize()));
+            check(processor.getUiPage() == 1,
+                  "the four-tab fx page moves to 1 on restore");
+        }
+        processor.setStateInformation(state.getData(),
+                                      static_cast<int>(state.getSize()));
+    }
+
+    {
         const std::vector<int32_t> params(
             static_cast<std::size_t>(kP1PartParamCount), 7);
         processor.presets().savePart(3, "smoke", params);

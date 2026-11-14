@@ -517,6 +517,7 @@ public:
         centre_.setSelectedItemIndex(4, juce::dontSendNotification);
         norm_.onClick = [this] { normalise(); };
         toOther_.onClick = [this] { copyToOther(); };
+        toOther_.setButtonText(isA_ ? "to b" : "to a");
         refreshLegend();
     }
 

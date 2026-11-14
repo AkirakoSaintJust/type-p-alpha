@@ -26,7 +26,7 @@ python3 -m http.server 8080 --directory build/web
 ```
 
 The root `index.html` redirects to `panel.html`. The bare page is at
-`http://localhost:8080/bare.html`; press `start audio`, then hold `note 60`. The
+`http://localhost:8080/bare.html`. Press `start audio`, then hold `note 60`. The
 level slider writes `op1_level.p0` through the same message bridge the full panel
 uses.
 
@@ -44,7 +44,7 @@ npm install playwright
 PLAYWRIGHT_CHANNEL=msedge node web/smoke.mjs
 ```
 
-The bare page is at `bare.html`; the panel smoke is at `panel.html`. On Linux,
+The bare page is at `bare.html`, and the panel smoke is at `panel.html`. On Linux,
 install Playwright’s Chromium and run both without a channel.
 
 ## Panel
@@ -66,31 +66,33 @@ multi-patch stores two part slots and the routing, so loading one restores both
 parts and their MIDI routing. A multi save materialises any part that has no slot,
 and an import refuses a patch that points at a missing part. A part slot stores
 every part parameter, so the spectrum levels travel with the part. The library
-lives in `localStorage` and exports to or imports from a JSON wrapper with the
+is stored in `localStorage` and exports to or imports from a JSON wrapper with
+the
 mockup's `type-p-alpha-library` name and slot arrays. The operator pages carry a
 copy and paste pair in each column header, and the operator scopes come from the
 engine tap buffers for the active part.
 
 The panel also carries the envelope graphs, the 64-bar spectrum editors, the
 `from wave` preview and the `op spectra mod` A/B display with the waveform overlay
-and morph marker. The first edit of a spectrum card or the first morph knob move
+and morph marker. The first edit of an a-row spectrum or the first morph knob move
 commits the preview and switches the waveform to spectrum.
 
-Each spectrum card has a group selector and a live, dead or both mask. The group
+The control card below each spectrum row has a group selector and a live, dead or
+both mask. The group
 picks a harmonic series from all, odd, even, octave, or the third, fifth, seventh,
 fifteenth, eleventh, thirteenth, ninth, twenty-first, nineteenth and seventeenth
 series. The bar labels show every harmonic in the range and mark the group members
 in green, and the legend names the group, the mask and the members in range. The
 tilt, level and formant controls are spring loaded: they write the 64 levels
-while held and return to centre on release. Tilt and level use the group and mask;
-formant uses the selected harmonic and ignores both. The group and mask are editor
+while held and return to centre on release. Tilt and level use the group and mask,
+and formant uses the selected harmonic and ignores both. The group and mask are editor
 state, so a gesture only writes the existing `opN_spec_a1` to `a64` and `b1` to
 `b64` parameters of the `osc` node.
 
 Every operator column carries its oscillator card on the operator envs, LFO,
 spectra and mod pages. The operator header carries the active and mute switch, and
 it shares its state with the toolbar mute box. Each operator sub-card has a copy
-and paste pair in its header, so a card copies across operators. The spectrum cards
+and paste pair in its header, so a card copies across operators. The spectrum rows
 copy their 64 levels for another operator, and each row carries its range.
 
 Open `http://localhost:8080/panel.html`. The root redirects there. The bare page

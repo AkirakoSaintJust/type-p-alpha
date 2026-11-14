@@ -78,10 +78,10 @@ The result is a preview while the waveform is not `spectrum`, and the first edit
 commits it. The `spectrum` entry has no analysis. It uses the stored a and b
 levels.
 
-The analysis table is generated with the wavetable bank, thirteen waves by sixteen
+The analysis table is generated with the wavetable bank, thirteen waves by 64
 harmonics, and a test compares it with a DFT of the checked-in table.
 
-The analysis has the limits in `spectral.md`: a sixteen-harmonic truncation, no
-phase, and no DC. A 2x wave analyses to h2 and its multiples, so h1 reads zero and
+The analysis has the limits in `spectral.md`: a 64-harmonic truncation, no phase,
+and no DC. A 2x wave analyses to h2 and its multiples, so h1 reads zero and
 the bar scale still starts at h1. A saw or square starting point is darker than its
 full-band table at low notes.

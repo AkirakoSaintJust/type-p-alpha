@@ -34,7 +34,7 @@
   helpers.
 - **Persistence/version impact:** the name field grows from 16 to 33 bytes,
   `PRESET_VERSION` becomes 2 and the library magic becomes `P1LIB2`. The reader
-  accepts the current `P1LIB2` layout only; the 146, 160 and 179 layouts and the
+  accepts the current `P1LIB2` layout only. The 146, 160 and 179 layouts and the
   16-byte `P1LIB1` name field are removed. Each part and multi record grows by
   17 bytes. A library made before `P1LIB2` needs conversion outside the plugin.
 - **MIDI/clock impact:** none.

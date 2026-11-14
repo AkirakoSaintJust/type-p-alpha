@@ -8,8 +8,7 @@ sample change.
 
 The design uses three tabs, `op spectra a`, `op spectra b` and `op spectra mod`.
 The first two edit the levels of one spectrum, and the third shows the spectra as a
-display and
-carries the morph envelope and the morph LFO.
+display and carries the morph envelope and the morph LFO.
 
 ## Tabs and page indices
 
@@ -25,29 +24,22 @@ The tab bar keeps seven tabs, with `part fx/mod` next to `patch settings`:
 | 5 | op spectra b |
 | 6 | op spectra mod |
 
-The move shifts the stored page index. A session saved with the old order needs a
-remap of 1 to 2, 2 to 3 and 3 to 1 on restore, or it opens the wrong page once.
-The patch and multi data are unaffected. The restore can key the remap on a new
-`uiPageLayout` property.
+The page order moves with each layout change, so restore remaps the stored page. A
+four-tab session had operators at 1, operator lfos at 2 and fx/mod at 3. A six-tab
+session had fx/mod at 1 and `op spectra mod` at 5. The split inserts `op spectra b`
+at 5, so the mod page moves to 6. The remap keys on `uiPageLayout`, now 3, and the
+patch and multi data are unaffected.
 
-The current tab bar lays each label out at `textWidth(displayFont(textTab)) + 32`.
-The six labels take about 1,030 px of the 1,238 px strip at the 16 px JUCE tab
-font, so 208 px remain. The bar does not scroll or clip.
+The tab bar lays each label out at `textWidth(displayFont(textTab)) + 32`. The seven
+labels take about 1,183 px of the 1,238 px strip at the 16 px JUCE tab font, so
+about 55 px remain. The bar does not scroll or clip.
 
-Four clamps change from 3 to 5:
-
-- `PluginEditor.cpp`, the constructor clamp.
-- `PluginEditor.cpp`, `showTab`.
-- `PluginProcessor.h`, `setUiPage`.
-- `PluginProcessor.cpp`, the state restore.
-
-`showTab` renumbers `part fx/mod`, `operator envs` and `operator lfos` to 1, 2
-and 3, and gains cases 4 and 5. `buildPage` gains the two factories.
+`showTab` clamps to 0 to 6 and gains cases 4, 5 and 6. `setUiPage` and the state
+restore clamp to 6. `buildPage` gains the two spectrum factories and the mod factory
+at 6.
 
 The editor window and page area do not move. The page is 1206 by 685 at (17, 255),
-and each operator column is 294 px wide with 278 px of inner width, the same as
-the operators and operator lfos pages. Four columns and the two new pages use the
-existing column rhythm.
+the same as the operators and operator lfos pages.
 
 ## Page geometry
 
@@ -60,10 +52,9 @@ existing column rhythm.
 | four control cards | 132 |
 | viewport total | 640 |
 
-The page holds about 710 px. The top operator strip is fixed and the rows and
-control cards sit in a scroll viewport, so the four rows and the four control cards
-are 640 px together and the whole page scrolls by about 100 px. Each row holds a
-range select, a 64-bar editor, the harmonic labels and the group legend. The
+The page is 685 px high. The operator strip is fixed at 176 px, so the viewport
+shows about 509 px of the 640 px content and scrolls by about 130 px. Each row holds
+a range select, a 64-bar editor, the harmonic labels and the group legend. The
 control card holds the group, the mask, the three spring controls, the formant
 picker, normalise and to the other spectrum.
 
@@ -80,9 +71,9 @@ picker, normalise and to the other spectrum.
 | total | 660 |
 
 The same 9 px remain. The visual is 120 px high, enough for two overlaid
-sixteen-harmonic outlines and the live morph marker.
+64-harmonic outlines and the live morph marker.
 
-The spectra page keeps the scope and spectro pair, because it is an operator
+The spectrum pages keep the scope and spectro pair, because they are operator
 editing page and the pair is the operator's audio identity. The mod page drops
 the pair, because the two-spectrum visual already shows the operator's shape and
 the page needs the height for the envelope and the LFO.
@@ -128,87 +119,93 @@ and shows the result as spectrum a. The analysis is a forward transform. The eng
 still rebuilds the time table from the levels.
 
 The analysis is a preview. The operator sounds through the selected waveform, the
-stored a and b levels are untouched, and the a card carries a `from wave` badge.
+stored a and b levels are untouched, and the a row carries a `from wave` badge.
 Opening the page does not dirty the patch.
 
-The first edit of an A-card control commits the preview. The controls are the
-sixteen a bars, the four macros, `norm` and `to b`.
-The morph knob does not commit by itself in this pass. The editor writes the
-sixteen a levels, leaves b as stored, then writes `opN_waveform` as 13, in that
-order, so the engine never reads the new mode against the old table. The mode
-switch crossfades over 10 ms. A first edit on the b card or the morph does not
-commit the a preview; select `spectrum` or edit the a card.
+The first edit of an A-row control commits the preview. The controls are the 64 a
+bars, the group and mask selectors, the three spring controls, `norm` and `to b`.
+The morph knob does not commit by itself. The editor writes the 64 a levels, leaves
+b as stored, then writes `opN_waveform` as 13, in that order, so the engine never
+reads the new mode against the old table. The mode switch crossfades over 10 ms. A
+first edit on the b row or the morph does not commit the a preview. Select
+`spectrum` or edit the a row.
 
-The first edit writes seventeen parameters, and a host undo may not group them.
+The first edit writes 65 parameters, and a host undo may not group them.
 Selecting a wave is the explicit way back. Host automation of a level does not
 engage the mode either, because the waveform value is the gate.
 
 Once the waveform is `spectrum`, the pages show the stored spectra. Selecting a wave
-keeps the stored levels and returns the a card to the live waveform analysis.
+keeps the stored levels and returns the a row to the live waveform analysis.
 Selecting `spectrum` again restores the stored spectra without re-analysing.
 
 The analysis is a starting point. A sine, triangle or half sine survives the
-sixteen-harmonic limit closely. A saw, square, pulse or rectified shape loses its
-upper harmonics, so the spectral version is audibly duller at low notes than the
-full-band table. The transform also drops phase, so the waveform shape, the peak
+64-harmonic limit closely. A saw, square, pulse or rectified shape loses the
+partials above 64, so the spectral version is duller above 4.2 kHz at C2 and stays
+close to the full-band table towards the top of the keyboard, where those partials
+sit above Nyquist. The transform also drops phase, so the waveform shape, the peak
 factor and the oscilloscope trace change even when the harmonic magnitudes match.
-The half-wave and rectified shapes carry a DC term, which the table drops. The
-thirty-two harmonic mode later closes part of the gap.
+The half-wave and rectified shapes carry a DC term, which the table drops.
 
-## Spectrum cards
+## Spectrum rows
 
-Each operator has two cards, `spectrum a` and `spectrum b`, with the same
-controls. The 64 levels and the range are the saved spectrum state.
-While the waveform is not `spectrum`, the a card shows the live waveform analysis.
-Once the waveform is `spectrum`, both cards show the stored levels.
+Each operator has one row per spectrum, `opN spectrum a` and `opN spectrum b`, with
+the same controls. The 64 levels and the range are the saved spectrum state. While
+the waveform is not `spectrum`, the a row shows the live waveform analysis. Once the
+waveform is `spectrum`, both rows show the stored levels.
 
 | Control | Meaning |
 | --- | --- |
 | `range` | the harmonic block the 64 bars address: 1-64 or 65-128 |
 | 64 bars | the selected range, 0 to 99 per bar |
-| `norm` | scale the sixteen bars so the tallest reads 99 |
-| `to b` / `to a` | copy this card's 64 levels to the other spectrum |
-| `odd` | drag to attenuate the even harmonics |
-| `even` | drag to attenuate the odd harmonics above h1 |
-| `tilt` | drag left to darken and right to brighten |
-| `formant` | place a peak at a selectable harmonic and drag its amount |
-| harmonic select | the formant centre, h1 to h16 |
+| `copy` / `paste` | move the whole spectrum to another operator |
+| `to b` / `to a` | copy the 64 levels to the other spectrum of the operator |
+| group | the harmonic series the spring controls select, from all, odd, even, octave P8, third P5, fifth M3, seventh m7, fifteenth M7, eleventh TT, thirteenth m6, ninth M2, twenty-first P4, nineteenth m3 and seventeenth m2 |
+| mask | live, dead or both, so a gesture writes only the sounding, only the silent, or every selected member |
+| tilt | drag left to darken and right to brighten the selected members |
+| level | drag to add or remove level across the selected members |
+| formant | place a peak at the picked harmonic and drag its amount |
+| harmonic picker | the formant centre, h1 to h64 |
+| `norm` | scale the 64 bars so the tallest reads 99 |
 
 The bar editor writes the level under the pointer and follows a drag across the
 bars. A bar snaps to whole units from 0 to 99. The engine normalises the generated
-table, so the bars set the relative amplitudes whilst the operator level sets the
-loudness. The range shifts the whole block, so a card set to 65-128 edits harmonics
+table, so the bars set the relative amplitudes and the operator level sets the
+loudness. The range shifts the whole block, so a row set to 65-128 edits harmonics
 65 to 128. A and b carry independent ranges, and the mod display zooms to the union
 when they differ.
 
-Each card carries `copy` and `paste` in its header, like every other operator
-card, so a whole spectrum moves between operators. The `to b` and `to a` buttons
-copy within one operator.
+The group and the mask limit which bars a spring control moves. With `third P5`
+selected and `both` masked, a level drag writes harmonics 3, 6, 12, 24 and 48 and
+leaves h1, h2 and h4 where they were. A `dead` mask writes only the members that
+are silent, which is the quick way to build a series from nothing.
 
-## The macros
+Each row carries `copy` and `paste` in its header, like every other operator card,
+so a whole spectrum moves between operators. The `to b` and `to a` buttons copy
+within one operator.
 
-The controls are editing gestures. The 64 levels are the host parameters. Each
-drag starts from a snapshot of the 64 levels at pointer down, applies one
-curve to that snapshot, and writes the result. The control returns to rest on
-release. A second drag starts from the committed levels, so repeated gestures
-never compound the same curve.
+## The spring controls
 
-`a` is the drag amount from 0 to 1 for `odd`, `even` and `formant`, and from -1 to
-1 for `tilt`. `L[n]` is the level of harmonic n in the snapshot, with n from 1 to
-16. `c` is the formant centre and the bell width is 1.5 harmonics.
+The controls are editing gestures. The 64 levels are the host parameters. Each drag
+starts from a snapshot of the 64 levels at pointer down, applies one curve to the
+selected members of that snapshot, and writes the result. The control returns to
+rest on release. A second drag starts from the committed levels, so repeated
+gestures never compound the same curve.
 
-| Macro | Curve |
+`a` is the drag amount from 0 to 1. `L[n]` is the level of harmonic n in the
+snapshot, from 1 to 64, and `i` is its bar index from 0 to 63. `c` is the formant
+centre and the bell width is 1.5 harmonics.
+
+| Control | Curve |
 | --- | --- |
-| odd | `L'[n] = L[n] * (1 - a)` for even n, unchanged for odd n |
-| even | `L'[n] = L[n] * (1 - a)` for odd n above h1, unchanged for h1 and even n |
-| tilt | `L'[n] = L[n] * clamp(1 + a * (n - 1) / 15, 0, 1)` |
-| formant | `L'[n] = clamp(L[n] + a * 99 * exp(-((n - c)^2) / 4.5), 0, 99)` |
+| tilt | `L'[n] = L[n] * (1 + a * i / 63)` |
+| level | `L'[n] = L[n] + a * 99` |
+| formant | `L'[n] = L[n] + a * 99 * exp(-((n - c)^2) / 4.5)` |
 
-`norm` scales every level by `99 / max(L)`, and leaves a silent spectrum alone.
+Every result clamps to 0 to 99, and only the selected members change. `norm` scales
+every level by `99 / max(L)` and leaves a silent spectrum alone.
 
-The curves are a first factory setting. The listening test compares them with a
-softer `odd` and `even`, and with a narrower formant bell. The interaction stays
-the same if a curve changes. The curves are provisional.
+The curves are a factory setting. The listening test compares the tilt amount and
+the formant width, and the interaction stays the same if a curve changes.
 
 ## Morph envelope card
 
@@ -243,7 +240,8 @@ A depth of zero is the bypass.
 ## Spectrum display
 
 The mod page shows spectrum a as a filled purple outline and spectrum b as a pink
-outline, with h1 to h16 on the same horizontal scale. A marker under the outlines
+outline, with the union of the two spans on one horizontal scale and 64 levels per
+outline. A marker under the outlines
 runs from `a` at the left to `b` at the right and shows the current morph value.
 The visual is a display and does not take a drag.
 
@@ -256,13 +254,13 @@ marker reflects the envelope and the LFO.
 
 The waveform defaults to sine, so the init patch stays exact. Every patch that
 uses waves 0 to 8 stays exact too. The `rect tri` insertion shifts old values 9, 10
-and 11 to 10, 11 and 12, and the preset version moves to 3.
+and 11 to 10, 11 and 12, and the preset version moved to 3.
 
 | Control | Default |
 | --- | --- |
 | waveform | sine (0) |
-| spectrum a | h1 99, h2 to h16 zero |
-| spectrum b | 99, 45, 30, 15, 55, 40, 25, 12, 8, 5, 3, 2, 1, 0, 0, 0 |
+| spectrum a | h1 99, h2 to h64 zero |
+| spectrum b | 99, 45, 30, 15, 55, 40, 25, 12, 8, 5, 3, 2, 1, then zero to h64 |
 | morph | 0 |
 | envelope rates | 80, 60, 50, 80 |
 | envelope levels | 99, 60, 0 |
@@ -275,7 +273,7 @@ and 11 to 10, 11 and 12, and the preset version moves to 3.
 The stored spectrum a is a sine. The page shows the selected wave while the
 waveform is not `spectrum`, and the first edit commits that analysis. Spectrum b is
 a formant shape at h5, which gives the morph an audible direction and shows the
-formant macro in context.
+formant spring in context.
 
 ## Parameters
 
@@ -287,8 +285,8 @@ waveform parameter grows from 0 to 11 to 0 to 13, where 13 selects `spectrum`.
 | --- | --- | --- | --- | --- |
 | range a | `opN_spec_range_a.pP` | 1 | 0 to 1 | 0 |
 | range b | `opN_spec_range_b.pP` | 1 | 0 to 1 | 0 |
-| spectrum a | `opN_spec_a1.pP` to `opN_spec_a16.pP` | 16 | 0 to 99 | 99, then zero |
-| spectrum b | `opN_spec_b1.pP` to `opN_spec_b16.pP` | 16 | 0 to 99 | as the defaults table |
+| spectrum a | `opN_spec_a1.pP` to `opN_spec_a64.pP` | 64 | 0 to 99 | 99, then zero |
+| spectrum b | `opN_spec_b1.pP` to `opN_spec_b64.pP` | 64 | 0 to 99 | as the defaults table |
 | morph | `opN_spec_morph.pP` | 1 | 0 to 99 | 0 |
 | envelope rates | `opN_spec_env_r1.pP` to `opN_spec_env_r4.pP` | 4 | 0 to 99 | 80, 60, 50, 80 |
 | envelope levels | `opN_spec_env_l1.pP` to `opN_spec_env_l3.pP` | 3 | 0 to 99 | 99, 60, 0 |
@@ -298,65 +296,61 @@ waveform parameter grows from 0 to 11 to 0 to 13, where 13 selects `spectrum`.
 | lfo wave | `opN_spec_lfo_wave.pP` | 1 | six waves | sine |
 | lfo mode | `opN_spec_lfo_mode.pP` | 1 | unipolar, bipolar | bipolar |
 
-That is 47 parameters per operator, 188 per part, and 376 in the manifest. The
+That is 143 parameters per operator, 572 per part, and 1,144 in the manifest. The
 part block grows from 228 to 800, and the manifest from 470 to 1,614.
 
 The range is the harmonic block the 64 bars address: 0 is 1 to 64 and 1 is
 65 to 128. A and b each carry their own range, so the mod display zooms
 out to the union of both spans when they differ.
 
-A thirty-two harmonic mode would add 32 levels per operator. It is not in the
-first release, and the 64-bar editor, the table generator and the parameter
-names all assume sixteen until that mode exists.
-
 ## Engine contract
 
-The engine generates a table bank per part: four operators, two spectra, five mip
-levels, 256 samples, signed 16-bit samples. The bank is 20,480 bytes per part. A
-shadow set per operator adds 20,480 bytes per part for the crossfade, so the two
-parts use 81,920 bytes.
+The engine generates a table bank per operator: two spectra for each of the two
+parts, seven mip levels, 256 samples, signed 16-bit samples, and one shadow spectrum
+per part for the crossfade. The bank is 10,880 samples per operator, so 21,760
+bytes per operator and 87,040 bytes for four operators, both parts included.
 
 The generator sums the 64 harmonic amplitudes into one table, finds the peak,
-and scales the table to full range, which is the normalisation step that the first
-survey run lacked, and without it the table clipped at -23 dB and the alias floor
-read as far better than the table actually was. The normalisation is mandatory.
+and scales the table to full range. The first survey run lacked that normalisation,
+so the table clipped at -23 dB and the alias floor read as far better than the table
+actually was. The normalisation is mandatory.
 
 The bank is 256 samples per mip. The read uses a 24-bit phase fraction, so the
 table's harmonic 1 is the note's fundamental. The first prototype used the
-1024-sample shift (22 bits) and played the table four times too high; the product
+1024-sample shift (22 bits) and played the table four times too high. The product
 uses 24 bits and the spectral test checks the fundamental.
 
-When a level changes, the engine marks the operator dirty, regenerates the affected
-spectrum on the 344 Hz control tick, writes the new table into the shadow while the
+When a level changes, the engine sees the new hash on the 32-sample control tick,
+regenerates the affected spectrum, writes the new table into the shadow while the
 current table keeps playing, and crossfades the read from the old table to the new
-one over ten milliseconds, which keeps the update silent without stopping the
-voice. The read never stops. The morph blends the two existing tables per sample.
+one over ten milliseconds. The update stays silent and the voice keeps running. The
+morph blends the two existing tables per sample.
 
-The mip selector now uses Nyquist/2.25, between the Nyquist/4 survey and the bright
-Nyquist/2 policy. At 16 harmonics and 256 samples, the alias floor at C7 is
--87.3 dB with the linear read in the survey. The Nyquist/4 selector cost the fifth
-to eighth harmonics at C7, which measure -91.6 dB against +4.2 dB with the bright
-policy. Nyquist/2.25 recovers part of that group with less alias headroom than the
-bright policy. The listening test can move it back.
+The mip selector keeps the top harmonic at or below Nyquist/2.25. At note 60 it
+selects mip 2, whose table keeps all 64 harmonics, so a 64-level spectrum reads the
+full set at mips 0 to 2 and drops to 32, 16, 8, 4, 2 and 1 at mips 3 to 8. The read
+maps `level = clamp(mip - 2, 0, 6)`. Nyquist/2.25 recovers the top octave with less
+alias headroom than the bright policy, and the listening test can move it back.
 
 The measured costs on this machine, with the caveat that the CPU clock moved the
 runs by up to 25 percent:
 
-| Work | Share of one core |
+| Work | Cost |
 | --- | --- |
-| 16 tables, 344 Hz, no mips | 1.7% |
-| 16 tables, 344 Hz, five mips | 3.4% |
+| one spectrum, 64 harmonics, 256 samples, seven mips | 60 µs |
+| eight spectra in one control tick | 482 µs |
+| one engine block that changes all eight spectra | about 850 µs |
+| one spectrum, 64 harmonics, 512 samples, seven mips | 120 µs |
 
-The 64-harmonic bank with seven mips is measured in the
-[additive research note](../docs/research/additive-synthesis.md).
-| full graph, 20 voices, linear read | 2.46% |
+A part regenerates a spectrum only when its levels change, so the steady cost is
+the read path: two table reads and one blend per sample, the same as the
+16-harmonic bank. The worst-case block takes about a third of a 128 frame callback
+at 48 kHz, which leaves two thirds of the budget. A 32 frame callback would not hold
+that block. The 512-sample table doubles the generation and stays out of the
+default bank. The control tick stays at 32 samples, which is 1,500 Hz at 48 kHz.
 
-A patch that enables all four operators on both parts and regenerates every table
-therefore sits near 6% of one core before the rest of the graph. The 1,378 Hz
-update path is not used. The control rate stays at 344 Hz.
-
-The cost survey used 20 voices. The current engine has 24, so the per-voice rows
-scale by 1.2 and the full graph figure moves from 2.46% to about 2.95%.
+The full graph read path measured 2.46% of one core at 20 voices, which scales to
+about 2.95% at 24.
 
 When `opN_waveform` is 13, the oscillator reads the additive bank. Values 0 to 12
 read the wave table, and the additive bank is not generated.
@@ -365,21 +359,13 @@ read the wave table, and the additive bank is not generated.
 
 The waveform defaults to sine, and the spectral levels default to a sine
 a-spectrum. Waves 0 to 8 render the same samples. The `rect tri` insertion shifts
-old values 9, 10 and 11 to 10, 11 and 12, so the preset version moves to 3 and the
-old test banks are regenerated. The engine parity test covers the wave path, and a
-new table test covers the spectrum mode.
+old values 9, 10 and 11 to 10, 11 and 12, so the preset version moved to 3. The
+64-level change moves it to 6, and the old test banks are regenerated. The engine
+parity test covers the wave path, and a new table test covers the spectrum mode.
 
 ## Open items
 
-- Confirm the preview and commit rule, and the control list that engages the mode.
-- Write the thirteen-wave table generator, compare the current twelve tables with
-  the new output, and regenerate `engine/gen/wavetable.h`.
-- Generate the thirteen by 64 harmonic analysis table from the wavetable bank
-  and test it against a DFT of the checked-in table.
-- Confirm the four macro curves and the formant width by ear.
+- Confirm the tilt amount, the level amount and the formant width by ear.
 - Choose the mip brightness policy after the C7 listening test.
-- Decide whether the thirty-two harmonic mode earns its parameter count after
-  the sixteen-harmonic release is measured.
-- Regenerate the thirteen editor goldens after the tab bar changes. The tab bar
-  appears in every snapshot, so all thirteen images change, and the two new pages
-  add two more, for fifteen in all.
+- Decide whether harmonic 128 in the 65-128 range earns a 512-sample table. The
+  512-sample bank doubles the generation and needs the work spread across ticks.

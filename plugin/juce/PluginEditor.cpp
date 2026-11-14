@@ -821,7 +821,7 @@ void PluginEditor::setActivePart(int part)
 
 void PluginEditor::showTab(int tab)
 {
-    tab = juce::jlimit(0, 5, tab);
+    tab = juce::jlimit(0, 6, tab);
     if (tab == activeTab_)
         return;
     activeTab_ = tab;

@@ -106,14 +106,15 @@ Every page fills the same height:
 - operator lfos: four operator columns with the oscillator, then the `amp lfo`,
   `fb lfo` and `detune lfo` cards. Each LFO card carries copy and paste in its
   header, and its `bipolar` switch beside the wave select.
-- operator spectra: four operator columns with the oscillator card, then the
-  `spectrum a` and `spectrum b` cards. The oscillator card adds the `morph` knob to
-  the knob row, and the wave select carries `spectrum` at 13. Each spectrum
-  card is 220 high and holds a range select, a 16-bar editor, a harmonic scale, the
-  `odd`, `even`, `tilt` and `formant` macros, and `norm` with `to b` or `to a`.
-  While the waveform is not `spectrum`, the a card shows the analysis of the selected
-  wave with a `from wave` badge. The first A-card edit commits that analysis and
-  moves the waveform to `spectrum`.
+- op spectra a: four operator and oscillator cards across the top, then four wide
+  spectrum rows and four control cards in a scroll viewport. Each row holds a range
+  select, a 64-bar editor, the harmonic labels and the group legend. The control
+  card holds the group, the mask, the `tilt`, `level` and `formant` springs, the
+  formant picker h1 to h64, `norm` and `to b`. While the waveform is not `spectrum`,
+  the a row shows the analysis of the selected wave with a `from wave` badge, and the
+  first edit on the row commits that analysis and moves the waveform to `spectrum`.
+- op spectra b: the same page for spectrum b, with `to a` in place of `to b` and no
+  wave analysis. Each row carries its own range and its own 64 levels.
 - op spectra mod: four operator columns with the oscillator card, a `spectra`
   display, the `morph env` card and the `morph lfo` card. The display draws the
   selected wave's analysis in a while the waveform is not `spectrum`, and the
@@ -121,9 +122,10 @@ Every page fills the same height:
   use different ranges, the display zooms out to the union of the two spans. The
   envelope card carries the graph, the depth knob, R1 to R4 and L1 to L3.
 
-Moving `part fx/mod` next to `patch settings` shifts the stored `uiPage` index. The
-processor remaps old 1 to 2, 2 to 3 and 3 to 1 when an old state has no
-`uiPageLayout` property.
+The page order changes with each layout addition, so the processor remaps the
+stored `uiPage` when an old state restores. A four-tab state maps 1 to 2, 2 to 3 and
+3 to 1. A six-tab state maps the mod page from 5 to 6. The `uiPageLayout` property
+is now 3.
 
 ## Header
 
@@ -186,12 +188,14 @@ current state in pink and the other word faint.
 
 The level slider is a 14px track with a purple fill and a `level` caption.
 
-A spectrum bar editor draws sixteen columns and writes the level under the pointer,
-then follows a horizontal drag. A macro control is a 10px track: the drag previews
-one curve from the sixteen levels captured at pointer down, and the release writes
-the levels, so repeated gestures never compound the same curve. While the waveform
-is not `spectrum`, the a card shows a sixteen-level preview of the selected wave,
-and the first edit writes those levels before it writes the waveform as 13.
+A spectrum row draws 64 columns across the page width and writes the level under
+the pointer, then follows a horizontal drag. The bar labels show every eighth
+harmonic, and the members of the selected group are green. A spring control is a
+10px track: the drag previews one curve from the 64 levels captured at pointer down,
+written to the members the group and mask select, and the release leaves the result
+in place, so repeated gestures never compound the same curve. While the waveform is
+not `spectrum`, the a row shows a 64-level preview of the selected wave, and the
+first edit writes those levels before it writes the waveform as 13.
 
 The wave select lists the fourteen names in `waveforms.md` in stored order.
 `rect tri` is value 9, `pulse`, `square` and `saw` are 10 to 12, and `spectrum` is
@@ -230,9 +234,9 @@ order.
   follow.
 - operator envs: four sets of oscillator, amplitude envelope, feedback envelope and
   the three LFO parameters.
-- operator spectra: per operator, the sixteen a levels, the sixteen b levels, the
-  morph value, the morph envelope and the morph LFO. The waveform parameter grows
-  to 0 to 13, with `spectrum` at 13.
+- op spectra a and op spectra b: per operator, the 64 a levels, the 64 b levels,
+  the two ranges, the morph value, the morph envelope and the morph LFO. The
+  waveform parameter grows to 0 to 13, with `spectrum` at 13.
 - global: algorithm and patch name.
 
 Use stable parameter IDs derived from the manifest. Host automation, state save and

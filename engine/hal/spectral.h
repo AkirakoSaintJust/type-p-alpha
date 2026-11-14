@@ -113,7 +113,8 @@ static inline void p1_spectral_copy(int16_t *dst, const int16_t *src)
 /* Generate or advance the bank for both parts. Called once per control block
  * at the first voice. One spectrum changes at a time per part. The oscillator
  * sets the used flag on every read, so a silent part commits its new table at
- * once and an audible part crossfades over 256 ticks. */
+ * once and an audible part crossfades over about 15 control ticks (256 units at
+ * 17 per tick, 480 samples, 10 ms). */
 static inline void p1_spectral_tick(
     int16_t *bank, const int32_t *waveform, const int32_t *range_a,
     const int32_t *range_b,

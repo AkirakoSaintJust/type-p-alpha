@@ -76,8 +76,8 @@ path is chosen.
   half is the current path.
 - **Instance memory, CPU, preset size:** the feedback and depth parameters are
   already in the 171 block. The shape and filter parameters free 32 bytes per part.
-  The `shaped` state is one `int32_t` per operator per voice; the `lp` state is
-  removed. Each part record loses 32 bytes.
+  The `shaped` state is one `int32_t` per operator per voice, and the `lp` state
+  is removed. Each part record loses 32 bytes.
 - **Overflow/overload policy:** `x` is Q15, and `abs(x)` is 0..32767. The negation
   is within the Q15 range. The magnitude of -32767 is 32767. The level is clamped to
   0..32767 and the existing tap shift applies.

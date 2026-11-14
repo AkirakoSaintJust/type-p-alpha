@@ -37,7 +37,7 @@
   version to 5, and the 64-harmonic feature to 6 and the state version to 4. The
   project has not released, so no migration is written and older test banks are
   regenerated. The manifest moves from 830 to 1,614 parameters, the part block from
-  408 to 800 and the spectral block from 45 to 133 per operator.
+  408 to 800 and the spectral block from 47 to 143 per operator.
 - **MIDI/clock impact:** none. The 4 Hz LFO defaults keep their displayed value.
 
 ## Parameter and event semantics
@@ -62,8 +62,8 @@ period falls from 725.6 to 666.7 microseconds and the coefficient shrinks
 accordingly. Examples: rate 0 goes from 7 to 6, rate 50 from 102 to 94, and rate 98
 from 26008 to 24350. The third-rate table follows the same transform, so rate 50
 goes from 487 to 448 and rate 98 from 59297 to 57983. The Q16 step quantises the
-slowest coefficient from 7 to 6, so that end runs about 7 percent long; the rest of
-the table is within a few percent.
+slowest coefficient from 7 to 6, so that end runs about 7 percent long, and the
+rest of the table is within a few percent.
 
 The other rate-derived constants are:
 
@@ -136,12 +136,16 @@ float, file access or display enters the audio path.
   The bridge latency is 58 host samples at 44.1, 0 at the 48 kHz bypass, 127 at 96
   and 254 at 192, from the 63.5 core-sample kernel delay.
 - **Target package check:** the VST3, CLAP and standalone targets build, and the
-  editor snapshot test passes at this commit. The later spectral UI pass changes
-  the panel and needs new goldens.
+  editor snapshot test passes against the current goldens.
 - **Host timing and platform check:** the Windows clang-cl/lld build passes all 12
-  CTest entries. The Linux DAW matrix is not run in this tree; it belongs to the
-  Linux container. The panel changes in the later spectral UI pass, so that pass
-  also needs the Linux goldens.
+  CTest entries, and the Linux build passes all 13, including the golden diff. The
+  Linux DAW matrix is not run in this tree. It belongs to the Linux container.
+- **Sanitizer vector:** the Linux clang build with
+  `-DP1_SANITIZERS=address,undefined` in `build/linux-amd64-clang-sanitize` passes
+  all 13 CTest entries with leak detection on and `halt_on_error` set. The first run
+  found a signed overflow in the MIDI CC scaling in `engine/runtime/synth_midi.c`,
+  where `(max - min) * value` overflowed for the 20,000,000-unit rate range. The
+  scale now multiplies in 64 bits.
 - **Evidence artefact:** this contract, the regenerated 48 kHz reference, and the
   measured rate table in `rate_bridge_test`. The feedback research notes keep their
   44.1 kHz measurements as the historical evidence for that rate.

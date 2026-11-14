@@ -14,7 +14,7 @@ bounded. The signed square is a phase variant in the magnitude spectrum.
 
 The measurement ran on Windows with clang-cl and lld-link, against product commit
 `cda8d3b` plus the shaper changes. The experiment test wrote the WAVs and the scope
-renderer read them; the files are committed in `feedback-shaper/`. The shipped
+renderer read them, and the files are committed in `feedback-shaper/`. The shipped
 control is the bipolar feedback knob, and the `feedback_bipolar` test covers it.
 
 The test uses one sine operator: note 60, velocity 100, ratio 1.0, level 99,

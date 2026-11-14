@@ -76,7 +76,7 @@ per second.
 The generation figure is eight tables times H times N times the update rate. A
 mip map roughly doubles the generation and the memory.
 
-The table itself is small. A 256-sample `int16` cycle is 512 bytes; a 512-sample
+The table itself is small. A 256-sample `int16` cycle is 512 bytes and a 512-sample
 cycle is 1024 bytes. Five mip levels for 16 harmonics at 256 samples is 2,560 bytes
 per table, so eight tables and a second crossfade buffer are about 41 KB. The
 32-harmonic case at 512 samples with six levels is about 98 KB. The current
@@ -96,8 +96,8 @@ samples the generation is 1.8 billion. That is not a default path for 20 voices.
 
 A per-voice table can still be useful as a quality mode with a lower voice count,
 or for a fixed note range where the table is generated once per note instead of at
-the control rate. The first case costs polyphony; the second costs memory and note
-setup time.
+the control rate. The first case costs polyphony and the second costs memory and
+note setup time.
 
 ### Shared tables with a per-voice morph
 
@@ -110,8 +110,8 @@ The generation cost stays at the part level and only the read cost doubles, from
 The morph value can follow the amplitude envelope, a dedicated spectral envelope,
 an LFO or key position. This keeps the per-voice movement that the existing
 envelopes provide without generating a table per voice. A bank of four or eight
-recipes and a two-table crossfade at the current position extends the same idea;
-the cost is one or two reads per voice, and the recipes are generated when they are
+recipes and a two-table crossfade at the current position extends the same idea.
+The cost is one or two reads per voice, and the recipes are generated when they are
 edited, not while they are static.
 
 ### Regeneration and crossfade
@@ -134,11 +134,13 @@ choice is a measurement.
 A table with H harmonics aliases when H times the fundamental exceeds Nyquist. The
 current phasor already computes a mip from the phase step. The additive table can
 reuse `p1_wave_mip(step)` and generate one table per level with a lower harmonic
-limit. The lowest level keeps one or two harmonics; the highest keeps all of them.
+limit. The lowest level keeps one or two harmonics and the highest keeps all of
+them.
 
 A 256-sample table with 16 harmonics gives 16 samples per cycle at the top
 harmonic. Linear interpolation between the two nearest samples removes the
-quantisation noise of a nearest read; the cost is one more multiply-add per read.
+quantisation noise of a nearest read, at the cost of one more multiply-add
+per read.
 The current `osc` reads nearest because its 1024-sample tables are dense. A custom
 table at 256 or 512 samples should use linear interpolation.
 
@@ -150,7 +152,7 @@ player edits it and how much of it reaches the host.
 ### Raw harmonic levels
 
 One host parameter per harmonic gives exact control. Sixteen levels per operator is
-64 per part and 128 in the manifest; 32 levels is 256. The current part block is
+64 per part and 128 in the manifest. 32 levels is 256. The current part block is
 228 parameters and the manifest is 470, so the raw form grows them to 356 and 598
 for 16 levels, or 484 and 726 for 32. The part record grows by 256 or 512 bytes.
 
@@ -172,7 +174,7 @@ table shows a peak near harmonic 6 and a falling tail. The generation is a few
 operations per harmonic, which is negligible next to the H times N sum.
 
 The macros are playable and automatable. The player who wants an exact vector needs
-the raw editor; the macros cover most musical spectra.
+the raw editor. The macros cover most musical spectra.
 
 ### Harmonic bands
 
@@ -187,13 +189,13 @@ A bank of four or eight spectra per operator, with one morph parameter, keeps th
 automation small and the CPU low. The recipes are edited in a spectral designer and
 stored with the preset, not exposed as host parameters. The oscillator reads the
 two tables around the current position. The per-voice morph can follow an envelope.
-The limit is that the spectrum stays inside the bank; a new colour needs a new
+The limit is that the spectrum stays inside the bank. A new colour needs a new
 recipe.
 
 ### Formant filters
 
 A graphic formant filter of 16 bands per operator is a different tool. The peaks
-sit at fixed frequencies, so a per-part table cannot track them; the filter has to
+sit at fixed frequencies, so a per-part table cannot track them, and the filter has to
 run per voice. Sixteen bands at five operations per sample across 80 operator
 voices is about 282 million operations per second. Four bands is about 70 million,
 which is plausible as a quality mode with a lower voice count. A per-part filter
@@ -257,7 +259,8 @@ A 16 harmonic table at 256 samples for a four-operator part:
 6. Measure before expanding to 32 harmonics. The 32 harmonic table is still
    affordable at a 344 Hz update and 512 samples, but its memory and generation are
    four times the 16 harmonic case. The 1,378 Hz path is the one to watch. The
-   headless measurement below covers the first pass; the integrated table remains.
+   headless measurement below covers the first pass. The integrated table
+   remains.
 
 ## Headless measurement
 
@@ -267,7 +270,7 @@ operators. The generator is the proposed shared-part algorithm measured in
 isolation. The oscillator prototype measures the single-table nearest read and the
 two-table linear and mip read at 80 operator voices, with the same 16/256 tables.
 The integrated prototype is `plugin/tools/additive_prototype.py` and
-`plugin/tests/additive_engine_bench.cpp`; the script copies the generated engine
+`plugin/tests/additive_engine_bench.cpp`. The script copies the generated engine
 into the build tree and replaces the four operator reads with the additive pair.
 The current five-mip generator and the proposed seven-mip 64-harmonic generator are
 timed by `plugin/tests/spectral_bench.cpp`.
@@ -326,13 +329,13 @@ The conservative mip costs brightness. The fifth to eighth harmonics at C7 measu
 | 32/256 | -88.8 dB | +4.2 dB |
 | 32/512 | -89.5 dB | +4.2 dB |
 
-The bright mip puts the top harmonic just below Nyquist and recovers the group;
-the conservative mip keeps it an octave below and loses it. A production policy can
+The bright mip puts the top harmonic just below Nyquist and recovers the group.
+The conservative mip keeps it an octave below and loses it. A production policy can
 sit between the two, or the table can carry more mip levels.
 
 For the current 256-harmonic banks the selector keeps the top harmonic at or below
 Nyquist/2.25. At note 60 that is the 64-harmonic table, so the top sits at about
-16.7 kHz; across the mip band it runs from about 10.7 to 21.3 kHz. The earlier
+16.7 kHz, and across the mip band it runs from about 10.7 to 21.3 kHz. The earlier
 Nyquist/4 policy put note 60 on the 32-harmonic table at 8.4 kHz, which is the
 rolloff a bright saw patch showed around 10 to 12 kHz. Nyquist/2.25 recovers the
 top octave with less alias headroom.
@@ -351,12 +354,12 @@ The first two are table oscillators. The third is the real voice graph with the
 additive oscillator. The engine prototype used the 1024-sample phase shift on the
 256-sample table, so its audition plays four times the intended pitch. The product
 bank uses a 24-bit fraction, and the spectral test checks the fundamental. The
-20-voice CPU row keeps the full four-operator graph; the audition uses the clean
+20-voice CPU row keeps the full four-operator graph. The audition uses the clean
 carrier and silences part 2. The engine prototype uses the same linear table read as
 the standalone. The first engine pass used a nearest read, and the sample-and-hold
-roughness read as noise in the upper harmonics; the linear read removes it. The
+roughness read as noise in the upper harmonics, and the linear read removes it. The
 first shared-morph pass advanced the morph inside the per-voice sample loop, so each
-chord voice saw a different blend; the morph is now one per-sample ramp that every
+chord voice saw a different blend. The morph is now one per-sample ramp that every
 voice shares. The modulators and feedback are disabled for the audition, so the
 remaining brightness is the bright table's formant, which the standalone shares.
 
@@ -372,15 +375,16 @@ from five to seven mips.
 The table size is the real choice. A 256-sample table carries 64 harmonics with
 room below Nyquist, but harmonic 128 in the 65-128 range sits at the table's
 Nyquist and comes out silent, as harmonic 128 already did in the previous 113-128
-range and now does in 65-128. A 512-sample table represents harmonic 128 and interpolates the top octave
+range. A 512-sample table represents harmonic 128 and interpolates the top octave
 better. It doubles the bank and the generation.
 
 The bank is shared by every voice of the part, so the read side is unchanged: two
 tables, plus the shadow during a crossfade, with one linear read each. No per-voice
 state or memory grows, so the 24-voice allocation is unaffected. The bank size for
 four operators and both parts, seven mips, both spectra and one shadow spectrum per
-part is 86,016 bytes at 256 samples and 172,032 bytes at 512 samples. The current
-bank is 65,536 bytes, and the WASM memory is fixed at 32 MB.
+part is 87,040 bytes at 256 samples and 173,056 bytes at 512 samples, header
+included. The 16-harmonic bank was 65,536 bytes, and the WASM memory is fixed at
+32 MB.
 
 `spectral_bench` measures the generator on this machine:
 
@@ -391,30 +395,29 @@ bank is 65,536 bytes, and the WASM memory is fixed at 32 MB.
 | 64 harmonics, 512 samples, seven mips | 119.9 µs | 959 µs |
 
 The eight-spectrum column is the worst case, where all four operators and both
-parts change in one control tick. A normal edit changes one spectrum, which is
+parts change in one control tick. A normal edit changes one spectrum, which costs
 60.3 or 119.9 µs. The whole engine block that changes all eight spectra, with the
-copies and the voice work, measured about 850 µs. That is 32 percent of a 128
-frame callback at 48 kHz, or 64 percent of a 64 frame callback. The control block is 32 samples, or 667 µs at 48 kHz, and the audio
-callback is larger than that. The 256-sample generation for eight spectra is under
-the control block; the 512-sample generation is over it. The whole block, not just
-the generation, is about 850 µs for the 256-sample bank, so a 32 frame callback
-would not hold it. It is safe at 128 frames and above. The 512-sample bank needs
-the generation spread across ticks or a larger control block.
-The cold commit and the 10 ms crossfade do not change, so the edit-to-audio latency
-is the same as the 16-harmonic case. The spike is CPU in the audio callback, not a
-delayed parameter.
+copies and the voice work, measured about 850 µs. That is 32 percent of a 128 frame
+callback at 48 kHz, and 64 percent of a 64 frame callback. The control block is 32
+samples, or 667 µs at 48 kHz, so the 256-sample generation for eight spectra fits
+under it and the 512-sample generation does not. The whole 256-sample block is
+about 850 µs, which a 32 frame callback would not hold. It runs at 128 frames and
+above. The 512-sample bank needs the generation spread across ticks or a larger
+control block. The cold commit and the 10 ms crossfade do not change, so the
+edit-to-audio latency is the same as the 16-harmonic case. The spike is CPU in the
+audio callback rather than a delayed parameter.
 
 The parameter surface grows by 768 levels, from 256 to 1,024, because two spectra of
 64 levels span four operators and two parts. The manifest grows from 846 to 1,614,
 the part block from 416 to 800, and the part record by 1,536 bytes. The two range
-values replace the eight range values; the group and mask stay editor state.
+values replace the eight range values. The group and mask stay editor state.
 
-The editor is a larger change than the DSP. A 64 bar spectrum in a 286 pixel card
-is about 4.5 pixels per bar. A two column spectra page doubles the card width, or
-the card can split the 64 bars into two rows of 32. The select groups, masks, spring
-controls and copy and paste still apply. The legend should show a count or the first
-and last member rather than 64 numbers, and the bar labels should show every eighth
-harmonic.
+The editor is a larger change than the DSP. The shipped layout splits the spectra
+into two tabs, one per spectrum, each with four operator and oscillator cards, four
+wide 64-bar rows and four control cards in a scroll viewport. A row spans the page
+width, so a bar gets about 18 px. The select groups, masks, spring controls and copy
+and paste carry over. The legend shows a count or the member harmonics rather than
+64 numbers, and the bar labels show every eighth harmonic.
 
 The recommendation is 64 harmonics with 256-sample tables and seven mips as the
 default. It keeps polyphony and the edit latency, and it leaves the worst-case

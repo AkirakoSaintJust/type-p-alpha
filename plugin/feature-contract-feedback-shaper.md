@@ -9,9 +9,9 @@
 - **Owner / date:** P1Onken, 2026-11-12.
 - **Disposition:** research. The shape and filter controls were the experiment. The
   shipped control is the bipolar feedback knob in
-  [`feature-contract-feedback-bipolar.md`](feature-contract-feedback-bipolar.md);
-  its negative half uses the abs and the average; the square and the one-pole remain
-  research variants. The measurements are in
+  [`feature-contract-feedback-bipolar.md`](feature-contract-feedback-bipolar.md).
+  Its negative half uses the abs and the average, and the square and the one-pole
+  remain research variants. The measurements are in
   [`../docs/research/feedback-shaper.md`](../docs/research/feedback-shaper.md).
 
 ## Player outcome

@@ -14,7 +14,7 @@ namespace {
 constexpr double kCoreRate = 48000.0;
 constexpr int kControlBlock = 32;
 constexpr int kStateVersion = 4;
-constexpr int kUiPageLayout = 2;
+constexpr int kUiPageLayout = 3;
 constexpr float kIntToFloat = 1.0f / 32768.0f;
 
 bool isEngineMessage(const juce::MidiMessage& message)
@@ -368,7 +368,7 @@ void TypePAlphaAudioProcessor::setStateInformation(const void* data, int sizeInB
     int page = static_cast<int>(state.getProperty("uiPage", 0));
     const int pageLayout =
         static_cast<int>(state.getProperty("uiPageLayout", 0));
-    if (pageLayout < kUiPageLayout) {
+    if (pageLayout < 2) {
         /* The four-tab layout had operators at 1, operator lfos at 2 and
          * fx/mod at 3. The six-tab layout moves fx/mod to 1. */
         if (page == 1)
@@ -378,7 +378,12 @@ void TypePAlphaAudioProcessor::setStateInformation(const void* data, int sizeInB
         else if (page == 3)
             page = 1;
     }
-    uiPage_ = juce::jlimit(0, 5, page);
+    if (pageLayout >= 2 && pageLayout < kUiPageLayout && page == 5) {
+        /* The six-tab layout had the mod page at 5. The split inserts
+         * op spectra b at 5, so the mod page moves to 6. */
+        page = 6;
+    }
+    uiPage_ = juce::jlimit(0, 6, page);
     presets_.setCurrentMulti(static_cast<int>(state.getProperty("currentMulti", -1)));
     for (int part = 0; part < kP1PartCount; ++part) {
         presets_.setPartSource(

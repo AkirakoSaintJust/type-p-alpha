@@ -91,8 +91,8 @@ outputs 0, and a flat envelope outputs 0, so the existing render stays exact.
 - **Maximum voices/events/effects:** 20 voices and two parts, unchanged.
 - **Per-sample and per-block operations:** four feedback envelopes and eight LFO
   nodes per part, all at control rate. The feedback envelope body is the existing
-  `pitch_env` shape; the LFO body is the existing `lfo` shape. The feedback level adds
-  one Q15 input; the pitch adds one saturation.
+  `pitch_env` shape, and the LFO body is the existing `lfo` shape. The feedback
+  level adds one Q15 input and the pitch adds one saturation.
 - **Instance memory, CPU, preset size:** the part block adds 57 parameters, so 228
   bytes per part and 456 bytes across the two parts. Four `pitch_env` states replace
   one shared state per voice, and each operator adds two LFO states, so the voice

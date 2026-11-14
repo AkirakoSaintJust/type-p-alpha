@@ -373,7 +373,7 @@ The shared feedback envelope with a per-operator depth is implemented on the eng
 side and measured in
 [`feedback-envelope.md`](feedback-envelope.md).
 The page, the mockup and the snapshots are in. The bipolar feedback knob ships the
-abs on its negative half; the square and the one-pole remain research variants, with
+abs on its negative half, and the square and the one-pole remain research variants, with
 the evidence in
 [`feedback-shaper.md`](feedback-shaper.md).
 The negative-feedback line now has the bipolar knob and the envelope. A different tap

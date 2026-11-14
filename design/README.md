@@ -1,13 +1,14 @@
 # p1onken interface language
 
 The shared visual language for the Type P.alpha editor. The clickable mockup at
-`design/mockup.html` is the reference implementation, and
-`tokens.json` is the machine-readable source. The CSS projection is `tokens.css`,
-the platform notes are in `juce.md`, the spectral control map is in `spectral.md`,
-and the waveform list and analysis are in `waveforms.md`.
+`design/mockup.html` carries the first-pass layout, and `tokens.json` is the
+machine-readable source. The CSS projection is `tokens.css`, the platform notes are
+in `juce.md`, the spectral control map is in `spectral.md`, and the waveform list and
+analysis are in `waveforms.md`. The shipped panel is `web/panel.html`, so where the
+mockup and the panel differ, the panel and `spectral.md` carry the current layout.
 
-Status: v1.4 draft, 2026-11-13. Adds the spectral pages, the `spectrum` wave, the
-waveform preview and the `part fx/mod` tab move.
+Status: v1.5 draft, 2026-11-14. Adds the 64-bar spectra rows, the `op spectra a` and
+`op spectra b` split, and the seven-tab bar.
 
 ## Principles
 
@@ -201,9 +202,9 @@ and the selected part button has a green border and green text.
 
 ### Tabs
 
-`patch settings`, `part fx/mod`, `operator envs`, `operator lfos`, `operator spectra`,
-`op spectra mod`, with no vertical dividers. The active tab is a pink cut polygon
-rather than a rectangle. Inactive tabs are dim text on black.
+`patch settings`, `part fx/mod`, `operator envs`, `operator lfos`, `op spectra a`,
+`op spectra b`, `op spectra mod`, with no vertical dividers. The active tab is a pink
+cut polygon rather than a rectangle. Inactive tabs are dim text on black.
 
 ### Patch settings
 
@@ -263,22 +264,27 @@ its header. The amplitude LFO depth is in level steps, the feedback LFO depth is
 percentage of the feedback range, and the detune LFO depth is in semitones. A
 negative depth in bipolar mode inverts the LFO phase.
 
-### Operator spectra
+### Operator spectra a and b
 
-Four borderless columns, each with the operator name at the left, copy and paste
-after it, the mute switch at the right, then a scope and spectro pair and three
-cards: `oscillator`, `spectrum a`, `spectrum b`. The oscillator card repeats the
-operator oscillator controls and adds a `morph` slider under the wave select. The
-wave select carries the mode: `spectrum` is the last entry, and selecting it uses
-the stored spectra. While the waveform is not `spectrum`, the a card shows the
-analysis of the selected wave with a `from wave` badge. The first edit commits that
-analysis and moves the waveform to `spectrum`. Each spectrum card holds sixteen
-bars with h1, h4, h8, h12
-and h16 on the scale, then `norm` and `to b` or `to a` below the macro rows. The
-first macro row carries `odd` and `even`. The second carries `tilt` and `formant`
-with a harmonic select for the formant centre. A macro is a drag gesture: the bars
-preview the curve from the levels at the start of the drag, and the release commits
-them. The card header carries copy and paste for the whole spectrum.
+A page per spectrum, `op spectra a` and `op spectra b`. Across the top, four
+borderless operator strips, each with the operator name at the left, copy and paste
+after it, the mute switch at the right, then a scope and spectro pair and an
+`oscillator` card. The oscillator card repeats the operator oscillator controls and
+adds the `morph` slider under the wave select. The wave select carries the mode:
+`spectrum` is the last entry, and selecting it uses the stored spectra.
+
+Below the strip, one wide row per operator and then one control card per operator.
+A row holds its range select, copy and paste, the `from wave` badge on the a page,
+the 64-bar editor and the group legend. A control card holds the group selector, the
+live, dead and both mask, the `tilt`, `level` and `formant` springs, the formant
+picker h1 to h64, `norm` and `to b` or `to a`. The bars preview a spring curve from
+the levels at the start of the drag, and the release commits them.
+
+While the waveform is not `spectrum`, the a row shows the analysis of the selected
+wave with a `from wave` badge. The first edit commits that analysis and moves the
+waveform to `spectrum`. The row header carries copy and paste for the whole
+spectrum, so a spectrum moves between operators, and `to b` or `to a` copies it to
+the other spectrum of the same operator.
 
 ### Op spectra mod
 

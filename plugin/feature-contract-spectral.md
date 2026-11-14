@@ -4,25 +4,25 @@
 
 - **Feature:** A per-operator additive oscillator with two 64-harmonic spectra,
   a morph, a morph envelope and a morph LFO, reached through the `spectrum` entry in
-  the wave list, with two editor pages and a starting spectrum analysed from the
+  the wave list, with three editor pages and a starting spectrum analysed from the
   current wave.
 - **Brief section:** [`../design/spectral.md`](../design/spectral.md),
   [`../design/waveforms.md`](../design/waveforms.md),
   [`../design/README.md`](../design/README.md) and
   [`../design/juce.md`](../design/juce.md).
 - **Owner / date:** P1Onken, 2026-11-13.
-- **Disposition:** complete for the engine and the seven-tab editor pages. The A card
-  shows the selected wave's analysis, the first A-card edit commits it, and the
-  first morph knob move commits it too. The cold commit and the crossfade direction
-  are in, with the schedule bench in `plugin/tests/spectral_bench.cpp`. The Linux
-  snapshot goldens were regenerated for the range and waveform changes.
+- **Disposition:** complete for the engine and the seven-tab editor pages. The a row
+  shows the selected wave's analysis, the first a-row edit commits it, and the first
+  morph knob move commits it too. The cold commit and the crossfade direction are
+  in, with the schedule bench in `plugin/tests/spectral_bench.cpp`. The Linux
+  snapshot goldens were regenerated for the 64-bar layout and the seven-tab bar.
 
 ## Player outcome
 
-- **New player action:** open `spectrum a` or `spectrum b` on the operator spectra
-  page, draw 64 harmonic levels, use the select group, mask and spring controls
-  macros, and choose `spectrum` in the wave select. The `op spectra mod` page carries
-  the spectrum display, the morph, the morph envelope and the morph LFO.
+- **New player action:** open `op spectra a` or `op spectra b`, draw 64 harmonic
+  levels, use the group, mask and spring controls, and choose `spectrum` in the wave
+  select. The `op spectra mod` page carries the spectrum display, the morph, the
+  morph envelope and the morph LFO.
 - **Sound and behaviour:** the wave select is the mode. Values 0 to 12 read the wave
   table, and value 13 (`spectrum`) reads the additive bank. The mode is saved.
   Because the wave select is the mode, choosing `spectrum` after an edit restores the
@@ -32,8 +32,8 @@
   operator morph blends spectrum a and b, and the envelope and LFO move the blend per
   voice. Each spectrum carries its own 64-harmonic range, so it addresses 1 to 64
   or 65 to 128. The mod display zooms to the union of the two
-  spans when a and b differ. While the waveform is not `spectrum`, the a card shows
-  the analysis of the selected wave with a `from wave` badge. The first a-card edit
+  spans when a and b differ. While the waveform is not `spectrum`, the a row shows
+  the analysis of the selected wave with a `from wave` badge. The first a-row edit
   writes the levels and then the waveform as 13. The first morph knob move commits
   the preview the same way. Selecting `spectrum` uses the stored a and b spectra.
   The mode switch crossfades over 10 ms. A silent part commits a new spectrum at
@@ -57,7 +57,8 @@
   banks are regenerated. The plugin state version moves to 4. The project has no
   release, so no migration path is provided. The values are stable. The part block
   grows from 416 to 800 parameters, the manifest from 846 to 1,614, and each part
-  record by 1,536 bytes. The plugin's `uiPage` needs the `part fx/mod` remap.
+  record by 1,536 bytes. The plugin's `uiPage` needs the `part fx/mod` remap and
+the split remap for the mod page, keyed on `uiPageLayout` 3.
 - **MIDI/clock impact:** none. The new parameters are host-automatable and stay out
   of the default CC map. The spectrum mode is the waveform parameter, so a host can
   automate the mode.
@@ -96,9 +97,9 @@ spectrum has its own 64-harmonic range. The wave values are the mode: 13 reads t
 additive bank, and 0 to 12 read the wave table.
 
 The editor commits the analysis preview by writing the 64 a levels, then the
-waveform value 13. The first morph knob move does the same. The b card's `to a`
-commits the a preview first; a b-card bar edit does not. Selecting a wave keeps the
-stored spectra. The preview is not written on page open.
+waveform value 13. The first morph knob move does the same. The b row's `to a`
+commits the a preview first, and a b-row bar edit does not. Selecting a wave keeps
+the stored spectra. The preview is not written on page open.
 
 ## Bounds and resources
 
@@ -123,8 +124,8 @@ stored spectra. The preview is not written on page open.
 - **Overflow/overload policy:** the generated table is peak normalised to Q15, so
   the blend of two normalised tables stays in range. The morph is clamped. A dirty
   operator regenerates on the control tick. An audible part crossfades from the old
-  table to the new one over 256 ticks (about 10 ms), then copies the shadow into
-  place. A part that has not been read since the last tick commits the new table at
+  table to the new one over about 15 control ticks (256 units at 17 per tick, 480
+  samples, 10 ms), then copies the shadow into place. A part that has not been read since the last tick commits the new table at
   once, without the crossfade, so a cold operator's next note starts on the new
   spectrum. The table update and the read run on the same core, so the table update
   tick has to fit inside the block budget.
@@ -159,10 +160,11 @@ stored spectra. The preview is not written on page open.
 - **Host vector(s):** build the VST3, CLAP and standalone on Windows and run
   `ctest`. The local `tools/audit_modules.py` check confirms that every Type P type
   and node parameter resolves to the `.dev` module library, and the Windows `ctest`
-  run is 12 of 12. The Linux CI build and ctest also pass on commit `fbb28b6`.
+  run is 12 of 12. The Linux CI build and ctest also pass on commit `98a1cc7`.
   pluginval and the Linux DAW matrix remain for the platform pass.
-- **Browser vector:** the mockup at `#opspec` and `#opspecmod` is the design
-  reference. The editor snapshot covers both pages.
+- **Browser vector:** the seven-tab panel in `web/panel.html` is the design
+  reference, and the mockup is the first-pass prototype. The editor snapshot covers
+  the two spectrum pages and the mod page.
 - **Target package check:** the Windows VST3, CLAP and standalone build. The Linux
   build and the pluginval pass remain.
 - **Host timing and platform check:** the 20-voice benchmark and a real Linux and
@@ -186,12 +188,12 @@ stored spectra. The preview is not written on page open.
 2. **Spectral engine:** in. The 64 levels per spectrum and the two range controls
    per operator, the bank, the spectrum mode 13, the morph, the envelope and the LFO
    are in. The 256-sample table reads with a
-   24-bit phase fraction; the first pass used the 1024-sample shift and played the
-   table four times too high. The Windows `ctest` run is 12 of 12.
+   24-bit phase fraction, and the first pass used the 1024-sample shift and played
+   the table four times too high. The Windows `ctest` run is 12 of 12.
    The cold commit and the crossfade direction are in: a silent part commits at
    once, and an audible part ramps from the old table to the new one over 256 ticks.
-   `spectral_bench` measures about 9 µs per generated spectrum and under 100 µs
-   worst for a block that changes all eight spectra.
+   `spectral_bench` measures about 60 µs per generated spectrum and about 850 µs
+   for the block that changes all eight spectra.
 3. **Editor pages:** in. The two spectrum tabs (`op spectra a` and `op spectra b`),
    the seven-tab bar, the 64-bar editor, the group and mask selectors, the
    select-group legend, the spring-loaded tilt, level and formant controls, the

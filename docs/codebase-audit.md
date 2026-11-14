@@ -319,7 +319,7 @@ and the panel readouts.
 | `ParamKnob::KnobSlider` | Slider with ratio detent keys and wheel steps. |
 | `ParamKnob::setParamID` | Rebind the knob to another parameter. |
 | `ParamKnob::resized` | Place the dial, name and value. |
-| `ParamKnob::paint` | Empty; the slider paints itself. |
+| `ParamKnob::paint` | Empty, because the slider paints itself. |
 | `ParamKnob::updateValueText` | Refresh the formatted value. |
 | `ParamKnob::commitValue` | Parse and apply a typed value. |
 | `ParamKnob::snapValue` | Snap the current ratio value. |
@@ -354,14 +354,15 @@ and the panel readouts.
 | `drawAlgorithmGraph` | Draw one of the eight routing graphs. |
 
 `plugin/juce/PagesSpectral.cpp` holds the `op spectra a`, `op spectra b` and
-`op spectra mod` pages. Each spectrum page has four wide 64-bar rows and four
-control cards in a scroll viewport below the operator and oscillator strip. The mod page shows the two spectra, a faint phase-zero waveform
-and the morph marker, followed by the morph envelope and the morph LFO.
+`op spectra mod` pages. Each spectrum page has four operator and oscillator cards,
+four wide 64-bar rows and four control cards in a scroll viewport. The mod page
+shows the two spectra, a faint phase-zero waveform and the morph marker, followed by
+the morph envelope and the morph LFO.
 
-The tab bar has six pages: patch settings, part fx/mod, operator envs, operator
-lfos, op spectra a, op spectra b and op spectra mod. The processor writes `uiPageLayout` 2
-with the page and remaps the old four-page order when it restores a state without
-that property.
+The tab bar has seven pages: patch settings, part fx/mod, operator envs, operator
+lfos, op spectra a, op spectra b and op spectra mod. The processor writes
+`uiPageLayout` 3 with the page, and remaps the four-tab order and the old mod page
+position when it restores a state that carries an older layout.
 
 ## Parameter id helpers
 
@@ -531,7 +532,7 @@ grouped into data, controls, views, library and dialogs:
 | Library | `exportLibrary`, `importLibrary`, `importLibraryData`, `normalisePart`, `normaliseMulti`, `showPatchName` |
 | Navigation | `fromHash` |
 
-The CSS is a token mirror of `design/tokens.css`; it is not duplicated logic.
+The CSS is a token mirror of `design/tokens.css`, not duplicated logic.
 
 ## Findings
 
@@ -540,15 +541,15 @@ The CSS is a token mirror of `design/tokens.css`; it is not duplicated logic.
 | Item | Why |
 | --- | --- |
 | `Pages.cpp` local `setParam` / `getParam` | Duplicated the inline helpers in `Pages.h`. |
-| One-argument `savePartToSlot` and `loadPartFromSlot` | Only the snapshot test used them; the explicit part form is the real API. |
-| `P1AlgorithmGraph` | No caller; `P1AlgorithmBlock` and `drawAlgorithmGraph` cover the header. |
+| One-argument `savePartToSlot` and `loadPartFromSlot` | Only the snapshot test used them, and the explicit part form is the real API. |
+| `P1AlgorithmGraph` | No caller. `P1AlgorithmBlock` and `drawAlgorithmGraph` cover the header. |
 | `drawLabel` | No caller. |
 | `plugin/engine/msvc_compat.h` | It was a no-op for the clang-cl build and only served a pure-MSVC path the project does not use. |
-| `P1Card` panel-background flag | Every card uses the panel background; the false branch had no caller. |
+| `P1Card` panel-background flag | Every card uses the panel background, and the false branch had no caller. |
 | Duplicated `SlotListBody` and `ModeListBody` list machinery | A shared `ListBody` owns the list, row paint, separator, selection and click. |
 | Repeated part and operator header setup | A shared `CardHeader` owns rename, copy, paste and the mute switch. |
-| `PluginEditor::setStatusMessage` and `statusMessage_` | The string was never painted; the status strip shows only the MIDI and sync LEDs. |
-| `P1Choice` string constructor | No caller; the default combo is the only use. |
+| `PluginEditor::setStatusMessage` and `statusMessage_` | The string was never painted, so the status strip shows only the MIDI and sync LEDs. |
+| `P1Choice` string constructor | No caller. The default combo is the only use. |
 | The `.slots` mockup CSS | It had no markup after the library rewrite. |
 | `plugin/preset/part_migration.h` | Held the 146, 160 and 179 maps. The current tree has one part layout. |
 | `legacy146PartMap`, `legacy160PartMap`, `legacy179PartMap`, `feedbackInsertionShift`, `shaperDropShift` | FM-1 and old Type P.alpha migration code with no current caller. |

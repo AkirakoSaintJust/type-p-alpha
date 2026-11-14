@@ -29,7 +29,7 @@ filter after the operators, so the negative half keeps its own character.
 
 The feedback parameter becomes `opN_feedback`, -32767..32767, default 0, with the
 `pct_bip` display. The engine carries 32,767 steps, and the host automation has the
-full step; the panel display is the signed percent. The per-operator depth
+full step, and the panel display is the signed percent. The per-operator depth
 `opN_fb_depth` and the shared `fbenv` stay. The shape and filter parameters from the
 shaper experiment are removed.
 
