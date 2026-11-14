@@ -28,7 +28,7 @@
   interpolates, so pitch and envelope time stay correct at 44.1, 96 and 192 kHz.
   Pasting a wave analysis commits the sixteen a levels and then waveform 13. The
   first bar, macro, norm or copy edit of the A card commits the preview, and the
-  first move of the morph knob commits it as well.
+  first move of the morph knob or a spectrum spring control commits it as well.
 - **Failure mode:** a context rate other than 48 kHz plays flat or slow, the panel
   drops a manifest parameter, a stored part or multi loses its routing, the library
   fails to survive a reload, the preview writes the patch on page open, or the
@@ -59,9 +59,9 @@ stored value. The page groups the 846 parameters as:
 | patch settings | 16 |
 | part fx/mod | 26 |
 | operator envs | 132 |
-| operator lfos | 72 |
-| operator spectra | 36 |
-| op spectra mod | 72 |
+| operator lfos | 68 |
+| operator spectra | 32 |
+| op spectra mod | 68 |
 
 The FX page keeps the six mockup cards. Filter cutoff, resonance, envelope amount,
 compensation and the DC blocker sit in the filter card with the type select and the
@@ -82,6 +82,22 @@ Every operator sub-card has a copy and paste pair in its header, so a card copie
 across operators and parts. The spectrum a and b cards copy their sixteen levels
 for another operator, which is the way to move a spectrum across the four
 operators. The range card copies both ranges and the morph.
+
+Each spectrum card carries the group selector, the live, dead and both mask, and
+the spring-loaded tilt, level and formant controls. The group sets which harmonic
+series a tilt or level gesture writes: all, odd, even, the octave series, or the
+series on the third, fifth, seventh, fifteenth, eleventh, thirteenth, ninth,
+twenty-first, nineteenth or seventeenth harmonic. The mask narrows that to the
+sounding members, the silent members, or both. The bar labels show every harmonic
+in the current range, and the members of the select group are green. The legend
+names the group and mask and lists the members inside the range. A spring control
+writes the spectrum as it moves and returns to centre on release. Tilt up boosts
+the higher harmonics, level up raises the selected harmonics, and formant moves
+the Gaussian around the selected harmonic. The formant ignores the group and mask.
+The group and mask are editor state for those gestures, so they add no manifest
+parameters. Every gesture writes the existing `opN_spec_a1` to `a16` and `b1` to
+`b16` parameters in the `osc` node. A patch can still be rebuilt from the node and
+macro library alone.
 
 The library snapshots a part as `{ name, params }`, where `params` is a list of
 `[id, value]` pairs for every parameter with that part suffix. A multi snapshots
@@ -130,12 +146,13 @@ and `error`.
   sine, saw and high-range analyses. The module reports 846 parameters.
 - **Browser vector:** `web/smoke.mjs` drives the bare page and checks a level round
   trip. `web/panel-smoke.mjs` drives the root redirect and checks the six tabs, the
-  saw preview, the bar commit, the morph commit, the output and tap peaks, the
-  algorithm round trip, the operator copy and paste, the operator mute switch and
-  its toolbar box, the four oscillator cards on each operator page, the card copy
-  and paste, the spectrum copy across operators, the part switch, the six FX cards,
-  the part rename and paste, the part and multi library save, the patch rename, the
-  reload persistence and the 44.1 kHz resampled path.
+  saw preview, the bar commit, the morph commit, the select group legend, the mask,
+  the level, formant and tilt springs and their return to centre, the output and tap
+  peaks, the algorithm round trip, the operator copy and paste, the operator mute
+  switch and its toolbar box, the four oscillator cards on each operator page, the
+  card copy and paste, the spectrum copy across operators, the part switch, the six
+  FX cards, the part rename and paste, the part and multi library save, the patch
+  rename, the reload persistence and the 44.1 kHz resampled path.
 - **Target package check:** `wasm/build.sh` writes `build/web` with the module, the
   manifest, the tokens and the pages. The app is served with
   `python3 -m http.server 8080 --directory build/web`.
@@ -157,14 +174,17 @@ and `error`.
    second at least 20, and the high range passes at 50 or more. Module size 164,298
    bytes, no imports.
 2. **Bare smoke:** 48 kHz, scope peak 0.089, `op1_level.p0` round trip 42.
-3. **Panel smoke:** pages `patch:16 fx:26 envs:132 lfos:72 spectra:36 mod:72`,
+3. **Panel smoke:** pages `patch:16 fx:26 envs:132 lfos:68 spectra:32 mod:68`,
    preview `[99, 49, 33]`, bar value 74, morph 15, a card copy that copied the amp
-   LFO rate to the second operator, a spectrum copy from op1 to op2, output peak
-   0.063, operator tap peak 0.064, route peak 0.064, algorithm 7, operator copy 75
+   LFO rate to the second operator, a spectrum copy from op1 to op2, the `third P5`
+   legend with members 3, 6 and 12, a dead-mask level spring that set those three to
+   66 and left h4 at 0, a formant spring that set h5 to 66, a tilt spring that took
+   h3 from 93 to 85 and h12 from 66 to 34, every spring back at 0%, output peak
+   0.079, operator tap peak 0.078, route peak 0.078, algorithm 7, operator copy 75
    to 75, operator mute 1 with the toolbar box marked muted, part two rebuilt, six FX
    cards with two follow cards, four oscillator cards on each operator page, part
    and multi slots 1, patch name `smoke patch`, persisted name and slots after
-   reload, 44.1 kHz context with the resampler and a peak of 0.0867.
+   reload, 44.1 kHz context with the resampler and a peak of 0.0861.
 4. **Release evidence:** the GitHub `wasm` job passed with the bare and panel
    smokes on Chromium. The release package and its binaries remain.
 

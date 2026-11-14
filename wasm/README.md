@@ -74,6 +74,17 @@ The panel also carries the envelope graphs, the sixteen-bar spectrum editors, th
 and morph marker. The first edit of a spectrum card or the first morph knob move
 commits the preview and switches the waveform to spectrum.
 
+Each spectrum card has a group selector and a live, dead or both mask. The group
+picks a harmonic series from all, odd, even, octave, or the third, fifth, seventh,
+fifteenth, eleventh, thirteenth, ninth, twenty-first, nineteenth and seventeenth
+series. The bar labels show every harmonic in the range and mark the group members
+in green, and the legend names the group, the mask and the members in range. The
+tilt, level and formant controls are spring loaded: they write the sixteen levels
+while held and return to centre on release. Tilt and level use the group and mask;
+formant uses the selected harmonic and ignores both. The group and mask are editor
+state, so a gesture only writes the existing `opN_spec_a1` to `a16` and `b1` to
+`b16` parameters of the `osc` node.
+
 Every operator column carries its oscillator card on the operator envs, LFO,
 spectra and mod pages. The operator header carries the active and mute switch, and
 it shares its state with the toolbar mute box. Each operator sub-card has a copy

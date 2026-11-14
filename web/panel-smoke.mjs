@@ -149,6 +149,101 @@ try {
   if (spectrumCopy[0] !== spectrumCopy[1])
     throw new Error("the spectrum paste did not copy the levels");
 
+  const firstCard = page.locator(".opcol").first()
+    .locator(".speccard").first();
+  await firstCard.locator(".specbars").scrollIntoViewIfNeeded();
+  const zeroBars = await firstCard.locator(".specbars").boundingBox();
+  await page.mouse.move(zeroBars.x + 2, zeroBars.y + zeroBars.height - 2);
+  await page.mouse.down();
+  for (let index = 0; index < 16; ++index) {
+    await page.mouse.move(
+      zeroBars.x + (index + 0.5) / 16 * zeroBars.width,
+      zeroBars.y + zeroBars.height + 2);
+  }
+  await page.mouse.up();
+  await page.waitForTimeout(150);
+  const zeroed = await page.evaluate(() => Array.from({ length: 16 },
+    (_, index) => window.__p1.paramValue("op1_spec_a" + (index + 1) + ".p0")));
+  console.log("zeroed spectrum:", zeroed.join(" "));
+  if (zeroed.some((level) => level !== 0))
+    throw new Error("the bar editor did not clear the spectrum");
+  await firstCard.locator(".specgroup select").first()
+    .selectOption({ label: "third P5" });
+  await page.waitForTimeout(150);
+  const legendText = (await firstCard.locator(".speclegend").textContent())
+    .replace(/\s+/g, " ").trim();
+  const members = await firstCard.locator(".speclabels span.in-group")
+    .allTextContents();
+  console.log("group legend:", legendText, "members:", members.join(" "));
+  if (!legendText.includes("harmonic third (P5)"))
+    throw new Error("the select group legend is wrong");
+  if (!members.includes("3") || !members.includes("6") ||
+      !members.includes("12"))
+    throw new Error("the select group did not mark its harmonics");
+
+  await firstCard.locator(".specmask button", { hasText: "dead" }).click();
+  const levelSpring = firstCard.locator(".spring").nth(1);
+  const levelTrack = levelSpring.locator(".spring-track");
+  await levelTrack.scrollIntoViewIfNeeded();
+  const levelBox = await levelTrack.boundingBox();
+  await page.mouse.move(levelBox.x + levelBox.width / 2,
+    levelBox.y + levelBox.height / 2);
+  await page.mouse.down();
+  await page.mouse.move(levelBox.x + levelBox.width / 2,
+    levelBox.y + levelBox.height / 2 - 40);
+  await page.mouse.up();
+  await page.waitForTimeout(250);
+  const springLevels = await page.evaluate(() => [3, 4, 6, 12].map((h) =>
+    window.__p1.paramValue("op1_spec_a" + h + ".p0")));
+  const springValue = (await levelSpring.locator(".spring-val").textContent())
+    .trim();
+  console.log("spring level:", springLevels, "returned:", springValue);
+  if (!(springLevels[0] > 0 && springLevels[2] > 0 && springLevels[3] > 0))
+    throw new Error("the level spring did not raise the dead group");
+  if (springLevels[1] !== 0)
+    throw new Error("the level spring touched a harmonic outside the group");
+  if (springValue !== "0%")
+    throw new Error("the level spring did not return to centre");
+
+  const formantSpring = firstCard.locator(".spring").nth(2);
+  const formantTrack = formantSpring.locator(".spring-track");
+  const formantBox = await formantTrack.boundingBox();
+  await page.mouse.move(formantBox.x + formantBox.width / 2,
+    formantBox.y + formantBox.height / 2);
+  await page.mouse.down();
+  await page.mouse.move(formantBox.x + formantBox.width / 2,
+    formantBox.y + formantBox.height / 2 - 40);
+  await page.mouse.up();
+  await page.waitForTimeout(250);
+  const formantLevel = await page.evaluate(() =>
+    window.__p1.paramValue("op1_spec_a5.p0"));
+  console.log("formant h5:", formantLevel);
+  if (!(formantLevel > 0))
+    throw new Error("the formant spring did not reach its harmonic");
+
+  await firstCard.locator(".specmask button", { hasText: "both" }).click();
+  const tiltBefore = await page.evaluate(() => [3, 12].map((h) =>
+    window.__p1.paramValue("op1_spec_a" + h + ".p0")));
+  const tiltSpring = firstCard.locator(".spring").first();
+  const tiltTrack = tiltSpring.locator(".spring-track");
+  const tiltBox = await tiltTrack.boundingBox();
+  await page.mouse.move(tiltBox.x + tiltBox.width / 2,
+    tiltBox.y + tiltBox.height / 2);
+  await page.mouse.down();
+  await page.mouse.move(tiltBox.x + tiltBox.width / 2,
+    tiltBox.y + tiltBox.height / 2 + 40);
+  await page.mouse.up();
+  await page.waitForTimeout(250);
+  const tiltAfter = await page.evaluate(() => [3, 12].map((h) =>
+    window.__p1.paramValue("op1_spec_a" + h + ".p0")));
+  const tiltValue = (await tiltSpring.locator(".spring-val").textContent())
+    .trim();
+  console.log("tilt:", tiltBefore, "to", tiltAfter, "returned:", tiltValue);
+  if (!(tiltAfter[1] < tiltBefore[1] && tiltAfter[0] < tiltBefore[0]))
+    throw new Error("the tilt spring did not lower the group");
+  if (tiltValue !== "0%")
+    throw new Error("the tilt spring did not return to centre");
+
   await page.locator(".tab").nth(2).click();
   const box = await page.locator("#note").boundingBox();
   await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);

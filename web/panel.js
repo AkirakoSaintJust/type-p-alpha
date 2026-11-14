@@ -9,6 +9,52 @@
   ];
   const LFO_WAVES = ["sine", "triangle", "saw", "inverse saw", "square", "random"];
   const RANGES = ["1-16", "17-32", "33-48", "49-64", "65-80", "81-96", "97-112", "113-128"];
+  const SPEC_MASKS = ["live", "dead", "both"];
+
+  function specSeries(base) {
+    return (harmonic) => {
+      if (harmonic < base)
+        return false;
+      let value = base;
+      while (value <= 128) {
+        if (value === harmonic)
+          return true;
+        value *= 2;
+      }
+      return false;
+    };
+  }
+
+  const SPEC_GROUPS = [
+    { name: "all", label: "all", test: () => true },
+    { name: "odd", label: "odd",
+      test: (harmonic) => harmonic >= 3 && harmonic % 2 === 1 },
+    { name: "even", label: "even",
+      test: (harmonic) => harmonic % 2 === 0 },
+    { name: "octave (P8)", label: "octave P8", test: specSeries(2) },
+    { name: "harmonic third (P5)", label: "third P5", test: specSeries(3) },
+    { name: "harmonic fifth (M3)", label: "fifth M3", test: specSeries(5) },
+    { name: "harmonic seventh (m7)", label: "seventh m7", test: specSeries(7) },
+    { name: "harmonic fifteenth (M7)", label: "fifteenth M7", test: specSeries(15) },
+    { name: "harmonic eleventh (TT)", label: "eleventh TT", test: specSeries(11) },
+    { name: "harmonic thirteenth (m6)", label: "thirteenth m6", test: specSeries(13) },
+    { name: "harmonic ninth (M2)", label: "ninth M2", test: specSeries(9) },
+    { name: "harmonic twenty-first (P4)", label: "twenty-first P4", test: specSeries(21) },
+    { name: "harmonic nineteenth (m3)", label: "nineteenth m3", test: specSeries(19) },
+    { name: "harmonic seventeenth (m2)", label: "seventeenth m2", test: specSeries(17) },
+  ];
+
+  const spectrumTools = new Map();
+
+  function spectrumToolState(part, op, a) {
+    const key = part + ":" + op + ":" + (a ? "a" : "b");
+    let state = spectrumTools.get(key);
+    if (state === undefined) {
+      state = { group: 0, mask: 2 };
+      spectrumTools.set(key, state);
+    }
+    return state;
+  }
   const FILTERS = ["lpf", "bpf", "hpf"];
   const PRIORITIES = ["last", "highest", "lowest"];
   const MODES = ["poly", "mono"];
@@ -400,62 +446,56 @@
       '" fill="none" stroke="#3dff9e" stroke-width="1.4"/></svg>';
   }
 
-  function makeMacro(label, options) {
-    const row = document.createElement("div");
-    row.className = "macro";
-    const name = document.createElement("span");
-    name.className = "mlabel";
+  function makeSpring(label, options) {
+    const cell = div("spring");
+    const track = div("spring-track");
+    const fill = div("spring-fill");
+    const thumb = div("spring-thumb");
+    track.append(fill, thumb);
+    const name = div("spring-name");
     name.textContent = label;
-    const track = document.createElement("div");
-    track.className = "mtrack";
-    if (options.min < 0) track.classList.add("bip");
-    const fill = document.createElement("i");
-    track.appendChild(fill);
-    const value = document.createElement("b");
-    value.className = "mval";
-    row.append(name);
-    if (options.extra) row.appendChild(options.extra);
-    row.append(track, value);
-    function paint(v) {
-      const f = (v - options.min) / (options.max - options.min);
-      if (options.min < 0) {
-        fill.style.left = Math.min(f, 0.5) * 100 + "%";
-        fill.style.width = Math.abs(f - 0.5) * 100 + "%";
-      } else {
-        fill.style.left = "0%";
-        fill.style.width = f * 100 + "%";
-      }
-      value.textContent = options.format ? options.format(v) : Math.round(v);
+    const value = div("spring-val");
+    value.textContent = "0";
+    cell.append(track, name, value);
+    if (options.extra) cell.append(options.extra);
+    let dragging = false;
+    let startY = 0;
+    function paint(amount) {
+      thumb.style.top = (50 - amount * 46) + "%";
+      const top = Math.min(50, 50 - amount * 46);
+      fill.style.top = top + "%";
+      fill.style.height = (Math.abs(amount) * 46) + "%";
+      value.textContent = (amount > 0 ? "+" : "") + Math.round(amount * 100) + "%";
     }
-    paint(options.value || 0);
-    function valueFrom(event) {
-      const rect = track.getBoundingClientRect();
-      const f = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width));
-      return options.min + f * (options.max - options.min);
+    function emit(amount) {
+      paint(amount);
+      if (options.onInput) options.onInput(amount);
     }
     track.addEventListener("pointerdown", function (event) {
       event.preventDefault();
       track.setPointerCapture(event.pointerId);
+      dragging = true;
+      startY = event.clientY;
       if (options.onStart) options.onStart();
-      const first = valueFrom(event);
-      paint(first);
-      options.onInput(first);
+      emit(0);
       function move(ev) {
-        const v = valueFrom(ev);
-        paint(v);
-        options.onInput(v);
+        if (!dragging) return;
+        emit(Math.max(-1, Math.min(1, (startY - ev.clientY) / 60)));
       }
       function up() {
+        if (!dragging) return;
+        dragging = false;
         track.removeEventListener("pointermove", move);
         track.removeEventListener("pointerup", up);
         track.removeEventListener("pointercancel", up);
+        paint(0);
         if (options.onEnd) options.onEnd();
       }
       track.addEventListener("pointermove", move);
       track.addEventListener("pointerup", up);
       track.addEventListener("pointercancel", up);
     });
-    return row;
+    return cell;
   }
 
   function div(className) {
@@ -925,15 +965,18 @@
     for (const update of spectrumUpdaters) update();
   }
 
-  function spectrumBars(specs, kind, rangeSpec, previewLevels, onEdit) {
+  function spectrumBars(specs, kind, rangeSpec, previewLevels, onEdit,
+                        groupTest) {
     const wrap = div("specbars");
     const fills = [];
+    const barEls = [];
     for (let i = 0; i < 16; ++i) {
       const bar = div("sbar" + (kind === "b" ? " b" : ""));
       const fill = document.createElement("i");
       bar.append(fill);
       wrap.append(bar);
       fills.push(fill);
+      barEls.push(bar);
     }
     const labels = div("speclabels");
     const labelSpans = [];
@@ -947,17 +990,21 @@
       if (preview !== null && preview !== undefined) return preview;
       return specs.map((spec) => values.get(spec.id) ?? 0);
     }
+    function currentFirst() {
+      const range = rangeSpec === undefined || rangeSpec === null
+        ? 0 : (values.get(rangeSpec.id) ?? 0);
+      return range * 16 + 1;
+    }
     function draw() {
       const data = levels();
       for (let i = 0; i < 16; ++i)
         fills[i].style.height = (data[i] / 99 * 100) + "%";
-      const range = rangeSpec === undefined || rangeSpec === null
-        ? 0 : (values.get(rangeSpec.id) ?? 0);
-      const first = range * 16 + 1;
+      const first = currentFirst();
       for (let i = 0; i < 16; ++i) {
-        labelSpans[i].textContent =
-          (i === 0 || i === 3 || i === 7 || i === 11 || i === 15)
-            ? "h" + (first + i) : "";
+        const inGroup = groupTest !== undefined && groupTest(first + i);
+        labelSpans[i].textContent = String(first + i);
+        labelSpans[i].classList.toggle("in-group", inGroup);
+        barEls[i].classList.toggle("in-group", inGroup);
       }
     }
     function setFrom(event) {
@@ -986,7 +1033,8 @@
     });
     spectrumUpdaters.push(draw);
     draw();
-    return { el: wrap, labels: labels, draw: draw, levels: levels };
+    return { el: wrap, labels: labels, draw: draw, levels: levels,
+      currentFirst: currentFirst };
   }
 
   function spectrumCard(title, specs, otherSpecs, kind, rangeSpec, options) {
@@ -1007,8 +1055,10 @@
     }
     secHead.append(head);
     cardEl.append(secHead);
+    const tools = options.tools || { group: 0, mask: 2 };
+    const groupTest = (harmonic) => SPEC_GROUPS[tools.group].test(harmonic);
     const bars = spectrumBars(specs, kind, rangeSpec, options.preview,
-      options.onEdit);
+      options.onEdit, groupTest);
     cardEl.append(bars.el, bars.labels);
     const acts = div("sec-actions");
     const copyButton = document.createElement("button");
@@ -1034,56 +1084,122 @@
     secHead.append(acts);
 
     let base = null;
+    let centre = 5;
     function begin() {
       if (options.onEdit) options.onEdit();
-      base = bars.levels();
+      base = bars.levels().slice();
     }
     function end() { base = null; }
-    function apply(fn) {
-      if (base === null) return;
+    function selected(index, first) {
+      if (base === null) return false;
+      if (!SPEC_GROUPS[tools.group].test(first + index)) return false;
+      if (tools.mask === 2) return true;
+      const live = base[index] > 0;
+      return tools.mask === 0 ? live : !live;
+    }
+    function write(levels) {
       for (let i = 0; i < 16; ++i)
-        setRaw(specs[i], clampLevel(fn(base[i], i + 1)));
+        setRaw(specs[i], clampLevel(levels[i]));
       bars.draw();
     }
-    const odd = makeMacro("odd", {
-      min: 0, max: 1, value: 0,
-      format: (v) => Math.round(v * 100) + "%",
+    function apply(transform) {
+      if (base === null) return;
+      const first = bars.currentFirst();
+      write(base.map((level, index) =>
+        selected(index, first) ? transform(level, index) : level));
+    }
+    const tilt = makeSpring("tilt", {
       onStart: begin, onEnd: end,
-      onInput: (a) => apply((level, n) => n % 2 === 0 ? level * (1 - a) : level),
+      onInput: (amount) => apply((level, index) =>
+        Math.round(level * (1 + amount * index / 15))),
     });
-    const even = makeMacro("even", {
-      min: 0, max: 1, value: 0,
-      format: (v) => Math.round(v * 100) + "%",
+    const level = makeSpring("level", {
       onStart: begin, onEnd: end,
-      onInput: (a) => apply((level, n) =>
-        n > 1 && n % 2 === 1 ? level * (1 - a) : level),
+      onInput: (amount) => apply((value) => Math.round(value + amount * 99)),
     });
-    const tilt = makeMacro("tilt", {
-      min: -1, max: 1, value: 0,
-      format: (v) => (v > 0 ? "+" : "") + Math.round(v * 100) + "%",
-      onStart: begin, onEnd: end,
-      onInput: (a) => apply((level, n) =>
-        level * Math.max(0, Math.min(1, 1 + a * (n - 1) / 15))),
-    });
-    let centre = 5;
     const formantSelect = makeSelect(
       ["h1", "h2", "h3", "h4", "h5", "h6", "h7", "h8", "h9", "h10", "h11",
        "h12", "h13", "h14", "h15", "h16"],
       "h5",
       (value) => { centre = parseInt(value.slice(1), 10); });
-    formantSelect.classList.add("msel");
-    const formant = makeMacro("formant", {
-      min: 0, max: 1, value: 0, extra: formantSelect,
-      format: (v) => Math.round(v * 100) + "%",
+    formantSelect.classList.add("spring-select");
+    const formant = makeSpring("formant", {
+      extra: formantSelect,
       onStart: begin, onEnd: end,
-      onInput: (a) => apply((level, n) =>
-        level + a * 99 * Math.exp(-Math.pow(n - centre, 2) / 4.5)),
+      onInput: (amount) => {
+        if (base === null) return;
+        write(base.map((value, index) =>
+          value + amount * 99 *
+            Math.exp(-Math.pow(index + 1 - centre, 2) / 4.5)));
+      },
     });
-    const row1 = div("macro-row");
-    row1.append(odd, even);
-    const row2 = div("macro-row");
-    row2.append(tilt, formant);
-    cardEl.append(row1, row2);
+
+    const legend = div("speclegend");
+    const legendName = document.createElement("span");
+    legendName.className = "legend-name";
+    const legendItems = document.createElement("span");
+    legendItems.className = "legend-items";
+    legend.append(legendName, " ", legendItems);
+    let lastLegendKey = "";
+    function updateLegend() {
+      const first = bars.currentFirst();
+      const key = tools.group + ":" + tools.mask + ":" + first;
+      if (key === lastLegendKey) return;
+      lastLegendKey = key;
+      const group = SPEC_GROUPS[tools.group];
+      legendName.textContent = group.name + " · " + SPEC_MASKS[tools.mask];
+      legendItems.textContent = "";
+      let count = 0;
+      for (let i = 0; i < 16; ++i) {
+        const harmonic = first + i;
+        if (!group.test(harmonic)) continue;
+        const chip = document.createElement("b");
+        chip.textContent = String(harmonic);
+        legendItems.append(chip, " ");
+        ++count;
+      }
+      if (count === 0) legendItems.textContent = "none in range";
+    }
+
+    const groupRow = div("specgroup");
+    const groupLabel = document.createElement("span");
+    groupLabel.className = "lbl";
+    groupLabel.textContent = "group";
+    const groupSelect = makeSelect(
+      SPEC_GROUPS.map((group) => group.label),
+      SPEC_GROUPS[tools.group].label,
+      (label) => {
+        const index = SPEC_GROUPS.findIndex((group) => group.label === label);
+        tools.group = index < 0 ? 0 : index;
+        bars.draw();
+        updateLegend();
+      });
+    groupRow.append(groupLabel, groupSelect);
+
+    const maskRow = div("specgroup");
+    const maskLabel = document.createElement("span");
+    maskLabel.className = "lbl";
+    maskLabel.textContent = "mask";
+    const maskSeg = div("seg specmask");
+    SPEC_MASKS.forEach((name, index) => {
+      const button = document.createElement("button");
+      button.textContent = name;
+      button.className = tools.mask === index ? "active" : "";
+      button.addEventListener("click", () => {
+        tools.mask = index;
+        maskSeg.querySelectorAll("button").forEach((item, position) =>
+          item.classList.toggle("active", position === index));
+        updateLegend();
+      });
+      maskSeg.append(button);
+    });
+    maskRow.append(maskLabel, maskSeg);
+
+    const springs = div("springs");
+    springs.append(tilt, level, formant);
+    cardEl.append(legend, groupRow, maskRow, springs);
+    updateLegend();
+    spectrumUpdaters.push(updateLegend);
 
     const foot = div("specfoot");
     const norm = document.createElement("button");
@@ -2464,11 +2580,13 @@
       }
       const aCard = a.length === 16
         ? spectrumCard("spectrum a", a, b, "a", rangeA,
-                       { fromWave: true, preview, onEdit: commit })
+                       { fromWave: true, preview, onEdit: commit,
+                         tools: spectrumToolState(activePart, op, true) })
         : null;
       const bCard = b.length === 16
         ? spectrumCard("spectrum b", b, a, "b", rangeB,
-                       { onEdit: commit })
+                       { onEdit: commit,
+                         tools: spectrumToolState(activePart, op, false) })
         : null;
       if (oscCard) col.append(oscCard);
       if (rangeCard) col.append(rangeCard);

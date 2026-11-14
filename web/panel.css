@@ -264,7 +264,7 @@
   .opvis canvas { width: 50%; height: 40px; display: block; background: #000; }
 
   /* ---------------- spectral pages ---------------- */
-  .speccard { display: flex; flex-direction: column; flex: 1 1 220px; min-height: 200px; }
+  .speccard { display: flex; flex-direction: column; flex: 0 0 auto; min-height: 0; }
   .specbars {
     flex: 1 1 auto; min-height: 70px; display: flex; gap: 3px;
     background: #000; border: 1px solid #141414; padding: 3px;
@@ -494,3 +494,26 @@ body { display: block; padding: 0; min-height: 100vh; }
 .part .knob-name { white-space: normal; overflow: visible; text-overflow: clip; line-height: 1.15; }
 .opcol-acts { display: flex; gap: 3px; }
 .opcol-head .opname { font-size: 16px; }
+
+/* spectrum select group, legend and spring controls */
+.specgroup { display: flex; align-items: center; gap: 6px; margin-top: 5px; }
+.specgroup .lbl { flex: 0 0 34px; width: 34px; font-size: 10px; color: var(--dim); }
+.specgroup select, .specmask { flex: 1; min-width: 0; }
+.specmask button { flex: 1; font-size: 8px; padding: 3px 2px; }
+.speclegend { display: flex; flex-wrap: wrap; align-items: baseline; gap: 3px 6px; margin-top: 5px; font-size: 9px; color: var(--faint); }
+.speclegend .legend-name { color: var(--dim); }
+.speclegend .legend-items { display: inline-flex; flex-wrap: wrap; gap: 3px; }
+.speclegend .legend-items b { color: var(--green); font-weight: 400; }
+.springs { display: flex; align-items: flex-start; gap: 8px; margin-top: 7px; }
+.spring { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; min-width: 0; }
+.spring-track { width: 22px; height: 56px; background: #0b0b0b; border: 1px solid var(--line2); position: relative; cursor: ns-resize; touch-action: none; }
+.spring-track::before { content: ""; position: absolute; left: 3px; right: 3px; top: 50%; border-top: 1px solid #3a3a3a; }
+.spring-thumb { position: absolute; left: 2px; width: 16px; height: 5px; top: calc(50% - 2px); background: var(--pink); }
+.spring-fill { position: absolute; left: 9px; width: 2px; background: var(--purple); }
+.spring-name { font-size: 9px; color: var(--dim); }
+.spring-val { font-size: 9px; color: var(--pink2); font-variant-numeric: tabular-nums; }
+.spring-select { width: 52px !important; font-size: 9px; margin-top: 1px; }
+.speclabels span { font-size: 8px; white-space: nowrap; }
+.speclabels span.in-group { color: var(--green); }
+.sbar.in-group { border-color: var(--green); }
+.sbar.in-group::after { content: ""; position: absolute; left: 50%; top: -1px; width: 4px; height: 2px; background: var(--green); transform: translateX(-50%); }
