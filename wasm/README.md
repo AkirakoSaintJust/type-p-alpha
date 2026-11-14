@@ -63,9 +63,11 @@ velocity amounts at once.
 
 The patch and part library keeps 64 multi-patches and 128 part slots. A
 multi-patch stores two part slots and the routing, so loading one restores both
-parts and their MIDI routing. The library lives in `localStorage` and exports to
-or imports from a JSON wrapper with the mockup's `type-p-alpha-library` name and
-slot arrays. The operator pages carry a
+parts and their MIDI routing. A multi save materialises any part that has no slot,
+and an import refuses a patch that points at a missing part. A part slot stores
+every part parameter, so the spectrum levels travel with the part. The library
+lives in `localStorage` and exports to or imports from a JSON wrapper with the
+mockup's `type-p-alpha-library` name and slot arrays. The operator pages carry a
 copy and paste pair in each column header, and the operator scopes come from the
 engine tap buffers for the active part.
 

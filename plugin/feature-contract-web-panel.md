@@ -44,7 +44,8 @@
 - **Persistence/version impact:** none in the engine. The web library is JSON in
   `localStorage` under `type-p-alpha-web-library`, with the mockup's
   `type-p-alpha-library` shape, 64 multi slots and 128 part slots. A slot stores the
-  part parameters by engine id, so it follows the manifest.
+  part parameters by engine id, so it follows the manifest and includes the sixteen
+  spectrum levels of both spectra.
 - **MIDI/clock impact:** none. The page sends note, all-notes-off and bend messages
   through the worklet.
 
@@ -100,9 +101,13 @@ parameters. Every gesture writes the existing `opN_spec_a1` to `a16` and `b1` to
 macro library alone.
 
 The library snapshots a part as `{ name, params }`, where `params` is a list of
-`[id, value]` pairs for every parameter with that part suffix. A multi snapshots
-`{ used, name, partSlots, routing }`. Loading a multi applies the two part slots and
-then the stored routing, so the multi wins over the part's own routing.
+`[id, value]` pairs for every parameter with that part suffix, so the spectrum
+levels travel with the part. A multi snapshots `{ used, name, partSlots, routing }`.
+A multi save materialises every part that does not have a slot, so the two
+references always point at saved parts. Loading a multi applies the two part slots
+and then the stored routing, so the multi wins over the part's own routing. An
+import refuses a used multi whose part references are missing, out of range, or
+empty, so a patch bank cannot point at parts that are not in the same file.
 
 The worklet messages are `module`, `params`, `param`, `part`, `note`, `allNotesOff`,
 `bend` and `analyze`. It answers with `ready`, `param`, `scope`, `taps`, `analysis`
@@ -151,7 +156,8 @@ and `error`.
   peaks, the algorithm round trip, the operator copy and paste, the operator mute
   switch and its toolbar box, the four oscillator cards on each operator page, the
   card copy and paste, the spectrum copy across operators, the part switch, the six
-  FX cards, the part rename and paste, the part and multi library save, the patch
+  FX cards, the part rename and paste, the part and multi library save, the multi
+  save materialising both parts, the spectrum level after the reload, the patch
   rename, the reload persistence and the 44.1 kHz resampled path.
 - **Target package check:** `wasm/build.sh` writes `build/web` with the module, the
   manifest, the tokens and the pages. The app is served with
@@ -182,9 +188,10 @@ and `error`.
    h3 from 93 to 85 and h12 from 66 to 34, every spring back at 0%, output peak
    0.079, operator tap peak 0.078, route peak 0.078, algorithm 7, operator copy 75
    to 75, operator mute 1 with the toolbar box marked muted, part two rebuilt, six FX
-   cards with two follow cards, four oscillator cards on each operator page, part
-   and multi slots 1, patch name `smoke patch`, persisted name and slots after
-   reload, 44.1 kHz context with the resampler and a peak of 0.0861.
+   cards with two follow cards, four oscillator cards on each operator page, the
+   multi save materialising both parts (2 part slots), the spectrum h3 at 85 after
+   the reload, patch name `smoke patch`, persisted name and slots after reload,
+   44.1 kHz context with the resampler and a peak of 0.0861.
 4. **Release evidence:** the GitHub `wasm` job passed with the bare and panel
    smokes on Chromium. The release package and its binaries remain.
 

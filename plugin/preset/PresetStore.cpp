@@ -280,9 +280,25 @@ bool PresetStore::loadLibrary(const uint8_t* data, std::size_t size)
     if (offset + multiSize != size)
         return false;
     const auto* multiData = data + offset;
-    if (!loadPartBank(partData, partSize) ||
-        !loadMultiBank(multiData, multiSize))
+    PresetStore staging(partParamCount_, partCount_, defaults_);
+    if (!staging.loadPartBank(partData, partSize) ||
+        !staging.loadMultiBank(multiData, multiSize))
         return false;
+    /* A patch must point at two parts that exist in the same file. Reject a
+     * library whose multi slots reference an empty part slot rather than loading
+     * a patch that cannot make a sound. */
+    for (int slot = 0; slot < kMultiSlots; ++slot) {
+        if (!staging.multiUsed(slot))
+            continue;
+        Multi multi;
+        if (!staging.loadMulti(slot, multi))
+            return false;
+        for (uint8_t source : multi.partSlot) {
+            if (source >= kPartSlots || !staging.partUsed(source))
+                return false;
+        }
+    }
+    *this = std::move(staging);
     currentMulti_ = -1;
     std::fill(partSource_.begin(), partSource_.end(), -1);
     return true;

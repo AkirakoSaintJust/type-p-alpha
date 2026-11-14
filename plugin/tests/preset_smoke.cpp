@@ -132,11 +132,26 @@ int main()
           "load a packed library file");
     check(libraryLoaded.partUsed(3) && libraryLoaded.partName(3) == "lead",
           "the library keeps the part records");
+    check(libraryLoaded.partParams(3)[5] == lead[5],
+          "the spectrum level travels in the part record");
     check(libraryLoaded.multiUsed(7), "the library keeps the multi records");
     check(!libraryLoaded.loadLibrary(library.data(), 12),
           "reject a truncated library file");
     check(!libraryLoaded.loadLibrary(library.data(), library.size() - 1),
           "reject a library file with a short tail");
+
+    p1::PresetStore broken{kP1PartParamCount, kP1PartCount};
+    check(broken.savePart(3, "lead", lead),
+          "save a part for the broken library");
+    check(broken.saveMulti(1, "dangling", {3, 9}, level, delay, channel, low,
+                           high),
+          "save a patch that points at an empty part");
+    const auto brokenLibrary = broken.packLibrary();
+    p1::PresetStore rejected{kP1PartParamCount, kP1PartCount};
+    check(!rejected.loadLibrary(brokenLibrary.data(), brokenLibrary.size()),
+          "reject a patch bank with a missing part");
+    check(!rejected.partUsed(3) && !rejected.multiUsed(1),
+          "the rejected library leaves the store untouched");
 
 
     std::printf("preset: %s\n", failures ? "FAILED" : "passed");

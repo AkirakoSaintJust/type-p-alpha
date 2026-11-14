@@ -200,7 +200,12 @@ stored spectra. The preview is not written on page open.
    snapshot is `editor-operator-spectra-saw.png`, and the mod display snapshot is
    `editor-op-spectra-mod-saw.png`. The Linux goldens for the spectra page were
    regenerated for the group and spring controls.
-4. **Release evidence:** the Linux goldens, the DAW pass and the pluginval report.
+4. **Library:** in. The part record carries the sixteen levels of both spectra, and
+   the `.p1lib` library packs the part bank and the multi bank in one file. A multi
+   save materialises any part that has no slot, and an import rejects a used multi
+   whose part reference is empty or out of range. `preset_smoke` checks the spectrum
+   level round-trip and the rejection.
+5. **Release evidence:** the Linux goldens, the DAW pass and the pluginval report.
 
 ## Risks and fallback
 

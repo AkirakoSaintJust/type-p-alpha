@@ -1569,16 +1569,17 @@
   function saveMulti(slot, mode) {
     for (let part = 0; part < 2; ++part) {
       let source = partSource[part];
-      if (mode !== 0) {
-        if (mode === 1 || source < 0 || partLibrary[source] === null) {
-          source = findFreePartSlot();
-          if (source < 0) {
-            toast("no free part slot");
-            return;
-          }
+      const missing = source < 0 || partLibrary[source] === null;
+      if (mode === 1 || missing) {
+        source = findFreePartSlot();
+        if (source < 0) {
+          toast("no free part slot");
+          return;
         }
         partLibrary[source] = partSnapshot(part);
         partSource[part] = source;
+      } else if (mode === 2) {
+        partLibrary[source] = partSnapshot(part);
       }
     }
     multiLibrary[slot] = multiSnapshot();
@@ -1654,9 +1655,26 @@
     };
   }
 
-  function applyLibrary(data) {
+  function validateLibrary(data) {
     if (!data || data.format !== "type-p-alpha-library")
       throw new Error("not a type P.alpha library");
+    const parts = Array.isArray(data.partSlots) ? data.partSlots : [];
+    const multis = Array.isArray(data.multis) ? data.multis : [];
+    for (const multi of multis) {
+      if (!multi || !multi.used) continue;
+      if (!Array.isArray(multi.partSlots) || multi.partSlots.length < 2)
+        throw new Error("a patch has no part references");
+      for (const source of multi.partSlots) {
+        if (!Number.isInteger(source) || source < 0 ||
+            source >= PART_SLOT_COUNT || parts[source] === null ||
+            parts[source] === undefined)
+          throw new Error("a patch points to a missing part");
+      }
+    }
+  }
+
+  function applyLibrary(data) {
+    validateLibrary(data);
     if (Array.isArray(data.partSlots)) {
       for (let i = 0; i < PART_SLOT_COUNT; ++i)
         partLibrary[i] = data.partSlots[i] || null;
@@ -1726,7 +1744,7 @@
           buildPage();
           toast("library imported");
         } catch (error) {
-          toast("library import failed");
+          toast("library import failed: " + error.message);
         }
       };
       reader.readAsText(file);

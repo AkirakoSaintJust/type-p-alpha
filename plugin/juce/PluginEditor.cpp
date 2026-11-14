@@ -1307,17 +1307,21 @@ void PluginEditor::savePatchToSlot(int slot, int mode)
     std::vector<int32_t> high(static_cast<std::size_t>(kP1PartCount), 127);
     for (int part = 0; part < kP1PartCount; ++part) {
         int source = store.partSource(part);
-        if (mode != 0) {
-            if (mode == 1 || source < 0 || !store.partUsed(source)) {
-                source = store.findFreePartSlot();
-                if (source < 0)
-                    return;
-            }
+        const bool missing = source < 0 || !store.partUsed(source);
+        if (mode == 1 || missing) {
+            source = store.findFreePartSlot();
+            if (source < 0)
+                return;
             if (!store.savePart(source,
                                 processor_.getPartName(part).toStdString(),
                                 currentPartParams(part)))
                 return;
             store.setPartSource(part, source);
+        } else if (mode == 2) {
+            if (!store.savePart(source,
+                                processor_.getPartName(part).toStdString(),
+                                currentPartParams(part)))
+                return;
         }
         partSlots[static_cast<std::size_t>(part)] =
             source >= 0 && source < p1::PresetStore::kPartSlots

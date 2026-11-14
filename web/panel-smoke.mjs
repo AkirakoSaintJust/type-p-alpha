@@ -362,6 +362,13 @@ try {
   const multiSlots = await page.evaluate(() => window.__p1.multiSlots());
   console.log("multi slots:", multiSlots);
   if (multiSlots !== 1) throw new Error("the multi library did not save a slot");
+  const slotsAfterMulti = await page.evaluate(() => window.__p1.partSlots());
+  const savedSpectrum = await page.evaluate(() =>
+    window.__p1.paramValue("op1_spec_a3.p0"));
+  console.log("parts after the multi save:", slotsAfterMulti,
+    "h3:", savedSpectrum);
+  if (slotsAfterMulti !== 2)
+    throw new Error("the multi save did not save both parts");
 
   await page.reload({ waitUntil: "load" });
   await page.waitForFunction(
@@ -370,8 +377,12 @@ try {
   });
   const persisted = await page.evaluate(() => window.__p1.patchName());
   const persistedSlots = await page.evaluate(() => window.__p1.partSlots());
-  console.log("persisted:", persisted, "part slots:", persistedSlots);
-  if (persisted !== "smoke patch" || persistedSlots !== 1)
+  const persistedSpectrum = await page.evaluate(() =>
+    window.__p1.paramValue("op1_spec_a3.p0"));
+  console.log("persisted:", persisted, "part slots:", persistedSlots,
+    "h3:", persistedSpectrum);
+  if (persisted !== "smoke patch" || persistedSlots !== 2 ||
+      persistedSpectrum !== savedSpectrum)
     throw new Error("the library did not persist");
 
   const fallbackUrl = new URL("panel.html", new URL(url));
