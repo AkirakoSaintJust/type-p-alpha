@@ -736,6 +736,12 @@ void P1SpectralBars::setFirstHarmonic(int first)
     repaint();
 }
 
+void P1SpectralBars::setGroupTest(std::function<bool(int)> test)
+{
+    groupTest_ = std::move(test);
+    repaint();
+}
+
 void P1SpectralBars::setLevel(int index, double value)
 {
     if (index < 0 || index >= parameterIDs_.size())
@@ -814,6 +820,20 @@ void P1SpectralBars::paint(juce::Graphics& g)
     g.setColour(colour(tokens::lineStrong));
     g.drawHorizontalLine(bars.getBottom(), static_cast<float>(bars.getX()),
                          static_cast<float>(bars.getRight()));
+    if (groupTest_) {
+        g.setColour(colour(tokens::green));
+        for (int i = 0; i < 16; ++i) {
+            if (!groupTest_(firstHarmonic_ + i))
+                continue;
+            g.drawRect(juce::Rectangle<float>(
+                           static_cast<float>(bars.getX()) +
+                               static_cast<float>(i) * slot + 1.0f,
+                           static_cast<float>(bars.getY()),
+                           juce::jmax(1.0f, slot - 2.0f),
+                           static_cast<float>(bars.getHeight())),
+                       1.0f);
+        }
+    }
     g.setFont(uiFont(tokens::textLegend));
     g.setColour(colour(tokens::dim));
     for (int k : {0, 3, 7, 11, 15}) {

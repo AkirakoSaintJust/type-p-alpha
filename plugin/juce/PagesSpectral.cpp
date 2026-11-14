@@ -41,53 +41,92 @@ juce::StringArray rangeNames()
             "65-80", "81-96", "97-112", "113-128"};
 }
 
-class MacroSlider : public juce::Component {
+constexpr int kSpectrumGroupCount = 14;
+const char* const kSpectrumGroupNames[kSpectrumGroupCount] = {
+    "all", "odd", "even", "octave (P8)", "harmonic third (P5)",
+    "harmonic fifth (M3)", "harmonic seventh (m7)",
+    "harmonic fifteenth (M7)", "harmonic eleventh (TT)",
+    "harmonic thirteenth (m6)", "harmonic ninth (M2)",
+    "harmonic twenty-first (P4)", "harmonic nineteenth (m3)",
+    "harmonic seventeenth (m2)"};
+const char* const kSpectrumGroupLabels[kSpectrumGroupCount] = {
+    "all", "odd", "even", "octave P8", "third P5", "fifth M3", "seventh m7",
+    "fifteenth M7", "eleventh TT", "thirteenth m6", "ninth M2",
+    "twenty-first P4", "nineteenth m3", "seventeenth m2"};
+const char* const kSpectrumMaskNames[3] = {"live", "dead", "both"};
+
+bool seriesHarmonic(int base, int harmonic)
+{
+    if (harmonic < base)
+        return false;
+    for (int value = base; value <= 128; value *= 2) {
+        if (value == harmonic)
+            return true;
+    }
+    return false;
+}
+
+bool groupHas(int group, int harmonic)
+{
+    switch (group) {
+    case 0: return true;
+    case 1: return harmonic >= 3 && harmonic % 2 == 1;
+    case 2: return harmonic % 2 == 0;
+    case 3: return seriesHarmonic(2, harmonic);
+    case 4: return seriesHarmonic(3, harmonic);
+    case 5: return seriesHarmonic(5, harmonic);
+    case 6: return seriesHarmonic(7, harmonic);
+    case 7: return seriesHarmonic(15, harmonic);
+    case 8: return seriesHarmonic(11, harmonic);
+    case 9: return seriesHarmonic(13, harmonic);
+    case 10: return seriesHarmonic(9, harmonic);
+    case 11: return seriesHarmonic(21, harmonic);
+    case 12: return seriesHarmonic(19, harmonic);
+    case 13: return seriesHarmonic(17, harmonic);
+    default: return true;
+    }
+}
+
+class SpringSlider : public juce::Component {
 public:
-    MacroSlider(juce::String label, double min, double max,
-                std::function<void()> onBegin,
-                std::function<void(double)> onChange,
-                std::function<void()> onEnd = {})
+    SpringSlider(juce::String label, std::function<void()> onBegin,
+                 std::function<void(double)> onChange,
+                 std::function<void()> onEnd = {})
         : label_(std::move(label)),
-          min_(min),
-          max_(max),
           onBegin_(std::move(onBegin)),
           onChange_(std::move(onChange)),
           onEnd_(std::move(onEnd))
     {
-        setMouseCursor(juce::MouseCursor::PointingHandCursor);
+        setMouseCursor(juce::MouseCursor::UpDownResizeCursor);
     }
 
     void paint(juce::Graphics& g) override
     {
-        g.fillAll(colour(tokens::bg));
-        g.setColour(colour(tokens::line));
-        g.drawRect(getLocalBounds(), 1);
-        auto area = getLocalBounds().reduced(4, 0);
+        auto area = getLocalBounds();
         g.setFont(uiFont(tokens::textLegend));
         g.setColour(colour(tokens::dim));
-        g.drawText(label_, area, juce::Justification::centredLeft, false);
-        const float trackLeft = static_cast<float>(area.getX()) + 34.0f;
-        const float trackRight = static_cast<float>(area.getRight());
-        if (trackRight <= trackLeft)
-            return;
-        const float centre = (trackLeft + trackRight) * 0.5f;
-        float start = centre;
-        float fill = 0.0f;
-        if (min_ < 0.0) {
-            const float t = static_cast<float>(amount_ / (max_ - min_));
-            fill = centre + t * (trackRight - trackLeft);
-            g.setColour(colour(tokens::lineStrong));
-            g.drawVerticalLine(juce::roundToInt(centre), 3.0f,
-                               static_cast<float>(getHeight()) - 3.0f);
-        } else {
-            const float t = static_cast<float>((amount_ - min_) / (max_ - min_));
-            start = trackLeft;
-            fill = trackLeft + t * (trackRight - trackLeft);
-        }
-        g.setColour(colour(tokens::purple));
+        g.drawText(label_, area.removeFromTop(12), juce::Justification::centred,
+                   false);
+        auto valueArea = area.removeFromBottom(12);
+        g.setColour(colour(tokens::pink));
+        g.drawText(valueText(), valueArea, juce::Justification::centred, false);
+        auto track = area.reduced(0, 1).withSizeKeepingCentre(
+            18, juce::jmax(12, area.getHeight() - 2));
+        g.setColour(colour(tokens::bg));
+        g.fillRect(track);
+        g.setColour(colour(tokens::lineStrong));
+        g.drawRect(track, 1);
+        const float centre = static_cast<float>(track.getCentreY());
+        g.drawHorizontalLine(juce::roundToInt(centre),
+                             static_cast<float>(track.getX() + 2),
+                             static_cast<float>(track.getRight() - 2));
+        const float travel =
+            static_cast<float>(track.getHeight()) * 0.5f - 4.0f;
+        const float thumb = centre - static_cast<float>(amount_) * travel;
+        g.setColour(colour(tokens::pink));
         g.fillRect(juce::Rectangle<float>(
-            juce::jmin(start, fill), 5.0f, std::abs(fill - start),
-            static_cast<float>(getHeight()) - 10.0f));
+            static_cast<float>(track.getX() + 2), thumb - 1.5f,
+            static_cast<float>(track.getWidth() - 4), 3.0f));
     }
 
     void mouseDown(const juce::MouseEvent& event) override
@@ -95,15 +134,17 @@ public:
         if (event.mods.isPopupMenu())
             return;
         dragging_ = true;
+        startY_ = event.position.y;
         if (onBegin_)
             onBegin_();
-        setFromMouse(event);
+        setAmount(0.0);
     }
 
     void mouseDrag(const juce::MouseEvent& event) override
     {
-        if (dragging_ && !event.mods.isPopupMenu())
-            setFromMouse(event);
+        if (!dragging_ || event.mods.isPopupMenu())
+            return;
+        setAmount((startY_ - event.position.y) / 32.0);
     }
 
     void mouseUp(const juce::MouseEvent&) override
@@ -112,35 +153,86 @@ public:
             return;
         dragging_ = false;
         amount_ = 0.0;
+        repaint();
         if (onEnd_)
             onEnd_();
-        repaint();
     }
 
 private:
-    void setFromMouse(const juce::MouseEvent& event)
+    juce::String valueText() const
     {
-        auto area = getLocalBounds().reduced(4, 0);
-        const float trackLeft = static_cast<float>(area.getX()) + 34.0f;
-        const float trackRight = static_cast<float>(area.getRight());
-        const float width = juce::jmax(1.0f, trackRight - trackLeft);
-        const double t = juce::jlimit(
-            0.0, 1.0,
-            static_cast<double>(event.position.x - trackLeft) / width);
-        amount_ = min_ + t * (max_ - min_);
+        const int percent =
+            static_cast<int>(std::lround(amount_ * 100.0));
+        return (percent > 0 ? "+" : "") + juce::String(percent) + "%";
+    }
+
+    void setAmount(double amount)
+    {
+        amount_ = juce::jlimit(-1.0, 1.0, amount);
+        repaint();
         if (onChange_)
             onChange_(amount_);
-        repaint();
     }
 
     juce::String label_;
-    double min_ = 0.0;
-    double max_ = 1.0;
     double amount_ = 0.0;
+    float startY_ = 0.0f;
     bool dragging_ = false;
     std::function<void()> onBegin_;
     std::function<void(double)> onChange_;
     std::function<void()> onEnd_;
+};
+
+class MaskRow : public juce::Component {
+public:
+    explicit MaskRow(int initial) : index_(juce::jlimit(0, 2, initial))
+    {
+        setMouseCursor(juce::MouseCursor::PointingHandCursor);
+    }
+
+    int index() const { return index_; }
+
+    void paint(juce::Graphics& g) override
+    {
+        auto area = getLocalBounds();
+        const int cell = area.getWidth() / 3;
+        for (int i = 0; i < 3; ++i) {
+            auto r = (i == 2 ? area : area.removeFromLeft(cell)).reduced(1);
+            g.setColour(colour(tokens::bg));
+            g.fillRect(r);
+            g.setColour(i == index_ ? colour(tokens::green)
+                                    : colour(tokens::lineStrong));
+            g.drawRect(r, 1);
+            g.setFont(uiFont(10.0f));
+            g.setColour(i == index_ ? colour(tokens::green)
+                                    : colour(tokens::dim));
+            g.drawText(kSpectrumMaskNames[i], r,
+                       juce::Justification::centred, false);
+            if (i == 2)
+                break;
+        }
+    }
+
+    void mouseDown(const juce::MouseEvent& event) override
+    {
+        if (event.mods.isPopupMenu())
+            return;
+        const int next = juce::jlimit(
+            0, 2, static_cast<int>(event.position.x * 3.0f /
+                                   static_cast<float>(
+                                       juce::jmax(1, getWidth()))));
+        if (next == index_)
+            return;
+        index_ = next;
+        repaint();
+        if (onChange)
+            onChange(index_);
+    }
+
+    std::function<void(int)> onChange;
+
+private:
+    int index_ = 2;
 };
 
 class MorphEnvelopeCard : public P1Card {
@@ -239,18 +331,19 @@ public:
                  rangeNames()),
           norm_("norm", true),
           toOther_(a ? "to b" : "to a", true),
-          odd_("odd", 0.0, 1.0, [this] { beginMacro(); },
-               [this](double value) { applyMacro(0, value); },
-               [this] { endMacro(); }),
-          even_("even", 0.0, 1.0, [this] { beginMacro(); },
-                [this](double value) { applyMacro(1, value); },
-                [this] { endMacro(); }),
-          tilt_("tilt", -1.0, 1.0, [this] { beginMacro(); },
-                [this](double value) { applyMacro(2, value); },
-                [this] { endMacro(); }),
-          formant_("formant", 0.0, 1.0, [this] { beginMacro(); },
-                   [this](double value) { applyMacro(3, value); },
-                   [this] { endMacro(); })
+          mask_(2),
+          tilt_(
+              "tilt", [this] { beginMacro(); },
+              [this](double value) { applyTilt(value); },
+              [this] { endMacro(); }),
+          level_(
+              "level", [this] { beginMacro(); },
+              [this](double value) { applyLevel(value); },
+              [this] { endMacro(); }),
+          formant_(
+              "formant", [this] { beginMacro(); },
+              [this](double value) { applyFormant(value); },
+              [this] { endMacro(); })
     {
         addAndMakeVisible(bars_);
         addAndMakeVisible(range_);
@@ -260,11 +353,39 @@ public:
         addAndMakeVisible(rangeLabel_);
         addAndMakeVisible(norm_);
         addAndMakeVisible(toOther_);
-        addAndMakeVisible(odd_);
-        addAndMakeVisible(even_);
+        addAndMakeVisible(group_);
+        addAndMakeVisible(mask_);
         addAndMakeVisible(tilt_);
+        addAndMakeVisible(level_);
         addAndMakeVisible(formant_);
         addAndMakeVisible(centre_);
+        addAndMakeVisible(groupLabel_);
+        addAndMakeVisible(maskLabel_);
+        addAndMakeVisible(legend_);
+        groupLabel_.setText("group", juce::dontSendNotification);
+        groupLabel_.setFont(uiFont(tokens::textLegend));
+        groupLabel_.setColour(juce::Label::textColourId, colour(tokens::dim));
+        maskLabel_.setText("mask", juce::dontSendNotification);
+        maskLabel_.setFont(uiFont(tokens::textLegend));
+        maskLabel_.setColour(juce::Label::textColourId, colour(tokens::dim));
+        legend_.setFont(uiFont(tokens::textLegend));
+        legend_.setColour(juce::Label::textColourId, colour(tokens::dim));
+        legend_.setMinimumHorizontalScale(0.6f);
+        legend_.setInterceptsMouseClicks(false, false);
+        group_.addItemList(
+            juce::StringArray(kSpectrumGroupLabels, kSpectrumGroupCount), 1);
+        group_.setSelectedItemIndex(0, juce::dontSendNotification);
+        group_.onChange = [this] {
+            bars_.setGroupTest(
+                [this](int harmonic) {
+                    return groupHas(group_.getSelectedItemIndex(), harmonic);
+                });
+            refreshLegend();
+        };
+        mask_.onChange = [this](int) { refreshLegend(); };
+        bars_.setGroupTest([this](int harmonic) {
+            return groupHas(group_.getSelectedItemIndex(), harmonic);
+        });
         centre_.addItemList(
             juce::StringArray{"h1", "h2", "h3", "h4", "h5", "h6", "h7", "h8",
                               "h9", "h10", "h11", "h12", "h13", "h14", "h15",
@@ -278,6 +399,7 @@ public:
             if (copyToOther_)
                 copyToOther_(bars_.levels());
         };
+        refreshLegend();
     }
 
     void setCopyToOther(
@@ -318,21 +440,30 @@ public:
     {
         P1Card::resized();
         auto area = contentArea();
-        area.removeFromTop(4);
-        auto rangeRow = area.removeFromTop(20);
-        rangeLabel_.setBounds(rangeRow.removeFromLeft(38));
-        range_.setBounds(rangeRow.removeFromLeft(92).reduced(1));
         area.removeFromTop(2);
-        bars_.setBounds(area.removeFromTop(82));
-        auto row = area.removeFromTop(22);
-        odd_.setBounds(row.removeFromLeft(row.getWidth() / 3));
-        even_.setBounds(row.removeFromLeft(row.getWidth() / 2));
-        tilt_.setBounds(row);
-        auto bottom = area.removeFromTop(22);
-        formant_.setBounds(bottom.removeFromLeft(bottom.getWidth() / 2));
-        centre_.setBounds(bottom.removeFromLeft(58).reduced(2, 1));
-        norm_.setBounds(bottom.removeFromLeft(48).reduced(2, 1));
-        toOther_.setBounds(bottom.removeFromLeft(48).reduced(2, 1));
+        auto rangeRow = area.removeFromTop(18);
+        rangeLabel_.setBounds(rangeRow.removeFromLeft(34));
+        range_.setBounds(rangeRow.removeFromLeft(88).reduced(1));
+        area.removeFromTop(2);
+        bars_.setBounds(area.removeFromTop(62));
+        legend_.setBounds(area.removeFromTop(12));
+        auto groupRow = area.removeFromTop(20);
+        groupLabel_.setBounds(groupRow.removeFromLeft(32));
+        group_.setBounds(groupRow.removeFromLeft(100).reduced(1));
+        groupRow.removeFromLeft(4);
+        maskLabel_.setBounds(groupRow.removeFromLeft(28));
+        mask_.setBounds(groupRow);
+        auto springs = area.removeFromTop(64);
+        const int springWidth = springs.getWidth() / 3;
+        tilt_.setBounds(springs.removeFromLeft(springWidth).reduced(1));
+        level_.setBounds(springs.removeFromLeft(springWidth).reduced(1));
+        auto formantCell = springs;
+        formant_.setBounds(formantCell.removeFromTop(44).reduced(1));
+        centre_.setBounds(
+            formantCell.removeFromTop(18).withSizeKeepingCentre(58, 18));
+        auto foot = area.removeFromTop(20);
+        norm_.setBounds(foot.removeFromLeft(48).reduced(1));
+        toOther_.setBounds(foot.removeFromRight(48).reduced(1));
     }
 
 private:
@@ -373,6 +504,7 @@ private:
                               : params::opSpecRangeB(op_, part_)))));
         const int first = range * 16 + 1;
         bars_.setFirstHarmonic(first);
+        refreshLegend();
         if (!isA_)
             return;
         const int wave = static_cast<int>(
@@ -403,7 +535,63 @@ private:
         lastWave_ = 13;
     }
 
-    void applyMacro(int kind, double amount)
+    int firstHarmonic() const
+    {
+        const int range = juce::jlimit(
+            0, 7,
+            static_cast<int>(std::lround(getParam(
+                editor_, isA_ ? params::opSpecRangeA(op_, part_)
+                              : params::opSpecRangeB(op_, part_)))));
+        return range * 16 + 1;
+    }
+
+    bool selected(int index) const
+    {
+        if (snapshot_.empty())
+            return false;
+        const int harmonic = firstHarmonic() + index;
+        if (!groupHas(group_.getSelectedItemIndex(), harmonic))
+            return false;
+        const int mask = mask_.index();
+        if (mask == 2)
+            return true;
+        const bool live =
+            snapshot_[static_cast<std::size_t>(index)] > 0.0;
+        return mask == 0 ? live : !live;
+    }
+
+    void applyTilt(double amount)
+    {
+        if (snapshot_.empty())
+            return;
+        auto levels = snapshot_;
+        for (int i = 0; i < static_cast<int>(levels.size()); ++i) {
+            if (!selected(i))
+                continue;
+            levels[static_cast<std::size_t>(i)] = juce::jlimit(
+                0.0, 99.0,
+                levels[static_cast<std::size_t>(i)] *
+                    (1.0 + amount * i / 15.0));
+        }
+        bars_.setLevels(levels);
+    }
+
+    void applyLevel(double amount)
+    {
+        if (snapshot_.empty())
+            return;
+        auto levels = snapshot_;
+        for (int i = 0; i < static_cast<int>(levels.size()); ++i) {
+            if (!selected(i))
+                continue;
+            levels[static_cast<std::size_t>(i)] = juce::jlimit(
+                0.0, 99.0,
+                levels[static_cast<std::size_t>(i)] + amount * 99.0);
+        }
+        bars_.setLevels(levels);
+    }
+
+    void applyFormant(double amount)
     {
         if (snapshot_.empty())
             return;
@@ -411,33 +599,33 @@ private:
         const int centre = centre_.getSelectedItemIndex() + 1;
         for (int i = 0; i < static_cast<int>(levels.size()); ++i) {
             const int h = i + 1;
-            switch (kind) {
-            case 0:
-                if (h % 2 == 0)
-                    levels[static_cast<std::size_t>(i)] *= (1.0 - amount);
-                break;
-            case 1:
-                if (h > 1 && h % 2 == 1)
-                    levels[static_cast<std::size_t>(i)] *= (1.0 - amount);
-                break;
-            case 2:
-                levels[static_cast<std::size_t>(i)] *= juce::jlimit(
-                    0.0, 1.0, 1.0 + amount * (h - 1) / 15.0);
-                break;
-            case 3:
-                levels[static_cast<std::size_t>(i)] = juce::jlimit(
-                    0.0, 99.0,
-                    levels[static_cast<std::size_t>(i)] +
-                        amount * 99.0 *
-                            std::exp(-((h - centre) * (h - centre)) / 4.5));
-                break;
-            default:
-                break;
-            }
-            levels[static_cast<std::size_t>(i)] =
-                juce::jlimit(0.0, 99.0, levels[static_cast<std::size_t>(i)]);
+            levels[static_cast<std::size_t>(i)] = juce::jlimit(
+                0.0, 99.0,
+                levels[static_cast<std::size_t>(i)] +
+                    amount * 99.0 *
+                        std::exp(-((h - centre) * (h - centre)) / 4.5));
         }
         bars_.setLevels(levels);
+    }
+
+    void refreshLegend()
+    {
+        const int first = firstHarmonic();
+        const int group = group_.getSelectedItemIndex();
+        juce::String text(kSpectrumGroupNames[group]);
+        text << " \xc2\xb7 " << kSpectrumMaskNames[mask_.index()];
+        bool any = false;
+        for (int i = 0; i < 16; ++i) {
+            const int harmonic = first + i;
+            if (!groupHas(group, harmonic))
+                continue;
+            text << " " << juce::String(harmonic);
+            any = true;
+        }
+        if (!any)
+            text << " none in range";
+        if (text != legend_.getText())
+            legend_.setText(text, juce::dontSendNotification);
     }
 
     PluginEditor& editor_;
@@ -451,10 +639,14 @@ private:
     juce::Label rangeLabel_;
     P1Button norm_;
     P1Button toOther_;
-    MacroSlider odd_;
-    MacroSlider even_;
-    MacroSlider tilt_;
-    MacroSlider formant_;
+    P1Choice group_;
+    MaskRow mask_;
+    juce::Label groupLabel_;
+    juce::Label maskLabel_;
+    juce::Label legend_;
+    SpringSlider tilt_;
+    SpringSlider level_;
+    SpringSlider formant_;
     juce::ComboBox centre_;
     std::vector<double> snapshot_;
     std::function<void(const std::vector<double>&)> copyToOther_;

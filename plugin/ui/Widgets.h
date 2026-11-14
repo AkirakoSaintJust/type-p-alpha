@@ -177,6 +177,7 @@ public:
     void setPreviewLevels(const std::vector<double>& levels);
     void clearPreview();
     void setFirstHarmonic(int first);
+    void setGroupTest(std::function<bool(int)> test);
     bool hasPreview() const { return !preview_.empty(); }
     std::function<void()> onEdit;
 
@@ -191,6 +192,7 @@ private:
     juce::Colour colour_;
     std::vector<double> preview_;
     int firstHarmonic_ = 1;
+    std::function<bool(int)> groupTest_;
 };
 
 class P1SpectrumDisplay : public juce::Component {

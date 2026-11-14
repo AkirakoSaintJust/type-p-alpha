@@ -193,11 +193,13 @@ stored spectra. The preview is not written on page open.
    once, and an audible part ramps from the old table to the new one over 256 ticks.
    `spectral_bench` measures about 9 µs per generated spectrum and under 100 µs
    worst for a block that changes all eight spectra.
-3. **Editor pages:** in. The two tabs, the six-tab bar, the bar editor, the macros,
-   the selected-wave preview with the `from wave` badge, the first A-card edit
-   commit, the copy and paste, and the page index remap. The saw preview snapshot
-   is `editor-operator-spectra-saw.png`, and the mod display snapshot is
-   `editor-op-spectra-mod-saw.png`.
+3. **Editor pages:** in. The two tabs, the six-tab bar, the bar editor, the group and
+   mask selectors, the select-group legend, the spring-loaded tilt, level and
+   formant controls, the selected-wave preview with the `from wave` badge, the first
+   A-card edit commit, the copy and paste, and the page index remap. The saw preview
+   snapshot is `editor-operator-spectra-saw.png`, and the mod display snapshot is
+   `editor-op-spectra-mod-saw.png`. The Linux goldens for the spectra page were
+   regenerated for the group and spring controls.
 4. **Release evidence:** the Linux goldens, the DAW pass and the pluginval report.
 
 ## Risks and fallback
