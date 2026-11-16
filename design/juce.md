@@ -106,11 +106,12 @@ Every page fills the same height:
 - operator lfos: four operator columns with the oscillator, then the `amp lfo`,
   `fb lfo` and `detune lfo` cards. Each LFO card carries copy and paste in its
   header, and its `bipolar` switch beside the wave select.
-- op spectra a: four operator and oscillator cards across the top, then four wide
-  spectrum rows and four control cards in a scroll viewport. Each row holds a range
+- op spectra a: four operator and oscillator cards across the top, then four bands
+  of a wide spectrum row and its control card side by side. Each row holds a range
   select, a 64-bar editor, the harmonic labels and the group legend. The control
   card holds the group, the mask, the `tilt`, `level` and `formant` springs, the
-  formant picker h1 to h64, `norm` and `to b`. While the waveform is not `spectrum`,
+  formant picker h1 to h64, `norm` and `to b`. The four bands are 124 px each, so
+  they fit under the strip without a scroll. While the waveform is not `spectrum`,
   the a row shows the analysis of the selected wave with a `from wave` badge, and the
   first edit on the row commits that analysis and moves the waveform to `spectrum`.
 - op spectra b: the same page for spectrum b, with `to a` in place of `to b` and no
@@ -118,7 +119,9 @@ Every page fills the same height:
 - op spectra mod: four operator columns with the oscillator card, a `spectra`
   display, the `morph env` card and the `morph lfo` card. The display draws the
   selected wave's analysis in a while the waveform is not `spectrum`, and the
-  stored a while it is, plus b and a morph marker. It takes no drag. When a and b
+  stored a while it is, plus b and a morph marker. The marker and the faint
+  waveform follow the live morph from the engine, so they advance with the
+  envelope and the LFO while a note sounds. The display takes no drag. When a and b
   use different ranges, the display zooms out to the union of the two spans. The
   envelope card carries the graph, the depth knob, R1 to R4 and L1 to L3.
 

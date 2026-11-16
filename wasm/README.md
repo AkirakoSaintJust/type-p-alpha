@@ -13,12 +13,12 @@ docker build -f docker/Dockerfile.wasm -t type-p-alpha-wasm .
 docker run --rm -v "$PWD:/work" -w /work type-p-alpha-wasm sh -c "./wasm/build.sh"
 ```
 
-The script writes `build/web/p1.wasm` and `build/web/reference.json`, then runs
-`wasm/parity.mjs`. The test initialises the engine, plays note 60 on the omni
-channel, renders 256 frames, releases the note and renders another 256 frames. It
-compares all 1,024 interleaved samples with the native capture.
-
-It also copies the app pages, the AudioWorklet and the manifest into `build/web`.
+The script writes `build/web/p1.wasm` and `build/web/reference.json`, runs
+`wasm/parity.mjs` against the native capture, and copies the app pages, the
+AudioWorklet, the manifest and the tokens into `build/web`, so one command produces
+the module and the pages that serve it. The test initialises the engine, plays note
+60 on the omni channel, renders 256 frames, releases the note and renders another
+256 frames, and compares all 1,024 interleaved samples with the native capture.
 Serve that directory to try the audio path:
 
 ```sh
@@ -73,8 +73,9 @@ copy and paste pair in each column header, and the operator scopes come from the
 engine tap buffers for the active part.
 
 The panel also carries the envelope graphs, the 64-bar spectrum editors, the
-`from wave` preview and the `op spectra mod` A/B display with the waveform overlay
-and morph marker. The first edit of an a-row spectrum or the first morph knob move
+`from wave` preview and the `op spectra mod` A/B display. Its waveform overlay and
+morph marker follow the live morph the engine publishes with the taps, so they
+advance with the envelope and the LFO. The first edit of an a-row spectrum or the first morph knob move
 commits the preview and switches the waveform to spectrum.
 
 The control card below each spectrum row has a group selector and a live, dead or
@@ -116,6 +117,12 @@ p1_render, p1_output, p1_tap
 p1_param_count
 p1_analyze, p1_analysis
 ```
+
+The worklet renders the engine at 48 kHz, copies the output straight through at
+that rate or linearly interpolates to the context rate, captures the ten tap
+channels and the four live morph values, and posts them to the panel every eight
+ring fills, so the scope, the spectro, the route meters and the mod cursor all move
+from the same audio block.
 
 `p1_output` returns `frames * 2` int32 samples. `p1_tap` returns one of the ten
 256-frame tap buffers for the scopes. `p1_analyze` turns one mip-0 wave table into

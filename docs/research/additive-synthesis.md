@@ -334,11 +334,11 @@ The conservative mip keeps it an octave below and loses it. A production policy 
 sit between the two, or the table can carry more mip levels.
 
 For the current 256-harmonic banks the selector keeps the top harmonic at or below
-Nyquist/2.25. At note 60 that is the 64-harmonic table, so the top sits at about
-16.7 kHz, and across the mip band it runs from about 10.7 to 21.3 kHz. The earlier
-Nyquist/4 policy put note 60 on the 32-harmonic table at 8.4 kHz, which is the
-rolloff a bright saw patch showed around 10 to 12 kHz. Nyquist/2.25 recovers the
-top octave with less alias headroom.
+Nyquist/2.25, which at note 60 is the 64-harmonic table, so the top sits at about
+16.7 kHz and across the mip band it runs from about 10.7 to 21.3 kHz, whilst the
+earlier Nyquist/4 policy put note 60 on the 32-harmonic table at 8.4 kHz and
+showed the rolloff a bright saw patch had around 10 to 12 kHz. Nyquist/2.25
+recovers the top octave with less alias headroom.
 
 The auditions are:
 
@@ -396,13 +396,12 @@ included. The 16-harmonic bank was 65,536 bytes, and the WASM memory is fixed at
 
 The eight-spectrum column is the worst case, where all four operators and both
 parts change in one control tick. A normal edit changes one spectrum, which costs
-60.3 or 119.9 µs. The whole engine block that changes all eight spectra, with the
-copies and the voice work, measured about 850 µs. That is 32 percent of a 128 frame
-callback at 48 kHz, and 64 percent of a 64 frame callback. The control block is 32
-samples, or 667 µs at 48 kHz, so the 256-sample generation for eight spectra fits
-under it and the 512-sample generation does not. The whole 256-sample block is
-about 850 µs, which a 32 frame callback would not hold. It runs at 128 frames and
-above. The 512-sample bank needs the generation spread across ticks or a larger
+60.3 or 119.9 µs. The whole engine block that changes all eight spectra, with the copies and the
+voice work, measured about 850 µs, which is 32 percent of a 128 frame callback at
+48 kHz and 64 percent of a 64 frame callback, and the control block is 32 samples,
+or 667 µs, so the 256-sample generation for eight spectra fits under it whilst the
+512-sample generation does not. The whole 256-sample block is about 850 µs, which
+a 32 frame callback would not hold. It runs at 128 frames and above. The 512-sample bank needs the generation spread across ticks or a larger
 control block. The cold commit and the 10 ms crossfade do not change, so the
 edit-to-audio latency is the same as the 16-harmonic case. The spike is CPU in the
 audio callback rather than a delayed parameter.
@@ -412,10 +411,10 @@ The parameter surface grows by 768 levels, from 256 to 1,024, because two spectr
 the part block from 416 to 800, and the part record by 1,536 bytes. The two range
 values replace the eight range values. The group and mask stay editor state.
 
-The editor is a larger change than the DSP. The shipped layout splits the spectra
-into two tabs, one per spectrum, each with four operator and oscillator cards, four
-wide 64-bar rows and four control cards in a scroll viewport. A row spans the page
-width, so a bar gets about 18 px. The select groups, masks, spring controls and copy
+The editor is a larger change than the DSP, because the shipped layout splits the
+spectra into two tabs, one per spectrum, and each tab carries four operator and
+oscillator cards above four bands of a 64-bar row and its control card. A row takes
+about three quarters of the page width, so a bar gets about 14 px. The select groups, masks, spring controls and copy
 and paste carry over. The legend shows a count or the member harmonics rather than
 64 numbers, and the bar labels show every eighth harmonic.
 

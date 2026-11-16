@@ -211,11 +211,14 @@ class P1Processor extends AudioWorkletProcessor {
       ++this.tapBlocks;
     }
     if (this.tapBlocks >= 8) {
+      const morph = [0, 1, 2, 3].map((op) =>
+        e.p1_spec_morph(op, this.activePart));
       this.port.postMessage({
         type: "taps",
         part: this.activePart,
         channels: this.tapRings.map((ring) => ring.slice()),
         routes: this.routeRings.map((ring) => ring.slice()),
+        morph,
       });
       this.tapBlocks = 0;
     }

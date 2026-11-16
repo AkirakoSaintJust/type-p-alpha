@@ -45,18 +45,21 @@ the same as the operators and operator lfos pages.
 
 `op spectra a` and `op spectra b`, per page:
 
-| Part | Height |
-| --- | --- |
-| four operator and oscillator cards | 176 |
-| four spectrum rows, 4 px gaps | 508 |
-| four control cards | 132 |
-| viewport total | 640 |
+| Part | Width | Height |
+| --- | --- | --- |
+| operator strip | 1,206 | 176 |
+| four row and control bands, 4 px gaps | 1,206 | 508 |
 
-The page is 685 px high. The operator strip is fixed at 176 px, so the viewport
-shows about 509 px of the 640 px content and scrolls by about 130 px. Each row holds
-a range select, a 64-bar editor, the harmonic labels and the group legend. The
-control card holds the group, the mask, the three spring controls, the formant
-picker, normalise and to the other spectrum.
+The page is 685 px high, so the 508 px of bands fit under the strip without a
+scroll. Each band is 124 px high. The row takes 898 px and its control card 300 px,
+with an 8 px gap. The row holds a range select, copy and paste, the 64-bar editor,
+the harmonic labels and the group legend. The control card, titled `opN spectral
+controls`, holds the group, the mask, the three spring controls, the formant
+picker, normalise and to the other spectrum. At 898 px each bar is about 14 px.
+
+The operator strip is the operator column from the operator envs page, reduced to a
+30 px scope and spectro pair and the oscillator card. The operator name sits in a
+24 px header, so the scope starts below it and nothing clips.
 
 `op spectra mod`, per column:
 
@@ -246,9 +249,11 @@ runs from `a` at the left to `b` at the right and shows the current morph value.
 The visual is a display and does not take a drag.
 
 The marker follows the base morph and the two modulation sources, so the move is
-visible while a note sounds. The outlines do not move. The engine publishes the
-current morph value for each operator and part on the existing tap path, so the
-marker reflects the envelope and the LFO.
+visible while a note sounds. The outlines do not move. The engine writes the last
+morph the oscillator read into the bank header, and the editor polls it on each
+tick. The faint waveform is redrawn at that value, so the trace and the cursor
+move together. A silent operator reports no read, and the display falls back to
+the base morph.
 
 ## Defaults
 
@@ -326,10 +331,10 @@ current table keeps playing, and crossfades the read from the old table to the n
 one over ten milliseconds. The update stays silent and the voice keeps running. The
 morph blends the two existing tables per sample.
 
-The mip selector keeps the top harmonic at or below Nyquist/2.25. At note 60 it
-selects mip 2, whose table keeps all 64 harmonics, so a 64-level spectrum reads the
-full set at mips 0 to 2 and drops to 32, 16, 8, 4, 2 and 1 at mips 3 to 8. The read
-maps `level = clamp(mip - 2, 0, 6)`. Nyquist/2.25 recovers the top octave with less
+The mip selector keeps the top harmonic at or below Nyquist/2.25, so at note 60 it
+selects mip 2, whose table keeps all 64 harmonics, and a 64-level spectrum reads
+the full set at mips 0 to 2 before dropping to 32, 16, 8, 4, 2 and 1 at mips 3 to
+8. The read maps `level = clamp(mip - 2, 0, 6)`. Nyquist/2.25 recovers the top octave with less
 alias headroom than the bright policy, and the listening test can move it back.
 
 The measured costs on this machine, with the caveat that the CPU clock moved the
@@ -343,8 +348,9 @@ runs by up to 25 percent:
 | one spectrum, 64 harmonics, 512 samples, seven mips | 120 µs |
 
 A part regenerates a spectrum only when its levels change, so the steady cost is
-the read path: two table reads and one blend per sample, the same as the
-16-harmonic bank. The worst-case block takes about a third of a 128 frame callback
+the read path, which reads two tables and blends them once per sample, the same
+work the 16-harmonic bank did, and the four operators share their banks across all
+24 voices because the levels are part parameters. The worst-case block takes about a third of a 128 frame callback
 at 48 kHz, which leaves two thirds of the budget. A 32 frame callback would not hold
 that block. The 512-sample table doubles the generation and stays out of the
 default bank. The control tick stays at 32 samples, which is 1,500 Hz at 48 kHz.

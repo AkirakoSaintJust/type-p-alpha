@@ -15,7 +15,8 @@
   shows the selected wave's analysis, the first a-row edit commits it, and the first
   morph knob move commits it too. The cold commit and the crossfade direction are
   in, with the schedule bench in `plugin/tests/spectral_bench.cpp`. The Linux
-  snapshot goldens were regenerated for the 64-bar layout and the seven-tab bar.
+  snapshot goldens were regenerated for the 64-bar bands, the live morph cursor
+  and the seven-tab bar.
 
 ## Player outcome
 
@@ -38,7 +39,9 @@
   the preview the same way. Selecting `spectrum` uses the stored a and b spectra.
   The mode switch crossfades over 10 ms. A silent part commits a new spectrum at
   once, so its next note starts on the new table. An audible part ramps from the
-  old table to the new one.
+  old table to the new one. The mod display reads the last morph the oscillator
+  wrote to the bank header, so its waveform and cursor follow the envelope and the
+  LFO.
 - **Failure mode:** the additive table clips, the morph leaks between voices, the
   preview writes the patch on open, the wave values shift again, a stored spectrum
   is overwritten by a mode change, or the existing waves change their samples.
@@ -172,8 +175,10 @@ the stored spectra. The preview is not written on page open.
 - **Tolerance/metric:** the existing waves 0 to 8 and the shifted pulse, square and
   saw must match the current header sample for sample. The checks are exact. The
   spectra page must render the selected wave analysis without writing a parameter
-  until the first A-card edit, and the mod display must show both outlines and the
-  morph marker. The part block and manifest counts must match 800 and 1,614.
+  until the first a-row edit, and the mod display must show both outlines and the
+  morph marker. `spectral` also checks that the engine publishes the live morph,
+  and that the base morph stays still with zero envelope depth. The part block and
+  manifest counts must match 800 and 1,614.
 - **Evidence artefact:** a wave table checksum test, a spectral table and morph
   test, a cold-commit and crossfade-direction test, the schedule bench, an editor
   page snapshot, a `ctest` log, a pluginval log and the measured table/CPU figures.
@@ -199,7 +204,8 @@ the stored spectra. The preview is not written on page open.
    select-group legend, the spring-loaded tilt, level and formant controls, the
    selected-wave preview with the `from wave` badge, the first A-card edit commit,
    the copy and paste, and the page index remap. The A and B tabs each carry four
-   wide rows and four control cards in a scroll view. The saw preview snapshot is
+   bands of a wide row and its control card, and the four bands fit without a
+   scroll. The saw preview snapshot is
    `editor-operator-spectra-saw.png`, the B page snapshot is
    `editor-operator-spectra-b.png`, and the mod display snapshot is
    `editor-op-spectra-mod-saw.png`. The Linux goldens were regenerated for the tab

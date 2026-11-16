@@ -455,7 +455,7 @@ class SpectrumControls : public P1Card {
 public:
     SpectrumControls(PluginEditor& editor, int op, int part, bool a,
                      SpectrumRow& row)
-        : P1Card("op" + juce::String(op + 1) + " controls"),
+        : P1Card("op" + juce::String(op + 1) + " spectral controls"),
           editor_(editor),
           op_(op),
           part_(part),
@@ -716,8 +716,8 @@ public:
 
     void resized() override
     {
-        auto area = getLocalBounds();
-        header_.setBounds(area.removeFromTop(22));
+        auto area = getLocalBounds().reduced(8, 0);
+        header_.setBounds(area.removeFromTop(24));
         auto visual = area.removeFromTop(30);
         const int half = (visual.getWidth() - 6) / 2;
         scope_.setBounds(visual.removeFromLeft(half));
@@ -829,6 +829,7 @@ public:
     void tick()
     {
         header_.tick();
+        display_.setLiveMorph(editor_.processor().specMorph(op_, part_));
         display_.repaint();
         env_.tick();
         repaint();
@@ -865,7 +866,7 @@ public:
                 *controls_[static_cast<std::size_t>(i)]);
         }
         viewport_.setViewedComponent(&content_, false);
-        viewport_.setScrollBarsShown(true, false);
+        viewport_.setScrollBarsShown(false, false);
         addAndMakeVisible(viewport_);
     }
 
@@ -879,22 +880,20 @@ public:
             top.removeFromLeft(10);
         }
         viewport_.setBounds(area);
-        const int contentWidth =
-            juce::jmax(320, viewport_.getMaximumVisibleWidth());
-        constexpr int rowHeight = 124;
-        constexpr int rowGap = 4;
-        constexpr int controlsHeight = 132;
-        content_.setSize(contentWidth,
-                         4 * rowHeight + 3 * rowGap + controlsHeight);
+        const int contentWidth = juce::jmax(320, viewport_.getWidth());
+        constexpr int pairHeight = 124;
+        constexpr int pairGap = 4;
+        constexpr int controlsWidth = 300;
+        constexpr int controlsGap = 8;
+        content_.setSize(contentWidth, 4 * pairHeight + 3 * pairGap);
         int y = 0;
-        for (auto& row : rows_) {
-            row->setBounds(0, y, contentWidth, rowHeight);
-            y += rowHeight + rowGap;
-        }
-        const int controlWidth = content_.getWidth() / 4;
+        const int rowWidth = contentWidth - controlsWidth - controlsGap;
         for (int i = 0; i < 4; ++i) {
+            rows_[static_cast<std::size_t>(i)]->setBounds(0, y, rowWidth,
+                                                          pairHeight);
             controls_[static_cast<std::size_t>(i)]->setBounds(
-                i * controlWidth, y, controlWidth - 4, controlsHeight);
+                rowWidth + controlsGap, y, controlsWidth, pairHeight);
+            y += pairHeight + pairGap;
         }
     }
 

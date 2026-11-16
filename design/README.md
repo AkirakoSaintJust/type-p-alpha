@@ -273,11 +273,12 @@ after it, the mute switch at the right, then a scope and spectro pair and an
 adds the `morph` slider under the wave select. The wave select carries the mode:
 `spectrum` is the last entry, and selecting it uses the stored spectra.
 
-Below the strip, one wide row per operator and then one control card per operator.
-A row holds its range select, copy and paste, the `from wave` badge on the a page,
-the 64-bar editor and the group legend. A control card holds the group selector, the
-live, dead and both mask, the `tilt`, `level` and `formant` springs, the formant
-picker h1 to h64, `norm` and `to b` or `to a`. The bars preview a spring curve from
+Below the strip, one 124 px band per operator, with the wide row on the left and
+its control card on the right. A row holds its range select, copy and paste, the
+`from wave` badge on the a page, the 64-bar editor and the group legend. A control
+card holds the group selector, the live, dead and both mask, the `tilt`, `level` and
+`formant` springs, the formant picker h1 to h64, `norm` and `to b` or `to a`. The
+four bands fit under the strip without a scroll. The bars preview a spring curve from
 the levels at the start of the drag, and the release commits them.
 
 While the waveform is not `spectrum`, the a row shows the analysis of the selected

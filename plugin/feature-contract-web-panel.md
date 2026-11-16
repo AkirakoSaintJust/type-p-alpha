@@ -160,7 +160,8 @@ and `error`.
   The smoke then walks the part switch, the six FX cards, the part rename and paste,
   the part and multi library saves, the multi save materialising both parts, the
   spectrum level after the reload, the patch rename, the reload persistence and the
-  44.1 kHz resampled path.
+  44.1 kHz resampled path. The taps message carries the live morph for the four
+  operators, and the mod display redraws from it while a note sounds.
 - **Target package check:** `wasm/build.sh` writes `build/web` with the module, the
   manifest, the tokens and the pages. The app is served with
   `python3 -m http.server 8080 --directory build/web`.
@@ -195,6 +196,8 @@ and `error`.
    save materialised both parts (2 part slots), the spectrum h3 read 91 after the
    reload, the patch name was `smoke patch`, the name and slots persisted after the
    reload, and a 44.1 kHz context exercised the resampler at a peak of 0.0865.
+   The taps message carried the live morph `[15, 0, -1, -1]` for the four
+   operators.
 4. **Release evidence:** the GitHub `wasm` job passed with the bare and panel
    smokes on Chromium. The release package and its binaries remain.
 

@@ -29,6 +29,9 @@ public:
     uint32_t lit(uint32_t base);
     bool quiet();
     const int32_t* tap(uint32_t channel);
+    /* The last morph the oscillator read for an operator and part, 0 to 99, or
+     * -1 when the operator has not read the bank since the state reset. */
+    int specMorph(int op, int part) const;
 
     P1_STATE* state();
 

@@ -149,6 +149,12 @@ bool checkMorphEnvelope()
                     h1, h2);
         return false;
     }
+    const int live = engine.specMorph(0, 0);
+    if (live < 80) {
+        std::printf("spectral: the live morph did not follow the envelope (%d)\n",
+                    live);
+        return false;
+    }
 
     p1::Engine base_engine;
     base_engine.reset();
@@ -169,6 +175,12 @@ bool checkMorphEnvelope()
     if (!(b2 < b1 * 0.5)) {
         std::printf("spectral: depth zero still moves the morph (h1 %.2f, h2 %.2f)\n",
                     b1, b2);
+        return false;
+    }
+    const int still = base_engine.specMorph(0, 0);
+    if (still < 0 || still > 5) {
+        std::printf("spectral: depth zero still publishes a live morph (%d)\n",
+                    still);
         return false;
     }
     return true;

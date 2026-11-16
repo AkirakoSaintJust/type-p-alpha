@@ -998,17 +998,22 @@ void P1SpectrumDisplay::paint(juce::Graphics& g)
     drawSpectrum(aLevel, firstA, aColour_);
     drawSpectrum(bLevel, firstB, bColour_);
 
-    const double morph = state_.getRawParameterValue(morphID_) != nullptr
-                             ? juce::jlimit(0.0, 99.0,
-                                            static_cast<double>(state_
-                                                .getRawParameterValue(morphID_)
-                                                ->load())) /
-                                   99.0
-                             : 0.0;
+    const double baseMorph = state_.getRawParameterValue(morphID_) != nullptr
+                                 ? juce::jlimit(0.0, 99.0,
+                                                static_cast<double>(state_
+                                                    .getRawParameterValue(
+                                                        morphID_)
+                                                    ->load())) /
+                                       99.0
+                                 : 0.0;
+    const double morph = liveMorph_ >= 0.0 && !fromWave
+                             ? juce::jlimit(0.0, 1.0, liveMorph_)
+                             : baseMorph;
 
     /* The faint line is the phase-zero sum of the two spectra at their own
        harmonic offsets, so the display shows the shape the engine will read at
-       the current morph. */
+       the live morph. The green cursor sits at the same value and follows the
+       envelope and the LFO while a note sounds. */
     constexpr int points = 160;
     std::array<float, points> wave{};
     float peak = 0.0f;

@@ -148,7 +148,7 @@ try {
     throw new Error("the spectrum paste did not copy the levels");
 
   const firstRow = page.locator(".spectrum-row").first();
-  const firstControls = page.locator(".spectrum-controls .card").first();
+  const firstControls = page.locator(".spectrum-controls-card").first();
   await firstRow.locator(".specbars").scrollIntoViewIfNeeded();
   const zeroBars = await firstRow.locator(".specbars").boundingBox();
   await page.mouse.move(zeroBars.x + 2, zeroBars.y + zeroBars.height - 2);
@@ -251,11 +251,14 @@ try {
   const tapPeak = await page.evaluate(() => window.__p1.lastTapPeak);
   const routePeak = await page.evaluate(() => window.__p1.lastRoutePeak);
   await page.mouse.up();
+  const morph = await page.evaluate(() => window.__p1.lastMorph);
   console.log("scope peak:", peak, "tap peak:", tapPeak,
-    "route peak:", routePeak);
+    "route peak:", routePeak, "live morph:", morph);
   if (!(peak > 0.0001)) throw new Error("the panel scope stayed silent");
   if (!(tapPeak > 0.0001)) throw new Error("the operator tap scopes stayed silent");
   if (!(routePeak > 0.0001)) throw new Error("the part route scopes stayed silent");
+  if (!Array.isArray(morph) || morph.length !== 4)
+    throw new Error("the taps message carries no live morph");
 
   await page.selectOption("#algorithm", "7");
   await page.waitForFunction(() => window.__p1.lastParam === 7, {

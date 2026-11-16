@@ -1,6 +1,8 @@
 /* SPDX-License-Identifier: GPL-3.0-only */
 #include "Engine.hpp"
 
+#include "p1_math.h"  /* brings in spectral.h for the bank offsets */
+
 namespace p1 {
 
 Engine::Engine() : state_(std::make_unique<P1_STATE>())
@@ -63,6 +65,22 @@ bool Engine::quiet()
 const int32_t* Engine::tap(uint32_t channel)
 {
     return P1_TAP(state_.get(), channel);
+}
+
+int Engine::specMorph(int op, int part) const
+{
+    if (part < 0 || part >= P1_SPEC_PARTS)
+        return -1;
+    const int16_t* bank = nullptr;
+    switch (op) {
+    case 0: bank = state_->op1_osc_bank; break;
+    case 1: bank = state_->op2_osc_bank; break;
+    case 2: bank = state_->op3_osc_bank; break;
+    case 3: bank = state_->op4_osc_bank; break;
+    default: return -1;
+    }
+    const int live = bank[P1_SPEC_LIVE + part];
+    return live > 0 ? live - 1 : -1;
 }
 
 P1_STATE* Engine::state()

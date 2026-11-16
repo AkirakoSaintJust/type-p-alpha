@@ -8,9 +8,12 @@ of scope.
 ## Scope and method
 
 The inventory covers the product repository at `type-p-alpha`: the engine runtime,
-the plugin host, the preset store, the editor, the tests and the build tools. The
-generated engine files are listed as generated and are not described function by
-function, because the generator and the module sources are the authority.
+the plugin host, the preset store, the editor, the tests and the build tools. It
+walks the generated manifest, the module library, the JUCE editor and the web
+panel, marks the generated files as generated, and records every removed API with
+the reason it had no caller, so the next pass can see what moved without re-reading
+the tree, and the removed table names the caller that used each one. The generated engine files are not described function by function,
+because the generator and the module sources are the authority.
 
 The audit looked for four things:
 
@@ -341,7 +344,7 @@ and the panel readouts.
 | `P1Scope` | Green scope widget. |
 | `P1Spectro` | Pink and purple spectrum widget. |
 | `P1SpectralBars` | Editable 64-harmonic bar editor for one spectrum. |
-| `P1SpectrumDisplay` | Two spectrum outlines, a faint phase-zero waveform and the morph marker. |
+| `P1SpectrumDisplay` | Two spectrum outlines, a faint phase-zero waveform and the live morph cursor. |
 | `P1Envelope` | Four-rate, three-level envelope curve. |
 | `P1Wave` | Waveform shape widget. |
 | `P1LevelSlider` | Wide level slider with APVTS attachment. |
@@ -355,9 +358,9 @@ and the panel readouts.
 
 `plugin/juce/PagesSpectral.cpp` holds the `op spectra a`, `op spectra b` and
 `op spectra mod` pages. Each spectrum page has four operator and oscillator cards,
-four wide 64-bar rows and four control cards in a scroll viewport. The mod page
-shows the two spectra, a faint phase-zero waveform and the morph marker, followed by
-the morph envelope and the morph LFO.
+then four bands of a 64-bar row and its control card side by side. The mod page
+shows the two spectra, a faint phase-zero waveform and the live morph cursor,
+followed by the morph envelope and the morph LFO.
 
 The tab bar has seven pages: patch settings, part fx/mod, operator envs, operator
 lfos, op spectra a, op spectra b and op spectra mod. The processor writes

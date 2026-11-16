@@ -203,6 +203,8 @@ public:
                       juce::String rangeBID, juce::Colour aColour,
                       juce::Colour bColour);
     void paint(juce::Graphics& g) override;
+    /* The morph the engine last read, 0 to 1, or -1 for the base parameter. */
+    void setLiveMorph(double value) { liveMorph_ = value; }
 
 private:
     double levelAt(const juce::StringArray& ids, int index) const;
@@ -219,6 +221,7 @@ private:
     std::array<double, 64> preview_{};
     int previewWave_ = -1;
     int previewFirst_ = 0;
+    double liveMorph_ = -1.0;
 };
 
 class P1Envelope : public juce::Component {

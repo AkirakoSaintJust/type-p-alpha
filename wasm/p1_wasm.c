@@ -6,6 +6,7 @@
 #include <stdint.h>
 
 #include "dsp.h"
+#include "p1_math.h"  /* the bank offsets in spectral.h */
 #include "wavetable.h"
 
 #define P1_WEB_MAX_FRAMES 4096
@@ -75,6 +76,24 @@ int32_t *p1_output(void)
 const int32_t *p1_tap(uint32_t channel)
 {
     return type_p_alpha_dsp_tap_s(&g_state.dsp, channel);
+}
+
+/* The last morph the oscillator read for an operator and part, 0 to 99, or -1
+ * when the operator has not read the bank. The mod display follows it. */
+int32_t p1_spec_morph(uint32_t op, uint32_t part)
+{
+    const int16_t *bank;
+    if (part > 1u)
+        return -1;
+    switch (op) {
+    case 0: bank = g_state.dsp.op1_osc_bank; break;
+    case 1: bank = g_state.dsp.op2_osc_bank; break;
+    case 2: bank = g_state.dsp.op3_osc_bank; break;
+    case 3: bank = g_state.dsp.op4_osc_bank; break;
+    default: return -1;
+    }
+    const int live = bank[P1_SPEC_LIVE + part];
+    return live > 0 ? live - 1 : -1;
 }
 
 uint32_t p1_param_count(void)

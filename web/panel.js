@@ -118,6 +118,7 @@
   let outputSamples = null;
   let tapSamples = null;
   let tapRoutes = null;
+  let liveMorphValues = null;
   let visMode = "scope";
   let analyser = null;
 
@@ -940,6 +941,19 @@
     node.port.postMessage({ type: "analyze", key, wave, first, request });
   }
 
+  function getLiveMorph(part, op) {
+    if (part !== activePart || !Array.isArray(liveMorphValues))
+      return -1;
+    const value = liveMorphValues[op];
+    return typeof value === "number" && value >= 0 ? value / 99 : -1;
+  }
+
+  function spectrumWaveformIsLive(op) {
+    const spec = byName.get(`op${op + 1}_waveform.p${activePart}`);
+    const wave = spec === undefined ? 0 : (values.get(spec.id) ?? 0);
+    return wave === 13;
+  }
+
   function getPreview(part, op) {
     const key = previewKey(part, op);
     const cached = previewCache.get(key);
@@ -1152,6 +1166,7 @@
 
   function spectrumControls(title, row) {
     const cardEl = sectionCard(title);
+    cardEl.classList.add("spectrum-controls-card");
     const tools = row.tools;
     let base = null;
     let centre = 5;
@@ -1270,7 +1285,7 @@
   }
 
   function spectrumDisplay(aSpecs, bSpecs, rangeA, rangeB, morphSpec,
-                           previewLevels) {
+                           previewLevels, liveMorph) {
     const canvas = document.createElement("canvas");
     canvas.className = "panel-spectrum-display";
     canvas.width = 512;
@@ -1331,8 +1346,11 @@
       }
       outline(aLevels, firstA, "#c780ff");
       outline(bLevels, firstB, "#ff2e7e");
-      const morph = morphSpec === undefined ? 0
+      const baseMorph = morphSpec === undefined ? 0
         : Math.max(0, Math.min(1, (values.get(morphSpec.id) ?? 0) / 99));
+      const live = liveMorph ? liveMorph() : -1;
+      const morph = live >= 0
+        ? Math.max(0, Math.min(1, live)) : baseMorph;
       const points = 256;
       const wave = new Float32Array(points);
       let peak = 0;
@@ -2603,7 +2621,6 @@
     const wrapper = div("spectra-page");
     const strip = div("panel-opcols spectra-strip");
     const runs = div("spectrum-runs");
-    const controls = div("panel-opcols spectrum-controls");
     for (let op = 0; op < 4; ++op) {
       const all = specsForOp(activePart, op);
       const a = all.filter((spec) =>
@@ -2640,11 +2657,13 @@
           fromWave: isA,
           otherSpecs: other,
         });
-      runs.append(row.el);
-      controls.append(spectrumControls(`op${op + 1} controls`, row));
+      const pair = div("spectrum-pair");
+      pair.append(row.el,
+        spectrumControls(`op${op + 1} spectral controls`, row));
+      runs.append(pair);
       requestPreview(activePart, op);
     }
-    wrapper.append(strip, runs, controls);
+    wrapper.append(strip, runs);
     page.append(wrapper);
   }
 
@@ -2679,7 +2698,9 @@
       displayTitle.textContent = "spectra";
       displayCard.append(displayTitle,
         spectrumDisplay(aSpecs, bSpecs, rangeA, rangeB, morph,
-                        () => getPreview(activePart, op)));
+                        () => getPreview(activePart, op),
+                        () => spectrumWaveformIsLive(op)
+                          ? getLiveMorph(activePart, op) : -1));
       requestPreview(activePart, op);
       const envCard = card("morph env", env, {
         className: "env",
@@ -2924,6 +2945,12 @@
         } else if (message.type === "taps") {
           if (message.part === activePart) {
             tapSamples = message;
+            if (Array.isArray(message.morph)) {
+              liveMorphValues = message.morph;
+              window.__p1.lastMorph = message.morph;
+              if (currentPage === "mod")
+                for (const update of spectrumUpdaters) update();
+            }
             let peak = 0;
             for (const channel of message.channels)
               for (const sample of channel)

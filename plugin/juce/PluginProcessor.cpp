@@ -93,6 +93,12 @@ void TypePAlphaAudioProcessor::readTapScope(int channel, float* destination, int
     tapScopes_[static_cast<size_t>(channel)].read(destination, count);
 }
 
+double TypePAlphaAudioProcessor::specMorph(int op, int part) const
+{
+    const int live = engine_.specMorph(op, part);
+    return live < 0 ? -1.0 : static_cast<double>(live) / 99.0;
+}
+
 TypePAlphaAudioProcessor::TypePAlphaAudioProcessor()
     : AudioProcessor(BusesProperties().withOutput(
           "Output", juce::AudioChannelSet::stereo(), true)),

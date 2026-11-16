@@ -73,6 +73,9 @@ public:
 
     void readOutputScope(float* destination, int count);
     void readTapScope(int channel, float* destination, int count);
+    /* The live morph for an operator and part, 0 to 1, or -1 when the operator
+     * has not read the bank since the reset. */
+    double specMorph(int op, int part) const;
 
     juce::String getPatchName() const { return patchName_; }
     void setPatchName(const juce::String& name) { patchName_ = name; }
