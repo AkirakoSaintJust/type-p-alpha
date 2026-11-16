@@ -84,10 +84,13 @@ covers both.
 - Grid gap is 10. Card padding is 9. Operator columns add 8 padding and a 6 gap.
 - Put card actions at the left of a header and keep a 16px gap before a mute
   switch. Put a mode's knobs next to its buttons with a 32px gap.
-- At startup, fit the 1240 by 985 canvas to the display work area less a band for
-  the host chrome, then keep applying the cap for a moment because a host can set
-  its own size after the editor attaches. A constructor-only cap is not enough,
-  and a maximised host window is smaller than the display work area.
+- At startup, size the 1240 by 985 canvas to the display's `userArea`, which
+  already excludes the taskbar or dock, and subtract the chrome the window actually
+  adds. Measure the chrome as the difference between the peer bounds and the editor
+  bounds, so the system title bar and any host menu are counted rather than guessed.
+  Use the largest scale that fits, up to the 2480 by 1970 resize limit, and keep
+  applying the fit for a moment because a host can set its own size after the editor
+  attaches.
 
 Every page fills the same height:
 
@@ -106,24 +109,23 @@ Every page fills the same height:
 - operator lfos: four operator columns with the oscillator, then the `amp lfo`,
   `fb lfo` and `detune lfo` cards. Each LFO card carries copy and paste in its
   header, and its `bipolar` switch beside the wave select.
-- op spectra a: four operator and oscillator cards across the top, then four bands
-  of a wide spectrum row and its control card side by side. Each row holds a range
-  select, a 64-bar editor, the harmonic labels and the group legend. The control
-  card holds the group, the mask, the `tilt`, `level` and `formant` springs, the
-  formant picker h1 to h64, `norm` and `to b`. The four bands are 124 px each, so
-  they fit under the strip without a scroll. While the waveform is not `spectrum`,
-  the a row shows the analysis of the selected wave with a `from wave` badge, and the
-  first edit on the row commits that analysis and moves the waveform to `spectrum`.
-- op spectra b: the same page for spectrum b, with `to a` in place of `to b` and no
-  wave analysis. Each row carries its own range and its own 64 levels.
-- op spectra mod: four operator columns with the oscillator card, a `spectra`
-  display, the `morph env` card and the `morph lfo` card. The display draws the
-  selected wave's analysis in a while the waveform is not `spectrum`, and the
-  stored a while it is, plus b and a morph marker. The marker and the faint
-  waveform follow the live morph from the engine, so they advance with the
-  envelope and the LFO while a note sounds. The display takes no drag. When a and b
-  use different ranges, the display zooms out to the union of the two spans. The
-  envelope card carries the graph, the depth knob, R1 to R4 and L1 to L3.
+- op spectra a: four operator and oscillator cards across the top, a 6 px empty
+  band, then four bands of a wide spectrum row and its control card side by side.
+  Each row holds a range select, the `load spectrum template...` button, a 64-bar
+  editor, the harmonic labels and the group legend. The control card holds the
+  group, the mask, the `tilt`, `level` and `formant` springs, the formant picker h1
+  to h64, `norm` and `to b`. The four bands are 124 px each, so they fit under the
+  strip without a scroll.
+- op spectra b: the same page for spectrum b, with `to a` in place of `to b`. Each
+  row carries its own range, its own 64 levels and its own template button.
+- op spectra mod: four operator columns with a 6 px gap under the operator header,
+  the oscillator card, a `spectra` display, the `morph env` card and the
+  `morph lfo` card. The display draws the stored a and b. The marker and the faint
+  waveform follow the live morph of the newest rendering voice, so they advance
+  with the envelope and the LFO while a note sounds. The display takes no drag.
+  When a and b use different ranges, the display zooms out to the union of the two
+  spans. The envelope card carries the graph, the depth knob, R1 to R4 and L1 to
+  L3.
 
 The page order changes with each layout addition, so the processor remaps the
 stored `uiPage` when an old state restores. A four-tab state maps 1 to 2, 2 to 3 and
@@ -143,9 +145,10 @@ is now 3.
   block cycles the active part's algorithm and must not open the picker.
 - In the picker, reserve the caption line below each graph. Centre the graph in the
   remaining figure area so it cannot clip or touch `alg n`.
-- The patch control shows `multi` and the current multi-patch name, with the hint
-  `click above for multi-patch library actions`. The library popup carries export,
-  import and init.
+- The multi-patch block sits above its buttons: `loaded multi-patch:` in Zen Dots,
+  the multi-patch name in DotGothic16 below it, then the
+  `multi-patch library...` control and the `rename` button. The library popup
+  carries export, import and init.
 
 ## Shape and borders
 
@@ -196,9 +199,15 @@ the pointer, then follows a horizontal drag. The bar labels show every eighth
 harmonic, and the members of the selected group are green. A spring control is a
 10px track: the drag previews one curve from the 64 levels captured at pointer down,
 written to the members the group and mask select, and the release leaves the result
-in place, so repeated gestures never compound the same curve. While the waveform is
-not `spectrum`, the a row shows a 64-level preview of the selected wave, and the
-first edit writes those levels before it writes the waveform as 13.
+in place, so repeated gestures never compound the same curve. Tilt up is the reverse
+tilt, with the highs louder and the lows quieter, and tilt down is the normal tilt,
+with the lows louder and the highs quieter. The `load spectrum template...` button
+opens the thirteen wave names and writes that analysis into the row without
+changing the waveform.
+
+The envelope graph weights each stage by the square of its distance from rate 99,
+so a rate of 99 has no horizontal run and reads as vertical whatever its target
+level, whilst the usual settings still fill the graph.
 
 The wave select lists the fourteen names in `waveforms.md` in stored order.
 `rect tri` is value 9, `pulse`, `square` and `saw` are 10 to 12, and `spectrum` is
@@ -216,8 +225,9 @@ a save and a load button for each part, so the slot is chosen before the action.
 - Amplitude and pitch envelopes: purple.
 - Filter envelope and pitch LFO: green.
 - Two-spectrum display: a purple filled outline for spectrum a, a pink outline for
-  spectrum b, and a green marker for the morph value. While the waveform is not
-  `spectrum`, the a outline is the selected wave's analysis.
+  spectrum b, a green marker for the morph value and a faint green waveform trace.
+  The marker and the trace follow the live morph of the newest rendering voice
+  rather than the base parameter.
 - Routing graph: white modulators, pink carriers, grey modulation lines, purple
   downward arrows under every carrier.
 

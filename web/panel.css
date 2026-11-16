@@ -107,7 +107,11 @@
 
   .actions { display: flex; flex-direction: column; gap: 4px; flex: 0 0 auto; align-items: stretch; }
   .patch-buttons { display: flex; gap: 8px; align-items: stretch; }
-  .patch-hint { font-size: 10px; color: var(--faint); text-align: center; white-space: nowrap; }
+  .loaded { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+  .loaded-label { font-family: var(--font-head); font-size: 10px; color: var(--dim);
+    letter-spacing: .04em; }
+  .loaded-name { font-size: 12px; color: var(--text); white-space: nowrap;
+    overflow: hidden; text-overflow: ellipsis; }
   .btn {
     background: #000; border: 1px solid var(--line2); color: var(--text);
     font-size: 12px; letter-spacing: .02em; padding: 8px 10px; cursor: pointer;
@@ -115,10 +119,8 @@
   }
   .btn:hover { border-color: var(--pink); }
   .btn .k { color: var(--faint); font-size: 11px; letter-spacing: .03em; }
-  .btn.patch { width: 150px; box-sizing: border-box; min-width: 0; }
-  .btn.patch #patchName {
-    flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis;
-  }
+  .btn.patch { width: 176px; box-sizing: border-box; min-width: 0;
+    padding-left: 9px; }
   .btn.renamer { color: var(--dim); }
   .btn.renamer:hover { color: var(--pink); }
 
@@ -152,7 +154,8 @@
     font-size: 12px; letter-spacing: .02em; padding: 5px 8px; cursor: pointer;
   }
   .tbtn:hover { border-color: var(--pink); color: var(--text); }
-  .tbtn.partsel { padding: 5px 11px; }
+  .tbtn.partsel { padding: 5px 10px; max-width: 128px; overflow: hidden;
+    text-overflow: ellipsis; white-space: nowrap; }
   .tbtn.partsel.active { border-color: var(--green); color: var(--green); }
   .tbtn.partlib { padding: 5px 9px; }
 
@@ -520,14 +523,26 @@ body { display: block; padding: 0; min-height: 100vh; }
 
 /* split spectra pages: operator strip, wide rows, control cards */
 .spectra-page { display: flex; flex-direction: column; gap: 8px; }
-.spectrum-runs { display: flex; flex-direction: column; gap: 8px; }
+.spectrum-runs { display: flex; flex-direction: column; gap: 8px;
+  padding-top: 6px; }
 .spectrum-pair { display: grid; grid-template-columns: minmax(0, 1fr) 300px;
   gap: 8px; align-items: stretch; }
 .spectrum-row { padding: 8px 10px; }
-.spectrum-row .specbars { height: 96px; gap: 2px; }
+.spectrum-row .specbars { height: 72px; gap: 2px; }
 .spectrum-row .speclabels span { font-size: 8px; }
 .spectrum-row-acts { display: flex; align-items: center; gap: 6px; }
 .row-range-label { font-size: 9px; color: var(--dim); }
 .row-range { width: 76px; flex: 0 0 76px; font-size: 10px; }
+.template-wrap { position: relative; display: inline-flex; }
+.spectrum-row .template-btn { white-space: nowrap; }
+.template-menu { position: absolute; top: 100%; right: 0; z-index: 30;
+  margin-top: 2px; display: flex; flex-direction: column; min-width: 132px;
+  background: #000; border: 1px solid var(--line2); padding: 2px 0; }
+.template-menu[hidden] { display: none; }
+.template-menu button { background: none; border: 0; color: var(--text);
+  text-align: left; font: inherit; font-size: 11px; padding: 4px 10px;
+  cursor: pointer; white-space: nowrap; }
+.template-menu button:hover { background: var(--panel); color: var(--pink); }
 .spectrum-controls-card { padding: 7px 8px; }
-.spectrum-controls-card .springs { margin-top: 5px; }
+.spectrum-controls-card .springs { margin-top: 4px; }
+.spectrum-controls-card .spring-track { height: 44px; }

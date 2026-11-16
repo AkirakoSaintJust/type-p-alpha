@@ -74,9 +74,9 @@ the shared `wave` display reads the stored value. The LFO list is separate.
 
 The spectral pages analyse a wave from 0 to 12 into 64 harmonic magnitudes. The
 analysis reads the mip-0 table, drops DC, and scales the largest harmonic to 99.
-The result is a preview while the waveform is not `spectrum`, and the first edit
-commits it. The `spectrum` entry has no analysis. It uses the stored a and b
-levels.
+The result is a template. The `load spectrum template...` button writes it into
+the chosen spectrum, and the waveform is unchanged until `spectrum` is selected.
+The `spectrum` entry has no analysis. It uses the stored a and b levels.
 
 The analysis table is generated with the wavetable bank, thirteen waves by 64
 harmonics, and a test compares it with a DFT of the checked-in table.

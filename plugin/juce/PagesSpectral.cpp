@@ -262,6 +262,9 @@ public:
     {
         addAndMakeVisible(env_);
         addAndMakeVisible(depth_);
+        depth_.onUserEditEnd = [&ed = editor, op, part] {
+            ensureSpectrumMode(ed, op, part, params::opSpecEnvDepth(op, part));
+        };
         for (int i = 0; i < 4; ++i) {
             rates_[static_cast<std::size_t>(i)] = std::make_unique<ParamKnob>(
                 editor.state(), params::opSpecEnvRate(op, i, part),
@@ -340,7 +343,8 @@ public:
         legend_.setMinimumHorizontalScale(0.6f);
         legend_.setInterceptsMouseClicks(false, false);
         addAndMakeVisible(legend_);
-        bars_.onEdit = [this] { commitPreview(); };
+        template_.onClick = [this] { showTemplateMenu(); };
+        addAndMakeVisible(template_);
     }
 
     void setGroupTest(std::function<bool(int)> test)
@@ -356,7 +360,6 @@ public:
 
     std::vector<double> levels() const { return bars_.levels(); }
     void setLevels(const std::vector<double>& levels) { bars_.setLevels(levels); }
-    void commitWavePreview() { commitPreview(); }
 
     int firstHarmonic() const
     {
@@ -370,23 +373,8 @@ public:
 
     void tick()
     {
-        updatePreview();
+        bars_.setFirstHarmonic(firstHarmonic());
         bars_.repaint();
-    }
-
-    void paint(juce::Graphics& g) override
-    {
-        P1Card::paint(g);
-        if (isA_ && bars_.hasPreview()) {
-            g.setFont(uiFont(tokens::textLegend));
-            g.setColour(colour(tokens::green));
-            g.drawText("from wave",
-                       getLocalBounds()
-                           .removeFromTop(20)
-                           .withTrimmedLeft(150)
-                           .withTrimmedRight(100),
-                       juce::Justification::centredLeft, false);
-        }
     }
 
     void resized() override
@@ -397,58 +385,47 @@ public:
         auto rangeRow = area.removeFromTop(18);
         rangeLabel_.setBounds(rangeRow.removeFromLeft(34));
         range_.setBounds(rangeRow.removeFromLeft(88).reduced(1));
+        rangeRow.removeFromLeft(8);
+        template_.setBounds(rangeRow.removeFromLeft(150).reduced(1));
         area.removeFromTop(2);
         bars_.setBounds(area.removeFromTop(64));
         legend_.setBounds(area.removeFromTop(14));
     }
 
 private:
-    void updatePreview()
+    void showTemplateMenu()
     {
-        const int first = firstHarmonic();
-        bars_.setFirstHarmonic(first);
-        if (!isA_)
-            return;
-        const int wave = static_cast<int>(
-            std::lround(getParam(editor_, params::opWaveform(op_, part_))));
-        if (wave == 13) {
-            if (bars_.hasPreview())
-                bars_.clearPreview();
-            lastWave_ = 13;
-            return;
-        }
-        if (wave < 0 || wave > 12)
-            return;
-        if (wave == lastWave_ && first == lastFirst_ && bars_.hasPreview())
-            return;
-        lastWave_ = wave;
-        lastFirst_ = first;
-        const auto values = analyseWaveTable(wave, first);
-        bars_.setPreviewLevels(
-            std::vector<double>(values.begin(), values.end()));
+        juce::PopupMenu menu;
+        const auto names = params::waveNames();
+        for (int i = 0; i < 13 && i < names.size(); ++i)
+            menu.addItem(i + 1, names[i]);
+        menu.showMenuAsync(
+            juce::PopupMenu::Options().withTargetComponent(&template_)
+                .withMinimumWidth(150),
+            [this](int result) {
+                if (result > 0)
+                    loadTemplate(result - 1);
+            });
     }
 
-    void commitPreview()
+    void loadTemplate(int wave)
     {
-        if (!isA_ || !bars_.hasPreview())
-            return;
-        const auto levels = bars_.levels();
-        bars_.clearPreview();
-        bars_.setLevels(levels);
-        setParam(editor_, params::opWaveform(op_, part_), 13);
-        lastWave_ = 13;
+        const auto values = analyseWaveTable(wave, firstHarmonic());
+        const auto ids = spectrumIDs(op_, part_, isA_);
+        for (int i = 0; i < ids.size() && i < 64; ++i)
+            setParam(editor_, ids[i], static_cast<float>(std::lround(values[static_cast<std::size_t>(i)])));
+        bars_.repaint();
     }
 
     PluginEditor& editor_;
     int op_ = 0;
     int part_ = 0;
     bool isA_ = true;
-    int lastWave_ = -1;
-    int lastFirst_ = 1;
     P1SpectralBars bars_;
     ParamChoice range_;
     juce::Label rangeLabel_;
     juce::Label legend_;
+    P1Button template_{"load spectrum template...", true};
 };
 
 class SpectrumControls : public P1Card {
@@ -548,11 +525,7 @@ public:
     }
 
 private:
-    void beginMacro()
-    {
-        row_.commitWavePreview();
-        snapshot_ = row_.levels();
-    }
+    void beginMacro() { snapshot_ = row_.levels(); }
 
     void endMacro() { snapshot_.clear(); }
 
@@ -579,11 +552,13 @@ private:
         for (int i = 0; i < static_cast<int>(levels.size()); ++i) {
             if (!selected(i))
                 continue;
+            const double centre =
+                (static_cast<double>(levels.size()) - 1.0) * 0.5;
             levels[static_cast<std::size_t>(i)] = juce::jlimit(
                 0.0, 99.0,
                 levels[static_cast<std::size_t>(i)] *
-                    (1.0 + amount * i /
-                               static_cast<double>(levels.size() - 1)));
+                    (1.0 + amount *
+                               (static_cast<double>(i) - centre) / centre));
         }
         row_.setLevels(levels);
     }
@@ -622,7 +597,6 @@ private:
 
     void normalise()
     {
-        row_.commitWavePreview();
         auto levels = row_.levels();
         double peak = 0.0;
         for (double level : levels)
@@ -636,7 +610,6 @@ private:
 
     void copyToOther()
     {
-        row_.commitWavePreview();
         const auto levels = row_.levels();
         const auto other = spectrumIDs(op_, part_, !isA_);
         for (int i = 0; i < other.size() && i < static_cast<int>(levels.size());
@@ -783,7 +756,6 @@ public:
           display_(editor.state(), spectrumIDs(op, part_, true),
                    spectrumIDs(op, part_, false),
                    params::opSpecMorph(op, part_),
-                   params::opWaveform(op, part_),
                    params::opSpecRangeA(op, part_),
                    params::opSpecRangeB(op, part_), colour(tokens::purple),
                    colour(tokens::pink)),
@@ -792,7 +764,11 @@ public:
                params::opSpecLfoDepth(op, part_),
                params::opSpecLfoWave(op, part_),
                params::opSpecLfoMode(op, part_), op, part_,
-               PluginEditor::OperatorSection::spectrumLfo)
+               PluginEditor::OperatorSection::spectrumLfo,
+               [&ed = editor, op] {
+                   ensureSpectrumMode(ed, op, ed.activePart(),
+                                      params::opSpecLfoDepth(op, ed.activePart()));
+               })
     {
         addAndMakeVisible(header_);
         addAndMakeVisible(osc_);
@@ -805,6 +781,7 @@ public:
     {
         auto area = getLocalBounds().reduced(8);
         header_.setBounds(area.removeFromTop(24));
+        area.removeFromTop(6);
         osc_.setBounds(area.removeFromTop(140));
         area.removeFromTop(4);
         display_.setBounds(area.removeFromTop(120));
@@ -873,7 +850,7 @@ public:
     void resized() override
     {
         auto area = getLocalBounds();
-        auto top = area.removeFromTop(176);
+        auto top = area.removeFromTop(170);
         const int width = (top.getWidth() - 30) / 4;
         for (auto& card : opcards_) {
             card->setBounds(top.removeFromLeft(width));
@@ -885,8 +862,8 @@ public:
         constexpr int pairGap = 4;
         constexpr int controlsWidth = 300;
         constexpr int controlsGap = 8;
-        content_.setSize(contentWidth, 4 * pairHeight + 3 * pairGap);
-        int y = 0;
+        content_.setSize(contentWidth, 4 * pairHeight + 3 * pairGap + 6);
+        int y = 6;
         const int rowWidth = contentWidth - controlsWidth - controlsGap;
         for (int i = 0; i < 4; ++i) {
             rows_[static_cast<std::size_t>(i)]->setBounds(0, y, rowWidth,
@@ -950,34 +927,6 @@ private:
 };
 
 } // namespace
-
-void commitWaveToSpectrum(PluginEditor& editor, int op, int part)
-{
-    const auto waveID = params::opWaveform(op, part);
-    int wave = 13;
-    if (auto* value = editor.state().getRawParameterValue(waveID))
-        wave = static_cast<int>(std::lround(value->load()));
-    if (wave < 0 || wave > 12)
-        return;
-    int range = 0;
-    if (auto* value = editor.state().getRawParameterValue(
-            params::opSpecRangeA(op, part))) {
-        range = static_cast<int>(std::lround(value->load()));
-    }
-    range = juce::jlimit(0, 7, range);
-    const auto levels = analyseWaveTable(wave, range * 16 + 1);
-    for (int h = 0; h < 16; ++h) {
-        if (auto* parameter =
-                editor.state().getParameter(params::opSpecA(op, h + 1, part))) {
-            parameter->setValueNotifyingHost(parameter->convertTo0to1(
-                static_cast<float>(levels[static_cast<std::size_t>(h)])));
-        }
-    }
-    if (auto* parameter = editor.state().getParameter(waveID)) {
-        parameter->setValueNotifyingHost(
-            parameter->convertTo0to1(13.0f));
-    }
-}
 
 std::unique_ptr<PageBase> makeOperatorSpectraPage(PluginEditor& editor, bool a)
 {

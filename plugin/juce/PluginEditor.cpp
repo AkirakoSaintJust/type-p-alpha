@@ -15,17 +15,9 @@ constexpr int kHeight = 985;
 
 class PatchButton : public juce::Button {
 public:
-    PatchButton() : juce::Button("patch")
+    PatchButton() : juce::Button("multi-patch library...")
     {
         setMouseCursor(juce::MouseCursor::PointingHandCursor);
-    }
-
-    void setName(const juce::String& name) override
-    {
-        if (name_ == name)
-            return;
-        name_ = name;
-        repaint();
     }
 
     void paintButton(juce::Graphics& g, bool highlighted, bool) override
@@ -35,18 +27,11 @@ public:
         g.setColour(p1::ui::colour(highlighted ? p1::tokens::pink
                                                : p1::tokens::lineStrong));
         g.drawRect(getLocalBounds(), 1);
-        g.setFont(p1::ui::uiFont(p1::tokens::textToolbarLabel));
-        g.setColour(p1::ui::colour(p1::tokens::dim));
-        g.drawText("multi", 8, 0, 40, getHeight(),
-                   juce::Justification::centredLeft, false);
         g.setFont(p1::ui::uiFont(p1::tokens::textButton));
         g.setColour(p1::ui::colour(p1::tokens::white));
-        g.drawText(name_, 46, 0, getWidth() - 52, getHeight(),
+        g.drawText(getButtonText(), getLocalBounds().reduced(8, 0),
                    juce::Justification::centredLeft, true);
     }
-
-private:
-    juce::String name_{"init patch"};
 };
 
 class SegmentButton : public juce::Button {
@@ -109,8 +94,8 @@ public:
         g.setFont(p1::ui::uiFont(p1::tokens::textButton));
         g.setColour(p1::ui::colour(active_ ? p1::tokens::green
                                            : p1::tokens::dim));
-        g.drawText(getButtonText(), getLocalBounds(),
-                   juce::Justification::centred, false);
+        g.drawText(getButtonText(), getLocalBounds().reduced(4, 0),
+                   juce::Justification::centred, true);
     }
 
 private:
@@ -149,8 +134,8 @@ public:
     void resized() override
     {
         alg_.setBounds(300, 15, 330, 130);
-        patch_.setBounds(1000, 63, 150, 35);
-        rename_.setBounds(1156, 63, 64, 35);
+        patch_.setBounds(1000, 54, 150, 35);
+        rename_.setBounds(1156, 54, 64, 35);
         scopeSeg_.setBounds(876, 22, 44, 18);
         spectroSeg_.setBounds(920, 22, 56, 18);
         scopeView_.setBounds(650, 44, 330, 50);
@@ -165,10 +150,14 @@ public:
         g.drawText(juce::String::fromUTF8(
                        "      p1onken // パンク派第１音響合成研究班"),
                    16, 80, 320, 18, juce::Justification::centredLeft, false);
-        g.setFont(p1::ui::uiFont(p1::tokens::textToolbarLabel));
-        g.setColour(p1::ui::colour(p1::tokens::faint));
-        g.drawText("click above for multi-patch library actions", 940, 101, 300, 14,
-                   juce::Justification::centred, false);
+        g.setFont(p1::ui::displayFont(p1::tokens::textToolbarLabel));
+        g.setColour(p1::ui::colour(p1::tokens::dim));
+        g.drawText("loaded multi-patch:", 998, 18, 236, 14,
+                   juce::Justification::centredLeft, false);
+        g.setFont(p1::ui::uiFont(p1::tokens::textButton));
+        g.setColour(p1::ui::colour(p1::tokens::white));
+        g.drawText(multiName_, 998, 32, 236, 16,
+                   juce::Justification::centredLeft, true);
         g.setFont(p1::ui::displayFont(p1::tokens::textAlgorithmLabel));
         g.setColour(p1::ui::colour(p1::tokens::green));
         g.drawText("output", 650, 22, 120, 16, juce::Justification::centredLeft,
@@ -187,7 +176,13 @@ public:
         spectroView_.setSamples(scratch_.data(), static_cast<int>(scratch_.size()));
     }
 
-    void setPatchName(const juce::String& name) { patch_.setName(name); }
+    void setPatchName(const juce::String& name)
+    {
+        if (name == multiName_)
+            return;
+        multiName_ = name;
+        repaint();
+    }
 
     void setSpectroMode(bool spectro)
     {
@@ -241,6 +236,7 @@ private:
     SegmentButton spectroSeg_{"spectro"};
     bool spectroMode_ = false;
     std::array<float, 512> scratch_{};
+    juce::String multiName_{"init patch"};
 };
 
 class Toolbar : public juce::Component {
@@ -267,15 +263,17 @@ public:
         addAndMakeVisible(*partTiles_[1]);
 
         partButtons_[0] =
-            std::make_unique<PartChoiceButton>("part 1");
+            std::make_unique<PartChoiceButton>("part 1: init");
         partButtons_[1] =
-            std::make_unique<PartChoiceButton>("part 2");
+            std::make_unique<PartChoiceButton>("part 2: init");
         partButtons_[0]->onClick = [this] { editor_.setActivePart(0); };
         partButtons_[1]->onClick = [this] { editor_.setActivePart(1); };
         addAndMakeVisible(*partButtons_[0]);
         addAndMakeVisible(*partButtons_[1]);
+        edit_.setButtonText("single part library...");
         edit_.onClick = [this] { editor_.showSinglePartsBrowser(); };
         addAndMakeVisible(edit_);
+        refreshPartNames();
     }
 
     void resized() override
@@ -291,9 +289,9 @@ public:
         const int right = getWidth() - 16;
         const int actionsWidth = 176;
         edit_.setBounds(right - actionsWidth, 10, actionsWidth, 24);
-        partButtons_[1]->setBounds(right - actionsWidth - 8 - 56, 10, 56, 24);
-        partButtons_[0]->setBounds(right - actionsWidth - 8 - 56 - 8 - 56, 10, 56,
-                                   24);
+        partButtons_[1]->setBounds(right - actionsWidth - 8 - 108, 10, 108, 24);
+        partButtons_[0]->setBounds(right - actionsWidth - 8 - 108 - 8 - 108, 10,
+                                   108, 24);
     }
 
     void paint(juce::Graphics& g) override
@@ -305,12 +303,23 @@ public:
         drawLegend(g);
         g.setFont(p1::ui::uiFont(p1::tokens::textToolbarLabel));
         g.setColour(p1::ui::colour(p1::tokens::dim));
-        g.drawText("now editing part:", getWidth() - 520, 0, 150, getHeight(),
+        g.drawText("now editing part:", getWidth() - 582, 0, 150, getHeight(),
                    juce::Justification::centredRight, false);
+    }
+
+    void refreshPartNames()
+    {
+        for (int i = 0; i < 2; ++i) {
+            const auto text = "part " + juce::String(i + 1) + ": " +
+                              editor_.processor().getPartName(i);
+            if (partButtons_[static_cast<size_t>(i)]->getButtonText() != text)
+                partButtons_[static_cast<size_t>(i)]->setButtonText(text);
+        }
     }
 
     void tick()
     {
+        refreshPartNames();
         for (int i = 0; i < 2; ++i) {
             const bool muted =
                 p1::ui::getParam(editor_, p1::params::level(i)) <= 0.0;
@@ -627,11 +636,14 @@ PluginEditor::PluginEditor(TypePAlphaAudioProcessor& audioProcessor)
     int initialHeight = kHeight;
     if (auto* display =
             juce::Desktop::getInstance().getDisplays().getPrimaryDisplay()) {
-        const auto area = display->userBounds.toNearestInt().reduced(48, 80);
-        const float scale = juce::jmin(
-            1.0f,
-            static_cast<float>(area.getWidth()) / static_cast<float>(kWidth),
-            static_cast<float>(area.getHeight()) / static_cast<float>(kHeight));
+        /* userArea excludes the taskbar or dock. The 40 px vertical reserve is
+         * the system title bar and a margin, and fitToHostWindow corrects it once
+         * the peer exists and the real chrome can be measured. */
+        const auto area = display->userArea.toNearestInt().reduced(8, 48);
+        const float scale = juce::jlimit(
+            0.5f, 2.0f,
+            juce::jmin(static_cast<float>(area.getWidth()) / static_cast<float>(kWidth),
+                       static_cast<float>(area.getHeight()) / static_cast<float>(kHeight)));
         initialWidth = juce::roundToInt(static_cast<float>(kWidth) * scale);
         initialHeight = juce::roundToInt(static_cast<float>(kHeight) * scale);
     }
@@ -695,33 +707,31 @@ void PluginEditor::fitToHostWindow()
         juce::Desktop::getInstance().getDisplays().getDisplayForRect(peerBounds);
     if (display == nullptr)
         return;
-    /* The constructor cap runs before the host attaches the window, so a host can
-       override it. Apply the same logical-area cap once more after attachment,
-       with a band for the host chrome and the desktop furniture. A maximised host
-       window is smaller than the display work area, and the old 64px only covered
-       a title bar. */
-    const auto area = display->userBounds.toNearestInt().reduced(48, 80);
+    /* Size to the display work area, which already excludes the taskbar or dock,
+       minus the chrome the window actually adds (the system title bar and any
+       host menu). The difference between the peer bounds and the editor bounds is
+       measured rather than guessed, so the editor does not open too small or push
+       its title bar past the work area. */
+    auto area = display->userArea.toNearestInt().reduced(8);
+    const auto editorBounds = getScreenBounds();
+    if (editorBounds.getWidth() > 0 && editorBounds.getHeight() > 0 &&
+        peerBounds.getWidth() >= editorBounds.getWidth() &&
+        peerBounds.getHeight() >= editorBounds.getHeight()) {
+        area.setWidth(area.getWidth() -
+                      (peerBounds.getWidth() - editorBounds.getWidth()));
+        area.setHeight(area.getHeight() -
+                       (peerBounds.getHeight() - editorBounds.getHeight()));
+    }
     if (area.getWidth() <= 0 || area.getHeight() <= 0)
         return;
-    int maxWidth = area.getWidth();
-    int maxHeight = area.getHeight();
-    for (auto* ancestor = getParentComponent(); ancestor != nullptr;
-         ancestor = ancestor->getParentComponent()) {
-        const auto bounds = ancestor->getScreenBounds();
-        if (!bounds.isEmpty()) {
-            maxWidth = juce::jmin(maxWidth, bounds.getWidth());
-            maxHeight = juce::jmin(maxHeight, bounds.getHeight());
-        }
-    }
-    const float scale = juce::jmin(
-        1.0f, static_cast<float>(maxWidth) / static_cast<float>(kWidth),
-        static_cast<float>(maxHeight) / static_cast<float>(kHeight));
-    if (scale < 0.999f) {
-        const int width = juce::roundToInt(static_cast<float>(kWidth) * scale);
-        const int height = juce::roundToInt(static_cast<float>(kHeight) * scale);
-        if (width != getWidth() || height != getHeight())
-            setSize(width, height);
-    }
+    const float scale = juce::jlimit(
+        0.5f, 2.0f,
+        juce::jmin(static_cast<float>(area.getWidth()) / static_cast<float>(kWidth),
+                   static_cast<float>(area.getHeight()) / static_cast<float>(kHeight)));
+    const int width = juce::roundToInt(static_cast<float>(kWidth) * scale);
+    const int height = juce::roundToInt(static_cast<float>(kHeight) * scale);
+    if (width != getWidth() || height != getHeight())
+        setSize(width, height);
 }
 
 void PluginEditor::updateVisualizers()
@@ -1173,8 +1183,6 @@ void PluginEditor::pasteOperatorSection(int op, int part,
             parameter->setValueNotifyingHost(
                 parameter->convertTo0to1(static_cast<float>(value)));
     }
-    if (section == OperatorSection::spectrumB)
-        p1::ui::commitWaveToSpectrum(*this, op, part);
     if (section == OperatorSection::spectrumA ||
         section == OperatorSection::spectrumB) {
         const auto waveID = params::opWaveform(op, part);

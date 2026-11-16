@@ -47,13 +47,15 @@ the same as the operators and operator lfos pages.
 
 | Part | Width | Height |
 | --- | --- | --- |
-| operator strip | 1,206 | 176 |
+| operator strip | 1,206 | 170 |
+| empty band | 1,206 | 6 |
 | four row and control bands, 4 px gaps | 1,206 | 508 |
 
-The page is 685 px high, so the 508 px of bands fit under the strip without a
-scroll. Each band is 124 px high. The row takes 898 px and its control card 300 px,
-with an 8 px gap. The row holds a range select, copy and paste, the 64-bar editor,
-the harmonic labels and the group legend. The control card, titled `opN spectral
+The page is 685 px high, so the 508 px of bands and the 6 px empty band fit under
+the 170 px strip without a scroll. Each band is 124 px high. The row takes 898 px
+and its control card 300 px, with an 8 px gap. The row holds a range select, the
+`load spectrum template...` button, copy and paste, the 64-bar editor, the harmonic
+labels and the group legend. The control card, titled `opN spectral
 controls`, holds the group, the mask, the three spring controls, the formant
 picker, normalise and to the other spectrum. At 898 px each bar is about 14 px.
 
@@ -66,12 +68,13 @@ The operator strip is the operator column from the operator envs page, reduced t
 | Part | Height |
 | --- | --- |
 | operator header | 24 |
+| empty band | 6 |
 | oscillator card | 140 |
 | spectrum display | 120 |
 | morph envelope card | 220 |
 | morph lfo card | 140 |
 | four 4 px gaps | 16 |
-| total | 660 |
+| total | 666 |
 
 The same 9 px remain. The visual is 120 px high, enough for two overlaid
 64-harmonic outlines and the live morph marker.
@@ -113,35 +116,26 @@ sample = (1 - m) * tableA + m * tableB
 The envelope and the LFO run per voice. The tables are shared per part, because
 the levels are part parameters and do not vary per voice.
 
-## Starting from the waveform
+## Loading a spectrum template
 
-The spectral page opens on the operator's current wave. While the waveform is not
-`spectrum`, the editor analyses the selected waveform's 1024-sample mip-0 table into
-64 harmonic magnitudes, drops the DC term, scales the largest harmonic to 99,
-and shows the result as spectrum a. The analysis is a forward transform. The engine
-still rebuilds the time table from the levels.
+Each row has a `load spectrum template...` button beside its range select. The
+button opens the thirteen wave names, and choosing one analyses that wave's
+1024-sample mip-0 table into 64 harmonic magnitudes, drops the DC term, scales the
+largest harmonic to 99, and writes the result into that row's levels. A and b carry
+their own buttons, so either spectrum can start from a wave. The analysis is a
+forward transform, and the engine still rebuilds the time table from the levels.
 
-The analysis is a preview. The operator sounds through the selected waveform, the
-stored a and b levels are untouched, and the a row carries a `from wave` badge.
-Opening the page does not dirty the patch.
+Loading a template does not change the waveform. The operator keeps its current
+wave, and the new levels wait for `spectrum` in the wave select, a spectrum paste,
+or a morph depth edit that leaves zero. A load writes 64 parameters, and a host
+undo may not group them.
 
-The first edit of an A-row control commits the preview. The controls are the 64 a
-bars, the group and mask selectors, the three spring controls, `norm` and `to b`.
-The morph knob does not commit by itself. The editor writes the 64 a levels, leaves
-b as stored, then writes `opN_waveform` as 13, in that order, so the engine never
-reads the new mode against the old table. The mode switch crossfades over 10 ms. A
-first edit on the b row or the morph does not commit the a preview. Select
-`spectrum` or edit the a row.
+The wave select is the only mode switch. Selecting a wave keeps the stored spectra,
+and selecting `spectrum` plays them with the 10 ms crossfade. A morph envelope or
+morph LFO depth that the player moves away from zero also selects `spectrum`, so
+the modulation has something to move.
 
-The first edit writes 65 parameters, and a host undo may not group them.
-Selecting a wave is the explicit way back. Host automation of a level does not
-engage the mode either, because the waveform value is the gate.
-
-Once the waveform is `spectrum`, the pages show the stored spectra. Selecting a wave
-keeps the stored levels and returns the a row to the live waveform analysis.
-Selecting `spectrum` again restores the stored spectra without re-analysing.
-
-The analysis is a starting point. A sine, triangle or half sine survives the
+The template is a starting point. A sine, triangle or half sine survives the
 64-harmonic limit closely. A saw, square, pulse or rectified shape loses the
 partials above 64, so the spectral version is duller above 4.2 kHz at C2 and stays
 close to the full-band table towards the top of the keyboard, where those partials
@@ -152,19 +146,20 @@ The half-wave and rectified shapes carry a DC term, which the table drops.
 ## Spectrum rows
 
 Each operator has one row per spectrum, `opN spectrum a` and `opN spectrum b`, with
-the same controls. The 64 levels and the range are the saved spectrum state. While
-the waveform is not `spectrum`, the a row shows the live waveform analysis. Once the
-waveform is `spectrum`, both rows show the stored levels.
+the same controls. The 64 levels and the range are the saved spectrum state. Both
+rows always show the stored levels, and the template button fills one of them from
+a wave.
 
 | Control | Meaning |
 | --- | --- |
 | `range` | the harmonic block the 64 bars address: 1-64 or 65-128 |
+| `load spectrum template...` | analyse one of the thirteen waves into this row |
 | 64 bars | the selected range, 0 to 99 per bar |
 | `copy` / `paste` | move the whole spectrum to another operator |
 | `to b` / `to a` | copy the 64 levels to the other spectrum of the operator |
 | group | the harmonic series the spring controls select, from all, odd, even, octave P8, third P5, fifth M3, seventh m7, fifteenth M7, eleventh TT, thirteenth m6, ninth M2, twenty-first P4, nineteenth m3 and seventeenth m2 |
 | mask | live, dead or both, so a gesture writes only the sounding, only the silent, or every selected member |
-| tilt | drag left to darken and right to brighten the selected members |
+| tilt | drag up for the reverse tilt, with the highs louder and the lows quieter, and down for the normal tilt, with the lows louder and the highs quieter |
 | level | drag to add or remove level across the selected members |
 | formant | place a peak at the picked harmonic and drag its amount |
 | harmonic picker | the formant centre, h1 to h64 |
@@ -200,7 +195,7 @@ centre and the bell width is 1.5 harmonics.
 
 | Control | Curve |
 | --- | --- |
-| tilt | `L'[n] = L[n] * (1 + a * i / 63)` |
+| tilt | `L'[n] = L[n] * (1 + a * (i - 31.5) / 31.5)` |
 | level | `L'[n] = L[n] + a * 99` |
 | formant | `L'[n] = L[n] + a * 99 * exp(-((n - c)^2) / 4.5)` |
 
@@ -249,11 +244,11 @@ runs from `a` at the left to `b` at the right and shows the current morph value.
 The visual is a display and does not take a drag.
 
 The marker follows the base morph and the two modulation sources, so the move is
-visible while a note sounds. The outlines do not move. The engine writes the last
-morph the oscillator read into the bank header, and the editor polls it on each
-tick. The faint waveform is redrawn at that value, so the trace and the cursor
-move together. A silent operator reports no read, and the display falls back to
-the base morph.
+visible while a note sounds. The outlines do not move. The engine keeps the morph
+each voice read, and the editor polls the newest voice that is still rendering for
+the part, so a chord shows the note played last instead of whichever voice ran last.
+The faint waveform is redrawn at that value, so the trace and the cursor move
+together. With no voice rendering, the display falls back to the base morph.
 
 ## Defaults
 
@@ -275,10 +270,9 @@ and 11 to 10, 11 and 12, and the preset version moved to 3.
 | lfo wave | sine |
 | lfo mode | bipolar |
 
-The stored spectrum a is a sine. The page shows the selected wave while the
-waveform is not `spectrum`, and the first edit commits that analysis. Spectrum b is
-a formant shape at h5, which gives the morph an audible direction and shows the
-formant spring in context.
+The stored spectrum a is a sine, and spectrum b is a formant shape at h5, which
+gives the morph an audible direction and shows the formant spring in context. The
+template button loads a wave into either row without touching the waveform.
 
 ## Parameters
 

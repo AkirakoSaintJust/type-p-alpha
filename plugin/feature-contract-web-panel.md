@@ -26,13 +26,13 @@
   the worklet copies the engine output with no resampling. At another rate the
   worklet advances through the engine stream at `48000 / rate` and linearly
   interpolates, so pitch and envelope time stay correct at 44.1, 96 and 192 kHz.
-  Pasting a wave analysis commits the 64 a levels and then waveform 13. The first
-  bar, group, mask, spring, norm or copy edit of the a row commits the preview, and
-  the first move of the morph knob commits it as well.
+  Each row's `load spectrum template...` menu writes that wave's 64-level analysis
+  into the row and leaves the waveform alone. The wave select, a spectrum paste, or
+  a morph envelope or LFO depth moved away from zero selects `spectrum`.
 - **Failure mode:** a context rate other than 48 kHz plays flat or slow, the panel
   drops a manifest parameter, a stored part or multi loses its routing, the library
-  fails to survive a reload, the preview writes the patch on page open, or the
-  48 kHz path starts to resample.
+  fails to survive a reload, a template load changes the waveform, or the 48 kHz
+  path starts to resample.
 
 ## Dependencies and interactions
 
@@ -121,7 +121,7 @@ and `error`.
   and one copy. The resampled path does one engine render, one linear interpolation
   per output sample and one array compaction per block. Taps are copied at the engine
   block size and posted every eight ring fills.
-- **Instance memory, CPU, preset size:** the module is 205,203 bytes with no imports
+- **Instance memory, CPU, preset size:** the module is 205,656 bytes with no imports
   and 32 MB of fixed memory. The part snapshot is one number per part parameter,
   about 800 pairs. The library bound is 64 multis and 128 part slots.
 - **Overflow/overload policy:** the resampler needs `ceil(frames * 48000 / rate) + 1`
@@ -152,9 +152,10 @@ and `error`.
   sine, saw and high-range analyses. The module reports 1,614 parameters.
 - **Browser vector:** `web/smoke.mjs` drives the bare page and checks a level round
   trip. `web/panel-smoke.mjs` drives the root redirect and checks the seven tabs,
-  the saw preview, the bar and morph commits, and the select group legend. It also
+  the saw template, the bar and morph values, and the select group legend. It also
   checks the mask, the level, formant and tilt springs and their return to centre,
-  the output and tap peaks, the algorithm round trip and the operator copy and paste.
+  the morph depth mode switch, the output and tap peaks, the algorithm round trip
+  and the operator copy and paste.
   The operator mute switch, its toolbar box, the four oscillator cards on each page,
   the card copy and paste and the spectrum copy across operators are checked too.
   The smoke then walks the part switch, the six FX cards, the part rename and paste,
@@ -169,9 +170,9 @@ and `error`.
   Edge. The Linux Chromium run passed in the `wasm` CI job on commit `98a1cc7`.
 - **Tolerance/metric:** the 48 kHz output is sample exact against the native capture.
   The browser checks are thresholds rather than exact audio: a scope peak, tap peak
-  and route peak above 0.0001, a preview whose second harmonic is above 10, a
-  spectrum bar value above 0, waveform 13 after the first edit, and the seven page
-  control counts.
+  and route peak above 0.0001, a template whose second harmonic is above 5, a
+  spectrum bar value above 0, waveform 13 after a morph depth edit, and the seven
+  page control counts.
 - **Evidence artefact:** the parity log, the two smoke logs, the measured page
   counts and the four screenshots in `build/web` from the local run.
 
@@ -180,24 +181,24 @@ and `error`.
 1. **WASM parity:** 1,614 parameters, note-on and release match the 48 kHz capture,
    the sine analysis passes with the first harmonic at least 90 and the second at
    most 5, the saw analysis passes with the first harmonic at least 80 and the
-   second at least 20, and the high range passes at 50 or more. Module size 205,203
+   second at least 20, and the high range passes at 50 or more. Module size 205,656
    bytes, no imports.
 2. **Bare smoke:** 48 kHz, scope peak 0.089, `op1_level.p0` round trip 42.
 3. **Panel smoke:** pages `patch:16 fx:26 envs:132 lfos:68 spectra-a:24 spectra-b:24
-   mod:68` and preview `[99, 49, 33]`. The bar commit writes 74 and the morph knob
-   writes 15. An operator card copy wrote the amp LFO rate to the second operator,
-   and a spectrum copy moved op1 to op2. The `third P5` legend lists members 3, 6,
-   12, 24 and 48. A dead-mask level spring set those members to 66 and left h4 at 0,
-   a formant spring set h5 to 66, and a tilt spring took h3 from 93 to 91 and h12
-   from 66 to 58. Every spring returned to 0%. Output peak 0.077, operator tap peak
-   0.078, route peak 0.078, algorithm 7, operator copy 75 to 75, and operator mute 1
-   with the toolbar box marked muted. Part two rebuilt with six FX cards and two
-   follow cards, and each operator page carries four oscillator cards. The multi
-   save materialised both parts (2 part slots), the spectrum h3 read 91 after the
-   reload, the patch name was `smoke patch`, the name and slots persisted after the
-   reload, and a 44.1 kHz context exercised the resampler at a peak of 0.0865.
-   The taps message carried the live morph `[15, 0, -1, -1]` for the four
-   operators.
+   mod:68` and a template load of `[99, 49, 33]`. The bar value is 74 and the morph
+   knob writes 15. An operator card copy wrote the amp LFO rate to the second
+   operator, and a spectrum copy moved op1 to op2. The `third P5` legend lists
+   members 3, 6, 12, 24 and 48. A dead-mask level spring set those members to 66 and
+   left h4 at 0, a formant spring set h5 to 66, and a tilt drag took h3 from 93 to
+   99 and h48 from 66 to 44. Every spring returned to 0%. A morph envelope depth
+   drag on op2 set its waveform to 13. Output peak 0.077, operator tap peak 0.080,
+   route peak 0.080, algorithm 7, operator copy 75 to 75, and operator mute 1 with
+   the toolbar box marked muted. Part two rebuilt with six FX cards and two follow
+   cards, and each operator page carries four oscillator cards. The multi save
+   materialised both parts (2 part slots), the spectrum h3 read 99 after the reload,
+   the patch name was `smoke patch`, the name and slots persisted after the reload,
+   and a 44.1 kHz context exercised the resampler at a peak of 0.0861. The taps
+   message carried the live morph `[15, 2, -1, -1]` for the four operators.
 4. **Release evidence:** the GitHub `wasm` job passed with the bare and panel
    smokes on Chromium. The release package and its binaries remain.
 

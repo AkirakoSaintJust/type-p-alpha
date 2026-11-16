@@ -12,7 +12,7 @@
 ## Player outcome
 
 - **New player action:** type a name up to 32 characters, and open the single
-  part library from `part library actions...`.
+  part library from `single part library...`.
 - **Sound and behaviour:** the on/off switches and the mute switch read their
   state in DotGothic. The bipolar switch reads `bipolar on` or `bipolar off`, and
   the mute switch reads `active` or `mute` to the right of the track. The single

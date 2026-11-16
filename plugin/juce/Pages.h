@@ -22,9 +22,18 @@ inline double getParam(PluginEditor& editor, const juce::String& id)
     return 0.0;
 }
 
-/* Write the current wave analysis into spectrum a and set the waveform to 13.
- * Used by the first morph drag and by a spectrum b paste. */
-void commitWaveToSpectrum(PluginEditor& editor, int op, int part);
+/* A depth edit that ends away from zero puts the operator in spectrum mode, so
+ * the envelope or LFO the player just set has something to move. */
+inline void ensureSpectrumMode(PluginEditor& editor, int op, int part,
+                               const juce::String& depthID)
+{
+    if (std::lround(getParam(editor, depthID)) == 0)
+        return;
+    const auto waveID = params::opWaveform(op, part);
+    if (std::lround(getParam(editor, waveID)) == 13)
+        return;
+    setParam(editor, waveID, 13.0f);
+}
 
 class InlineMuteSwitch : public juce::Component {
 public:
@@ -145,10 +154,7 @@ public:
         if (withMorph) {
             morph_ = std::make_unique<ParamKnob>(editor.state(),
                                                  params::opSpecMorph(op, part),
-                                                 "morph", 24.0f);
-            morph_->onUserEdit = [&ed = editor, op, part] {
-                commitWaveToSpectrum(ed, op, part);
-            };
+                                                 "morph", 28.0f);
             addAndMakeVisible(*morph_);
         }
     }
@@ -157,8 +163,8 @@ public:
     {
         P1Card::resized();
         auto area = contentArea();
-        area.removeFromTop(8);
-        auto row = area.removeFromTop(morph_ != nullptr ? 66 : 70);
+        area.removeFromTop(morph_ != nullptr ? 4 : 8);
+        auto row = area.removeFromTop(morph_ != nullptr ? 68 : 70);
         const int cells = morph_ != nullptr ? 5 : 4;
         const int cell = row.getWidth() / cells;
         ratio_.setBounds(row.removeFromLeft(cell));
@@ -313,7 +319,8 @@ class LfoCard : public P1Card {
 public:
     LfoCard(PluginEditor& editor, juce::String title, juce::String rateID,
             juce::String depthID, juce::String waveID, juce::String modeID,
-            int op, int part, PluginEditor::OperatorSection section)
+            int op, int part, PluginEditor::OperatorSection section,
+            std::function<void()> onDepthEdit = {})
         : P1Card(std::move(title),
                  [&ed = editor, op, part, section] {
                      ed.copyOperatorSection(op, part, section);
@@ -330,6 +337,7 @@ public:
         addAndMakeVisible(depth_);
         addAndMakeVisible(wave_);
         addAndMakeVisible(mode_);
+        depth_.onUserEditEnd = std::move(onDepthEdit);
     }
 
     void resized() override

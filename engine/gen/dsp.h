@@ -19,6 +19,7 @@ typedef struct type_p_alpha_state {
     uint32_t op1_osc_base[NVOICE];
     uint32_t op1_osc_bl[NVOICE];
     uint32_t op1_osc_tick[NVOICE];
+    int32_t op1_osc_live[NVOICE];
     uint32_t op1_eg_stage[NVOICE];
     int32_t op1_eg_level[NVOICE];
     uint32_t op1_eg_r1_eff[NVOICE];
@@ -70,6 +71,7 @@ typedef struct type_p_alpha_state {
     uint32_t op2_osc_base[NVOICE];
     uint32_t op2_osc_bl[NVOICE];
     uint32_t op2_osc_tick[NVOICE];
+    int32_t op2_osc_live[NVOICE];
     uint32_t op2_eg_stage[NVOICE];
     int32_t op2_eg_level[NVOICE];
     uint32_t op2_eg_r1_eff[NVOICE];
@@ -121,6 +123,7 @@ typedef struct type_p_alpha_state {
     uint32_t op3_osc_base[NVOICE];
     uint32_t op3_osc_bl[NVOICE];
     uint32_t op3_osc_tick[NVOICE];
+    int32_t op3_osc_live[NVOICE];
     uint32_t op3_eg_stage[NVOICE];
     int32_t op3_eg_level[NVOICE];
     uint32_t op3_eg_r1_eff[NVOICE];
@@ -172,6 +175,7 @@ typedef struct type_p_alpha_state {
     uint32_t op4_osc_base[NVOICE];
     uint32_t op4_osc_bl[NVOICE];
     uint32_t op4_osc_tick[NVOICE];
+    int32_t op4_osc_live[NVOICE];
     uint32_t op4_eg_stage[NVOICE];
     int32_t op4_eg_level[NVOICE];
     uint32_t op4_eg_r1_eff[NVOICE];

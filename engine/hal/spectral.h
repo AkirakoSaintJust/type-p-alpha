@@ -14,10 +14,6 @@
  *
  * The bank is one int16_t[P1_SPEC_BANK] per operator. A 256-sample table is
  * used for every mip, and the levels carry 64, 32, 16, 8, 4, 2 and 1 harmonics.
- *
- * The header also carries the last morph the oscillator read for each part,
- * offset by one so zero means no read yet. The editor reads it through
- * `specMorph`, so the mod display can follow the envelope and the LFO.
  */
 #pragma once
 #include <stdint.h>
@@ -42,7 +38,6 @@
 #define P1_SPEC_HASH 4
 #define P1_SPEC_TARGET_HASH 8
 #define P1_SPEC_USED 12
-#define P1_SPEC_LIVE 16
 
 static inline int16_t p1_spectral_clamp16(int32_t v)
 {
@@ -297,7 +292,5 @@ static inline int32_t p1_spectral_read(int16_t *bank, int part,
         else
             bv = p1_spectral_blend(bv, sv, xw);
     }
-    const int32_t m = p1_spectral_clamp99(morph);
-    bank[P1_SPEC_LIVE + part] = (int16_t)(m + 1);
-    return p1_spectral_blend(av, bv, m * 331);
+    return p1_spectral_blend(av, bv, p1_spectral_clamp99(morph) * 331);
 }

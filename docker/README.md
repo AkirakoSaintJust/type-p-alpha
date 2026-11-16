@@ -162,7 +162,7 @@ functions in `wasm/p1_wasm.c`. The AudioWorklet and the browser pages are in
 `engine/gen/params.json`, groups the parameters into the seven tabs and sends every
 control through the worklet. It carries the algorithm graph, the output scope and
 spectro toggle, the two-part patch page, the six-card FX page, the envelope graphs,
-the 64-bar spectrum editors, the live `from wave` preview, the `op spectra mod`
+the 64-bar spectrum editors, the spectrum template menus, the `op spectra mod`
 A/B display and the per-operator tap scopes. A patch and part library keeps 64
 multi-patches and 128 part slots in `localStorage` and exports them as JSON. The
 engine runs at 48 kHz and the worklet resamples at the output boundary when the

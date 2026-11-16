@@ -96,12 +96,21 @@ int main(int argc, char** argv)
     fill();
     ok = saveSnapshot(*editor,
                       directory.getChildFile("editor-operator-spectra.png")) && ok;
-    if (auto* wave = p1editor->state().getParameter("op1_waveform.p0")) {
-        wave->setValueNotifyingHost(wave->convertTo0to1(12.0f));
+    {
+        const std::array<std::pair<const char*, float>, 8> levels{{
+            {"op1_spec_a1.p0", 99.0f}, {"op1_spec_a2.p0", 62.0f},
+            {"op1_spec_a3.p0", 45.0f}, {"op1_spec_a4.p0", 30.0f},
+            {"op1_spec_a5.p0", 22.0f}, {"op1_spec_a6.p0", 14.0f},
+            {"op1_spec_a7.p0", 9.0f}, {"op1_spec_a8.p0", 5.0f}}};
+        for (const auto& [id, value] : levels) {
+            if (auto* parameter = p1editor->state().getParameter(id))
+                parameter->setValueNotifyingHost(
+                    parameter->convertTo0to1(value));
+        }
         p1editor->updateVisualizers();
         ok = saveSnapshot(
                  *editor,
-                 directory.getChildFile("editor-operator-spectra-saw.png")) &&
+                 directory.getChildFile("editor-operator-spectra-levels.png")) &&
              ok;
         p1editor->showTab(5);
         p1editor->updateVisualizers();
@@ -113,10 +122,20 @@ int main(int argc, char** argv)
         p1editor->updateVisualizers();
         ok = saveSnapshot(
                  *editor,
-                 directory.getChildFile("editor-op-spectra-mod-saw.png")) &&
+                 directory.getChildFile("editor-op-spectra-mod-levels.png")) &&
              ok;
         p1editor->showTab(4);
-        wave->setValueNotifyingHost(wave->convertTo0to1(0.0f));
+        if (auto* parameter =
+                p1editor->state().getParameter("op1_spec_a1.p0")) {
+            parameter->setValueNotifyingHost(parameter->convertTo0to1(99.0f));
+        }
+        for (int h = 2; h <= 8; ++h) {
+            if (auto* parameter = p1editor->state().getParameter(
+                    "op1_spec_a" + juce::String(h) + ".p0")) {
+                parameter->setValueNotifyingHost(
+                    parameter->convertTo0to1(0.0f));
+            }
+        }
         p1editor->updateVisualizers();
     }
     p1editor->showTab(6);

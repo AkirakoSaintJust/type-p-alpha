@@ -226,7 +226,7 @@ so an AudioWorklet can instantiate it without an Emscripten runtime.
 | `wasm/parity.mjs` | Compare the WASM note-on and release with the native 48 kHz capture. |
 | `web/p1-worklet.js` | Own the module, render the output and post the output and tap scopes. |
 | `web/main.js`, `web/bare.html` | The bare audio and parameter page. |
-| `web/panel.js`, `web/panel.html` | The manifest-driven six-page panel with the algorithm graph, output scope and spectro, envelope graphs, spectrum bars and select groups, the `from wave` preview, the mod A/B display, the patch and part library and tap scopes. |
+| `web/panel.js`, `web/panel.html` | The manifest-driven six-page panel with the algorithm graph, output scope and spectro, envelope graphs, spectrum bars and select groups, the spectrum template menus, the mod A/B display, the patch and part library and tap scopes. |
 | `web/smoke.mjs`, `web/panel-smoke.mjs` | Browser smoke tests. |
 
 ## Preset store
@@ -358,9 +358,10 @@ and the panel readouts.
 
 `plugin/juce/PagesSpectral.cpp` holds the `op spectra a`, `op spectra b` and
 `op spectra mod` pages. Each spectrum page has four operator and oscillator cards,
-then four bands of a 64-bar row and its control card side by side. The mod page
-shows the two spectra, a faint phase-zero waveform and the live morph cursor,
-followed by the morph envelope and the morph LFO.
+a 6 px gap, then four bands of a 64-bar row and its control card side by side. The
+row carries the `load spectrum template...` menu and the control card carries the
+springs. The mod page shows the two spectra, a faint phase-zero waveform and the
+live morph cursor, followed by the morph envelope and the morph LFO.
 
 The tab bar has seven pages: patch settings, part fx/mod, operator envs, operator
 lfos, op spectra a, op spectra b and op spectra mod. The processor writes
@@ -432,7 +433,7 @@ engine, the MIDI bridge, the rate bridge, the preset bank and the UI state.
 
 | Symbol | Purpose |
 | --- | --- |
-| `PatchButton` | Header multi-patch button with an ellipsised name. |
+| `PatchButton` | Header multi-patch library button. |
 | `SegmentButton` | `scope` / `spectro` segment. |
 | `PartChoiceButton` | Toolbar part selector. |
 | `Header` | Wordmark, algorithm block, output scope and patch control. |

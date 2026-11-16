@@ -78,20 +78,23 @@ try {
 
   await page.locator(".tab").nth(2).click();
   await page.waitForTimeout(100);
-  const waveSelect = page.locator(".opcol").first()
-    .locator(".param-enum").filter({ hasText: "wave" }).locator("select");
-  await waveSelect.selectOption({ label: "saw" });
-  await page.waitForFunction(() => {
-    const preview = window.__p1.analysisFor(0, 0);
-    return preview && preview[1] > 10;
-  }, { timeout: 5000 });
-  const preview = await page.evaluate(() => window.__p1.analysisFor(0, 0));
-  console.log("from wave preview:", preview ? preview.slice(0, 3) : null);
-
   await page.locator(".tab").nth(4).click();
   await page.waitForTimeout(200);
-  const badgeVisible = await page.locator(".fromwave").first().isVisible();
-  if (!badgeVisible) throw new Error("the from wave badge is not visible");
+  const spectraRow = page.locator(".spectrum-row").first();
+  await spectraRow.locator(".template-btn").click();
+  await page.locator(".template-menu button", { hasText: "saw" }).first().click();
+  await page.waitForFunction(
+    () => (window.__p1.paramValue("op1_spec_a2.p0") ?? 0) > 5,
+    { timeout: 5000 });
+  const templateLevels = await page.evaluate(() => [1, 2, 3].map((h) =>
+    window.__p1.paramValue("op1_spec_a" + h + ".p0")));
+  console.log("template saw:", templateLevels.join(" "));
+  if (!(templateLevels[1] > 5))
+    throw new Error("the spectrum template did not load the saw");
+  await page.locator(".opcol").first()
+    .locator(".param-enum").filter({ hasText: "wave" }).locator("select")
+    .selectOption({ label: "spectrum" });
+  await page.waitForTimeout(150);
   await page.locator(".specbars").first().scrollIntoViewIfNeeded();
   const bars = await page.locator(".specbars").first().boundingBox();
   await page.mouse.click(bars.x + bars.width * 0.5, bars.y + bars.height * 0.25);
@@ -101,20 +104,9 @@ try {
   const barValue = await page.evaluate(() => window.__p1.lastParam);
   console.log("spectrum bar value:", barValue, "waveform:", waveform);
   if (waveform !== 13)
-    throw new Error("the first bar edit did not commit the preview");
+    throw new Error("the bar edit cleared the spectrum mode");
   if (!(barValue > 0)) throw new Error("the spectrum bar did not reach the engine");
 
-  await page.locator(".tab").nth(2).click();
-  await page.waitForTimeout(100);
-  await page.locator(".opcol").first()
-    .locator(".param-enum").filter({ hasText: "wave" }).locator("select")
-    .selectOption({ label: "saw" });
-  await page.waitForFunction(() => {
-    const preview = window.__p1.analysisFor(0, 0);
-    return preview && preview[1] > 10;
-  }, { timeout: 5000 });
-  await page.locator(".tab").nth(4).click();
-  await page.waitForTimeout(200);
   const morphKnob = page.locator(".knob:has(.knob-name:text-is('morph'))")
     .first();
   await morphKnob.scrollIntoViewIfNeeded();
@@ -132,7 +124,7 @@ try {
     window.__p1.paramValue("op1_spec_morph.p0"));
   console.log("morph knob:", morphValue, "waveform:", morphWave);
   if (morphWave !== 13)
-    throw new Error("the morph knob did not commit the preview");
+    throw new Error("the morph knob cleared the spectrum mode");
 
   await page.locator(".spectrum-row").first()
     .locator(".sec-actions button", { hasText: "copy" }).click();
@@ -220,7 +212,7 @@ try {
     throw new Error("the formant spring did not reach its harmonic");
 
   await firstControls.locator(".specmask button", { hasText: "both" }).click();
-  const tiltBefore = await page.evaluate(() => [3, 12].map((h) =>
+  const tiltBefore = await page.evaluate(() => [3, 48].map((h) =>
     window.__p1.paramValue("op1_spec_a" + h + ".p0")));
   const tiltSpring = firstControls.locator(".spring").first();
   const tiltTrack = tiltSpring.locator(".spring-track");
@@ -232,15 +224,35 @@ try {
     tiltBox.y + tiltBox.height / 2 + 40);
   await page.mouse.up();
   await page.waitForTimeout(250);
-  const tiltAfter = await page.evaluate(() => [3, 12].map((h) =>
+  const tiltAfter = await page.evaluate(() => [3, 48].map((h) =>
     window.__p1.paramValue("op1_spec_a" + h + ".p0")));
   const tiltValue = (await tiltSpring.locator(".spring-val").textContent())
     .trim();
   console.log("tilt:", tiltBefore, "to", tiltAfter, "returned:", tiltValue);
-  if (!(tiltAfter[1] < tiltBefore[1] && tiltAfter[0] < tiltBefore[0]))
-    throw new Error("the tilt spring did not lower the group");
+  if (!(tiltAfter[1] < tiltBefore[1]))
+    throw new Error("the tilt spring did not lower the high harmonics");
+  if (!(tiltAfter[0] >= tiltBefore[0]))
+    throw new Error("the tilt spring did not raise the low harmonics");
   if (tiltValue !== "0%")
     throw new Error("the tilt spring did not return to centre");
+
+  await page.locator(".tab").nth(6).click();
+  await page.waitForTimeout(200);
+  const depthKnob = page.locator(".opcol").nth(1).locator(".env .knob")
+    .filter({ hasText: "depth" }).first();
+  const depthDial = await depthKnob.locator(".dial").boundingBox();
+  await page.mouse.move(depthDial.x + depthDial.width / 2,
+    depthDial.y + depthDial.height / 2);
+  await page.mouse.down();
+  await page.mouse.move(depthDial.x + depthDial.width / 2,
+    depthDial.y + depthDial.height / 2 - 24);
+  await page.mouse.up();
+  await page.waitForTimeout(200);
+  const depthWave = await page.evaluate(() =>
+    window.__p1.paramValue("op2_waveform.p0"));
+  console.log("depth sets spectrum:", depthWave);
+  if (depthWave !== 13)
+    throw new Error("the morph envelope depth did not set spectrum mode");
 
   await page.locator(".tab").nth(2).click();
   const box = await page.locator("#note").boundingBox();

@@ -19,6 +19,7 @@ typedef struct type_p_alpha_state {
     uint32_t op1_osc_base[NVOICE];
     uint32_t op1_osc_bl[NVOICE];
     uint32_t op1_osc_tick[NVOICE];
+    int32_t op1_osc_live[NVOICE];
     uint32_t op1_eg_stage[NVOICE];
     int32_t op1_eg_level[NVOICE];
     uint32_t op1_eg_r1_eff[NVOICE];
@@ -70,6 +71,7 @@ typedef struct type_p_alpha_state {
     uint32_t op2_osc_base[NVOICE];
     uint32_t op2_osc_bl[NVOICE];
     uint32_t op2_osc_tick[NVOICE];
+    int32_t op2_osc_live[NVOICE];
     uint32_t op2_eg_stage[NVOICE];
     int32_t op2_eg_level[NVOICE];
     uint32_t op2_eg_r1_eff[NVOICE];
@@ -121,6 +123,7 @@ typedef struct type_p_alpha_state {
     uint32_t op3_osc_base[NVOICE];
     uint32_t op3_osc_bl[NVOICE];
     uint32_t op3_osc_tick[NVOICE];
+    int32_t op3_osc_live[NVOICE];
     uint32_t op3_eg_stage[NVOICE];
     int32_t op3_eg_level[NVOICE];
     uint32_t op3_eg_r1_eff[NVOICE];
@@ -172,6 +175,7 @@ typedef struct type_p_alpha_state {
     uint32_t op4_osc_base[NVOICE];
     uint32_t op4_osc_bl[NVOICE];
     uint32_t op4_osc_tick[NVOICE];
+    int32_t op4_osc_live[NVOICE];
     uint32_t op4_eg_stage[NVOICE];
     int32_t op4_eg_level[NVOICE];
     uint32_t op4_eg_r1_eff[NVOICE];
@@ -4441,6 +4445,7 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op1_osc_base (S->op1_osc_base)
 #define op1_osc_bl (S->op1_osc_bl)
 #define op1_osc_tick (S->op1_osc_tick)
+#define op1_osc_live (S->op1_osc_live)
 #define op1_eg_stage (S->op1_eg_stage)
 #define op1_eg_level (S->op1_eg_level)
 #define op1_eg_r1_eff (S->op1_eg_r1_eff)
@@ -4492,6 +4497,7 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op2_osc_base (S->op2_osc_base)
 #define op2_osc_bl (S->op2_osc_bl)
 #define op2_osc_tick (S->op2_osc_tick)
+#define op2_osc_live (S->op2_osc_live)
 #define op2_eg_stage (S->op2_eg_stage)
 #define op2_eg_level (S->op2_eg_level)
 #define op2_eg_r1_eff (S->op2_eg_r1_eff)
@@ -4543,6 +4549,7 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op3_osc_base (S->op3_osc_base)
 #define op3_osc_bl (S->op3_osc_bl)
 #define op3_osc_tick (S->op3_osc_tick)
+#define op3_osc_live (S->op3_osc_live)
 #define op3_eg_stage (S->op3_eg_stage)
 #define op3_eg_level (S->op3_eg_level)
 #define op3_eg_r1_eff (S->op3_eg_r1_eff)
@@ -4594,6 +4601,7 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op4_osc_base (S->op4_osc_base)
 #define op4_osc_bl (S->op4_osc_bl)
 #define op4_osc_tick (S->op4_osc_tick)
+#define op4_osc_live (S->op4_osc_live)
 #define op4_eg_stage (S->op4_eg_stage)
 #define op4_eg_level (S->op4_eg_level)
 #define op4_eg_r1_eff (S->op4_eg_r1_eff)
@@ -7047,12 +7055,14 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
                `tick`, and the 10 ms crossfade is in the read. */
             int32_t op4_osc_audio_x;
             if (op4_osc_wave[v] >= 13u) {
+                op4_osc_live[v] = p1_spectral_morph(op4_osc_spec_morph[voice_part[v]],
+                                                  op4_osc_spec_env_depth[voice_part[v]],
+                                                  op4_specenv_cv_x[v], op4_speclfo_cv_x[v]);
                 op4_osc_audio_x = p1_spectral_read(
                     op4_osc_bank, (int)voice_part[v], op4_ph_phase_x, op4_ph_mip_x,
-                    p1_spectral_morph(op4_osc_spec_morph[voice_part[v]],
-                                      op4_osc_spec_env_depth[voice_part[v]],
-                                      op4_specenv_cv_x[v], op4_speclfo_cv_x[v]));
+                    op4_osc_live[v]);
             } else {
+                op4_osc_live[v] = -1;
                 op4_osc_audio_x = p1_wave[op4_osc_base[v]
                     + ((op4_osc_bl[v] ? op4_ph_mip_x : 0u) << 10) + (op4_ph_phase_x >> 22)];
             }
@@ -7132,12 +7142,14 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
                `tick`, and the 10 ms crossfade is in the read. */
             int32_t op3_osc_audio_x;
             if (op3_osc_wave[v] >= 13u) {
+                op3_osc_live[v] = p1_spectral_morph(op3_osc_spec_morph[voice_part[v]],
+                                                  op3_osc_spec_env_depth[voice_part[v]],
+                                                  op3_specenv_cv_x[v], op3_speclfo_cv_x[v]);
                 op3_osc_audio_x = p1_spectral_read(
                     op3_osc_bank, (int)voice_part[v], op3_ph_phase_x, op3_ph_mip_x,
-                    p1_spectral_morph(op3_osc_spec_morph[voice_part[v]],
-                                      op3_osc_spec_env_depth[voice_part[v]],
-                                      op3_specenv_cv_x[v], op3_speclfo_cv_x[v]));
+                    op3_osc_live[v]);
             } else {
+                op3_osc_live[v] = -1;
                 op3_osc_audio_x = p1_wave[op3_osc_base[v]
                     + ((op3_osc_bl[v] ? op3_ph_mip_x : 0u) << 10) + (op3_ph_phase_x >> 22)];
             }
@@ -7217,12 +7229,14 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
                `tick`, and the 10 ms crossfade is in the read. */
             int32_t op2_osc_audio_x;
             if (op2_osc_wave[v] >= 13u) {
+                op2_osc_live[v] = p1_spectral_morph(op2_osc_spec_morph[voice_part[v]],
+                                                  op2_osc_spec_env_depth[voice_part[v]],
+                                                  op2_specenv_cv_x[v], op2_speclfo_cv_x[v]);
                 op2_osc_audio_x = p1_spectral_read(
                     op2_osc_bank, (int)voice_part[v], op2_ph_phase_x, op2_ph_mip_x,
-                    p1_spectral_morph(op2_osc_spec_morph[voice_part[v]],
-                                      op2_osc_spec_env_depth[voice_part[v]],
-                                      op2_specenv_cv_x[v], op2_speclfo_cv_x[v]));
+                    op2_osc_live[v]);
             } else {
+                op2_osc_live[v] = -1;
                 op2_osc_audio_x = p1_wave[op2_osc_base[v]
                     + ((op2_osc_bl[v] ? op2_ph_mip_x : 0u) << 10) + (op2_ph_phase_x >> 22)];
             }
@@ -7302,12 +7316,14 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
                `tick`, and the 10 ms crossfade is in the read. */
             int32_t op1_osc_audio_x;
             if (op1_osc_wave[v] >= 13u) {
+                op1_osc_live[v] = p1_spectral_morph(op1_osc_spec_morph[voice_part[v]],
+                                                  op1_osc_spec_env_depth[voice_part[v]],
+                                                  op1_specenv_cv_x[v], op1_speclfo_cv_x[v]);
                 op1_osc_audio_x = p1_spectral_read(
                     op1_osc_bank, (int)voice_part[v], op1_ph_phase_x, op1_ph_mip_x,
-                    p1_spectral_morph(op1_osc_spec_morph[voice_part[v]],
-                                      op1_osc_spec_env_depth[voice_part[v]],
-                                      op1_specenv_cv_x[v], op1_speclfo_cv_x[v]));
+                    op1_osc_live[v]);
             } else {
+                op1_osc_live[v] = -1;
                 op1_osc_audio_x = p1_wave[op1_osc_base[v]
                     + ((op1_osc_bl[v] ? op1_ph_mip_x : 0u) << 10) + (op1_ph_phase_x >> 22)];
             }

@@ -7,8 +7,9 @@ in `juce.md`, the spectral control map is in `spectral.md`, and the waveform lis
 analysis are in `waveforms.md`. The shipped panel is `web/panel.html`, so where the
 mockup and the panel differ, the panel and `spectral.md` carry the current layout.
 
-Status: v1.5 draft, 2026-11-14. Adds the 64-bar spectra rows, the `op spectra a` and
-`op spectra b` split, and the seven-tab bar.
+Status: v1.6 draft, 2026-11-16. Adds the spectrum template menus, the multi-patch
+header block, the named part buttons, the centred tilt and the vertical fast
+envelope stages.
 
 ## Principles
 
@@ -185,9 +186,10 @@ the block cycles the eight algorithms without opening the picker.
 The output section is a label plus a `scope` and `spectro` segmented control, with
 the active segment in purple. The plot is 50px high, borderless, black.
 
-The patch control shows `multi` and the current multi-patch name, with a separate
-`rename` button and the hint `click above for multi-patch library actions` below
-it. Clicking the control opens the multi-patch library.
+The multi-patch block sits above its buttons. `loaded multi-patch:` is drawn in
+Zen Dots, the current multi-patch name in DotGothic16 below it, then the
+`multi-patch library...` control and the separate `rename` button. Clicking the
+control opens the multi-patch library.
 
 ### Toolbar
 
@@ -197,8 +199,9 @@ tiles, `op1` to `op4` and `p1`, `p2`, at 36 by 22. An active tile is solid pink 
 a black label, and a muted tile is black with a pink outline and a pink label. The
 猫 is only a legend glyph, never a button label.
 
-Right is `now editing part:` with `part 1`, `part 2` and `part library actions...`,
-and the selected part button has a green border and green text.
+Right is `now editing part:` with `part 1: name`, `part 2: name` and
+`single part library...`, and the selected part button has a green border and green
+text. A long part name is truncated with an ellipsis.
 
 ### Tabs
 
@@ -273,28 +276,31 @@ after it, the mute switch at the right, then a scope and spectro pair and an
 adds the `morph` slider under the wave select. The wave select carries the mode:
 `spectrum` is the last entry, and selecting it uses the stored spectra.
 
-Below the strip, one 124 px band per operator, with the wide row on the left and
-its control card on the right. A row holds its range select, copy and paste, the
-`from wave` badge on the a page, the 64-bar editor and the group legend. A control
-card holds the group selector, the live, dead and both mask, the `tilt`, `level` and
-`formant` springs, the formant picker h1 to h64, `norm` and `to b` or `to a`. The
-four bands fit under the strip without a scroll. The bars preview a spring curve from
-the levels at the start of the drag, and the release commits them.
+Below a 6 px empty band under the strip, one 124 px band per operator, with the
+wide row on the left and its control card on the right. A row holds its range
+select, the `load spectrum template...` button, copy and paste, the 64-bar editor
+and the group legend. A control card holds the group selector, the live, dead and
+both mask, the `tilt`, `level` and `formant` springs, the formant picker h1 to h64,
+`norm` and `to b` or `to a`. The four bands fit under the strip without a scroll.
+The bars preview a spring curve from the levels at the start of the drag, and the
+release leaves the result in place.
 
-While the waveform is not `spectrum`, the a row shows the analysis of the selected
-wave with a `from wave` badge. The first edit commits that analysis and moves the
-waveform to `spectrum`. The row header carries copy and paste for the whole
-spectrum, so a spectrum moves between operators, and `to b` or `to a` copies it to
-the other spectrum of the same operator.
+The template button opens the thirteen wave names and writes that wave's analysis
+into the row. It does not touch the waveform, so the stored levels wait for
+`spectrum` in the wave select, a spectrum paste, or a morph depth moved away from
+zero. A and b each carry their own button, so either spectrum can start from a
+wave. The row header carries copy and paste for the whole spectrum, so a spectrum
+moves between operators, and `to b` or `to a` copies it to the other spectrum of the
+same operator.
 
 ### Op spectra mod
 
-Four columns, each with the operator name, copy and paste, the mute switch, the
-`oscillator` card, a `spectra` display, then the `morph env` and `morph lfo` cards.
-The display draws the selected wave's analysis in spectrum a while the waveform is
-not `spectrum`, and the stored spectrum a while it is. Spectrum a is a filled purple
-outline and spectrum b is a pink outline, with a marker under them that runs from
-`a` to `b` at the current morph value. The display does not take a drag. The `morph
+Four columns, each with the operator name, copy and paste, the mute switch, a 6 px
+gap, the `oscillator` card, a `spectra` display, then the `morph env` and
+`morph lfo` cards. The display draws the stored spectra. Spectrum a is a filled
+purple outline and spectrum b is a pink outline, with a marker under them that runs
+from `a` to `b` at the current morph value. The marker and the faint waveform follow
+the live morph of the newest rendering voice. The display does not take a drag. The `morph
 env` card holds the graph, the depth knob, R1 to R4 and L1 to L3. The `morph lfo`
 card holds rate, depth, the wave select and the `bipolar` switch.
 

@@ -82,18 +82,34 @@ const int32_t *p1_tap(uint32_t channel)
  * when the operator has not read the bank. The mod display follows it. */
 int32_t p1_spec_morph(uint32_t op, uint32_t part)
 {
-    const int16_t *bank;
+    const int32_t *live;
     if (part > 1u)
         return -1;
     switch (op) {
-    case 0: bank = g_state.dsp.op1_osc_bank; break;
-    case 1: bank = g_state.dsp.op2_osc_bank; break;
-    case 2: bank = g_state.dsp.op3_osc_bank; break;
-    case 3: bank = g_state.dsp.op4_osc_bank; break;
+    case 0: live = g_state.dsp.op1_osc_live; break;
+    case 1: live = g_state.dsp.op2_osc_live; break;
+    case 2: live = g_state.dsp.op3_osc_live; break;
+    case 3: live = g_state.dsp.op4_osc_live; break;
     default: return -1;
     }
-    const int live = bank[P1_SPEC_LIVE + part];
-    return live > 0 ? live - 1 : -1;
+    /* The newest voice still rendering for the part wins. */
+    int newest = -1;
+    uint32_t best = 0;
+    for (int voice = 0; voice < NVOICE; ++voice) {
+        if (g_state.dsp.voice_part[voice] != part)
+            continue;
+        if (!g_state.dsp.voice_gate[voice] &&
+            g_state.dsp.voice_rel[voice] == 0)
+            continue;
+        const uint32_t age = g_state.dsp.voice_age[voice];
+        if (newest < 0 || age > best) {
+            best = age;
+            newest = voice;
+        }
+    }
+    if (newest < 0)
+        return -1;
+    return live[newest] >= 0 ? live[newest] : -1;
 }
 
 uint32_t p1_param_count(void)

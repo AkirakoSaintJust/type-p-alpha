@@ -11,40 +11,40 @@
   [`../design/README.md`](../design/README.md) and
   [`../design/juce.md`](../design/juce.md).
 - **Owner / date:** P1Onken, 2026-11-13.
-- **Disposition:** complete for the engine and the seven-tab editor pages. The a row
-  shows the selected wave's analysis, the first a-row edit commits it, and the first
-  morph knob move commits it too. The cold commit and the crossfade direction are
-  in, with the schedule bench in `plugin/tests/spectral_bench.cpp`. The Linux
-  snapshot goldens were regenerated for the 64-bar bands, the live morph cursor
-  and the seven-tab bar.
+- **Disposition:** complete for the engine and the seven-tab editor pages. Each row
+  loads a wave analysis through its `load spectrum template...` button, the wave
+  select is the only mode switch, and a morph depth moved away from zero also
+  selects `spectrum`. The cold commit and the crossfade direction are in, with the
+  schedule bench in `plugin/tests/spectral_bench.cpp`. The Linux snapshot goldens
+  were regenerated for the 64-bar bands, the new header and toolbar text, the
+  envelope graph and the live morph cursor.
 
 ## Player outcome
 
-- **New player action:** open `op spectra a` or `op spectra b`, draw 64 harmonic
-  levels, use the group, mask and spring controls, and choose `spectrum` in the wave
-  select. The `op spectra mod` page carries the spectrum display, the morph, the
-  morph envelope and the morph LFO.
+- **New player action:** open `op spectra a` or `op spectra b`, load a wave with
+  `load spectrum template...`, draw 64 harmonic levels, use the group, mask and
+  spring controls, and choose `spectrum` in the wave select. The `op spectra mod`
+  page carries the spectrum display, the morph, the morph envelope and the morph
+  LFO.
 - **Sound and behaviour:** the wave select is the mode. Values 0 to 12 read the wave
   table, and value 13 (`spectrum`) reads the additive bank. The mode is saved.
   Because the wave select is the mode, choosing `spectrum` after an edit restores the
-  stored pair, choosing any other wave keeps the pair for the next selection, and the
-  analysed preview is written only when a spectral control changes, so the player can
-  move between the wave table and the additive bank without losing either sound. The
-  operator morph blends spectrum a and b, and the envelope and LFO move the blend per
-  voice. Each spectrum carries its own 64-harmonic range, so it addresses 1 to 64
-  or 65 to 128. The mod display zooms to the union of the two
-  spans when a and b differ. While the waveform is not `spectrum`, the a row shows
-  the analysis of the selected wave with a `from wave` badge. The first a-row edit
-  writes the levels and then the waveform as 13. The first morph knob move commits
-  the preview the same way. Selecting `spectrum` uses the stored a and b spectra.
-  The mode switch crossfades over 10 ms. A silent part commits a new spectrum at
-  once, so its next note starts on the new table. An audible part ramps from the
-  old table to the new one. The mod display reads the last morph the oscillator
-  wrote to the bank header, so its waveform and cursor follow the envelope and the
-  LFO.
-- **Failure mode:** the additive table clips, the morph leaks between voices, the
-  preview writes the patch on open, the wave values shift again, a stored spectrum
-  is overwritten by a mode change, or the existing waves change their samples.
+  stored pair, choosing any other wave keeps the pair for the next selection, and a
+  template load writes only the chosen row, so the player can move between the wave
+  table and the additive bank without losing either sound. The operator morph blends
+  spectrum a and b, and the envelope and LFO move the blend per voice. Each spectrum
+  carries its own 64-harmonic range, so it addresses 1 to 64 or 65 to 128. The mod
+  display zooms to the union of the two spans when a and b differ. A template load
+  does not change the waveform. The wave select, a spectrum paste, or a morph depth
+  moved away from zero selects `spectrum`. The mode switch crossfades over 10 ms. A
+  silent part commits a new spectrum at once, so its next note starts on the new
+  table. An audible part ramps from the old table to the new one. The mod display
+  reads the morph the newest rendering voice wrote, so its waveform and cursor
+  follow the envelope and the LFO without jumping between chord voices.
+- **Failure mode:** the additive table clips, the morph leaks between voices, a
+  template load changes the waveform, the wave values shift again, a stored
+  spectrum is overwritten by a mode change, or the existing waves change their
+  samples.
 
 ## Dependencies and interactions
 
@@ -99,17 +99,17 @@ The envelope and LFO run per voice. The a and b tables are per part, and each
 spectrum has its own 64-harmonic range. The wave values are the mode: 13 reads the
 additive bank, and 0 to 12 read the wave table.
 
-The editor commits the analysis preview by writing the 64 a levels, then the
-waveform value 13. The first morph knob move does the same. The b row's `to a`
-commits the a preview first, and a b-row bar edit does not. Selecting a wave keeps
-the stored spectra. The preview is not written on page open.
+The editor writes a template into the chosen row only, 64 parameters at a time.
+Selecting a wave keeps the stored spectra, and the editor does not write the
+waveform when a template loads. A morph envelope or morph LFO depth edit that ends
+away from zero writes the waveform as 13, so the modulation has something to move.
 
 ## Bounds and resources
 
 - **Maximum voices/events/effects:** 24 voices and two parts.
 - **Per-sample and per-block operations:** two table reads and one linear blend per
   spectral oscillator sample. The table generation runs on the control tick.
-  The analysis preview is a table lookup in the editor, not a runtime DFT.
+  The template analysis is a table lookup in the editor, not a runtime DFT.
 - **Instance memory, CPU, preset size:** the spectral bank is 10,880 signed
   16-bit samples per operator, so 21,760 bytes per operator and 87,040 bytes for
   four operators. Each part reads its two tables and the shadow at the selected mip,
@@ -173,11 +173,12 @@ the stored spectra. The preview is not written on page open.
 - **Host timing and platform check:** the 20-voice benchmark and a real Linux and
   Windows DAW pass remain.
 - **Tolerance/metric:** the existing waves 0 to 8 and the shifted pulse, square and
-  saw must match the current header sample for sample. The checks are exact. The
-  spectra page must render the selected wave analysis without writing a parameter
-  until the first a-row edit, and the mod display must show both outlines and the
-  morph marker. `spectral` also checks that the engine publishes the live morph,
-  and that the base morph stays still with zero envelope depth. The part block and
+  saw must match the current header sample for sample. The checks are exact. A
+  template load must write the 64 levels of the chosen row and leave the waveform
+  alone, and the mod display must show both outlines, the morph marker and the
+  waveform trace. `spectral` also checks that the engine publishes the live morph
+  for the newest voice, and that the base morph stays still with zero envelope
+  depth. The part block and
   manifest counts must match 800 and 1,614.
 - **Evidence artefact:** a wave table checksum test, a spectral table and morph
   test, a cold-commit and crossfade-direction test, the schedule bench, an editor
@@ -202,14 +203,14 @@ the stored spectra. The preview is not written on page open.
 3. **Editor pages:** in. The two spectrum tabs (`op spectra a` and `op spectra b`),
    the seven-tab bar, the 64-bar editor, the group and mask selectors, the
    select-group legend, the spring-loaded tilt, level and formant controls, the
-   selected-wave preview with the `from wave` badge, the first A-card edit commit,
-   the copy and paste, and the page index remap. The A and B tabs each carry four
+   `load spectrum template...` menu on each row, the morph depth mode switch, the
+   copy and paste, and the page index remap. The A and B tabs each carry four
    bands of a wide row and its control card, and the four bands fit without a
-   scroll. The saw preview snapshot is
-   `editor-operator-spectra-saw.png`, the B page snapshot is
+   scroll. The shaped spectrum snapshot is
+   `editor-operator-spectra-levels.png`, the B page snapshot is
    `editor-operator-spectra-b.png`, and the mod display snapshot is
-   `editor-op-spectra-mod-saw.png`. The Linux goldens were regenerated for the tab
-   bar and the 64-bar layout.
+   `editor-op-spectra-mod-levels.png`. The Linux goldens were regenerated for the
+   header and toolbar text, the 6 px band, the envelope graph and the 64-bar layout.
 4. **Library:** in. The part record carries the 64 levels of both spectra, and
    the `.p1lib` library packs the part bank and the multi bank in one file. A multi
    save materialises any part that has no slot, and an import rejects a used multi

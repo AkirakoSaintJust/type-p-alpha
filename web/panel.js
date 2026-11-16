@@ -94,15 +94,15 @@
   const algGraphEl = document.querySelector("#algGraph");
   const visSeg = document.querySelector("#visSeg");
   const toolbarEl = document.querySelector("#toolbar");
-  const patchNameEl = document.querySelector("#patchName");
+  const patchNameEl = document.querySelector("#loadedPatchName");
   const patchButton = document.querySelector("#patchBtn");
   const patchRenameButton = document.querySelector("#patchRename");
   const toolbarNodes = [];
 
   const graphUpdaters = [];
   const spectrumUpdaters = [];
-  const previewCache = new Map();
-  const previewRequests = new Set();
+  const analysisRequests = new Map();
+  let analysisCounter = 0;
 
   let params = [];
   let byName = new Map();
@@ -140,7 +140,6 @@
       const spec = byName.get(name);
       return spec === undefined ? null : values.get(spec.id) ?? null;
     },
-    analysisFor: (part, op) => getPreview(part, op),
     patchName: () => patchName,
     partName: (part) => partNames[part],
     partSlots: () => partLibrary.filter((slot) => slot !== null).length,
@@ -384,22 +383,37 @@
     return el;
   }
 
+  /* Stage weight is the square of the rate's distance from 99, so 99 has no
+     horizontal run and reads as vertical whatever its target level. The weights
+     are normalised to fill the graph, which keeps the usual settings full width. */
+  function envStageWeight(rate) {
+    const t = 99 - Math.max(0, Math.min(99, rate));
+    return t * t;
+  }
+
+  function envWidths(r, sustain) {
+    const weights = [envStageWeight(r[0]), envStageWeight(r[1]),
+      envStageWeight(r[2]), envStageWeight(r[3])];
+    const sum = weights.reduce(function (a, b) { return a + b; }, 0);
+    const scale = sum > 0 ? (240 - 12 - sustain) / sum : 0;
+    return weights.map(function (w) { return w * scale; });
+  }
+
   function envSvg(r, l, cls) {
     const W = 240;
     const H = 62;
-    const widths = r.map(function (rr) { return 8 + (99 - rr) / 99 * 26; });
-    const total = widths.reduce(function (a, b) { return a + b; }, 0);
-    const scale = (W - 12) / total;
+    const rateWidths = envWidths(r, 8);
+    const widths = [rateWidths[0], rateWidths[1], rateWidths[2], 8,
+      rateWidths[3]];
+    const scale = 1;
+    const levels = [l[0], l[1], l[2], l[2], 0];
     let x = 6;
     let d = "M 6 " + H;
-    const levels = [l[0], l[1], l[2], l[2]];
-    for (let i = 0; i < 4; ++i) {
+    for (let i = 0; i < 5; ++i) {
       x += widths[i] * scale;
       const y = H - 3 - levels[i] / 99 * (H - 10);
       d += " L " + x.toFixed(1) + " " + y.toFixed(1);
     }
-    x += widths[3] * scale;
-    d += " L " + x.toFixed(1) + " " + H;
     return '<svg viewBox="0 0 ' + W + " " + H + '">' +
       '<line class="egrid" x1="6" y1="' + (H - 3) + '" x2="' + (W - 6) +
       '" y2="' + (H - 3) + '"/>' +
@@ -411,9 +425,8 @@
     const H = 62;
     const mid = H / 2;
     const top = scaleMax || 12;
-    const widths = r.map(function (rr) { return 8 + (99 - rr) / 99 * 26; });
-    const total = widths.reduce(function (a, b) { return a + b; }, 0);
-    const scale = (W - 12) / total;
+    const widths = envWidths(r, 0);
+    const scale = 1;
     let x = 6;
     let d = "M 6 " + mid;
     const levels = l.length >= 4 ? [l[0], l[1], l[2], l[3]]
@@ -685,6 +698,17 @@
     if (node !== null) {
       node.port.postMessage({ type: "param", id: spec.id, value });
     }
+    /* A depth edit that ends away from zero puts the operator in spectrum mode,
+       so the envelope or LFO the player just set has something to move. */
+    const depth = baseName(spec.name).match(/^op([1-4])_spec_(env|lfo)_depth$/);
+    const partMatch = spec.name.match(/\.p(\d+)$/);
+    if (depth !== null && value !== 0 && partMatch !== null) {
+      const n = depth[1];
+      const part = Number(partMatch[1]);
+      const waveSpec = byName.get(`op${n}_waveform.p${part}`);
+      if (waveSpec !== undefined && (values.get(waveSpec.id) ?? 0) !== 13)
+        setRaw(waveSpec, 13);
+    }
   }
 
   function controlFor(spec, labelOverride, onStart, formatOverride) {
@@ -908,37 +932,11 @@
     return Math.max(0, Math.min(99, Math.round(value)));
   }
 
-  function previewKey(part, op) {
-    return part + ":" + op;
-  }
-
-  function previewSpecs(part, op) {
-    return specsForOp(part, op)
-      .filter((spec) => /^op[1-4]_spec_a\d+$/.test(baseName(spec.name)))
-      .sort(naturalSort);
-  }
-
-  function requestPreview(part, op) {
+  function requestAnalysis(wave, first, callback) {
     if (!workletReady || node === null) return;
-    const waveSpec = byName.get(`op${op + 1}_waveform.p${part}`);
-    const rangeSpec = byName.get(`op${op + 1}_spec_range_a.p${part}`);
-    if (waveSpec === undefined || rangeSpec === undefined) return;
-    const wave = values.get(waveSpec.id) ?? 0;
-    const key = previewKey(part, op);
-    if (wave === 13) {
-      previewCache.delete(key);
-      return;
-    }
-    const first = ((values.get(rangeSpec.id) ?? 0) * 64) + 1;
-    const cached = previewCache.get(key);
-    if (cached !== undefined && cached.wave === wave &&
-        cached.first === first)
-      return;
-    const request = `${key}:${wave}:${first}`;
-    if (previewRequests.has(request))
-      return;
-    previewRequests.add(request);
-    node.port.postMessage({ type: "analyze", key, wave, first, request });
+    const request = "a" + (++analysisCounter);
+    analysisRequests.set(request, callback);
+    node.port.postMessage({ type: "analyze", wave, first, request });
   }
 
   function getLiveMorph(part, op) {
@@ -954,40 +952,7 @@
     return wave === 13;
   }
 
-  function getPreview(part, op) {
-    const key = previewKey(part, op);
-    const cached = previewCache.get(key);
-    if (cached === undefined) return null;
-    const waveSpec = byName.get(`op${op + 1}_waveform.p${part}`);
-    const rangeSpec = byName.get(`op${op + 1}_spec_range_a.p${part}`);
-    if (waveSpec === undefined || rangeSpec === undefined) return null;
-    const wave = values.get(waveSpec.id) ?? 0;
-    const first = ((values.get(rangeSpec.id) ?? 0) * 64) + 1;
-    if (wave === 13 || cached.wave !== wave || cached.first !== first)
-      return null;
-    return cached.levels;
-  }
-
-  function commitPreview(part, op) {
-    const key = previewKey(part, op);
-    const preview = previewCache.get(key);
-    if (preview === undefined) return;
-    const aSpecs = previewSpecs(part, op);
-    if (aSpecs.length !== 64) {
-      previewCache.delete(key);
-      return;
-    }
-    for (let i = 0; i < 64; ++i)
-      setRaw(aSpecs[i], preview.levels[i]);
-    const waveSpec = byName.get(`op${op + 1}_waveform.p${part}`);
-    if (waveSpec !== undefined)
-      setRaw(waveSpec, 13);
-    previewCache.delete(key);
-    for (const update of spectrumUpdaters) update();
-  }
-
-  function spectrumBars(specs, kind, rangeSpec, previewLevels, onEdit,
-                        groupTest) {
+  function spectrumBars(specs, kind, rangeSpec, groupTest) {
     const count = specs.length;
     const wrap = div("specbars");
     const fills = [];
@@ -1008,8 +973,6 @@
       labelSpans.push(span);
     }
     function levels() {
-      const preview = previewLevels ? previewLevels() : null;
-      if (preview !== null && preview !== undefined) return preview;
       return specs.map((spec) => values.get(spec.id) ?? 0);
     }
     function currentFirst() {
@@ -1041,7 +1004,6 @@
     }
     wrap.addEventListener("pointerdown", function (event) {
       event.preventDefault();
-      if (onEdit) onEdit();
       wrap.setPointerCapture(event.pointerId);
       setFrom(event);
       function move(ev) { setFrom(ev); }
@@ -1072,13 +1034,6 @@
     const heading = document.createElement("h3");
     heading.textContent = title;
     head.append(heading);
-    let badge = null;
-    if (options.fromWave) {
-      badge = document.createElement("span");
-      badge.className = "fromwave";
-      badge.textContent = "from wave";
-      head.append(badge);
-    }
     secHead.append(head);
     const acts = div("sec-actions spectrum-row-acts");
     if (rangeSpec !== undefined) {
@@ -1096,6 +1051,36 @@
       rangeSelect.classList.add("row-range");
       acts.append(rangeLabel, rangeSelect);
     }
+    const templateWrap = div("template-wrap");
+    const templateButton = document.createElement("button");
+    templateButton.type = "button";
+    templateButton.className = "mini template-btn";
+    templateButton.textContent = "load spectrum template...";
+    const templateMenu = div("template-menu");
+    templateMenu.hidden = true;
+    WAVES.slice(0, 13).forEach((name, wave) => {
+      const item = document.createElement("button");
+      item.type = "button";
+      item.textContent = name;
+      item.addEventListener("click", () => {
+        templateMenu.hidden = true;
+        requestAnalysis(wave, bars.currentFirst(), (levels) => {
+          for (let i = 0; i < specs.length; ++i)
+            setRaw(specs[i], clampLevel(levels[i] ?? 0));
+          bars.draw();
+        });
+      });
+      templateMenu.append(item);
+    });
+    templateButton.addEventListener("click", (event) => {
+      event.stopPropagation();
+      templateMenu.hidden = !templateMenu.hidden;
+    });
+    templateMenu.addEventListener("pointerdown", (event) => {
+      event.stopPropagation();
+    });
+    templateWrap.append(templateButton, templateMenu);
+    acts.append(templateWrap);
     const copyButton = document.createElement("button");
     copyButton.className = "mini";
     copyButton.textContent = "copy";
@@ -1110,7 +1095,6 @@
       clipboard.kind !== "spectrum";
     pasteButton.addEventListener("click", () => {
       if (clipboard === null || clipboard.kind !== "spectrum") return;
-      if (options.onEdit) options.onEdit();
       for (let i = 0; i < specs.length; ++i)
         setRaw(specs[i], clampLevel(clipboard.values[i] ?? 0));
       buildPage();
@@ -1118,8 +1102,7 @@
     acts.append(copyButton, pasteButton);
     secHead.append(acts);
     cardEl.append(secHead);
-    const bars = spectrumBars(specs, options.kind, rangeSpec, options.preview,
-      options.onEdit, markTest);
+    const bars = spectrumBars(specs, options.kind, rangeSpec, markTest);
     cardEl.append(bars.el, bars.labels);
     const legend = div("speclegend");
     const legendName = document.createElement("span");
@@ -1152,15 +1135,10 @@
     }
     updateLegend();
     spectrumUpdaters.push(updateLegend);
-    if (badge !== null) {
-      spectrumUpdaters.push(() => {
-        badge.style.display = options.preview && options.preview() ? "" : "none";
-      });
-    }
     return {
       el: cardEl, bars: bars, tools: tools, specs: specs,
       otherSpecs: options.otherSpecs || [], kind: options.kind,
-      onEdit: options.onEdit, updateLegend: updateLegend,
+      updateLegend: updateLegend,
     };
   }
 
@@ -1171,7 +1149,6 @@
     let base = null;
     let centre = 5;
     function begin() {
-      if (row.onEdit) row.onEdit();
       base = row.bars.levels().slice();
     }
     function end() { base = null; }
@@ -1195,8 +1172,11 @@
     }
     const tilt = makeSpring("tilt", {
       onStart: begin, onEnd: end,
-      onInput: (amount) => apply((level, index) =>
-        Math.round(level * (1 + amount * index / (row.specs.length - 1)))),
+      onInput: (amount) => {
+        const centre = (row.specs.length - 1) / 2;
+        apply((level, index) =>
+          Math.round(level * (1 + amount * (index - centre) / centre)));
+      },
     });
     const level = makeSpring("level", {
       onStart: begin, onEnd: end,
@@ -1261,7 +1241,6 @@
     norm.className = "mini";
     norm.textContent = "norm";
     norm.addEventListener("click", () => {
-      if (row.onEdit) row.onEdit();
       const levels = row.bars.levels();
       const max = Math.max(...levels);
       if (max > 0) {
@@ -1274,7 +1253,6 @@
     to.className = "mini";
     to.textContent = row.kind === "a" ? "to b" : "to a";
     to.addEventListener("click", () => {
-      if (row.onEdit) row.onEdit();
       const levels = row.bars.levels();
       for (let i = 0; i < row.specs.length && i < row.otherSpecs.length; ++i)
         setRaw(row.otherSpecs[i], levels[i]);
@@ -1285,7 +1263,7 @@
   }
 
   function spectrumDisplay(aSpecs, bSpecs, rangeA, rangeB, morphSpec,
-                           previewLevels, liveMorph) {
+                           liveMorph) {
     const canvas = document.createElement("canvas");
     canvas.className = "panel-spectrum-display";
     canvas.width = 512;
@@ -1326,8 +1304,7 @@
       context.lineTo(right, bottom);
       context.strokeStyle = "#2e2e2e";
       context.stroke();
-      const aLevels = (previewLevels && previewLevels()) ||
-        aSpecs.map((spec) => values.get(spec.id) ?? 0);
+      const aLevels = aSpecs.map((spec) => values.get(spec.id) ?? 0);
       const bLevels = bSpecs.map((spec) => values.get(spec.id) ?? 0);
       function outline(levels, first, color) {
         context.beginPath();
@@ -1874,6 +1851,7 @@
       if (partSource[part] >= 0)
         partLibrary[partSource[part]] = partSnapshot(part);
       saveLibrary();
+      buildToolbar();
       buildPage();
       toast("part " + (part + 1) + " renamed");
     });
@@ -2152,14 +2130,15 @@
       const button = document.createElement("button");
       button.className = "tbtn partsel" +
         (activePart === part ? " active" : "");
-      button.textContent = "part " + (part + 1);
+      button.textContent = "part " + (part + 1) + ": " + partNames[part];
+      button.title = "edit part " + (part + 1) + ": " + partNames[part];
       button.addEventListener("click", () => selectPart(part));
       editing.append(button);
     }
     const library = document.createElement("button");
     library.className = "tbtn partlib";
     library.id = "partLibrary";
-    library.textContent = "part library actions...";
+    library.textContent = "single part library...";
     library.title = "Single part library";
     library.addEventListener("click", openSingleParts);
     editing.append(library);
@@ -2633,14 +2612,12 @@
         baseName(spec.name) === `op${op + 1}_spec_range_b`);
       const morph = all.find((spec) =>
         baseName(spec.name) === `op${op + 1}_spec_morph`);
-      const preview = () => getPreview(activePart, op);
-      const commit = () => commitPreview(activePart, op);
       const col = opColumn(op, true);
       const oscCard = card("oscillator", oscillatorSpecs(op),
         { className: "osc", kind: "oscillator" });
       if (oscCard && morph !== undefined) {
         const knobs = oscCard.querySelector(".knobs");
-        if (knobs !== null) knobs.append(controlFor(morph, null, commit));
+        if (knobs !== null) knobs.append(controlFor(morph, "morph"));
       }
       if (oscCard) col.append(oscCard);
       strip.append(col);
@@ -2652,16 +2629,12 @@
         `op${op + 1} spectrum ${letter}`, specs, range, {
           tools: spectrumToolState(activePart, op, isA),
           kind: letter,
-          preview: isA ? preview : null,
-          onEdit: commit,
-          fromWave: isA,
           otherSpecs: other,
         });
       const pair = div("spectrum-pair");
       pair.append(row.el,
         spectrumControls(`op${op + 1} spectral controls`, row));
       runs.append(pair);
-      requestPreview(activePart, op);
     }
     wrapper.append(strip, runs);
     page.append(wrapper);
@@ -2698,10 +2671,8 @@
       displayTitle.textContent = "spectra";
       displayCard.append(displayTitle,
         spectrumDisplay(aSpecs, bSpecs, rangeA, rangeB, morph,
-                        () => getPreview(activePart, op),
                         () => spectrumWaveformIsLive(op)
                           ? getLiveMorph(activePart, op) : -1));
-      requestPreview(activePart, op);
       const envCard = card("morph env", env, {
         className: "env",
         kind: "morph env",
@@ -2933,8 +2904,6 @@
             values: Array.from(values.entries()),
           });
           node.port.postMessage({ type: "part", part: activePart });
-          for (let op = 0; op < 4; ++op)
-            requestPreview(activePart, op);
         } else if (message.type === "scope") {
           outputSamples = message.samples;
           let peak = 0;
@@ -2969,14 +2938,12 @@
         } else if (message.type === "param") {
           window.__p1.lastParam = message.value;
         } else if (message.type === "analysis") {
-          previewCache.set(message.key, {
-            wave: message.wave,
-            first: message.first,
-            levels: message.levels,
-          });
-          previewRequests.delete(message.request);
           window.__p1.lastAnalysis = message;
-          for (const update of spectrumUpdaters) update();
+          const callback = analysisRequests.get(message.request);
+          if (callback !== undefined) {
+            analysisRequests.delete(message.request);
+            callback(message.levels, message.wave, message.first);
+          }
         } else if (message.type === "error") {
           window.__p1.error = message.message;
           setStatus(`engine error: ${message.message}`);
@@ -3040,11 +3007,16 @@
   noteButton.addEventListener("pointercancel", noteOff);
   window.addEventListener("blur", noteOff);
 
+  document.addEventListener("pointerdown", (event) => {
+    if (event.target.closest && event.target.closest(".template-wrap")) return;
+    document.querySelectorAll(".template-menu").forEach((menu) => {
+      menu.hidden = true;
+    });
+  });
+
   setInterval(function () {
     for (const update of graphUpdaters) update();
     for (const update of spectrumUpdaters) update();
-    for (let op = 0; op < 4; ++op)
-      requestPreview(activePart, op);
   }, 120);
 
   async function init() {

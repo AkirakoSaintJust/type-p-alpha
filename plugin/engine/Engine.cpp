@@ -69,18 +69,34 @@ const int32_t* Engine::tap(uint32_t channel)
 
 int Engine::specMorph(int op, int part) const
 {
-    if (part < 0 || part >= P1_SPEC_PARTS)
+    if (part < 0 || part >= 2)
         return -1;
-    const int16_t* bank = nullptr;
+    const int32_t* live = nullptr;
     switch (op) {
-    case 0: bank = state_->op1_osc_bank; break;
-    case 1: bank = state_->op2_osc_bank; break;
-    case 2: bank = state_->op3_osc_bank; break;
-    case 3: bank = state_->op4_osc_bank; break;
+    case 0: live = state_->op1_osc_live; break;
+    case 1: live = state_->op2_osc_live; break;
+    case 2: live = state_->op3_osc_live; break;
+    case 3: live = state_->op4_osc_live; break;
     default: return -1;
     }
-    const int live = bank[P1_SPEC_LIVE + part];
-    return live > 0 ? live - 1 : -1;
+    /* The newest voice still rendering for the part wins, so a chord shows the
+     * note that was played last rather than whichever voice ran last. */
+    int newest = -1;
+    uint32_t best = 0;
+    for (int voice = 0; voice < NVOICE; ++voice) {
+        if (state_->voice_part[voice] != part)
+            continue;
+        if (!state_->voice_gate[voice] && state_->voice_rel[voice] == 0)
+            continue;
+        const uint32_t age = state_->voice_age[voice];
+        if (newest < 0 || age > best) {
+            best = age;
+            newest = voice;
+        }
+    }
+    if (newest < 0)
+        return -1;
+    return live[newest] >= 0 ? live[newest] : -1;
 }
 
 P1_STATE* Engine::state()

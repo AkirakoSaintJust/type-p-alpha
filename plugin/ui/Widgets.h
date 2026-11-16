@@ -34,6 +34,9 @@ public:
     /* Runs once when a user starts dragging the knob. Host automation does not
      * call it. */
     std::function<void()> onUserEdit;
+    /* Runs once when a user edit finishes, after the value is written. Host
+     * automation and preset restores do not call it. */
+    std::function<void()> onUserEditEnd;
 
 private:
     /* Arrow keys step a detented ratio knob to the next detent instead of
@@ -52,6 +55,7 @@ private:
 
         std::function<bool(const juce::KeyPress&)> onDetentKey;
         std::function<void()> onUserEdit;
+        std::function<void()> onUserEditEnd;
     };
 
     void updateValueText();
@@ -174,23 +178,18 @@ public:
 
     std::vector<double> levels() const;
     void setLevels(const std::vector<double>& levels);
-    void setPreviewLevels(const std::vector<double>& levels);
-    void clearPreview();
     void setFirstHarmonic(int first);
     void setGroupTest(std::function<bool(int)> test);
-    bool hasPreview() const { return !preview_.empty(); }
     std::function<void()> onEdit;
 
 private:
     void setFromMouse(const juce::MouseEvent& event);
     double levelAt(int index) const;
-    double displayLevelAt(int index) const;
     void setLevel(int index, double value);
 
     APVTS& state_;
     juce::StringArray parameterIDs_;
     juce::Colour colour_;
-    std::vector<double> preview_;
     int firstHarmonic_ = 1;
     std::function<bool(int)> groupTest_;
 };
@@ -199,9 +198,8 @@ class P1SpectrumDisplay : public juce::Component {
 public:
     P1SpectrumDisplay(APVTS& state, juce::StringArray aIDs,
                       juce::StringArray bIDs, juce::String morphID,
-                      juce::String waveformID, juce::String rangeAID,
-                      juce::String rangeBID, juce::Colour aColour,
-                      juce::Colour bColour);
+                      juce::String rangeAID, juce::String rangeBID,
+                      juce::Colour aColour, juce::Colour bColour);
     void paint(juce::Graphics& g) override;
     /* The morph the engine last read, 0 to 1, or -1 for the base parameter. */
     void setLiveMorph(double value) { liveMorph_ = value; }
@@ -213,14 +211,10 @@ private:
     juce::StringArray aIDs_;
     juce::StringArray bIDs_;
     juce::String morphID_;
-    juce::String waveformID_;
     juce::String rangeAID_;
     juce::String rangeBID_;
     juce::Colour aColour_;
     juce::Colour bColour_;
-    std::array<double, 64> preview_{};
-    int previewWave_ = -1;
-    int previewFirst_ = 0;
     double liveMorph_ = -1.0;
 };
 

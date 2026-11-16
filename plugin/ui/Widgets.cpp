@@ -243,6 +243,14 @@ ParamKnob::ParamKnob(APVTS& state, juce::String paramID, juce::String label,
             onUserEdit();
     };
     slider_.onDragStart = [this] { slider_.onUserEdit(); };
+    slider_.onDragEnd = [this] {
+        if (onUserEditEnd)
+            onUserEditEnd();
+    };
+    slider_.onUserEditEnd = [this] {
+        if (onUserEditEnd)
+            onUserEditEnd();
+    };
     slider_.onValueChange = [this] {
         snapValue();
         updateValueText();
@@ -303,6 +311,8 @@ void ParamKnob::KnobSlider::mouseWheelMove(const juce::MouseEvent& event,
     }
     setValue(juce::jlimit(getMinimum(), getMaximum(), value),
              juce::sendNotificationSync);
+    if (onUserEditEnd)
+        onUserEditEnd();
 }
 
 void ParamKnob::setParamID(const juce::String& paramID)
@@ -379,6 +389,8 @@ void ParamKnob::commitValue()
     slider_.setValue(value, juce::sendNotificationSync);
     snapValue();
     updateValueText();
+    if (onUserEditEnd)
+        onUserEditEnd();
 }
 
 P1Button::P1Button(const juce::String& label, bool mini)
@@ -697,35 +709,13 @@ double P1SpectralBars::levelAt(int index) const
     return 0.0;
 }
 
-double P1SpectralBars::displayLevelAt(int index) const
-{
-    if (!preview_.empty() && index >= 0 &&
-        index < static_cast<int>(preview_.size()))
-        return juce::jlimit(0.0, 99.0, preview_[static_cast<std::size_t>(index)]);
-    return levelAt(index);
-}
-
 std::vector<double> P1SpectralBars::levels() const
 {
-    if (!preview_.empty())
-        return preview_;
     std::vector<double> result;
     result.reserve(static_cast<std::size_t>(parameterIDs_.size()));
     for (int i = 0; i < parameterIDs_.size(); ++i)
         result.push_back(levelAt(i));
     return result;
-}
-
-void P1SpectralBars::setPreviewLevels(const std::vector<double>& levels)
-{
-    preview_ = levels;
-    repaint();
-}
-
-void P1SpectralBars::clearPreview()
-{
-    preview_.clear();
-    repaint();
 }
 
 void P1SpectralBars::setFirstHarmonic(int first)
@@ -753,7 +743,6 @@ void P1SpectralBars::setLevel(int index, double value)
 
 void P1SpectralBars::setLevels(const std::vector<double>& levels)
 {
-    preview_.clear();
     const int count = juce::jmin(static_cast<int>(levels.size()),
                                  parameterIDs_.size());
     for (int i = 0; i < count; ++i)
@@ -786,8 +775,6 @@ void P1SpectralBars::mouseDown(const juce::MouseEvent& event)
 {
     if (event.mods.isPopupMenu())
         return;
-    if (hasPreview() && onEdit)
-        onEdit();
     setFromMouse(event);
 }
 
@@ -795,8 +782,6 @@ void P1SpectralBars::mouseDrag(const juce::MouseEvent& event)
 {
     if (event.mods.isPopupMenu())
         return;
-    if (hasPreview() && onEdit)
-        onEdit();
     setFromMouse(event);
 }
 
@@ -813,7 +798,7 @@ void P1SpectralBars::paint(juce::Graphics& g)
     const float slot = static_cast<float>(bars.getWidth()) /
                        static_cast<float>(count);
     for (int i = 0; i < count; ++i) {
-        const float level = static_cast<float>(displayLevelAt(i)) / 99.0f;
+        const float level = static_cast<float>(levelAt(i)) / 99.0f;
         const float height = level * static_cast<float>(bars.getHeight());
         g.setColour(colour(i % 2 == 0 ? tokens::purple : tokens::pink));
         g.fillRect(static_cast<float>(bars.getX()) + static_cast<float>(i) * slot + 1.0f,
@@ -857,7 +842,6 @@ void P1SpectralBars::paint(juce::Graphics& g)
 P1SpectrumDisplay::P1SpectrumDisplay(APVTS& state, juce::StringArray aIDs,
                                      juce::StringArray bIDs,
                                      juce::String morphID,
-                                     juce::String waveformID,
                                      juce::String rangeAID,
                                      juce::String rangeBID,
                                      juce::Colour aColour,
@@ -866,7 +850,6 @@ P1SpectrumDisplay::P1SpectrumDisplay(APVTS& state, juce::StringArray aIDs,
       aIDs_(std::move(aIDs)),
       bIDs_(std::move(bIDs)),
       morphID_(std::move(morphID)),
-      waveformID_(std::move(waveformID)),
       rangeAID_(std::move(rangeAID)),
       rangeBID_(std::move(rangeBID)),
       aColour_(aColour),
@@ -960,21 +943,7 @@ void P1SpectrumDisplay::paint(juce::Graphics& g)
     g.drawHorizontalLine(juce::roundToInt(graph.getBottom()), graph.getX(),
                          graph.getRight());
 
-    const int waveIndex = state_.getRawParameterValue(waveformID_) != nullptr
-                              ? static_cast<int>(std::lround(static_cast<double>(
-                                    state_.getRawParameterValue(waveformID_)
-                                        ->load())))
-                              : 13;
-    const bool fromWave = waveIndex >= 0 && waveIndex <= 12;
-    if (fromWave && (waveIndex != previewWave_ || firstA != previewFirst_)) {
-        preview_ = analyseWaveTable(waveIndex, firstA);
-        previewWave_ = waveIndex;
-        previewFirst_ = firstA;
-    }
-    auto aLevel = [&](int index) {
-        return fromWave ? preview_[static_cast<std::size_t>(index)]
-                        : levelAt(aIDs_, index);
-    };
+    auto aLevel = [&](int index) { return levelAt(aIDs_, index); };
     auto bLevel = [&](int index) { return levelAt(bIDs_, index); };
 
     auto drawSpectrum = [&](std::function<double(int)> level, int first,
@@ -1006,7 +975,7 @@ void P1SpectrumDisplay::paint(juce::Graphics& g)
                                                     ->load())) /
                                        99.0
                                  : 0.0;
-    const double morph = liveMorph_ >= 0.0 && !fromWave
+    const double morph = liveMorph_ >= 0.0
                              ? juce::jlimit(0.0, 1.0, liveMorph_)
                              : baseMorph;
 
@@ -1108,22 +1077,31 @@ void P1Envelope::paint(juce::Graphics& g)
             levels[static_cast<size_t>(i)] = static_cast<double>(v->load());
     }
 
-    /* The panel graph shows the log2 of the one-pole time constant, so a faster
-     * rate is a shorter stage, and the sustain is a short flat hold. */
-    const auto stageLen = [](int32_t rate) -> uint32_t {
-        const int32_t r = juce::jlimit(0, 99, rate);
-        int32_t c = p1_rate_coeff[r];
-        uint32_t lg = 0;
-        while (c > 1) {
-            c >>= 1;
-            ++lg;
-        }
-        return lg < 16u ? 16u - lg : 1u;
+    /* Stage weight is the square of the rate's distance from 99, so 99 has no
+     * horizontal run and reads as vertical whatever its target level. The four
+     * weights are normalised to fill the graph, which keeps the usual 50 to 80
+     * settings full width instead of cramming them into the left edge.
+     *
+     * A four-level envelope (pitch, feedback) uses one stage per rate, so it has
+     * no sustain hold. The three-level amplitude and spectral envelopes keep the
+     * short hold between the last decay and the release. */
+    const auto stageWeight = [](int32_t rate) -> float {
+        const float t = static_cast<float>(99 - juce::jlimit(0, 99, rate));
+        return t * t;
     };
-    const std::array<uint32_t, 5> len = {
-        stageLen(rates[0]), stageLen(rates[1]), stageLen(rates[2]), 8u,
-        stageLen(rates[3])};
-    const uint32_t total = len[0] + len[1] + len[2] + len[3] + len[4];
+    const bool fourStage = levelIDs_.size() >= 4;
+    const std::array<float, 4> weight = {
+        stageWeight(rates[0]), stageWeight(rates[1]), stageWeight(rates[2]),
+        stageWeight(rates[3])};
+    const float sum = weight[0] + weight[1] + weight[2] + weight[3];
+    const float sustain = fourStage ? 0.0f : 8.0f;
+    const float scale = sum > 0.0f
+                            ? (area.getWidth() - 8.0f - sustain) / sum
+                            : 0.0f;
+    const std::array<float, 5> len = {
+        weight[0] * scale, weight[1] * scale, weight[2] * scale,
+        fourStage ? weight[3] * scale : sustain,
+        fourStage ? 0.0f : weight[3] * scale};
 
     auto levelY = [this, area, mid](double level) {
         if (zeroLine_) {
@@ -1136,11 +1114,10 @@ void P1Envelope::paint(juce::Graphics& g)
                                   norm * (area.getHeight() - 8.0));
     };
 
-    const float width = area.getWidth() - 8.0f;
     const float right = area.getRight() - 4.0f;
     float x = area.getX() + 4.0f;
-    const auto advance = [&x, width, right, total](uint32_t stage) {
-        x += width * static_cast<float>(stage) / static_cast<float>(total);
+    const auto advance = [&x, right](float stage) {
+        x += stage;
         if (x > right)
             x = right;
         return x;
@@ -1150,8 +1127,12 @@ void P1Envelope::paint(juce::Graphics& g)
     path.lineTo(advance(len[0]), levelY(levels[0]));
     path.lineTo(advance(len[1]), levelY(levels[1]));
     path.lineTo(advance(len[2]), levelY(levels[2]));
-    path.lineTo(advance(len[3]), levelY(levels[2]));
-    path.lineTo(advance(len[4]), levelY(levels[3]));
+    if (fourStage) {
+        path.lineTo(advance(len[3]), levelY(levels[3]));
+    } else {
+        path.lineTo(advance(len[3]), levelY(levels[2]));
+        path.lineTo(advance(len[4]), levelY(levels[3]));
+    }
     g.setColour(colour_);
     g.strokePath(path, juce::PathStrokeType(1.4f));
 }

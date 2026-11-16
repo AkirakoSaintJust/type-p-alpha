@@ -156,6 +156,23 @@ bool checkMorphEnvelope()
         return false;
     }
 
+    /* A newer voice wins the display even while the older one sits at 99. */
+    engine.noteOn(64, 100, 0);
+    render(engine, 16);
+    const int fresh = engine.specMorph(0, 0);
+    if (fresh < 0 || fresh > 20) {
+        std::printf("spectral: the live morph did not follow the newest voice (%d)\n",
+                    fresh);
+        return false;
+    }
+    render(engine, 22050);
+    const int settled = engine.specMorph(0, 0);
+    if (settled < 80) {
+        std::printf("spectral: the newest voice never reached the envelope (%d)\n",
+                    settled);
+        return false;
+    }
+
     p1::Engine base_engine;
     base_engine.reset();
     if (!setupCarrier(base_engine))

@@ -73,10 +73,11 @@ copy and paste pair in each column header, and the operator scopes come from the
 engine tap buffers for the active part.
 
 The panel also carries the envelope graphs, the 64-bar spectrum editors, the
-`from wave` preview and the `op spectra mod` A/B display. Its waveform overlay and
-morph marker follow the live morph the engine publishes with the taps, so they
-advance with the envelope and the LFO. The first edit of an a-row spectrum or the first morph knob move
-commits the preview and switches the waveform to spectrum.
+spectrum template menus and the `op spectra mod` A/B display. Its waveform overlay
+and morph marker follow the live morph the engine publishes with the taps, so they
+advance with the envelope and the LFO. A template menu analyses a wave into either spectrum. The waveform switches to
+spectrum through the wave select, a spectrum paste, or a morph depth moved away
+from zero.
 
 The control card below each spectrum row has a group selector and a live, dead or
 both mask. The group
@@ -126,7 +127,7 @@ from the same audio block.
 
 `p1_output` returns `frames * 2` int32 samples. `p1_tap` returns one of the ten
 256-frame tap buffers for the scopes. `p1_analyze` turns one mip-0 wave table into
-64 normalized harmonic magnitudes for the `from wave` preview. The parameter
+64 normalized harmonic magnitudes for the spectrum template menu. The parameter
 ids are the engine ids in `engine/gen/params.json`.
 
 ## Next stage
