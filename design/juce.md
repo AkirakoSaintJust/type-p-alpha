@@ -110,14 +110,13 @@ Every page fills the same height:
   `fb lfo` and `detune lfo` cards. Each LFO card carries copy and paste in its
   header, and its `bipolar` switch beside the wave select.
 - op spectra a: four operator and oscillator cards across the top, a 6 px empty
-  band, then four bands of a wide spectrum row and its control card side by side.
-  Each row holds a range select, the `load spectrum template...` button, a 64-bar
-  editor, the harmonic labels and the group legend. The control card holds the
-  group, the mask, the selection window, the `tilt`, `level` and `formant` springs,
-  the formant picker h1 to h64, and `norm` and `to b` in the card foot. The four bands are 124 px each, so they fit under the
-  strip without a scroll.
+  band, then four spectrum cards of 124 px. Each card header carries `range`,
+  `mask`, `selection`, `group`, `load spectrum template...`, `norm`, `to b`, copy
+  and paste. The body holds the 64-bar editor and the group legend on the left and
+  the `tilt`, `level` and `formant` springs on the right, with the formant picker
+  beside the formant lever. The four cards fit under the strip without a scroll.
 - op spectra b: the same page for spectrum b, with `to a` in place of `to b`. Each
-  row carries its own range, its own 64 levels and its own template button.
+  card carries its own range, its own 64 levels and its own template button.
 - op spectra mod: four operator columns with a 6 px gap under the operator header,
   the oscillator card, a `spectra` display, the `morph env` card and the
   `morph lfo` card. The display draws the stored a and b. The marker and the faint
@@ -194,10 +193,11 @@ current state in pink and the other word faint.
 
 The level slider is a 14px track with a purple fill and a `level` caption.
 
-A spectrum row draws 64 columns across the page width and writes the level under
+A spectrum card draws 64 columns across its left side and writes the level under
 the pointer, then follows a horizontal drag. Only a bar inside the selection window
 and passing the live or dead mask is written, so the window narrows both the freehand
-editor and the springs. Bars outside the window are dimmed. The bar labels show every eighth
+editor and the springs. The formant ignores the group and the mask but stays inside
+the window. Bars outside the window are dimmed. The bar labels show every eighth
 harmonic, and the members of the selected group are green. A spring control is a
 10px track: the drag previews one curve from the 64 levels captured at pointer down,
 written to the members the group and mask select, and the release leaves the result

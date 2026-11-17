@@ -140,7 +140,6 @@ try {
     throw new Error("the spectrum paste did not copy the levels");
 
   const firstRow = page.locator(".spectrum-row").first();
-  const firstControls = page.locator(".spectrum-controls-card").first();
   await firstRow.locator(".specbars").scrollIntoViewIfNeeded();
   const zeroBars = await firstRow.locator(".specbars").boundingBox();
   await page.mouse.move(zeroBars.x + 2, zeroBars.y + zeroBars.height - 2);
@@ -157,7 +156,7 @@ try {
   console.log("zeroed spectrum:", zeroed.join(" "));
   if (zeroed.some((level) => level !== 0))
     throw new Error("the bar editor did not clear the spectrum");
-  const selection = firstControls.locator(".row-selection");
+  const selection = firstRow.locator(".row-selection");
   await selection.selectOption({ label: "edit 17-32" });
   await page.waitForTimeout(150);
   await page.mouse.click(zeroBars.x + 4.5 / 64 * zeroBars.width,
@@ -170,7 +169,7 @@ try {
   console.log("selection window h5 h17 h33:", windowed.join(" "));
   if (!(windowed[0] === 0 && windowed[1] > 0 && windowed[2] === 0))
     throw new Error("the selection window did not restrict freehand editing");
-  await firstControls.locator(".specmask button", { hasText: "live" }).click();
+  await firstRow.locator(".specmask button", { hasText: "live" }).click();
   await page.mouse.click(zeroBars.x + 19.5 / 64 * zeroBars.width,
     zeroBars.y + zeroBars.height * 0.4);
   await page.waitForTimeout(150);
@@ -178,7 +177,7 @@ try {
     window.__p1.paramValue("op1_spec_a20.p0"));
   if (liveBlocked !== 0)
     throw new Error("the live mask did not block a silent bar");
-  await firstControls.locator(".specmask button", { hasText: "both" }).click();
+  await firstRow.locator(".specmask button", { hasText: "both" }).click();
   await page.mouse.click(zeroBars.x + 19.5 / 64 * zeroBars.width,
     zeroBars.y + zeroBars.height * 0.4);
   await page.waitForTimeout(150);
@@ -188,7 +187,7 @@ try {
     throw new Error("the both mask did not allow the silent bar");
   await selection.selectOption({ label: "edit 1-64" });
   await page.waitForTimeout(150);
-  await firstControls.locator(".specgroup select").first()
+  await firstRow.locator(".row-group")
     .selectOption({ label: "third P5" });
   await page.waitForTimeout(150);
   const legendText = (await firstRow.locator(".speclegend").textContent())
@@ -202,8 +201,8 @@ try {
       !members.includes("12"))
     throw new Error("the select group did not mark its harmonics");
 
-  await firstControls.locator(".specmask button", { hasText: "dead" }).click();
-  const levelSpring = firstControls.locator(".spring").nth(1);
+  await firstRow.locator(".specmask button", { hasText: "dead" }).click();
+  const levelSpring = firstRow.locator(".spring").nth(1);
   const levelTrack = levelSpring.locator(".spring-track");
   await levelTrack.scrollIntoViewIfNeeded();
   const levelBox = await levelTrack.boundingBox();
@@ -226,7 +225,7 @@ try {
   if (springValue !== "0%")
     throw new Error("the level spring did not return to centre");
 
-  const formantSpring = firstControls.locator(".spring").nth(2);
+  const formantSpring = firstRow.locator(".spring").nth(2);
   const formantTrack = formantSpring.locator(".spring-track");
   const formantBox = await formantTrack.boundingBox();
   await page.mouse.move(formantBox.x + formantBox.width / 2,
@@ -242,10 +241,10 @@ try {
   if (!(formantLevel > 0))
     throw new Error("the formant spring did not reach its harmonic");
 
-  await firstControls.locator(".specmask button", { hasText: "both" }).click();
+  await firstRow.locator(".specmask button", { hasText: "both" }).click();
   const tiltBefore = await page.evaluate(() => [3, 48].map((h) =>
     window.__p1.paramValue("op1_spec_a" + h + ".p0")));
-  const tiltSpring = firstControls.locator(".spring").first();
+  const tiltSpring = firstRow.locator(".spring").first();
   const tiltTrack = tiltSpring.locator(".spring-track");
   const tiltBox = await tiltTrack.boundingBox();
   await page.mouse.move(tiltBox.x + tiltBox.width / 2,
@@ -271,6 +270,7 @@ try {
   await page.waitForTimeout(200);
   const depthKnob = page.locator(".opcol").nth(1).locator(".env .knob")
     .filter({ hasText: "depth" }).first();
+  await depthKnob.scrollIntoViewIfNeeded();
   const depthDial = await depthKnob.locator(".dial").boundingBox();
   await page.mouse.move(depthDial.x + depthDial.width / 2,
     depthDial.y + depthDial.height / 2);

@@ -358,9 +358,9 @@ and the panel readouts.
 
 `plugin/juce/PagesSpectral.cpp` holds the `op spectra a`, `op spectra b` and
 `op spectra mod` pages. Each spectrum page has four operator and oscillator cards,
-a 6 px gap, then four bands of a 64-bar row and its control card side by side. The
-row carries the `load spectrum template...` menu and the control card carries the
-springs. The mod page shows the two spectra, a faint phase-zero waveform and the
+a 6 px gap, then four spectrum cards. Each card header carries the range, mask,
+selection, group, template, norm and copy controls, with the 64-bar editor on the
+left and the springs on the right. The mod page shows the two spectra, a faint phase-zero waveform and the
 live morph cursor, followed by the morph envelope and the morph LFO.
 
 The tab bar has seven pages: patch settings, part fx/mod, operator envs, operator

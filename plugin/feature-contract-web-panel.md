@@ -87,8 +87,9 @@ card copies across operators and parts. The spectrum rows copy their 64 levels f
 another operator, which is the way to move a spectrum across the four operators.
 Each row carries its own range.
 
-The control card under each spectrum row carries the group selector, the live,
-dead and both mask, and the spring-loaded tilt, level and formant controls. The group sets which harmonic
+Each card header carries the range, the live, dead and both mask, the selection
+window and the group selector, and the spring-loaded tilt, level and formant
+controls sit on the right. The group sets which harmonic
 series a tilt or level gesture writes: all, odd, even, the octave series, or the
 series on the third, fifth, seventh, fifteenth, eleventh, thirteenth, ninth,
 twenty-first, nineteenth or seventeenth harmonic. The mask narrows that to the
@@ -200,7 +201,7 @@ and `error`.
    cards, and each operator page carries four oscillator cards. The multi save
    materialised both parts (2 part slots), the spectrum h3 read 99 after the reload,
    the patch name was `smoke patch`, the name and slots persisted after the reload,
-   and a 44.1 kHz context exercised the resampler at a peak of 0.0861. The taps
+   and a 44.1 kHz context exercised the resampler at a peak of about 0.086. The taps
    message carried the live morph `[15, 2, -1, -1]` for the four operators.
 4. **Release evidence:** the GitHub `wasm` job passed with the bare and panel
    smokes on Chromium. The release package and its binaries remain.

@@ -276,14 +276,14 @@ after it, the mute switch at the right, then a scope and spectro pair and an
 adds the `morph` slider under the wave select. The wave select carries the mode:
 `spectrum` is the last entry, and selecting it uses the stored spectra.
 
-Below a 6 px empty band under the strip, one 124 px band per operator, with the
-wide row on the left and its control card on the right. A row holds its range
-select, the `load spectrum template...` button, copy and paste, the 64-bar editor
-and the group legend. A control card holds the group selector, the live, dead and
-both mask, the selection window under it, the `tilt`, `level` and `formant` springs,
-the formant picker h1 to h64, and `norm` and `to b` or `to a` along its foot. The
-selection offers seven windows that follow the row's range, from the whole spectrum
-down to 16-harmonic blocks, and it gates the springs and the freehand editor. The four bands fit under the strip without a scroll.
+Below a 6 px empty band under the strip, one 124 px card per operator. The card
+header carries `range`, `mask`, `selection`, `group`, the `load spectrum
+template...` button, `norm`, `to b` or `to a`, copy and paste. The body holds the
+64-bar editor and the group legend on the left and the `tilt`, `level` and
+`formant` springs on the right, with the formant picker h1 to h64 beside the
+formant lever. The selection offers seven windows that follow the card's range,
+from the whole spectrum down to 16-harmonic blocks, and it gates the springs and
+the freehand editor. The four bands fit under the strip without a scroll.
 The bars preview a spring curve from the levels at the start of the drag, and the
 release leaves the result in place.
 

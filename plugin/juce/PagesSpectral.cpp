@@ -330,124 +330,7 @@ public:
           range_(editor.state(),
                  a ? params::opSpecRangeA(op, part)
                    : params::opSpecRangeB(op, part),
-                 rangeNames())
-    {
-        addAndMakeVisible(bars_);
-        addAndMakeVisible(range_);
-        rangeLabel_.setText("range", juce::dontSendNotification);
-        rangeLabel_.setFont(uiFont(tokens::textLegend));
-        rangeLabel_.setColour(juce::Label::textColourId, colour(tokens::dim));
-        addAndMakeVisible(rangeLabel_);
-        legend_.setFont(uiFont(tokens::textLegend));
-        legend_.setColour(juce::Label::textColourId, colour(tokens::dim));
-        legend_.setMinimumHorizontalScale(0.6f);
-        legend_.setInterceptsMouseClicks(false, false);
-        addAndMakeVisible(legend_);
-        template_.onClick = [this] { showTemplateMenu(); };
-        addAndMakeVisible(template_);
-    }
-
-    void setGroupTest(std::function<bool(int)> test)
-    {
-        bars_.setGroupTest(std::move(test));
-    }
-
-    void setEditWindow(int first, int last)
-    {
-        bars_.setEditWindow(first, last);
-    }
-
-    void setEditTest(std::function<bool(int, double)> test)
-    {
-        bars_.setEditTest(std::move(test));
-    }
-
-    void setLegend(const juce::String& text)
-    {
-        if (text != legend_.getText())
-            legend_.setText(text, juce::dontSendNotification);
-    }
-
-    std::vector<double> levels() const { return bars_.levels(); }
-    void setLevels(const std::vector<double>& levels) { bars_.setLevels(levels); }
-
-    int firstHarmonic() const
-    {
-        const int range = juce::jlimit(
-            0, 1,
-            static_cast<int>(std::lround(getParam(
-                editor_, isA_ ? params::opSpecRangeA(op_, part_)
-                              : params::opSpecRangeB(op_, part_)))));
-        return range * 64 + 1;
-    }
-
-    void tick()
-    {
-        bars_.setFirstHarmonic(firstHarmonic());
-        bars_.repaint();
-    }
-
-    void resized() override
-    {
-        P1Card::resized();
-        auto area = contentArea();
-        area.removeFromTop(2);
-        auto rangeRow = area.removeFromTop(18);
-        rangeLabel_.setBounds(rangeRow.removeFromLeft(34));
-        range_.setBounds(rangeRow.removeFromLeft(88).reduced(1));
-        rangeRow.removeFromLeft(8);
-        template_.setBounds(rangeRow.removeFromLeft(150).reduced(1));
-        area.removeFromTop(2);
-        bars_.setBounds(area.removeFromTop(64));
-        legend_.setBounds(area.removeFromTop(14));
-    }
-
-private:
-    void showTemplateMenu()
-    {
-        juce::PopupMenu menu;
-        const auto names = params::waveNames();
-        for (int i = 0; i < 13 && i < names.size(); ++i)
-            menu.addItem(i + 1, names[i]);
-        menu.showMenuAsync(
-            juce::PopupMenu::Options().withTargetComponent(&template_)
-                .withMinimumWidth(150),
-            [this](int result) {
-                if (result > 0)
-                    loadTemplate(result - 1);
-            });
-    }
-
-    void loadTemplate(int wave)
-    {
-        const auto values = analyseWaveTable(wave, firstHarmonic());
-        const auto ids = spectrumIDs(op_, part_, isA_);
-        for (int i = 0; i < ids.size() && i < 64; ++i)
-            setParam(editor_, ids[i], static_cast<float>(std::lround(values[static_cast<std::size_t>(i)])));
-        bars_.repaint();
-    }
-
-    PluginEditor& editor_;
-    int op_ = 0;
-    int part_ = 0;
-    bool isA_ = true;
-    P1SpectralBars bars_;
-    ParamChoice range_;
-    juce::Label rangeLabel_;
-    juce::Label legend_;
-    P1Button template_{"load spectrum template...", true};
-};
-
-class SpectrumControls : public P1Card {
-public:
-    SpectrumControls(PluginEditor& editor, int op, int part, bool a,
-                     SpectrumRow& row)
-        : P1Card("op" + juce::String(op + 1) + " spectral controls"),
-          editor_(editor),
-          op_(op),
-          part_(part),
-          isA_(a),
-          row_(row),
+                 rangeNames()),
           mask_(2),
           tilt_(
               "tilt", [this] { beginMacro(); },
@@ -462,14 +345,15 @@ public:
               [this](double value) { applyFormant(value); },
               [this] { endMacro(); })
     {
-        groupLabel_.setText("group", juce::dontSendNotification);
-        groupLabel_.setFont(uiFont(tokens::textLegend));
-        groupLabel_.setColour(juce::Label::textColourId, colour(tokens::dim));
+        addAndMakeVisible(bars_);
+        addAndMakeVisible(range_);
+        rangeLabel_.setText("range", juce::dontSendNotification);
+        rangeLabel_.setFont(uiFont(tokens::textLegend));
+        rangeLabel_.setColour(juce::Label::textColourId, colour(tokens::dim));
+        addAndMakeVisible(rangeLabel_);
         maskLabel_.setText("mask", juce::dontSendNotification);
         maskLabel_.setFont(uiFont(tokens::textLegend));
         maskLabel_.setColour(juce::Label::textColourId, colour(tokens::dim));
-        addAndMakeVisible(groupLabel_);
-        addAndMakeVisible(group_);
         addAndMakeVisible(maskLabel_);
         addAndMakeVisible(mask_);
         selectionLabel_.setText("selection", juce::dontSendNotification);
@@ -478,27 +362,37 @@ public:
                                   colour(tokens::dim));
         addAndMakeVisible(selectionLabel_);
         addAndMakeVisible(selection_);
+        groupLabel_.setText("group", juce::dontSendNotification);
+        groupLabel_.setFont(uiFont(tokens::textLegend));
+        groupLabel_.setColour(juce::Label::textColourId, colour(tokens::dim));
+        addAndMakeVisible(groupLabel_);
+        addAndMakeVisible(group_);
+        template_.onClick = [this] { showTemplateMenu(); };
+        addAndMakeVisible(template_);
+        addAndMakeVisible(norm_);
+        addAndMakeVisible(toOther_);
         addAndMakeVisible(tilt_);
         addAndMakeVisible(level_);
         addAndMakeVisible(formant_);
         addAndMakeVisible(centre_);
-        addAndMakeVisible(norm_);
-        addAndMakeVisible(toOther_);
+
+        legend_.setFont(uiFont(tokens::textLegend));
+        legend_.setColour(juce::Label::textColourId, colour(tokens::dim));
+        legend_.setMinimumHorizontalScale(0.6f);
+        legend_.setInterceptsMouseClicks(false, false);
+        addAndMakeVisible(legend_);
+
         group_.addItemList(
             juce::StringArray(kSpectrumGroupLabels, kSpectrumGroupCount), 1);
         group_.setSelectedItemIndex(0, juce::dontSendNotification);
         group_.onChange = [this] {
-            row_.setGroupTest([this](int harmonic) {
-                return group_.getSelectedItemIndex() != 0 &&
-                       groupHas(group_.getSelectedItemIndex(), harmonic);
-            });
+            refreshGroupTest();
             refreshLegend();
         };
-        mask_.onChange = [this](int) { refreshLegend(); };
-        row_.setGroupTest([this](int harmonic) {
-            return group_.getSelectedItemIndex() != 0 &&
-                   groupHas(group_.getSelectedItemIndex(), harmonic);
-        });
+        mask_.onChange = [this](int) {
+            refreshGroupTest();
+            refreshLegend();
+        };
         selection_.onChange = [this] { applySelection(); };
         centre_.addItemList(
             juce::StringArray([] {
@@ -514,52 +408,92 @@ public:
         toOther_.setButtonText(isA_ ? "to b" : "to a");
         refreshSelectionItems();
         applySelection();
+        refreshGroupTest();
         refreshLegend();
     }
 
-    void tick() { refreshLegend(); }
+    void tick()
+    {
+        const int first = firstHarmonic();
+        bars_.setFirstHarmonic(first);
+        if (first != lastFirst_) {
+            lastFirst_ = first;
+            refreshSelectionItems();
+            applySelection();
+        }
+        refreshLegend();
+        bars_.repaint();
+    }
 
     void resized() override
     {
         P1Card::resized();
+        /* Header controls sit to the left of the card's copy and paste pair. */
+        auto header = getLocalBounds().removeFromTop(20).reduced(4, 1);
+        header.removeFromRight(112);
+        toOther_.setBounds(header.removeFromRight(44));
+        header.removeFromRight(4);
+        norm_.setBounds(header.removeFromRight(44));
+        header.removeFromRight(6);
+        template_.setBounds(header.removeFromRight(150));
+        header.removeFromRight(6);
+        group_.setBounds(header.removeFromRight(120));
+        header.removeFromRight(3);
+        groupLabel_.setBounds(header.removeFromRight(30));
+        header.removeFromRight(6);
+        selection_.setBounds(header.removeFromRight(104));
+        header.removeFromRight(3);
+        selectionLabel_.setBounds(header.removeFromRight(48));
+        header.removeFromRight(6);
+        mask_.setBounds(header.removeFromRight(112));
+        header.removeFromRight(3);
+        maskLabel_.setBounds(header.removeFromRight(26));
+        header.removeFromRight(6);
+        range_.setBounds(header.removeFromRight(64));
+        header.removeFromRight(3);
+        rangeLabel_.setBounds(header.removeFromRight(30));
+
         auto area = contentArea();
-        area.removeFromTop(1);
-        auto groupRow = area.removeFromTop(18);
-        groupLabel_.setBounds(groupRow.removeFromLeft(32));
-        group_.setBounds(groupRow.removeFromLeft(100).reduced(1));
-        groupRow.removeFromLeft(4);
-        maskLabel_.setBounds(groupRow.removeFromLeft(28));
-        mask_.setBounds(groupRow);
-        auto selectionRow = area.removeFromTop(17);
-        selectionLabel_.setBounds(selectionRow.removeFromLeft(52));
-        selection_.setBounds(selectionRow.reduced(1));
-        auto springs = area.removeFromTop(46);
-        const int springWidth = springs.getWidth() / 3;
-        tilt_.setBounds(springs.removeFromLeft(springWidth).reduced(1));
-        level_.setBounds(springs.removeFromLeft(springWidth).reduced(1));
-        auto formantCell = springs;
-        formant_.setBounds(formantCell.removeFromTop(30).reduced(1));
+        auto controls = area.removeFromRight(280);
+        area.removeFromRight(8);
+        bars_.setBounds(area.removeFromTop(82));
+        legend_.setBounds(area.removeFromTop(14));
+        controls.removeFromTop(6);
+        tilt_.setBounds(controls.removeFromLeft(84));
+        controls.removeFromLeft(4);
+        level_.setBounds(controls.removeFromLeft(84));
+        controls.removeFromLeft(4);
+        formant_.setBounds(controls.removeFromLeft(50));
         centre_.setBounds(
-            formantCell.removeFromTop(16).withSizeKeepingCentre(58, 16));
-        auto foot = area.removeFromTop(16);
-        norm_.setBounds(foot.removeFromLeft(48).reduced(1));
-        toOther_.setBounds(foot.removeFromRight(48).reduced(1));
+            controls.removeFromLeft(58).withTrimmedBottom(78));
     }
 
 private:
-    void beginMacro() { snapshot_ = row_.levels(); }
+    int firstHarmonic() const
+    {
+        const int range = juce::jlimit(
+            0, 1,
+            static_cast<int>(std::lround(getParam(
+                editor_, isA_ ? params::opSpecRangeA(op_, part_)
+                              : params::opSpecRangeB(op_, part_)))));
+        return range * 64 + 1;
+    }
 
-    void endMacro() { snapshot_.clear(); }
+    void refreshGroupTest()
+    {
+        bars_.setGroupTest([this](int harmonic) {
+            return group_.getSelectedItemIndex() != 0 &&
+                   groupHas(group_.getSelectedItemIndex(), harmonic);
+        });
+    }
 
-    /* The seven selection windows as offsets into the current range, so the
-     * same index reads 1-32 in the low range and 65-96 in the high one. */
     std::pair<int, int> windowFor(int index) const
     {
         static constexpr int kOffsets[7][2] = {
             {0, 63}, {0, 31}, {32, 63}, {0, 15},
             {16, 31}, {32, 47}, {48, 63}};
         const int choice = juce::jlimit(0, 6, index);
-        const int first = row_.firstHarmonic();
+        const int first = firstHarmonic();
         return {first + kOffsets[choice][0], first + kOffsets[choice][1]};
     }
 
@@ -580,8 +514,8 @@ private:
     {
         const int choice = juce::jlimit(0, 6, selection_.getSelectedItemIndex());
         const auto [first, last] = windowFor(choice);
-        row_.setEditWindow(first, last);
-        row_.setEditTest(
+        bars_.setEditWindow(first, last);
+        bars_.setEditTest(
             [this](int harmonic, double level) { return editable(harmonic, level); });
     }
 
@@ -601,7 +535,7 @@ private:
     {
         if (snapshot_.empty())
             return false;
-        const int harmonic = row_.firstHarmonic() + index;
+        const int harmonic = firstHarmonic() + index;
         const auto [first, last] =
             windowFor(selection_.getSelectedItemIndex());
         if (harmonic < first || harmonic > last)
@@ -616,23 +550,27 @@ private:
         return mask == 0 ? live : !live;
     }
 
+    void beginMacro() { snapshot_ = bars_.levels(); }
+
+    void endMacro() { snapshot_.clear(); }
+
     void applyTilt(double amount)
     {
         if (snapshot_.empty())
             return;
         auto levels = snapshot_;
+        const double centre =
+            (static_cast<double>(levels.size()) - 1.0) * 0.5;
         for (int i = 0; i < static_cast<int>(levels.size()); ++i) {
             if (!selected(i))
                 continue;
-            const double centre =
-                (static_cast<double>(levels.size()) - 1.0) * 0.5;
             levels[static_cast<std::size_t>(i)] = juce::jlimit(
                 0.0, 99.0,
                 levels[static_cast<std::size_t>(i)] *
                     (1.0 + amount *
                                (static_cast<double>(i) - centre) / centre));
         }
-        row_.setLevels(levels);
+        bars_.setLevels(levels);
     }
 
     void applyLevel(double amount)
@@ -647,7 +585,7 @@ private:
                 0.0, 99.0,
                 levels[static_cast<std::size_t>(i)] + amount * 99.0);
         }
-        row_.setLevels(levels);
+        bars_.setLevels(levels);
     }
 
     void applyFormant(double amount)
@@ -655,21 +593,26 @@ private:
         if (snapshot_.empty())
             return;
         auto levels = snapshot_;
-        const int centre = centre_.getSelectedItemIndex() + 1;
+        const int formantCentre = centre_.getSelectedItemIndex() + 1;
+        const auto [winFirst, winLast] =
+            windowFor(selection_.getSelectedItemIndex());
         for (int i = 0; i < static_cast<int>(levels.size()); ++i) {
-            const int h = i + 1;
+            const int h = firstHarmonic() + i;
+            if (h < winFirst || h > winLast)
+                continue;
             levels[static_cast<std::size_t>(i)] = juce::jlimit(
                 0.0, 99.0,
                 levels[static_cast<std::size_t>(i)] +
                     amount * 99.0 *
-                        std::exp(-((h - centre) * (h - centre)) / 4.5));
+                        std::exp(-((h - formantCentre) * (h - formantCentre)) /
+                                 4.5));
         }
-        row_.setLevels(levels);
+        bars_.setLevels(levels);
     }
 
     void normalise()
     {
-        auto levels = row_.levels();
+        auto levels = bars_.levels();
         double peak = 0.0;
         for (double level : levels)
             peak = juce::jmax(peak, level);
@@ -677,12 +620,12 @@ private:
             return;
         for (double& level : levels)
             level = level * 99.0 / peak;
-        row_.setLevels(levels);
+        bars_.setLevels(levels);
     }
 
     void copyToOther()
     {
-        const auto levels = row_.levels();
+        const auto levels = bars_.levels();
         const auto other = spectrumIDs(op_, part_, !isA_);
         for (int i = 0; i < other.size() && i < static_cast<int>(levels.size());
              ++i) {
@@ -693,17 +636,40 @@ private:
         }
     }
 
+    void showTemplateMenu()
+    {
+        juce::PopupMenu menu;
+        const auto names = params::waveNames();
+        for (int i = 0; i < 13 && i < names.size(); ++i)
+            menu.addItem(i + 1, names[i]);
+        menu.showMenuAsync(
+            juce::PopupMenu::Options().withTargetComponent(&template_)
+                .withMinimumWidth(150),
+            [this](int result) {
+                if (result > 0)
+                    loadTemplate(result - 1);
+            });
+    }
+
+    void loadTemplate(int wave)
+    {
+        const auto values = analyseWaveTable(wave, firstHarmonic());
+        const auto ids = spectrumIDs(op_, part_, isA_);
+        for (int i = 0; i < ids.size() && i < 64; ++i)
+            setParam(editor_, ids[i],
+                     static_cast<float>(
+                         std::lround(values[static_cast<std::size_t>(i)])));
+        bars_.repaint();
+    }
+
     void refreshLegend()
     {
-        const int first = row_.firstHarmonic();
-        if (first != lastFirst_) {
-            lastFirst_ = first;
-            refreshSelectionItems();
-            applySelection();
-        }
+        const int first = firstHarmonic();
         const int group = group_.getSelectedItemIndex();
         juce::String text(kSpectrumGroupNames[group]);
         text << " \xc2\xb7 " << kSpectrumMaskNames[mask_.index()];
+        const auto [winFirst, winLast] = windowFor(selection_.getSelectedItemIndex());
+        text << " \xc2\xb7 edit " << winFirst << "-" << winLast;
         int count = 0;
         for (int i = 0; i < 64; ++i) {
             const int harmonic = first + i;
@@ -717,28 +683,33 @@ private:
             text << " none in range";
         else if (count > 24)
             text << " " << juce::String(count) << " members";
-        row_.setLegend(text);
+        if (legend_.getText() != text)
+            legend_.setText(text, juce::dontSendNotification);
     }
 
     PluginEditor& editor_;
     int op_ = 0;
     int part_ = 0;
     bool isA_ = true;
-    SpectrumRow& row_;
-    P1Choice group_;
+    P1SpectralBars bars_;
+    ParamChoice range_;
+    juce::Label rangeLabel_;
     MaskRow mask_;
-    P1Choice selection_;
-    juce::Label groupLabel_;
     juce::Label maskLabel_;
+    P1Choice selection_;
     juce::Label selectionLabel_;
-    int lastFirst_ = -1;
+    P1Choice group_;
+    juce::Label groupLabel_;
+    P1Button template_{"load spectrum template...", true};
+    P1Button norm_{"norm", true};
+    P1Button toOther_{"to b", true};
     SpringSlider tilt_;
     SpringSlider level_;
     SpringSlider formant_;
     juce::ComboBox centre_;
-    P1Button norm_{"norm", true};
-    P1Button toOther_{"to b", true};
+    juce::Label legend_;
     std::vector<double> snapshot_;
+    int lastFirst_ = -1;
 };
 
 class SpectraOperatorCard : public juce::Component {
@@ -914,13 +885,7 @@ public:
             rows_[static_cast<std::size_t>(i)] =
                 std::make_unique<SpectrumRow>(editor, i,
                                               editor.activePart(), a);
-            controls_[static_cast<std::size_t>(i)] =
-                std::make_unique<SpectrumControls>(
-                    editor, i, editor.activePart(), a,
-                    *rows_[static_cast<std::size_t>(i)]);
             content_.addAndMakeVisible(*rows_[static_cast<std::size_t>(i)]);
-            content_.addAndMakeVisible(
-                *controls_[static_cast<std::size_t>(i)]);
         }
         viewport_.setViewedComponent(&content_, false);
         viewport_.setScrollBarsShown(false, false);
@@ -940,16 +905,10 @@ public:
         const int contentWidth = juce::jmax(320, viewport_.getWidth());
         constexpr int pairHeight = 124;
         constexpr int pairGap = 4;
-        constexpr int controlsWidth = 300;
-        constexpr int controlsGap = 8;
         content_.setSize(contentWidth, 4 * pairHeight + 3 * pairGap + 6);
         int y = 6;
-        const int rowWidth = contentWidth - controlsWidth - controlsGap;
-        for (int i = 0; i < 4; ++i) {
-            rows_[static_cast<std::size_t>(i)]->setBounds(0, y, rowWidth,
-                                                          pairHeight);
-            controls_[static_cast<std::size_t>(i)]->setBounds(
-                rowWidth + controlsGap, y, controlsWidth, pairHeight);
+        for (auto& row : rows_) {
+            row->setBounds(0, y, contentWidth, pairHeight);
             y += pairHeight + pairGap;
         }
     }
@@ -960,14 +919,11 @@ public:
             card->tick();
         for (auto& row : rows_)
             row->tick();
-        for (auto& controls : controls_)
-            controls->tick();
     }
 
 private:
     std::array<std::unique_ptr<SpectraOperatorCard>, 4> opcards_{};
     std::array<std::unique_ptr<SpectrumRow>, 4> rows_{};
-    std::array<std::unique_ptr<SpectrumControls>, 4> controls_{};
     juce::Component content_;
     juce::Viewport viewport_;
 };

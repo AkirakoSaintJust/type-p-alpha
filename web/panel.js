@@ -1056,23 +1056,68 @@
     heading.textContent = title;
     head.append(heading);
     secHead.append(head);
+
     const acts = div("sec-actions spectrum-row-acts");
+    const rangeLabel = document.createElement("span");
+    rangeLabel.className = "row-range-label";
+    rangeLabel.textContent = "range";
+    let rangeSelect = null;
     if (rangeSpec !== undefined) {
-      const rangeLabel = document.createElement("span");
-      rangeLabel.className = "row-range-label";
-      rangeLabel.textContent = "range";
       const current = values.get(rangeSpec.id) ?? 0;
-      const rangeSelect = makeSelect(RANGES, RANGES[current] ?? RANGES[0],
+      rangeSelect = makeSelect(RANGES, RANGES[current] ?? RANGES[0],
         (choice) => {
           const index = RANGES.indexOf(choice);
           setRaw(rangeSpec, index < 0 ? 0 : index);
           bars.draw();
           updateLegend();
-          if (row.onRangeChange) row.onRangeChange();
+          refreshSelection();
+          applyWindow();
         });
       rangeSelect.classList.add("row-range");
       acts.append(rangeLabel, rangeSelect);
     }
+
+    const maskLabel = document.createElement("span");
+    maskLabel.className = "row-range-label";
+    maskLabel.textContent = "mask";
+    const maskSeg = div("seg specmask compact");
+    SPEC_MASKS.forEach((name, index) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.textContent = name;
+      button.className = tools.mask === index ? "active" : "";
+      button.addEventListener("click", () => {
+        tools.mask = index;
+        maskSeg.querySelectorAll("button").forEach((item, position) =>
+          item.classList.toggle("active", position === index));
+        updateLegend();
+      });
+      maskSeg.append(button);
+    });
+    acts.append(maskLabel, maskSeg);
+
+    const selectionLabel = document.createElement("span");
+    selectionLabel.className = "row-range-label";
+    selectionLabel.textContent = "selection";
+    const selectionSelect = document.createElement("select");
+    selectionSelect.className = "row-selection";
+    acts.append(selectionLabel, selectionSelect);
+
+    const groupLabel = document.createElement("span");
+    groupLabel.className = "row-range-label";
+    groupLabel.textContent = "group";
+    const groupSelect = makeSelect(
+      SPEC_GROUPS.map((group) => group.label),
+      SPEC_GROUPS[tools.group].label,
+      (label) => {
+        const index = SPEC_GROUPS.findIndex((group) => group.label === label);
+        tools.group = index < 0 ? 0 : index;
+        bars.draw();
+        updateLegend();
+      });
+    groupSelect.classList.add("row-group");
+    acts.append(groupLabel, groupSelect);
+
     const templateWrap = div("template-wrap");
     const templateButton = document.createElement("button");
     templateButton.type = "button";
@@ -1103,6 +1148,28 @@
     });
     templateWrap.append(templateButton, templateMenu);
     acts.append(templateWrap);
+
+    const norm = document.createElement("button");
+    norm.className = "mini";
+    norm.textContent = "norm";
+    norm.addEventListener("click", () => {
+      const levels = bars.levels();
+      const max = Math.max(...levels);
+      if (max > 0) {
+        for (let i = 0; i < specs.length; ++i)
+          setRaw(specs[i], clampLevel(levels[i] * 99 / max));
+        bars.draw();
+      }
+    });
+    const to = document.createElement("button");
+    to.className = "mini";
+    to.textContent = options.kind === "a" ? "to b" : "to a";
+    to.addEventListener("click", () => {
+      const levels = bars.levels();
+      for (let i = 0; i < specs.length && i < (options.otherSpecs || []).length;
+           ++i)
+        setRaw(options.otherSpecs[i], levels[i]);
+    });
     const copyButton = document.createElement("button");
     copyButton.className = "mini";
     copyButton.textContent = "copy";
@@ -1121,26 +1188,91 @@
         setRaw(specs[i], clampLevel(clipboard.values[i] ?? 0));
       buildPage();
     });
-    acts.append(copyButton, pasteButton);
+    acts.append(norm, to, copyButton, pasteButton);
     secHead.append(acts);
     cardEl.append(secHead);
+
+    const body = div("spectrum-body");
+    const spot = div("spectrum-spot");
     const bars = spectrumBars(specs, options.kind, rangeSpec, markTest, canEdit);
-    cardEl.append(bars.el, bars.labels);
     const legend = div("speclegend");
     const legendName = document.createElement("span");
     legendName.className = "legend-name";
     const legendItems = document.createElement("span");
     legendItems.className = "legend-items";
     legend.append(legendName, " ", legendItems);
-    cardEl.append(legend);
+    spot.append(bars.el, bars.labels, legend);
+    body.append(spot);
+
+    const controls = div("spectrum-springs");
+    let base = null;
+    let centre = 5;
+    function begin() {
+      base = bars.levels().slice();
+    }
+    function end() { base = null; }
+    function selected(index, first) {
+      if (base === null) return false;
+      if (!bars.inWindow(first + index)) return false;
+      if (!SPEC_GROUPS[tools.group].test(first + index)) return false;
+      if (tools.mask === 2) return true;
+      const live = base[index] > 0;
+      return tools.mask === 0 ? live : !live;
+    }
+    function write(levels) {
+      for (let i = 0; i < specs.length; ++i)
+        setRaw(specs[i], clampLevel(levels[i]));
+      bars.draw();
+    }
+    function apply(transform, test) {
+      if (base === null) return;
+      const first = bars.currentFirst();
+      write(base.map((level, index) =>
+        (test ? test(index, first) : selected(index, first))
+          ? transform(level, index) : level));
+    }
+    const tilt = makeSpring("tilt", {
+      onStart: begin, onEnd: end,
+      onInput: (amount) => {
+        const centrePoint = (specs.length - 1) / 2;
+        apply((level, index) =>
+          Math.round(level * (1 + amount * (index - centrePoint) / centrePoint)));
+      },
+    });
+    const level = makeSpring("level", {
+      onStart: begin, onEnd: end,
+      onInput: (amount) => apply((value) => Math.round(value + amount * 99)),
+    });
+    const formant = makeSpring("formant", {
+      onStart: begin, onEnd: end,
+      onInput: (amount) => {
+        apply((value, index) => Math.round(
+          value + amount * 99 * Math.exp(-Math.pow(index + 1 - centre, 2) / 4.5)),
+        (index, first) => bars.inWindow(first + index));
+      },
+    });
+    const harmonicNames = Array.from({ length: 64 }, (_, index) => "h" + (index + 1));
+    const centreSelect = makeSelect(harmonicNames, "h5",
+      (value) => { centre = parseInt(value.slice(1), 10); });
+    centreSelect.classList.add("formant-select");
+    const formantCell = div("formant-cell");
+    formantCell.append(formant, centreSelect);
+    const springs = div("springs");
+    springs.append(tilt, level, formantCell);
+    controls.append(springs);
+    body.append(controls);
+    cardEl.append(body);
+
     let lastLegendKey = "";
     function updateLegend() {
       const first = bars.currentFirst();
-      const key = tools.group + ":" + tools.mask + ":" + first;
+      const key = tools.group + ":" + tools.mask + ":" + tools.selection + ":" + first;
       if (key === lastLegendKey) return;
       lastLegendKey = key;
       const group = SPEC_GROUPS[tools.group];
-      legendName.textContent = group.name + " · " + SPEC_MASKS[tools.mask];
+      const [winFirst, winLast] = windowFor(tools.selection);
+      legendName.textContent = group.name + " \u00b7 " + SPEC_MASKS[tools.mask] +
+        " \u00b7 edit " + winFirst + "-" + winLast;
       legendItems.textContent = "";
       let count = 0;
       for (let i = 0; i < specs.length; ++i) {
@@ -1155,174 +1287,45 @@
       if (count === 0) legendItems.textContent = "none in range";
       else if (count > 24) legendItems.textContent = count + " members";
     }
+
+    function windowFor(index) {
+      const first = bars.currentFirst();
+      const offsets = [[0, 63], [0, 31], [32, 63], [0, 15], [16, 31],
+        [32, 47], [48, 63]];
+      const choice = Math.max(0, Math.min(6, index));
+      return [first + offsets[choice][0], first + offsets[choice][1]];
+    }
+    function refreshSelection() {
+      const chosen = Math.max(0, Math.min(6, tools.selection));
+      selectionSelect.textContent = "";
+      for (let i = 0; i < 7; ++i) {
+        const [first, last] = windowFor(i);
+        const option = document.createElement("option");
+        option.value = String(i);
+        option.textContent = "edit " + first + "-" + last;
+        option.selected = i === chosen;
+        selectionSelect.append(option);
+      }
+    }
+    function applyWindow() {
+      const [first, last] = windowFor(tools.selection);
+      bars.setWindow(first, last);
+    }
+    selectionSelect.addEventListener("change", () => {
+      tools.selection = Number(selectionSelect.value);
+      applyWindow();
+      updateLegend();
+    });
+    refreshSelection();
+    applyWindow();
     updateLegend();
     spectrumUpdaters.push(updateLegend);
     const row = {
       el: cardEl, bars: bars, tools: tools, specs: specs,
       otherSpecs: options.otherSpecs || [], kind: options.kind,
-      updateLegend: updateLegend, onRangeChange: null,
+      updateLegend: updateLegend,
     };
     return row;
-  }
-
-  function spectrumControls(title, row) {
-    const cardEl = sectionCard(title);
-    cardEl.classList.add("spectrum-controls-card");
-    const tools = row.tools;
-    let base = null;
-    let centre = 5;
-    function begin() {
-      base = row.bars.levels().slice();
-    }
-    function end() { base = null; }
-    function selected(index, first) {
-      if (base === null) return false;
-      if (!row.bars.inWindow(first + index)) return false;
-      if (!SPEC_GROUPS[tools.group].test(first + index)) return false;
-      if (tools.mask === 2) return true;
-      const live = base[index] > 0;
-      return tools.mask === 0 ? live : !live;
-    }
-    function write(levels) {
-      for (let i = 0; i < row.specs.length; ++i)
-        setRaw(row.specs[i], clampLevel(levels[i]));
-      row.bars.draw();
-    }
-    function apply(transform) {
-      if (base === null) return;
-      const first = row.bars.currentFirst();
-      write(base.map((level, index) =>
-        selected(index, first) ? transform(level, index) : level));
-    }
-    const tilt = makeSpring("tilt", {
-      onStart: begin, onEnd: end,
-      onInput: (amount) => {
-        const centre = (row.specs.length - 1) / 2;
-        apply((level, index) =>
-          Math.round(level * (1 + amount * (index - centre) / centre)));
-      },
-    });
-    const level = makeSpring("level", {
-      onStart: begin, onEnd: end,
-      onInput: (amount) => apply((value) => Math.round(value + amount * 99)),
-    });
-    const harmonicNames = Array.from({ length: 64 },
-      (_, index) => "h" + (index + 1));
-    const formantSelect = makeSelect(harmonicNames, "h5",
-      (value) => { centre = parseInt(value.slice(1), 10); });
-    formantSelect.classList.add("spring-select");
-    const formant = makeSpring("formant", {
-      extra: formantSelect,
-      onStart: begin, onEnd: end,
-      onInput: (amount) => {
-        if (base === null) return;
-        write(base.map((value, index) =>
-          value + amount * 99 *
-            Math.exp(-Math.pow(index + 1 - centre, 2) / 4.5)));
-      },
-    });
-
-    const groupRow = div("specgroup");
-    const groupLabel = document.createElement("span");
-    groupLabel.className = "lbl";
-    groupLabel.textContent = "group";
-    const groupSelect = makeSelect(
-      SPEC_GROUPS.map((group) => group.label),
-      SPEC_GROUPS[tools.group].label,
-      (label) => {
-        const index = SPEC_GROUPS.findIndex((group) => group.label === label);
-        tools.group = index < 0 ? 0 : index;
-        row.bars.draw();
-        row.updateLegend();
-      });
-    groupRow.append(groupLabel, groupSelect);
-
-    const maskRow = div("specgroup");
-    const maskLabel = document.createElement("span");
-    maskLabel.className = "lbl";
-    maskLabel.textContent = "mask";
-    const maskSeg = div("seg specmask");
-    SPEC_MASKS.forEach((name, index) => {
-      const button = document.createElement("button");
-      button.textContent = name;
-      button.className = tools.mask === index ? "active" : "";
-      button.addEventListener("click", () => {
-        tools.mask = index;
-        maskSeg.querySelectorAll("button").forEach((item, position) =>
-          item.classList.toggle("active", position === index));
-        row.updateLegend();
-      });
-      maskSeg.append(button);
-    });
-    maskRow.append(maskLabel, maskSeg);
-
-    const selectionRow = div("specgroup specselection");
-    const selectionLabel = document.createElement("span");
-    selectionLabel.className = "lbl";
-    selectionLabel.textContent = "selection";
-    const selectionSelect = document.createElement("select");
-    selectionSelect.className = "row-selection";
-    function selectionWindows() {
-      const first = row.bars.currentFirst();
-      return [[0, 63], [0, 31], [32, 63], [0, 15], [16, 31], [32, 47],
-        [48, 63]].map(([lo, hi]) => [first + lo, first + hi]);
-    }
-    function refreshSelection() {
-      const chosen = Math.max(0, Math.min(6, tools.selection));
-      selectionSelect.textContent = "";
-      selectionWindows().forEach(([first, last], index) => {
-        const option = document.createElement("option");
-        option.value = String(index);
-        option.textContent = "edit " + first + "-" + last;
-        option.selected = index === chosen;
-        selectionSelect.append(option);
-      });
-    }
-    function applyWindow() {
-      const windows = selectionWindows();
-      const chosen = Math.max(0, Math.min(6, tools.selection));
-      row.bars.setWindow(windows[chosen][0], windows[chosen][1]);
-    }
-    selectionSelect.addEventListener("change", () => {
-      tools.selection = Number(selectionSelect.value);
-      applyWindow();
-    });
-    selectionRow.append(selectionLabel, selectionSelect);
-    refreshSelection();
-    applyWindow();
-    row.onRangeChange = () => {
-      refreshSelection();
-      applyWindow();
-    };
-
-    const springs = div("springs");
-    springs.append(tilt, level, formant);
-    cardEl.append(groupRow, maskRow, selectionRow, springs);
-
-    const foot = div("specfoot");
-    const norm = document.createElement("button");
-    norm.className = "mini";
-    norm.textContent = "norm";
-    norm.addEventListener("click", () => {
-      const levels = row.bars.levels();
-      const max = Math.max(...levels);
-      if (max > 0) {
-        for (let i = 0; i < row.specs.length; ++i)
-          setRaw(row.specs[i], clampLevel(levels[i] * 99 / max));
-        row.bars.draw();
-      }
-    });
-    const to = document.createElement("button");
-    to.className = "mini";
-    to.textContent = row.kind === "a" ? "to b" : "to a";
-    to.addEventListener("click", () => {
-      const levels = row.bars.levels();
-      for (let i = 0; i < row.specs.length && i < row.otherSpecs.length; ++i)
-        setRaw(row.otherSpecs[i], levels[i]);
-    });
-    foot.append(norm, to);
-    cardEl.append(foot);
-    return cardEl;
   }
 
   function spectrumDisplay(aSpecs, bSpecs, rangeA, rangeB, morphSpec,
@@ -2694,10 +2697,7 @@
           kind: letter,
           otherSpecs: other,
         });
-      const pair = div("spectrum-pair");
-      pair.append(row.el,
-        spectrumControls(`op${op + 1} spectral controls`, row));
-      runs.append(pair);
+      runs.append(row.el);
     }
     wrapper.append(strip, runs);
     page.append(wrapper);

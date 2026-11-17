@@ -523,18 +523,27 @@ body { display: block; padding: 0; min-height: 100vh; }
 
 /* split spectra pages: operator strip, wide rows, control cards */
 .spectra-page { display: flex; flex-direction: column; gap: 8px; }
-.spectrum-runs { display: flex; flex-direction: column; gap: 8px;
+.spectrum-runs { display: flex; flex-direction: column; gap: 4px;
   padding-top: 6px; }
-.spectrum-pair { display: grid; grid-template-columns: minmax(0, 1fr) 300px;
-  gap: 8px; align-items: stretch; }
-.spectrum-row { padding: 8px 10px; }
-.spectrum-row .specbars { height: 72px; gap: 2px; }
-.spectrum-row .speclabels span { font-size: 8px; }
-.spectrum-row-acts { display: flex; align-items: center; gap: 6px; }
-.row-range-label { font-size: 9px; color: var(--dim); }
-.row-range { width: 76px; flex: 0 0 76px; font-size: 10px; }
+.spectrum-row { height: 124px; padding: 0; display: flex;
+  flex-direction: column; }
+.spectrum-row .sec-head { height: 24px; padding: 0 8px; margin: 0; }
+.spectrum-row .secheadleft { flex: 0 0 auto; margin-right: 10px; }
+.spectrum-row h3 { font-size: 11px; }
+.spectrum-row-acts { display: flex; align-items: center; gap: 5px; flex: 1;
+  justify-content: flex-end; min-width: 0; }
+.row-range-label { font-size: 9px; color: var(--dim); white-space: nowrap; }
+.row-range { width: 64px; flex: 0 0 64px; font-size: 10px; }
+.spectrum-row-acts .seg.specmask.compact { display: flex; width: 132px;
+  flex: 0 0 132px; }
+.spectrum-row-acts .seg.specmask.compact button { flex: 1; padding: 2px 0;
+  font-size: 9px; height: 18px; }
+.row-selection { width: 94px; flex: 0 0 94px; font-size: 9px; }
+.row-group { width: 108px; flex: 0 0 108px; font-size: 9px; }
 .template-wrap { position: relative; display: inline-flex; }
-.spectrum-row .template-btn { white-space: nowrap; }
+.spectrum-row .template-btn { white-space: nowrap; font-size: 9px;
+  padding: 2px 6px; height: 18px; }
+.spectrum-row-acts .mini { padding: 2px 6px; height: 18px; }
 .template-menu { position: absolute; top: 100%; right: 0; z-index: 30;
   margin-top: 2px; display: flex; flex-direction: column; min-width: 132px;
   background: #000; border: 1px solid var(--line2); padding: 2px 0; }
@@ -543,9 +552,22 @@ body { display: block; padding: 0; min-height: 100vh; }
   text-align: left; font: inherit; font-size: 11px; padding: 4px 10px;
   cursor: pointer; white-space: nowrap; }
 .template-menu button:hover { background: var(--panel); color: var(--pink); }
-.spectrum-controls-card { padding: 7px 8px; }
-.spectrum-controls-card .specselection select { flex: 1; font-size: 10px; }
-.spectrum-controls-card .specselection .lbl { min-width: 46px; }
+.spectrum-body { flex: 1; display: flex; gap: 8px; padding: 0 8px 6px;
+  min-height: 0; }
+.spectrum-spot { flex: 1; display: flex; flex-direction: column;
+  min-width: 0; }
+.spectrum-row .specbars { flex: 1; height: auto; min-height: 0; }
+.spectrum-row .speclabels { height: 11px; }
+.spectrum-row .speclegend { height: 12px; font-size: 9px; }
+.spectrum-springs { width: 280px; display: flex; flex-direction: column;
+  padding-top: 6px; }
+.spectrum-springs .springs { flex: 1; align-items: flex-start; margin-top: 0;
+  gap: 6px; }
+.spectrum-springs .spring-track { height: 56px; }
+.spectrum-springs .formant-cell { flex: 1.7; display: flex;
+  align-items: flex-end; gap: 6px; min-width: 0; }
+.spectrum-springs .formant-cell .spring { flex: 1; }
+.spectrum-springs .formant-select { margin-bottom: 9px; }
 .sbar.outside { background: #050505; border-color: #111; }
 .sbar.outside i { background: #2a2a2a; }
 .sbar.b.outside i { background: #2a2a2a; }

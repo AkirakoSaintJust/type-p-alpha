@@ -79,8 +79,8 @@ advance with the envelope and the LFO. A template menu analyses a wave into eith
 spectrum through the wave select, a spectrum paste, or a morph depth moved away
 from zero.
 
-The control card below each spectrum row has a group selector, a live, dead or
-both mask, and a selection window in seven steps that follows the row's range. The group
+The card header has range, a live, dead or both mask, a selection window in seven
+steps that follows the card's range, and a group selector. The group
 picks a harmonic series from all, odd, even, octave, or the third, fifth, seventh,
 fifteenth, eleventh, thirteenth, ninth, twenty-first, nineteenth and seventeenth
 series. The bar labels show every harmonic in the range and mark the group members

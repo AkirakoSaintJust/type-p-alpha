@@ -413,8 +413,8 @@ values replace the eight range values. The group and mask stay editor state.
 
 The editor is a larger change than the DSP, because the shipped layout splits the
 spectra into two tabs, one per spectrum, and each tab carries four operator and
-oscillator cards above four bands of a 64-bar row and its control card. A row takes
-about three quarters of the page width, so a bar gets about 14 px. The select groups, masks, spring controls and copy
+oscillator cards above four spectrum cards. Each card holds the 64-bar editor on a
+left column and the springs on a right column, so a bar gets about 14 px. The select groups, masks, spring controls and copy
 and paste carry over. The legend shows a count or the member harmonics rather than
 64 numbers, and the bar labels show every eighth harmonic.
 

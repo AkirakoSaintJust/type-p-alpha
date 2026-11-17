@@ -205,10 +205,10 @@ away from zero writes the waveform as 13, so the modulation has something to mov
 3. **Editor pages:** in. The two spectrum tabs (`op spectra a` and `op spectra b`),
    the seven-tab bar, the 64-bar editor, the group and mask selectors, the
    select-group legend, the spring-loaded tilt, level and formant controls, the
-   `load spectrum template...` menu on each row, the selection window in the control
-   card, the morph depth mode switch, the copy and paste, and the page index remap. The A and B tabs each carry four
-   bands of a wide row and its control card, and the four bands fit without a
-   scroll. The shaped spectrum snapshot is
+   `load spectrum template...` menu, the selection window, the morph depth mode
+   switch, the copy and paste, and the page index remap. The A and B tabs each carry
+   four spectrum cards, each with its header selectors, the 64-bar editor and the
+   three springs, and the four cards fit without a scroll. The shaped spectrum snapshot is
    `editor-operator-spectra-levels.png`, the B page snapshot is
    `editor-operator-spectra-b.png`, and the mod display snapshot is
    `editor-op-spectra-mod-levels.png`. The Linux goldens were regenerated for the

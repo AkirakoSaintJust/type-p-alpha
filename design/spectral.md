@@ -49,15 +49,15 @@ the same as the operators and operator lfos pages.
 | --- | --- | --- |
 | operator strip | 1,206 | 170 |
 | empty band | 1,206 | 6 |
-| four row and control bands, 4 px gaps | 1,206 | 508 |
+| four spectrum cards, 4 px gaps | 1,206 | 508 |
 
-The page is 685 px high, so the 508 px of bands and the 6 px empty band fit under
-the 170 px strip without a scroll. Each band is 124 px high. The row takes 898 px
-and its control card 300 px, with an 8 px gap. The row holds a range select, the
-`load spectrum template...` button, copy and paste, the 64-bar editor, the harmonic
-labels and the group legend. The control card, titled `opN spectral
-controls`, holds the group, the mask, the three spring controls, the formant
-picker, normalise and to the other spectrum. At 898 px each bar is about 14 px.
+The page is 685 px high, so the 508 px of cards and the 6 px empty band fit under
+the 170 px strip without a scroll. Each card is 124 px high. The header holds the
+title, `range`, `mask`, `selection`, `group`, `load spectrum template...`, `norm`,
+`to b` or `to a`, and copy and paste. The body holds the 64-bar editor and the group
+legend on the left, about 918 px, and the three spring controls on the right,
+280 px, with the formant picker beside the formant lever. At 918 px each bar is
+about 14 px.
 
 The operator strip is the operator column from the operator envs page, reduced to a
 30 px scope and spectro pair and the oscillator card. The operator name sits in a
@@ -143,12 +143,13 @@ sit above Nyquist. The transform also drops phase, so the waveform shape, the pe
 factor and the oscilloscope trace change even when the harmonic magnitudes match.
 The half-wave and rectified shapes carry a DC term, which the table drops.
 
-## Spectrum rows
+## Spectrum cards
 
-Each operator has one row per spectrum, `opN spectrum a` and `opN spectrum b`, with
-the same controls. The 64 levels and the range are the saved spectrum state. Both
-rows always show the stored levels, and the template button fills one of them from
-a wave.
+Each operator has one card per spectrum, `opN spectrum a` and `opN spectrum b`, with
+the same controls. The card header carries the range, mask, selection, group,
+template, norm and copy controls. The 64 levels and the range are the saved spectrum
+state. Both cards always show the stored levels, and the template button fills one
+of them from a wave.
 
 | Control | Meaning |
 | --- | --- |
@@ -157,14 +158,14 @@ a wave.
 | 64 bars | the selected range, 0 to 99 per bar |
 | `copy` / `paste` | move the whole spectrum to another operator |
 | `to b` / `to a` | copy the 64 levels to the other spectrum of the operator |
+| `norm` | scale the 64 levels so the tallest reads 99 |
 | group | the harmonic series the spring controls select, from all, odd, even, octave P8, third P5, fifth M3, seventh m7, fifteenth M7, eleventh TT, thirteenth m6, ninth M2, twenty-first P4, nineteenth m3 and seventeenth m2 |
 | mask | live, dead or both, so a gesture writes only the sounding, only the silent, or every selected member |
 | selection | the harmonic window that gestures and freehand edits may touch: `edit 1-64`, `edit 1-32`, `edit 33-64`, `edit 1-16`, `edit 17-32`, `edit 33-48` or `edit 49-64`, and the same seven steps shifted to the 65-128 range |
 | tilt | drag up for the reverse tilt, with the highs louder and the lows quieter, and down for the normal tilt, with the lows louder and the highs quieter |
 | level | drag to add or remove level across the selected members |
 | formant | place a peak at the picked harmonic and drag its amount |
-| harmonic picker | the formant centre, h1 to h64 |
-| `norm` | scale the 64 bars so the tallest reads 99 |
+| harmonic picker | the formant centre, h1 to h64, beside the formant lever |
 
 The bar editor writes the level under the pointer and follows a drag across the
 bars. A bar snaps to whole units from 0 to 99. The engine normalises the generated
@@ -178,17 +179,17 @@ selected and `both` masked, a level drag writes harmonics 3, 6, 12, 24 and 48 an
 leaves h1, h2 and h4 where they were. A `dead` mask writes only the members that
 are silent, which is the quick way to build a series from nothing.
 
-The selection window sits under the mask and composes with it. It offers seven
-steps, and the labels follow the row's range, so `edit 1-32` becomes `edit 65-96`
-when the row moves to 65-128. A spring gesture writes a bar only when it is in the
+The selection window sits after the mask in the card header and composes with it.
+It offers seven steps, and the labels follow the card's range, so `edit 1-32`
+becomes `edit 65-96` when the range moves to 65-128. A spring gesture writes a bar only when it is in the
 window and passes the mask and the group. Freehand editing also stays inside the
 window and respects the live or dead mask, so a narrowed window makes the bar editor
 direct and precise at the same time. Bars outside the window are dimmed. The window
 is editor state and is not saved with the patch or written to the manifest.
 
-Each row carries `copy` and `paste` in its header, like every other operator card,
-so a whole spectrum moves between operators. The control card carries `norm` and
-`to b` or `to a` along its foot, under the selection row and the three springs.
+Each card carries `copy` and `paste` in its header, like every other operator card,
+so a whole spectrum moves between operators. `norm` and `to b` or `to a` sit in the
+same header.
 
 ## The spring controls
 
