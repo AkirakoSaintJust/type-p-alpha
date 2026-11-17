@@ -113,8 +113,8 @@ Every page fills the same height:
   band, then four bands of a wide spectrum row and its control card side by side.
   Each row holds a range select, the `load spectrum template...` button, a 64-bar
   editor, the harmonic labels and the group legend. The control card holds the
-  group, the mask, the `tilt`, `level` and `formant` springs, the formant picker h1
-  to h64, `norm` and `to b`. The four bands are 124 px each, so they fit under the
+  group, the mask, the selection window, the `tilt`, `level` and `formant` springs,
+  the formant picker h1 to h64, and `norm` and `to b` in the card foot. The four bands are 124 px each, so they fit under the
   strip without a scroll.
 - op spectra b: the same page for spectrum b, with `to a` in place of `to b`. Each
   row carries its own range, its own 64 levels and its own template button.
@@ -195,7 +195,9 @@ current state in pink and the other word faint.
 The level slider is a 14px track with a purple fill and a `level` caption.
 
 A spectrum row draws 64 columns across the page width and writes the level under
-the pointer, then follows a horizontal drag. The bar labels show every eighth
+the pointer, then follows a horizontal drag. Only a bar inside the selection window
+and passing the live or dead mask is written, so the window narrows both the freehand
+editor and the springs. Bars outside the window are dimmed. The bar labels show every eighth
 harmonic, and the members of the selected group are green. A spring control is a
 10px track: the drag previews one curve from the 64 levels captured at pointer down,
 written to the members the group and mask select, and the release leaves the result

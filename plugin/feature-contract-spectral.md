@@ -22,8 +22,8 @@
 ## Player outcome
 
 - **New player action:** open `op spectra a` or `op spectra b`, load a wave with
-  `load spectrum template...`, draw 64 harmonic levels, use the group, mask and
-  spring controls, and choose `spectrum` in the wave select. The `op spectra mod`
+  `load spectrum template...`, draw 64 harmonic levels, use the group, mask,
+  selection window and spring controls, and choose `spectrum` in the wave select. The `op spectra mod`
   page carries the spectrum display, the morph, the morph envelope and the morph
   LFO.
 - **Sound and behaviour:** the wave select is the mode. Values 0 to 12 read the wave
@@ -34,8 +34,10 @@
   table and the additive bank without losing either sound. The operator morph blends
   spectrum a and b, and the envelope and LFO move the blend per voice. Each spectrum
   carries its own 64-harmonic range, so it addresses 1 to 64 or 65 to 128. The mod
-  display zooms to the union of the two spans when a and b differ. A template load
-  does not change the waveform. The wave select, a spectrum paste, or a morph depth
+  display zooms to the union of the two spans when a and b differ. The selection
+  window composes with the group and the live or dead mask for both the springs and
+  the freehand editor, and it is editor state, so it adds no manifest parameters. A
+  template load does not change the waveform. The wave select, a spectrum paste, or a morph depth
   moved away from zero selects `spectrum`. The mode switch crossfades over 10 ms. A
   silent part commits a new spectrum at once, so its next note starts on the new
   table. An audible part ramps from the old table to the new one. The mod display
@@ -175,8 +177,8 @@ away from zero writes the waveform as 13, so the modulation has something to mov
 - **Tolerance/metric:** the existing waves 0 to 8 and the shifted pulse, square and
   saw must match the current header sample for sample. The checks are exact. A
   template load must write the 64 levels of the chosen row and leave the waveform
-  alone, and the mod display must show both outlines, the morph marker and the
-  waveform trace. `spectral` also checks that the engine publishes the live morph
+  alone, the selection window must gate both freehand writes and the springs, and
+  the mod display must show both outlines, the morph marker and the waveform trace. `spectral` also checks that the engine publishes the live morph
   for the newest voice, and that the base morph stays still with zero envelope
   depth. The part block and
   manifest counts must match 800 and 1,614.
@@ -203,8 +205,8 @@ away from zero writes the waveform as 13, so the modulation has something to mov
 3. **Editor pages:** in. The two spectrum tabs (`op spectra a` and `op spectra b`),
    the seven-tab bar, the 64-bar editor, the group and mask selectors, the
    select-group legend, the spring-loaded tilt, level and formant controls, the
-   `load spectrum template...` menu on each row, the morph depth mode switch, the
-   copy and paste, and the page index remap. The A and B tabs each carry four
+   `load spectrum template...` menu on each row, the selection window in the control
+   card, the morph depth mode switch, the copy and paste, and the page index remap. The A and B tabs each carry four
    bands of a wide row and its control card, and the four bands fit without a
    scroll. The shaped spectrum snapshot is
    `editor-operator-spectra-levels.png`, the B page snapshot is

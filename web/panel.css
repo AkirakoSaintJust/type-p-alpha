@@ -544,5 +544,10 @@ body { display: block; padding: 0; min-height: 100vh; }
   cursor: pointer; white-space: nowrap; }
 .template-menu button:hover { background: var(--panel); color: var(--pink); }
 .spectrum-controls-card { padding: 7px 8px; }
+.spectrum-controls-card .specselection select { flex: 1; font-size: 10px; }
+.spectrum-controls-card .specselection .lbl { min-width: 46px; }
+.sbar.outside { background: #050505; border-color: #111; }
+.sbar.outside i { background: #2a2a2a; }
+.sbar.b.outside i { background: #2a2a2a; }
 .spectrum-controls-card .springs { margin-top: 4px; }
 .spectrum-controls-card .spring-track { height: 44px; }

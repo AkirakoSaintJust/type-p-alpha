@@ -726,6 +726,23 @@ void P1SpectralBars::setFirstHarmonic(int first)
     repaint();
 }
 
+void P1SpectralBars::setEditWindow(int first, int last)
+{
+    windowFirst_ = first;
+    windowLast_ = last;
+    repaint();
+}
+
+void P1SpectralBars::setEditTest(std::function<bool(int, double)> test)
+{
+    editTest_ = std::move(test);
+}
+
+bool P1SpectralBars::inWindow(int harmonic) const
+{
+    return harmonic >= windowFirst_ && harmonic <= windowLast_;
+}
+
 void P1SpectralBars::setGroupTest(std::function<bool(int)> test)
 {
     groupTest_ = std::move(test);
@@ -764,6 +781,11 @@ void P1SpectralBars::setFromMouse(const juce::MouseEvent& event)
     const int index = juce::jlimit(
         0, count - 1, static_cast<int>((event.position.x - barsLeft) /
                                        (barsWidth / static_cast<float>(count))));
+    const int harmonic = firstHarmonic_ + index;
+    if (!inWindow(harmonic))
+        return;
+    if (editTest_ && !editTest_(harmonic, levelAt(index)))
+        return;
     const double level = juce::jlimit(
         0.0, 99.0, 99.0 * (barsTop + barsHeight - event.position.y) /
                         static_cast<double>(barsHeight));
@@ -797,10 +819,26 @@ void P1SpectralBars::paint(juce::Graphics& g)
     const int count = juce::jmax(1, parameterIDs_.size());
     const float slot = static_cast<float>(bars.getWidth()) /
                        static_cast<float>(count);
+    /* The editable window is a faintly lighter band, so a narrowed selection is
+     * visible even when its bars are empty. */
+    if (windowFirst_ > firstHarmonic_ ||
+        windowLast_ < firstHarmonic_ + count - 1) {
+        const int start = juce::jmax(0, windowFirst_ - firstHarmonic_);
+        const int end = juce::jmin(count - 1, windowLast_ - firstHarmonic_);
+        g.setColour(juce::Colours::white.withAlpha(0.02f));
+        g.fillRect(static_cast<float>(bars.getX()) +
+                       static_cast<float>(start) * slot,
+                   static_cast<float>(bars.getY()),
+                   static_cast<float>(end - start + 1) * slot,
+                   static_cast<float>(bars.getHeight()));
+    }
     for (int i = 0; i < count; ++i) {
         const float level = static_cast<float>(levelAt(i)) / 99.0f;
         const float height = level * static_cast<float>(bars.getHeight());
-        g.setColour(colour(i % 2 == 0 ? tokens::purple : tokens::pink));
+        const bool outside = !inWindow(firstHarmonic_ + i);
+        g.setColour(outside
+                        ? colour(tokens::lineStrong)
+                        : colour(i % 2 == 0 ? tokens::purple : tokens::pink));
         g.fillRect(static_cast<float>(bars.getX()) + static_cast<float>(i) * slot + 1.0f,
                    static_cast<float>(bars.getBottom()) - height,
                    juce::jmax(1.0f, slot - 2.0f), height);

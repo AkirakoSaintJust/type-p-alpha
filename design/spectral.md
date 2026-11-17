@@ -159,6 +159,7 @@ a wave.
 | `to b` / `to a` | copy the 64 levels to the other spectrum of the operator |
 | group | the harmonic series the spring controls select, from all, odd, even, octave P8, third P5, fifth M3, seventh m7, fifteenth M7, eleventh TT, thirteenth m6, ninth M2, twenty-first P4, nineteenth m3 and seventeenth m2 |
 | mask | live, dead or both, so a gesture writes only the sounding, only the silent, or every selected member |
+| selection | the harmonic window that gestures and freehand edits may touch: `edit 1-64`, `edit 1-32`, `edit 33-64`, `edit 1-16`, `edit 17-32`, `edit 33-48` or `edit 49-64`, and the same seven steps shifted to the 65-128 range |
 | tilt | drag up for the reverse tilt, with the highs louder and the lows quieter, and down for the normal tilt, with the lows louder and the highs quieter |
 | level | drag to add or remove level across the selected members |
 | formant | place a peak at the picked harmonic and drag its amount |
@@ -177,9 +178,17 @@ selected and `both` masked, a level drag writes harmonics 3, 6, 12, 24 and 48 an
 leaves h1, h2 and h4 where they were. A `dead` mask writes only the members that
 are silent, which is the quick way to build a series from nothing.
 
+The selection window sits under the mask and composes with it. It offers seven
+steps, and the labels follow the row's range, so `edit 1-32` becomes `edit 65-96`
+when the row moves to 65-128. A spring gesture writes a bar only when it is in the
+window and passes the mask and the group. Freehand editing also stays inside the
+window and respects the live or dead mask, so a narrowed window makes the bar editor
+direct and precise at the same time. Bars outside the window are dimmed. The window
+is editor state and is not saved with the patch or written to the manifest.
+
 Each row carries `copy` and `paste` in its header, like every other operator card,
-so a whole spectrum moves between operators. The `to b` and `to a` buttons copy
-within one operator.
+so a whole spectrum moves between operators. The control card carries `norm` and
+`to b` or `to a` along its foot, under the selection row and the three springs.
 
 ## The spring controls
 

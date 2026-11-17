@@ -180,18 +180,26 @@ public:
     void setLevels(const std::vector<double>& levels);
     void setFirstHarmonic(int first);
     void setGroupTest(std::function<bool(int)> test);
+    /* The selection window in absolute harmonics, and the live/dead test that
+     * composes with it. Freehand editing only writes a bar both allow. */
+    void setEditWindow(int first, int last);
+    void setEditTest(std::function<bool(int, double)> test);
     std::function<void()> onEdit;
 
 private:
     void setFromMouse(const juce::MouseEvent& event);
     double levelAt(int index) const;
     void setLevel(int index, double value);
+    bool inWindow(int harmonic) const;
 
     APVTS& state_;
     juce::StringArray parameterIDs_;
     juce::Colour colour_;
     int firstHarmonic_ = 1;
+    int windowFirst_ = 1;
+    int windowLast_ = 128;
     std::function<bool(int)> groupTest_;
+    std::function<bool(int, double)> editTest_;
 };
 
 class P1SpectrumDisplay : public juce::Component {

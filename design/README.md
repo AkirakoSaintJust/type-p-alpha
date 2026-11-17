@@ -280,8 +280,10 @@ Below a 6 px empty band under the strip, one 124 px band per operator, with the
 wide row on the left and its control card on the right. A row holds its range
 select, the `load spectrum template...` button, copy and paste, the 64-bar editor
 and the group legend. A control card holds the group selector, the live, dead and
-both mask, the `tilt`, `level` and `formant` springs, the formant picker h1 to h64,
-`norm` and `to b` or `to a`. The four bands fit under the strip without a scroll.
+both mask, the selection window under it, the `tilt`, `level` and `formant` springs,
+the formant picker h1 to h64, and `norm` and `to b` or `to a` along its foot. The
+selection offers seven windows that follow the row's range, from the whole spectrum
+down to 16-harmonic blocks, and it gates the springs and the freehand editor. The four bands fit under the strip without a scroll.
 The bars preview a spring curve from the levels at the start of the drag, and the
 release leaves the result in place.
 

@@ -343,7 +343,7 @@ and the panel readouts.
 | `P1TabBar::paint` | Draw the tab baseline. |
 | `P1Scope` | Green scope widget. |
 | `P1Spectro` | Pink and purple spectrum widget. |
-| `P1SpectralBars` | Editable 64-harmonic bar editor for one spectrum. |
+| `P1SpectralBars` | Editable 64-harmonic bar editor with a selection window and the live or dead mask. |
 | `P1SpectrumDisplay` | Two spectrum outlines, a faint phase-zero waveform and the live morph cursor. |
 | `P1Envelope` | Four-rate, three-level envelope curve. |
 | `P1Wave` | Waveform shape widget. |

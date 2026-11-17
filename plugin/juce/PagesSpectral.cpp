@@ -352,6 +352,16 @@ public:
         bars_.setGroupTest(std::move(test));
     }
 
+    void setEditWindow(int first, int last)
+    {
+        bars_.setEditWindow(first, last);
+    }
+
+    void setEditTest(std::function<bool(int, double)> test)
+    {
+        bars_.setEditTest(std::move(test));
+    }
+
     void setLegend(const juce::String& text)
     {
         if (text != legend_.getText())
@@ -462,6 +472,12 @@ public:
         addAndMakeVisible(group_);
         addAndMakeVisible(maskLabel_);
         addAndMakeVisible(mask_);
+        selectionLabel_.setText("selection", juce::dontSendNotification);
+        selectionLabel_.setFont(uiFont(tokens::textLegend));
+        selectionLabel_.setColour(juce::Label::textColourId,
+                                  colour(tokens::dim));
+        addAndMakeVisible(selectionLabel_);
+        addAndMakeVisible(selection_);
         addAndMakeVisible(tilt_);
         addAndMakeVisible(level_);
         addAndMakeVisible(formant_);
@@ -483,6 +499,7 @@ public:
             return group_.getSelectedItemIndex() != 0 &&
                    groupHas(group_.getSelectedItemIndex(), harmonic);
         });
+        selection_.onChange = [this] { applySelection(); };
         centre_.addItemList(
             juce::StringArray([] {
                 juce::StringArray names;
@@ -495,6 +512,8 @@ public:
         norm_.onClick = [this] { normalise(); };
         toOther_.onClick = [this] { copyToOther(); };
         toOther_.setButtonText(isA_ ? "to b" : "to a");
+        refreshSelectionItems();
+        applySelection();
         refreshLegend();
     }
 
@@ -511,15 +530,18 @@ public:
         groupRow.removeFromLeft(4);
         maskLabel_.setBounds(groupRow.removeFromLeft(28));
         mask_.setBounds(groupRow);
-        auto springs = area.removeFromTop(56);
+        auto selectionRow = area.removeFromTop(17);
+        selectionLabel_.setBounds(selectionRow.removeFromLeft(52));
+        selection_.setBounds(selectionRow.reduced(1));
+        auto springs = area.removeFromTop(46);
         const int springWidth = springs.getWidth() / 3;
         tilt_.setBounds(springs.removeFromLeft(springWidth).reduced(1));
         level_.setBounds(springs.removeFromLeft(springWidth).reduced(1));
         auto formantCell = springs;
-        formant_.setBounds(formantCell.removeFromTop(40).reduced(1));
+        formant_.setBounds(formantCell.removeFromTop(30).reduced(1));
         centre_.setBounds(
             formantCell.removeFromTop(16).withSizeKeepingCentre(58, 16));
-        auto foot = area.removeFromTop(18);
+        auto foot = area.removeFromTop(16);
         norm_.setBounds(foot.removeFromLeft(48).reduced(1));
         toOther_.setBounds(foot.removeFromRight(48).reduced(1));
     }
@@ -529,11 +551,61 @@ private:
 
     void endMacro() { snapshot_.clear(); }
 
+    /* The seven selection windows as offsets into the current range, so the
+     * same index reads 1-32 in the low range and 65-96 in the high one. */
+    std::pair<int, int> windowFor(int index) const
+    {
+        static constexpr int kOffsets[7][2] = {
+            {0, 63}, {0, 31}, {32, 63}, {0, 15},
+            {16, 31}, {32, 47}, {48, 63}};
+        const int choice = juce::jlimit(0, 6, index);
+        const int first = row_.firstHarmonic();
+        return {first + kOffsets[choice][0], first + kOffsets[choice][1]};
+    }
+
+    void refreshSelectionItems()
+    {
+        const int choice = juce::jlimit(0, 6, selection_.getSelectedItemIndex());
+        juce::StringArray labels;
+        for (int i = 0; i < 7; ++i) {
+            const auto [first, last] = windowFor(i);
+            labels.add("edit " + juce::String(first) + "-" + juce::String(last));
+        }
+        selection_.clear(juce::dontSendNotification);
+        selection_.addItemList(labels, 1);
+        selection_.setSelectedItemIndex(choice, juce::dontSendNotification);
+    }
+
+    void applySelection()
+    {
+        const int choice = juce::jlimit(0, 6, selection_.getSelectedItemIndex());
+        const auto [first, last] = windowFor(choice);
+        row_.setEditWindow(first, last);
+        row_.setEditTest(
+            [this](int harmonic, double level) { return editable(harmonic, level); });
+    }
+
+    bool editable(int harmonic, double level) const
+    {
+        const auto [first, last] = windowFor(selection_.getSelectedItemIndex());
+        if (harmonic < first || harmonic > last)
+            return false;
+        const int mask = mask_.index();
+        if (mask == 2)
+            return true;
+        const bool live = level > 0.0;
+        return mask == 0 ? live : !live;
+    }
+
     bool selected(int index) const
     {
         if (snapshot_.empty())
             return false;
         const int harmonic = row_.firstHarmonic() + index;
+        const auto [first, last] =
+            windowFor(selection_.getSelectedItemIndex());
+        if (harmonic < first || harmonic > last)
+            return false;
         if (!groupHas(group_.getSelectedItemIndex(), harmonic))
             return false;
         const int mask = mask_.index();
@@ -624,6 +696,11 @@ private:
     void refreshLegend()
     {
         const int first = row_.firstHarmonic();
+        if (first != lastFirst_) {
+            lastFirst_ = first;
+            refreshSelectionItems();
+            applySelection();
+        }
         const int group = group_.getSelectedItemIndex();
         juce::String text(kSpectrumGroupNames[group]);
         text << " \xc2\xb7 " << kSpectrumMaskNames[mask_.index()];
@@ -650,8 +727,11 @@ private:
     SpectrumRow& row_;
     P1Choice group_;
     MaskRow mask_;
+    P1Choice selection_;
     juce::Label groupLabel_;
     juce::Label maskLabel_;
+    juce::Label selectionLabel_;
+    int lastFirst_ = -1;
     SpringSlider tilt_;
     SpringSlider level_;
     SpringSlider formant_;

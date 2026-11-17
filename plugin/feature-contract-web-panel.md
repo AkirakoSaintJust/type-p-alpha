@@ -27,7 +27,9 @@
   worklet advances through the engine stream at `48000 / rate` and linearly
   interpolates, so pitch and envelope time stay correct at 44.1, 96 and 192 kHz.
   Each row's `load spectrum template...` menu writes that wave's 64-level analysis
-  into the row and leaves the waveform alone. The wave select, a spectrum paste, or
+  into the row and leaves the waveform alone. The selection window under the mask
+  gates freehand writes and the springs, and its seven labels follow the row's
+  range. The wave select, a spectrum paste, or
   a morph envelope or LFO depth moved away from zero selects `spectrum`.
 - **Failure mode:** a context rate other than 48 kHz plays flat or slow, the panel
   drops a manifest parameter, a stored part or multi loses its routing, the library
@@ -153,9 +155,10 @@ and `error`.
 - **Browser vector:** `web/smoke.mjs` drives the bare page and checks a level round
   trip. `web/panel-smoke.mjs` drives the root redirect and checks the seven tabs,
   the saw template, the bar and morph values, and the select group legend. It also
-  checks the mask, the level, formant and tilt springs and their return to centre,
-  the morph depth mode switch, the output and tap peaks, the algorithm round trip
-  and the operator copy and paste.
+  checks the mask, the selection window and its composition with the live mask, the
+  level, formant and tilt springs and their return to centre, the morph depth mode
+  switch, the output and tap peaks, the algorithm round trip and the operator copy
+  and paste.
   The operator mute switch, its toolbar box, the four oscillator cards on each page,
   the card copy and paste and the spectrum copy across operators are checked too.
   The smoke then walks the part switch, the six FX cards, the part rename and paste,

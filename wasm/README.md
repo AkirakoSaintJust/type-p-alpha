@@ -79,15 +79,16 @@ advance with the envelope and the LFO. A template menu analyses a wave into eith
 spectrum through the wave select, a spectrum paste, or a morph depth moved away
 from zero.
 
-The control card below each spectrum row has a group selector and a live, dead or
-both mask. The group
+The control card below each spectrum row has a group selector, a live, dead or
+both mask, and a selection window in seven steps that follows the row's range. The group
 picks a harmonic series from all, odd, even, octave, or the third, fifth, seventh,
 fifteenth, eleventh, thirteenth, ninth, twenty-first, nineteenth and seventeenth
 series. The bar labels show every harmonic in the range and mark the group members
 in green, and the legend names the group, the mask and the members in range. The
 tilt, level and formant controls are spring loaded: they write the 64 levels
-while held and return to centre on release. Tilt and level use the group and mask,
-and formant uses the selected harmonic and ignores both. The group and mask are editor
+while held and return to centre on release. Tilt and level use the group, mask and selection window,
+and formant uses the selected harmonic and ignores all three. The window also gates
+freehand editing, so a narrowed window writes only its bars. The group and mask are editor
 state, so a gesture only writes the existing `opN_spec_a1` to `a64` and `b1` to
 `b64` parameters of the `osc` node.
 

@@ -50,7 +50,7 @@
     const key = part + ":" + op + ":" + (a ? "a" : "b");
     let state = spectrumTools.get(key);
     if (state === undefined) {
-      state = { group: 0, mask: 2 };
+      state = { group: 0, mask: 2, selection: 0 };
       spectrumTools.set(key, state);
     }
     return state;
@@ -952,8 +952,10 @@
     return wave === 13;
   }
 
-  function spectrumBars(specs, kind, rangeSpec, groupTest) {
+  function spectrumBars(specs, kind, rangeSpec, groupTest, canEdit) {
     const count = specs.length;
+    let windowFirst = 1;
+    let windowLast = 128;
     const wrap = div("specbars");
     const fills = [];
     const barEls = [];
@@ -975,6 +977,14 @@
     function levels() {
       return specs.map((spec) => values.get(spec.id) ?? 0);
     }
+    function inWindow(harmonic) {
+      return harmonic >= windowFirst && harmonic <= windowLast;
+    }
+    function setWindow(first, last) {
+      windowFirst = first;
+      windowLast = last;
+      draw();
+    }
     function currentFirst() {
       const range = rangeSpec === undefined || rangeSpec === null
         ? 0 : (values.get(rangeSpec.id) ?? 0);
@@ -991,6 +1001,7 @@
           ? String(first + i) : "";
         labelSpans[i].classList.toggle("in-group", inGroup);
         barEls[i].classList.toggle("in-group", inGroup);
+        barEls[i].classList.toggle("outside", !inWindow(first + i));
       }
     }
     function setFrom(event) {
@@ -998,6 +1009,10 @@
       const cell = rect.width / count;
       const index = Math.max(0, Math.min(count - 1,
         Math.floor((event.clientX - rect.left) / cell)));
+      const harmonic = currentFirst() + index;
+      if (!inWindow(harmonic)) return;
+      const current = levels()[index];
+      if (canEdit && !canEdit(harmonic, current)) return;
       const y = 1 - (event.clientY - rect.top) / rect.height;
       setRaw(specs[index], clampLevel(y * 99));
       draw();
@@ -1019,14 +1034,20 @@
     spectrumUpdaters.push(draw);
     draw();
     return { el: wrap, labels: labels, draw: draw, levels: levels,
-      currentFirst: currentFirst, count: count };
+      currentFirst: currentFirst, count: count, setWindow: setWindow,
+      inWindow: inWindow };
   }
 
   function spectrumRangeRow(title, specs, rangeSpec, options) {
     options = options || {};
-    const tools = options.tools || { group: 0, mask: 2 };
+    const tools = options.tools || { group: 0, mask: 2, selection: 0 };
     const markTest = (harmonic) =>
       tools.group !== 0 && SPEC_GROUPS[tools.group].test(harmonic);
+    const canEdit = (harmonic, level) => {
+      if (tools.mask === 2) return true;
+      const live = level > 0;
+      return tools.mask === 0 ? live : !live;
+    };
     const cardEl = document.createElement("section");
     cardEl.className = "card spectrum-row";
     const secHead = div("sec-head");
@@ -1047,6 +1068,7 @@
           setRaw(rangeSpec, index < 0 ? 0 : index);
           bars.draw();
           updateLegend();
+          if (row.onRangeChange) row.onRangeChange();
         });
       rangeSelect.classList.add("row-range");
       acts.append(rangeLabel, rangeSelect);
@@ -1102,7 +1124,7 @@
     acts.append(copyButton, pasteButton);
     secHead.append(acts);
     cardEl.append(secHead);
-    const bars = spectrumBars(specs, options.kind, rangeSpec, markTest);
+    const bars = spectrumBars(specs, options.kind, rangeSpec, markTest, canEdit);
     cardEl.append(bars.el, bars.labels);
     const legend = div("speclegend");
     const legendName = document.createElement("span");
@@ -1135,11 +1157,12 @@
     }
     updateLegend();
     spectrumUpdaters.push(updateLegend);
-    return {
+    const row = {
       el: cardEl, bars: bars, tools: tools, specs: specs,
       otherSpecs: options.otherSpecs || [], kind: options.kind,
-      updateLegend: updateLegend,
+      updateLegend: updateLegend, onRangeChange: null,
     };
+    return row;
   }
 
   function spectrumControls(title, row) {
@@ -1154,6 +1177,7 @@
     function end() { base = null; }
     function selected(index, first) {
       if (base === null) return false;
+      if (!row.bars.inWindow(first + index)) return false;
       if (!SPEC_GROUPS[tools.group].test(first + index)) return false;
       if (tools.mask === 2) return true;
       const live = base[index] > 0;
@@ -1232,9 +1256,48 @@
     });
     maskRow.append(maskLabel, maskSeg);
 
+    const selectionRow = div("specgroup specselection");
+    const selectionLabel = document.createElement("span");
+    selectionLabel.className = "lbl";
+    selectionLabel.textContent = "selection";
+    const selectionSelect = document.createElement("select");
+    selectionSelect.className = "row-selection";
+    function selectionWindows() {
+      const first = row.bars.currentFirst();
+      return [[0, 63], [0, 31], [32, 63], [0, 15], [16, 31], [32, 47],
+        [48, 63]].map(([lo, hi]) => [first + lo, first + hi]);
+    }
+    function refreshSelection() {
+      const chosen = Math.max(0, Math.min(6, tools.selection));
+      selectionSelect.textContent = "";
+      selectionWindows().forEach(([first, last], index) => {
+        const option = document.createElement("option");
+        option.value = String(index);
+        option.textContent = "edit " + first + "-" + last;
+        option.selected = index === chosen;
+        selectionSelect.append(option);
+      });
+    }
+    function applyWindow() {
+      const windows = selectionWindows();
+      const chosen = Math.max(0, Math.min(6, tools.selection));
+      row.bars.setWindow(windows[chosen][0], windows[chosen][1]);
+    }
+    selectionSelect.addEventListener("change", () => {
+      tools.selection = Number(selectionSelect.value);
+      applyWindow();
+    });
+    selectionRow.append(selectionLabel, selectionSelect);
+    refreshSelection();
+    applyWindow();
+    row.onRangeChange = () => {
+      refreshSelection();
+      applyWindow();
+    };
+
     const springs = div("springs");
     springs.append(tilt, level, formant);
-    cardEl.append(groupRow, maskRow, springs);
+    cardEl.append(groupRow, maskRow, selectionRow, springs);
 
     const foot = div("specfoot");
     const norm = document.createElement("button");

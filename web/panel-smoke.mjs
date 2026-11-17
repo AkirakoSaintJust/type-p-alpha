@@ -157,6 +157,37 @@ try {
   console.log("zeroed spectrum:", zeroed.join(" "));
   if (zeroed.some((level) => level !== 0))
     throw new Error("the bar editor did not clear the spectrum");
+  const selection = firstControls.locator(".row-selection");
+  await selection.selectOption({ label: "edit 17-32" });
+  await page.waitForTimeout(150);
+  await page.mouse.click(zeroBars.x + 4.5 / 64 * zeroBars.width,
+    zeroBars.y + zeroBars.height * 0.3);
+  await page.mouse.click(zeroBars.x + 16.5 / 64 * zeroBars.width,
+    zeroBars.y + zeroBars.height * 0.3);
+  await page.waitForTimeout(200);
+  const windowed = await page.evaluate(() => [5, 17, 33].map((h) =>
+    window.__p1.paramValue("op1_spec_a" + h + ".p0")));
+  console.log("selection window h5 h17 h33:", windowed.join(" "));
+  if (!(windowed[0] === 0 && windowed[1] > 0 && windowed[2] === 0))
+    throw new Error("the selection window did not restrict freehand editing");
+  await firstControls.locator(".specmask button", { hasText: "live" }).click();
+  await page.mouse.click(zeroBars.x + 19.5 / 64 * zeroBars.width,
+    zeroBars.y + zeroBars.height * 0.4);
+  await page.waitForTimeout(150);
+  const liveBlocked = await page.evaluate(() =>
+    window.__p1.paramValue("op1_spec_a20.p0"));
+  if (liveBlocked !== 0)
+    throw new Error("the live mask did not block a silent bar");
+  await firstControls.locator(".specmask button", { hasText: "both" }).click();
+  await page.mouse.click(zeroBars.x + 19.5 / 64 * zeroBars.width,
+    zeroBars.y + zeroBars.height * 0.4);
+  await page.waitForTimeout(150);
+  const bothAllowed = await page.evaluate(() =>
+    window.__p1.paramValue("op1_spec_a20.p0"));
+  if (!(bothAllowed > 0))
+    throw new Error("the both mask did not allow the silent bar");
+  await selection.selectOption({ label: "edit 1-64" });
+  await page.waitForTimeout(150);
   await firstControls.locator(".specgroup select").first()
     .selectOption({ label: "third P5" });
   await page.waitForTimeout(150);
