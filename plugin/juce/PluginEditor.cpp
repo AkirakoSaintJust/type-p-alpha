@@ -1098,6 +1098,87 @@ void PluginEditor::pasteOperator(int op)
     buildPage();
 }
 
+namespace {
+
+/* The parameters each operator card owns, in its display order. The list is the
+ * card's contract: copy fills the clipboard from it and paste writes back through
+ * it, so a card cannot copy some of its controls and miss others. The amplitude
+ * envelope's first and last rates are the op1-only `attack` and `release` names,
+ * and opEnvRate maps them for the source and destination op. */
+std::vector<juce::String> sectionParamIDs(int op, int part,
+                                          PluginEditor::OperatorSection section)
+{
+    std::vector<juce::String> ids;
+    const auto add = [&ids](const juce::String& id) { ids.push_back(id); };
+    switch (section) {
+    case PluginEditor::OperatorSection::oscillator:
+        add(p1::params::opRatio(op, part));
+        add(p1::params::opDetune(op, part));
+        add(p1::params::opWaveform(op, part));
+        add(p1::params::opLevel(op, part));
+        add(p1::params::opFeedback(op, part));
+        add(p1::params::opSpecMorph(op, part));
+        break;
+    case PluginEditor::OperatorSection::amplitudeEnvelope:
+        for (int i = 0; i < 4; ++i)
+            add(p1::params::opEnvRate(op, i, part));
+        for (int i = 0; i < 3; ++i)
+            add(p1::params::opEnvLevel(op, i, part));
+        break;
+    case PluginEditor::OperatorSection::feedbackEnvelope:
+        add(p1::params::opFeedbackOn(op, part));
+        for (int i = 0; i < 4; ++i)
+            add(p1::params::opFeedbackRate(op, i, part));
+        for (int i = 0; i < 4; ++i)
+            add(p1::params::opFeedbackLevel(op, i, part));
+        break;
+    case PluginEditor::OperatorSection::amplitudeLfo:
+        add(p1::params::opTremRate(op, part));
+        add(p1::params::opTremDepth(op, part));
+        add(p1::params::opTremWave(op, part));
+        add(p1::params::opTremMode(op, part));
+        break;
+    case PluginEditor::OperatorSection::feedbackLfo:
+        add(p1::params::opFeedbackLfoRate(op, part));
+        add(p1::params::opFeedbackLfoDepth(op, part));
+        add(p1::params::opFeedbackLfoWave(op, part));
+        add(p1::params::opFeedbackLfoMode(op, part));
+        break;
+    case PluginEditor::OperatorSection::detuneLfo:
+        add(p1::params::opDetuneLfoRate(op, part));
+        add(p1::params::opDetuneLfoDepth(op, part));
+        add(p1::params::opDetuneLfoWave(op, part));
+        add(p1::params::opDetuneLfoMode(op, part));
+        break;
+    case PluginEditor::OperatorSection::spectrumA:
+        add(p1::params::opSpecRangeA(op, part));
+        for (int h = 1; h <= 64; ++h)
+            add(p1::params::opSpecA(op, h, part));
+        break;
+    case PluginEditor::OperatorSection::spectrumB:
+        add(p1::params::opSpecRangeB(op, part));
+        for (int h = 1; h <= 64; ++h)
+            add(p1::params::opSpecB(op, h, part));
+        break;
+    case PluginEditor::OperatorSection::spectrumEnvelope:
+        add(p1::params::opSpecEnvDepth(op, part));
+        for (int i = 0; i < 4; ++i)
+            add(p1::params::opSpecEnvRate(op, i, part));
+        for (int i = 0; i < 3; ++i)
+            add(p1::params::opSpecEnvLevel(op, i, part));
+        break;
+    case PluginEditor::OperatorSection::spectrumLfo:
+        add(p1::params::opSpecLfoRate(op, part));
+        add(p1::params::opSpecLfoDepth(op, part));
+        add(p1::params::opSpecLfoWave(op, part));
+        add(p1::params::opSpecLfoMode(op, part));
+        break;
+    }
+    return ids;
+}
+
+} // namespace
+
 void PluginEditor::copyOperatorSection(int op, int part,
                                        OperatorSection section)
 {
@@ -1105,57 +1186,9 @@ void PluginEditor::copyOperatorSection(int op, int part,
     operatorSectionClipboardOp_ = op;
     operatorSectionClipboardKind_ = section;
     operatorSectionClipboardValid_ = true;
-    const auto suffix = ".p" + juce::String(part);
-    const auto prefix = "op" + juce::String(op + 1);
-    for (const auto& spec : kP1ParamSpecs) {
-        const juce::String id(spec.id);
-        if (!id.endsWith(suffix))
-            continue;
-        const auto base = id.dropLastCharacters(3);
-        bool matches = false;
-        switch (section) {
-        case OperatorSection::oscillator:
-            matches = base == prefix + "_ratio" ||
-                      base == prefix + "_detune" ||
-                      base == prefix + "_waveform" ||
-                      base == prefix + "_level" ||
-                      base == prefix + "_feedback" ||
-                      base == prefix + "_spec_morph";
-            break;
-        case OperatorSection::amplitudeEnvelope:
-            matches = base.startsWith(prefix + ".eg.");
-            break;
-        case OperatorSection::feedbackEnvelope:
-            matches = base.startsWith(prefix + ".fbenv.");
-            break;
-        case OperatorSection::amplitudeLfo:
-            matches = base.startsWith(prefix + "_trem_");
-            break;
-        case OperatorSection::feedbackLfo:
-            matches = base.startsWith(prefix + "_fblfo_");
-            break;
-        case OperatorSection::detuneLfo:
-            matches = base.startsWith(prefix + "_dlfo_");
-            break;
-        case OperatorSection::spectrumA:
-            matches = base.startsWith(prefix + "_spec_a") ||
-                      base == prefix + "_spec_range_a";
-            break;
-        case OperatorSection::spectrumB:
-            matches = base.startsWith(prefix + "_spec_b") ||
-                      base == prefix + "_spec_range_b";
-            break;
-        case OperatorSection::spectrumEnvelope:
-            matches = base.startsWith(prefix + "_spec_env_");
-            break;
-        case OperatorSection::spectrumLfo:
-            matches = base.startsWith(prefix + "_spec_lfo_");
-            break;
-        }
-        if (!matches)
-            continue;
+    for (const auto& id : sectionParamIDs(op, part, section)) {
         if (auto* value = state().getRawParameterValue(id))
-            operatorSectionClipboard_[base] = value->load();
+            operatorSectionClipboard_.push_back(value->load());
     }
 }
 
@@ -1166,27 +1199,20 @@ void PluginEditor::pasteOperatorSection(int op, int part,
         operatorSectionClipboardKind_ != section ||
         operatorSectionClipboard_.empty())
         return;
-    const auto suffix = ".p" + juce::String(part);
-    const auto source = "op" + juce::String(operatorSectionClipboardOp_ + 1);
-    const auto destination = "op" + juce::String(op + 1);
-    for (const auto& [storedBase, value] : operatorSectionClipboard_) {
-        juce::String base = storedBase;
-        if (base.startsWith(source + "_") || base.startsWith(source + "."))
-            base = destination + base.substring(source.length());
-        if (op == 0 && section == OperatorSection::amplitudeEnvelope &&
-            base == "op1.eg.r1")
-            base = "attack";
-        else if (op == 0 && section == OperatorSection::amplitudeEnvelope &&
-                 base == "op1.eg.r4")
-            base = "release";
-        if (auto* parameter = state().getParameter(base + suffix))
-            parameter->setValueNotifyingHost(
-                parameter->convertTo0to1(static_cast<float>(value)));
+    const auto ids = sectionParamIDs(op, part, section);
+    const int count = juce::jmin(static_cast<int>(ids.size()),
+                                 static_cast<int>(
+                                     operatorSectionClipboard_.size()));
+    for (int i = 0; i < count; ++i) {
+        if (auto* parameter = state().getParameter(ids[static_cast<std::size_t>(i)]))
+            parameter->setValueNotifyingHost(parameter->convertTo0to1(
+                static_cast<float>(
+                    operatorSectionClipboard_[static_cast<std::size_t>(i)])));
     }
     if (section == OperatorSection::spectrumA ||
         section == OperatorSection::spectrumB) {
-        const auto waveID = params::opWaveform(op, part);
-        if (auto* parameter = state().getParameter(waveID)) {
+        if (auto* parameter = state().getParameter(
+                p1::params::opWaveform(op, part))) {
             parameter->setValueNotifyingHost(
                 parameter->convertTo0to1(13.0f));
         }

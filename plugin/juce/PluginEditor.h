@@ -120,7 +120,7 @@ private:
     std::map<juce::String, double> partClipboard_;
     std::map<juce::String, double> operatorClipboard_;
     int operatorClipboardOp_ = -1;
-    std::map<juce::String, double> operatorSectionClipboard_;
+    std::vector<double> operatorSectionClipboard_;
     int operatorSectionClipboardOp_ = -1;
     OperatorSection operatorSectionClipboardKind_ =
         OperatorSection::amplitudeEnvelope;

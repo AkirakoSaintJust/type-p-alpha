@@ -126,6 +126,17 @@ try {
   if (morphWave !== 13)
     throw new Error("the morph knob cleared the spectrum mode");
 
+  await page.locator(".opcol").nth(0)
+    .locator(".osc .sec-actions button", { hasText: "copy" }).click();
+  await page.locator(".opcol").nth(1)
+    .locator(".osc .sec-actions button", { hasText: "paste" }).click();
+  await page.waitForTimeout(200);
+  const op2Morph = await page.evaluate(() =>
+    window.__p1.paramValue("op2_spec_morph.p0"));
+  console.log("oscillator copy morph:", op2Morph);
+  if (op2Morph !== 15)
+    throw new Error("the oscillator card copy missed the morph knob");
+
   await page.locator(".spectrum-row").first()
     .locator(".sec-actions button", { hasText: "copy" }).click();
   await page.locator(".spectrum-row").nth(1)
@@ -138,6 +149,25 @@ try {
   console.log("spectrum copy:", spectrumCopy[0], spectrumCopy[1]);
   if (spectrumCopy[0] !== spectrumCopy[1])
     throw new Error("the spectrum paste did not copy the levels");
+
+  const op1Row = page.locator(".spectrum-row").first();
+  await op1Row.locator(".row-range").selectOption({ label: "65-128" });
+  await page.waitForTimeout(150);
+  await op1Row.locator(".sec-actions button", { hasText: "copy" }).click();
+  await page.locator(".spectrum-row").nth(1)
+    .locator(".sec-actions button", { hasText: "paste" }).click();
+  await page.waitForTimeout(250);
+  const copiedRange = await page.locator(".spectrum-row").nth(1)
+    .locator(".row-range").evaluate((el) => el.selectedOptions[0].textContent);
+  const copiedWave = await page.evaluate(() =>
+    window.__p1.paramValue("op2_waveform.p0"));
+  console.log("spectrum copy range:", copiedRange, "waveform:", copiedWave);
+  if (copiedRange !== "65-128" || copiedWave !== 13)
+    throw new Error("the spectrum copy missed the range or the mode");
+  await op1Row.locator(".row-range").selectOption({ label: "1-64" });
+  await page.locator(".spectrum-row").nth(1)
+    .locator(".row-range").selectOption({ label: "1-64" });
+  await page.waitForTimeout(150);
 
   const firstRow = page.locator(".spectrum-row").first();
   await firstRow.locator(".specbars").scrollIntoViewIfNeeded();

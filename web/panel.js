@@ -870,6 +870,10 @@
     return el;
   }
 
+  function cardRole(spec) {
+    return baseName(spec.name).replace(/^op[1-4]/, "opN");
+  }
+
   function cardActions(kind, specs) {
     const acts = div("sec-actions");
     const copy = document.createElement("button");
@@ -878,7 +882,8 @@
     copy.addEventListener("click", () => {
       clipboard = {
         kind,
-        values: specs.map((spec) => values.get(spec.id) ?? spec.default),
+        values: specs.map((spec) =>
+          [cardRole(spec), values.get(spec.id) ?? spec.default]),
       };
       buildPage();
     });
@@ -889,10 +894,10 @@
     paste.addEventListener("click", () => {
       if (clipboard === null || clipboard.kind !== kind) return;
       const entries = [];
-      specs.forEach((spec, index) => {
-        if (clipboard.values[index] === undefined) return;
-        entries.push([spec.id, clipboard.values[index]]);
-      });
+      for (const [role, value] of clipboard.values) {
+        const target = specs.find((spec) => cardRole(spec) === role);
+        if (target !== undefined) entries.push([target.id, value]);
+      }
       applyValues(entries);
       buildPage();
     });
@@ -904,7 +909,7 @@
     options = options || {};
     if (specs.length === 0) return null;
     const headExtra = options.kind
-      ? cardActions(options.kind, specs)
+      ? cardActions(options.kind, options.copySpecs || specs)
       : (options.headExtra || null);
     const el = sectionCard(title, {
       className: options.className,
@@ -1174,7 +1179,11 @@
     copyButton.className = "mini";
     copyButton.textContent = "copy";
     copyButton.addEventListener("click", () => {
-      clipboard = { kind: "spectrum", values: bars.levels().slice() };
+      clipboard = {
+        kind: "spectrum",
+        values: bars.levels().slice(),
+        range: rangeSpec === undefined ? null : values.get(rangeSpec.id) ?? 0,
+      };
       buildPage();
     });
     const pasteButton = document.createElement("button");
@@ -1186,6 +1195,11 @@
       if (clipboard === null || clipboard.kind !== "spectrum") return;
       for (let i = 0; i < specs.length; ++i)
         setRaw(specs[i], clampLevel(clipboard.values[i] ?? 0));
+      if (clipboard.range !== null && clipboard.range !== undefined &&
+          rangeSpec !== undefined)
+        setRaw(rangeSpec, clipboard.range);
+      if (options.waveformSpec !== undefined)
+        setRaw(options.waveformSpec, 13);
       buildPage();
     });
     acts.append(norm, to, copyButton, pasteButton);
@@ -1942,7 +1956,14 @@
   function copyOp(part, op) {
     const entries = specsForOp(part, op)
       .filter((spec) => !/_mute$/.test(baseName(spec.name)))
-      .map((spec) => [spec.name, values.get(spec.id) ?? spec.default]);
+      .map((spec) => {
+        let name = spec.name;
+        if (baseName(name) === "attack")
+          name = "op1.eg.r1.p" + part;
+        else if (baseName(name) === "release")
+          name = "op1.eg.r4.p" + part;
+        return [name, values.get(spec.id) ?? spec.default];
+      });
     clipboard = { kind: "op", part, op, data: entries };
     buildPage();
     toast("op" + (op + 1) + " copied");
@@ -1953,9 +1974,13 @@
     const entries = [];
     for (const [name, value] of clipboard.data) {
       if (op !== 0 && !/^op[1-4][_.]/.test(name)) continue;
-      const renamed = name
+      let renamed = name
         .replace(/^op[1-4]([_.])/, "op" + (op + 1) + "$1")
         .replace(/\.p[01]$/, ".p" + part);
+      if (op === 0 && renamed === "op1.eg.r1.p" + part)
+        renamed = "attack.p" + part;
+      else if (op === 0 && renamed === "op1.eg.r4.p" + part)
+        renamed = "release.p" + part;
       const spec = byName.get(renamed);
       if (spec !== undefined) entries.push([spec.id, value]);
     }
@@ -2679,8 +2704,12 @@
       const morph = all.find((spec) =>
         baseName(spec.name) === `op${op + 1}_spec_morph`);
       const col = opColumn(op, true);
-      const oscCard = card("oscillator", oscillatorSpecs(op),
-        { className: "osc", kind: "oscillator" });
+      const oscSpecs = oscillatorSpecs(op);
+      const oscCard = card("oscillator", oscSpecs, {
+        className: "osc",
+        kind: "oscillator",
+        copySpecs: morph === undefined ? oscSpecs : oscSpecs.concat([morph]),
+      });
       if (oscCard && morph !== undefined) {
         const knobs = oscCard.querySelector(".knobs");
         if (knobs !== null) knobs.append(controlFor(morph, "morph"));
@@ -2691,11 +2720,14 @@
       const specs = isA ? a : b;
       const range = isA ? rangeA : rangeB;
       const other = isA ? b : a;
+      const waveformSpec = all.find((spec) =>
+        baseName(spec.name) === `op${op + 1}_waveform`);
       const row = spectrumRangeRow(
         `op${op + 1} spectrum ${letter}`, specs, range, {
           tools: spectrumToolState(activePart, op, isA),
           kind: letter,
           otherSpecs: other,
+          waveformSpec,
         });
       runs.append(row.el);
     }

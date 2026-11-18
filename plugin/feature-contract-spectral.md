@@ -178,7 +178,10 @@ away from zero writes the waveform as 13, so the modulation has something to mov
   saw must match the current header sample for sample. The checks are exact. A
   template load must write the 64 levels of the chosen row and leave the waveform
   alone, the selection window must gate both freehand writes and the springs, and
-  the mod display must show both outlines, the morph marker and the waveform trace. `spectral` also checks that the engine publishes the live morph
+  the mod display must show both outlines, the morph marker and the waveform trace.
+  `editor_snapshot` also copies every operator card from op1 to op2 and back and
+  compares every control, including the four fb envelope levels, the morph
+  envelope depth, the spectrum range and the op1 attack and release names. `spectral` also checks that the engine publishes the live morph
   for the newest voice, and that the base morph stays still with zero envelope
   depth. The part block and
   manifest counts must match 800 and 1,614.

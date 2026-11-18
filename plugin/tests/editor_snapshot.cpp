@@ -7,6 +7,7 @@
 
 #include <juce_gui_basics/juce_gui_basics.h>
 
+#include "ParamIDs.h"
 #include "PluginEditor.h"
 #include "PluginProcessor.h"
 
@@ -379,6 +380,173 @@ int main(int argc, char** argv)
         processor.presets().partParams(discarded.partSlot[1])[0] != 229376) {
         std::printf("editor snapshot: discard edits to parts changed a part slot\n");
         ok = false;
+    }
+
+    {
+        /* Every card with copy and paste must move all of its controls. Each
+         * case writes a normalised source value, pastes, and compares every
+         * destination parameter with the source value it was given. */
+        auto& params = processor.parameters();
+        using Section = PluginEditor::OperatorSection;
+        auto check = [&](const char* name, Section section, int srcOp, int dstOp,
+                         const std::vector<juce::String>& src,
+                         const std::vector<juce::String>& dst) {
+            if (src.size() != dst.size()) {
+                std::printf("editor snapshot: %s list lengths differ\n", name);
+                ok = false;
+                return;
+            }
+            std::vector<double> expected;
+            for (std::size_t i = 0; i < src.size(); ++i) {
+                if (auto* parameter = params.getParameter(src[i])) {
+                    parameter->setValueNotifyingHost(0.37f);
+                    expected.push_back(
+                        params.getRawParameterValue(src[i])->load());
+                } else {
+                    expected.push_back(0.0);
+                }
+                if (auto* parameter = params.getParameter(dst[i]))
+                    parameter->setValueNotifyingHost(0.11f);
+            }
+            p1editor->copyOperatorSection(srcOp, 0, section);
+            p1editor->pasteOperatorSection(dstOp, 0, section);
+            for (std::size_t i = 0; i < dst.size(); ++i) {
+                const auto* value = params.getRawParameterValue(dst[i]);
+                if (value == nullptr ||
+                    std::abs(value->load() - expected[i]) > 0.51) {
+                    std::printf("editor snapshot: %s copy missed %s\n", name,
+                                dst[i].toRawUTF8());
+                    ok = false;
+                    break;
+                }
+            }
+        };
+        auto feedbackEnv = [](int op) {
+            std::vector<juce::String> ids;
+            ids.push_back(p1::params::opFeedbackOn(op, 0));
+            for (int i = 0; i < 4; ++i)
+                ids.push_back(p1::params::opFeedbackRate(op, i, 0));
+            for (int i = 0; i < 4; ++i)
+                ids.push_back(p1::params::opFeedbackLevel(op, i, 0));
+            return ids;
+        };
+        auto amplitudeEnv = [](int op) {
+            std::vector<juce::String> ids;
+            for (int i = 0; i < 4; ++i)
+                ids.push_back(p1::params::opEnvRate(op, i, 0));
+            for (int i = 0; i < 3; ++i)
+                ids.push_back(p1::params::opEnvLevel(op, i, 0));
+            return ids;
+        };
+        auto morphEnv = [](int op) {
+            std::vector<juce::String> ids;
+            ids.push_back(p1::params::opSpecEnvDepth(op, 0));
+            for (int i = 0; i < 4; ++i)
+                ids.push_back(p1::params::opSpecEnvRate(op, i, 0));
+            for (int i = 0; i < 3; ++i)
+                ids.push_back(p1::params::opSpecEnvLevel(op, i, 0));
+            return ids;
+        };
+        auto lfo = [](int op, int kind) {
+            std::vector<juce::String> ids;
+            if (kind == 0) {
+                ids.push_back(p1::params::opTremRate(op, 0));
+                ids.push_back(p1::params::opTremDepth(op, 0));
+                ids.push_back(p1::params::opTremWave(op, 0));
+                ids.push_back(p1::params::opTremMode(op, 0));
+            } else if (kind == 1) {
+                ids.push_back(p1::params::opFeedbackLfoRate(op, 0));
+                ids.push_back(p1::params::opFeedbackLfoDepth(op, 0));
+                ids.push_back(p1::params::opFeedbackLfoWave(op, 0));
+                ids.push_back(p1::params::opFeedbackLfoMode(op, 0));
+            } else if (kind == 2) {
+                ids.push_back(p1::params::opDetuneLfoRate(op, 0));
+                ids.push_back(p1::params::opDetuneLfoDepth(op, 0));
+                ids.push_back(p1::params::opDetuneLfoWave(op, 0));
+                ids.push_back(p1::params::opDetuneLfoMode(op, 0));
+            } else {
+                ids.push_back(p1::params::opSpecLfoRate(op, 0));
+                ids.push_back(p1::params::opSpecLfoDepth(op, 0));
+                ids.push_back(p1::params::opSpecLfoWave(op, 0));
+                ids.push_back(p1::params::opSpecLfoMode(op, 0));
+            }
+            return ids;
+        };
+        auto oscillator = [](int op) {
+            return std::vector<juce::String>{
+                p1::params::opRatio(op, 0), p1::params::opDetune(op, 0),
+                p1::params::opWaveform(op, 0), p1::params::opLevel(op, 0),
+                p1::params::opFeedback(op, 0), p1::params::opSpecMorph(op, 0)};
+        };
+        auto spectrumA = [](int op) {
+            std::vector<juce::String> ids;
+            ids.push_back(p1::params::opSpecRangeA(op, 0));
+            for (int h = 1; h <= 64; ++h)
+                ids.push_back(p1::params::opSpecA(op, h, 0));
+            return ids;
+        };
+        auto spectrumB = [](int op) {
+            std::vector<juce::String> ids;
+            ids.push_back(p1::params::opSpecRangeB(op, 0));
+            for (int h = 1; h <= 64; ++h)
+                ids.push_back(p1::params::opSpecB(op, h, 0));
+            return ids;
+        };
+
+        check("feedback envelope", Section::feedbackEnvelope, 0, 1,
+              feedbackEnv(0), feedbackEnv(1));
+        check("amplitude envelope", Section::amplitudeEnvelope, 0, 1,
+              amplitudeEnv(0), amplitudeEnv(1));
+        check("amplitude envelope back", Section::amplitudeEnvelope, 1, 0,
+              amplitudeEnv(1), amplitudeEnv(0));
+        check("morph envelope", Section::spectrumEnvelope, 0, 1,
+              morphEnv(0), morphEnv(1));
+        check("amplitude lfo", Section::amplitudeLfo, 0, 1,
+              lfo(0, 0), lfo(1, 0));
+        check("feedback lfo", Section::feedbackLfo, 0, 1,
+              lfo(0, 1), lfo(1, 1));
+        check("detune lfo", Section::detuneLfo, 0, 1,
+              lfo(0, 2), lfo(1, 2));
+        check("spectrum lfo", Section::spectrumLfo, 0, 1,
+              lfo(0, 3), lfo(1, 3));
+        check("oscillator", Section::oscillator, 0, 1,
+              oscillator(0), oscillator(1));
+        check("spectrum a", Section::spectrumA, 0, 1,
+              spectrumA(0), spectrumA(1));
+        check("spectrum b", Section::spectrumB, 0, 1,
+              spectrumB(0), spectrumB(1));
+    }
+
+    {
+        /* The whole-operator copy has the same op1 attack and release edge. */
+        auto& params = processor.parameters();
+        auto setNorm = [&params](const juce::String& id, float value) {
+            if (auto* parameter = params.getParameter(id))
+                parameter->setValueNotifyingHost(value);
+        };
+        auto raw = [&params](const juce::String& id) {
+            const auto* value = params.getRawParameterValue(id);
+            return value == nullptr ? 0.0 : value->load();
+        };
+        p1editor->setActivePart(0);
+        setNorm("attack.p0", 0.37f);
+        setNorm("op1.eg.l1.p0", 0.37f);
+        setNorm("op2.eg.l1.p0", 0.11f);
+        p1editor->copyOperator(0);
+        p1editor->pasteOperator(1);
+        if (std::abs(raw("op2.eg.r1.p0") - raw("attack.p0")) > 0.51 ||
+            std::abs(raw("op2.eg.l1.p0") - raw("op1.eg.l1.p0")) > 0.51) {
+            std::printf("editor snapshot: operator copy missed op1 attack or level\n");
+            ok = false;
+        }
+        setNorm("op2.eg.r1.p0", 0.37f);
+        setNorm("op1.eg.l1.p0", 0.11f);
+        p1editor->copyOperator(1);
+        p1editor->pasteOperator(0);
+        if (std::abs(raw("attack.p0") - raw("op2.eg.r1.p0")) > 0.51) {
+            std::printf("editor snapshot: operator copy missed the attack edge\n");
+            ok = false;
+        }
     }
 
     library.deleteFile();
