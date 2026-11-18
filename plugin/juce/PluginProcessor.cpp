@@ -121,14 +121,18 @@ TypePAlphaAudioProcessor::createLayout()
         const int low = spec.min;
         const int high = spec.max > spec.min ? spec.max : spec.min + 1;
         const int def = juce::jlimit(low, high, spec.def);
-        auto attributes = juce::AudioParameterIntAttributes()
-            .withStringFromValueFunction([spec](int value, int) {
-                return p1::ui::formatParamValue(spec, value);
-            })
-            .withValueFromStringFunction([spec](const juce::String& text) {
-                return static_cast<int>(
-                    std::lround(p1::ui::parseParamValue(spec, text)));
-            });
+        const auto display = juce::String(spec.display);
+        auto attributes = juce::AudioParameterIntAttributes();
+        if (display == "cutoff" || display == "oct" || display == "pct") {
+            attributes = attributes
+                .withStringFromValueFunction([spec](int value, int) {
+                    return p1::ui::formatParamValue(spec, value);
+                })
+                .withValueFromStringFunction([spec](const juce::String& text) {
+                    return static_cast<int>(
+                        std::lround(p1::ui::parseParamValue(spec, text)));
+                });
+        }
         layout.add(std::make_unique<juce::AudioParameterInt>(
             juce::ParameterID{spec.id, 1}, spec.name, low, high, def,
             attributes));
