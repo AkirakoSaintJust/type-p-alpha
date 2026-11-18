@@ -41,10 +41,17 @@ derives `res_k = res / 41942 * 6.25` in Q16. The four-pole loop reaches unity at
 about 79 percent of the travel, inside the reference's 0.79 to 0.82 window, and
 the cubic clip on the feedback path bounds the self-oscillation.
 
-The passband makeup `comp` is a fraction of `1 + res_k`. Its default is 0, so
-the lows thin and the level falls as the resonance rises. The old default was a
-full makeup, which hid the ladder's bass loss. The knob remains available as a
-trim.
+The ladder drops the passband by `1/(1 + res_k)`. The real SH-101 puts part of
+that back at the filter output: R130 from OUT4 and R132 from TR26's emitter sum
+into C53 and the VCA, so the output is `(1 + a) * OUT4 / 152` where `a` is the
+resonance wiper. The passband at `a = 0.75` is -8.8 dB with the sum and -13.7 dB
+without.
+
+The engine's `comp` is 0 to 100 percent of the `1 + res_k` makeup and clamps
+negative values to 0. Its default is 22 percent (raw 7209), which gives -8.95 dB
+at 75 percent and -9.69 dB at 100 percent in the ladder, matching the reference.
+The control is not on the Type P panel. It stays in the module for other users
+and in the host automation.
 
 ## Input saturation
 

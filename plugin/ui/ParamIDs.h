@@ -206,7 +206,6 @@ inline juce::String pitchEnvLevel(int index, int part)
 
 inline juce::String filterCutoff(int part) { return withPart("cutoff", part); }
 inline juce::String filterRes(int part) { return withPart("res", part); }
-inline juce::String filterComp(int part) { return withPart("lp.comp", part); }
 inline juce::String filterType(int part) { return withPart("filter_type", part); }
 inline juce::String filterOn(int part) { return withPart("filter_on", part); }
 inline juce::String filterEnvDepth(int part) { return withPart("fenv_depth", part); }

@@ -71,6 +71,16 @@ int main()
     check(p1_soft_clip(-8192) == -p1_soft_clip(8192),
           "the soft knee is symmetric");
 
+    const double comp = 7209.0 / 32767.0;
+    const double k75 = res_k(31456) / 65536.0;
+    const double g75 = (1.0 + k75 * comp) / (1.0 + k75);
+    check(std::abs(20.0 * std::log10(g75) + 8.95) < 0.15,
+          "the 22 percent makeup matches the SH-101 at 75 percent");
+    const double k100 = res_k(41942) / 65536.0;
+    const double g100 = (1.0 + k100 * comp) / (1.0 + k100);
+    check(std::abs(20.0 * std::log10(g100) + 9.69) < 0.15,
+          "the 22 percent makeup matches the SH-101 at 100 percent");
+
     std::printf("filter: %s\n", failures ? "FAILED" : "passed");
     return failures ? 1 : 0;
 }

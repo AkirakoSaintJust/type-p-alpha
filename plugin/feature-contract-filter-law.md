@@ -16,20 +16,24 @@
 
 ## Player outcome
 
-- **New player action:** set `cutoff` by hertz over about 3.5 Hz to 14.3 kHz,
-  set `res` as a linear percentage, and trim the passband with `comp`. The
-  filter envelope amount reads in octaves.
+- **New player action:** set `cutoff` by hertz over about 3.5 Hz to 14.3 kHz and
+  set `res` as a linear percentage. The filter envelope amount reads in octaves.
+  The passband makeup is internal, so the player does not manage it.
 - **Sound and behaviour:** the cutoff knob is exponential. Its midpoint is about
   224 Hz, so the musical range is spread over the travel rather than crowded
   into the top. Resonance self-oscillates from about 79 percent, matching the
   SH-101's VR18 at 0.79 to 0.82. The self-oscillation level rises from about
   1,493 RMS at 80 percent to 3,492 RMS at the top in the integer node model.
-  The `comp` default is 0, so the lows thin as the resonance rises. The input
-  soft knee is transparent below about -6 dBFS and compresses to about -29 dB
-  THD at 0 dBFS.
+  The SH-101 puts part of the passband loss back at the filter output, summing
+  `TR26`'s non-inverted emitter signal with `OUT4` so the VCA sees
+  `(1 + a) * OUT4 / 152`. At `a = 0.75` the reference's passband is -8.8 dB with
+  that sum and -13.7 dB without. The engine's internal `comp` is 22 percent of
+  the full `1 + res_k` makeup, which gives -8.95 dB at 75 percent and -9.69 dB
+  at 100 percent in the ladder. The input soft knee is transparent below about
+  -6 dBFS and compresses to about -29 dB THD at 0 dBFS.
 - **Failure mode:** an old patch loads with a different cutoff, the filter
   self-oscillates far from 79 percent, the cutoff law is not exponential, a
-  clean patch is dirtied by the input knee, the `comp` default removes too much
+  clean patch is dirtied by the input knee, the internal makeup removes too much
   level, or the top of the cutoff range breaks into a parasitic oscillation.
 
 ## Dependencies and interactions
@@ -55,7 +59,7 @@
 | --- | --- | --- | --- | --- |
 | `cutoff` | 0 to 55296 | 36958 | Hz | Log position, 3.5 Hz to 14.336 kHz over 12 octaves |
 | `res` | 0 to 41942 | 16000 | percent | Linear resonance, self-oscillation at about 79 percent |
-| `comp` | -32768 to 32767 | 0 | raw | Fraction of the `1 + res_k` makeup |
+| `comp` | -32768 to 32767 | 7209 | raw | Internal, 22 percent of the `1 + res_k` makeup; hidden from the panel |
 | `fenv_depth` | 0 to 65535 | 0 | octaves | 0 to 8 octaves of envelope sweep |
 
 The cutoff table at selected positions:
@@ -93,10 +97,10 @@ larger only at the sub-audio bottom.
   the old 8000 default, loads it through `PresetStore`, and checks that the
   cutoff lands on position 36958, the 909 Hz point. A version 7 record keeps its
   raw value.
-- **UI:** the native filter card now carries the `comp` knob and reads `909Hz`,
-  `38%`, `0` and `0.00 oct`. The Linux `editor-fxmod.png` golden is regenerated.
-  The host text for `cutoff`, `res` and `fenv_depth` round-trips at 21
-  normalized points per parameter, which is the check the CLAP
+- **UI:** the native filter card reads `909Hz`, `38%` and `0.00 oct` and keeps
+  the `comp` trim off the panel. The Linux `editor-fxmod.png` golden is
+  regenerated. The host text for `cutoff`, `res` and `fenv_depth` round-trips at
+  21 normalized points per parameter, which is the check the CLAP
   `param-conversions` validator makes.
 - **Web:** the wasm module rebuilds at 206,862 bytes and the parity script
   reports 1,614 parameters with the note-on and release matching the 48 kHz
@@ -119,6 +123,8 @@ larger only at the sub-audio bottom.
 - The top coefficient is clamped at 55296, so the last 0.2 percent of the cutoff
   travel is flat at about 14.18 kHz.
 - The input knee is fixed. There is no drive parameter.
+- The `comp` trim is hidden from the Type P panel and fixed at 22 percent. It
+  remains a module parameter and a host automation lane.
 - Only `cutoff`, `res` and `fenv_depth` get the human-readable host text. The
   other parameters keep the host's numeric text, so their automation lanes are
   unchanged.
@@ -131,7 +137,9 @@ larger only at the sub-audio bottom.
 
 If the self-oscillation onset moves more than a few percent from 79, adjust the
 `res_k` numerator and re-run the node model and the engine self-oscillation
-check. If a clean patch at -12 dBFS gains audible distortion, reduce the
-fifth-order term. If the top of the cutoff range shows a parasitic oscillation,
-lower the table clamp and regenerate. If an old preset does not land on its
-frequency, fix the migration before accepting the next golden set.
+check. If the compensated passband is more than about 1 dB from the reference at
+75 or 100 percent, adjust the `comp` default and re-run the DC gain check. If a
+clean patch at -12 dBFS gains audible distortion, reduce the fifth-order term.
+If the top of the cutoff range shows a parasitic oscillation, lower the table
+clamp and regenerate. If an old preset does not land on its frequency, fix the
+migration before accepting the next golden set.

@@ -11,18 +11,16 @@ namespace {
 class FilterCard : public P1Card {
 public:
     FilterCard(PluginEditor& editor, juce::String title, juce::String cutoffID,
-               juce::String resID, juce::String compID, juce::String envID,
-               juce::String typeID, juce::String onID)
+               juce::String resID, juce::String envID, juce::String typeID,
+               juce::String onID)
         : P1Card(std::move(title)),
           cutoff_(editor.state(), std::move(cutoffID), "cutoff", 42.0f),
           res_(editor.state(), std::move(resID), "res", 42.0f),
-          comp_(editor.state(), std::move(compID), "comp", 42.0f),
           type_(editor.state(), std::move(typeID), {"lpf", "bpf", "hpf"}),
           on_(editor.state(), std::move(onID), "on")
     {
         addAndMakeVisible(cutoff_);
         addAndMakeVisible(res_);
-        addAndMakeVisible(comp_);
         if (envID.isNotEmpty()) {
             env_ = std::make_unique<ParamKnob>(editor.state(), std::move(envID),
                                                "env amt", 42.0f);
@@ -36,11 +34,10 @@ public:
     {
         auto area = contentArea();
         auto row = area.removeFromTop(84);
-        const int cells = env_ != nullptr ? 4 : 3;
+        const int cells = env_ != nullptr ? 3 : 2;
         const int cell = row.getWidth() / cells;
         cutoff_.setBounds(row.removeFromLeft(cell));
         res_.setBounds(row.removeFromLeft(cell));
-        comp_.setBounds(row.removeFromLeft(cell));
         if (env_ != nullptr)
             env_->setBounds(row);
         type_.setBounds(44, 118, 150, 18);
@@ -58,7 +55,6 @@ public:
 private:
     ParamKnob cutoff_;
     ParamKnob res_;
-    ParamKnob comp_;
     std::unique_ptr<ParamKnob> env_;
     ParamChoice type_;
     P1Toggle on_;
@@ -348,8 +344,8 @@ public:
         const int part = editor.activePart();
         filter1_ = std::make_unique<FilterCard>(
             editor, "filter 1", params::filterCutoff(part), params::filterRes(part),
-            params::filterComp(part), params::filterEnvDepth(part),
-            params::filterType(part), params::filterOn(part));
+            params::filterEnvDepth(part), params::filterType(part),
+            params::filterOn(part));
         filterEnv_ = std::make_unique<FilterEnvelopeCard>(editor, part);
         pitchLfo_ = std::make_unique<PitchLfoCard>(editor);
         pitchEnv_ = std::make_unique<PitchEnvelopeCard>(editor);

@@ -73,6 +73,10 @@ int main()
     } else {
         check(false, "the cutoff spec is present");
     }
+    if (const auto* comp = p1::ui::findSpec("lp.comp.p0"))
+        check(comp->def == 7209, "the internal makeup defaults to 22 percent");
+    else
+        check(false, "the internal makeup spec is present");
     TypePAlphaAudioProcessor processor;
 
     check(processor.getParameters().size() == kP1ParamCount,

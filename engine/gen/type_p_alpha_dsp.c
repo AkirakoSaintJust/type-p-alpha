@@ -1970,7 +1970,7 @@ const dsp_param type_p_alpha_dsp_params[1614] = {
     { 778u, "fenv_vs.p0", -100, 100, 0, 0u, 0u, "" },
     { 779u, "cutoff.p0", 0, 55296, 36958, 0u, 0u, "" },
     { 780u, "res.p0", 0, 41942, 16000, 0u, 0u, "" },
-    { 781u, "lp.comp.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 781u, "lp.comp.p0", -32768, 32767, 7209, 0u, 0u, "" },
     { 782u, "filter_type.p0", 0, 2, 0, 0u, 0u, "" },
     { 783u, "filter_on.p0", 0, 1, 0, 0u, 0u, "" },
     { 784u, "fenv_depth.p0", 0, 65535, 0, 0u, 0u, "" },
@@ -2770,7 +2770,7 @@ const dsp_param type_p_alpha_dsp_params[1614] = {
     { 1578u, "fenv_vs.p1", -100, 100, 0, 0u, 0u, "" },
     { 1579u, "cutoff.p1", 0, 55296, 36958, 0u, 0u, "" },
     { 1580u, "res.p1", 0, 41942, 16000, 0u, 0u, "" },
-    { 1581u, "lp.comp.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1581u, "lp.comp.p1", -32768, 32767, 7209, 0u, 0u, "" },
     { 1582u, "filter_type.p1", 0, 2, 0, 0u, 0u, "" },
     { 1583u, "filter_on.p1", 0, 1, 0, 0u, 0u, "" },
     { 1584u, "fenv_depth.p1", 0, 65535, 0, 0u, 0u, "" },
@@ -6966,8 +6966,9 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
                SH-101's feedback diodes). The input has its own soft knee before the feedback
                subtraction, so a hot mixer compresses like the OTA pair and the
                self-oscillation amplitude does not follow the input level. The feedback drops the passband by
-               `1/(1+res_k)`, so `comp` (Q15) is the fraction of a `1+res_k` makeup applied to
-               the LP4 output; at 0 the lows thin with resonance. `mode` selects the output:
+               `1/(1+res_k)`, so `comp` is 0 to 100 percent of a `1+res_k` makeup applied to the
+               LP4 output, with negative values clamped to 0. At 22 percent the output matches the
+               SH-101's partial `1 + a` sum. `mode` selects the output:
                0 = LP4, 1 = the band tap, 2 = the 2-pole highpass, the (1 - L)^2 tap whose
                corner lines up with the LP pole. Locals are scoped so several instances can
                coexist. */
@@ -6999,7 +7000,8 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
                 lp_lp2_x = lp_z2[v];
                 lp_band_x = lp_z1[v] - lp_z2[v];
                 {
-                    int32_t boost = p1_q16_mul(lp_res_k[v], lp_comp[voice_part[v]] << 1); /* res_k * comp */
+                    int32_t comp_q15 = lp_comp[voice_part[v]] < 0 ? 0 : lp_comp[voice_part[v]];
+                    int32_t boost = p1_q16_mul(lp_res_k[v], comp_q15 << 1); /* res_k * comp */
                     int32_t lp4 = lp_z4[v] + p1_q16_mul(lp_z4[v], boost);
                     /* The 2-pole HP is the (1 - L)^2 tap, so its corner lines up with the
                        LP pole rather than the 1.55x offset of the 4-pole (1 - L)^4 tap. */

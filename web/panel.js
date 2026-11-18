@@ -2496,7 +2496,7 @@
 
     const filterCard = sectionCard("filter 1");
     const filterKnobs = div("knobs");
-    for (const base of ["cutoff", "res", "fenv_depth", "lp.comp", "dc.r"]) {
+    for (const base of ["cutoff", "res", "fenv_depth", "dc.r"]) {
       const spec = specByBase(base);
       if (spec !== undefined) filterKnobs.append(controlFor(spec));
     }
