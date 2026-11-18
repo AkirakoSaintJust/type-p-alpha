@@ -72,7 +72,10 @@ juce::String notePair(int note)
 juce::String percentage(const P1ParamSpec& spec, double value, bool inverse)
 {
     const double range = static_cast<double>(spec.max - spec.min);
-    int pct = range > 0.0 ? static_cast<int>((value - spec.min) * 100.0 / range) : 0;
+    int pct = range > 0.0
+                  ? static_cast<int>(
+                        std::lround((value - spec.min) * 100.0 / range))
+                  : 0;
     if (inverse)
         pct = 100 - pct;
     return juce::String(juce::jlimit(0, 100, pct)) + "%";
@@ -142,6 +145,8 @@ juce::String formatParamValue(const P1ParamSpec& spec, double value)
     }
     if (display == "onoff")
         return v > 0 ? "on" : "off";
+    if (display == "onoff_inv")
+        return v > 0 ? "off" : "on";
     if (display == "note")
         return notePair(v);
     if (display == "mode")
@@ -183,6 +188,13 @@ double parseParamValue(const P1ParamSpec& spec, const juce::String& text)
             break;
     }
     const double v = numeric.getDoubleValue();
+    if (display == "onoff" || display == "onoff_inv") {
+        const auto lower = text.trim().toLowerCase();
+        if (lower == "on" || lower == "active")
+            return display == "onoff_inv" ? spec.min : spec.max;
+        if (lower == "off" || lower == "inactive")
+            return display == "onoff_inv" ? spec.max : spec.min;
+    }
     if (juce::String(spec.id).startsWith("channel."))
         return juce::jlimit(static_cast<double>(spec.min),
                             static_cast<double>(spec.max),
@@ -209,10 +221,12 @@ double parseParamValue(const P1ParamSpec& spec, const juce::String& text)
                             static_cast<double>(spec.max),
                             spec.min + v * range / 100.0);
     }
-    if (display == "cutoff")
+    if (display == "cutoff") {
+        const double hz = text.containsIgnoreCase("khz") ? v * 1000.0 : v;
         return juce::jlimit(static_cast<double>(spec.min),
                             static_cast<double>(spec.max),
-                            static_cast<double>(p1::cutoffPositionFromHz(v)));
+                            static_cast<double>(p1::cutoffPositionFromHz(hz)));
+    }
     if (display == "oct")
         return juce::jlimit(static_cast<double>(spec.min),
                             static_cast<double>(spec.max),

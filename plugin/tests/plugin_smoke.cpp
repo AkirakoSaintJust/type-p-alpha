@@ -77,6 +77,25 @@ int main()
 
     check(processor.getParameters().size() == kP1ParamCount,
           "the APVTS exposes every manifest parameter");
+    {
+        int bad = 0;
+        for (auto* parameter : processor.getParameters()) {
+            for (int step = 0; step <= 20; ++step) {
+                const double norm = static_cast<double>(step) / 20.0;
+                const auto first = parameter->getText(
+                    static_cast<float>(norm), 64);
+                const auto second = parameter->getText(
+                    parameter->getValueForText(first), 64);
+                if (first != second) {
+                    std::printf("roundtrip %s %.2f: %s -> %s\n",
+                                parameter->getName(64).toRawUTF8(), norm,
+                                first.toRawUTF8(), second.toRawUTF8());
+                    ++bad;
+                }
+            }
+        }
+        check(bad == 0, "every host parameter text round-trips");
+    }
     check(processor.acceptsMidi() && !processor.producesMidi(),
           "the processor accepts MIDI and produces audio only");
 

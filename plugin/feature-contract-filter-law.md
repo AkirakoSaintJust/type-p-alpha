@@ -95,6 +95,9 @@ larger only at the sub-audio bottom.
   raw value.
 - **UI:** the native filter card now carries the `comp` knob and reads `909Hz`,
   `38%`, `0` and `0.00 oct`. The Linux `editor-fxmod.png` golden is regenerated.
+  The host text for `cutoff`, `res` and `fenv_depth` round-trips at 21
+  normalized points per parameter, which is the check the CLAP
+  `param-conversions` validator makes.
 - **Web:** the wasm module rebuilds at 206,862 bytes and the parity script
   reports 1,614 parameters with the note-on and release matching the 48 kHz
   capture. The panel and bare browser smokes pass.
@@ -116,6 +119,9 @@ larger only at the sub-audio bottom.
 - The top coefficient is clamped at 55296, so the last 0.2 percent of the cutoff
   travel is flat at about 14.18 kHz.
 - The input knee is fixed. There is no drive parameter.
+- Only `cutoff`, `res` and `fenv_depth` get the human-readable host text. The
+  other parameters keep the host's numeric text, so their automation lanes are
+  unchanged.
 - The key follow still uses the proportional push, so 100 percent does not
   track at exactly one octave per octave.
 - The resonance and `comp` raw values are not migrated. Old patches keep their
