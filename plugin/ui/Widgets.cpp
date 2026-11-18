@@ -5,6 +5,7 @@
 #include <cmath>
 #include <vector>
 
+#include "CutoffLaw.h"
 #include "math_tables.h"
 #include "SpectrumAnalysis.h"
 
@@ -111,6 +112,16 @@ juce::String formatParamValue(const P1ParamSpec& spec, double value)
         return percentage(spec, value, true);
     if (display == "pct")
         return percentage(spec, value, false);
+    if (display == "cutoff") {
+        const double hz = p1::cutoffHzFromPosition(v);
+        if (hz < 100.0)
+            return juce::String(hz, 1) + "Hz";
+        if (hz < 1000.0)
+            return juce::String(static_cast<int>(std::lround(hz))) + "Hz";
+        return juce::String(hz / 1000.0, 2) + "kHz";
+    }
+    if (display == "oct")
+        return juce::String(static_cast<double>(v) / 65535.0 * 8.0, 2) + " oct";
     if (display == "pct_exp") {
         const double range = static_cast<double>(spec.max - spec.min);
         const double x = range > 0.0 ? (value - spec.min) / range : 0.0;
@@ -198,6 +209,14 @@ double parseParamValue(const P1ParamSpec& spec, const juce::String& text)
                             static_cast<double>(spec.max),
                             spec.min + v * range / 100.0);
     }
+    if (display == "cutoff")
+        return juce::jlimit(static_cast<double>(spec.min),
+                            static_cast<double>(spec.max),
+                            static_cast<double>(p1::cutoffPositionFromHz(v)));
+    if (display == "oct")
+        return juce::jlimit(static_cast<double>(spec.min),
+                            static_cast<double>(spec.max),
+                            v / 8.0 * 65535.0);
     if (display == "pct_exp") {
         const double range = static_cast<double>(spec.max - spec.min);
         constexpr double k = 3.0;

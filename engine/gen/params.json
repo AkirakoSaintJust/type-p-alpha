@@ -10133,12 +10133,12 @@
       "target": "lp.f.p0",
       "min": 0,
       "max": 55296,
-      "default": 8000,
-      "curve": "log",
+      "default": 36958,
+      "curve": "linear",
       "unit": "",
       "rate": "block",
       "modulatable": false,
-      "display": "off_pct"
+      "display": "cutoff"
     },
     {
       "id": 780,
@@ -10147,11 +10147,11 @@
       "min": 0,
       "max": 41942,
       "default": 16000,
-      "curve": "log",
+      "curve": "linear",
       "unit": "",
       "rate": "block",
       "modulatable": false,
-      "display": "pct_exp"
+      "display": "pct"
     },
     {
       "id": 781,
@@ -10159,7 +10159,7 @@
       "target": "lp.comp.p0",
       "min": -32768,
       "max": 32767,
-      "default": 32767,
+      "default": 0,
       "curve": "linear",
       "unit": "",
       "rate": "block",
@@ -10203,7 +10203,7 @@
       "unit": "",
       "rate": "block",
       "modulatable": false,
-      "display": "pct"
+      "display": "oct"
     },
     {
       "id": 785,
@@ -20533,12 +20533,12 @@
       "target": "lp.f.p1",
       "min": 0,
       "max": 55296,
-      "default": 8000,
-      "curve": "log",
+      "default": 36958,
+      "curve": "linear",
       "unit": "",
       "rate": "block",
       "modulatable": false,
-      "display": "off_pct"
+      "display": "cutoff"
     },
     {
       "id": 1580,
@@ -20547,11 +20547,11 @@
       "min": 0,
       "max": 41942,
       "default": 16000,
-      "curve": "log",
+      "curve": "linear",
       "unit": "",
       "rate": "block",
       "modulatable": false,
-      "display": "pct_exp"
+      "display": "pct"
     },
     {
       "id": 1581,
@@ -20559,7 +20559,7 @@
       "target": "lp.comp.p1",
       "min": -32768,
       "max": 32767,
-      "default": 32767,
+      "default": 0,
       "curve": "linear",
       "unit": "",
       "rate": "block",
@@ -20603,7 +20603,7 @@
       "unit": "",
       "rate": "block",
       "modulatable": false,
-      "display": "pct"
+      "display": "oct"
     },
     {
       "id": 1585,

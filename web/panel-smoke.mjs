@@ -459,6 +459,28 @@ try {
       persistedSpectrum !== savedSpectrum)
     throw new Error("the library did not persist");
 
+  await page.evaluate(() => {
+    const key = "type-p-alpha-web-library";
+    const data = JSON.parse(localStorage.getItem(key));
+    data.version = 2;
+    const multi = data.multis[data.currentMulti];
+    const part = data.partSlots[multi.partSlots[0]];
+    for (const entry of part.params) {
+      if (entry[0] === "cutoff.p0") entry[1] = 8000;
+    }
+    localStorage.setItem(key, JSON.stringify(data));
+  });
+  await page.reload({ waitUntil: "load" });
+  await page.waitForFunction(
+    () => window.__p1 && window.__p1.paramCount === 1614, {
+    timeout: 20000,
+  });
+  const migratedCutoff = await page.evaluate(() =>
+    window.__p1.paramValue("cutoff.p0"));
+  console.log("migrated cutoff:", migratedCutoff);
+  if (migratedCutoff !== 36958)
+    throw new Error("the old library cutoff was not migrated");
+
   const fallbackUrl = new URL("panel.html", new URL(url));
   fallbackUrl.searchParams.set("rate", "44100");
   const fallback = await browser.newPage();

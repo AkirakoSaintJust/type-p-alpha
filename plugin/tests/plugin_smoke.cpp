@@ -14,6 +14,7 @@
 #include "Engine.hpp"
 #include "Params.h"
 #include "PluginProcessor.h"
+#include "Widgets.h"
 
 namespace {
 
@@ -66,6 +67,12 @@ bool matches(const juce::AudioBuffer<float>& buffer, const int32_t* reference, i
 
 int main()
 {
+    if (const auto* spec = p1::ui::findSpec("cutoff.p0")) {
+        check(p1::ui::formatParamValue(*spec, 36958) == "909Hz",
+              "the cutoff reads in hertz");
+    } else {
+        check(false, "the cutoff spec is present");
+    }
     TypePAlphaAudioProcessor processor;
 
     check(processor.getParameters().size() == kP1ParamCount,
@@ -150,6 +157,32 @@ int main()
         }
         processor.setStateInformation(state.getData(),
                                       static_cast<int>(state.getSize()));
+    }
+
+    {
+        std::unique_ptr<juce::XmlElement> oldXml(processor.getXmlFromBinary(
+            state.getData(), static_cast<int>(state.getSize())));
+        if (oldXml != nullptr) {
+            auto tree = juce::ValueTree::fromXml(*oldXml);
+            tree.setProperty("stateVersion", 4, nullptr);
+            for (int i = 0; i < tree.getNumChildren(); ++i) {
+                auto child = tree.getChild(i);
+                if (child.hasType("PARAM") &&
+                    child.getProperty("id").toString() == "cutoff.p0")
+                    child.setProperty("value", 8000, nullptr);
+            }
+            juce::MemoryBlock older;
+            processor.copyXmlToBinary(*tree.createXml(), older);
+            processor.setStateInformation(older.getData(),
+                                          static_cast<int>(older.getSize()));
+            auto* cutoff =
+                processor.parameters().getRawParameterValue("cutoff.p0");
+            check(cutoff != nullptr &&
+                      std::lround(cutoff->load()) == 36958,
+                  "an old state migrates the cutoff to 909 Hz");
+            processor.setStateInformation(state.getData(),
+                                          static_cast<int>(state.getSize()));
+        }
     }
 
     {

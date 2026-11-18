@@ -69,7 +69,7 @@
   ],
   "init": {
     "algorithm": 7,
-    "cutoff": 0,
+    "cutoff": 36958,
     "res": 16000,
     "filter_type": 0,
     "filter_on": 0,
@@ -314,7 +314,7 @@
     ]
   },
   "bench": {
-    "cutoff": 30000,
+    "cutoff": 46080,
     "filter_on": 1,
     "fenv_depth": 65535,
     "pitch_rate": 447392,
@@ -340,15 +340,15 @@
       "target": "lp.f",
       "min": 0,
       "max": 55296,
-      "curve": "log",
-      "display": "off_pct"
+      "curve": "linear",
+      "display": "cutoff"
     },
     "res": {
       "target": "lp.res",
       "min": 0,
       "max": 41942,
-      "curve": "log",
-      "display": "pct_exp"
+      "curve": "linear",
+      "display": "pct"
     },
     "filter_type": {
       "target": "lp.mode",
@@ -411,7 +411,7 @@
       "min": 0,
       "max": 65535,
       "curve": "linear",
-      "display": "pct"
+      "display": "oct"
     },
     "op1_fbenv_on": {
       "target": "op1.fbenv.on",
@@ -5487,9 +5487,9 @@
         "id": "lp",
         "type": "liquid_filter",
         "params": {
-          "f": 8000,
+          "f": 36958,
           "res": 16000,
-          "comp": 32767,
+          "comp": 0,
           "mode": 0,
           "on": 0,
           "fenv_depth": 0

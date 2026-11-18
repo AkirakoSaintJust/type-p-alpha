@@ -155,10 +155,14 @@ float, file access or display enters the audio path.
 - **Assumptions/open research:** the output resampler now carries the 44.1 kHz
   host, so that path is no longer bit-exact with the core. Only the 48 kHz path is
   exact. This is the cost of a single native rate.
-- **Filter cutoff approximation:** the linear coefficient scale is exact at low
+- **Filter cutoff approximation:** the 48 kHz conversion scaled the old
+  coefficient by 60211/65536 to keep the 44.1 kHz cutoff, which was exact at low
   cutoffs and about 5 percent low at the top of the range against the
-  time-preserving transform. The default cutoff is within 2 percent. A lookup
-  table can replace the scale if a listening test finds the top dull.
+  time-preserving transform. The SH-101 filter law in
+  [`feature-contract-filter-law.md`](feature-contract-filter-law.md) removes that
+  scale and reads the cutoff from a 257-entry table, so the 48 kHz core now has
+  the one-pole coefficient at every position. The old scale remains only in the
+  migration of patches saved before the change.
 - **Safe experiment and stop criterion:** if the 48 kHz core drifts in pitch,
   envelope time, filter cutoff or LFO rate, stop and regenerate the table rather
   than tuning the render. If the bridge images above the gate, fix the kernel

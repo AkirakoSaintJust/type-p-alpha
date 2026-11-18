@@ -5,6 +5,8 @@
 #include <cstring>
 #include <utility>
 
+#include "CutoffLaw.h"
+
 extern "C" {
 #include "presets.h"
 }
@@ -12,8 +14,11 @@ extern "C" {
 namespace p1 {
 
 PresetStore::PresetStore(int partParamCount, int partCount,
-                         std::vector<int32_t> defaults)
-    : partParamCount_(std::max(0, partParamCount)),
+                         std::vector<int32_t> defaults, int cutoffIndex)
+    : cutoffIndex_(cutoffIndex >= 0 && cutoffIndex < partParamCount
+                       ? cutoffIndex
+                       : -1),
+      partParamCount_(std::max(0, partParamCount)),
       partCount_(std::max(0, partCount)),
       defaults_(std::move(defaults)),
       parts_(static_cast<std::size_t>(kPartSlots)),
@@ -157,6 +162,10 @@ bool PresetStore::loadPartBank(const uint8_t* data, std::size_t size)
         std::vector<int32_t> params(static_cast<std::size_t>(partParamCount_));
         if (preset_part_unpack(raw, static_cast<uint32_t>(partParamCount_), name,
                                params.data())) {
+            if (raw[0] < PRESET_VERSION && cutoffIndex_ >= 0)
+                params[static_cast<std::size_t>(cutoffIndex_)] =
+                    p1::cutoffOldToNew(
+                        params[static_cast<std::size_t>(cutoffIndex_)]);
             part.used = true;
             part.name = shortName(name);
             part.params = std::move(params);

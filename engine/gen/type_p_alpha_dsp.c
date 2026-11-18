@@ -244,6 +244,7 @@ typedef struct type_p_alpha_state {
     int32_t lp_z4[NVOICE];
     int32_t lp_f_eff[NVOICE];
     int32_t lp_fc[NVOICE];
+    int32_t lp_res_k[NVOICE];
     uint32_t fenv_stage[NVOICE];
     int32_t fenv_level[NVOICE];
     uint32_t fenv_r1_eff[NVOICE];
@@ -1967,9 +1968,9 @@ const dsp_param type_p_alpha_dsp_params[1614] = {
     { 776u, "fenv_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
     { 777u, "f1_cutoff_vs.p0", -100, 100, 0, 0u, 0u, "" },
     { 778u, "fenv_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 779u, "cutoff.p0", 0, 55296, 8000, 1u, 0u, "" },
-    { 780u, "res.p0", 0, 41942, 16000, 1u, 0u, "" },
-    { 781u, "lp.comp.p0", -32768, 32767, 32767, 0u, 0u, "" },
+    { 779u, "cutoff.p0", 0, 55296, 36958, 0u, 0u, "" },
+    { 780u, "res.p0", 0, 41942, 16000, 0u, 0u, "" },
+    { 781u, "lp.comp.p0", -32768, 32767, 0, 0u, 0u, "" },
     { 782u, "filter_type.p0", 0, 2, 0, 0u, 0u, "" },
     { 783u, "filter_on.p0", 0, 1, 0, 0u, 0u, "" },
     { 784u, "fenv_depth.p0", 0, 65535, 0, 0u, 0u, "" },
@@ -2767,9 +2768,9 @@ const dsp_param type_p_alpha_dsp_params[1614] = {
     { 1576u, "fenv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
     { 1577u, "f1_cutoff_vs.p1", -100, 100, 0, 0u, 0u, "" },
     { 1578u, "fenv_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1579u, "cutoff.p1", 0, 55296, 8000, 1u, 0u, "" },
-    { 1580u, "res.p1", 0, 41942, 16000, 1u, 0u, "" },
-    { 1581u, "lp.comp.p1", -32768, 32767, 32767, 0u, 0u, "" },
+    { 1579u, "cutoff.p1", 0, 55296, 36958, 0u, 0u, "" },
+    { 1580u, "res.p1", 0, 41942, 16000, 0u, 0u, "" },
+    { 1581u, "lp.comp.p1", -32768, 32767, 0, 0u, 0u, "" },
     { 1582u, "filter_type.p1", 0, 2, 0, 0u, 0u, "" },
     { 1583u, "filter_on.p1", 0, 1, 0, 0u, 0u, "" },
     { 1584u, "fenv_depth.p1", 0, 65535, 0, 0u, 0u, "" },
@@ -4670,6 +4671,7 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define lp_z4 (S->lp_z4)
 #define lp_f_eff (S->lp_f_eff)
 #define lp_fc (S->lp_fc)
+#define lp_res_k (S->lp_res_k)
 #define fenv_stage (S->fenv_stage)
 #define fenv_level (S->fenv_level)
 #define fenv_r1_eff (S->fenv_r1_eff)
@@ -6731,8 +6733,9 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
         penv_r2_eff[v] = (uint32_t)p1_key_apply(penv_r2[voice_part[v]], p1_key_add(penv_ks_k_x[v], penv_vs_k_x[v]), 0, 99);
         penv_r3_eff[v] = (uint32_t)p1_key_apply(penv_r3[voice_part[v]], p1_key_add(penv_ks_k_x[v], penv_vs_k_x[v]), 0, 99);
         penv_r4_eff[v] = (uint32_t)p1_key_apply(penv_r4[voice_part[v]], p1_key_add(penv_ks_k_x[v], penv_vs_k_x[v]), 0, 99);
-        lp_f_eff[v] = p1_key_apply(lp_f[voice_part[v]], p1_key_add(f1_ks_k_x[v], f1_vs_k_x[v]), 0, 65535);
-        lp_fc[v] = p1_q16_mul(p1_clamp16_max(lp_f_eff[v] + p1_q16_mul(lp_fenv_depth[voice_part[v]], fenv_cv_x[v] << 1), 55296), 60211);
+        lp_f_eff[v] = p1_key_apply(lp_f[voice_part[v]], p1_key_add(f1_ks_k_x[v], f1_vs_k_x[v]), 0, 55296);
+        lp_res_k[v] = ((int64_t)lp_res[voice_part[v]] * 65536 / 41942) * 25 / 4;
+        lp_fc[v] = p1_filter_coeff_q16(p1_clamp16_max(lp_f_eff[v] + p1_q16_mul(p1_q16_mul(lp_fenv_depth[voice_part[v]], fenv_cv_x[v] << 1) * 8, 4608), 55296));
         op4_speclfo_base[v] = ((uint32_t)p1_wave_base[((op4_speclfo_wave[voice_part[v]] > 11u) ? 0u : op4_speclfo_wave[voice_part[v]])] << 10);
         op4_specenv_r1_eff[v] = (uint32_t)p1_key_apply(op4_specenv_r1[voice_part[v]], p1_key_add(0, 0), 0, 99);
         op4_specenv_r2_eff[v] = (uint32_t)p1_key_apply(op4_specenv_r2[voice_part[v]], p1_key_add(0, 0), 0, 99);
@@ -6953,29 +6956,27 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
                 route_car_x = p1_q15_mul(d1_out_x, 32767) + p1_q15_mul(d2_out_x, 32767) + p1_q15_mul(d3_out_x, 32767) + p1_q15_mul(d4_out_x, 32767);
                 break;
             }
-            /* A 4-pole resonant lowpass ladder in the spirit of the Ripples / Liquid Filter.
-               Four one-pole OTA stages run in series, with the 4th fed back negatively at 4x.
-               The loop gain reaches unity at the cutoff, so it self-oscillates. The soft clip
-               sits on the resonance feedback path (the Ripples OTA, and the SH-101's feedback
-               diodes) rather than on the input, so the input stays linear and the
-               self-oscillation amplitude does not change with the input level. The states are
-               not clamped. The feedback clip already bounds the loop, so the cells settle
-               within a few times the input level and int32 holds them comfortably. `f` is the
-               per-stage coefficient (Q16). `fc` is block-derived from the envelope plus key /
-               velocity follow, and clamped at 55296 because the feedback loop breaks into a
-               parasitic oscillation above that coefficient. The feedback also drops the
-               passband by `1/(1+4.5*res)`, so `comp` (Q15) is the fraction of a `1+4.5*res`
-               makeup applied to the LP4 output. At `comp` = 1 the passband stays level as
-               the resonance rises. `mode` selects the output: 0 = LP4, 1 = the band tap,
-               2 = the 2-pole highpass, the (1 - L)^2 tap whose corner lines up with the LP
-               pole. Locals are scoped so several instances can coexist. */
+            /* A 4-pole resonant lowpass ladder in the spirit of the Ripples / Liquid Filter
+               and the SH-101's IR3109. Four one-pole OTA stages run in series, with the 4th
+               fed back negatively. `f` is a log cutoff position over 12 octaves, and `fc` is
+               the 48 kHz per-stage coefficient from the table. `res` is linear and `res_k`
+               scales it to a feedback coefficient of 6.25 at the top, so the four-pole loop
+               reaches unity at about 79 percent and self-oscillates through the last fifth.
+               The resonance soft clip sits on the feedback path (the Ripples OTA, and the
+               SH-101's feedback diodes). The input has its own soft knee before the feedback
+               subtraction, so a hot mixer compresses like the OTA pair and the
+               self-oscillation amplitude does not follow the input level. The feedback drops the passband by
+               `1/(1+res_k)`, so `comp` (Q15) is the fraction of a `1+res_k` makeup applied to
+               the LP4 output; at 0 the lows thin with resonance. `mode` selects the output:
+               0 = LP4, 1 = the band tap, 2 = the 2-pole highpass, the (1 - L)^2 tap whose
+               corner lines up with the LP pole. Locals are scoped so several instances can
+               coexist. */
             int32_t lp_out_x = 0;
             int32_t lp_lp2_x = 0;
             int32_t lp_band_x = 0;
             int32_t lp_hp_x = 0;
             if (lp_on[voice_part[v]]) {
-                int32_t fb = p1_q16_mul(lp_res[voice_part[v]], lp_z4[v]);
-                fb = fb * 9 / 2;                 /* 4.5x: a little past the discretized threshold */
+                int32_t fb = p1_q16_mul(lp_res_k[v], lp_z4[v]);
                 int32_t fbc;
                 if (fb > 32767) {
                     fbc = 21845;
@@ -6986,7 +6987,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
                     int32_t f3 = (f2 * fb) >> 15;
                     fbc = fb - ((f3 * 21846) >> 16);
                 }
-                int32_t u = route_car_x - fbc;
+                int32_t u = p1_soft_clip(route_car_x) - fbc;
                 int32_t d = u - lp_z1[v];
                 lp_z1[v] += p1_q16_mul(lp_fc[v], d);
                 d = lp_z1[v] - lp_z2[v];
@@ -6998,8 +6999,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t (*taps)[D
                 lp_lp2_x = lp_z2[v];
                 lp_band_x = lp_z1[v] - lp_z2[v];
                 {
-                    int32_t boost = p1_q16_mul(lp_res[voice_part[v]], lp_comp[voice_part[v]] << 1); /* res * comp */
-                    boost = boost * 9 / 2;                 /* 4.5x: the ladder feedback */
+                    int32_t boost = p1_q16_mul(lp_res_k[v], lp_comp[voice_part[v]] << 1); /* res_k * comp */
                     int32_t lp4 = lp_z4[v] + p1_q16_mul(lp_z4[v], boost);
                     /* The 2-pole HP is the (1 - L)^2 tap, so its corner lines up with the
                        LP pole rather than the 1.55x offset of the 4-pole (1 - L)^4 tap. */

@@ -24,6 +24,18 @@ OLD_RATE = 44100.0
 NEW_RATE = 48000.0
 BLOCK = 32
 
+# The VCF's log cutoff position. The engine stores a position from 0 to
+# FILTER_POS_MAX over FILTER_OCTAVES octaves, from FILTER_HZ_MIN to
+# FILTER_HZ_MIN * 2 ** FILTER_OCTAVES. The 257-entry table gives the per-stage
+# one-pole coefficient at every 1/256 of the range, and the last entry is clamped
+# at FILTER_COEFF_MAX, the highest coefficient the four-pole feedback loop takes
+# without a parasitic oscillation.
+FILTER_POS_MAX = 55296
+FILTER_OCTAVES = 12.0
+FILTER_HZ_MIN = 3.5
+FILTER_STEPS = 256
+FILTER_COEFF_MAX = 55296
+
 
 def q15(x: float) -> int:
     v = int(round(x * 32768.0))
@@ -70,6 +82,17 @@ def keep_time(coefficient: int, old_rate: float, new_rate: float) -> int:
     return max(0, min(65536, int(round(beta * 65536.0))))
 
 
+def filter_g_q16(rate: float) -> list[int]:
+    """The per-stage VCF coefficient at each log cutoff position."""
+    values: list[int] = []
+    for i in range(FILTER_STEPS + 1):
+        position = i * FILTER_POS_MAX / FILTER_STEPS
+        hz = FILTER_HZ_MIN * 2.0 ** (position / FILTER_POS_MAX * FILTER_OCTAVES)
+        coefficient = 1.0 - math.exp(-2.0 * math.pi * hz / rate)
+        values.append(min(FILTER_COEFF_MAX, max(0, int(round(coefficient * 65536.0)))))
+    return values
+
+
 def build(rate: float) -> dict[str, list[int]]:
     n = 256
     sin_q15 = [q15(math.sin(math.pi / 2.0 * i / n)) for i in range(n)]
@@ -96,6 +119,7 @@ def build(rate: float) -> dict[str, list[int]]:
         "rate_coeff": rate_coeff,
         "rate_coeff_r3": rate_coeff_r3,
         "level_gain": level_gain,
+        "filter_g_q16": filter_g_q16(rate),
     }
 
 
@@ -128,6 +152,8 @@ def render(rate: float) -> str:
     lines += c_array("int32_t", "p1_rate_coeff_r3", tables["rate_coeff_r3"], 8)
     lines += [""]
     lines += c_array("int32_t", "p1_level_gain", tables["level_gain"], 8)
+    lines += [""]
+    lines += c_array("int32_t", "p1_filter_g_q16", tables["filter_g_q16"], 8)
     lines += [""]
     return "\n".join(lines) + "\n"
 

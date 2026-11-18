@@ -7,13 +7,15 @@
 
 #include <juce_audio_utils/juce_audio_utils.h>
 
+#include "CutoffLaw.h"
 #include "PluginEditor.h"
+#include "Widgets.h"
 
 namespace {
 
 constexpr double kCoreRate = 48000.0;
 constexpr int kControlBlock = 32;
-constexpr int kStateVersion = 4;
+constexpr int kStateVersion = 5;
 constexpr int kUiPageLayout = 3;
 constexpr float kIntToFloat = 1.0f / 32768.0f;
 
@@ -119,8 +121,17 @@ TypePAlphaAudioProcessor::createLayout()
         const int low = spec.min;
         const int high = spec.max > spec.min ? spec.max : spec.min + 1;
         const int def = juce::jlimit(low, high, spec.def);
+        auto attributes = juce::AudioParameterIntAttributes()
+            .withStringFromValueFunction([spec](int value, int) {
+                return p1::ui::formatParamValue(spec, value);
+            })
+            .withValueFromStringFunction([spec](const juce::String& text) {
+                return static_cast<int>(
+                    std::lround(p1::ui::parseParamValue(spec, text)));
+            });
         layout.add(std::make_unique<juce::AudioParameterInt>(
-            juce::ParameterID{spec.id, 1}, spec.name, low, high, def));
+            juce::ParameterID{spec.id, 1}, spec.name, low, high, def,
+            attributes));
     }
     return layout;
 }
@@ -367,6 +378,19 @@ void TypePAlphaAudioProcessor::setStateInformation(const void* data, int sizeInB
     auto state = juce::ValueTree::fromXml(*xml);
     if (!state.isValid() || !state.hasType(apvts_.state.getType()))
         return;
+    const int loadedVersion = static_cast<int>(state.getProperty("stateVersion", 0));
+    if (loadedVersion < kStateVersion) {
+        for (int i = 0; i < state.getNumChildren(); ++i) {
+            auto child = state.getChild(i);
+            if (!child.hasType("PARAM"))
+                continue;
+            const auto id = child.getProperty("id").toString();
+            if (id == "cutoff.p0" || id == "cutoff.p1") {
+                const int old = static_cast<int>(child.getProperty("value"));
+                child.setProperty("value", p1::cutoffOldToNew(old), nullptr);
+            }
+        }
+    }
     patchName_ = state.getProperty("patchName", "init patch").toString();
     partNames_[0] = state.getProperty("part1Name", "init").toString();
     partNames_[1] = state.getProperty("part2Name", "init").toString();

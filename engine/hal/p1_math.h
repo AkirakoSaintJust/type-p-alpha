@@ -45,6 +45,20 @@ P1_MATH_INLINE int32_t p1_q31_mul(int32_t a, int32_t b)
     return (int32_t)(((int64_t)a * b + (1 << 30)) >> 31);
 }
 
+/* The filter input's soft knee: y = x - x^5/8, with x clamped at full scale.
+ * The fifth-order term is 0.2 percent at -12 dBFS, 2.5 percent at -3 dBFS and
+ * 12.5 percent at 0 dBFS, so a normal level stays clean and a hot mixer
+ * compresses like the VCF's input pair. */
+P1_MATH_INLINE int32_t p1_soft_clip(int32_t x)
+{
+    if (x > 32767) x = 32767;
+    else if (x < -32767) x = -32767;
+    int32_t x2 = p1_q15_mul(x, x);
+    int32_t x3 = p1_q15_mul(x2, x);
+    int32_t x5 = p1_q15_mul(x3, x2);
+    return x - (x5 >> 3);
+}
+
 /* Rounding right shift (the SDK's PSHR). */
 P1_MATH_INLINE int32_t p1_shr_round(int32_t x, int shift)
 {
@@ -231,6 +245,22 @@ P1_MATH_INLINE int32_t p1_route4(const int16_t *w, int32_t a, int32_t b, int32_t
 
 /* p1_exp2_q16[i] = 2^(-i/256) in Q16  (exponential decay: envelopes, note-to-inc).
  * p1_log2_q16[i] = log2(1 + i/256) in Q16  (log-domain FM). Both indexed directly. */
+
+/* The VCF's per-stage coefficient from the log cutoff position. The 257-entry
+ * table is the exact 48 kHz one-pole transform at every 1/256 of the 12-octave
+ * range; linear interpolation between entries keeps the error below a cent. The
+ * top entry is clamped at 55296, the highest coefficient the feedback loop takes
+ * without a parasitic oscillation. */
+P1_MATH_INLINE int32_t p1_filter_coeff_q16(int32_t pos)
+{
+    if (pos <= 0) return p1_filter_g_q16[0];
+    if (pos >= 55296) return p1_filter_g_q16[256];
+    uint32_t index = (uint32_t)pos / 216u;
+    uint32_t rem = (uint32_t)pos - index * 216u;
+    int32_t a = p1_filter_g_q16[index];
+    int32_t b = p1_filter_g_q16[index + 1];
+    return a + (int32_t)(((int64_t)(b - a) * rem) / 216);
+}
 
 /* 2^(octave + semi/12 + cent/1200) in Q16: the note-derived tuning ratio (the
  * naive oscillator's octave/semi/cent knobs). `octave` -3..3, `semi` -11..11,

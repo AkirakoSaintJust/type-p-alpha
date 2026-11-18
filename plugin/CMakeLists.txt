@@ -130,6 +130,13 @@ add_executable(wavetable tests/wavetable.cpp)
 target_include_directories(wavetable PRIVATE "${P1_SYNTH_GEN}")
 add_test(NAME wavetable COMMAND wavetable)
 
+add_executable(filter_law tests/filter_law.cpp)
+target_include_directories(filter_law PRIVATE
+    "${P1_ENGINE}/hal"
+    "${P1_SYNTH_GEN}"
+    "${CMAKE_CURRENT_SOURCE_DIR}/preset")
+add_test(NAME filter_law COMMAND filter_law)
+
 add_executable(spectral tests/spectral.cpp)
 target_link_libraries(spectral PRIVATE p1_engine)
 target_include_directories(spectral PRIVATE "${P1_GENERATED_DIR}")

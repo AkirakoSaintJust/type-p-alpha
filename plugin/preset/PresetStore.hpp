@@ -34,7 +34,7 @@ public:
     };
 
     PresetStore(int partParamCount, int partCount,
-                std::vector<int32_t> defaults = {});
+                std::vector<int32_t> defaults = {}, int cutoffIndex = -1);
 
     int partParamCount() const { return partParamCount_; }
     int partCount() const { return partCount_; }
@@ -77,6 +77,8 @@ public:
 
 private:
     static std::string shortName(const std::string& name);
+
+    int cutoffIndex_ = -1;
 
     int partParamCount_ = 0;
     int partCount_ = 0;

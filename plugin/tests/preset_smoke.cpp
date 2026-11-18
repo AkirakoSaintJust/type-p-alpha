@@ -9,6 +9,7 @@
 #include <string>
 #include <vector>
 
+#include "CutoffLaw.h"
 #include "Params.h"
 #include "PresetStore.hpp"
 #include "part_defaults.h"
@@ -153,6 +154,46 @@ int main()
     check(!rejected.partUsed(3) && !rejected.multiUsed(1),
           "the rejected library leaves the store untouched");
 
+    /* A version 6 part record carries the old coefficient law. Loading it must
+     * keep its cutoff frequency, not reinterpret the raw value. */
+    auto old = pattern(7);
+    old[static_cast<std::size_t>(kP1PartCutoffIndex)] = 8000;
+    std::vector<uint8_t> oldRecord(PP_RECORD(static_cast<uint32_t>(
+        kP1PartParamCount)), 0xFF);
+    preset_part_pack(oldRecord.data(), "old", old.data(),
+                     static_cast<uint32_t>(kP1PartParamCount));
+    oldRecord[0] = 6;
+    const std::size_t body = oldRecord.size() - 4u;
+    const uint32_t crc = preset_crc32(oldRecord.data(),
+                                      static_cast<uint32_t>(body));
+    for (int i = 0; i < 4; ++i)
+        oldRecord[body + static_cast<std::size_t>(i)] =
+            static_cast<uint8_t>((crc >> (8 * i)) & 0xFFu);
+    std::vector<uint8_t> oldBank(oldRecord.size() * 128u, 0xFF);
+    std::memcpy(oldBank.data(), oldRecord.data(), oldRecord.size());
+    p1::PresetStore migrator{kP1PartParamCount, kP1PartCount, {},
+                             kP1PartCutoffIndex};
+    check(migrator.loadPartBank(oldBank.data(), oldBank.size()),
+          "load a version 6 part bank");
+    check(migrator.partUsed(0), "the version 6 record is used");
+    check(migrator.partParams(0)[static_cast<std::size_t>(kP1PartCutoffIndex)] ==
+              p1::cutoffOldToNew(8000),
+          "the old cutoff migrates to the new log position");
+    check(p1::cutoffOldToNew(8000) == 36958,
+          "the migrated default is the 909 Hz position");
+
+    p1::PresetStore current{kP1PartParamCount, kP1PartCount, {},
+                            kP1PartCutoffIndex};
+    check(current.savePart(0, "current", old),
+          "save a current part with the old raw value");
+    const auto currentBank = current.packPartBank();
+    p1::PresetStore currentLoaded{kP1PartParamCount, kP1PartCount, {},
+                                  kP1PartCutoffIndex};
+    check(currentLoaded.loadPartBank(currentBank.data(), currentBank.size()),
+          "load the current part bank");
+    check(currentLoaded.partParams(0)[static_cast<std::size_t>(
+              kP1PartCutoffIndex)] == 8000,
+          "a current record keeps its raw cutoff");
 
     std::printf("preset: %s\n", failures ? "FAILED" : "passed");
     return failures ? 1 : 0;

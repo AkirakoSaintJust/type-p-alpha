@@ -2,6 +2,7 @@
 /* Milestone 1: the engine render reference and the state, filter and MIDI
  * isolation checks. The reference is a captured Type P.alpha render, not a
  * device render. */
+#include <cmath>
 #include <cstdint>
 #include <cstdio>
 #include <cstring>
@@ -149,6 +150,54 @@ void test_filter_is_per_part()
     check(!same(ra, rb, 512), "part 1 uses its own cutoff");
 }
 
+double filter_tail_rms(int32_t resonance)
+{
+    const uint32_t on = param_id("filter_on.p0");
+    const uint32_t cut = param_id("cutoff.p0");
+    const uint32_t res = param_id("res.p0");
+    const uint32_t op1 = param_id("op1_level.p0");
+    const uint32_t op2 = param_id("op2_level.p0");
+    const uint32_t op3 = param_id("op3_level.p0");
+    const uint32_t op4 = param_id("op4_level.p0");
+    const uint32_t part = param_id("level.p0");
+    if (on == ~0u || cut == ~0u || res == ~0u || op1 == ~0u || op2 == ~0u ||
+        op3 == ~0u || op4 == ~0u || part == ~0u)
+        return 0.0;
+
+    p1::Engine engine;
+    int32_t buffer[512] = {};
+    engine.reset();
+    engine.setParam(on, 1);
+    engine.setParam(cut, 40000);
+    engine.setParam(res, resonance);
+    engine.setParam(part, 99);
+    engine.noteOn(60, 100, 0);
+    engine.render(buffer, 256);
+    engine.setParam(op1, 0);
+    engine.setParam(op2, 0);
+    engine.setParam(op3, 0);
+    engine.setParam(op4, 0);
+    engine.render(buffer, 256);
+
+    std::int64_t sum = 0;
+    for (int block = 0; block < 40; ++block) {
+        engine.render(buffer, 256);
+        for (int i = 0; i < 512; ++i)
+            sum += static_cast<std::int64_t>(buffer[i]) * buffer[i];
+    }
+    return std::sqrt(static_cast<double>(sum) / (40.0 * 512.0));
+}
+
+void test_filter_self_oscillation()
+{
+    const double high = filter_tail_rms(37748); /* 90 percent */
+    const double low = filter_tail_rms(20000);  /* 48 percent */
+    check(high > 200.0,
+          "the filter self-oscillates at 90 percent resonance");
+    check(low < high * 0.1,
+          "the resonance below onset decays");
+}
+
 void test_sustain_isolation()
 {
     p1::Engine a;
@@ -196,6 +245,7 @@ int main(int argc, char** argv)
     test_engine_render();
     test_state_isolation();
     test_filter_is_per_part();
+    test_filter_self_oscillation();
     test_sustain_isolation();
     std::printf("engine: %s\n", failures ? "FAILED" : "passed");
     return failures ? 1 : 0;

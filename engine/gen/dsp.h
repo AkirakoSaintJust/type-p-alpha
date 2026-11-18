@@ -244,6 +244,7 @@ typedef struct type_p_alpha_state {
     int32_t lp_z4[NVOICE];
     int32_t lp_f_eff[NVOICE];
     int32_t lp_fc[NVOICE];
+    int32_t lp_res_k[NVOICE];
     uint32_t fenv_stage[NVOICE];
     int32_t fenv_level[NVOICE];
     uint32_t fenv_r1_eff[NVOICE];
@@ -1194,8 +1195,8 @@ typedef struct { uint16_t id; int32_t value; } type_p_alpha_init_entry;
 static const type_p_alpha_init_entry type_p_alpha_init[] = {
     { 756u, 7 },
     { 1556u, 7 },
-    { 779u, 0 },
-    { 1579u, 0 },
+    { 779u, 36958 },
+    { 1579u, 36958 },
     { 780u, 16000 },
     { 1580u, 16000 },
     { 782u, 0 },

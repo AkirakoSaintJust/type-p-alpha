@@ -643,6 +643,21 @@
         toRaw: (user) => (user / 100) * spec.max,
       };
     }
+    if (display === "cutoff") {
+      return {
+        min: 3.5, max: 3.5 * 2 ** 12, step: 0.1,
+        toUser: (raw) => 3.5 * 2 ** (raw / 55296 * 12),
+        toRaw: (user) => Math.max(0, Math.min(55296,
+          Math.log2(user / 3.5) / 12 * 55296)),
+      };
+    }
+    if (display === "oct") {
+      return {
+        min: 0, max: 8, step: 0.01,
+        toUser: (raw) => raw / 65535 * 8,
+        toRaw: (user) => user / 8 * 65535,
+      };
+    }
     if (display === "semi_lfo" || display === "semi_fine") {
       return {
         min: spec.min * 12 / 32768, max: spec.max * 12 / 32768, step: 0.01,
@@ -665,6 +680,12 @@
       return (user > 0 ? "+" : "") + Math.round(user) + "%";
     if (display === "pct" || display === "pct_exp" || display === "off_pct")
       return Math.round(user) + "%";
+    if (display === "cutoff") {
+      if (user < 100) return user.toFixed(1) + "Hz";
+      if (user < 1000) return user.toFixed(0) + "Hz";
+      return (user / 1000).toFixed(2) + "kHz";
+    }
+    if (display === "oct") return user.toFixed(2) + " oct";
     if (display === "semi_lfo" || display === "semi_fine")
       return (user > 0 ? "+" : "") + user.toFixed(2) + "st";
     if (display === "cent")
@@ -1754,7 +1775,7 @@
   function libraryData() {
     return {
       format: "type-p-alpha-library",
-      version: 2,
+      version: 3,
       partSlots: partLibrary,
       multis: multiLibrary,
       patchName,
@@ -1764,11 +1785,35 @@
     };
   }
 
+  function cutoffOldToNew(old) {
+    const fc = Math.floor((old * 60211 + 32768) / 65536);
+    const g = fc / 65536;
+    if (g <= 0) return 0;
+    if (g >= 1) return 55296;
+    const hz = -Math.log(1 - g) * 48000 / (2 * Math.PI);
+    return Math.max(0, Math.min(55296,
+      Math.round(Math.log2(hz / 3.5) / 12 * 55296)));
+  }
+
+  function migrateLibrary(data) {
+    if (data.version !== 2) return;
+    const parts = Array.isArray(data.partSlots) ? data.partSlots : [];
+    for (const part of parts) {
+      if (!part || !Array.isArray(part.params)) continue;
+      for (const entry of part.params) {
+        if (!Array.isArray(entry) || entry.length < 2) continue;
+        if (entry[0] === "cutoff.p0" || entry[0] === "cutoff.p1")
+          entry[1] = cutoffOldToNew(Number(entry[1]) || 0);
+      }
+    }
+    data.version = 3;
+  }
+
   function validateLibrary(data) {
     if (!data || data.format !== "type-p-alpha-library")
       throw new Error("not a type P.alpha library");
-    if (data.version !== 2)
-      throw new Error("library version is not 2");
+    if (data.version !== 2 && data.version !== 3)
+      throw new Error("library version is not 2 or 3");
     const parts = Array.isArray(data.partSlots) ? data.partSlots : [];
     const multis = Array.isArray(data.multis) ? data.multis : [];
     for (const multi of multis) {
@@ -1786,6 +1831,7 @@
 
   function applyLibrary(data) {
     validateLibrary(data);
+    migrateLibrary(data);
     if (Array.isArray(data.partSlots)) {
       for (let i = 0; i < PART_SLOT_COUNT; ++i)
         partLibrary[i] = data.partSlots[i] || null;
@@ -1818,7 +1864,10 @@
   function loadLibrary() {
     try {
       const raw = localStorage.getItem(LIBRARY_KEY);
-      if (raw) applyLibrary(JSON.parse(raw));
+      if (raw) {
+        applyLibrary(JSON.parse(raw));
+        saveLibrary();
+      }
     } catch (error) {
       window.__p1.libraryError = String(error);
     }

@@ -3,9 +3,10 @@
 The shared visual language for the Type P.alpha editor. The clickable mockup at
 `design/mockup.html` carries the first-pass layout, and `tokens.json` is the
 machine-readable source. The CSS projection is `tokens.css`, the platform notes are
-in `juce.md`, the spectral control map is in `spectral.md`, and the waveform list and
-analysis are in `waveforms.md`. The shipped panel is `web/panel.html`, so where the
-mockup and the panel differ, the panel and `spectral.md` carry the current layout.
+in `juce.md`, the spectral control map is in `spectral.md`, the filter law is in
+`filter.md`, and the waveform list and analysis are in `waveforms.md`. The shipped
+panel is `web/panel.html`, so where the mockup and the panel differ, the panel and
+`spectral.md` carry the current layout.
 
 Status: v1.6 draft, 2026-11-16. Adds the spectrum template menus, the multi-patch
 header block, the named part buttons, the centred tilt and the vertical fast
