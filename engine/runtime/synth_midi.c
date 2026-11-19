@@ -46,9 +46,9 @@ void synth_midi_feed(synth_midi_ctx *ctx, uint8_t st, uint8_t d1, uint8_t d2)
                               (int32_t)(((int64_t)range * (int32_t)d2) / 127);
             ctx->set_param(id, v);
         }
-    } else if (ty == 0xE0u) { /* pitch bend, 14-bit, ±2 semitones (Q16 cents) */
-        int32_t b = (int32_t)((uint32_t)d1 | (uint32_t)d2 << 7) - 8192;
-        ctx->set_bend((uint32_t)(65536 + b * 1600));
+    } else if (ty == 0xE0u) { /* pitch bend, 14-bit; the part range sets the span */
+        uint32_t b = (uint32_t)d1 | ((uint32_t)d2 << 7);
+        ctx->set_bend(b, ch);
     }
 }
 

@@ -31,10 +31,10 @@ extern "C" int p1_bridge_set_param(uint32_t id, int32_t value)
     return current ? current->setParam(id, value) : 0;
 }
 
-extern "C" void p1_bridge_set_bend(uint32_t bend)
+extern "C" void p1_bridge_set_bend(uint32_t bend, uint32_t channel)
 {
     if (current)
-        current->setBend(bend);
+        current->setBend(bend, channel);
 }
 
 namespace p1 {

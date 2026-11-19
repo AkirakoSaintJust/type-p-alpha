@@ -170,7 +170,7 @@ bool PresetStore::loadPartBank(const uint8_t* data, std::size_t size)
         std::vector<int32_t> params(static_cast<std::size_t>(partParamCount_));
         if (preset_part_unpack(raw, static_cast<uint32_t>(partParamCount_), name,
                                params.data())) {
-            if (raw[0] < PRESET_VERSION && cutoffIndex_ >= 0)
+            if (raw[0] < PRESET_CUTOFF_LAW_VERSION && cutoffIndex_ >= 0)
                 params[static_cast<std::size_t>(cutoffIndex_)] =
                     p1::cutoffOldToNew(
                         params[static_cast<std::size_t>(cutoffIndex_)]);
@@ -291,13 +291,29 @@ bool PresetStore::loadLibrary(const uint8_t* data, std::size_t size)
     uint32_t multiSize = 0;
     const auto currentPartSize =
         partRecordSize() * static_cast<std::size_t>(kPartSlots);
-    if (!get32(partSize) ||
-        static_cast<std::size_t>(partSize) != currentPartSize)
-        return false;
-    if (offset + partSize + 4u > size)
+    if (!get32(partSize) || partSize == 0u || offset + partSize + 4u > size)
         return false;
     const auto* partData = data + offset;
     offset += partSize;
+    std::vector<uint8_t> migrated;
+    if (static_cast<std::size_t>(partSize) != currentPartSize) {
+        /* A library written before the bend range joined the part record. The
+         * old count comes from the record size, and the new params are appended,
+         * so the prefix copies across and the tail takes the defaults. */
+        const auto oldRecord = static_cast<std::size_t>(partSize) / kPartSlots;
+        if (static_cast<std::size_t>(partSize) % kPartSlots != 0u ||
+            oldRecord < PP_RECORD(0u))
+            return false;
+        const auto oldCount =
+            (oldRecord - PP_RECORD(0u)) / 4u;
+        if ((oldRecord - PP_RECORD(0u)) % 4u != 0u ||
+            oldCount + 1u != static_cast<std::size_t>(partParamCount_))
+            return false;
+        if (!migratePartBank(partData, static_cast<uint32_t>(oldCount), migrated))
+            return false;
+        partData = migrated.data();
+        partSize = static_cast<uint32_t>(currentPartSize);
+    }
     if (!get32(multiSize) ||
         static_cast<std::size_t>(multiSize) !=
             multiRecordSize() * static_cast<std::size_t>(kMultiSlots))
@@ -329,6 +345,36 @@ bool PresetStore::loadLibrary(const uint8_t* data, std::size_t size)
     revision_ = revision;
     dirtyParts_.fill(false);
     dirtyMultis_.fill(false);
+    return true;
+}
+
+bool PresetStore::migratePartBank(const uint8_t* data, uint32_t oldCount,
+                                  std::vector<uint8_t>& out) const
+{
+    const auto oldRecord = PP_RECORD(oldCount);
+    const auto newRecord = partRecordSize();
+    out.assign(newRecord * kPartSlots, 0xFF);
+    std::vector<int32_t> grown(static_cast<std::size_t>(partParamCount_));
+    for (int slot = 0; slot < kPartSlots; ++slot) {
+        const auto* raw = data + static_cast<std::size_t>(slot) * oldRecord;
+        if (raw[0] == PRESET_EMPTY)
+            continue;
+        char name[PRESET_NAME_LEN] = {};
+        std::vector<int32_t> params(static_cast<std::size_t>(oldCount));
+        if (!preset_part_unpack(raw, oldCount, name, params.data()))
+            return false;
+        grown = defaults_;
+        for (uint32_t i = 0; i < oldCount; ++i)
+            grown[i] = params[i];
+        if (raw[0] < PRESET_CUTOFF_LAW_VERSION && cutoffIndex_ >= 0 &&
+            cutoffIndex_ < partParamCount_)
+            grown[static_cast<std::size_t>(cutoffIndex_)] =
+                p1::cutoffOldToNew(
+                    grown[static_cast<std::size_t>(cutoffIndex_)]);
+        preset_part_pack(out.data() + static_cast<std::size_t>(slot) * newRecord,
+                         name, grown.data(),
+                         static_cast<uint32_t>(partParamCount_));
+    }
     return true;
 }
 

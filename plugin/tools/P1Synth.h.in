@@ -12,6 +12,7 @@
 #define P1_NOTE_OFF_CH @P1_SYNTH_CNAME@_dsp_note_off_ch_s
 #define P1_ALL_NOTES_OFF @P1_SYNTH_CNAME@_dsp_all_notes_off_s
 #define P1_SET_BEND @P1_SYNTH_CNAME@_dsp_set_bend_q16_s
+#define P1_SET_BEND_CH @P1_SYNTH_CNAME@_dsp_set_bend_ch_q16_s
 #define P1_RENDER @P1_SYNTH_CNAME@_dsp_render_s
 #define P1_LIT @P1_SYNTH_CNAME@_dsp_lit_s
 #define P1_QUIET @P1_SYNTH_CNAME@_dsp_quiet_s

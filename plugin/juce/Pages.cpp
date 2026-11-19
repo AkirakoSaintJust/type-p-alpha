@@ -63,12 +63,13 @@ public:
     {
         addAndMakeVisible(header_);
 
-        const std::array<juce::String, 6> labels = {
+        const std::array<juce::String, 7> labels = {
             "midi channel", "keyzone start", "keyzone end", "tune", "transpose",
-            "delay"};
-        const std::array<juce::String, 6> ids = {
+            "delay", "bend"};
+        const std::array<juce::String, 7> ids = {
             params::channel(part_), params::keyLow(part_), params::keyHigh(part_),
-            params::detune(part_), params::transpose(part_), params::delay(part_)};
+            params::detune(part_), params::transpose(part_), params::delay(part_),
+            params::bendRange(part_)};
         for (size_t i = 0; i < knobs_.size(); ++i) {
             knobs_[i] = std::make_unique<ParamKnob>(editor_.state(), ids[i],
                                                     labels[i], 38.0f);
@@ -127,7 +128,7 @@ private:
     int part_ = 0;
     bool active_ = false;
     CardHeader header_;
-    std::array<std::unique_ptr<ParamKnob>, 6> knobs_{};
+    std::array<std::unique_ptr<ParamKnob>, 7> knobs_{};
     std::unique_ptr<P1LevelSlider> level_;
     P1Scope scope_;
     P1Spectro spectro_;

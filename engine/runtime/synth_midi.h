@@ -21,7 +21,7 @@ typedef struct {
     void (*note_off)(uint32_t note, uint32_t channel);
     void (*all_off)(void);
     int (*set_param)(uint32_t id, int32_t value);
-    void (*set_bend)(uint32_t bend_q16);
+    void (*set_bend)(uint32_t bend14, uint32_t channel);
     const uint16_t *cc_map;    /* cc_to_param[128], SYNTH_CC_NONE = unassigned */
     const int32_t *param_min;  /* per-param ranges, indexed by param id */
     const int32_t *param_max;

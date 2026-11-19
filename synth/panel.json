@@ -365,7 +365,9 @@
           "widgets": [
             { "type": "label", "row": 2, "span": 2, "text": "MIDI CH" },
             { "type": "param_row", "row": 4, "param": "channel.p0", "text": "P1 CH" },
-            { "type": "param_row", "row": 5, "param": "channel.p1", "text": "P2 CH" }
+            { "type": "param_row", "row": 5, "param": "channel.p1", "text": "P2 CH" },
+            { "type": "param_row", "row": 6, "param": "bend_range.p0", "text": "P1 BEND" },
+            { "type": "param_row", "row": 7, "param": "bend_range.p1", "text": "P2 BEND" }
           ]
         },
         {

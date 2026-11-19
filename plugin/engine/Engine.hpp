@@ -24,7 +24,7 @@ public:
     void noteOn(uint32_t note, uint32_t velocity, uint32_t channel = 0xFFFFFFFFu);
     void noteOff(uint32_t note, uint32_t channel = 0xFFFFFFFFu);
     void allNotesOff();
-    void setBend(uint32_t q16);
+    void setBend(uint32_t bend14, uint32_t channel = 0xFFFFFFFFu);
     void render(int32_t* out, uint32_t frames);
     uint32_t lit(uint32_t base);
     bool quiet();

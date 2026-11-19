@@ -152,6 +152,53 @@ int main()
     check(v2Loaded.partUsed(3) && v2Loaded.partName(3) == "lead",
           "a v2 library keeps its part records");
 
+    /* A library whose part record has one fewer param, as every library written
+     * before the bend range. The loader has to expand the record and default the
+     * new value without touching the old ones. */
+    {
+        const uint32_t oldCount = kP1PartParamCount - 1u;
+        const auto oldRecord = PP_RECORD(oldCount);
+        std::vector<uint8_t> oldBank(static_cast<std::size_t>(oldRecord) * 128u,
+                                     0xFF);
+        std::vector<int32_t> oldParams(oldCount, 3);
+        oldParams[static_cast<std::size_t>(kP1PartCutoffIndex)] = 12345;
+        preset_part_pack(oldBank.data() +
+                             static_cast<std::size_t>(3u) * oldRecord,
+                         "older", oldParams.data(), oldCount);
+
+        std::vector<uint8_t> oldLibrary;
+        const auto put32 = [&oldLibrary](uint32_t value) {
+            oldLibrary.push_back(static_cast<uint8_t>(value & 0xFFu));
+            oldLibrary.push_back(static_cast<uint8_t>((value >> 8) & 0xFFu));
+            oldLibrary.push_back(static_cast<uint8_t>((value >> 16) & 0xFFu));
+            oldLibrary.push_back(static_cast<uint8_t>((value >> 24) & 0xFFu));
+        };
+        static const uint8_t magic[7] = {'P', '1', 'L', 'I', 'B', '3', '\n'};
+        oldLibrary.insert(oldLibrary.end(), magic, magic + 7);
+        put32(9);
+        put32(static_cast<uint32_t>(oldBank.size()));
+        oldLibrary.insert(oldLibrary.end(), oldBank.begin(), oldBank.end());
+        const auto multiSize =
+            MP_RECORD(static_cast<uint32_t>(kP1PartCount)) * 64u;
+        put32(static_cast<uint32_t>(multiSize));
+        oldLibrary.insert(oldLibrary.end(), multiSize, 0xFF);
+
+        p1::PresetStore expanded{kP1PartParamCount, kP1PartCount,
+                                 p1::partParamDefaults(), kP1PartCutoffIndex};
+        check(expanded.loadLibrary(oldLibrary.data(), oldLibrary.size()),
+              "load a library with the old part record size");
+        check(expanded.revision() == 9,
+              "the old library keeps its revision through the migration");
+        check(expanded.partName(3) == "older",
+              "the old part name survives the record expansion");
+        const auto& grown = expanded.partParams(3);
+        check(grown[5] == 3 &&
+                  grown[static_cast<std::size_t>(kP1PartParamCount - 1)] == 2,
+              "the old params survive and the bend range defaults to 2");
+        check(grown[static_cast<std::size_t>(kP1PartCutoffIndex)] == 12345,
+              "a current-law cutoff is not converted twice");
+    }
+
     /* Two instances over one file: independent slots merge, a slot both changed
      * comes back as a conflict and the disk version stays. */
     p1::PresetStore shared{kP1PartParamCount, kP1PartCount};

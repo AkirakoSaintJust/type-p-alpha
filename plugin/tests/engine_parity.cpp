@@ -267,6 +267,33 @@ void test_sustain_per_channel()
           "lifting the pedal releases the notes it held");
 }
 
+void test_bend_per_part()
+{
+    p1::Engine engine;
+    p1::MidiBridge midi(engine);
+    engine.reset();
+    midi.reset();
+
+    /* A quarter of the default +/-2 semitone span, on channel 0. */
+    midi.feed(0xE0, 0, 96);
+    check(engine.state()->part_bend_q16[0] > 65536,
+          "bend on channel 0 raises its part");
+    check(engine.state()->part_bend_q16[1] == 65536,
+          "bend on channel 0 leaves part 1 at centre");
+
+    midi.feed(0xE1, 0, 32);
+    check(engine.state()->part_bend_q16[1] < 65536,
+          "bend on channel 1 lowers its own part");
+    check(engine.state()->part_bend_q16[0] > 65536,
+          "the first part keeps its bend");
+
+    engine.setParam(param_id("bend_range.p0"), 12);
+    midi.feed(0xE0, 127, 127);
+    const int32_t wide = engine.state()->part_bend_q16[0];
+    check(wide > 130000 && wide < 132000,
+          "the part range sets the bend span");
+}
+
 } // namespace
 
 int main(int argc, char** argv)
@@ -295,6 +322,7 @@ int main(int argc, char** argv)
     test_sustain_isolation();
     test_channel_separation();
     test_sustain_per_channel();
+    test_bend_per_part();
     std::printf("engine: %s\n", failures ? "FAILED" : "passed");
     return failures ? 1 : 0;
 }

@@ -42,9 +42,9 @@ void Engine::allNotesOff()
     P1_ALL_NOTES_OFF(state_.get());
 }
 
-void Engine::setBend(uint32_t q16)
+void Engine::setBend(uint32_t bend14, uint32_t channel)
 {
-    P1_SET_BEND(state_.get(), q16);
+    P1_SET_BEND_CH(state_.get(), bend14, channel);
 }
 
 void Engine::render(int32_t* out, uint32_t frames)

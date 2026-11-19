@@ -107,6 +107,12 @@ public:
 private:
     static std::string shortName(const std::string& name);
 
+    /* Expand a part bank saved with `oldCount` params per record to the current
+     * count. The new params are appended at the end of the record, which is how
+     * the bend range joined the mode group. */
+    bool migratePartBank(const uint8_t* data, uint32_t oldCount,
+                         std::vector<uint8_t>& out) const;
+
     int cutoffIndex_ = -1;
 
     int partParamCount_ = 0;
