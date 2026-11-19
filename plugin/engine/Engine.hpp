@@ -22,7 +22,7 @@ public:
     int setParam(uint32_t id, int32_t value);
     int32_t getParam(uint32_t id);
     void noteOn(uint32_t note, uint32_t velocity, uint32_t channel = 0xFFFFFFFFu);
-    void noteOff(uint32_t note);
+    void noteOff(uint32_t note, uint32_t channel = 0xFFFFFFFFu);
     void allNotesOff();
     void setBend(uint32_t q16);
     void render(int32_t* out, uint32_t frames);

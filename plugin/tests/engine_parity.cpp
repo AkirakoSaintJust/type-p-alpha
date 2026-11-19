@@ -221,6 +221,52 @@ void test_sustain_isolation()
     check(a_lit && !b_lit, "sustain state stays per MIDI bridge");
 }
 
+void test_channel_separation()
+{
+    p1::Engine engine;
+    p1::MidiBridge midi(engine);
+    engine.reset();
+    midi.reset();
+
+    /* The patch puts part 1 on channel 0 and part 2 on channel 1. */
+    midi.feed(0x90, 60, 100);
+    midi.feed(0x91, 60, 100);
+    const uint32_t bit = 1u << 7; /* note 60 from base 53 */
+    check((engine.lit(53u) & bit) != 0,
+          "both parts sound the same note on different channels");
+
+    midi.feed(0x80, 60, 0);
+    check((engine.lit(53u) & bit) != 0,
+          "a note-off on one channel leaves the other part sounding");
+
+    midi.feed(0x81, 60, 0);
+    check((engine.lit(53u) & bit) == 0,
+          "the second note-off releases its own part");
+}
+
+void test_sustain_per_channel()
+{
+    p1::Engine engine;
+    p1::MidiBridge midi(engine);
+    engine.reset();
+    midi.reset();
+
+    midi.feed(0x90, 64, 100);
+    midi.feed(0x91, 65, 100);
+    midi.feed(0xB0, 64, 127); /* sustain on channel 0 only */
+    midi.feed(0x80, 64, 0);
+    midi.feed(0x81, 65, 0);
+
+    const uint32_t held = 1u << 11;   /* note 64 from base 53 */
+    const uint32_t other = 1u << 12;  /* note 65 from base 53 */
+    check((engine.lit(53u) & held) != 0 && (engine.lit(53u) & other) == 0,
+          "sustain holds its own channel and not the other");
+
+    midi.feed(0xB0, 64, 0);
+    check((engine.lit(53u) & held) == 0,
+          "lifting the pedal releases the notes it held");
+}
+
 } // namespace
 
 int main(int argc, char** argv)
@@ -247,6 +293,8 @@ int main(int argc, char** argv)
     test_filter_is_per_part();
     test_filter_self_oscillation();
     test_sustain_isolation();
+    test_channel_separation();
+    test_sustain_per_channel();
     std::printf("engine: %s\n", failures ? "FAILED" : "passed");
     return failures ? 1 : 0;
 }

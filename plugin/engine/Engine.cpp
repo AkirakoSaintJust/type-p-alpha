@@ -32,9 +32,9 @@ void Engine::noteOn(uint32_t note, uint32_t velocity, uint32_t channel)
     P1_NOTE_ON_CH(state_.get(), note, velocity, channel);
 }
 
-void Engine::noteOff(uint32_t note)
+void Engine::noteOff(uint32_t note, uint32_t channel)
 {
-    P1_NOTE_OFF(state_.get(), note);
+    P1_NOTE_OFF_CH(state_.get(), note, channel);
 }
 
 void Engine::allNotesOff()

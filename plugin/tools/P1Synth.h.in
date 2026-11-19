@@ -9,6 +9,7 @@
 #define P1_GET_PARAM @P1_SYNTH_CNAME@_dsp_get_param_s
 #define P1_NOTE_ON_CH @P1_SYNTH_CNAME@_dsp_note_on_ch_s
 #define P1_NOTE_OFF @P1_SYNTH_CNAME@_dsp_note_off_s
+#define P1_NOTE_OFF_CH @P1_SYNTH_CNAME@_dsp_note_off_ch_s
 #define P1_ALL_NOTES_OFF @P1_SYNTH_CNAME@_dsp_all_notes_off_s
 #define P1_SET_BEND @P1_SYNTH_CNAME@_dsp_set_bend_q16_s
 #define P1_RENDER @P1_SYNTH_CNAME@_dsp_render_s

@@ -7539,10 +7539,15 @@ P1_DSP_API void type_p_alpha_dsp_note_on_s(type_p_alpha_state *state, uint32_t n
     type_p_alpha_dsp_note_on_ch_s(state, note, velocity, 0xFFFFFFFFu); /* omni */
 }
 
-P1_DSP_API void type_p_alpha_dsp_note_off_s(type_p_alpha_state *state, uint32_t note) {
+P1_DSP_API void type_p_alpha_dsp_note_off_ch_s(type_p_alpha_state *state, uint32_t note, uint32_t channel) {
     S = state;
     if (note > 127u) return;
+    uint8_t part_match[N_PART];
+    for (uint32_t p = 0; p < N_PART; p++)
+        part_match[p] = (channel == 0xFFFFFFFFu || part_channel[p] == -1 ||
+                         part_channel[p] == (int32_t)channel) ? 1u : 0u;
     for (uint32_t p = 0; p < N_PART; p++) {
+        if (!part_match[p]) continue;
         if ((uint32_t)vm_mode[p] == 1u) {
             if (mono_held[p][note]) mono_held[p][note]--;
             uint32_t active = voice_mono_active(p, vm_note_priority[p]);
@@ -7569,7 +7574,12 @@ P1_DSP_API void type_p_alpha_dsp_note_off_s(type_p_alpha_state *state, uint32_t 
         }
     }
     for (uint32_t v = 0; v < NVOICE; v++)
-        if (voice_note[v] == note) { voice_gate[v] = 0; voice_rel[v] = 8916u; voice_delay[v] = 0; }
+        if (voice_note[v] == note && part_match[voice_part[v]])
+            { voice_gate[v] = 0; voice_rel[v] = 8916u; voice_delay[v] = 0; }
+}
+
+P1_DSP_API void type_p_alpha_dsp_note_off_s(type_p_alpha_state *state, uint32_t note) {
+    type_p_alpha_dsp_note_off_ch_s(state, note, 0xFFFFFFFFu);
 }
 
 P1_DSP_API void type_p_alpha_dsp_all_notes_off_s(type_p_alpha_state *state) {

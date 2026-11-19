@@ -16,29 +16,29 @@ void synth_midi_feed(synth_midi_ctx *ctx, uint8_t st, uint8_t d1, uint8_t d2)
         return; /* clock/transport: the app's concern */
     if (ty == 0x90u && d2) { /* note on */
         ctx->note_on(d1, d2, ch);
-        ctx->sustain_pend[d1] = 0; /* a fresh on cancels any deferred off */
+        ctx->sustain_pend[ch][d1] = 0; /* a fresh on cancels any deferred off */
     } else if (ty == 0x80u || ty == 0x90u) { /* note off (velocity 0 = off) */
-        if (ctx->sustain_on)
-            ctx->sustain_pend[d1] = 1;
+        if (ctx->sustain_on[ch])
+            ctx->sustain_pend[ch][d1] = 1;
         else
-            ctx->note_off(d1);
+            ctx->note_off(d1, ch);
     } else if (ty == 0xB0u) { /* control change */
         if (d1 == 64u) { /* sustain */
-            ctx->sustain_on = d2 >= 64u;
-            if (!ctx->sustain_on) {
+            ctx->sustain_on[ch] = d2 >= 64u;
+            if (!ctx->sustain_on[ch]) {
                 uint32_t n;
                 for (n = 0; n < 128u; n++)
-                    if (ctx->sustain_pend[n]) {
-                        ctx->sustain_pend[n] = 0;
-                        ctx->note_off(n);
+                    if (ctx->sustain_pend[ch][n]) {
+                        ctx->sustain_pend[ch][n] = 0;
+                        ctx->note_off(n, ch);
                     }
             }
         } else if (d1 == 123u) { /* all notes off */
             uint32_t n;
             ctx->all_off();
             for (n = 0; n < 128u; n++)
-                ctx->sustain_pend[n] = 0;
-            ctx->sustain_on = 0;
+                ctx->sustain_pend[ch][n] = 0;
+            ctx->sustain_on[ch] = 0;
         } else if (d1 < 128u && ctx->cc_map[d1] != SYNTH_CC_NONE) {
             uint32_t id = ctx->cc_map[d1];
             const int32_t range = ctx->param_max[id] - ctx->param_min[id];
