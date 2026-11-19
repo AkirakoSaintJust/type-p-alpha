@@ -5,6 +5,7 @@
 #include <atomic>
 #include <cstdint>
 #include <limits>
+#include <string>
 #include <vector>
 
 #include <juce_audio_processors/juce_audio_processors.h>
@@ -28,6 +29,19 @@ private:
     juce::AbstractFifo fifo_{kCapacity};
     std::array<float, kCapacity> buffer_{};
     std::array<float, kCapacity> scratch_{};
+};
+
+/* The outcome of a library save. A conflict means another instance wrote the
+ * slot first, so the disk version stayed and the local edit is still only in
+ * memory. `unreadable` means the file exists but could not be parsed, so nothing
+ * was written over it. */
+struct LibrarySaveResult {
+    bool written = false;
+    bool unreadable = false;
+    bool conflict = false;
+    bool multi = false;
+    int slot = -1;
+    std::string name;
 };
 
 class TypePAlphaAudioProcessor : public juce::AudioProcessor {
@@ -60,7 +74,7 @@ public:
     void setStateInformation(const void* data, int sizeInBytes) override;
 
     void ensureLibraryLoaded();
-    void saveLibrary();
+    LibrarySaveResult saveLibrary();
     juce::File libraryFile() const;
     void setLibraryFileForTesting(const juce::File& file)
     {

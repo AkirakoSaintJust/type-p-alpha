@@ -152,6 +152,63 @@ int main()
     check(v2Loaded.partUsed(3) && v2Loaded.partName(3) == "lead",
           "a v2 library keeps its part records");
 
+    /* Two instances over one file: independent slots merge, a slot both changed
+     * comes back as a conflict and the disk version stays. */
+    p1::PresetStore shared{kP1PartParamCount, kP1PartCount};
+    check(shared.savePart(1, "one", lead), "save the shared slot one");
+    check(shared.savePart(2, "two", lead), "save the shared slot two");
+    shared.setRevision(1);
+    const auto baseBytes = shared.packLibrary();
+
+    p1::PresetStore instanceA{kP1PartParamCount, kP1PartCount};
+    p1::PresetStore instanceB{kP1PartParamCount, kP1PartCount};
+    check(instanceA.loadLibrary(baseBytes.data(), baseBytes.size()),
+          "instance A loads the shared library");
+    check(instanceB.loadLibrary(baseBytes.data(), baseBytes.size()),
+          "instance B loads the shared library");
+
+    instanceA.savePart(1, "one-a", lead);
+    p1::PresetStore merged{kP1PartParamCount, kP1PartCount};
+    check(merged.loadLibrary(baseBytes.data(), baseBytes.size()),
+          "load the on-disk library for the merge");
+    check(instanceA.mergeInto(merged).empty(),
+          "a slot only A changed merges without a conflict");
+    check(merged.partName(1) == "one-a",
+          "A's edit replaces the untouched disk slot");
+    instanceA.markSaved();
+
+    instanceB.savePart(2, "two-b", lead);
+    check(instanceB.mergeInto(merged).empty(),
+          "a slot only B changed merges without a conflict");
+    check(merged.partName(1) == "one-a" && merged.partName(2) == "two-b",
+          "both instances keep their slot after the merge");
+    instanceB.markSaved();
+
+    instanceA.saveMulti(3, "multi-a", {1, 2}, level, delay, channel, low, high);
+    check(instanceA.mergeInto(merged).empty(),
+          "a patch only A changed merges without a conflict");
+    check(merged.multiName(3) == "multi-a",
+          "the merged patch reaches the disk bank");
+    instanceA.markSaved();
+
+    p1::PresetStore left{kP1PartParamCount, kP1PartCount};
+    p1::PresetStore right{kP1PartParamCount, kP1PartCount};
+    check(left.loadLibrary(baseBytes.data(), baseBytes.size()) &&
+              right.loadLibrary(baseBytes.data(), baseBytes.size()),
+          "two instances load the same revision");
+    left.savePart(1, "left", lead);
+    right.savePart(1, "right", lead);
+    p1::PresetStore onDisk{kP1PartParamCount, kP1PartCount};
+    check(onDisk.loadLibrary(baseBytes.data(), baseBytes.size()) &&
+              left.mergeInto(onDisk).empty(),
+          "the left instance saves first");
+    const auto conflicts = right.mergeInto(onDisk);
+    check(conflicts.size() == 1 && !conflicts[0].multi &&
+              conflicts[0].slot == 1 && conflicts[0].name == "right",
+          "the right instance reports the slot both changed");
+    check(onDisk.partName(1) == "left",
+          "the conflicting slot keeps the disk version");
+
     check(!libraryLoaded.loadLibrary(library.data(), 12),
           "reject a truncated library file");
     check(!libraryLoaded.loadLibrary(library.data(), library.size() - 1),

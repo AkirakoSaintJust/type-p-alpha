@@ -1,6 +1,7 @@
 /* SPDX-License-Identifier: GPL-3.0-only */
 #pragma once
 
+#include <array>
 #include <cstddef>
 #include <cstdint>
 #include <string>
@@ -72,6 +73,29 @@ public:
     uint32_t revision() const { return revision_; }
     void setRevision(uint32_t revision) { revision_ = revision; }
 
+    /* A slot that changed on disk since this instance loaded it. `multi` says
+     * which bank, and the name is the local name so the message can quote it. */
+    struct Conflict {
+        bool multi = false;
+        int slot = -1;
+        std::string name;
+    };
+
+    /* Copy the slots this instance changed into `disk`, which must be a fresh
+     * store loaded from the current file. A slot the other side changed comes
+     * back as a conflict and is left out, so the disk version stays. The local
+     * store keeps its value and its queued change is cleared, so the edit can be
+     * saved to another slot. */
+    std::vector<Conflict> mergeInto(PresetStore& disk);
+
+    /* Take the merged banks back, keeping the routing state the user chose. */
+    void adoptLibrary(const PresetStore& other);
+
+    /* Drop the queued changes after the file holds them. */
+    void markSaved();
+
+    bool hasChanges() const;
+
     int findFreePartSlot() const;
     int findFreeMultiSlot() const;
 
@@ -93,6 +117,14 @@ private:
     int currentMulti_ = -1;
     std::vector<int> partSource_;
     uint32_t revision_ = 0;
+
+    /* The change set: which slots this instance wrote since it loaded, and the
+     * value each had before the first write, so a merge can tell a local edit
+     * from an edit that arrived on disk. */
+    std::array<bool, kPartSlots> dirtyParts_{};
+    std::array<bool, kMultiSlots> dirtyMultis_{};
+    std::array<Part, kPartSlots> baseParts_{};
+    std::array<Multi, kMultiSlots> baseMultis_{};
 };
 
 } // namespace p1

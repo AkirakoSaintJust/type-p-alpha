@@ -329,17 +329,61 @@ void TypePAlphaAudioProcessor::ensureLibraryLoaded()
     }
 }
 
-void TypePAlphaAudioProcessor::saveLibrary()
+LibrarySaveResult TypePAlphaAudioProcessor::saveLibrary()
 {
+    LibrarySaveResult result;
     const auto file = libraryFile();
     file.getParentDirectory().createDirectory();
-    const auto next = presets_.revision() + 1;
-    presets_.setRevision(next);
-    const auto bytes = presets_.packLibrary();
-    if (!file.replaceWithData(bytes.data(), bytes.size())) {
-        presets_.setRevision(next - 1);
-        DBG("could not save the plugin library");
+
+    if (!file.existsAsFile()) {
+        /* The first save: write this instance's bank as revision 1. */
+        presets_.setRevision(presets_.revision() + 1);
+        const auto bytes = presets_.packLibrary();
+        if (!file.replaceWithData(bytes.data(), bytes.size())) {
+            presets_.setRevision(presets_.revision() - 1);
+            DBG("could not save the plugin library");
+            return result;
+        }
+        presets_.markSaved();
+        result.written = true;
+        return result;
     }
+
+    juce::MemoryBlock data;
+    p1::PresetStore disk(kP1PartParamCount, kP1PartCount, p1::partParamDefaults(),
+                         kP1PartCutoffIndex);
+    if (!file.loadFileAsData(data) ||
+        !disk.loadLibrary(static_cast<const uint8_t*>(data.getData()),
+                          data.getSize())) {
+        result.unreadable = true;
+        return result;
+    }
+
+    const auto conflicts = presets_.mergeInto(disk);
+    if (!conflicts.empty()) {
+        result.conflict = true;
+        result.multi = conflicts.front().multi;
+        result.slot = conflicts.front().slot;
+        result.name = conflicts.front().name;
+    }
+
+    const uint32_t current =
+        presets_.revision() > disk.revision() ? presets_.revision()
+                                              : disk.revision();
+    disk.setRevision(current + 1);
+    const auto bytes = disk.packLibrary();
+    if (!file.replaceWithData(bytes.data(), bytes.size())) {
+        DBG("could not save the plugin library");
+        return result;
+    }
+
+    result.written = true;
+    presets_.markSaved();
+    if (!result.conflict)
+        presets_.adoptLibrary(disk);
+    else
+        presets_.setRevision(disk.revision());
+    return result;
 }
 
 juce::AudioProcessorEditor* TypePAlphaAudioProcessor::createEditor()

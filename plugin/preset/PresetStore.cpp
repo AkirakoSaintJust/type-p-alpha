@@ -46,6 +46,10 @@ bool PresetStore::savePart(int slot, const std::string& name,
         params.size() != static_cast<std::size_t>(partParamCount_))
         return false;
     auto& part = parts_[static_cast<std::size_t>(slot)];
+    if (!dirtyParts_[static_cast<std::size_t>(slot)]) {
+        baseParts_[static_cast<std::size_t>(slot)] = part;
+        dirtyParts_[static_cast<std::size_t>(slot)] = true;
+    }
     part.used = true;
     part.name = shortName(name);
     part.params = params;
@@ -98,6 +102,10 @@ bool PresetStore::saveMulti(int slot, const std::string& name,
         low.size() != count || high.size() != count)
         return false;
     auto& multi = multis_[static_cast<std::size_t>(slot)];
+    if (!dirtyMultis_[static_cast<std::size_t>(slot)]) {
+        baseMultis_[static_cast<std::size_t>(slot)] = multi;
+        dirtyMultis_[static_cast<std::size_t>(slot)] = true;
+    }
     multi.used = true;
     multi.name = shortName(name);
     multi.partSlot = partSlot;
@@ -171,6 +179,7 @@ bool PresetStore::loadPartBank(const uint8_t* data, std::size_t size)
             part.params = std::move(params);
         }
     }
+    dirtyParts_.fill(false);
     return true;
 }
 
@@ -229,6 +238,7 @@ bool PresetStore::loadMultiBank(const uint8_t* data, std::size_t size)
             multi.high = std::move(high);
         }
     }
+    dirtyMultis_.fill(false);
     return true;
 }
 
@@ -317,7 +327,80 @@ bool PresetStore::loadLibrary(const uint8_t* data, std::size_t size)
     currentMulti_ = -1;
     std::fill(partSource_.begin(), partSource_.end(), -1);
     revision_ = revision;
+    dirtyParts_.fill(false);
+    dirtyMultis_.fill(false);
     return true;
+}
+
+bool PresetStore::hasChanges() const
+{
+    return std::any_of(dirtyParts_.begin(), dirtyParts_.end(),
+                       [](bool dirty) { return dirty; }) ||
+           std::any_of(dirtyMultis_.begin(), dirtyMultis_.end(),
+                       [](bool dirty) { return dirty; });
+}
+
+std::vector<PresetStore::Conflict> PresetStore::mergeInto(PresetStore& disk)
+{
+    std::vector<Conflict> conflicts;
+    if (disk.partParamCount_ != partParamCount_ || disk.partCount_ != partCount_)
+        return conflicts;
+
+    const auto samePart = [](const Part& a, const Part& b) {
+        return a.used == b.used && a.name == b.name && a.params == b.params;
+    };
+    const auto sameMulti = [](const Multi& a, const Multi& b) {
+        return a.used == b.used && a.name == b.name &&
+               a.partSlot == b.partSlot && a.level == b.level &&
+               a.delay == b.delay && a.channel == b.channel &&
+               a.low == b.low && a.high == b.high;
+    };
+
+    for (int slot = 0; slot < kPartSlots; ++slot) {
+        const auto index = static_cast<std::size_t>(slot);
+        if (!dirtyParts_[index])
+            continue;
+        const Part& local = parts_[index];
+        const Part& theirs = disk.parts_[index];
+        if (samePart(theirs, local))
+            continue; /* a retry after a write that already landed */
+        if (samePart(theirs, baseParts_[index]))
+            disk.parts_[index] = local;
+        else
+            conflicts.push_back({false, slot, local.name});
+    }
+
+    for (int slot = 0; slot < kMultiSlots; ++slot) {
+        const auto index = static_cast<std::size_t>(slot);
+        if (!dirtyMultis_[index])
+            continue;
+        const Multi& local = multis_[index];
+        const Multi& theirs = disk.multis_[index];
+        if (sameMulti(theirs, local))
+            continue;
+        if (sameMulti(theirs, baseMultis_[index]))
+            disk.multis_[index] = local;
+        else
+            conflicts.push_back({true, slot, local.name});
+    }
+    return conflicts;
+}
+
+void PresetStore::adoptLibrary(const PresetStore& other)
+{
+    if (other.partParamCount_ != partParamCount_ || other.partCount_ != partCount_)
+        return;
+    parts_ = other.parts_;
+    multis_ = other.multis_;
+    revision_ = other.revision_;
+    dirtyParts_.fill(false);
+    dirtyMultis_.fill(false);
+}
+
+void PresetStore::markSaved()
+{
+    dirtyParts_.fill(false);
+    dirtyMultis_.fill(false);
 }
 
 int PresetStore::findFreePartSlot() const

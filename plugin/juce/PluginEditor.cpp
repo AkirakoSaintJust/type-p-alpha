@@ -1020,7 +1020,7 @@ void PluginEditor::importLibrary()
                 return;
             if (processor_.presets().loadLibrary(
                     static_cast<const uint8_t*>(data.getData()), data.getSize())) {
-                processor_.saveLibrary();
+                reportLibrarySave(processor_.saveLibrary());
                 refreshNames();
             }
         });
@@ -1318,7 +1318,7 @@ void PluginEditor::savePartToSlot(int part, int slot)
                         currentPartParams(part)))
         return;
     store.setPartSource(part, slot);
-    processor_.saveLibrary();
+    reportLibrarySave(processor_.saveLibrary());
 }
 
 void PluginEditor::loadPartFromSlot(int part, int slot)
@@ -1375,7 +1375,31 @@ void PluginEditor::savePatchToSlot(int slot, int mode)
                          level, delay, channel, low, high))
         return;
     store.setCurrentMulti(slot);
-    processor_.saveLibrary();
+    reportLibrarySave(processor_.saveLibrary());
+}
+
+void PluginEditor::reportLibrarySave(const LibrarySaveResult& result)
+{
+    if (result.written && !result.conflict)
+        return;
+    juce::String message;
+    if (result.unreadable) {
+        message = "The library file could not be read, so nothing was overwritten. "
+                  "The file is at " +
+                  processor_.libraryFile().getFullPathName() + ".";
+    } else if (result.conflict) {
+        message = juce::String(result.multi ? "The patch " : "The part ") + "\"" +
+                  juce::String(result.name) + "\" in slot " +
+                  juce::String(result.slot + 1) +
+                  " was changed by another instance, so the version on disk was "
+                  "kept. Your version is still in the editor, so save it to "
+                  "another slot if you want to keep it.";
+    } else {
+        message = "The library could not be written. Check the folder permissions "
+                  "and try again.";
+    }
+    juce::AlertWindow::showMessageBoxAsync(
+        juce::MessageBoxIconType::WarningIcon, "library", message);
 }
 
 void PluginEditor::loadPatchFromSlot(int slot)

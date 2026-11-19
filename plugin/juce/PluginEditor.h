@@ -61,6 +61,7 @@ public:
     void setActivePart(int part);
     void showTab(int tab);
     void refreshNames();
+    void reportLibrarySave(const LibrarySaveResult& result);
     void showAlgorithmPicker();
     void applyAlgorithm(int algorithm);
     void showRenameDialog(bool part, int index);
