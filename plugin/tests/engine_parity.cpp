@@ -294,6 +294,29 @@ void test_bend_per_part()
           "the part range sets the bend span");
 }
 
+void test_pan_per_part()
+{
+    p1::Engine engine;
+    engine.reset();
+    engine.setParam(param_id("pan.p0"), -100);
+    engine.setParam(param_id("pan.p1"), 100);
+    int32_t buffer[512] = {};
+    engine.render(buffer, 256);
+    check(engine.state()->pan_l_q16[0] > 90000 &&
+              engine.state()->pan_r_q16[0] == 0,
+          "hard left puts part 1 on the left");
+    check(engine.state()->pan_l_q16[1] == 0 &&
+              engine.state()->pan_r_q16[1] > 90000,
+          "hard right puts part 2 on the right");
+
+    engine.setParam(param_id("pan.p0"), 0);
+    engine.setParam(param_id("pan.p1"), 0);
+    engine.render(buffer, 256);
+    check(engine.state()->pan_l_q16[0] == 65536 &&
+              engine.state()->pan_r_q16[0] == 65536,
+          "centre pan is exactly unity on both channels");
+}
+
 } // namespace
 
 int main(int argc, char** argv)
@@ -323,6 +346,7 @@ int main(int argc, char** argv)
     test_channel_separation();
     test_sustain_per_channel();
     test_bend_per_part();
+    test_pan_per_part();
     std::printf("engine: %s\n", failures ? "FAILED" : "passed");
     return failures ? 1 : 0;
 }

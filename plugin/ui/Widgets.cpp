@@ -1251,8 +1251,10 @@ void P1Wave::paint(juce::Graphics& g)
     g.strokePath(path, juce::PathStrokeType(1.4f));
 }
 
-P1LevelSlider::P1LevelSlider(APVTS& state, const juce::String& paramID)
-    : state_(state), paramID_(paramID)
+P1LevelSlider::P1LevelSlider(APVTS& state, const juce::String& paramID,
+                             juce::String caption, bool bipolar)
+    : state_(state), paramID_(paramID), caption_(std::move(caption)),
+      bipolar_(bipolar)
 {
     spec_ = findSpec(paramID_);
     if (auto* param = state_.getParameter(paramID_)) {
@@ -1277,7 +1279,7 @@ void P1LevelSlider::paint(juce::Graphics& g)
 {
     g.setFont(uiFont(tokens::textInlineLabel));
     g.setColour(colour(tokens::dim));
-    g.drawText("level", getLocalBounds().removeFromTop(18),
+    g.drawText(caption_, getLocalBounds().removeFromTop(18),
                juce::Justification::centredLeft, false);
     if (spec_ != nullptr) {
         g.setColour(colour(tokens::pinkBright));
@@ -1293,9 +1295,21 @@ void P1LevelSlider::paint(juce::Graphics& g)
                            ? juce::jlimit(0.0f, 1.0f,
                                          (value_ - static_cast<float>(spec_->min)) / range)
                            : 0.0f;
+    const auto inner = track_.reduced(1);
+    const int edge = inner.getX() + static_cast<int>(
+                                         std::round(static_cast<float>(inner.getWidth()) * norm));
     g.setColour(colour(tokens::purple));
-    g.fillRect(track_.reduced(1).withWidth(static_cast<int>(
-        std::round(static_cast<float>(track_.getWidth() - 2) * norm))));
+    if (bipolar_) {
+        const int centre = inner.getX() + inner.getWidth() / 2;
+        const int x = juce::jmin(centre, edge);
+        const int w = juce::jmax(centre, edge) - x;
+        g.fillRect(juce::Rectangle<int>(x, inner.getY(), w, inner.getHeight()));
+        g.setColour(colour(tokens::lineStrong));
+        g.drawVerticalLine(centre, static_cast<float>(inner.getY()),
+                           static_cast<float>(inner.getBottom()));
+    } else {
+        g.fillRect(inner.withWidth(edge - inner.getX()));
+    }
 }
 
 void P1LevelSlider::mouseDown(const juce::MouseEvent& event)

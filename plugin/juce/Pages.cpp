@@ -78,6 +78,9 @@ public:
         level_ = std::make_unique<P1LevelSlider>(editor_.state(),
                                                  params::level(part_));
         addAndMakeVisible(*level_);
+        pan_ = std::make_unique<P1LevelSlider>(editor_.state(),
+                                               params::pan(part_), "pan", true);
+        addAndMakeVisible(*pan_);
         addAndMakeVisible(scope_);
         addAndMakeVisible(spectro_);
     }
@@ -91,7 +94,9 @@ public:
         for (auto& knob : knobs_)
             knob->setBounds(knobRow.removeFromLeft(cell));
         level_->setBounds(area.removeFromTop(38).reduced(4, 0));
-        area.removeFromTop(6);
+        area.removeFromTop(2);
+        pan_->setBounds(area.removeFromTop(30).reduced(4, 0));
+        area.removeFromTop(4);
         const int visualWidth = (area.getWidth() - 8) / 2;
         scope_.setBounds(area.removeFromLeft(visualWidth));
         area.removeFromLeft(8);
@@ -130,6 +135,7 @@ private:
     CardHeader header_;
     std::array<std::unique_ptr<ParamKnob>, 7> knobs_{};
     std::unique_ptr<P1LevelSlider> level_;
+    std::unique_ptr<P1LevelSlider> pan_;
     P1Scope scope_;
     P1Spectro spectro_;
     std::array<float, 512> scratch_{};

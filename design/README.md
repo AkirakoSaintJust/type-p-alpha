@@ -254,8 +254,9 @@ cut polygon rather than a rectangle. Inactive tabs are dim text on black.
 Two part cards, each titled `part n: name` in Zen Dots. The active part has a green
 border, and the inactive part has no visible border. Each card holds rename, copy
 and paste at the left of the header, a mute switch at the right with a 16px gap,
-seven knobs, a wide level slider with the caption `level`, and two borderless
-visualisers, one scope and one spectro, with no captions on the visualisers. The
+seven knobs, a wide level slider with the caption `level`, a bipolar `pan` slider
+under it, and two borderless visualisers, one scope and one spectro, with no
+captions on the visualisers. The
 seven knobs are `midi channel`, `keyzone start`, `keyzone end`, `tune`,
 `transpose`, `delay` and `bend`, where `tune` is the part detune in cents and
 `bend` is the pitch-bend range in semitones. Then a voice mode block with `poly`,

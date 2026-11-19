@@ -19,6 +19,7 @@ inline juce::String withPart(const juce::String& base, int part)
 
 inline juce::String algorithm(int part) { return withPart("algorithm", part); }
 inline juce::String channel(int part) { return withPart("channel", part); }
+inline juce::String pan(int part) { return withPart("pan", part); }
 inline juce::String bendRange(int part) { return withPart("bend_range", part); }
 inline juce::String keyLow(int part) { return withPart("low", part); }
 inline juce::String keyHigh(int part) { return withPart("high", part); }

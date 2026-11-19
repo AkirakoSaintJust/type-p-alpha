@@ -307,7 +307,7 @@ bool PresetStore::loadLibrary(const uint8_t* data, std::size_t size)
         const auto oldCount =
             (oldRecord - PP_RECORD(0u)) / 4u;
         if ((oldRecord - PP_RECORD(0u)) % 4u != 0u ||
-            oldCount + 1u != static_cast<std::size_t>(partParamCount_))
+            oldCount == 0u || oldCount >= static_cast<std::size_t>(partParamCount_))
             return false;
         if (!migratePartBank(partData, static_cast<uint32_t>(oldCount), migrated))
             return false;

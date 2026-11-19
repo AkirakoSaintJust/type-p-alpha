@@ -108,9 +108,9 @@ covers both.
 
 Every page fills the same height:
 
-- patch settings: two part cards, each with seven knobs, a level slider and a
-  scope and spectro, which grow to fill the remaining card height, followed by the
-  voice mode block.
+- patch settings: two part cards, each with seven knobs, a level slider, a pan
+  slider and a scope and spectro, which grow to fill the remaining card height,
+  followed by the voice mode block.
 - part fx/mod: a three by two grid. Filter 1, the filter envelope and the pitch LFO
   fill the first row. Pitch envelope, key follow and velocity follow fill the second
   row. The two follow cards are separate, and each has its own on switch and wipe

@@ -257,7 +257,8 @@ private:
 
 class P1LevelSlider : public juce::Component {
 public:
-    P1LevelSlider(APVTS& state, const juce::String& paramID);
+    P1LevelSlider(APVTS& state, const juce::String& paramID,
+                  juce::String caption = "level", bool bipolar = false);
     void resized() override;
     void paint(juce::Graphics& g) override;
     void mouseDown(const juce::MouseEvent& event) override;
@@ -268,6 +269,8 @@ private:
 
     APVTS& state_;
     juce::String paramID_;
+    juce::String caption_;
+    bool bipolar_ = false;
     const P1ParamSpec* spec_ = nullptr;
     float value_ = 0.0f;
     juce::Rectangle<int> track_;
