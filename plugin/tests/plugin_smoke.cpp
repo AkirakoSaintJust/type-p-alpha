@@ -254,6 +254,35 @@ int main()
         check(reader.presets().partUsed(9) &&
                   reader.presets().partName(9) == "persisted",
               "the global library restores saved parts");
+
+        /* A second instance adds a slot after the reader loaded its copy. The
+         * reader then restores a project whose snapshot predates that slot. The
+         * project must not write its old bank over the shared library. */
+        TypePAlphaAudioProcessor second;
+        second.setLibraryFileForTesting(library);
+        second.ensureLibraryLoaded();
+        second.presets().savePart(
+            10, "second", std::vector<int32_t>(
+                              static_cast<std::size_t>(kP1PartParamCount), 6));
+        second.saveLibrary();
+
+        juce::MemoryBlock project;
+        reader.getStateInformation(project);
+        reader.setStateInformation(project.getData(),
+                                   static_cast<int>(project.getSize()));
+        reader.presets().savePart(
+            11, "reader", std::vector<int32_t>(
+                              static_cast<std::size_t>(kP1PartParamCount), 7));
+        reader.saveLibrary();
+
+        TypePAlphaAudioProcessor merged;
+        merged.setLibraryFileForTesting(library);
+        merged.ensureLibraryLoaded();
+        check(merged.presets().partUsed(10) &&
+                  merged.presets().partName(10) == "second",
+              "a project load does not overwrite the shared library");
+        check(merged.presets().partUsed(11),
+              "the reader's own slot still reaches the library");
         library.deleteFile();
     }
 

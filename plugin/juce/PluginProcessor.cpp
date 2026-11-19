@@ -471,16 +471,10 @@ void TypePAlphaAudioProcessor::setStateInformation(const void* data, int sizeInB
             part, static_cast<int>(
                       state.getProperty("partSource" + juce::String(part), -1)));
     }
-    juce::MemoryBlock partBank;
-    partBank.fromBase64Encoding(state.getProperty("partBank", "").toString());
-    if (partBank.getSize() > 0)
-        presets_.loadPartBank(static_cast<const uint8_t*>(partBank.getData()),
-                              partBank.getSize());
-    juce::MemoryBlock multiBank;
-    multiBank.fromBase64Encoding(state.getProperty("multiBank", "").toString());
-    if (multiBank.getSize() > 0)
-        presets_.loadMultiBank(static_cast<const uint8_t*>(multiBank.getData()),
-                               multiBank.getSize());
+    /* The banks stay in the project as a portable snapshot of the library, but
+     * loading a project never writes them into the shared store. A project made
+     * against an older library would otherwise replace every slot on disk at the
+     * next save. Restoring the snapshot is a separate, explicit action. */
     apvts_.replaceState(state);
     paramsDirty_.store(true, std::memory_order_relaxed);
     updateHostDisplay(juce::AudioProcessor::ChangeDetails().withProgramChanged(true));
