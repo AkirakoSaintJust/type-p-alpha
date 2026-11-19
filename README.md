@@ -51,7 +51,7 @@ Results so far seem to be fit for intent. I've been able to easily make rudiment
 7. Synchronising the patch/part library across instances. They're stored as files, but I don't know what's supposed to happen when two instances edit the
    same slot.
 8. Filter param range and character refinement.
-9. Documentation and the graphic design. The panel is already ok, but I'd like to work on the workmark, a nicely designed manual, and complementary materials such as posters, web graphics, etc.
+9. Documentation and the graphic design. The panel is already ok, but I'd like to work on the wordmark, a nicely designed manual, and complementary materials such as posters, web graphics, etc.
 10. Any other waveform worth adding to the ops?
 11. Would ring mod algorithms add anything worth implementing?
 
@@ -118,7 +118,7 @@ The plugin compiles into `build/plugin/juce/type_p_alpha_artefacts/Release/`:
 
 The tests cover engine parity, the rate bridge, preset storage, processor
 smoke test, stability pass, editor snapshots, and the Linux DAW matrix. The
-`linux_daws` test needs Ardour, Carla, JACK and Xvfb. Use `ctest -E linux_daws` to set those hosts up.
+`linux_daws` test needs Ardour, Carla, JACK and Xvfb. Use `ctest -E linux_daws` when those hosts are not installed.
 
 ## Code map
 
