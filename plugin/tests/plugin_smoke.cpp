@@ -223,15 +223,20 @@ int main()
         processor.presets().savePart(
             3, "changed", std::vector<int32_t>(
                               static_cast<std::size_t>(kP1PartParamCount), 1));
+        processor.presets().saveMulti(
+            2, "changed multi", std::vector<uint8_t>{3, 3},
+            std::vector<int32_t>{99, 99}, std::vector<int32_t>{0, 0},
+            std::vector<int32_t>{0, 1}, std::vector<int32_t>{0, 0},
+            std::vector<int32_t>{127, 127});
         processor.presets().setCurrentMulti(-1);
         processor.presets().setPartSource(0, -1);
         processor.setStateInformation(state.getData(),
                                       static_cast<int>(state.getSize()));
-        check(processor.presets().partName(3) == "smoke",
-              "the state restores the part bank");
+        check(processor.presets().partName(3) == "changed",
+              "a project load leaves the part bank alone");
         check(processor.presets().multiUsed(2) &&
-                  processor.presets().multiName(2) == "smoke multi",
-              "the state restores the multi bank");
+                  processor.presets().multiName(2) == "changed multi",
+              "a project load leaves the multi bank alone");
         check(processor.presets().currentMulti() == 2 &&
                   processor.presets().partSource(0) == 3,
               "the state restores the current patch and part source");
