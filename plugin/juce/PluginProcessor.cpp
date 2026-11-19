@@ -333,8 +333,11 @@ void TypePAlphaAudioProcessor::saveLibrary()
 {
     const auto file = libraryFile();
     file.getParentDirectory().createDirectory();
+    const auto next = presets_.revision() + 1;
+    presets_.setRevision(next);
     const auto bytes = presets_.packLibrary();
     if (!file.replaceWithData(bytes.data(), bytes.size())) {
+        presets_.setRevision(next - 1);
         DBG("could not save the plugin library");
     }
 }

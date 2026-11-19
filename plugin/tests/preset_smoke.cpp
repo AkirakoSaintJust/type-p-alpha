@@ -127,15 +127,31 @@ int main()
               wideLoaded.partName(5) == longName.substr(0, 32),
           "the 32-character name round-trips through the record");
 
+    store.setRevision(4);
     const auto library = store.packLibrary();
     p1::PresetStore libraryLoaded{kP1PartParamCount, kP1PartCount};
     check(libraryLoaded.loadLibrary(library.data(), library.size()),
           "load a packed library file");
+    check(libraryLoaded.revision() == 4,
+          "the library revision travels in the file header");
     check(libraryLoaded.partUsed(3) && libraryLoaded.partName(3) == "lead",
           "the library keeps the part records");
     check(libraryLoaded.partParams(3)[5] == lead[5],
           "the spectrum level travels in the part record");
     check(libraryLoaded.multiUsed(7), "the library keeps the multi records");
+
+    /* A v2 file has no revision field. It must keep loading, as revision 0, so
+     * a library saved before the header change survives the update. */
+    std::vector<uint8_t> v2(library.begin(), library.end());
+    v2[5] = '2';
+    v2.erase(v2.begin() + 7, v2.begin() + 11);
+    p1::PresetStore v2Loaded{kP1PartParamCount, kP1PartCount};
+    check(v2Loaded.loadLibrary(v2.data(), v2.size()),
+          "load a v2 library file");
+    check(v2Loaded.revision() == 0, "a v2 library loads as revision 0");
+    check(v2Loaded.partUsed(3) && v2Loaded.partName(3) == "lead",
+          "a v2 library keeps its part records");
+
     check(!libraryLoaded.loadLibrary(library.data(), 12),
           "reject a truncated library file");
     check(!libraryLoaded.loadLibrary(library.data(), library.size() - 1),

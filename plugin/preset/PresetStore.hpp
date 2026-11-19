@@ -67,6 +67,11 @@ public:
     std::vector<uint8_t> packLibrary() const;
     bool loadLibrary(const uint8_t* data, std::size_t size);
 
+    /* The library revision written into the file header. A v2 file has no
+     * revision field, so it loads as revision 0. */
+    uint32_t revision() const { return revision_; }
+    void setRevision(uint32_t revision) { revision_ = revision; }
+
     int findFreePartSlot() const;
     int findFreeMultiSlot() const;
 
@@ -87,6 +92,7 @@ private:
     std::vector<Multi> multis_;
     int currentMulti_ = -1;
     std::vector<int> partSource_;
+    uint32_t revision_ = 0;
 };
 
 } // namespace p1

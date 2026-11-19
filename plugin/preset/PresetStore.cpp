@@ -236,9 +236,9 @@ std::vector<uint8_t> PresetStore::packLibrary() const
 {
     const auto part = packPartBank();
     const auto multi = packMultiBank();
-    static const uint8_t magic[7] = {'P', '1', 'L', 'I', 'B', '2', '\n'};
+    static const uint8_t magic[7] = {'P', '1', 'L', 'I', 'B', '3', '\n'};
     std::vector<uint8_t> out;
-    out.reserve(7u + 4u + part.size() + 4u + multi.size());
+    out.reserve(7u + 4u + 4u + part.size() + 4u + multi.size());
     out.insert(out.end(), magic, magic + 7);
     const auto put32 = [&out](uint32_t value) {
         out.push_back(static_cast<uint8_t>(value & 0xFFu));
@@ -246,6 +246,7 @@ std::vector<uint8_t> PresetStore::packLibrary() const
         out.push_back(static_cast<uint8_t>((value >> 16) & 0xFFu));
         out.push_back(static_cast<uint8_t>((value >> 24) & 0xFFu));
     };
+    put32(revision_);
     put32(static_cast<uint32_t>(part.size()));
     out.insert(out.end(), part.begin(), part.end());
     put32(static_cast<uint32_t>(multi.size()));
@@ -255,10 +256,12 @@ std::vector<uint8_t> PresetStore::packLibrary() const
 
 bool PresetStore::loadLibrary(const uint8_t* data, std::size_t size)
 {
-    static const uint8_t magic[7] = {'P', '1', 'L', 'I', 'B', '2', '\n'};
+    static const uint8_t magic2[7] = {'P', '1', 'L', 'I', 'B', '2', '\n'};
+    static const uint8_t magic3[7] = {'P', '1', 'L', 'I', 'B', '3', '\n'};
     if (data == nullptr || size < 7u + 4u)
         return false;
-    if (std::memcmp(data, magic, 7) != 0)
+    const bool hasRevision = std::memcmp(data, magic3, 7) == 0;
+    if (!hasRevision && std::memcmp(data, magic2, 7) != 0)
         return false;
     std::size_t offset = 7u;
     const auto get32 = [data, size, &offset](uint32_t& value) {
@@ -271,6 +274,9 @@ bool PresetStore::loadLibrary(const uint8_t* data, std::size_t size)
         offset += 4u;
         return true;
     };
+    uint32_t revision = 0;
+    if (hasRevision && !get32(revision))
+        return false;
     uint32_t partSize = 0;
     uint32_t multiSize = 0;
     const auto currentPartSize =
@@ -310,6 +316,7 @@ bool PresetStore::loadLibrary(const uint8_t* data, std::size_t size)
     *this = std::move(staging);
     currentMulti_ = -1;
     std::fill(partSource_.begin(), partSource_.end(), -1);
+    revision_ = revision;
     return true;
 }
 
