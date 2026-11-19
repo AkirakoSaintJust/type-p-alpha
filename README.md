@@ -1,6 +1,6 @@
 # Type P.α
 
-Hey, it's Akirako Saint-Just from the パンク派第１音響合成研究班, or Punk Faction, Sound Synthesis Research Unit Number 1 (P1Onken for short.) Through my commitment to punk, post-punk, techno and industrial politics and aesthetics, I've come to be a fanatic of DX-style phase modulation synths, so over the years I've been accumulating ideas about things I wish I had in a PM synth, which features from which DX-style synths are best, and how to balance ease of use with synthesis power. My inspirations are what I've learned from playing the Yamaha synths and emulations I've used, and in general Yamaha's OPN, OPM, OPP, OPL3 and OPZ chips plus the Reface DX for phase modulation. I've also been curious about how other techniques compose with PM, whether they offer anything of interest, and how to implement them without overcomplicating patch design. On that front, my references are Casio's CZ series for the character of phase distortion, Kleimola-Lazzarini-Timoney-Välimäki's paper on vector phaseshaping for the details, Xenakis' granular and stochastic techniques, Nonlinearcircuits' chaos modules, and the Kawai K5 for my implementation of spectral synthesis.
+Hey, it's Akirako Saint-Just from the パンク派第１音響合成研究班, or Punk Faction, Sound Synthesis Research Unit Number 1 (P1Onken for short.) Through my commitment to punk, post-punk, techno and industrial politics and aesthetics, I've come to be a fanatic of DX-style phase modulation synths, so over the years I've been accumulating ideas about things I wish I had in a PM synth, which features from which DX-style synths are best, and how to balance ease of use with synthesis power. My inspirations are what I've learned from playing the Yamaha synths and emulations I've used, and in general Yamaha's OPN, OPM, OPP, OPL3 and OPZ chips plus the Reface DX for phase modulation. I've also been curious about how other techniques compose with PM, whether they offer anything of interest, and how to implement them without overcomplicating patch design. On that front, my references are Roland's D50 and D110 and Casio's CZ series for the character phase distortion sounds, Kleimola-Lazzarini-Timoney-Välimäki's paper on vector phaseshaping for details about phase distortion, Xenakis' granular and stochastic techniques, Nonlinearcircuits' chaos modules, and the Kawai K5 for my implementation of spectral synthesis.
 
 _Type P_, where _P_ stands for _phase_, is the name for the general project of developing this kind of expanded DX-style++ synth. I've tried several experimental implementations, like _Type P.a_, which was implemented in allocation-free C# and had a complex modular architecture, _Type P.b_, which was radically simplified following lessons taken from _Type P.a_; and _Type P.fm1_, which was constrained by the CPU, memory and UI limits of the M-VAVE FM1. **Type P.α** (_α_ as in _alpha_, distinct from the _a_ in _Type P.a_) is the current iteration, presented as a VST3 plugin, a CLAP plugin and a standalone app, made with JUCE and using my personal framework tooling.
 
@@ -8,66 +8,74 @@ The reasons for abandoning Type P.fm1 are that I've decided to disengage from th
 
 ## The instrument
 
-**Type P.α** has 24 voices split across two four-operator parts. Each operator carries feedback, a set of 13 waveforms, a spectrum oscillator mode more or less modelled after the OPL3 and the OPZ/TX81z/DX11/V50, and an amplitude LFO. Feedback also has its own envelope and LFO per operator, and each operator has a pitch LFO, so the harmonic spectrum can move without touching the amplitude. The pitch envelope, the pitch LFO and the multi-mode filter have an envelope of their own, all per voice and per part, plus key scaling and velocity sensitivity for a lot of parameters. Parts can be stacked, assigned to different MIDI channels or split into keyboard zones, and each has a delay stage so they can be sequential in time.
+**Type P.α** has 24 voices split across two four-operator parts. Each operator contains:
 
-The spectral side is the part I'm most proud of. Each operator has two editable 64-harmonic spectra, with an envelope and an LFO to morph between them. The K5 is the starting point, but where the K5 has two overlapping spectra across two parts and four envelopes per part assignable to harmonics, Type P.α has two spectra across four operators and two parts, and each operator has its own morph envelope and LFO on top of its amplitude envelope and LFO.
+- The usual output level, frequency ratio and detune controls.
+- Bipolar phase modulation feedback, with a dedicated LFO and envelope.
+- A set of 13 waveforms more or less modelled after the OPL3 and the OPZ/TX81z/DX11/V50.
+- An amplitude LFO on top of the usual amplitude envelope.
+- A pitch LFO for evolving PM timbres.
+- An additive spectral mode with two 64-harmonic tables, an LFO and envelope for morphing between them, and spectral controls inspired by the Kawai K5.
 
-I believe two 4-operator parts is the sweet spot for usability and power. Compared to 6-operator synths, the number of algorithms is smaller, and I feel like dividing patches into two 4-op blocks makes programming way less overwhelming than presenting users with one 8-op part. I also believe offering feedback on every operator, along with additional waveforms, most of the time makes up for the kind of 6-op algorithms Type P.α lacks. Most importantly, it's an architecture that lends itself well to assembling patches out of stacked or sequential partials, which to me is the ideal patch design approach for phase modulation.
+Parts contain:
+
+- A bipolar pitch envelope.
+- A pitch LFO.
+- A polyphonic, multimode, resonant filter with a dedicated envelope.
+- Key scaling and velocity sensitivity for a lot of params.
+- Detune and transposition.
+
+Parts can be stacked, assigned to different MIDI channels or split into keyboard zones, and each has a delay stage so they can be sequential in time.
+
+The spectral synthesis implementation is the bit I'm most proud of. My starting points were Yamaha's parallel carrier algorithm and the Kawai K5, but where the K5 has two overlapping spectra and four envelopes per part that can be assigned to individual harmonics, Type P.α has two spectra for each of the four operators, times two parts, and each operator has its own morph envelope and LFO on top of its amplitude envelope and LFO.
+
+I believe two 4-operator parts is the sweet spot for balancing usability and power. Compared to 6-operator synths, the number of algorithms is smaller, and I feel like dividing patches into two 4-op blocks makes programming way less overwhelming than presenting users with one 8-op part. I also believe offering feedback on every operator, along with additional waveforms, most of the time makes up for the kind of 6-op algorithms Type P.α lacks. Most importantly, it's an architecture that lends itself well to assembling patches out of stacked or sequential partials, which to me is the ideal patch design approach for phase modulation.
 
 I've also tried to make sound design easier by restraining components to a small maximum parameter count, making sure the state of every operator can be compared and edited from a single page, ensuring mutes are accessible from any page, and providing visual guidance through envelope graphs, spectrograms and oscilloscopes.
 
-Phase modulation indices are calibrated to be similar to Yamaha's OPN, OPM, OPL and OPZ families, rather than the softer sound of synths like the DX7, DX9 and Reface DX. Feedback is bipolar. The positive half follows Yamaha's traditional behaviour and scales with the operator's amplitude. The negative half is rectified into the Reface-style absolute-value pulse, which adds odd harmonics to a sine instead of flipping the waveform. The feedback envelope and LFO move the magnitude, so the shipped feedback is the one I want to use. The contracts are [bipolar feedback](plugin/feature-contract-feedback-bipolar.md) and [operator LFOs](plugin/feature-contract-operator-lfos.md), and the research note is [the feedback study](docs/research/README.md).
+Phase modulation indices are calibrated to be similar to Yamaha's OPN, OPM, OPL and OPZ families, rather than the softer sound of synths like the DX7, DX9 and Reface DX. Feedback scales with the operator's amplitude, as in Yamaha's traditional DX synths and unlike the Reface DX, but like the Reface DX's feedback, it is bipolar and the negative (or rather, rectified) half adds odd harmonics when applied to a sine wave. Feedback also has an LFO and envelope per operator, which I think is a powerful addition. I'm well chuffed with how it works but I wonder whether having a feedback envelope would make more sense with Reface DX-style amplitude-independent feedback? Anyway, for more details, see [bipolar feedback](plugin/feature-contract-feedback-bipolar.md) and [operator LFOs](plugin/feature-contract-operator-lfos.md) contracts, and the [the feedback research study](docs/research/README.md).
 
-Results so far seem to be fit for intent. I've been able to easily make rudimentary additive patches that sound a bit like the PPG sounds Tangerine Dream used circa Exit, additive brass, woodwinds and strings; and pseudo-PWM pads and leads by pairing saw operators with sine operators at 20-35% feedback, which gives them a ramp waveform. Conversion of OPM patches to Type P ranges produces spectrally similar results to the originals, and they are easy to edit.
+Results so far seem to be fit for intent. I've been able to easily make rudimentary additive patches that sound a bit like the PPG sounds Tangerine Dream used circa Exit, additive brass, woodwinds and strings; and pseudo-PWM pads and leads by pairing saw operators with sine operators at 20-35% feedback, which gives them a ramp waveform. Conversion of OPM patches to Type P ranges produces spectrally similar results to the originals, and I reckon they are easy to edit.
 
 ## Lines of research
 
 1. Phase distortion and vector phaseshaping. Where should the transfer function's
-   breakpoint sit, and can phase distortion and phase modulation share one phase
-   transfer function without extra machinery? The 2D vector version feels like a
-   lot of work for little reward, so it stays a question rather than a commitment.
+   breakpoint be placed? Can phase distortion and phase modulation share one single phase
+   transfer function without extra machinery? To be honest I'm not too eager to implement it because I'm unsure it'll add much for the effort, but I guess it's part of the "phase-based synthesizer" research concept.
 2. Phase granulation as a layer on top of PM and PD, with chaotic and stochastic
-   modulators. What should it do, what does it cost, and which parameters keep it
-   playable?
+   modulators. What should it do exactly, how much RAM and compute does it cost, and which parameters would be the most user-friendly?
 3. Envelope design. Curves, stages and loops.
-4. LFO envelopes. What should an envelope on an LFO rate or depth add to the
-   operator LFOs?
-5. Control macros. Which few macro controls earn a place without turning the panel
-   into a second modulation matrix?
-6. Stereo. Where does the width come from, and how much of it belongs to the
-   operators rather than the parts?
-7. Synchronising the sound banks between open instances. The library files are the
-   obvious boundary. The open question is what happens when two instances edit the
+4. LFO envelopes for rate and depth.
+5. Control macros. What kind of macro controls would make the synth friendlier, more performable, and more modulatable, without turning the panel into an overwhelming mod matrix?
+6. Per-part stereo panning.
+7. Synchronising the patch/part library across instances. They're stored as files, but I don't know what's supposed to happen when two instances edit the
    same slot.
-8. The filter. The cutoff and resonance law is now the SH-101's, but I still want a
-   listening pass before I call it finished.
-9. Documentation and the graphic design. The panel is close. The manual, the
-   posters and the wordmark are not.
-10. Extra waves. Is there another waveform that earns its place?
-11. Ring modulation algorithms. Does ring mod add something the PM algorithms
-    cannot?
+8. Filter param range and character refinement.
+9. Documentation and the graphic design. The panel is already ok, but I'd like to work on the workmark, a nicely designed manual, and complementary materials such as posters, web graphics, etc.
+10. Any other waveform worth adding to the ops?
+11. Would ring mod algorithms add anything worth implementing?
 
-## Decided steps
+## Done
 
 1. More precise spectrograms, with clear differentiation of odd and even harmonics, and maybe some numbers for easier reading. Being able to reliably see the spectra is essential for additive-style synthesis.
 2. Exploiting parallelism if possible!
-3. A web app made from the same engine and a panel from the editor design, with the build and browser evidence in the [web panel contract](plugin/feature-contract-web-panel.md).
-4. A 64-harmonic spectral oscillator per operator, with two editable spectra, a morph envelope and a morph LFO. The K5 group editing is the starting point, with more selection masks. The survey is in the [additive synthesis note](docs/research/additive-synthesis.md), and the current contract is [the spectral contract](plugin/feature-contract-spectral.md).
-5. A 48 kHz core with a 128-tap output bridge, so a 48 kHz host takes the core output untouched and the other rates are resampled at the boundary. The measurements are in the [48 kHz contract](plugin/feature-contract-48k-core.md).
-6. The SH-101 filter law: exponential cutoff, linear resonance with self-oscillation near 80 percent, the output-side makeup, and the input soft knee. The contract is [the filter law](plugin/feature-contract-filter-law.md).
+3. A web app made from the same engine and panel design (see [web panel contract](plugin/feature-contract-web-panel.md).) Performance is poor and the panel is kind of wonky, so I'm inclined to remove it.
+4. A 64-harmonic spectral oscillator per operator, with two editable spectra, a morph envelope and a morph LFO, and K5-style editing controls expanded and modified for the Type P (see the [additive synthesis note](docs/research/additive-synthesis.md) and [the spectral contract](plugin/feature-contract-spectral.md)).
+5. A 48 kHz core with a 128-tap output bridge, so a 48 kHz host takes the core output untouched and the other rates are resampled at the boundary. See the [48 kHz contract](plugin/feature-contract-48k-core.md).
+6. Giving the filter an SH-101-ish character (see [the filter law](plugin/feature-contract-filter-law.md) contract.)
 
 ## Experiments I'd like to try
 
 1. Replicating DX7 patches to find the limitations of Type P.α's architecture in comparison to 6-op architectures.
 2. Having other people try the synth and provide feedback on UX and sound.
 3. Trying wild PM techniques from chiptune composers like blobnote.
-4. Using the spectral oscillator on more material and finding which K5-style editing tools are worth adding.
+4. Making more spectral patches and finding which other K5-style editing tools might be worth adding.
 5. Documenting the pseudo-virtual analogue experience.
 
 ## Compiling
 
 The build fetches JUCE 9.0.5 and the pinned `clap-juce-extensions` commit at
-configure time, and it needs CMake 3.22, Ninja, clang, and the platform JUCE
+configure time. It also needs CMake 3.22, Ninja, clang, and the platform JUCE
 dependencies.
 
 ```sh
@@ -99,8 +107,8 @@ docker/build.sh linux/amd64
 ```
 
 The compiler is clang on every platform, so the Windows script uses clang-cl with
-lld-link and macOS uses AppleClang. [`docker/README.md`](docker/README.md) carries
-the platform matrix, the sanitizer build and the clang tooling.
+lld-link and macOS uses AppleClang. See [`docker/README.md`](docker/README.md) for
+more info on the platform matrix, sanitizer build and clang tooling.
 
 The plugin compiles into `build/plugin/juce/type_p_alpha_artefacts/Release/`:
 
@@ -109,20 +117,19 @@ The plugin compiles into `build/plugin/juce/type_p_alpha_artefacts/Release/`:
 - `Standalone/Type P.alpha`
 
 The tests cover engine parity, the rate bridge, preset storage, processor
-smoke, stability pass, editor snapshots, and the Linux DAW matrix. The
-`linux_daws` test needs Ardour, Carla, JACK and Xvfb. Use `ctest -E linux_daws` when
-those hosts are not installed.
+smoke test, stability pass, editor snapshots, and the Linux DAW matrix. The
+`linux_daws` test needs Ardour, Carla, JACK and Xvfb. Use `ctest -E linux_daws` to set those hosts up.
 
 ## Code map
 
 The hand-written types and functions, the generated files and the cleanup
-findings are in [`docs/codebase-audit.md`](docs/codebase-audit.md). The visual
-language, its references and the panel rules are in
+findings are detailed in [`docs/codebase-audit.md`](docs/codebase-audit.md). The visual
+language, its references and the panel rules are at
 [`design/README.md`](design/README.md).
 
 ## Installation
 
-The release archives hold the VST3, the CLAP, the standalone app, and the licences. Copy
+The release packages contain the VST3 and CLAP plugins, the standalone app, and the licences. Copy
 the VST3 or CLAP into your plugin folder, or just run the standalone app.
 
 ## Licensing
@@ -130,23 +137,22 @@ the VST3 or CLAP into your plugin folder, or just run the standalone app.
 The source is GPL-3.0-only. The plugin binary also links JUCE 9 under the
 AGPL-3.0-only terms, and the bundled fonts are SIL Open Font License 1.1. Read
 [`LICENSING.md`](LICENSING.md) before packaging a binary. The repository is the
-corresponding source for every release, and the release archives carry the notices
+corresponding source for every release. Release packages carry the licensing notices
 in `licences/`.
 
 ## Status
 
-The Type P.α engine and editor grew out of the abandoned Type P.fm1 build. Patch
-and part names carry 32 characters, and the library uses the `P1LIB2` record
+The Type P.α engine and editor have grown out of the abandoned Type P.fm1 project. Patch
+and part names are 32 characters rather than the older 15, and the library uses the new `P1LIB2` record
 layout. Each operator carries its own amplitude envelope, signed feedback envelope,
 and amplitude, feedback and detune LFOs, with the three LFO families on the
 `operator lfos` tab. The seven-tab editor has the two 64-harmonic spectra pages and
 the spectra mod page. The filter follows the SH-101's cutoff and resonance law,
-with the old cutoff values migrated on load.
+with cutoff values from older versions migrated on load.
 
 The plugin passes pluginval at strictness 5 on Linux x86_64, with the editor open
 and the audio, state and automation checks included. The CLAP validator reports no
-failures and one warning, because its random-state test loads garbage without a
-crash. The Linux suite runs in CTest, and the Windows clang-cl and macOS universal
-VST3, CLAP and standalone builds pass in CI. The AU target and the macOS DAW
-validation are still open, and the Linux DAW matrix runs when Ardour, Carla and
-JACK are installed.
+failures and one warning, because its random-state test loads garbage without crashing. The Linux suite runs in CTest, and the Windows clang-cl and macOS universal
+VST3, CLAP and standalone builds pass in CI. The Linux DAW matrix runs when Ardour, Carla and
+JACK are installed, but the AU target and the macOS DAW
+validation are still untested, pending access to an actual Mac.
