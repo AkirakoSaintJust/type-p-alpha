@@ -27,6 +27,23 @@ jobs:
             cmake --build build/linux-amd64-clang &&
             ctest --test-dir build/linux-amd64-clang --output-on-failure -E linux_daws'
 
+  tsan:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v7
+      - name: Build the Debian trixie image
+        run: docker build -f docker/Dockerfile -t type-p-alpha-build:ci .
+      - name: Build and test under ThreadSanitizer
+        run: |
+          docker run --rm --security-opt seccomp=unconfined -v "$PWD:/work" -w /work type-p-alpha-build:ci sh -c '
+            cmake -S . -B build/linux-tsan -G Ninja -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+              -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ \
+              -DP1_SANITIZERS=thread &&
+            cmake --build build/linux-tsan --target engine_parity preset_smoke rate_bridge_test &&
+            TSAN_OPTIONS=halt_on_error=1 ctest --test-dir build/linux-tsan \
+              --output-on-failure -R "engine_parity|preset_smoke|rate_bridge"'
+
   windows:
     runs-on: windows-2022
     timeout-minutes: 60

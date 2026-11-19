@@ -92,6 +92,31 @@ The other rate-derived constants:
 - The spectral bank crossfade step becomes 17 per control tick, so 256 steps take
   about 10 ms at 48 kHz.
 
+## MIDI timing
+
+The core 32-sample grid is the timeline at every host rate, rather than only at
+48 kHz. Events are mapped into core frames and dispatched per core tick:
+
+- At 48 kHz the processor drains the events for each 32-sample chunk before that
+  chunk renders.
+- At 44.1, 96 and 192 kHz each host position maps to a core frame with the bridge
+  ratio, and the bridge callback feeds the next core chunk before it renders. At 96
+  and 192 kHz a block generates fewer core frames than host frames, so an event can
+  belong to a tick the next block renders and waits in the schedule until then.
+- A note-on and its note-off in the same tick dispatch the on before the render and
+  hold the off until after it, so the note sounds for one control tick instead of
+  cancelling before any audio. An ordinary note-off keeps its own tick.
+
+The placement error is at most 31 samples, 0.65 ms at 48 kHz, and the same grid at
+44.1 kHz removes the old whole-block collapse, which was up to a host block early.
+The envelope's first tick is silent with the default attack, so a note shorter than
+a tick is inaudible by construction rather than swallowed by the event order.
+
+Evidence is in `plugin_smoke`: `a short note renders at 44100 Hz`, and the same at
+48, 96 and 192 kHz, where the note spans about 65 core samples so the old non-48 kHz
+path would have cancelled it. `a same-tick pair leaves a finite block` covers the
+degenerate case.
+
 ## Bounds and resources
 
 - **Maximum voices/events/effects:** 24 voices, two parts and four operators per

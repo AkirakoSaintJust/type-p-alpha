@@ -223,6 +223,26 @@ zero writes the waveform as 13, so the modulation has something to move.
    spectrum level round-trip and the rejection.
 5. **Release evidence:** the Linux goldens, the DAW pass and the pluginval report.
 
+## Live morph publication
+
+The spectral page shows the morph the newest voice is reading, which used to be a
+scan of the voice arrays from the editor's 30 Hz timer. The audio thread owns those
+arrays, so the read was a data race, even though the values were display-only.
+
+The processor now publishes the eight values, four operators across two parts, from
+the audio thread after each core chunk. `specMorph` reads a per-value atomic and
+never touches voice state. There is no mutex on the render path, and the editor's
+timer only reads the atomics.
+
+The engine's own scan still runs on the audio thread, where the arrays are safe to
+read. The publication is one store per operator and part per chunk.
+
+Evidence is in `plugin_smoke`: `the live morph starts unpublished`, `the live morph
+reads a published value` and `the live morph stays in range after a render`. The CI
+gains a ThreadSanitizer job over `engine_parity`, `preset_smoke` and `rate_bridge`,
+which is the wider check for shared state. The editor's timer path is covered by
+construction rather than by a threaded test, and the contract records that limit.
+
 ## Risks and fallback
 
 - **Range and aliasing:** the bank shifts the 64 partials by the range offset, whilst
