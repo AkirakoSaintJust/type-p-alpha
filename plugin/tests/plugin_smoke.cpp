@@ -6,6 +6,7 @@
 #include <cstdint>
 #include <cstdio>
 #include <cstring>
+#include <memory>
 #include <set>
 #include <string>
 #include <vector>
@@ -78,7 +79,8 @@ int main()
         check(comp->def == 7209, "the internal makeup defaults to 22 percent");
     else
         check(false, "the internal makeup spec is present");
-    TypePAlphaAudioProcessor processor;
+    auto processorOwner = std::make_unique<TypePAlphaAudioProcessor>();
+    auto& processor = *processorOwner;
 
     check(processor.getParameters().size() == kP1ParamCount,
           "the APVTS exposes every manifest parameter");
@@ -247,52 +249,56 @@ int main()
         auto library = juce::File::getSpecialLocation(
                            juce::File::tempDirectory)
                            .getNonexistentChildFile("p1-library", ".p1lib", false);
-        TypePAlphaAudioProcessor writer;
-        writer.setLibraryFileForTesting(library);
-        writer.presets().savePart(
+        /* A processor carries ten scope rings and the engine state, which is
+         * more than a 1 MB Windows stack wants several of at once, so these
+         * instances live on the heap. */
+        auto writer = std::make_unique<TypePAlphaAudioProcessor>();
+        writer->setLibraryFileForTesting(library);
+        writer->presets().savePart(
             9, "persisted", std::vector<int32_t>(
                                static_cast<std::size_t>(kP1PartParamCount), 5));
-        writer.saveLibrary();
+        writer->saveLibrary();
 
-        TypePAlphaAudioProcessor reader;
-        reader.setLibraryFileForTesting(library);
-        reader.ensureLibraryLoaded();
-        check(reader.presets().partUsed(9) &&
-                  reader.presets().partName(9) == "persisted",
+        auto reader = std::make_unique<TypePAlphaAudioProcessor>();
+        reader->setLibraryFileForTesting(library);
+        reader->ensureLibraryLoaded();
+        check(reader->presets().partUsed(9) &&
+                  reader->presets().partName(9) == "persisted",
               "the global library restores saved parts");
 
         /* A second instance adds a slot after the reader loaded its copy. The
          * reader then restores a project whose snapshot predates that slot. The
          * project must not write its old bank over the shared library. */
-        TypePAlphaAudioProcessor second;
-        second.setLibraryFileForTesting(library);
-        second.ensureLibraryLoaded();
-        second.presets().savePart(
+        auto second = std::make_unique<TypePAlphaAudioProcessor>();
+        second->setLibraryFileForTesting(library);
+        second->ensureLibraryLoaded();
+        second->presets().savePart(
             10, "second", std::vector<int32_t>(
                               static_cast<std::size_t>(kP1PartParamCount), 6));
-        second.saveLibrary();
+        second->saveLibrary();
 
         juce::MemoryBlock project;
-        reader.getStateInformation(project);
-        reader.setStateInformation(project.getData(),
-                                   static_cast<int>(project.getSize()));
-        reader.presets().savePart(
+        reader->getStateInformation(project);
+        reader->setStateInformation(project.getData(),
+                                    static_cast<int>(project.getSize()));
+        reader->presets().savePart(
             11, "reader", std::vector<int32_t>(
                               static_cast<std::size_t>(kP1PartParamCount), 7));
-        reader.saveLibrary();
+        reader->saveLibrary();
 
-        TypePAlphaAudioProcessor merged;
-        merged.setLibraryFileForTesting(library);
-        merged.ensureLibraryLoaded();
-        check(merged.presets().partUsed(10) &&
-                  merged.presets().partName(10) == "second",
+        auto merged = std::make_unique<TypePAlphaAudioProcessor>();
+        merged->setLibraryFileForTesting(library);
+        merged->ensureLibraryLoaded();
+        check(merged->presets().partUsed(10) &&
+                  merged->presets().partName(10) == "second",
               "a project load does not overwrite the shared library");
-        check(merged.presets().partUsed(11),
+        check(merged->presets().partUsed(11),
               "the reader's own slot still reaches the library");
         library.deleteFile();
     }
 
-    TypePAlphaAudioProcessor automated;
+    auto automatedOwner = std::make_unique<TypePAlphaAudioProcessor>();
+    auto& automated = *automatedOwner;
     automated.setRateAndBufferSizeDetails(48000.0, kFrames);
     automated.prepareToPlay(48000.0, kFrames);
     auto* automatedParameter = automated.parameters().getParameter("algorithm.p0");
@@ -308,7 +314,8 @@ int main()
     check(matches(automatedBlock, reference, kFrames),
           "automation applies at the 32-sample control block");
 
-    TypePAlphaAudioProcessor offset;
+    auto offsetOwner = std::make_unique<TypePAlphaAudioProcessor>();
+    auto& offset = *offsetOwner;
     offset.setRateAndBufferSizeDetails(48000.0, kFrames);
     offset.prepareToPlay(48000.0, kFrames);
     juce::AudioBuffer<float> offsetBlock(2, kFrames);
@@ -348,10 +355,10 @@ int main()
             const int frames = 512;
             const int off = static_cast<int>(
                 std::lround(65.0 * rate / 48000.0));
-            TypePAlphaAudioProcessor shortNote;
-            shortNote.setRateAndBufferSizeDetails(rate, frames);
-            shortNote.prepareToPlay(rate, frames);
-            if (auto* attack = shortNote.parameters().getParameter("attack.p0"))
+            auto shortNote = std::make_unique<TypePAlphaAudioProcessor>();
+            shortNote->setRateAndBufferSizeDetails(rate, frames);
+            shortNote->prepareToPlay(rate, frames);
+            if (auto* attack = shortNote->parameters().getParameter("attack.p0"))
                 attack->setValueNotifyingHost(attack->convertTo0to1(0.0f));
             juce::AudioBuffer<float> shortBlock(2, frames);
             juce::MidiBuffer shortMidi;
@@ -359,7 +366,7 @@ int main()
                 juce::MidiMessage::noteOn(1, 60, static_cast<juce::uint8>(100)),
                 0);
             shortMidi.addEvent(juce::MidiMessage::noteOff(1, 60), off);
-            shortNote.processBlock(shortBlock, shortMidi);
+            shortNote->processBlock(shortBlock, shortMidi);
             bool ok = true;
             bool heard = false;
             for (int i = 0; i < frames; ++i) {
@@ -378,15 +385,15 @@ int main()
          * and the block stays finite. The envelope's first tick is silent, so the
          * pair is inaudible by construction rather than cancelled before the
          * tick. */
-        TypePAlphaAudioProcessor sameTick;
-        sameTick.setRateAndBufferSizeDetails(48000.0, kFrames);
-        sameTick.prepareToPlay(48000.0, kFrames);
+        auto sameTick = std::make_unique<TypePAlphaAudioProcessor>();
+        sameTick->setRateAndBufferSizeDetails(48000.0, kFrames);
+        sameTick->prepareToPlay(48000.0, kFrames);
         juce::AudioBuffer<float> pairBlock(2, kFrames);
         juce::MidiBuffer pairMidi;
         pairMidi.addEvent(
             juce::MidiMessage::noteOn(1, 60, static_cast<juce::uint8>(100)), 0);
         pairMidi.addEvent(juce::MidiMessage::noteOff(1, 60), 1);
-        sameTick.processBlock(pairBlock, pairMidi);
+        sameTick->processBlock(pairBlock, pairMidi);
         bool pairFinite = true;
         for (int i = 0; i < kFrames; ++i)
             pairFinite = pairFinite && std::isfinite(pairBlock.getSample(0, i));
@@ -397,17 +404,17 @@ int main()
         const double first = processor.specMorph(0, 0);
         check(first >= -1.0 && first <= 1.0,
               "the live morph reads a published value");
-        TypePAlphaAudioProcessor morph;
-        morph.setRateAndBufferSizeDetails(48000.0, kFrames);
-        morph.prepareToPlay(48000.0, kFrames);
-        check(morph.specMorph(0, 0) == -1.0,
+        auto morph = std::make_unique<TypePAlphaAudioProcessor>();
+        morph->setRateAndBufferSizeDetails(48000.0, kFrames);
+        morph->prepareToPlay(48000.0, kFrames);
+        check(morph->specMorph(0, 0) == -1.0,
               "the live morph starts unpublished");
         juce::AudioBuffer<float> morphBlock(2, kFrames);
         juce::MidiBuffer morphMidi;
         morphMidi.addEvent(
             juce::MidiMessage::noteOn(1, 60, static_cast<juce::uint8>(100)), 0);
-        morph.processBlock(morphBlock, morphMidi);
-        const double live = morph.specMorph(0, 0);
+        morph->processBlock(morphBlock, morphMidi);
+        const double live = morph->specMorph(0, 0);
         check(live >= -1.0 && live <= 1.0,
               "the live morph stays in range after a render");
     }
@@ -437,8 +444,10 @@ int main()
     }
 
     {
-        TypePAlphaAudioProcessor source;
-        TypePAlphaAudioProcessor restored;
+        auto sourceOwner = std::make_unique<TypePAlphaAudioProcessor>();
+    auto& source = *sourceOwner;
+        auto restoredOwner = std::make_unique<TypePAlphaAudioProcessor>();
+    auto& restored = *restoredOwner;
         for (int i = 0; i < kP1ParamCount; ++i) {
             const auto& spec = kP1ParamSpecs[static_cast<std::size_t>(i)];
             auto* sourceParameter = source.parameters().getParameter(spec.id);
@@ -464,7 +473,8 @@ int main()
     }
 
     {
-        TypePAlphaAudioProcessor chord;
+        auto chordOwner = std::make_unique<TypePAlphaAudioProcessor>();
+    auto& chord = *chordOwner;
         chord.setRateAndBufferSizeDetails(48000.0, kFrames);
         chord.prepareToPlay(48000.0, kFrames);
         juce::AudioBuffer<float> chordBlock(2, kFrames);
