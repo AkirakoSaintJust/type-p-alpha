@@ -25,7 +25,7 @@ Parts contain:
 - Key scaling and velocity sensitivity for a lot of params.
 - Detune and transposition.
 
-Parts can be stacked, assigned to different MIDI channels or split into keyboard zones, and each has a delay stage so they can be sequential in time.
+Parts can be stacked, assigned to different MIDI channels or split into keyboard zones, and each has a delay stage so they can be sequential in time. The pitch bend range is per part, 0 to 24 semitones, and defaults to 2.
 
 The spectral synthesis implementation is the bit I'm most proud of. My starting points were Yamaha's parallel carrier algorithm and the Kawai K5, but where the K5 has two overlapping spectra and four envelopes per part that can be assigned to individual harmonics, Type P.α has two spectra for each of the four operators, times two parts, and each operator has its own morph envelope and LFO on top of its amplitude envelope and LFO.
 
