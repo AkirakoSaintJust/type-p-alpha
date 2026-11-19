@@ -7,23 +7,25 @@
 - **Brief section:** `README.md` line of research 1 and 9, and
   [`../design/README.md`](../design/README.md) Operators and Operator LFOs.
 - **Owner / date:** P1Onken, 2026-11-12.
-- **Disposition:** complete. The engine, the two pages, the tests and the Linux
-  goldens are in.
+- **Disposition:** complete, with the engine, the two pages, the tests and the Linux
+  goldens in. The oscillator appears on both pages, and the envelopes and LFOs split
+  between them.
 
 ## Player outcome
 
-- **New player action:** open `operators` for the oscillator, amplitude envelope
-  and feedback envelope, or open `operator lfos` for the oscillator and the three
-  per-operator LFOs. Each envelope and LFO card carries `copy` and `paste` in its
-  header, so a shape or an LFO moves between operators on its own.
-- **Sound and behaviour:** each operator owns its feedback envelope. The feedback
-  knob, the envelope and the LFO are summed as a signed feedback level, and the sign
+- **New player action:** open `operators` for the oscillator, amplitude envelope and
+  feedback envelope, or open `operator lfos` for the oscillator and the three
+  per-operator LFOs.
+  Each envelope and LFO card carries `copy` and `paste` in its header, so a shape or
+  an LFO moves between operators on its own.
+- **Sound and behaviour:** each operator owns its feedback envelope, and the feedback
+  knob, the envelope and the LFO are summed as a signed feedback level, so the sign
   chooses the family: a non-negative sum uses the current path, and a negative sum
   uses the negative feedback family. A negative envelope or LFO level can therefore
-  cross zero and is audible from a zero feedback knob. The detune LFO adds a signed
-  pitch offset to that operator. A negative LFO depth in bipolar mode inverts the LFO
-  phase. A flat envelope, the envelope off switch and both LFOs at depth 0 keep the
-  render bit-exact.
+  cross zero and is audible from a zero feedback knob, the detune LFO adds a signed
+  pitch offset to that operator, and a negative LFO depth in bipolar mode inverts the
+  LFO phase. A flat envelope, the envelope off switch and both LFOs at depth 0 keep
+  the render bit-exact, and that is the case the bit-exact checks cover.
 - **Failure mode:** the operator envelope leaks between operators, the flat or off
   path changes the render, the detune LFO shifts another operator, or a full-level
   envelope or LFO runs away.
@@ -32,12 +34,13 @@
 
 - **Other features:** `fm_op`, `fb_tap`, the `lfo`, `dx_env` and `pitch_env` nodes,
   the shared pitch input, the editor pages and the preset store.
-- **Platform/API/HAL changes:** none. The engine stays integer C.
-- **Persistence/version impact:** the part block grows from 171 to 228 parameters
-  and the manifest from 356 to 470. The library stays `P1LIB2`, with the new record
-  size. The 171 layout is not read; a pre-change library needs conversion outside
-  the plugin.
-- **MIDI/clock impact:** none. The new parameters are host-automatable and stay
+- **Platform/API/HAL changes:** none, because the engine stays integer C and every new
+  node is a control-rate body of an existing shape.
+- **Persistence/version impact:** the part block grows from 171 to 228 parameters and
+  the manifest from 356 to 470, and the library stays `P1LIB2` with the new record
+  size. The 171 layout is not read, so a pre-change library needs conversion outside
+  the plugin, and I'd rather flag that here than let a player find it at load time.
+- **MIDI/clock impact:** none, since the new parameters are host-automatable and stay
   out of the default CC map.
 
 ## Parameter and event semantics
@@ -58,9 +61,9 @@ The envelope, feedback LFO and detune LFO are per operator and per part.
 | `opN_dlfo_wave` | `opN.dlfo.wave` | 0..11 | 0 | `wave` |
 | `opN_dlfo_mode` | `opN.dlfo.mode` | 0..1 | 1 | `onoff` |
 
-The feedback level is signed. The base level keeps its sign after the key and
-velocity scaling, the envelope and LFO offsets are added, and the sign of the sum
-chooses the family:
+The feedback level is signed, the base level keeps its sign after the key and velocity
+scaling, the envelope and LFO offsets are added, and the sign of the sum chooses the
+family:
 
 ```c
 signed = (level < 0 ? -1 : 1) * p1_key_apply(abs(level), k + vk, 0, 32767)
@@ -71,7 +74,7 @@ level_eff = p1_clamp(abs(signed), 0, 32767);
 ```
 
 The `fb_tap` node uses `negative` for the family, so a negative envelope or LFO can
-cross zero even when the feedback knob is at zero. The detune LFO is added to the
+cross zero even when the feedback knob is at zero, and the detune LFO is added to the
 operator pitch input:
 
 ```c
@@ -81,28 +84,28 @@ pitch = p1_clamp(pitch_shared + dlfo, -32768, 32767)
 The `fm_op` macro owns one `pitch_env` for the feedback envelope, one `lfo` for each
 new family, and a `csum` for the pitch pair. The feedback envelope keeps the pitch
 envelope's signed Q15 levels, four rates and on switch, with its release level fixed
-at zero. The `fb_tap` node gains the `lfo` input, sums both control inputs with the
-signed base, and uses the sign of that sum for the family. The bipolar `lfo` mode
-uses the signed depth, so a negative depth inverts the phase. At depth 0 each LFO
-outputs 0, and a flat envelope outputs 0, so the existing render stays exact.
+at zero, and the `fb_tap` node gains the `lfo` input, sums both control inputs with the
+signed base, and uses the sign of that sum for the family. The bipolar `lfo` mode uses
+the signed depth, so a negative depth inverts the phase, and at depth 0 each LFO
+outputs 0 whilst a flat envelope outputs 0, so the existing render stays exact.
 
 ## Bounds and resources
 
 - **Maximum voices/events/effects:** 20 voices and two parts, unchanged.
-- **Per-sample and per-block operations:** four feedback envelopes and eight LFO
-  nodes per part, all at control rate. The feedback envelope body is the existing
-  `pitch_env` shape, and the LFO body is the existing `lfo` shape. The feedback
+- **Per-sample and per-block operations:** four feedback envelopes and eight LFO nodes
+  per part, all at control rate. The feedback envelope body is the existing
+  `pitch_env` shape and the LFO body is the existing `lfo` shape, whilst the feedback
   level adds one Q15 input and the pitch adds one saturation.
 - **Instance memory, CPU, preset size:** the part block adds 57 parameters, so 228
   bytes per part and 456 bytes across the two parts. Four `pitch_env` states replace
   one shared state per voice, and each operator adds two LFO states, so the voice
-  state grows by 42 `int32_t` fields, 3,360 bytes at 20 voices. Each library record
-  grows by 228 bytes, so the 128-slot part bank grows by 29,184 bytes.
+  state grows by 42 `int32_t` fields, 3,360 bytes at 20 voices, and each library
+  record grows by 228 bytes, so the 128-slot part bank grows by 29,184 bytes.
 - **Overflow/overload policy:** the feedback LFO is Q15 and the feedback level is
-  clamped to 0..32767. The detune LFO is Q15 and the pitch sum is clamped. The
+  clamped to 0..32767, the detune LFO is Q15 and the pitch sum is clamped, and the
   existing peak-bound tests cover the extremes.
-- **Division, shift, and range analysis:** no new division or shift. The LFO and
-  csum helpers are existing code.
+- **Division, shift, and range analysis:** no new division or shift, because the LFO
+  and csum helpers are existing code.
 
 ## Files and interfaces
 
@@ -128,20 +131,19 @@ outputs 0, and a flat envelope outputs 0, so the existing render stays exact.
   bound. `feedback_bipolar` checks the negative family and the envelope level.
   `voice_alloc` checks a three-note chord, a seven-note scale, one note's release,
   both part channels and recycled voices. `plugin_smoke` checks a three-note chord
-  through the host block and restores every manifest parameter. `plugin_stability`
-  drives every parameter to its bounds. `editor_snapshot` checks that the
+  through the host block and restores every manifest parameter, `plugin_stability`
+  drives every parameter to its bounds, and `editor_snapshot` checks that the
   oscillator, amp envelope and detune LFO sections paste to another operator.
-- **Browser vector (if applicable):** the mockup check covers the operators tab,
-  the operator lfos tab, the four feedback envelopes with four signed levels, and
-  the two new LFO cards.
-- **Target package check:** the Linux and Windows builds link the editor, the
-  engine and the tests.
+- **Browser vector (if applicable):**
+  the mockup check covers the operators tab, the operator lfos tab, the four feedback
+  envelopes with four signed levels, and the two new LFO cards.
+- **Target package check:** the Linux and Windows builds link the editor, the engine
+  and the tests.
 - **Host timing and platform check:** Linux `ctest` passes 11 of 11, including the
   13-image snapshot diff, and the Windows suite passes 10 of 10.
-- **Tolerance/metric:** the flat and off envelope renders and the depth-0 LFO
-  renders are bit-exact. The nonzero LFO and envelope renders differ. The family
-  selection and the peak bound keep their existing tolerances. The snapshot diff is
-  exact.
+- **Tolerance/metric:** the flat and off envelope renders and the depth-0 LFO renders
+  are bit-exact, the nonzero LFO and envelope renders differ, and the family selection
+  and the peak bound keep their existing tolerances. The snapshot diff is exact.
 - **Evidence artefact:** `plugin/tests/operator_lfos.cpp`,
   `plugin/tests/feedback_envelope.cpp`, `plugin/tests/voice_alloc.cpp`, the Linux
   snapshots `editor-operators.png` and `editor-operator-lfos.png`, and the mockup
@@ -149,16 +151,15 @@ outputs 0, and a flat envelope outputs 0, so the existing render stays exact.
 
 ## Risks and fallback
 
-- **Assumptions/open research:** the detune LFO uses the shared pitch scale, so
-  full depth is one octave. The feedback LFO is a percentage of the Q15 feedback
-  range. The feedback envelope uses the pitch envelope's signed levels and on
-  switch, with a fixed zero release level. The per-operator envelope is the chosen
-  design.
-- **Safe experiment and stop criterion:** if a flat envelope or the off switch
-  changes the render, if one operator envelope or LFO reaches another operator, or
-  if the pitch sum wraps, stop and fix the graph before the UI.
-- **Smaller alternative:** keep the unipolar envelope and its depth knob. This was
-  rejected because the feedback path is bipolar and the depth only rescales the
-  same signed offset.
+- **Assumptions/open research:** the detune LFO uses the shared pitch scale, so full
+  depth is one octave, and the feedback LFO is a percentage of the Q15 feedback range.
+  The feedback envelope uses the pitch envelope's signed levels and on switch, with a
+  fixed zero release level, and the per-operator envelope is the design I chose.
+- **Safe experiment and stop criterion:** if a flat envelope or the off switch changes
+  the render, if one operator envelope or LFO reaches another operator, or if the pitch
+  sum wraps, stop and fix the graph before the UI.
+- **Smaller alternative:** keep the unipolar envelope and its depth knob, which was
+  rejected because the feedback path is bipolar and the depth only rescales the same
+  signed offset.
 - **Rollback:** restore the shared `fbenv` node and the 171 layout, and remove the
   `pitch_env`, `fblfo`, `dlfo` and `dsum` nodes. The old contract remains as history.

@@ -13,6 +13,13 @@ multi-patch header block, the named part buttons, the centred tilt and the
 vertical fast envelope stages. v1.7 adds the SH-101 filter law and the single
 spectrum card with its header selectors.
 
+I keep this file because the panel is the part of the project I can see, and a
+visual language that only exists in my head is a visual language I break the moment
+I add a page. The rules below are the ones I keep forgetting, so they're written
+down before they become a debate with myself at two in the morning. The mockup is
+the sketch, `tokens.json` is the source the code reads, and the shipped panel is the
+one that counts when they disagree.
+
 ## Principles
 
 1. Black environment. Surfaces do not need outlines.
@@ -63,6 +70,12 @@ The visual language borrows from these:
 | brandInk | `#d6d6d6` | wordmark |
 | brandShadow | `#c2ad00` | solid wordmark shadow |
 
+The palette is small on purpose. Pink carries the identity and the value I want you
+to read first, green carries anything live or enabled, and purple carries the
+selected or modulating thing. When a new state needs a colour, I'd rather reuse one
+of those three than add a fourth, because the moment a colour means two things the
+panel starts to look like a dashboard.
+
 Rules:
 
 - Pink is identity and primary emphasis. It is not a success colour.
@@ -85,6 +98,12 @@ Families:
 The mockup loads both OFL families from Google Fonts after first paint, whilst the
 JUCE build bundles the OFL files as binary resources. The wordmark is all Zen Dots, and Digital Desolation
 Plus is not used in the interface, so it stays out of the binary.
+
+The type is the other half of the identity, and it's deliberately cheap to render.
+Zen Dots does the shouting and DotGothic16 does the reading, whilst Unbounded
+appears only in the wordmark. I'd keep it that way, because a third family would
+give me one more thing to license and one more way to make a label look important
+when it isn't.
 
 Scale:
 
@@ -156,6 +175,12 @@ Knob cells and dials:
 | part settings | 62 | 38 |
 | pitch envelope | 52 | 38 |
 | key follow and velocity follow | 64 | 42 |
+
+The window is fixed because the pages are a grid, and a grid that reflows is a grid
+I have to test twice. The operator page sets the height, the other pages fit inside
+it, and the editor sizes to the display's user area less the measured window chrome.
+If a page needs more room, the answer is a tighter card rather than a taller
+window.
 
 Borders:
 
@@ -411,6 +436,12 @@ at the right edge of the last button row.
 
 The interface is designed before it is written. Read the visual language and the
 panel before changing the editor.
+
+I design the control map and the mockup before I touch the editor, because the JUCE
+code is expensive to rearrange and the HTML is cheap. The mockup is allowed to be
+wrong, but it has to be wrong in a way I can see. Once the tokens and the layout
+agree, the editor build is mostly transcription, and the snapshots catch the places
+where the transcription drifted.
 
 ## Open items
 

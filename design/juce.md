@@ -11,6 +11,11 @@ Status: Milestone 3 implements this mapping. `plugin/tools/gen_tokens.py` emits
 `UiTokens.h`, the editor is `plugin/juce/PluginEditor.*` and `plugin/ui/*`, and
 `plugin_editor_snapshot` renders the pages and dialogs for review.
 
+I wrote this mapping because the browser mockup and the JUCE editor are two
+different renderers, and the only way I've found to keep them honest is to make the
+tokens the single place where a number changes. The rules below are the ones that
+keep the editor from drifting into a second design.
+
 ## Token source
 
 Retype a colour, a size or a metric in C++ and it will drift. Generate a
@@ -48,6 +53,10 @@ the editor.
 - Signal, enabled state and active part `green`.
 - Body text `text`, labels `dim`, hints `faint`.
 
+Colour is the easiest place to cheat, so I keep the list short and forbid the
+extras. A gradient or a rounded corner looks fine in a mockup and then costs me an
+afternoon in JUCE, and the flat black is the identity anyway.
+
 ## Fonts
 
 Bundle DotGothic16 and Zen Dots as binary resources, since both are SIL Open Font
@@ -67,6 +76,11 @@ JUCE draws both families about 4px smaller than the browser at the same nominal
 height, so `plugin/ui/Theme.cpp` adds a 4px optical correction to every generated
 size. Keep `tokens.json` as the design value and apply the correction in the
 mapping, because editing the tokens would pull the scale away from the mockup.
+
+Fonts are the other place where the mockup and the plugin disagree, because the
+browser and JUCE rasterise the same family at different optical sizes. The 4px
+correction is a fudge, but it's a measured fudge, and I'd rather keep it in one
+mapping file than scatter it through the pages.
 
 Check the Japanese glyph coverage for the brand line
 `p1onken // パンク派第１音響合成研究班` and for the 猫 legend glyph. DotGothic16
@@ -177,6 +191,10 @@ name when it needs one (`bipolar on`). The mouse wheel moves 2 percent of the ra
 per notch, and shift moves 0.5 percent, because the default 15 percent is too coarse
 for a level or a rate.
 
+The knob and the toggle are the two controls I use everywhere, so they carry most of
+the interaction rules. If a new control needs a third behaviour, I'd rather make it
+a button than teach the knob another trick.
+
 Context sizes:
 
 - default 52 cell, 42 dial
@@ -208,6 +226,12 @@ tilt, with the highs louder and the lows quieter, and tilt down is the normal ti
 with the lows louder and the highs quieter. The `load spectrum template...` button
 opens the thirteen wave names and writes that analysis into the row without
 changing the waveform.
+
+The spectrum card is the most complicated control in the panel, and the selection
+window is the part that keeps it usable. Without the window, a drag on a 64-bar row
+is a recipe for a smeared spectrum, and the springs would fight the freehand editor.
+The window is the shared boundary between the two, so I keep it visible even when the
+mask hides most of the bars.
 
 The envelope graph weights each stage by the square of its distance from rate 99,
 so a rate of 99 has no horizontal run and reads as vertical whatever its target
@@ -258,6 +282,10 @@ order.
 
 Use stable parameter IDs derived from the manifest. Host automation, state save and
 restore, and the web lab must all agree.
+
+The parameter list is generated from the manifest, so the editor does not have a
+second list to maintain. That is the only reason I can add a control on one page and
+trust the host automation to find it on the next build.
 
 ## Audio
 

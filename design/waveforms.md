@@ -4,6 +4,11 @@ The oscillator carries fourteen selectable entries: thirteen single-cycle tables
 and the spectrum mode. This note covers the list, the `rect tri` table, the
 spectrum mode and the harmonic analysis behind the spectral pages.
 
+I keep this note because the waveform list is the one place where a stored number, a
+panel label and a table offset have to agree, and they've disagreed before. The list
+below is the current order, and the spectrum entry is the only value that isn't a
+table.
+
 ## The list
 
 `rect tri` is inserted after `rect sine`, and `spectrum` sits at the end. The
@@ -26,9 +31,10 @@ stored value is the visible position:
 | 12 | saw |
 | 13 | spectrum |
 
-The insertion shifts pulse, square and saw from 9, 10 and 11 to 10, 11 and 12.
-There is no release yet, so `PRESET_VERSION` moves to 3, the old test banks are
-regenerated, and no migration path is added. The new values are the only values.
+The insertion shifted pulse, square and saw from 9, 10 and 11 to 10, 11 and 12.
+There was no release at the time, so `PRESET_VERSION` moved to 3 and the old test
+banks were regenerated. The later 64-level change moved it to 6, and the filter law
+to 7, so the current version is 7. The new values are the only values.
 
 Value 13 is the spectrum mode, not a table. The engine reads the additive bank for
 13 and the wave table for 0 to 12.
@@ -59,7 +65,8 @@ the new triangle is the only added table. The base array is 13 entries. The curr
 twelve tables keep their samples, apart from the base offsets, and a test compares
 the old and new arrays before the new header is accepted.
 
-It is a host tool.
+It is a host tool, and I'd like to keep it that way. The moment it needs a device
+tree or a firmware header, the waveform list stops being portable.
 
 The generator carries no firmware, M-VAVE or FM-1 device code. It is a host-side
 table tool for the plugin.
@@ -85,3 +92,7 @@ The analysis has the limits in `spectral.md`: a 64-harmonic truncation, no phase
 and no DC. A 2x wave analyses to h2 and its multiples, so h1 reads zero and
 the bar scale still starts at h1. A saw or square starting point is darker than its
 full-band table at low notes.
+
+The analysis is a starting point, not a promise. A wave that analyses to 64
+harmonics is already a compromise, and the fact that it sounds close is the reason
+the feature works at all.

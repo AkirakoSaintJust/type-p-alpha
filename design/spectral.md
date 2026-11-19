@@ -10,6 +10,11 @@ The design uses three tabs, `op spectra a`, `op spectra b` and `op spectra mod`.
 The first two edit the levels of one spectrum, and the third shows the spectra as a
 display and carries the morph envelope and the morph LFO.
 
+I wrote this note because the spectral oscillator is the feature I most wanted to get
+right, and the K5 is the reason. The first version had one spectrum per operator and
+a single card, and the second split it into two spectra and three pages, which is the
+point where the editing finally felt like the K5 rather than a form.
+
 ## Tabs and page indices
 
 The tab bar keeps seven tabs, with `part fx/mod` next to `patch settings`:
@@ -362,6 +367,11 @@ default bank. The control tick stays at 32 samples, which is 1,500 Hz at 48 kHz.
 The full graph read path measured 2.46% of one core at 20 voices, which scales to
 about 2.95% at 24.
 
+The cost model is the reason I kept the two spectra at 64 levels instead of 128. The
+read path is cheap because the tables are shared across the voices, and the
+generation cost only appears when a level changes, which is exactly when the player
+expects a small pause.
+
 When `opN_waveform` is 13, the oscillator reads the additive bank. Values 0 to 12
 read the wave table, and the additive bank is not generated.
 
@@ -372,6 +382,11 @@ a-spectrum. Waves 0 to 8 render the same samples. The `rect tri` insertion shift
 old values 9, 10 and 11 to 10, 11 and 12, so the preset version moved to 3. The
 64-level change moves it to 6, and the old test banks are regenerated. The engine
 parity test covers the wave path, and a new table test covers the spectrum mode.
+
+The migration is the least glamorous part of the feature, and it's the part I'd keep
+if I had to cut something else. An old patch that loads with a silent oscillator is
+worse than a patch that refuses to load, because the second one tells you what
+happened.
 
 ## Open items
 
