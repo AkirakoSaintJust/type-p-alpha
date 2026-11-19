@@ -14,7 +14,7 @@
 - **Disposition:** complete, with the engine, the depth-only page, the 179 legacy
   migration and the Linux goldens in, and the CI run still to follow.
   I left the page at the envelope card and the four depth knobs, because the shape
-  and filter rows belong to the research contract and not to this one.
+  and filter rows belong to the research contract.
 
 ## Player outcome
 

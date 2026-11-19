@@ -8,7 +8,7 @@
 
 This is the engine evidence for
 [`../feature-contract-feedback-envelope.md`](../../plugin/feature-contract-feedback-envelope.md),
-and the page and its snapshots are the next milestone.
+and the page and its snapshots are recorded below.
 
 ## Verdict
 

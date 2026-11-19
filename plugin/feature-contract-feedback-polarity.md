@@ -141,8 +141,8 @@ enters the audio path.
   ratios fell, to 0.184 from 0.239 and to 0.076 from 0.125. The 75 percent row rose,
   but the positive second harmonic was nearly zero, so the row isn't a stable
   control, and the 100 percent negative peak was 3 percent lower. The 0 percent
-  renders were bit-identical and `engine_parity` stayed bit-exact, which leaves the
-  sign flip as something other than a reliable odd-harmonic control.
+  renders were bit-identical and `engine_parity` stayed bit-exact, so the sign flip
+  isn't a reliable odd-harmonic control.
 
 ## Risks and fallback
 

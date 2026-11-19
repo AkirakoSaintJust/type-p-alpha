@@ -103,8 +103,8 @@
 ## Risks and fallback
 
 - **Assumptions/open research:** the current `P1LIB2` format is the only one the plugin
-  reads, so a pre-`P1LIB2` library needs conversion outside the plugin, and a real
-  macOS DAW and manual pass remains separate platform work.
+  reads, so a pre-`P1LIB2` library needs conversion outside the plugin, and the macOS
+  DAW pass and the manual belong to separate platform work.
 - **Safe experiment and stop criterion:** if a `P1LIB2` library fails to load, or a
   32-character name returns shortened, stop and fix the record path before the UI.
 - **Smaller alternative:** keep the name field at 16 bytes and truncate the display,

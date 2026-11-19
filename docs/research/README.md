@@ -137,14 +137,14 @@ the knob percentage as the feedback amount.
 | 100% | 0.452 | 0.438 | 0.579 | 0.698 |
 
 The 20 and 25 percent rows are identical to three decimals, and at 35 percent the
-second-harmonic amplitude is five percent lower, but the fundamental drops by a
-third, so the ratios move apart and the third harmonic is about 1.4 times the
+second-harmonic amplitude is five percent lower, whilst the fundamental drops by
+a third, so the ratios move apart and the third harmonic is about 1.4 times the
 second for both signs. At 50 percent the negative third harmonic is half the
 positive one, and at 75 and 100 percent the waveform is chaotic, so the ratios do
 not form a clean odd-harmonic rise. The model is a preliminary check rather than
-the product evidence, but it points one way, because a single sign bit does not
-give a consistent odd-harmonic rise. The engine measurement below confirms the
-inconsistency and adds a regime change the model does not show.
+the product evidence, though it points one way, because a single sign bit does
+not give a consistent odd-harmonic rise. The engine measurement below confirms
+the inconsistency and adds a regime change the model does not show.
 
 The safe seam, if the experiment proceeds, is the `fb_tap` output:
 
@@ -332,9 +332,9 @@ path is bit-exact, because the added term is 0 and the clamp sees the existing
 value.
 
 The envelope is worth implementing because the spectrum follows the feedback
-magnitude, which the sign flip does not change. The open question is whether the
-sweep earns 11 parameters and a new page, and a listening test decides the useful
-range and shape. The polarity experiment comes first because it is the research
+magnitude, which the sign flip does not change. What the sweep has to earn is 11
+parameters and a new page, and a listening test decides the useful range and
+shape. The polarity experiment comes first because it is the research
 question, and the envelope contract follows the measurement, though the envelope
 design does not depend on the polarity result.
 
@@ -393,6 +393,6 @@ engine side and measured in
 snapshots are in. The bipolar feedback knob ships the abs on its negative half,
 whilst the square and the one-pole remain research variants, with the evidence in
 [`feedback-shaper.md`](feedback-shaper.md).
-The negative-feedback line now has the bipolar knob and the envelope, though a
-different tap topology or a listening comparison with the Reface remains open,
-and it needs its own contract.
+The negative-feedback line now has the bipolar knob and the envelope, whilst a
+different tap topology and a listening comparison with the Reface are still
+untested, and the line needs its own contract.

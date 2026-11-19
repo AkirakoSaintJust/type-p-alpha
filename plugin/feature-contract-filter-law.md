@@ -127,8 +127,8 @@ only at the sub-audio bottom.
   parameters keep the host's numeric text, so their automation lanes are unchanged.
 - Key follow still uses the proportional push, so 100 percent does not track at exactly
   one octave per octave.
-- Resonance and `comp` raw values are not migrated, so old patches keep their cutoff but
-  change their resonance and level.
+- Resonance and `comp` raw values are not migrated, so an old patch keeps its cutoff
+  whilst its resonance and level change.
 
 ## Safe experiment and stop criterion
 

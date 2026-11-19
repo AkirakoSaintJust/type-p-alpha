@@ -79,8 +79,8 @@ its sign is a phase flip in the magnitude spectrum, so it is the least useful of
 the three as a tone control.
 
 I'd say the one-pole filter earns its place, because it lowers the noisy top of
-the feedback range without changing the default path, since the average is still
-the default. The filter is per operator, like the shape and the feedback amount.
+the feedback range and leaves the average as the default path. The filter is per
+operator, like the shape and the feedback amount.
 
 The experiment page carried the three controls per operator: the depth knob, the
 shape choice and the filter choice. The shipped page keeps the envelope and the

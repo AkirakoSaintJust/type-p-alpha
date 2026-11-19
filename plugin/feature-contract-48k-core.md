@@ -25,8 +25,8 @@
   bridge, so the old 44.1 kHz rule is withdrawn, the engine has one musical base,
   and I'm glad to see the second one go.
 - **Failure mode:** a pitch offset, an envelope or LFO that changes speed, a filter
-  cutoff that moves, a part delay that drifts, a resampler that images, or a 48 kHz
-  render that is not bit-exact with the core.
+  cutoff that moves, part delay that drifts, resampling that images, or a 48 kHz
+  render that isn't bit-exact with the core.
 
 ## Dependencies and interactions
 
@@ -182,7 +182,7 @@ float, file access or display enters the audio path.
   than tuning the render. If the bridge images above the gate, fix the kernel
   before widening the test.
 - **Smaller alternative:** keep the 44.1 kHz core and resample every other host,
-  which preserves the old exact path but keeps two musical bases to maintain.
+  which preserves the old exact path at the cost of two musical bases to maintain.
 - **Rollback:** restore the 44.1 kHz tables and the 32-tap bridge, return
   `PRESET_VERSION` to 3 and the state version to 2, and regenerate the test banks.
 

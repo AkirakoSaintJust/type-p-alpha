@@ -216,16 +216,16 @@ The level slider is a 14px track with a purple fill and a `level` caption.
 A spectrum card draws 64 columns across its left side and writes the level under
 the pointer, then follows a horizontal drag. Only a bar inside the selection window
 and passing the live or dead mask is written, so the window narrows both the freehand
-editor and the springs. The formant ignores the group and the mask but stays inside
-the window. Bars outside the window are dimmed. The bar labels show every eighth
-harmonic, and the members of the selected group are green. A spring control is a
-10px track: the drag previews one curve from the 64 levels captured at pointer down,
-written to the members the group and mask select, and the release leaves the result
-in place, so repeated gestures never compound the same curve. Tilt up is the reverse
-tilt, with the highs louder and the lows quieter, and tilt down is the normal tilt,
-with the lows louder and the highs quieter. The `load spectrum template...` button
-opens the thirteen wave names and writes that analysis into the row without
-changing the waveform.
+editor and the springs. The formant ignores the group and the mask, whilst staying
+inside the window. Bars outside the window are dimmed. The bar labels show every
+eighth harmonic, and the members of the selected group are green. A spring control
+is a 10px track: the drag previews one curve from the 64 levels captured at pointer
+down, written to the members the group and mask select, and the release leaves the
+result in place, so repeated gestures never compound the same curve. Tilt up is the
+reverse tilt, with the highs louder and the lows quieter, and tilt down is the
+normal tilt, with the lows louder and the highs quieter. The
+`load spectrum template...` button opens the thirteen wave names and writes that
+analysis into the row without changing the waveform.
 
 The spectrum card is the most complicated control in the panel, and the selection
 window is the part that keeps it usable. Without the window, a drag on a 64-bar row

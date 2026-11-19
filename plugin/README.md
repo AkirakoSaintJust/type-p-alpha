@@ -75,5 +75,5 @@ python3 plugin/tools/snapshot_check.py --update \
 ## Release
 
 The `.github/workflows/release.yml` builds the Linux and Windows artefacts on a
-tag and attaches the VST3, CLAP, standalone and source archives, and each archive
+tag and attaches the VST3, CLAP, standalone and source packages, and each package
 carries the `licences/` folder. Read `../LICENSING.md` before publishing.

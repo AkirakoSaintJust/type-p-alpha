@@ -138,6 +138,6 @@ ids are the engine ids in `engine/gen/params.json`.
 
 The AudioWorklet owns the module and the engine state, whilst the main thread
 compiles the module, posts it to the worklet, and sends parameter and note messages.
-The open work is the cosmetic pass against `design/mockup.html` and the operator and
-spectrum copy and paste pairs, and the panel is served from the same build tree, so
-a change to `web/` needs a rebuild before it reaches `build/web`.
+The remaining work is the cosmetic pass against `design/mockup.html` and the
+operator and spectrum copy and paste pairs, and the panel is served from the same
+build tree, so a change to `web/` needs a rebuild before it reaches `build/web`.

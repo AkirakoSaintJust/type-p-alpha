@@ -4,8 +4,8 @@
 
 - **Feature:** A browser panel that drives the same generated C engine through a
   narrow WebAssembly seam, with the mockup's CSS and seven-tab layout, the two-part
-  patch page, the six-card FX page, the spectral editors, a patch and part library,
-  and an output resampler for context rates other than 48 kHz.
+  patch page, the six-card FX page, spectral editors, a patch and part library, and an
+  output resampler for context rates other than 48 kHz.
 - **Brief section:** [`../design/README.md`](../design/README.md),
   [`../design/mockup.html`](../design/mockup.html),
   [`../design/juce.md`](../design/juce.md) and
@@ -202,14 +202,14 @@ and `error`.
    for the four operators, the oscillator card copy carried the morph knob to op2, and
    the spectrum copy carried the range and switched op2 to spectrum mode.
 4. **Release evidence:** the GitHub `wasm` job passed with the bare and panel smokes on
-   Chromium, and the release package and its binaries remain.
+   Chromium, and the release package and its binaries are still to come.
 
 ## Risks and fallback
 
 - **Range and aliasing:** the resampler is linear, so a 44.1 kHz context adds a small
   high-frequency roll-off and some aliasing above 20 kHz. The intended quality is the
-  48 kHz path, and a windowed-sinc resampler is the refinement if a listening test asks
-  for it.
+  48 kHz path, and a windowed-sinc resampler is the refinement I'd try first if a
+  listening test asks for it.
 - **Top range edge:** the panel shows the same 65-128 limit as the native editor, and
   harmonic 128 is silent in the 256-sample table.
 - **Assumptions/open research:** the browser library is JSON, not the plugin's `.p1lib`

@@ -51,10 +51,10 @@ simple operations per second before envelopes and modulation. H = 32 doubles it,
 and that is more than the rest of the engine at full polyphony, besides moving
 with every extra voice.
 
-The recursive and Chebyshev paths lower the constant but keep the per-voice and
-per-partial scaling. Chebyshev is useful for a harmonic family with a fixed phase
-relation, such as an odd-only or even-only series, though it is not a general
-spectrum editor.
+The recursive and Chebyshev paths lower the constant whilst keeping the per-voice
+and per-partial scaling. Chebyshev is useful for a harmonic family with a fixed
+phase relation, such as an odd-only or even-only series, though it is not a
+general spectrum editor.
 
 ## Table methods
 
@@ -85,7 +85,7 @@ is 2,560 bytes per table, so eight tables and a second crossfade buffer are abou
 The current `p1_wave` table is 73 KB, so the memory is in the same class.
 
 The part table is shared by every voice, so the spectrum is a part setting, and
-the operator's amplitude and feedback envelopes remain per voice but only scale
+the operator's amplitude and feedback envelopes remain per voice and only scale
 the result. A per-voice harmonic shape needs the morph described below.
 
 ### Per-voice tables
@@ -148,8 +148,8 @@ a custom table at 256 or 512 samples should use linear interpolation.
 
 ## Harmonic control surfaces
 
-The engine can generate any 16 or 32 level vector, and the open question is how
-the player edits it and how much of it reaches the host.
+The engine can generate any 16 or 32 level vector, so what is left to decide is
+how the player edits it and how much of it reaches the host.
 
 ### Raw harmonic levels
 

@@ -123,10 +123,10 @@ zero writes the waveform as 13, so the modulation has something to move.
   block that changes all eight spectra costs about 482 µs of generation, and about
   850 µs with the copies and the voice work, whilst a 512-sample table is about 120 µs
   per spectrum and 959 µs for eight. The control block is 667 µs, so the 256-sample
-  generation fits but the whole block needs a 128 frame callback or larger, which is
-  the constraint I'd design the next table size around. A voice
-  reads 1.5 KB of tables and a generation writes 3.5 KB of shadow plus 3.5 KB of
-  target, and the edit-to-audio path and the 10 ms crossfade are unchanged.
+  generation fits, whilst the whole block needs a 128 frame callback or larger, which
+  is the constraint I'd design the next table size around. A voice reads 1.5 KB of
+  tables and a generation writes 3.5 KB of shadow plus 3.5 KB of target, and the
+  edit-to-audio path and the 10 ms crossfade are unchanged.
 - **Overflow/overload policy:** the generated table is peak normalised to Q15, so the
   blend of two normalised tables stays in range, and the morph is clamped. A dirty
   operator regenerates on the control tick, and an audible part crossfades from the
@@ -166,15 +166,15 @@ zero writes the waveform as 13, so the modulation has something to move.
 - **Host vector(s):** build the VST3, CLAP and standalone on Windows and run `ctest`,
   and the local `tools/audit_modules.py` check confirms that every Type P type and node
   parameter resolves to the `.dev` module library. The Windows `ctest` run is 12 of
-  12, the Linux CI build and ctest also pass on commit `98a1cc7`, and pluginval and the
-  Linux DAW matrix remain for the platform pass.
+  12, the Linux CI build and ctest also pass on commit `98a1cc7`, and the platform
+  pass still needs pluginval and the Linux DAW matrix.
 - **Browser vector:** the seven-tab panel in `web/panel.html` is the design reference,
   and the mockup is the first-pass prototype. The editor snapshot covers the two
   spectrum pages and the mod page.
-- **Target package check:** the Windows VST3, CLAP and standalone build, whilst the
-  Linux build and the pluginval pass remain.
+- **Target package check:** the Windows VST3, CLAP and standalone build is in, and the
+  Linux build and the pluginval pass are still to run.
 - **Host timing and platform check:** the 20-voice benchmark and a real Linux and
-  Windows DAW pass remain.
+  Windows DAW pass are still to run.
 - **Tolerance/metric:** the existing waves 0 to 8 and the shifted pulse, square and saw
   must match the current header sample for sample, and the checks are exact. A
   template load must write the 64 levels of the chosen row and leave the waveform
@@ -225,8 +225,8 @@ zero writes the waveform as 13, so the modulation has something to move.
 
 ## Risks and fallback
 
-- **Range and aliasing:** the bank shifts the 64 partials by the range offset, but the
-  read still chooses its mip from the note step, so a high range at a high note can
+- **Range and aliasing:** the bank shifts the 64 partials by the range offset, whilst
+  the read still chooses its mip from the note step, so a high range at a high note can
   fold because the top partial passes Nyquist. The intended use is a high range on low
   notes, and a range-aware harmonic limit in the read is the next refinement.
 - **Top range edge:** the bank table is 256 samples, so harmonic 128 sits exactly at
