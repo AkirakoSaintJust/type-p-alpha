@@ -353,8 +353,8 @@ runs by up to 25 percent:
 
 A part regenerates a spectrum only when its levels change, so the steady cost is
 the read path, which reads two tables and blends them once per sample, the same
-work the 16-harmonic bank did, and the four operators share their banks across all
-24 voices because the levels are part parameters. The worst-case block takes about a third of a 128 frame callback
+work as the earlier 16-harmonic bank, and the four operators share their banks
+across all 24 voices because the levels are part parameters. The worst-case block takes about a third of a 128 frame callback
 at 48 kHz, which leaves two thirds of the budget. A 32 frame callback would not hold
 that block. The 512-sample table doubles the generation and stays out of the
 default bank. The control tick stays at 32 samples, which is 1,500 Hz at 48 kHz.

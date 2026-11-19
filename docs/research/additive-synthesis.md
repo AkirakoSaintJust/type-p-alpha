@@ -2,34 +2,33 @@
 
 ## The question
 
-The README asks whether each operator can carry a 16 or 32 harmonic waveform and
-let the player shape those harmonics without a CPU cost that eats the polyphony.
-This note maps the DSP methods, the control surfaces and the costs, and it proposes
-the smallest engine change that keeps the 20-voice budget.
+The README asks whether each operator can carry a 16, 32 or 64 harmonic waveform
+and let the player shape those harmonics without a CPU cost that eats the
+polyphony. This note maps the DSP methods, the control surfaces and the costs, and
+it proposes the smallest engine change that keeps the 24-voice budget.
 
 The patch is the only reference: `synth/patch.json`, the generated `engine/gen`,
 and the current table in `engine/gen/wavetable.h`.
 
 ## The current engine
 
-The core runs at 48 kHz with 20 voices, two parts and four operators per voice.
-That is 80 operator voices at full polyphony. A control block is 32 samples, so the
-control rate is 1,500 Hz.
+The core runs at 48 kHz with 24 voices, two parts and four operators per voice.
+That is 96 operator voices at full polyphony. A control block is 32 samples, so the
+control rate is 1,500 Hz. The measurements below were taken on the 20-voice,
+44.1 kHz engine and are kept as the survey evidence. The 48 kHz conversion is in
+the [48 kHz contract](../../plugin/feature-contract-48k-core.md), and the
+64-harmonic bank is in the [spectral contract](../../plugin/feature-contract-spectral.md).
 
-The measured tables below were taken on the 44.1 kHz core, and the 1,378 Hz and
-344 Hz figures are its survey rates. The conversion is recorded in the
-[48 kHz contract](../../plugin/feature-contract-48k-core.md).
-
-Each operator has a phasor and an `osc` node that reads the `p1_wave` table
-table, which holds 1024 samples per wave as Q15 values and is read at the nearest
+Each operator has a phasor and an `osc` node that reads the `p1_wave` table,
+which holds 1024 samples per wave as Q15 values and is read at the nearest
 sample from the top ten bits of the phase, whilst waves 9 to 11 carry nine mip
 levels whose harmonic counts fall from 256 to 1 and whose level is chosen by the
 phasor's `mip` output, so the top octaves read a table with fewer harmonics and the
 oscillator stays band-limited. The table is 36,864 `int16` values, 73,728 bytes.
 
-At full polyphony the oscillator performs 80 table reads per sample, 3.528 million
-reads per second. The table is shared by every voice that uses the same waveform,
-which is the cost model that makes a larger spectrum affordable.
+At the 20-voice measurement the oscillator performs 80 table reads per sample,
+3.528 million reads per second. The table is shared by every voice that uses the
+same waveform, which is the cost model that makes a larger spectrum affordable.
 
 ## Direct methods
 

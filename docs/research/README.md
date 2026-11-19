@@ -1,5 +1,14 @@
 # Feedback research: envelopes and negative feedback
 
+Status: these notes record the feedback research from 2026-11. Both questions
+have an answer. The plain polarity toggle did not ship, and the bipolar feedback,
+the feedback envelope and the feedback LFO did. The measurements below were taken
+on the 44.1 kHz, 20-voice engine and are kept as the evidence for that time. The
+current engine runs at 48 kHz with 24 voices. The current contracts are
+[`../../plugin/feature-contract-feedback-bipolar.md`](../../plugin/feature-contract-feedback-bipolar.md)
+and
+[`../../plugin/feature-contract-operator-lfos.md`](../../plugin/feature-contract-operator-lfos.md).
+
 The experiments are recorded one per file:
 
 - [Feedback polarity](feedback-polarity.md)
@@ -13,7 +22,7 @@ Further research:
 - [Additive synthesis](additive-synthesis.md): a survey of 16, 32 and 64 harmonic
   operator spectra, table generation and control-rate costs.
 
-This is the design note for lines 1 and 2 of the research list:
+The note answers two questions:
 
 1. Feedback envelopes. Are they worth it, and where do they belong without
    overcomplicating patch design?
@@ -47,21 +56,24 @@ to the external modulation. The two-sample average puts a zero at Nyquist, which
 damps the one-sample loop at the top of the band. The level gate makes feedback at
 0 cost nothing.
 
-`level_eff` is
+The base level is
 
 ```c
 p1_key_apply(param.level, p1_key_add(in.k, in.vk), 0, 32767)
 ```
 
-so the feedback amount is `0..32767`, and the key and velocity followers push it
-toward 0 or 32767. The `tl` level is already applied before the tap, so the
-feedback follows the operator's own output level. The feedback amount is a
-fraction of that output, not a separate gain after the operator.
+and the feedback envelope and the signed feedback LFO add their own control-rate
+values to it. The sum is clamped to `0..32767`, and the key and velocity
+followers push the base toward 0 or the top. The `tl` level is already applied
+before the tap, so the feedback follows the operator's own output level. The
+feedback amount is a fraction of that output, not a separate gain after the
+operator.
 
-The current feedback is positive. The README says it follows Yamaha's traditional
-one, with no negative feedback. There is no feedback envelope. The amplitude LFO
-can reach the total level, and the key and velocity followers can reach the
-feedback amount, but the feedback amount itself is static for the note.
+The sign of the sum picks the half. A positive sum follows Yamaha's traditional
+feedback. A negative sum sets the rectified flag, and the `fb_tap` path turns the
+absolute value into the Reface-style pulse, so a sine gains odd harmonics without
+flipping the waveform. The feedback envelope and LFO move the magnitude, so the
+feedback amount is no longer static for the note.
 
 ## Negative feedback
 

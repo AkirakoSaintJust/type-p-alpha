@@ -126,10 +126,12 @@ Every page fills the same height:
   spans. The envelope card carries the graph, the depth knob, R1 to R4 and L1 to
   L3.
 
-The page order changes with each layout addition, so the processor remaps the
-stored `uiPage` when an old state restores. A four-tab state maps 1 to 2, 2 to 3 and
-3 to 1. A six-tab state maps the mod page from 5 to 6. The `uiPageLayout` property
-is now 3.
+The current layout has seven tabs: patch settings at 0, part fx/mod at 1, operator
+envs at 2, operator lfos at 3, op spectra a at 4, op spectra b at 5 and op spectra
+mod at 6. The page order changes with each layout addition, so the processor
+remaps the stored `uiPage` when an old state restores. A four-tab state maps 1 to
+2, 2 to 3 and 3 to 1. A six-tab state maps the mod page from 5 to 6. The
+`uiPageLayout` property is now 3.
 
 ## Header
 

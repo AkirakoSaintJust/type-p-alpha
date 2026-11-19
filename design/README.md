@@ -8,9 +8,10 @@ in `juce.md`, the spectral control map is in `spectral.md`, the filter law is in
 panel is `web/panel.html`, so where the mockup and the panel differ, the panel and
 `spectral.md` carry the current layout.
 
-Status: v1.6 draft, 2026-11-16. Adds the spectrum template menus, the multi-patch
-header block, the named part buttons, the centred tilt and the vertical fast
-envelope stages.
+Status: v1.7 draft, 2026-11-19. v1.6 added the spectrum template menus, the
+multi-patch header block, the named part buttons, the centred tilt and the
+vertical fast envelope stages. v1.7 adds the SH-101 filter law and the single
+spectrum card with its header selectors.
 
 ## Principles
 
@@ -28,6 +29,19 @@ envelope stages.
    operator counts, or a `what this is` section. The page shows the product, and the
    words go on the next action, the controls, or a real limit.
 7. One algorithm per node, one meaning per colour, one home for every token.
+
+## References
+
+The visual language borrows from these:
+
+- A Novarese's Eurostile and Stop for the squared, technical letterforms.
+- Openmind's work for Amon Tobin's Foley Room for the cut-up, layered surfaces.
+- R Mitchell's Corporate for the restrained grid.
+- TDR's Wipeout and Autechre covers for the high-contrast, print-like marks.
+- N2-Antireal's Terminal for the terminal density.
+- Maniackers, Nakamura Y and Hashimoto K's Gona for the compact, coded labels.
+- VDL's Line and Giga for the thin rules and modular blocks.
+- R Larabie's Rexlia for the wide, industrial display type.
 
 ## Colour
 
@@ -404,3 +418,5 @@ panel before changing the editor.
   lowercase `a`, so the brand font licence does not block packaging.
 - The `part settings` page is intentionally sparse at the top and fills with the
   two part visualisers, so do not add filler widgets to fill space.
+- The posters and the wordmark are still to be designed. The interface language is
+  ahead of the surrounding material.

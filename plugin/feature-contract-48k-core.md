@@ -35,9 +35,11 @@
 - **Persistence/version impact:** `PRESET_VERSION` moves from 3 to 4 and the plugin
   state version from 2 to 3. The later harmonic range feature moves the preset
   version to 5, and the 64-harmonic feature to 6 and the state version to 4. The
-  project has not released, so no migration is written and older test banks are
-  regenerated. The manifest moves from 830 to 1,614 parameters, the part block from
-  408 to 800 and the spectral block from 47 to 143 per operator.
+  project had not released at the time, so this pass wrote no migration and
+  regenerated the older test banks. The later filter-law change added the cutoff
+  migration, with preset version 7, state version 5 and web library version 3. The
+  manifest moves from 830 to 1,614 parameters, the part block from 408 to 800 and
+  the spectral block from 47 to 143 per operator.
 - **MIDI/clock impact:** none. The 4 Hz LFO defaults keep their displayed value.
 
 ## Parameter and event semantics

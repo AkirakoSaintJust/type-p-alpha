@@ -2,8 +2,10 @@
 
 This is the reference map for the active Type P.alpha product tree. It describes
 the hand-written types and functions, marks the generated code, and records the
-duplication and legacy cleanup. The FM-1 tree stays in its archive tag and is out
-of scope.
+duplication and legacy cleanup. The symbol tables track the current tree. The
+cleanup findings at the end are a snapshot from the 2026-10 pass, and the feature
+contracts are the current evidence. The FM-1 tree stays in its archive tag and is
+out of scope.
 
 ## Scope and method
 
@@ -45,14 +47,16 @@ magic. A library made before `P1LIB2` no longer loads. The current layout stores
 ## Engine HAL
 
 `engine/hal/p1_math.h` is the fixed-point layer. `P1_MATH_INLINE` is the
-always-inline attribute, and `P1_Q15_ONE` is 32768.
+always-inline attribute. Q15 unity is 32768 by convention, not a named macro.
 
 | Symbol | Purpose |
 | --- | --- |
 | `p1_q15_mul` | Multiply two Q15 values and return Q15. |
-| `p1_q15_mul32` | Multiply a Q15 value by an int32 and shift by 15. |
+| `p1_q15_mul32` | Multiply two Q15 values with a 32-bit product; the caller owns the range proof. |
 | `p1_q16_mul` | Multiply two Q16 values and return Q16. |
 | `p1_q31_mul` | Multiply two Q31 values and return Q31. |
+| `p1_soft_clip` | The filter input's fifth-order soft knee. |
+| `p1_filter_coeff_q16` | The VCF's per-stage coefficient from the log cutoff position. |
 | `p1_shr_round` | Arithmetic right shift with round-to-nearest. |
 | `p1_sat_add32` | Saturating int32 addition. |
 | `p1_sat_sub32` | Saturating int32 subtraction. |
@@ -79,12 +83,12 @@ always-inline attribute, and `P1_Q15_ONE` is 32768.
 
 `engine/runtime/presets.h` and `presets.c` own the byte layout. The record is a
 version byte, a 33-byte name field, the body and a CRC-32. Empty slots are
-`0xFF`. The current version is 2.
+`0xFF`. The current version is 7.
 
 | Symbol | Purpose |
 | --- | --- |
 | `PRESET_NAME_LEN` | 33 bytes, 32 characters and a terminator. |
-| `PRESET_VERSION` | 2 for the current record. |
+| `PRESET_VERSION` | 7 for the current record. |
 | `PRESET_EMPTY` | `0xFF`, the empty slot marker. |
 | `PRESET_PART_SLOTS` | 128 single-part slots. |
 | `PRESET_MULTI_SLOTS` | 64 multi-patch slots. |
@@ -226,7 +230,7 @@ so an AudioWorklet can instantiate it without an Emscripten runtime.
 | `wasm/parity.mjs` | Compare the WASM note-on and release with the native 48 kHz capture. |
 | `web/p1-worklet.js` | Own the module, render the output and post the output and tap scopes. |
 | `web/main.js`, `web/bare.html` | The bare audio and parameter page. |
-| `web/panel.js`, `web/panel.html` | The manifest-driven six-page panel with the algorithm graph, output scope and spectro, envelope graphs, spectrum bars and select groups, the spectrum template menus, the mod A/B display, the patch and part library and tap scopes. |
+| `web/panel.js`, `web/panel.html` | The manifest-driven seven-page panel with the algorithm graph, output scope and spectro, envelope graphs, spectrum bars and select groups, the spectrum template menus, the mod A/B display, the patch and part library and tap scopes. |
 | `web/smoke.mjs`, `web/panel-smoke.mjs` | Browser smoke tests. |
 
 ## Preset store
@@ -578,7 +582,7 @@ The record format is now a single `P1LIB2` layout with a 33-byte name field and 
 
 | Item | Reason |
 | --- | --- |
-| `engine/runtime/presets.c` bank and settings helpers | They belong to the shared engine runtime and the device build. The plugin host links them through the same source and does not call them. Splitting the runtime would fork the engine. |
+| `engine/runtime/presets.c` bank and settings helpers | They belong to the shared engine runtime. The plugin host links them through the same source and does not call them. Splitting the runtime would fork the engine. |
 | `engine/runtime/synth_midi.c` | It is the live MIDI parser behind `MidiBridge`, not an FM-1 path. |
 | `README` FM-1 history and `docs/fm1-scrub.md` | Project background and archive evidence. |
 | Old feature contracts | They are dated records of shipped milestones. The audit note explains that their old-layout claims describe the past. |

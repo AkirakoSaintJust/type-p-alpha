@@ -4,6 +4,11 @@ This folder is the desktop plugin. The voice engine is generated into
 `../engine/gen`, the editor is in `juce/` and `ui/`, and the shared parameter
 table is generated from `engine/gen/params.json`.
 
+The feature contracts in this folder record each milestone at its date. Their
+voice counts are the maximum for the engine at that time. The current engine is
+24 voices at 48 kHz, and the current contracts include the filter law, the
+spectral oscillator, the feedback set and the 48 kHz core.
+
 ## Build
 
 ```sh
@@ -23,6 +28,7 @@ ctest --test-dir build --output-on-failure
 ```
 
 - `engine_parity` compiles the engine and checks the MIDI path.
+- `filter_law` checks the cutoff table, the resonance onset and the input soft knee.
 - `feedback_envelope` checks the shared envelope and the per-operator depth.
 - `feedback_bipolar` checks the bipolar positive and negative halves and the envelope depth.
 - `rate_bridge` checks the output-rate adaptation and the exact core-rate bypass.
@@ -39,8 +45,10 @@ ctest --test-dir build --output-on-failure
 `plugin/tools/gen_params.py` turns `engine/gen/params.json` into the C++ table, and
 `gen_tokens.py` turns `design/tokens.json` into `UiTokens.h`.
 
-Every manifest parameter must reach the APVTS and the editor. The generator is the
-only reference, so add a parameter to the manifest rather than typing it twice.
+Every manifest parameter must reach the APVTS. The generator is the only
+reference, so add a parameter to the manifest rather than typing it twice. The
+editor shows the player-facing controls. The filter's internal makeup is the one
+manifest parameter that stays in the host automation only.
 
 ## Snapshots
 
