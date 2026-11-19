@@ -151,7 +151,7 @@ runtime.
 | `engine/gen/dsp.h` | same | state struct and public engine functions |
 | `engine/gen/wavetable.h` | waveform data | mip-mapped wavetables |
 | `engine/gen/naive_wave.h` | waveform data | naive waveform references |
-| `engine/gen/math_tables.h` | generator | sine, envelope and rate tables |
+| `engine/gen/math_tables.h` | generator | sine, envelope, rate and filter tables |
 | `engine/gen/cc_map.h` | generator | CC to parameter map |
 | `engine/gen/tables.c` and `tables.h` | generator | table objects |
 | `engine/gen/params.json` | generator | manifest of every parameter |
