@@ -153,4 +153,13 @@ int RateBridge::latencySamples() const
         std::lround((kTaps - 1) * 0.5 * hostRate_ / 48000.0));
 }
 
+bool RateBridge::hasCore(int hostFrames) const
+{
+    if (hostFrames <= 0 || ringSize_ <= 0)
+        return false;
+    const int64_t last = static_cast<int64_t>(std::floor(
+        static_cast<double>(outputIndex_ + hostFrames - 1) * ratio_));
+    return coreGenerated_ <= last;
+}
+
 } // namespace p1

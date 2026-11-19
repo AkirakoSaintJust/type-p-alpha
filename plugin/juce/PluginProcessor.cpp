@@ -15,7 +15,10 @@ namespace {
 
 constexpr double kCoreRate = 48000.0;
 constexpr int kControlBlock = 32;
-constexpr int kStateVersion = 5;
+constexpr int kStateVersion = 6;
+/* The state version whose cutoff values already use the current law. A later
+ * version bump must not run the cutoff conversion again. */
+constexpr int kCutoffLawStateVersion = 5;
 constexpr int kUiPageLayout = 3;
 constexpr float kIntToFloat = 1.0f / 32768.0f;
 
@@ -95,12 +98,6 @@ void TypePAlphaAudioProcessor::readTapScope(int channel, float* destination, int
     tapScopes_[static_cast<size_t>(channel)].read(destination, count);
 }
 
-double TypePAlphaAudioProcessor::specMorph(int op, int part) const
-{
-    const int live = engine_.specMorph(op, part);
-    return live < 0 ? -1.0 : static_cast<double>(live) / 99.0;
-}
-
 TypePAlphaAudioProcessor::TypePAlphaAudioProcessor()
     : AudioProcessor(BusesProperties().withOutput(
           "Output", juce::AudioChannelSet::stereo(), true)),
@@ -147,6 +144,15 @@ void TypePAlphaAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBl
     midi_.reset();
     rateBridge_.reset();
     directBuffer_.assign(static_cast<std::size_t>(kControlBlock) * 2u, 0);
+    scheduled_.clear();
+    scheduled_.reserve(static_cast<std::size_t>(std::max(1, samplesPerBlock)) * 2u + 16u);
+    deferredOffs_.clear();
+    deferredOffs_.reserve(64);
+    nextScheduled_ = 0;
+    coreFrames_ = 0;
+    chunkNotes_.fill(0);
+    for (auto& value : liveMorph_)
+        value.store(-1, std::memory_order_relaxed);
     if (std::abs(sampleRate - kCoreRate) > 0.5) {
         rateBridge_.prepare(sampleRate, samplesPerBlock);
         setLatencySamples(rateBridge_.latencySamples());
@@ -220,6 +226,57 @@ void TypePAlphaAudioProcessor::pushTapScopes(p1::Engine& engine, int frames)
     }
 }
 
+void TypePAlphaAudioProcessor::publishMorph(p1::Engine& engine)
+{
+    for (int part = 0; part < kP1PartCount; ++part)
+        for (int op = 0; op < 4; ++op)
+            liveMorph_[static_cast<std::size_t>(part * 4 + op)].store(
+                engine.specMorph(op, part), std::memory_order_relaxed);
+}
+
+void TypePAlphaAudioProcessor::feedScheduled(int64_t limit)
+{
+    while (nextScheduled_ < scheduled_.size() &&
+           scheduled_[nextScheduled_].coreFrame < limit) {
+        const auto& event = scheduled_[nextScheduled_];
+        const auto& message = event.message;
+        const bool noteOff =
+            message.isNoteOff() ||
+            (message.isNoteOn() && message.getVelocity() == 0);
+        if (noteOff && chunkNotes_[static_cast<std::size_t>(
+                           message.getNoteNumber())]) {
+            /* The note started in this same tick, so the release waits until the
+             * tick has rendered. It sounds for one control block rather than
+             * cancelling before any audio. */
+            deferredOffs_.push_back(message);
+        } else {
+            feedMessage(midi_, message);
+            if (message.isNoteOn() && message.getVelocity() > 0)
+                chunkNotes_[static_cast<std::size_t>(message.getNoteNumber())] = 1;
+        }
+        ++nextScheduled_;
+    }
+}
+
+void TypePAlphaAudioProcessor::flushDeferred()
+{
+    for (const auto& message : deferredOffs_)
+        feedMessage(midi_, message);
+    deferredOffs_.clear();
+}
+
+void TypePAlphaAudioProcessor::coreChunk(void* context, p1::Engine& engine,
+                                         int frames)
+{
+    auto* self = static_cast<TypePAlphaAudioProcessor*>(context);
+    self->flushDeferred();
+    self->coreFrames_ += static_cast<uint64_t>(frames);
+    self->chunkNotes_.fill(0);
+    self->feedScheduled(static_cast<int64_t>(self->coreFrames_) + kControlBlock);
+    self->pushTapScopes(engine, frames);
+    self->publishMorph(engine);
+}
+
 void TypePAlphaAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
                                           juce::MidiBuffer& midi)
 {
@@ -247,10 +304,26 @@ void TypePAlphaAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
             const int length = std::min(kControlBlock, frames - pos);
             const int end = pos + length;
 
+            chunkNotes_.fill(0);
+            deferredOffs_.clear();
             while (event != midi.end() && (*event).samplePosition < end) {
                 const auto message = (*event).getMessage();
-                if (isEngineMessage(message))
+                if (!isEngineMessage(message)) {
+                    ++event;
+                    continue;
+                }
+                const bool noteOff =
+                    message.isNoteOff() ||
+                    (message.isNoteOn() && message.getVelocity() == 0);
+                if (noteOff && chunkNotes_[static_cast<std::size_t>(
+                                   message.getNoteNumber())]) {
+                    deferredOffs_.push_back(message);
+                } else {
                     feedMessage(midi_, message);
+                    if (message.isNoteOn() && message.getVelocity() > 0)
+                        chunkNotes_[static_cast<std::size_t>(
+                            message.getNoteNumber())] = 1;
+                }
                 ++event;
             }
 
@@ -263,8 +336,10 @@ void TypePAlphaAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
                     right[pos + i] =
                         static_cast<float>(directBuffer_[index + 1u]) * kIntToFloat;
             }
+            flushDeferred();
             outputScope_.push(left + pos, length);
             pushTapScopes(engine_, length);
+            publishMorph(engine_);
             pos = end;
         }
 
@@ -275,25 +350,48 @@ void TypePAlphaAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
             ++event;
         }
     } else {
+        /* Map each host event into the core timeline, then feed it when the
+         * bridge is about to render the tick it belongs to. At 96 and 192 kHz a
+         * block generates fewer core frames than host frames, so an event can
+         * fall in a tick that the next block renders. Those wait in
+         * `scheduled_`; this block applies any that are still there first. */
+        chunkNotes_.fill(0);
+        if (nextScheduled_ < scheduled_.size())
+            feedScheduled(std::numeric_limits<int64_t>::max());
+        scheduled_.clear();
+        nextScheduled_ = 0;
+        chunkNotes_.fill(0);
+        const double ratio = rateBridge_.ratio();
         for (const auto metadata : midi) {
             const auto message = metadata.getMessage();
-            if (isEngineMessage(message))
-                feedMessage(midi_, message);
+            if (!isEngineMessage(message))
+                continue;
+            const int64_t coreFrame = static_cast<int64_t>(std::floor(
+                static_cast<double>(coreFrames_) +
+                static_cast<double>(metadata.samplePosition) * ratio));
+            scheduled_.push_back({message, coreFrame});
         }
         syncParams();
         float* left = buffer.getWritePointer(0);
         float* right = channels > 1 ? buffer.getWritePointer(1) : left;
-        rateBridge_.process(
-            engine_, left, right, frames,
-            [](void* context, p1::Engine& engine, int count) {
-                static_cast<TypePAlphaAudioProcessor*>(context)->pushTapScopes(
-                    engine, count);
-            },
-            this);
+        if (rateBridge_.hasCore(frames))
+            feedScheduled(static_cast<int64_t>(coreFrames_) + kControlBlock);
+        rateBridge_.process(engine_, left, right, frames, &coreChunk, this);
         outputScope_.push(left, frames);
+        publishMorph(engine_);
     }
 
     midi.clear();
+}
+
+double TypePAlphaAudioProcessor::specMorph(int op, int part) const
+{
+    if (op < 0 || op > 3 || part < 0 || part >= kP1PartCount)
+        return -1.0;
+    const int live =
+        liveMorph_[static_cast<std::size_t>(part * 4 + op)].load(
+            std::memory_order_relaxed);
+    return live < 0 ? -1.0 : static_cast<double>(live) / 99.0;
 }
 
 juce::File TypePAlphaAudioProcessor::libraryFile() const
@@ -430,7 +528,7 @@ void TypePAlphaAudioProcessor::setStateInformation(const void* data, int sizeInB
     if (!state.isValid() || !state.hasType(apvts_.state.getType()))
         return;
     const int loadedVersion = static_cast<int>(state.getProperty("stateVersion", 0));
-    if (loadedVersion < kStateVersion) {
+    if (loadedVersion < kCutoffLawStateVersion) {
         for (int i = 0; i < state.getNumChildren(); ++i) {
             auto child = state.getChild(i);
             if (!child.hasType("PARAM"))

@@ -109,6 +109,15 @@ private:
     void syncParams();
     void renderCore(int32_t* out, int frames);
     void pushTapScopes(p1::Engine& engine, int frames);
+    void publishMorph(p1::Engine& engine);
+    void feedScheduled(int64_t limit);
+    void flushDeferred();
+    static void coreChunk(void* context, p1::Engine& engine, int frames);
+
+    struct ScheduledEvent {
+        juce::MidiMessage message;
+        int64_t coreFrame = 0;
+    };
 
     p1::Engine engine_;
     p1::MidiBridge midi_;
@@ -119,6 +128,13 @@ private:
     std::vector<int32_t> directBuffer_;
     std::atomic<bool> paramsDirty_{false};
     double hostRate_ = 48000.0;
+
+    std::vector<ScheduledEvent> scheduled_;
+    std::size_t nextScheduled_ = 0;
+    std::array<uint8_t, 128> chunkNotes_{};
+    std::vector<juce::MidiMessage> deferredOffs_;
+    uint64_t coreFrames_ = 0;
+    std::array<std::atomic<int>, 8> liveMorph_{};
 
     ScopeRing outputScope_;
     std::array<ScopeRing, 10> tapScopes_;

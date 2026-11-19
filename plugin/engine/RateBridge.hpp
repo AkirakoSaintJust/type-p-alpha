@@ -32,6 +32,10 @@ public:
     int latencySamples() const;
     double ratio() const { return ratio_; }
 
+    /* True when a `process` call of `hostFrames` will render at least one core
+     * chunk, so the caller can feed the first chunk's events before it runs. */
+    bool hasCore(int hostFrames) const;
+
 private:
     static constexpr int kTaps = 128;
     static constexpr int kPhases = 1024;

@@ -7,6 +7,7 @@
 #include <cstdio>
 #include <cstring>
 #include <set>
+#include <string>
 #include <vector>
 
 #include <juce_audio_processors/juce_audio_processors.h>
@@ -336,6 +337,80 @@ int main()
         sounding = sounding || sample > 0.0f || sample < 0.0f;
     }
     check(finite && sounding, "the 44.1 kHz placeholder path renders audio");
+
+    {
+        /* A short note spans the same core ticks at every rate. The position is
+         * scaled by the rate so the note lasts about 65 core samples, which is
+         * three control ticks: the old non-48 kHz path fed every event before the
+         * block and cancelled the note. */
+        const double rates[] = {44100.0, 48000.0, 96000.0, 192000.0};
+        for (const double rate : rates) {
+            const int frames = 512;
+            const int off = static_cast<int>(
+                std::lround(65.0 * rate / 48000.0));
+            TypePAlphaAudioProcessor shortNote;
+            shortNote.setRateAndBufferSizeDetails(rate, frames);
+            shortNote.prepareToPlay(rate, frames);
+            if (auto* attack = shortNote.parameters().getParameter("attack.p0"))
+                attack->setValueNotifyingHost(attack->convertTo0to1(0.0f));
+            juce::AudioBuffer<float> shortBlock(2, frames);
+            juce::MidiBuffer shortMidi;
+            shortMidi.addEvent(
+                juce::MidiMessage::noteOn(1, 60, static_cast<juce::uint8>(100)),
+                0);
+            shortMidi.addEvent(juce::MidiMessage::noteOff(1, 60), off);
+            shortNote.processBlock(shortBlock, shortMidi);
+            bool ok = true;
+            bool heard = false;
+            for (int i = 0; i < frames; ++i) {
+                const float sample = shortBlock.getSample(0, i);
+                ok = ok && std::isfinite(sample);
+                heard = heard || std::abs(sample) > 1.0e-6f;
+            }
+            const auto label = "a short note renders at " +
+                               std::to_string(static_cast<int>(rate)) + " Hz";
+            check(ok && heard, label.c_str());
+        }
+    }
+
+    {
+        /* A note-on and note-off in one 32-sample tick still feed both events,
+         * and the block stays finite. The envelope's first tick is silent, so the
+         * pair is inaudible by construction rather than cancelled before the
+         * tick. */
+        TypePAlphaAudioProcessor sameTick;
+        sameTick.setRateAndBufferSizeDetails(48000.0, kFrames);
+        sameTick.prepareToPlay(48000.0, kFrames);
+        juce::AudioBuffer<float> pairBlock(2, kFrames);
+        juce::MidiBuffer pairMidi;
+        pairMidi.addEvent(
+            juce::MidiMessage::noteOn(1, 60, static_cast<juce::uint8>(100)), 0);
+        pairMidi.addEvent(juce::MidiMessage::noteOff(1, 60), 1);
+        sameTick.processBlock(pairBlock, pairMidi);
+        bool pairFinite = true;
+        for (int i = 0; i < kFrames; ++i)
+            pairFinite = pairFinite && std::isfinite(pairBlock.getSample(0, i));
+        check(pairFinite, "a same-tick pair leaves a finite block");
+    }
+
+    {
+        const double first = processor.specMorph(0, 0);
+        check(first >= -1.0 && first <= 1.0,
+              "the live morph reads a published value");
+        TypePAlphaAudioProcessor morph;
+        morph.setRateAndBufferSizeDetails(48000.0, kFrames);
+        morph.prepareToPlay(48000.0, kFrames);
+        check(morph.specMorph(0, 0) == -1.0,
+              "the live morph starts unpublished");
+        juce::AudioBuffer<float> morphBlock(2, kFrames);
+        juce::MidiBuffer morphMidi;
+        morphMidi.addEvent(
+            juce::MidiMessage::noteOn(1, 60, static_cast<juce::uint8>(100)), 0);
+        morph.processBlock(morphBlock, morphMidi);
+        const double live = morph.specMorph(0, 0);
+        check(live >= -1.0 && live <= 1.0,
+              "the live morph stays in range after a render");
+    }
 
     {
         /* The bridge renders several core chunks per host block. The tap scope
