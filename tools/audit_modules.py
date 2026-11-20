@@ -121,7 +121,7 @@ def main() -> int:
 
     if missing or param_problems or map_problems:
         return 1
-    if part_block != 416 or waveform_max != 13 or spec_per_op != 47:
+    if part_block != 831 or waveform_max != 13 or spec_per_op != 145:
         print("audit: generated manifest shape changed")
         return 1
     if spec_defaults != expected_defaults:
