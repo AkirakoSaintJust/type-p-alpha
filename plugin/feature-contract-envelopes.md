@@ -130,20 +130,23 @@ Old libraries are remapped, not rejected.
   its levels, and stops moving the morph when the envelope is off.
 - `engine_parity` keeps the default note-on and release renders bit-exact with the
   filter envelope off.
-- The Linux snapshot set shows the operator, pitch, feedback, pan and spectral cards
-  with the new controls. `editor-envelope-loops.png` and `editor-fxmod-loops.png`
-  show the double bars at the sustain and loop boundaries and the left arrow under
-  the loop.
+- The Linux snapshot set shows the operator, pitch, feedback, filter and spectral
+  cards with the new controls. `editor-envelope-loops.png` and
+  `editor-fxmod-loops.png` show the double bars at the sustain and loop boundaries
+  and the left arrow under the loop.
+- The web panel draws the operator, pitch, feedback, filter, spectral and pan graphs
+  with the new shapes, the mode read from the manifest, and the pan card on the fx
+  page.
 - The operator graph draws the warm-up convex, the surge concave and the decays and
   release straight, with the sustain or loop boundaries marked.
 
 ## Limits and open work
 
-- The web panel carries the new parameter names but still draws the old graph shape
-  for the filter and spectral cards.
 - The hardware panel layout in `synth/panel.json` still lists the old envelope names
-  and lacks the new mode controls. The plugin UI and the manifest are current; the
-  hardware panel is a separate surface and needs its own pass.
+  and lacks the new mode controls. Its `envelope` and `genv` widgets are fixed at
+  seven parameters and the UI kit draws the old stage shape, so the hardware panel
+  needs a firmware UI kit pass. The plugin and web surfaces and the manifest are
+  current.
 - The macOS AU, the macOS DAW matrix and the physical device pass are separate
   layers and are not claimed here.
 

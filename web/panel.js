@@ -949,7 +949,7 @@
       if (options.kind === "amp") return ampSvg(rates, levels, mode);
       return bipolarSvg(rates, levels, mode, {
         signed: options.signed !== false,
-        top: options.top,
+        top: options.top || options.scaleMax,
         start,
       });
     };
