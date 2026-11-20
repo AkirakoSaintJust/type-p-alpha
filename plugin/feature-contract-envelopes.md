@@ -10,10 +10,10 @@
 - **Owner / date:** P1Onken, 2026-11-20.
 - **Disposition:** implemented. The operator amplitude envelope and the pitch,
   feedback, filter, spectral and pan modulation envelopes are on the new stages,
-  with their UI cards, graphs and the version 14 migration. The CI plugin
-  validators on Linux, Windows and macOS, the WASM parity gate and the browser
-  smoke tests are the evidence. The macOS DAW matrix, the macOS AU and the
-  physical device pass are separate layers and are not claimed.
+  with their UI cards, graphs and the version 14 migration. The product targets are
+  VST3, CLAP and standalone through JUCE, plus the web app for internal testing. The
+  CI plugin validators on Linux, Windows and macOS, the WASM parity gate and the
+  browser smoke tests are the evidence. The DAW matrix is not run in this tree.
 
 ## Operator amplitude envelope
 
@@ -142,13 +142,12 @@ Old libraries are remapped, not rejected.
 
 ## Limits and open work
 
-- The hardware panel layout in `synth/panel.json` still lists the old envelope names
-  and lacks the new mode controls. Its `envelope` and `genv` widgets are fixed at
-  seven parameters and the UI kit draws the old stage shape, so the hardware panel
-  needs a firmware UI kit pass. The plugin and web surfaces and the manifest are
-  current.
-- The macOS AU, the macOS DAW matrix and the physical device pass are separate
-  layers and are not claimed here.
+- The DAW matrix is not run in this tree. The plugin validators and the browser
+  smoke tests are the automated evidence.
+- `synth/panel.json` is a legacy device panel map from the original hardware
+  design. No current target builds it, so its old envelope names and seven-parameter
+  widgets are left as they are. The plugin editor and the web app read the
+  parameter manifest.
 
 ## Safe experiment and stop criterion
 
