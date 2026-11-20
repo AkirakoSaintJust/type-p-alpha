@@ -258,7 +258,8 @@ public:
                 params::opSpecEnvLevel(op, 2, part),
                 params::opSpecEnvRelLevel(op, part)},
                colour(tokens::purple), 0.0, 99.0, false,
-               EnvelopeShape::bipolar, params::opSpecEnvMode(op, part)),
+               EnvelopeShape::bipolar, params::opSpecEnvMode(op, part),
+               params::opSpecMorph(op, part)),
           on_(editor.state(), params::opSpecEnvOn(op, part), "on"),
           mode_(editor.state(), params::opSpecEnvMode(op, part),
                 {"off", "sustain", "loop1", "loop2"})
