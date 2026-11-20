@@ -1235,13 +1235,13 @@ void P1Envelope::paint(juce::Graphics& g)
         return t * t;
     };
     const auto doubleBar = [this, &g](float bx, float by) {
-        g.setColour(colour(tokens::dim));
+        g.setColour(colour(tokens::white));
         g.drawLine(bx - 1.5f, by - 7.0f, bx - 1.5f, by + 7.0f, 1.0f);
         g.drawLine(bx + 1.5f, by - 7.0f, bx + 1.5f, by + 7.0f, 1.0f);
     };
     const auto loopArrow = [this, &g, area](float x0, float x1) {
         const float ay = area.getBottom() - 1.0f;
-        g.setColour(colour(tokens::dim));
+        g.setColour(colour(tokens::white));
         g.drawLine(x0, ay, x1, ay, 1.0f);
         g.drawLine(x0, ay, x0 + 4.0f, ay - 3.0f, 1.0f);
         g.drawLine(x0, ay, x0 + 4.0f, ay + 3.0f, 1.0f);

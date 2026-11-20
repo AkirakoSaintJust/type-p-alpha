@@ -86,7 +86,7 @@ a:focus-visible { outline: 2px solid var(--pink); outline-offset: 3px; }
 .toc li { margin: 0 0 7px; }
 .toc ul ul { margin-left: 12px; }
 .toc a { color: var(--dim); }
-.toc a:hover { color: var(--text); }
+.toc a:hover { color: var(--pink); }
 
 .book { min-width: 0; }
 
