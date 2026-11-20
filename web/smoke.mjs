@@ -21,7 +21,7 @@ try {
   const ready = await page.evaluate(() => window.__p1);
   console.log("ready:", ready);
   if (!ready.ready) throw new Error(ready.error || "engine did not start");
-  if (ready.paramCount !== 1646)
+  if (ready.paramCount !== 1656)
     throw new Error(`param count ${ready.paramCount}`);
 
   const box = await page.locator("#note").boundingBox();
