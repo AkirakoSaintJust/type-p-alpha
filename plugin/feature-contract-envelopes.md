@@ -22,11 +22,11 @@ Eight controls per operator:
 | --- | --- | --- |
 | attack warm-up rate | 0 off, 1 to 99 | Convex rise to 50% of the operator level, or to 100% when the surge is off. 99 is instant. |
 | attack surge rate | 0 off, 1 to 99 | Concave rise to 100% of the operator level, starting from silence when the warm-up is off. 99 is instant. |
-| decay1 rate | 1 to 99 | Moves to decay1 level. Falling is convex, rising is concave. 99 is instant. |
+| decay1 rate | 0 to 99 | Moves to decay1 level. Falling is convex, rising is concave. 99 is instant. |
 | decay1 level | 0 to 99 | 99 is the operator level, 0 is silence. |
-| decay2 rate | 1 to 99 | Moves to decay2 level. Falling is convex, rising is concave. 99 is instant. |
+| decay2 rate | 0 to 99 | Moves to decay2 level. Falling is convex, rising is concave. 99 is instant. |
 | decay2 level | 0 to 99 | 99 is the operator level, 0 is silence. |
-| release rate | 1 to 99 | Falls to silence. Concave falling. 99 is instant. |
+| release rate | 0 to 99 | Falls to silence. Concave falling. 99 is instant, 0 is the slowest. |
 | mode | 0 to 3 | 0 sustain off, 1 sustain on, 2 loop1, 3 loop2. Default 0. |
 
 Both attack rates off means the attack is instant to full level.
@@ -43,17 +43,17 @@ Modes:
 
 ## Bipolar modulation envelope
 
-Eight controls per envelope plus its on switch:
+Nine controls per envelope plus its on switch:
 
 | Control | Range | Meaning |
 | --- | --- | --- |
-| rate1 | 1 to 99 | Moves from the target value to level1. Falling convex, rising concave. |
+| rate1 | 0 to 99 | Moves from the target value to level1. Falling convex, rising concave. |
 | level1 | the current level range | First target, read as a position in the target's range. |
-| rate2 | 1 to 99 | Moves to level2. |
+| rate2 | 0 to 99 | Moves to level2. |
 | level2 | the current level range | Second target. |
-| rate3 | 1 to 99 | Moves to level3. |
+| rate3 | 0 to 99 | Moves to level3. |
 | level3 | the current level range | Third target, and the sustain point. |
-| release rate | 1 to 99 | Falls to the release level. Concave falling. |
+| release rate | 0 to 99 | Falls to the release level. Concave falling. 99 is instant, 0 is the slowest. |
 | release level | the current level range | The level the release ends at. |
 | mode | 0 to 3 | Same four modes; sustain holds level3 and the loops cycle level2 and level3. |
 
@@ -140,6 +140,9 @@ Old libraries are remapped, not rejected.
 
 - The web panel carries the new parameter names but still draws the old graph shape
   for the filter and spectral cards.
+- The hardware panel layout in `synth/panel.json` still lists the old envelope names
+  and lacks the new mode controls. The plugin UI and the manifest are current; the
+  hardware panel is a separate surface and needs its own pass.
 - The macOS AU, the macOS DAW matrix and the physical device pass are separate
   layers and are not claimed here.
 
