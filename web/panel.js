@@ -588,7 +588,7 @@
       transpose: "transpose", note_priority: "priority", unison_count: "unison",
       unison_detune: "unison detune", portamento: "porta", mode: "mode",
       cutoff: "cutoff", res: "res", filter_type: "type", filter_on: "on",
-      fenv_depth: "env depth", key_sens_on: "key sens", vel_sens_on: "vel sens",
+      key_sens_on: "key sens", vel_sens_on: "vel sens",
       breakpoint: "breakpoint", pitch_rate: "rate", pitch_depth: "depth",
       pitch_wave: "wave", pitch_mode: "bipolar", penv_on: "penv on",
       penv_ks_lo: "penv lo", penv_ks_hi: "penv hi", penv_vs: "penv vs",
@@ -856,11 +856,13 @@
   }
 
   function filterRateNames(part) {
-    return [1, 2, 3, 4].map((i) => namePart("fenv_r" + i, part));
+    return [1, 2, 3].map((i) => namePart("fenv_r" + i, part)).concat(
+      namePart("fenv_relr", part));
   }
 
   function filterLevelNames(part) {
-    return [1, 2, 3].map((i) => namePart("fenv_l" + i, part));
+    return [1, 2, 3].map((i) => namePart("fenv_l" + i, part)).concat(
+      namePart("fenv_rell", part));
   }
 
   function appendGraph(el, graph) {
@@ -2497,7 +2499,7 @@
 
     const filterCard = sectionCard("filter 1");
     const filterKnobs = div("knobs");
-    for (const base of ["cutoff", "res", "fenv_depth", "dc.r"]) {
+    for (const base of ["cutoff", "res", "dc.r"]) {
       const spec = specByBase(base);
       if (spec !== undefined) filterKnobs.append(controlFor(spec));
     }
@@ -2523,8 +2525,9 @@
     }
     grid.append(filterCard);
 
-    const fenvSpecs = ["fenv_r1", "fenv_r2", "fenv_r3", "fenv_r4",
-      "fenv_l1", "fenv_l2", "fenv_l3"]
+    const fenvSpecs = ["fenv_on", "fenv_r1", "fenv_r2", "fenv_r3",
+      "fenv_relr", "fenv_l1", "fenv_l2", "fenv_l3", "fenv_rell",
+      "fenv_mode"]
       .map(specByBase).filter((spec) => spec !== undefined);
     const fenvCard = card("filter envelope", fenvSpecs, {
       graph: graphFor(filterRateNames(activePart), filterLevelNames(activePart),

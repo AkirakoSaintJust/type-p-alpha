@@ -8,10 +8,11 @@
 - **Brief section:** the operator envelope page, the part fx/mod cards and the
   research note on envelopes.
 - **Owner / date:** P1Onken, 2026-11-20.
-- **Disposition:** in progress. The operator amplitude envelope, the pitch and
-  feedback offset envelopes, the absolute spectral envelope and the absolute pan
-  envelope are implemented, with their UI cards, graphs and the version 14 migration.
-  The absolute filter envelope is not done, and no layer is claimed as passed.
+- **Disposition:** implemented. The operator amplitude envelope and the pitch,
+  feedback, filter, spectral and pan modulation envelopes are on the new stages,
+  with their UI cards, graphs and the version 14 migration. The Linux and WASM
+  renders are the only layers claimed; the macOS AU and the physical device pass
+  remain separate.
 
 ## Operator amplitude envelope
 
@@ -57,14 +58,14 @@ Eight controls per envelope plus its on switch:
 | mode | 0 to 3 | Same four modes; sustain holds level3 and the loops cycle level2 and level3. |
 
 The envelope starts from the target parameter's value at note-on for an absolute
-envelope, and from a zero offset for the pitch and feedback envelopes. The spectral
-and pan envelopes are absolute positions in the target's range, so the knob is the
-starting point and the depth control retires. The pitch envelope stays an offset in
-Q15 because its target is the note, so its signed levels are the whole modulation
-and it has no depth control. Feedback keeps its Q15 levels as offsets on the feedback
-amount. The filter envelope is still the old relative shape, because its starting
-cutoff is a per-voice signal and the control-rate envelope reading it closes a graph
-cycle; it keeps its depth until the start signal is available.
+envelope, and from a zero offset for the pitch and feedback envelopes. The filter,
+spectral and pan envelopes are absolute positions in the target's range, so the
+knob is the starting point and the depth control retires. The filter start is the
+key- and velocity-followed cutoff, carried by a separate `cutoff_pos` node so the
+envelope never reads the filter output and closes a cycle. The pitch envelope stays
+an offset in Q15 because its target is the note, so its signed levels are the whole
+modulation and it has no depth control. Feedback keeps its Q15 levels as offsets on
+the feedback amount.
 
 - **Sustain off:** release at the end of stage 3, with the gate still high.
 - **Sustain on:** hold level3 until note-off, then release to the release level.
@@ -98,19 +99,19 @@ pan targets, a depth. The migration maps:
 - r1 to r3 and l1 to l3 across.
 - r4 to the release rate and l4 to the release level.
 - mode to sustain on.
-- The old depth value is dropped for the absolute envelopes. Their levels replace it,
-  so a patch with any depth keeps its stage values but loses the depth scaling,
-  which is the recorded approximation.
+- The old depth value becomes the on switch for the absolute envelopes. Their levels
+  replace it, so a patch with any depth keeps its stage values but loses the depth
+  scaling, which is the recorded approximation.
 - The pitch and feedback envelopes keep their signed levels, so they map across with
   the new stage count and mode.
 
-The operator and offset envelopes add four and five slots, and the spectral envelope
-adds two slots per operator, so `PRESET_VERSION` moves to 14 and the part record
-grows by seventeen params from version 10. The version 10 record is expanded through
-the operator blocks, the version 11 record is reordered through the pan block, the
-version 12 record gets one inserted slot per pitch and feedback envelope, and the
-version 13 record gets two inserted slots per spectral envelope. Old libraries are
-remapped, not rejected.
+The operator and offset envelopes add four and five slots, and the filter and four
+spectral envelopes add two slots each, so `PRESET_VERSION` moves to 14 and the part
+record grows by nineteen params from version 10. The version 10 record is expanded
+through the operator blocks, the version 11 record is reordered through the pan
+block, the version 12 record gets one inserted slot per pitch and feedback envelope,
+and the version 13 record gets two inserted slots per filter and spectral envelope.
+Old libraries are remapped, not rejected.
 
 ## Evidence
 
@@ -122,10 +123,12 @@ remapped, not rejected.
 - `pitch_envelope` covers the zero start, the slow first stage, sustain on and off,
   the release level, and the loop2 cycle between level2 and level3.
 - `preset_smoke` migrates a fabricated version 10 record, a version 12 record and a
-  version 13 record, covering the operator, pan, offset and spectral envelope blocks
-  in one chain.
+  version 13 record, covering the operator, pan, offset, filter and spectral envelope
+  blocks in one chain.
 - `spectral` checks that the absolute morph envelope starts at the morph knob, reaches
   its levels, and stops moving the morph when the envelope is off.
+- `engine_parity` keeps the default note-on and release renders bit-exact with the
+  filter envelope off.
 - The Linux snapshot set shows the operator, pitch, feedback, pan and spectral cards
   with the new controls. `editor-envelope-loops.png` and `editor-fxmod-loops.png`
   show the double bars at the sustain and loop boundaries and the left arrow under
@@ -135,12 +138,10 @@ remapped, not rejected.
 
 ## Limits and open work
 
-- The filter envelope still uses the old four-rate, three-level relative shape and
-  keeps its depth. Making it absolute needs the cutoff position as a separate
-  control signal that does not close a cycle with the filter. The generator's
-  cross-rate read of an audio output by a control node is the missing piece.
-- The web panel carries the new spectral names but still draws the old graph shape.
-  The filter card keeps its old graph with the relative envelope.
+- The web panel carries the new parameter names but still draws the old graph shape
+  for the filter and spectral cards.
+- The macOS AU, the macOS DAW matrix and the physical device pass are separate
+  layers and are not claimed here.
 
 ## Safe experiment and stop criterion
 

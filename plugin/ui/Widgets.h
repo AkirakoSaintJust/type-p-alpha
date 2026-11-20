@@ -238,7 +238,8 @@ public:
                juce::StringArray levelIDs, juce::Colour curveColour,
                double levelMin, double levelMax, bool zeroLine,
                EnvelopeShape shape = EnvelopeShape::legacyFourStage,
-               juce::String modeID = {}, juce::String startID = {});
+               juce::String modeID = {}, juce::String startID = {},
+               double startScale = 1.0);
     void paint(juce::Graphics& g) override;
     void refresh() { repaint(); }
 
@@ -253,6 +254,7 @@ private:
     EnvelopeShape shape_ = EnvelopeShape::legacyFourStage;
     juce::String modeID_;
     juce::String startID_;
+    double startScale_ = 1.0;
 };
 
 class P1Wave : public juce::Component {

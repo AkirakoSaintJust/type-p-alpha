@@ -73,14 +73,16 @@
     "res": 16000,
     "filter_type": 0,
     "filter_on": 0,
+    "fenv_on": 0,
     "fenv_r1": 80,
     "fenv_r2": 60,
     "fenv_r3": 50,
-    "fenv_r4": 80,
     "fenv_l1": 99,
     "fenv_l2": 93,
     "fenv_l3": 87,
-    "fenv_depth": 0,
+    "fenv_relr": 80,
+    "fenv_rell": 0,
+    "fenv_mode": 1,
     "pitch_rate": 0,
     "pitch_depth": 0,
     "pitch_wave": 0,
@@ -325,7 +327,7 @@
   "bench": {
     "cutoff": 46080,
     "filter_on": 1,
-    "fenv_depth": 65535,
+    "fenv_on": 1,
     "pitch_rate": 447392,
     "pitch_depth": 32767,
     "penv_on": 1,
@@ -346,7 +348,7 @@
       "curve": "linear"
     },
     "cutoff": {
-      "target": "lp.f",
+      "target": "cutoff_pos.cutoff",
       "min": 0,
       "max": 55296,
       "curve": "linear",
@@ -373,6 +375,13 @@
       "curve": "linear",
       "display": "onoff"
     },
+    "fenv_on": {
+      "target": "fenv.on",
+      "min": 0,
+      "max": 1,
+      "curve": "linear",
+      "display": "onoff"
+    },
     "fenv_r1": {
       "target": "fenv.r1",
       "min": 0,
@@ -387,12 +396,6 @@
     },
     "fenv_r3": {
       "target": "fenv.r3",
-      "min": 0,
-      "max": 99,
-      "curve": "linear"
-    },
-    "fenv_r4": {
-      "target": "fenv.r4",
       "min": 0,
       "max": 99,
       "curve": "linear"
@@ -415,12 +418,23 @@
       "max": 99,
       "curve": "linear"
     },
-    "fenv_depth": {
-      "target": "lp.fenv_depth",
+    "fenv_relr": {
+      "target": "fenv.relr",
       "min": 0,
-      "max": 65535,
-      "curve": "linear",
-      "display": "oct"
+      "max": 99,
+      "curve": "linear"
+    },
+    "fenv_rell": {
+      "target": "fenv.rell",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "fenv_mode": {
+      "target": "fenv.mode",
+      "min": 0,
+      "max": 3,
+      "curve": "linear"
     },
     "op1_fbenv_on": {
       "target": "op1.fbenv.on",
@@ -5592,28 +5606,36 @@
         }
       },
       {
+        "id": "cutoff_pos",
+        "type": "cutoff_pos",
+        "params": {
+          "cutoff": 36958
+        }
+      },
+      {
         "id": "lp",
         "type": "liquid_filter",
         "params": {
-          "f": 36958,
           "res": 16000,
           "comp": 7209,
           "mode": 0,
-          "on": 0,
-          "fenv_depth": 0
+          "on": 0
         }
       },
       {
         "id": "fenv",
-        "type": "dx_env",
+        "type": "mod_env",
         "params": {
+          "on": 0,
           "r1": 80,
           "r2": 60,
           "r3": 50,
-          "r4": 80,
           "l1": 99,
           "l2": 93,
-          "l3": 87
+          "l3": 87,
+          "relr": 80,
+          "rell": 0,
+          "mode": 1
         }
       }
     ],
@@ -5704,15 +5726,27 @@
       },
       {
         "from": "f1_ks.k",
-        "to": "lp.k"
+        "to": "cutoff_pos.k"
       },
       {
         "from": "f1_vs.k",
-        "to": "lp.vk"
+        "to": "cutoff_pos.vk"
+      },
+      {
+        "from": "cutoff_pos.f",
+        "to": "lp.f"
       },
       {
         "from": "fenv.cv",
         "to": "lp.fenv"
+      },
+      {
+        "from": "cutoff_pos.pos",
+        "to": "fenv.start"
+      },
+      {
+        "from": "fenv.active",
+        "to": "lp.fenv_on"
       },
       {
         "from": "fenv_ks.k",

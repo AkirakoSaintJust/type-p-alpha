@@ -1115,7 +1115,7 @@ P1Envelope::P1Envelope(APVTS& state, juce::StringArray rateIDs,
                        juce::StringArray levelIDs, juce::Colour curveColour,
                        double levelMin, double levelMax, bool zeroLine,
                        EnvelopeShape shape, juce::String modeID,
-                       juce::String startID)
+                       juce::String startID, double startScale)
     : state_(state),
       rateIDs_(std::move(rateIDs)),
       levelIDs_(std::move(levelIDs)),
@@ -1125,7 +1125,8 @@ P1Envelope::P1Envelope(APVTS& state, juce::StringArray rateIDs,
       zeroLine_(zeroLine),
       shape_(shape),
       modeID_(std::move(modeID)),
-      startID_(std::move(startID))
+      startID_(std::move(startID)),
+      startScale_(startScale)
 {
     setInterceptsMouseClicks(false, false);
 }
@@ -1270,7 +1271,7 @@ void P1Envelope::paint(juce::Graphics& g)
             stageLevels[static_cast<size_t>(i)] = levels[i];
         if (startID_.isNotEmpty()) {
             if (auto* v = state_.getRawParameterValue(startID_))
-                startLevel = static_cast<double>(v->load());
+                startLevel = static_cast<double>(v->load()) * startScale_;
         }
     }
 

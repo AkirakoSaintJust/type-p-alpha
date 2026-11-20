@@ -254,7 +254,16 @@ inline juce::String filterCutoff(int part) { return withPart("cutoff", part); }
 inline juce::String filterRes(int part) { return withPart("res", part); }
 inline juce::String filterType(int part) { return withPart("filter_type", part); }
 inline juce::String filterOn(int part) { return withPart("filter_on", part); }
-inline juce::String filterEnvDepth(int part) { return withPart("fenv_depth", part); }
+inline juce::String filterEnvOn(int part) { return withPart("fenv_on", part); }
+inline juce::String filterEnvRelRate(int part)
+{
+    return withPart("fenv_relr", part);
+}
+inline juce::String filterEnvRelLevel(int part)
+{
+    return withPart("fenv_rell", part);
+}
+inline juce::String filterEnvMode(int part) { return withPart("fenv_mode", part); }
 inline juce::String filterRate(int index, int part)
 {
     return withPart("fenv_r" + juce::String(index + 1), part);

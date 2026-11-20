@@ -116,12 +116,13 @@ public:
         pitchEnvBase_ = pitch;
     }
 
-    /* The part-block index of each operator's `spec_env_on`, used to remap a
-     * version 13 record where the spectral envelope became absolute and gained
-     * on, release and mode controls. -1 in any slot means no layout was
-     * supplied. */
-    void setAbsEnvelopeIndices(const std::array<int, 4>& spectral)
+    /* The part-block index of `fenv_on` and of each operator's `spec_env_on`,
+     * used to remap a version 13 record where the filter and spectral
+     * envelopes became absolute and gained on, release and mode controls. -1
+     * in any slot means no layout was supplied. */
+    void setAbsEnvelopeIndices(int filter, const std::array<int, 4>& spectral)
     {
+        filterEnvBase_ = filter;
         specEnvBase_ = spectral;
     }
 
@@ -177,6 +178,7 @@ private:
     int panEnvBase_ = -1;
     std::array<int, 4> fbEnvBase_{{ -1, -1, -1, -1 }};
     int pitchEnvBase_ = -1;
+    int filterEnvBase_ = -1;
     std::array<int, 4> specEnvBase_{{ -1, -1, -1, -1 }};
 };
 

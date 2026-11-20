@@ -153,6 +153,7 @@ TypePAlphaAudioProcessor::TypePAlphaAudioProcessor()
     presets_.setOffsetEnvelopeIndices(feedbackEnvelopeIndices(),
                                       partParamIndex("penv_on.p0"));
     presets_.setAbsEnvelopeIndices(
+        partParamIndex("fenv_on.p0"),
         {partParamIndex("op1_spec_env_on.p0"),
          partParamIndex("op2_spec_env_on.p0"),
          partParamIndex("op3_spec_env_on.p0"),

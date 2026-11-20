@@ -19,8 +19,9 @@ namespace {
  * feedback envelope for each operator. */
 constexpr int kOffsetEnvelopeBlocks = 5;
 
-/* The four spectral envelope blocks that gained two slots in version 14. */
-constexpr int kAbsEnvelopeBlocks = 4;
+/* The five absolute envelope blocks that gained two slots in version 14: the
+ * filter envelope and one spectral envelope for each operator. */
+constexpr int kAbsEnvelopeBlocks = 5;
 constexpr int kAbsEnvelopeSlots = 2;
 
 /* The version 11 pan envelope block: on, r1, r2, r3, r4, l1, l2, l3, l4, depth.
@@ -93,6 +94,29 @@ void remapAbsSpecBlock(const std::vector<int32_t>& in, int oldBase,
     put(5, at(5));
     put(6, at(6));
     put(7, at(3));
+    put(8, 0);
+    put(9, 1);
+}
+
+/* The version 13 filter envelope block: depth, r1, r2, r3, r4, l1, l2, l3. The
+ * depth sits before the block, so the new block starts where it was. */
+void remapAbsFilterBlock(const std::vector<int32_t>& in, int oldBase,
+                         std::vector<int32_t>& out, int newBase)
+{
+    const auto at = [oldBase, &in](int k) -> int32_t {
+        return in[static_cast<std::size_t>(oldBase + k)];
+    };
+    const auto put = [newBase, &out](int k, int32_t value) {
+        out[static_cast<std::size_t>(newBase + k)] = value;
+    };
+    put(0, at(0) != 0 ? 1 : 0);
+    put(1, at(1));
+    put(2, at(2));
+    put(3, at(3));
+    put(4, at(5));
+    put(5, at(6));
+    put(6, at(7));
+    put(7, at(4));
     put(8, 0);
     put(9, 1);
 }
@@ -439,6 +463,8 @@ bool PresetStore::loadLibrary(const uint8_t* data, std::size_t size)
 int PresetStore::toVersion13Index(int targetIndex) const
 {
     int shift = 0;
+    if (filterEnvBase_ >= 0 && filterEnvBase_ < targetIndex)
+        shift += kAbsEnvelopeSlots;
     for (int base : specEnvBase_)
         if (base >= 0 && base < targetIndex)
             shift += kAbsEnvelopeSlots;
@@ -502,14 +528,20 @@ bool PresetStore::migratePartBank(const uint8_t* data, uint32_t oldCount,
     struct AbsBlock {
         int targetBase = -1;
         int oldBase = -1;
+        bool filter = false;
     };
     std::array<AbsBlock, kAbsEnvelopeBlocks> absBlocks{};
     int absCount = 0;
+    if (filterEnvBase_ >= 0) {
+        absBlocks[static_cast<std::size_t>(absCount)] = {
+            filterEnvBase_, toVersion13Index(filterEnvBase_), true};
+        ++absCount;
+    }
     for (int base : specEnvBase_) {
         if (base < 0 || absCount >= kAbsEnvelopeBlocks)
             continue;
         absBlocks[static_cast<std::size_t>(absCount)] = {
-            base, toVersion13Index(base)};
+            base, toVersion13Index(base), false};
         ++absCount;
     }
     std::sort(absBlocks.begin(),
@@ -646,7 +678,10 @@ bool PresetStore::migratePartBank(const uint8_t* data, uint32_t oldCount,
                             static_cast<std::size_t>(block.oldBase) + 8u >
                                 grown.size())
                             return false;
-                        remapAbsSpecBlock(grown, block.oldBase, expanded, i);
+                        if (block.filter)
+                            remapAbsFilterBlock(grown, block.oldBase, expanded, i);
+                        else
+                            remapAbsSpecBlock(grown, block.oldBase, expanded, i);
                         i += 9;
                         shift += kAbsEnvelopeSlots;
                         ++next;

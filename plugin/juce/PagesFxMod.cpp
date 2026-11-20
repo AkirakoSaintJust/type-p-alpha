@@ -11,8 +11,7 @@ namespace {
 class FilterCard : public P1Card {
 public:
     FilterCard(PluginEditor& editor, juce::String title, juce::String cutoffID,
-               juce::String resID, juce::String envID, juce::String typeID,
-               juce::String onID)
+               juce::String resID, juce::String typeID, juce::String onID)
         : P1Card(std::move(title)),
           cutoff_(editor.state(), std::move(cutoffID), "cutoff", 42.0f),
           res_(editor.state(), std::move(resID), "res", 42.0f),
@@ -21,11 +20,6 @@ public:
     {
         addAndMakeVisible(cutoff_);
         addAndMakeVisible(res_);
-        if (envID.isNotEmpty()) {
-            env_ = std::make_unique<ParamKnob>(editor.state(), std::move(envID),
-                                               "env amt", 42.0f);
-            addAndMakeVisible(*env_);
-        }
         addAndMakeVisible(type_);
         addAndMakeVisible(on_);
     }
@@ -34,12 +28,9 @@ public:
     {
         auto area = contentArea();
         auto row = area.removeFromTop(84);
-        const int cells = env_ != nullptr ? 3 : 2;
-        const int cell = row.getWidth() / cells;
+        const int cell = row.getWidth() / 2;
         cutoff_.setBounds(row.removeFromLeft(cell));
         res_.setBounds(row.removeFromLeft(cell));
-        if (env_ != nullptr)
-            env_->setBounds(row);
         type_.setBounds(44, 118, 150, 18);
         on_.setBounds(10, 148, 52, 18);
     }
@@ -55,7 +46,6 @@ public:
 private:
     ParamKnob cutoff_;
     ParamKnob res_;
-    std::unique_ptr<ParamKnob> env_;
     ParamChoice type_;
     P1Toggle on_;
 };
@@ -64,26 +54,41 @@ class FilterEnvelopeCard : public P1Card {
 public:
     FilterEnvelopeCard(PluginEditor& editor, int part)
         : P1Card("filter envelope"),
+          part_(part),
           envView_(editor.state(),
                    {params::filterRate(0, part), params::filterRate(1, part),
-                    params::filterRate(2, part), params::filterRate(3, part)},
+                    params::filterRate(2, part),
+                    params::filterEnvRelRate(part)},
                    {params::filterLevel(0, part), params::filterLevel(1, part),
-                    params::filterLevel(2, part)},
-                   colour(tokens::green), 0.0, 99.0, false)
+                    params::filterLevel(2, part),
+                    params::filterEnvRelLevel(part)},
+                   colour(tokens::green), 0.0, 99.0, false,
+                   EnvelopeShape::bipolar, params::filterEnvMode(part),
+                   params::filterCutoff(part), 99.0 / 55296.0),
+          on_(editor.state(), params::filterEnvOn(part), "on"),
+          mode_(editor.state(), params::filterEnvMode(part), "mode", 42.0f)
     {
         addAndMakeVisible(envView_);
-        for (int i = 0; i < 4; ++i) {
+        addAndMakeVisible(on_);
+        addAndMakeVisible(mode_);
+        for (int i = 0; i < 3; ++i) {
             rates_[static_cast<size_t>(i)] = std::make_unique<ParamKnob>(
                 editor.state(), params::filterRate(i, part),
                 "r" + juce::String(i + 1), 42.0f);
             addAndMakeVisible(*rates_[static_cast<size_t>(i)]);
         }
+        rates_[3] = std::make_unique<ParamKnob>(
+            editor.state(), params::filterEnvRelRate(part), "rel", 42.0f);
+        addAndMakeVisible(*rates_[3]);
         for (int i = 0; i < 3; ++i) {
             levels_[static_cast<size_t>(i)] = std::make_unique<ParamKnob>(
                 editor.state(), params::filterLevel(i, part),
                 "l" + juce::String(i + 1), 42.0f);
             addAndMakeVisible(*levels_[static_cast<size_t>(i)]);
         }
+        levels_[3] = std::make_unique<ParamKnob>(
+            editor.state(), params::filterEnvRelLevel(part), "rl", 42.0f);
+        addAndMakeVisible(*levels_[3]);
     }
 
     void resized() override
@@ -96,17 +101,23 @@ public:
         for (auto& knob : rates_)
             knob->setBounds(row.removeFromLeft(cell));
         auto levelRow = area.removeFromTop(84);
-        const int levelCell = levelRow.getWidth() / 3;
+        const int levelCell = levelRow.getWidth() / 4;
         for (auto& knob : levels_)
             knob->setBounds(levelRow.removeFromLeft(levelCell));
+        auto modeRow = area.removeFromTop(84);
+        mode_.setBounds(modeRow.removeFromLeft(levelCell));
+        on_.setBounds(getWidth() - 56, 0, 48, 18);
     }
 
     void tick() { envView_.repaint(); }
 
 private:
+    int part_ = 0;
     P1Envelope envView_;
+    P1Toggle on_;
+    ParamKnob mode_;
     std::array<std::unique_ptr<ParamKnob>, 4> rates_{};
-    std::array<std::unique_ptr<ParamKnob>, 3> levels_{};
+    std::array<std::unique_ptr<ParamKnob>, 4> levels_{};
 };
 
 class PitchLfoCard : public P1Card {
@@ -426,8 +437,7 @@ public:
         const int part = editor.activePart();
         filter1_ = std::make_unique<FilterCard>(
             editor, "filter 1", params::filterCutoff(part), params::filterRes(part),
-            params::filterEnvDepth(part), params::filterType(part),
-            params::filterOn(part));
+            params::filterType(part), params::filterOn(part));
         filterEnv_ = std::make_unique<FilterEnvelopeCard>(editor, part);
         pitchLfo_ = std::make_unique<PitchLfoCard>(editor);
         pitchEnv_ = std::make_unique<PitchEnvelopeCard>(editor);
