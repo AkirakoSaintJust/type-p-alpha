@@ -1126,10 +1126,13 @@ std::vector<juce::String> sectionParamIDs(int op, int part,
         break;
     case PluginEditor::OperatorSection::feedbackEnvelope:
         add(p1::params::opFeedbackOn(op, part));
-        for (int i = 0; i < 4; ++i)
+        for (int i = 0; i < 3; ++i)
             add(p1::params::opFeedbackRate(op, i, part));
-        for (int i = 0; i < 4; ++i)
+        add(p1::params::opFeedbackRelRate(op, part));
+        for (int i = 0; i < 3; ++i)
             add(p1::params::opFeedbackLevel(op, i, part));
+        add(p1::params::opFeedbackRelLevel(op, part));
+        add(p1::params::opFeedbackMode(op, part));
         break;
     case PluginEditor::OperatorSection::amplitudeLfo:
         add(p1::params::opTremRate(op, part));

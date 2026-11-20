@@ -8,9 +8,10 @@
 - **Brief section:** the operator envelope page, the part fx/mod cards and the
   research note on envelopes.
 - **Owner / date:** P1Onken, 2026-11-20.
-- **Disposition:** in progress. The semantics are agreed and the slow-start
-  primitive is in `engine/hal/p1_math.h`. The node, macro, parameter, UI, graph
-  and migration work is not done, and no layer is claimed as passed.
+- **Disposition:** in progress. The operator amplitude envelope and the pitch and
+  feedback offset envelopes are implemented, with their UI cards and the version 13
+  migration. The filter and spectral absolute envelopes, the graph shapes and the
+  mode selectors on the graphs are not done, and no layer is claimed as passed.
 
 ## Operator amplitude envelope
 
@@ -55,15 +56,16 @@ Eight controls per envelope plus its on switch:
 | release level | the current level range | The level the release ends at. |
 | mode | 0 to 3 | Same four modes; sustain holds level3 and the loops cycle level2 and level3. |
 
-The envelope starts from the target parameter's value at note-on. For the filter,
+The envelope starts from the target parameter's value at note-on for an absolute
+envelope, and from a zero offset for the pitch and feedback envelopes. For the filter,
 spectral and pan envelopes the levels are absolute positions in the target's range,
 so the knob is the starting point and the depth control retires. The pitch envelope
-stays an offset in Q15 cents because its target is the note, and keeps its depth.
-Feedback keeps its Q15 levels as positions across the feedback range.
+stays an offset in Q15 because its target is the note, so its signed levels are the
+whole modulation and it has no depth control. Feedback keeps its Q15 levels as
+offsets on the feedback amount.
 
-- **Sustain off:** release at the end of stage 3.
-- **Sustain on:** hold level3 until note-off; ignored when level3 equals the release
-  level.
+- **Sustain off:** release at the end of stage 3, with the gate still high.
+- **Sustain on:** hold level3 until note-off, then release to the release level.
 - **Loop1:** level2 to level3 at rate2, back at rate3.
 - **Loop2:** the same cycle with both directions at rate3.
 
@@ -88,40 +90,46 @@ The old operator envelope had r1 to r4 and l1 to l3. The migration maps:
 - l1 and l4 have no new home and are dropped. The attack peak becomes the operator
   level and the release ends at silence.
 
-The old bipolar envelope had r1 to r4, l1 to l4 and a depth. The migration maps:
+The old bipolar envelope had r1 to r4, l1 to l4 and, for the filter, spectral and
+pan targets, a depth. The migration maps:
 
 - r1 to r3 and l1 to l3 across.
 - r4 to the release rate and l4 to the release level.
 - mode to sustain on.
-- The old depth value is dropped. Absolute levels replace it, so a patch with any
-  depth keeps its stage values but loses the depth scaling, which is the recorded
-  approximation.
-- The pitch envelope keeps its offset levels and depth, so it maps across with the
-  new stage count and mode.
+- The old depth value is dropped for the absolute envelopes. Their levels replace it,
+  so a patch with any depth keeps its stage values but loses the depth scaling,
+  which is the recorded approximation.
+- The pitch and feedback envelopes keep their signed levels, so they map across with
+  the new stage count and mode.
 
-The parameter counts change, so `PRESET_VERSION` moves once and an old-layout table
-drives a name-based remap in the same migration. Old libraries are remapped, not
-rejected.
+The operator and offset envelopes each add a slot, so `PRESET_VERSION` moves to 13
+and the part record grows by five params. The version 10 record is expanded through
+the operator blocks, the version 11 record is reordered through the pan block, and
+the version 12 record gets one inserted slot per pitch and feedback envelope. Old
+libraries are remapped, not rejected.
 
-## Evidence to produce
+## Evidence
 
-- Engine tests per family: warm-up and surge shapes, direction-based decay bend,
-  the four modes, release to silence or the release level, and a pitch envelope that
-  still starts from zero offset.
-- A migration test from a version 10 part record, covering the operator and bipolar
-  remaps.
-- Graph snapshots for the operator page and each bipolar card: the double bars at
-  the sustain and loop boundaries, and the left arrow under the loop.
-- The unchanged centre render reference for a default patch, which has depth 0 and
-  the default mode.
+- `engine_parity` keeps the note-on and release render references bit-exact for the
+  default patch.
+- `feedback_envelope` and `feedback_bipolar` cover the offset family: flat and
+  bypassed are bit-exact, the stage sign chooses the feedback family, and the levels
+  move the signed feedback amount.
+- `pitch_envelope` covers the zero start, the slow first stage, sustain on and off,
+  the release level, and the loop2 cycle between level2 and level3.
+- `preset_smoke` migrates a fabricated version 10 record and a version 12 record,
+  covering the operator, pan and offset envelope blocks in one chain.
+- The Linux snapshot set shows the operator, pitch and feedback cards with the new
+  controls.
 
 ## Limits and open work
 
-- The graphs are drawn from the new mode and stage data; until that lands the
-  snapshot set does not describe the new envelope.
-- The feedback envelope has no depth today, so its Q15 levels become positions
-  without losing a control.
-- The web panel needs the same mode and stage display once the engine lands.
+- The filter and spectral envelopes still use the old four-rate, three-level shape;
+  they need the absolute start input and the depth removal.
+- The envelope graphs still draw the old stage shape. The double bars at the sustain
+  and loop boundaries, the left arrow under the loop, the convex warm-up and the
+  concave surge are still to draw, and the snapshots do not yet describe them.
+- The web panel carries the new parameter names but still draws the old graph shape.
 
 ## Safe experiment and stop criterion
 

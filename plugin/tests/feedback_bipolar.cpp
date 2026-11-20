@@ -62,7 +62,7 @@ bool setup(p1::Engine& engine, int32_t feedback, int32_t envLevel)
     ok &= set_param(engine, "op1_fbenv_l1.p0", envLevel);
     ok &= set_param(engine, "op1_fbenv_l2.p0", envLevel);
     ok &= set_param(engine, "op1_fbenv_l3.p0", envLevel);
-    ok &= set_param(engine, "op1_fbenv_l4.p0", envLevel);
+    ok &= set_param(engine, "op1_fbenv_rell.p0", envLevel);
     ok &= set_param(engine, "op1_mute.p0", 0);
     ok &= set_param(engine, "op2_level.p0", 0);
     ok &= set_param(engine, "op3_level.p0", 0);

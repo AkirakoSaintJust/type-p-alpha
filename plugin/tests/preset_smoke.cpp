@@ -37,6 +37,18 @@ std::vector<int32_t> pattern(int seed)
     return values;
 }
 
+/* `preset_part_pack` seals a current-version record. An older record needs the
+ * version byte and then a fresh CRC. */
+void setRecordVersion(uint8_t* record, uint32_t count, uint8_t version)
+{
+    record[0] = version;
+    const uint32_t body = 1u + PRESET_NAME_LEN + count * 4u;
+    const uint32_t crc = preset_crc32(record, body);
+    for (int k = 0; k < 4; ++k)
+        record[body + static_cast<std::size_t>(k)] =
+            static_cast<uint8_t>((crc >> (8 * k)) & 0xFFu);
+}
+
 } // namespace
 
 int main()
@@ -178,7 +190,9 @@ int main()
         const int panBase = indexOf("pan_env_on.p0");
         check(w0 > 0 && w1 > w0 && panBase > w1,
               "find the operator and pan envelope blocks");
-        const uint32_t oldCount = kP1PartParamCount - 4u;
+        /* The version 10 record is nine params shorter: four operator slots and
+         * the five offset envelope slots all precede the cutoff and pan blocks. */
+        const uint32_t oldCount = kP1PartParamCount - 9u;
         const auto oldRecord = PP_RECORD(oldCount);
         std::vector<uint8_t> oldBank(static_cast<std::size_t>(oldRecord) * 128u,
                                      0xFF);
@@ -186,8 +200,8 @@ int main()
         for (int k = 0; k < 7; ++k)
             oldParams[static_cast<std::size_t>(w0) + static_cast<std::size_t>(k)] =
                 11 + k;
-        oldParams[static_cast<std::size_t>(kP1PartCutoffIndex) - 4u] = 12345;
-        const int oldPan = panBase - 4;
+        oldParams[static_cast<std::size_t>(kP1PartCutoffIndex) - 9u] = 12345;
+        const int oldPan = panBase - 9;
         oldParams[static_cast<std::size_t>(oldPan)] = 1;
         oldParams[static_cast<std::size_t>(oldPan) + 4u] = 55;
         oldParams[static_cast<std::size_t>(oldPan) + 5u] = 11;
@@ -198,6 +212,9 @@ int main()
         preset_part_pack(oldBank.data() +
                              static_cast<std::size_t>(3u) * oldRecord,
                          "older", oldParams.data(), oldCount);
+        setRecordVersion(
+            oldBank.data() + static_cast<std::size_t>(3u) * oldRecord,
+            oldCount, 10u);
 
         std::vector<uint8_t> oldLibrary;
         const auto put32 = [&oldLibrary](uint32_t value) {
@@ -220,6 +237,10 @@ int main()
                                  p1::partParamDefaults(), kP1PartCutoffIndex};
         expanded.setOperatorEnvelopeIndices({w0, w1, warmIndex(2), warmIndex(3)});
         expanded.setPanEnvelopeIndex(panBase);
+        expanded.setOffsetEnvelopeIndices(
+            {indexOf("op1_fbenv_on.p0"), indexOf("op2_fbenv_on.p0"),
+             indexOf("op3_fbenv_on.p0"), indexOf("op4_fbenv_on.p0")},
+            indexOf("penv_on.p0"));
         check(expanded.loadLibrary(oldLibrary.data(), oldLibrary.size()),
               "load a version 10 library");
         check(expanded.revision() == 9,
@@ -249,6 +270,107 @@ int main()
               "the pan envelope maps r4 to the release rate and depth to the mode");
         check(grown[static_cast<std::size_t>(kP1PartCutoffIndex)] == 12345,
               "a current-law cutoff is not converted twice");
+    }
+
+    /* A version 12 part record, before the pitch and feedback envelopes gained
+     * a mode and swapped the fourth level for a release level. The loader
+     * inserts one slot per block and keeps the pan block aligned. */
+    {
+        const auto indexOf = [](const char* name) {
+            for (int i = 0; i < kP1PartParamCount; ++i) {
+                if (std::string(name) ==
+                    kP1ParamSpecs[static_cast<std::size_t>(i)].id)
+                    return i;
+            }
+            return -1;
+        };
+        const std::array<int, 5> bases = {
+            indexOf("op1_fbenv_on.p0"), indexOf("op2_fbenv_on.p0"),
+            indexOf("op3_fbenv_on.p0"), indexOf("op4_fbenv_on.p0"),
+            indexOf("penv_on.p0")};
+        const int panBase = indexOf("pan_env_on.p0");
+        check(bases[0] > 0 && bases[4] > bases[0] && panBase > bases[4],
+              "find the offset and pan envelope blocks");
+        const auto oldIndex = [&bases](int target) {
+            int shift = 0;
+            for (int base : bases)
+                if (base < target)
+                    ++shift;
+            return target - shift;
+        };
+
+        const uint32_t oldCount = kP1PartParamCount - 5u;
+        const auto oldRecord = PP_RECORD(oldCount);
+        std::vector<uint8_t> oldBank(static_cast<std::size_t>(oldRecord) * 128u,
+                                     0xFF);
+        std::vector<int32_t> oldParams(oldCount, 3);
+        const std::array<int, 9> feedback = {1, 21, 22, 23, 24, 25, 26, 27, 28};
+        const std::array<int, 9> pitch = {0, 31, 32, 33, 34, 35, 36, 37, 38};
+        const std::array<int, 10> pan = {1, 41, 42, 43, 44, 45, 46, 47, 48, 2};
+        const auto writeBlock = [&oldParams, &oldIndex](
+                                    int target, const auto& values) {
+            const int base = oldIndex(target);
+            for (std::size_t k = 0; k < values.size(); ++k)
+                oldParams[static_cast<std::size_t>(base) + k] =
+                    values[k];
+        };
+        writeBlock(bases[0], feedback);
+        writeBlock(bases[4], pitch);
+        writeBlock(panBase, pan);
+
+        const auto slot = static_cast<std::size_t>(5) * oldRecord;
+        preset_part_pack(oldBank.data() + slot, "offset", oldParams.data(),
+                         oldCount);
+        setRecordVersion(oldBank.data() + slot, oldCount, 12u);
+
+        std::vector<uint8_t> oldLibrary;
+        const auto put32 = [&oldLibrary](uint32_t value) {
+            oldLibrary.push_back(static_cast<uint8_t>(value & 0xFFu));
+            oldLibrary.push_back(static_cast<uint8_t>((value >> 8) & 0xFFu));
+            oldLibrary.push_back(static_cast<uint8_t>((value >> 16) & 0xFFu));
+            oldLibrary.push_back(static_cast<uint8_t>((value >> 24) & 0xFFu));
+        };
+        static const uint8_t magic[7] = {'P', '1', 'L', 'I', 'B', '3', '\n'};
+        oldLibrary.insert(oldLibrary.end(), magic, magic + 7);
+        put32(10);
+        put32(static_cast<uint32_t>(oldBank.size()));
+        oldLibrary.insert(oldLibrary.end(), oldBank.begin(), oldBank.end());
+        const auto multiSize =
+            MP_RECORD(static_cast<uint32_t>(kP1PartCount)) * 64u;
+        put32(static_cast<uint32_t>(multiSize));
+        oldLibrary.insert(oldLibrary.end(), multiSize, 0xFF);
+
+        p1::PresetStore loaded{kP1PartParamCount, kP1PartCount,
+                               p1::partParamDefaults(), kP1PartCutoffIndex};
+        loaded.setOperatorEnvelopeIndices(
+            {indexOf("op1.eg.warm.p0"), indexOf("op2.eg.warm.p0"),
+             indexOf("op3.eg.warm.p0"), indexOf("op4.eg.warm.p0")});
+        loaded.setPanEnvelopeIndex(panBase);
+        loaded.setOffsetEnvelopeIndices(
+            {bases[0], bases[1], bases[2], bases[3]}, bases[4]);
+        check(loaded.loadLibrary(oldLibrary.data(), oldLibrary.size()),
+              "load a version 12 library");
+        const auto& grown = loaded.partParams(5);
+        check(grown[static_cast<std::size_t>(bases[0])] == 1 &&
+                  grown[static_cast<std::size_t>(bases[0]) + 1u] == 21 &&
+                  grown[static_cast<std::size_t>(bases[0]) + 2u] == 22 &&
+                  grown[static_cast<std::size_t>(bases[0]) + 3u] == 23 &&
+                  grown[static_cast<std::size_t>(bases[0]) + 4u] == 25 &&
+                  grown[static_cast<std::size_t>(bases[0]) + 5u] == 26 &&
+                  grown[static_cast<std::size_t>(bases[0]) + 6u] == 27 &&
+                  grown[static_cast<std::size_t>(bases[0]) + 7u] == 24 &&
+                  grown[static_cast<std::size_t>(bases[0]) + 8u] == 28 &&
+                  grown[static_cast<std::size_t>(bases[0]) + 9u] == 1,
+              "the feedback envelope maps r4 to the release rate and l4 to the release level");
+        check(grown[static_cast<std::size_t>(bases[4]) + 7u] == 34 &&
+                  grown[static_cast<std::size_t>(bases[4]) + 8u] == 38 &&
+                  grown[static_cast<std::size_t>(bases[4]) + 9u] == 1,
+              "the pitch envelope gains a release level and a sustain mode");
+        check(grown[static_cast<std::size_t>(panBase)] == 1 &&
+                  grown[static_cast<std::size_t>(panBase) + 4u] == 44 &&
+                  grown[static_cast<std::size_t>(panBase) + 7u] == 47 &&
+                  grown[static_cast<std::size_t>(panBase) + 9u] == 2,
+              "the pan block keeps its version 12 layout after the insert");
     }
 
     /* Two instances over one file: independent slots merge, a slot both changed

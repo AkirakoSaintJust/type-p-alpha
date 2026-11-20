@@ -80,11 +80,11 @@ bool setup(p1::Engine& engine, int32_t feedback, int32_t envL1, int32_t envR1,
     ok &= set_param(engine, "op1_fbenv_r1.p0", envR1);
     ok &= set_param(engine, "op1_fbenv_r2.p0", 99);
     ok &= set_param(engine, "op1_fbenv_r3.p0", 99);
-    ok &= set_param(engine, "op1_fbenv_r4.p0", 99);
+    ok &= set_param(engine, "op1_fbenv_relr.p0", 99);
     ok &= set_param(engine, "op1_fbenv_l1.p0", envL1);
     ok &= set_param(engine, "op1_fbenv_l2.p0", envL1);
     ok &= set_param(engine, "op1_fbenv_l3.p0", envL1);
-    ok &= set_param(engine, "op1_fbenv_l4.p0", envL1);
+    ok &= set_param(engine, "op1_fbenv_rell.p0", envL1);
     return ok;
 }
 

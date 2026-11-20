@@ -15,7 +15,7 @@ namespace {
 
 constexpr double kCoreRate = 48000.0;
 constexpr int kControlBlock = 32;
-constexpr int kStateVersion = 10;
+constexpr int kStateVersion = 11;
 /* The state version whose cutoff values already use the current law. A later
  * version bump must not run the cutoff conversion again. */
 constexpr int kCutoffLawStateVersion = 5;
@@ -49,15 +49,29 @@ std::array<int, 4> operatorEnvelopeIndices()
     return out;
 }
 
-/* The part-block index of the pan envelope, for the version 11 remap. */
-int panEnvelopeIndex()
+/* The part-block index of a `.p0` parameter, or -1. The preset migration needs
+ * these for the remaps that cannot be expressed as an append. */
+int partParamIndex(const std::string& wanted)
 {
     for (int i = 0; i < kP1PartParamCount; ++i) {
-        if (std::string("pan_env_on.p0") ==
-            kP1ParamSpecs[static_cast<std::size_t>(i)].id)
+        if (wanted == kP1ParamSpecs[static_cast<std::size_t>(i)].id)
             return i;
     }
     return -1;
+}
+
+/* The part-block index of the pan envelope, for the version 11 remap. */
+int panEnvelopeIndex() { return partParamIndex("pan_env_on.p0"); }
+
+/* The part-block indices of each operator feedback envelope, for the version
+ * 12 remap. */
+std::array<int, 4> feedbackEnvelopeIndices()
+{
+    std::array<int, 4> out{{-1, -1, -1, -1}};
+    for (int op = 0; op < 4; ++op)
+        out[static_cast<std::size_t>(op)] = partParamIndex(
+            "op" + std::to_string(op + 1) + "_fbenv_on.p0");
+    return out;
 }
 
 } // namespace
@@ -136,6 +150,8 @@ TypePAlphaAudioProcessor::TypePAlphaAudioProcessor()
 {
     presets_.setOperatorEnvelopeIndices(operatorEnvelopeIndices());
     presets_.setPanEnvelopeIndex(panEnvelopeIndex());
+    presets_.setOffsetEnvelopeIndices(feedbackEnvelopeIndices(),
+                                      partParamIndex("penv_on.p0"));
     lastParams_.fill(std::numeric_limits<int32_t>::min());
     for (int i = 0; i < kP1ParamCount; ++i)
         paramValues_[static_cast<std::size_t>(i)] =

@@ -805,33 +805,31 @@
   }
 
   function ampRateNames(op, part) {
-    const n = op + 1;
-    return op === 0
-      ? [namePart("attack", part), namePart("op1.eg.r2", part),
-         namePart("op1.eg.r3", part), namePart("release", part)]
-      : [namePart("op" + n + ".eg.r1", part),
-         namePart("op" + n + ".eg.r2", part),
-         namePart("op" + n + ".eg.r3", part),
-         namePart("op" + n + ".eg.r4", part)];
+    const base = "op" + (op + 1) + ".eg.";
+    return ["warm", "surge", "d1r", "d2r"].map((field) =>
+      field === "surge" && op === 0
+        ? namePart("attack", part)
+        : namePart(base + field, part));
   }
 
   function ampLevelNames(op, part) {
-    const n = op + 1;
-    return [namePart("op" + n + ".eg.l1", part),
-            namePart("op" + n + ".eg.l2", part),
-            namePart("op" + n + ".eg.l3", part)];
+    const base = "op" + (op + 1) + ".eg.";
+    return [namePart(base + "d1l", part), namePart(base + "d2l", part),
+            namePart(base + "d2l", part)];
   }
 
   function fbRateNames(op, part) {
     const n = op + 1;
-    return [1, 2, 3, 4].map((i) =>
-      namePart("op" + n + "_fbenv_r" + i, part));
+    return [1, 2, 3].map((i) =>
+      namePart("op" + n + "_fbenv_r" + i, part)).concat(
+      namePart("op" + n + "_fbenv_relr", part));
   }
 
   function fbLevelNames(op, part) {
     const n = op + 1;
-    return [1, 2, 3, 4].map((i) =>
-      namePart("op" + n + "_fbenv_l" + i, part));
+    return [1, 2, 3].map((i) =>
+      namePart("op" + n + "_fbenv_l" + i, part)).concat(
+      namePart("op" + n + "_fbenv_rell", part));
   }
 
   function morphRateNames(op, part) {
@@ -847,11 +845,13 @@
   }
 
   function pitchRateNames(part) {
-    return [1, 2, 3, 4].map((i) => namePart("penv_r" + i, part));
+    return [1, 2, 3].map((i) => namePart("penv_r" + i, part)).concat(
+      namePart("penv_relr", part));
   }
 
   function pitchLevelNames(part) {
-    return [1, 2, 3, 4].map((i) => namePart("penv_l" + i, part));
+    return [1, 2, 3].map((i) => namePart("penv_l" + i, part)).concat(
+      namePart("penv_rell", part));
   }
 
   function filterRateNames(part) {
@@ -2576,8 +2576,8 @@
       { signed: true, scaleMax: 12,
         transform: (value) => value * 12 / 32768 }));
     const penvKnobs = div("knobs");
-    for (const base of ["penv_r1", "penv_r2", "penv_r3", "penv_r4",
-      "penv_l1", "penv_l2", "penv_l3", "penv_l4"]) {
+    for (const base of ["penv_r1", "penv_r2", "penv_r3", "penv_relr",
+      "penv_l1", "penv_l2", "penv_l3", "penv_rell", "penv_mode"]) {
       const spec = specByBase(base);
       if (spec !== undefined) penvKnobs.append(controlFor(spec));
     }

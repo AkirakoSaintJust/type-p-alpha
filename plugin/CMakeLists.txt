@@ -114,6 +114,12 @@ target_include_directories(feedback_bipolar PRIVATE "${P1_GENERATED_DIR}")
 add_dependencies(feedback_bipolar p1_params)
 add_test(NAME feedback_bipolar COMMAND feedback_bipolar)
 
+add_executable(pitch_envelope tests/pitch_envelope.cpp)
+target_link_libraries(pitch_envelope PRIVATE p1_engine)
+target_include_directories(pitch_envelope PRIVATE "${P1_GENERATED_DIR}")
+add_dependencies(pitch_envelope p1_params)
+add_test(NAME pitch_envelope COMMAND pitch_envelope)
+
 add_executable(operator_lfos tests/operator_lfos.cpp)
 target_link_libraries(operator_lfos PRIVATE p1_engine)
 target_include_directories(operator_lfos PRIVATE "${P1_GENERATED_DIR}")

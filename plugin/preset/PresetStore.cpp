@@ -15,6 +15,10 @@ namespace p1 {
 
 namespace {
 
+/* The five envelope blocks that gained a slot in version 13: one pitch and one
+ * feedback envelope for each operator. */
+constexpr int kOffsetEnvelopeBlocks = 5;
+
 /* The version 11 pan envelope block: on, r1, r2, r3, r4, l1, l2, l3, l4, depth.
  * The version 12 block: on, r1, r2, r3, l1, l2, l3, rel rate, rel level, mode.
  * The release rate and level come from the old r4 and l4, and the depth becomes
@@ -38,6 +42,31 @@ void remapPanBlock(std::vector<int32_t>& params, int base)
     at(7) = relRate;
     at(8) = relLevel;
     at(9) = depth != 0 ? 1 : 0;
+}
+
+/* The version 12 offset envelope block: on, r1, r2, r3, r4, l1, l2, l3, l4.
+ * The version 13 block: on, r1, r2, r3, l1, l2, l3, rel rate, rel level, mode.
+ * The old r4 and l4 are the release rate and level. The old envelope always
+ * sustained at l3, so the mode is sustain on. */
+void remapOffsetBlock(const std::vector<int32_t>& in, int oldBase,
+                      std::vector<int32_t>& out, int newBase)
+{
+    const auto at = [oldBase, &in](int k) -> int32_t {
+        return in[static_cast<std::size_t>(oldBase + k)];
+    };
+    const auto put = [newBase, &out](int k, int32_t value) {
+        out[static_cast<std::size_t>(newBase + k)] = value;
+    };
+    put(0, at(0));
+    put(1, at(1));
+    put(2, at(2));
+    put(3, at(3));
+    put(4, at(5));
+    put(5, at(6));
+    put(6, at(7));
+    put(7, at(4));
+    put(8, at(8));
+    put(9, 1);
 }
 
 } // namespace
@@ -379,6 +408,17 @@ bool PresetStore::loadLibrary(const uint8_t* data, std::size_t size)
     return true;
 }
 
+int PresetStore::toVersion12Index(int targetIndex) const
+{
+    int shift = 0;
+    if (pitchEnvBase_ >= 0 && pitchEnvBase_ < targetIndex)
+        ++shift;
+    for (int base : fbEnvBase_)
+        if (base >= 0 && base < targetIndex)
+            ++shift;
+    return targetIndex - shift;
+}
+
 bool PresetStore::migratePartBank(const uint8_t* data, uint32_t oldCount,
                                   std::vector<uint8_t>& out) const
 {
@@ -386,10 +426,37 @@ bool PresetStore::migratePartBank(const uint8_t* data, uint32_t oldCount,
     const auto newRecord = partRecordSize();
     out.assign(newRecord * kPartSlots, 0xFF);
     const auto target = static_cast<std::size_t>(partParamCount_);
+    const auto v12Count =
+        target >= static_cast<std::size_t>(kOffsetEnvelopeBlocks)
+            ? target - static_cast<std::size_t>(kOffsetEnvelopeBlocks)
+            : target;
+
+    /* The version 12 operator warm-up indices, before the five offset envelope
+     * slots were inserted. */
+    std::array<int, 4> opWarm12{{-1, -1, -1, -1}};
+    for (int op = 0; op < 4; ++op) {
+        const int warm = opEnvWarm_[static_cast<std::size_t>(op)];
+        if (warm >= 0)
+            opWarm12[static_cast<std::size_t>(op)] = toVersion12Index(warm);
+    }
     const bool remapOperators =
-        opEnvWarm_[0] >= 0 && opEnvWarm_[1] >= 0 && opEnvWarm_[2] >= 0 &&
-        opEnvWarm_[3] >= 0 && static_cast<std::size_t>(oldCount) + 4u == target;
+        opWarm12[0] >= 0 && opWarm12[1] >= 0 && opWarm12[2] >= 0 &&
+        opWarm12[3] >= 0 &&
+        static_cast<std::size_t>(oldCount) + 4u == v12Count;
+
+    /* The five inserted blocks, in ascending target order. */
+    std::array<int, kOffsetEnvelopeBlocks> offsetBases{};
+    int offsetCount = 0;
+    for (int base : fbEnvBase_)
+        if (base >= 0)
+            offsetBases[static_cast<std::size_t>(offsetCount++)] = base;
+    if (pitchEnvBase_ >= 0)
+        offsetBases[static_cast<std::size_t>(offsetCount++)] = pitchEnvBase_;
+    std::sort(offsetBases.begin(),
+              offsetBases.begin() + static_cast<std::ptrdiff_t>(offsetCount));
+
     std::vector<int32_t> grown;
+    std::vector<int32_t> expanded;
     std::vector<uint8_t> inOperatorEnvelope;
     for (int slot = 0; slot < kPartSlots; ++slot) {
         const auto* raw = data + static_cast<std::size_t>(slot) * oldRecord;
@@ -400,14 +467,15 @@ bool PresetStore::migratePartBank(const uint8_t* data, uint32_t oldCount,
         if (!preset_part_unpack(raw, oldCount, name, params.data()))
             return false;
         if (remapOperators) {
-            grown.assign(target, 0);
-            inOperatorEnvelope.assign(target, 0);
+            grown.assign(v12Count, 0);
+            inOperatorEnvelope.assign(v12Count, 0);
             for (int op = 0; op < 4; ++op) {
-                const int start = opEnvWarm_[static_cast<std::size_t>(op)];
+                const int start = opWarm12[static_cast<std::size_t>(op)];
                 const int oldStart = start - op;
-                if (start < 0 || static_cast<std::size_t>(start) + 8u > target ||
+                if (start < 0 ||
+                    static_cast<std::size_t>(start) + 8u > v12Count ||
                     oldStart < 0 ||
-                    static_cast<std::size_t>(oldStart) + 6u >= params.size())
+                    static_cast<std::size_t>(oldStart) + 7u > params.size())
                     return false;
                 /* warm, surge, d1r, d1l, d2r, d2l, rel, mode from the old
                  * r1, r2, r3, r4, l1, l2, l3 block. */
@@ -428,26 +496,66 @@ bool PresetStore::migratePartBank(const uint8_t* data, uint32_t oldCount,
                 for (int k = 0; k < 8; ++k)
                     inOperatorEnvelope[static_cast<std::size_t>(start + k)] = 1;
             }
-            for (std::size_t i = 0; i < target; ++i) {
+            for (std::size_t i = 0; i < v12Count; ++i) {
                 if (inOperatorEnvelope[i])
                     continue;
                 std::size_t shift = 0;
-                for (int warm : opEnvWarm_)
-                    if (static_cast<std::size_t>(warm) < i)
+                for (int warm : opWarm12)
+                    if (warm >= 0 && static_cast<std::size_t>(warm) < i)
                         ++shift;
                 const auto oldIndex = i - shift;
                 grown[i] = oldIndex < params.size() ? params[oldIndex]
                                                     : defaults_[i];
             }
         } else {
-            grown = defaults_;
-            const auto copy = std::min<std::size_t>(oldCount, target);
+            grown.assign(v12Count, 0);
+            const auto copy = std::min<std::size_t>(oldCount, v12Count);
             for (std::size_t i = 0; i < copy; ++i)
                 grown[i] = params[i];
+            for (std::size_t i = copy; i < v12Count; ++i)
+                grown[i] = i < defaults_.size() ? defaults_[i] : 0;
         }
-        if (panEnvBase_ >= 4 &&
-            panEnvBase_ + 6 <= static_cast<int>(oldCount))
-            remapPanBlock(grown, panEnvBase_);
+        const int pan12 =
+            panEnvBase_ >= 0 ? toVersion12Index(panEnvBase_) : -1;
+        if (raw[0] < 12u && pan12 >= 4 &&
+            pan12 + 6 <= static_cast<int>(v12Count))
+            remapPanBlock(grown, pan12);
+        if (raw[0] < 13u) {
+            expanded.assign(target, 0);
+            if (offsetCount != kOffsetEnvelopeBlocks) {
+                const auto copy = std::min<std::size_t>(grown.size(), target);
+                for (std::size_t i = 0; i < copy; ++i)
+                    expanded[i] = grown[i];
+            } else {
+                int shift = 0;
+                int next = 0;
+                for (int i = 0; i < static_cast<int>(target); ++i) {
+                    if (next < offsetCount && i == offsetBases[next]) {
+                        const int oldBase = i - shift;
+                        if (oldBase < 0 ||
+                            static_cast<std::size_t>(oldBase) + 9u >
+                                grown.size())
+                            return false;
+                        remapOffsetBlock(grown, oldBase, expanded, i);
+                        i += 9;
+                        ++shift;
+                        ++next;
+                        continue;
+                    }
+                    const int oldIndex = i - shift;
+                    expanded[static_cast<std::size_t>(i)] =
+                        oldIndex >= 0 &&
+                                static_cast<std::size_t>(oldIndex) < grown.size()
+                            ? grown[static_cast<std::size_t>(oldIndex)]
+                            : (static_cast<std::size_t>(i) < defaults_.size()
+                                   ? defaults_[static_cast<std::size_t>(i)]
+                                   : 0);
+                }
+            }
+            grown.swap(expanded);
+        }
+        if (grown.size() < target)
+            grown.resize(target, 0);
         if (raw[0] < PRESET_CUTOFF_LAW_VERSION && cutoffIndex_ >= 0 &&
             cutoffIndex_ < partParamCount_)
             grown[static_cast<std::size_t>(cutoffIndex_)] =

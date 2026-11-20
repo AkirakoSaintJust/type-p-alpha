@@ -263,28 +263,37 @@ public:
                    {params::opFeedbackRate(op, 0, part),
                     params::opFeedbackRate(op, 1, part),
                     params::opFeedbackRate(op, 2, part),
-                    params::opFeedbackRate(op, 3, part)},
+                    params::opFeedbackRelRate(op, part)},
                    {params::opFeedbackLevel(op, 0, part),
                     params::opFeedbackLevel(op, 1, part),
                     params::opFeedbackLevel(op, 2, part),
-                    params::opFeedbackLevel(op, 3, part)},
+                    params::opFeedbackRelLevel(op, part)},
                    colour(tokens::purple), -32768.0, 32767.0, true),
-          on_(editor.state(), params::opFeedbackOn(op, part), "on")
+          on_(editor.state(), params::opFeedbackOn(op, part), "on"),
+          mode_(editor.state(), params::opFeedbackMode(op, part),
+                {"off", "sustain", "loop1", "loop2"})
     {
         addAndMakeVisible(envView_);
         addAndMakeVisible(on_);
-        for (int i = 0; i < 4; ++i) {
+        addAndMakeVisible(mode_);
+        for (int i = 0; i < 3; ++i) {
             rates_[static_cast<std::size_t>(i)] = std::make_unique<ParamKnob>(
                 editor.state(), params::opFeedbackRate(op, i, part),
-                "r" + juce::String(i + 1), 28.0f);
+                "r" + juce::String(i + 1), 20.0f);
             addAndMakeVisible(*rates_[static_cast<std::size_t>(i)]);
         }
-        for (int i = 0; i < 4; ++i) {
+        rates_[3] = std::make_unique<ParamKnob>(
+            editor.state(), params::opFeedbackRelRate(op, part), "rel", 20.0f);
+        addAndMakeVisible(*rates_[3]);
+        for (int i = 0; i < 3; ++i) {
             levels_[static_cast<std::size_t>(i)] = std::make_unique<ParamKnob>(
                 editor.state(), params::opFeedbackLevel(op, i, part),
-                "l" + juce::String(i + 1), 28.0f);
+                "l" + juce::String(i + 1), 20.0f);
             addAndMakeVisible(*levels_[static_cast<std::size_t>(i)]);
         }
+        levels_[3] = std::make_unique<ParamKnob>(
+            editor.state(), params::opFeedbackRelLevel(op, part), "rl", 20.0f);
+        addAndMakeVisible(*levels_[3]);
         setHeaderTrailingWidth(48);
     }
 
@@ -293,16 +302,17 @@ public:
         P1Card::resized();
         auto area = contentArea();
         area.removeFromTop(8);
-        auto top = area.removeFromTop(64);
-        envView_.setBounds(top);
-        auto rates = area.removeFromTop(64);
+        envView_.setBounds(area.removeFromTop(32));
+        auto rates = area.removeFromTop(56);
         const int rateCell = rates.getWidth() / 4;
         for (auto& knob : rates_)
             knob->setBounds(rates.removeFromLeft(rateCell));
-        auto levels = area.removeFromTop(64);
+        auto levels = area.removeFromTop(56);
         const int levelCell = levels.getWidth() / 4;
         for (auto& knob : levels_)
             knob->setBounds(levels.removeFromLeft(levelCell));
+        auto modeRow = area.removeFromTop(24);
+        mode_.setBounds(modeRow.removeFromLeft(levelCell * 2));
         on_.setBounds(headerTrailingBounds());
     }
 
@@ -311,6 +321,7 @@ public:
 private:
     P1Envelope envView_;
     P1Toggle on_;
+    ParamChoice mode_;
     std::array<std::unique_ptr<ParamKnob>, 4> rates_{};
     std::array<std::unique_ptr<ParamKnob>, 4> levels_{};
 };

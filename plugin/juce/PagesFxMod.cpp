@@ -158,26 +158,36 @@ public:
           part_(editor.activePart()),
           envView_(editor.state(),
                    {params::pitchEnvRate(0, part_), params::pitchEnvRate(1, part_),
-                    params::pitchEnvRate(2, part_), params::pitchEnvRate(3, part_)},
+                    params::pitchEnvRate(2, part_),
+                    params::pitchEnvRelRate(part_)},
                    {params::pitchEnvLevel(0, part_), params::pitchEnvLevel(1, part_),
-                    params::pitchEnvLevel(2, part_), params::pitchEnvLevel(3, part_)},
+                    params::pitchEnvLevel(2, part_),
+                    params::pitchEnvRelLevel(part_)},
                    colour(tokens::purple), -32768.0, 32767.0, true),
-          on_(editor.state(), params::pitchEnvOn(part_), "on")
+          on_(editor.state(), params::pitchEnvOn(part_), "on"),
+          mode_(editor.state(), params::pitchEnvMode(part_), "mode", 42.0f)
     {
         addAndMakeVisible(envView_);
         addAndMakeVisible(on_);
-        for (int i = 0; i < 4; ++i) {
+        addAndMakeVisible(mode_);
+        for (int i = 0; i < 3; ++i) {
             rates_[static_cast<size_t>(i)] = std::make_unique<ParamKnob>(
                 editor.state(), params::pitchEnvRate(i, part_),
                 "r" + juce::String(i + 1), 42.0f);
             addAndMakeVisible(*rates_[static_cast<size_t>(i)]);
         }
-        for (int i = 0; i < 4; ++i) {
+        rates_[3] = std::make_unique<ParamKnob>(
+            editor.state(), params::pitchEnvRelRate(part_), "rel", 42.0f);
+        addAndMakeVisible(*rates_[3]);
+        for (int i = 0; i < 3; ++i) {
             levels_[static_cast<size_t>(i)] = std::make_unique<ParamKnob>(
                 editor.state(), params::pitchEnvLevel(i, part_),
                 "l" + juce::String(i + 1), 42.0f);
             addAndMakeVisible(*levels_[static_cast<size_t>(i)]);
         }
+        levels_[3] = std::make_unique<ParamKnob>(
+            editor.state(), params::pitchEnvRelLevel(part_), "rl", 42.0f);
+        addAndMakeVisible(*levels_[3]);
     }
 
     void resized() override
@@ -193,6 +203,8 @@ public:
         const int levelCell = levelRow.getWidth() / 4;
         for (auto& knob : levels_)
             knob->setBounds(levelRow.removeFromLeft(levelCell));
+        auto modeRow = area.removeFromTop(84);
+        mode_.setBounds(modeRow.removeFromLeft(levelCell));
         on_.setBounds(getWidth() - 56, 0, 48, 18);
     }
 
@@ -202,6 +214,7 @@ private:
     int part_ = 0;
     P1Envelope envView_;
     P1Toggle on_;
+    ParamKnob mode_;
     std::array<std::unique_ptr<ParamKnob>, 4> rates_{};
     std::array<std::unique_ptr<ParamKnob>, 4> levels_{};
 };

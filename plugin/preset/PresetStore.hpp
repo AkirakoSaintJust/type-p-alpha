@@ -105,6 +105,17 @@ public:
      * mode. -1 means no layout was supplied. */
     void setPanEnvelopeIndex(int index) { panEnvBase_ = index; }
 
+    /* The part-block indices of each operator feedback envelope's `on` param
+     * and of `penv_on`, used to remap a version 12 record where the pitch and
+     * feedback envelopes gained a mode and swapped the fourth level for a
+     * release level. -1 in any slot means no layout was supplied. */
+    void setOffsetEnvelopeIndices(const std::array<int, 4>& feedback,
+                                  int pitch)
+    {
+        fbEnvBase_ = feedback;
+        pitchEnvBase_ = pitch;
+    }
+
     /* Drop the queued changes after the file holds them. */
     void markSaved();
 
@@ -121,9 +132,13 @@ public:
 private:
     static std::string shortName(const std::string& name);
 
+    /* The part-block index in the version 12 layout, before the five offset
+     * envelope slots were inserted. Every inserted block is one slot. */
+    int toVersion12Index(int targetIndex) const;
+
     /* Expand a part bank saved with `oldCount` params per record to the current
-     * count. The new params are appended at the end of the record, which is how
-     * the bend range joined the mode group. */
+     * count. The chain runs version 10 operator blocks, the version 11 pan
+     * reorder, and the version 12 offset envelope insert. */
     bool migratePartBank(const uint8_t* data, uint32_t oldCount,
                          std::vector<uint8_t>& out) const;
 
@@ -147,6 +162,8 @@ private:
     std::array<Multi, kMultiSlots> baseMultis_{};
     std::array<int, 4> opEnvWarm_{{ -1, -1, -1, -1 }};
     int panEnvBase_ = -1;
+    std::array<int, 4> fbEnvBase_{{ -1, -1, -1, -1 }};
+    int pitchEnvBase_ = -1;
 };
 
 } // namespace p1

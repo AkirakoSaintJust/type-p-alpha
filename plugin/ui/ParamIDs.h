@@ -202,6 +202,18 @@ inline juce::String opFeedbackLevel(int op, int index, int part)
     return "op" + juce::String(op + 1) + "_fbenv_l" +
            juce::String(index + 1) + partSuffix(part);
 }
+inline juce::String opFeedbackRelRate(int op, int part)
+{
+    return "op" + juce::String(op + 1) + "_fbenv_relr" + partSuffix(part);
+}
+inline juce::String opFeedbackRelLevel(int op, int part)
+{
+    return "op" + juce::String(op + 1) + "_fbenv_rell" + partSuffix(part);
+}
+inline juce::String opFeedbackMode(int op, int part)
+{
+    return "op" + juce::String(op + 1) + "_fbenv_mode" + partSuffix(part);
+}
 
 inline juce::String pitchRate(int part) { return withPart("pitch_rate", part); }
 inline juce::String pitchDepth(int part) { return withPart("pitch_depth", part); }
@@ -216,6 +228,15 @@ inline juce::String pitchEnvLevel(int index, int part)
 {
     return withPart("penv_l" + juce::String(index + 1), part);
 }
+inline juce::String pitchEnvRelRate(int part)
+{
+    return withPart("penv_relr", part);
+}
+inline juce::String pitchEnvRelLevel(int part)
+{
+    return withPart("penv_rell", part);
+}
+inline juce::String pitchEnvMode(int part) { return withPart("penv_mode", part); }
 
 inline juce::String filterCutoff(int part) { return withPart("cutoff", part); }
 inline juce::String filterRes(int part) { return withPart("res", part); }

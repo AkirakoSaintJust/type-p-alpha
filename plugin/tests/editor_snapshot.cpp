@@ -424,10 +424,13 @@ int main(int argc, char** argv)
         auto feedbackEnv = [](int op) {
             std::vector<juce::String> ids;
             ids.push_back(p1::params::opFeedbackOn(op, 0));
-            for (int i = 0; i < 4; ++i)
+            for (int i = 0; i < 3; ++i)
                 ids.push_back(p1::params::opFeedbackRate(op, i, 0));
-            for (int i = 0; i < 4; ++i)
+            ids.push_back(p1::params::opFeedbackRelRate(op, 0));
+            for (int i = 0; i < 3; ++i)
                 ids.push_back(p1::params::opFeedbackLevel(op, i, 0));
+            ids.push_back(p1::params::opFeedbackRelLevel(op, 0));
+            ids.push_back(p1::params::opFeedbackMode(op, 0));
             return ids;
         };
         auto amplitudeEnv = [](int op) {
