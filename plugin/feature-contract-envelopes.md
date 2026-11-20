@@ -10,9 +10,10 @@
 - **Owner / date:** P1Onken, 2026-11-20.
 - **Disposition:** implemented. The operator amplitude envelope and the pitch,
   feedback, filter, spectral and pan modulation envelopes are on the new stages,
-  with their UI cards, graphs and the version 14 migration. The Linux and WASM
-  renders are the only layers claimed; the macOS AU and the physical device pass
-  remain separate.
+  with their UI cards, graphs and the version 14 migration. The CI plugin
+  validators on Linux, Windows and macOS, the WASM parity gate and the browser
+  smoke tests are the evidence. The macOS DAW matrix, the macOS AU and the
+  physical device pass are separate layers and are not claimed.
 
 ## Operator amplitude envelope
 
