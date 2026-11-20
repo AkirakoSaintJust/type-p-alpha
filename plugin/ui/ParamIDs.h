@@ -21,7 +21,15 @@ inline juce::String algorithm(int part) { return withPart("algorithm", part); }
 inline juce::String channel(int part) { return withPart("channel", part); }
 inline juce::String pan(int part) { return withPart("pan", part); }
 inline juce::String panEnvOn(int part) { return withPart("pan_env_on", part); }
-inline juce::String panEnvDepth(int part) { return withPart("pan_env_depth", part); }
+inline juce::String panEnvRelRate(int part)
+{
+    return withPart("pan_env_relr", part);
+}
+inline juce::String panEnvRelLevel(int part)
+{
+    return withPart("pan_env_rell", part);
+}
+inline juce::String panEnvMode(int part) { return withPart("pan_env_mode", part); }
 inline juce::String panEnvRate(int index, int part)
 {
     return withPart("pan_env_r" + juce::String(index + 1), part);

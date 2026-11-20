@@ -10532,19 +10532,6 @@
     },
     {
       "id": 810,
-      "name": "pan_env_r4.p0",
-      "target": "vm_pan_env_r4",
-      "min": 0,
-      "max": 99,
-      "default": 80,
-      "curve": "linear",
-      "unit": "",
-      "rate": "block",
-      "modulatable": false,
-      "display": "raw"
-    },
-    {
-      "id": 811,
       "name": "pan_env_l1.p0",
       "target": "vm_pan_env_l1",
       "min": -99,
@@ -10557,7 +10544,7 @@
       "display": "raw"
     },
     {
-      "id": 812,
+      "id": 811,
       "name": "pan_env_l2.p0",
       "target": "vm_pan_env_l2",
       "min": -99,
@@ -10570,7 +10557,7 @@
       "display": "raw"
     },
     {
-      "id": 813,
+      "id": 812,
       "name": "pan_env_l3.p0",
       "target": "vm_pan_env_l3",
       "min": -99,
@@ -10583,9 +10570,22 @@
       "display": "raw"
     },
     {
+      "id": 813,
+      "name": "pan_env_relr.p0",
+      "target": "vm_pan_env_relr",
+      "min": 0,
+      "max": 99,
+      "default": 80,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "raw"
+    },
+    {
       "id": 814,
-      "name": "pan_env_l4.p0",
-      "target": "vm_pan_env_l4",
+      "name": "pan_env_rell.p0",
+      "target": "vm_pan_env_rell",
       "min": -99,
       "max": 99,
       "default": 0,
@@ -10597,13 +10597,13 @@
     },
     {
       "id": 815,
-      "name": "pan_env_depth.p0",
-      "target": "vm_pan_env_depth",
-      "min": -100,
-      "max": 100,
+      "name": "pan_env_mode.p0",
+      "target": "vm_pan_env_mode",
+      "min": 0,
+      "max": 3,
       "default": 0,
       "curve": "linear",
-      "unit": "%",
+      "unit": "",
       "rate": "block",
       "modulatable": false,
       "display": "raw"
@@ -21140,19 +21140,6 @@
     },
     {
       "id": 1626,
-      "name": "pan_env_r4.p1",
-      "target": "vm_pan_env_r4",
-      "min": 0,
-      "max": 99,
-      "default": 80,
-      "curve": "linear",
-      "unit": "",
-      "rate": "block",
-      "modulatable": false,
-      "display": "raw"
-    },
-    {
-      "id": 1627,
       "name": "pan_env_l1.p1",
       "target": "vm_pan_env_l1",
       "min": -99,
@@ -21165,7 +21152,7 @@
       "display": "raw"
     },
     {
-      "id": 1628,
+      "id": 1627,
       "name": "pan_env_l2.p1",
       "target": "vm_pan_env_l2",
       "min": -99,
@@ -21178,7 +21165,7 @@
       "display": "raw"
     },
     {
-      "id": 1629,
+      "id": 1628,
       "name": "pan_env_l3.p1",
       "target": "vm_pan_env_l3",
       "min": -99,
@@ -21191,9 +21178,22 @@
       "display": "raw"
     },
     {
+      "id": 1629,
+      "name": "pan_env_relr.p1",
+      "target": "vm_pan_env_relr",
+      "min": 0,
+      "max": 99,
+      "default": 80,
+      "curve": "linear",
+      "unit": "",
+      "rate": "block",
+      "modulatable": false,
+      "display": "raw"
+    },
+    {
       "id": 1630,
-      "name": "pan_env_l4.p1",
-      "target": "vm_pan_env_l4",
+      "name": "pan_env_rell.p1",
+      "target": "vm_pan_env_rell",
       "min": -99,
       "max": 99,
       "default": 0,
@@ -21205,13 +21205,13 @@
     },
     {
       "id": 1631,
-      "name": "pan_env_depth.p1",
-      "target": "vm_pan_env_depth",
-      "min": -100,
-      "max": 100,
+      "name": "pan_env_mode.p1",
+      "target": "vm_pan_env_mode",
+      "min": 0,
+      "max": 3,
       "default": 0,
       "curve": "linear",
-      "unit": "%",
+      "unit": "",
       "rate": "block",
       "modulatable": false,
       "display": "raw"

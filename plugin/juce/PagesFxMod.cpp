@@ -213,26 +213,31 @@ public:
           part_(editor.activePart()),
           envView_(editor.state(),
                    {params::panEnvRate(0, part_), params::panEnvRate(1, part_),
-                    params::panEnvRate(2, part_), params::panEnvRate(3, part_)},
+                    params::panEnvRate(2, part_),
+                    params::panEnvRelRate(part_)},
                    {params::panEnvLevel(0, part_), params::panEnvLevel(1, part_),
-                    params::panEnvLevel(2, part_), params::panEnvLevel(3, part_)},
+                    params::panEnvLevel(2, part_)},
                    colour(tokens::purple), -99.0, 99.0, true),
           on_(editor.state(), params::panEnvOn(part_), "on"),
-          depth_(editor.state(), params::panEnvDepth(part_), "depth", 42.0f)
+          mode_(editor.state(), params::panEnvMode(part_), "mode", 42.0f)
     {
         addAndMakeVisible(envView_);
         addAndMakeVisible(on_);
-        addAndMakeVisible(depth_);
+        addAndMakeVisible(mode_);
         for (int i = 0; i < 4; ++i) {
+            const juce::String id = i < 3 ? params::panEnvRate(i, part_)
+                                          : params::panEnvRelRate(part_);
             rates_[static_cast<size_t>(i)] = std::make_unique<ParamKnob>(
-                editor.state(), params::panEnvRate(i, part_),
-                "r" + juce::String(i + 1), 42.0f);
+                editor.state(), id, i < 3 ? "r" + juce::String(i + 1) : "rel",
+                42.0f);
             addAndMakeVisible(*rates_[static_cast<size_t>(i)]);
         }
         for (int i = 0; i < 4; ++i) {
+            const juce::String id = i < 3 ? params::panEnvLevel(i, part_)
+                                          : params::panEnvRelLevel(part_);
             levels_[static_cast<size_t>(i)] = std::make_unique<ParamKnob>(
-                editor.state(), params::panEnvLevel(i, part_),
-                "l" + juce::String(i + 1), 42.0f);
+                editor.state(), id, i < 3 ? "l" + juce::String(i + 1) : "rl",
+                42.0f);
             addAndMakeVisible(*levels_[static_cast<size_t>(i)]);
         }
     }
@@ -250,8 +255,8 @@ public:
         const int levelCell = levelRow.getWidth() / 4;
         for (auto& knob : levels_)
             knob->setBounds(levelRow.removeFromLeft(levelCell));
-        auto depthRow = area.removeFromTop(84);
-        depth_.setBounds(depthRow.removeFromLeft(cell));
+        auto modeRow = area.removeFromTop(84);
+        mode_.setBounds(modeRow.removeFromLeft(cell));
         on_.setBounds(getWidth() - 56, 0, 48, 18);
     }
 
@@ -261,7 +266,7 @@ private:
     int part_ = 0;
     P1Envelope envView_;
     P1Toggle on_;
-    ParamKnob depth_;
+    ParamKnob mode_;
     std::array<std::unique_ptr<ParamKnob>, 4> rates_{};
     std::array<std::unique_ptr<ParamKnob>, 4> levels_{};
 };

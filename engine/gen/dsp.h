@@ -292,12 +292,12 @@ typedef struct type_p_alpha_state {
     int32_t vm_pan_env_r1[2];
     int32_t vm_pan_env_r2[2];
     int32_t vm_pan_env_r3[2];
-    int32_t vm_pan_env_r4[2];
     int32_t vm_pan_env_l1[2];
     int32_t vm_pan_env_l2[2];
     int32_t vm_pan_env_l3[2];
-    int32_t vm_pan_env_l4[2];
-    int32_t vm_pan_env_depth[2];
+    int32_t vm_pan_env_relr[2];
+    int32_t vm_pan_env_rell[2];
+    int32_t vm_pan_env_mode[2];
     int32_t part_channel[2];
     int32_t part_low[2];
     int32_t part_high[2];

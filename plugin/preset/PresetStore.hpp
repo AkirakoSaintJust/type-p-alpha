@@ -100,6 +100,11 @@ public:
         opEnvWarm_ = indices;
     }
 
+    /* The part-block index of `pan_env_on`, used to remap a version 11 record
+     * where the pan envelope dropped the depth and gained a release level and a
+     * mode. -1 means no layout was supplied. */
+    void setPanEnvelopeIndex(int index) { panEnvBase_ = index; }
+
     /* Drop the queued changes after the file holds them. */
     void markSaved();
 
@@ -141,6 +146,7 @@ private:
     std::array<Part, kPartSlots> baseParts_{};
     std::array<Multi, kMultiSlots> baseMultis_{};
     std::array<int, 4> opEnvWarm_{{ -1, -1, -1, -1 }};
+    int panEnvBase_ = -1;
 };
 
 } // namespace p1

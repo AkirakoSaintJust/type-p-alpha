@@ -321,11 +321,13 @@ void test_pan_envelope()
 {
     p1::Engine engine;
     engine.reset();
-    engine.setParam(param_id("pan_env_depth.p0"), 100);
     engine.setParam(param_id("pan_env_l1.p0"), 99);
     engine.setParam(param_id("pan_env_l2.p0"), 99);
     engine.setParam(param_id("pan_env_l3.p0"), 99);
     engine.setParam(param_id("pan_env_r1.p0"), 99);
+    engine.setParam(param_id("pan_env_r2.p0"), 99);
+    engine.setParam(param_id("pan_env_r3.p0"), 99);
+    engine.setParam(param_id("pan_env_mode.p0"), 1);
     engine.noteOn(60, 100);
     int32_t buffer[512] = {};
     for (int i = 0; i < 16; ++i)
@@ -334,7 +336,7 @@ void test_pan_envelope()
               engine.state()->pan_l_q16[0] < 1000,
           "the pan envelope swings to the right");
 
-    engine.setParam(param_id("pan_env_r4.p0"), 99);
+    engine.setParam(param_id("pan_env_relr.p0"), 99);
     engine.noteOff(60);
     for (int i = 0; i < 64; ++i)
         engine.render(buffer, 256);

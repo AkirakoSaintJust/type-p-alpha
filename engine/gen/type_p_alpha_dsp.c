@@ -292,12 +292,12 @@ typedef struct type_p_alpha_state {
     int32_t vm_pan_env_r1[2];
     int32_t vm_pan_env_r2[2];
     int32_t vm_pan_env_r3[2];
-    int32_t vm_pan_env_r4[2];
     int32_t vm_pan_env_l1[2];
     int32_t vm_pan_env_l2[2];
     int32_t vm_pan_env_l3[2];
-    int32_t vm_pan_env_l4[2];
-    int32_t vm_pan_env_depth[2];
+    int32_t vm_pan_env_relr[2];
+    int32_t vm_pan_env_rell[2];
+    int32_t vm_pan_env_mode[2];
     int32_t part_channel[2];
     int32_t part_low[2];
     int32_t part_high[2];
@@ -2093,12 +2093,12 @@ const dsp_param type_p_alpha_dsp_params[1646] = {
     { 807u, "pan_env_r1.p0", 0, 99, 80, 0u, 0u, "" },
     { 808u, "pan_env_r2.p0", 0, 99, 60, 0u, 0u, "" },
     { 809u, "pan_env_r3.p0", 0, 99, 50, 0u, 0u, "" },
-    { 810u, "pan_env_r4.p0", 0, 99, 80, 0u, 0u, "" },
-    { 811u, "pan_env_l1.p0", -99, 99, 0, 0u, 0u, "" },
-    { 812u, "pan_env_l2.p0", -99, 99, 0, 0u, 0u, "" },
-    { 813u, "pan_env_l3.p0", -99, 99, 0, 0u, 0u, "" },
-    { 814u, "pan_env_l4.p0", -99, 99, 0, 0u, 0u, "" },
-    { 815u, "pan_env_depth.p0", -100, 100, 0, 0u, 0u, "%" },
+    { 810u, "pan_env_l1.p0", -99, 99, 0, 0u, 0u, "" },
+    { 811u, "pan_env_l2.p0", -99, 99, 0, 0u, 0u, "" },
+    { 812u, "pan_env_l3.p0", -99, 99, 0, 0u, 0u, "" },
+    { 813u, "pan_env_relr.p0", 0, 99, 80, 0u, 0u, "" },
+    { 814u, "pan_env_rell.p0", -99, 99, 0, 0u, 0u, "" },
+    { 815u, "pan_env_mode.p0", 0, 3, 0, 0u, 0u, "" },
     { 816u, "op1_ratio.p1", 32768, 1048576, 65536, 0u, 0u, "" },
     { 817u, "op1_detune.p1", -50, 50, 0, 0u, 0u, "" },
     { 818u, "op1_waveform.p1", 0, 13, 0, 0u, 0u, "" },
@@ -2909,12 +2909,12 @@ const dsp_param type_p_alpha_dsp_params[1646] = {
     { 1623u, "pan_env_r1.p1", 0, 99, 80, 0u, 0u, "" },
     { 1624u, "pan_env_r2.p1", 0, 99, 60, 0u, 0u, "" },
     { 1625u, "pan_env_r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 1626u, "pan_env_r4.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1627u, "pan_env_l1.p1", -99, 99, 0, 0u, 0u, "" },
-    { 1628u, "pan_env_l2.p1", -99, 99, 0, 0u, 0u, "" },
-    { 1629u, "pan_env_l3.p1", -99, 99, 0, 0u, 0u, "" },
-    { 1630u, "pan_env_l4.p1", -99, 99, 0, 0u, 0u, "" },
-    { 1631u, "pan_env_depth.p1", -100, 100, 0, 0u, 0u, "%" },
+    { 1626u, "pan_env_l1.p1", -99, 99, 0, 0u, 0u, "" },
+    { 1627u, "pan_env_l2.p1", -99, 99, 0, 0u, 0u, "" },
+    { 1628u, "pan_env_l3.p1", -99, 99, 0, 0u, 0u, "" },
+    { 1629u, "pan_env_relr.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1630u, "pan_env_rell.p1", -99, 99, 0, 0u, 0u, "" },
+    { 1631u, "pan_env_mode.p1", 0, 3, 0, 0u, 0u, "" },
     { 1632u, "breakpoint", 0, 127, 60, 0u, 0u, "" },
     { 1633u, "key_sens_on", 0, 1, 1, 0u, 0u, "" },
     { 1634u, "vel_sens_on", 0, 1, 1, 0u, 0u, "" },
@@ -3742,12 +3742,12 @@ static const type_p_alpha_slot_t type_p_alpha_slots[1646] = {
     { (uint32_t)offsetof(type_p_alpha_state, vm_pan_env_r1), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, vm_pan_env_r2), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, vm_pan_env_r3), 0u },
-    { (uint32_t)offsetof(type_p_alpha_state, vm_pan_env_r4), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, vm_pan_env_l1), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, vm_pan_env_l2), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, vm_pan_env_l3), 0u },
-    { (uint32_t)offsetof(type_p_alpha_state, vm_pan_env_l4), 0u },
-    { (uint32_t)offsetof(type_p_alpha_state, vm_pan_env_depth), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, vm_pan_env_relr), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, vm_pan_env_rell), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, vm_pan_env_mode), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_ph_inc_ratio), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_ph_detune), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_osc_waveform), 1u },
@@ -4558,12 +4558,12 @@ static const type_p_alpha_slot_t type_p_alpha_slots[1646] = {
     { (uint32_t)offsetof(type_p_alpha_state, vm_pan_env_r1), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, vm_pan_env_r2), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, vm_pan_env_r3), 1u },
-    { (uint32_t)offsetof(type_p_alpha_state, vm_pan_env_r4), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, vm_pan_env_l1), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, vm_pan_env_l2), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, vm_pan_env_l3), 1u },
-    { (uint32_t)offsetof(type_p_alpha_state, vm_pan_env_l4), 1u },
-    { (uint32_t)offsetof(type_p_alpha_state, vm_pan_env_depth), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, vm_pan_env_relr), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, vm_pan_env_rell), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, vm_pan_env_mode), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, key_bp_bp), 255u },
     { (uint32_t)offsetof(type_p_alpha_state, key_on_on), 255u },
     { (uint32_t)offsetof(type_p_alpha_state, vel_on_on), 255u },
@@ -4598,7 +4598,7 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
     for (uint32_t p = 0; p < N_PART; p++) {
         s->pan_l_q16[p] = 65536;
         s->pan_r_q16[p] = 65536;
-        s->pan_env_stage[p] = 4u;
+        s->pan_env_stage[p] = 7u;
         s->pan_env_level[p] = 0;
         s->pan_env_trig[p] = 0u;
     }
@@ -4885,12 +4885,12 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define vm_pan_env_r1 (S->vm_pan_env_r1)
 #define vm_pan_env_r2 (S->vm_pan_env_r2)
 #define vm_pan_env_r3 (S->vm_pan_env_r3)
-#define vm_pan_env_r4 (S->vm_pan_env_r4)
 #define vm_pan_env_l1 (S->vm_pan_env_l1)
 #define vm_pan_env_l2 (S->vm_pan_env_l2)
 #define vm_pan_env_l3 (S->vm_pan_env_l3)
-#define vm_pan_env_l4 (S->vm_pan_env_l4)
-#define vm_pan_env_depth (S->vm_pan_env_depth)
+#define vm_pan_env_relr (S->vm_pan_env_relr)
+#define vm_pan_env_rell (S->vm_pan_env_rell)
+#define vm_pan_env_mode (S->vm_pan_env_mode)
 #define part_channel (S->part_channel)
 #define part_low (S->part_low)
 #define part_high (S->part_high)
@@ -5891,15 +5891,11 @@ P1_DSP_API void type_p_alpha_render_pre_block(void) {
                 (voice_gate[v] || voice_delay[v] > 0u)) { gate = 1; break; }
         if (pan_env_trig[p]) {
             pan_env_trig[p] = 0u; pan_env_stage[p] = 0u;
-            pan_env_level[p] = 0;
+            pan_env_level[p] = vm_pan[p];
         }
-        if (gate) {
-            if (pan_env_stage[p] == 4u) {
-                pan_env_stage[p] = 0u; pan_env_level[p] = 0;
-            }
-        } else if (pan_env_stage[p] != 4u) {
-            pan_env_stage[p] = 4u;
-        }
+        if (!gate && pan_env_stage[p] != 6u &&
+            pan_env_stage[p] != 7u)
+            pan_env_stage[p] = 6u;
         if (pan_env_stage[p] == 0u) {
             pan_env_level[p] = p1_onepole(pan_env_level[p], vm_pan_env_l1[p], p1_rate_coeff[vm_pan_env_r1[p]]);
             int32_t d = pan_env_level[p] - vm_pan_env_l1[p];
@@ -5916,19 +5912,39 @@ P1_DSP_API void type_p_alpha_render_pre_block(void) {
             pan_env_level[p] = p1_onepole(pan_env_level[p], vm_pan_env_l3[p], p1_rate_coeff[vm_pan_env_r3[p]]);
             int32_t d = pan_env_level[p] - vm_pan_env_l3[p];
             if (d < 0) d = -d;
-            if (d <= 8) { pan_env_level[p] = vm_pan_env_l3[p]; pan_env_stage[p] = 3u; }
+            if (d <= 8) {
+                pan_env_level[p] = vm_pan_env_l3[p];
+                if (vm_pan_env_mode[p] == 0u ||
+                    (vm_pan_env_mode[p] == 1u && vm_pan_env_l3[p] == vm_pan_env_rell[p]))
+                    pan_env_stage[p] = 6u;
+                else if (vm_pan_env_mode[p] == 1u)
+                    pan_env_stage[p] = 3u;
+                else
+                    pan_env_stage[p] = 4u;
+            }
         }
         if (pan_env_stage[p] == 3u)
             pan_env_level[p] = vm_pan_env_l3[p];
         if (pan_env_stage[p] == 4u) {
-            pan_env_level[p] = p1_onepole(pan_env_level[p], vm_pan_env_l4[p], p1_rate_coeff[vm_pan_env_r4[p]]);
-            int32_t d = pan_env_level[p] - vm_pan_env_l4[p];
+            pan_env_level[p] = p1_onepole(pan_env_level[p], vm_pan_env_l2[p],
+                p1_rate_coeff[(vm_pan_env_mode[p] == 2u) ? vm_pan_env_r2[p] : vm_pan_env_r3[p]]);
+            int32_t d = pan_env_level[p] - vm_pan_env_l2[p];
             if (d < 0) d = -d;
-            if (d <= 8) pan_env_level[p] = vm_pan_env_l4[p];
+            if (d <= 8) { pan_env_level[p] = vm_pan_env_l2[p]; pan_env_stage[p] = 5u; }
         }
-        int32_t env = vm_pan_env_on[p] ?
-            pan_env_level[p] * vm_pan_env_depth[p] / 99 : 0;
-        int32_t pan = vm_pan[p] + env;
+        if (pan_env_stage[p] == 5u) {
+            pan_env_level[p] = p1_onepole(pan_env_level[p], vm_pan_env_l3[p], p1_rate_coeff[vm_pan_env_r3[p]]);
+            int32_t d = pan_env_level[p] - vm_pan_env_l3[p];
+            if (d < 0) d = -d;
+            if (d <= 8) { pan_env_level[p] = vm_pan_env_l3[p]; pan_env_stage[p] = 4u; }
+        }
+        if (pan_env_stage[p] == 6u) {
+            pan_env_level[p] = p1_onepole(pan_env_level[p], vm_pan_env_rell[p], p1_rate_coeff[vm_pan_env_relr[p]]);
+            int32_t d = pan_env_level[p] - vm_pan_env_rell[p];
+            if (d < 0) d = -d;
+            if (d <= 8) pan_env_level[p] = vm_pan_env_rell[p];
+        }
+        int32_t pan = (pan_env_stage[p] == 7u) ? vm_pan[p] : (vm_pan_env_on[p] ? pan_env_level[p] : vm_pan[p]);
         if (pan < -100) pan = -100; else if (pan > 100) pan = 100;
         pan_l_q16[p] = pan_l_table[pan + 100];
         pan_r_q16[p] = pan_r_table[pan + 100];

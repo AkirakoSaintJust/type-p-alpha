@@ -165,9 +165,19 @@ int main()
             }
             return -1;
         };
+        const auto indexOf = [](const char* name) {
+            for (int i = 0; i < kP1PartParamCount; ++i) {
+                if (std::string(name) ==
+                    kP1ParamSpecs[static_cast<std::size_t>(i)].id)
+                    return i;
+            }
+            return -1;
+        };
         const int w0 = warmIndex(0);
         const int w1 = warmIndex(1);
-        check(w0 > 0 && w1 > w0, "find the operator envelope blocks");
+        const int panBase = indexOf("pan_env_on.p0");
+        check(w0 > 0 && w1 > w0 && panBase > w1,
+              "find the operator and pan envelope blocks");
         const uint32_t oldCount = kP1PartParamCount - 4u;
         const auto oldRecord = PP_RECORD(oldCount);
         std::vector<uint8_t> oldBank(static_cast<std::size_t>(oldRecord) * 128u,
@@ -177,6 +187,14 @@ int main()
             oldParams[static_cast<std::size_t>(w0) + static_cast<std::size_t>(k)] =
                 11 + k;
         oldParams[static_cast<std::size_t>(kP1PartCutoffIndex) - 4u] = 12345;
+        const int oldPan = panBase - 4;
+        oldParams[static_cast<std::size_t>(oldPan)] = 1;
+        oldParams[static_cast<std::size_t>(oldPan) + 4u] = 55;
+        oldParams[static_cast<std::size_t>(oldPan) + 5u] = 11;
+        oldParams[static_cast<std::size_t>(oldPan) + 6u] = 22;
+        oldParams[static_cast<std::size_t>(oldPan) + 7u] = 33;
+        oldParams[static_cast<std::size_t>(oldPan) + 8u] = -44;
+        oldParams[static_cast<std::size_t>(oldPan) + 9u] = 50;
         preset_part_pack(oldBank.data() +
                              static_cast<std::size_t>(3u) * oldRecord,
                          "older", oldParams.data(), oldCount);
@@ -201,6 +219,7 @@ int main()
         p1::PresetStore expanded{kP1PartParamCount, kP1PartCount,
                                  p1::partParamDefaults(), kP1PartCutoffIndex};
         expanded.setOperatorEnvelopeIndices({w0, w1, warmIndex(2), warmIndex(3)});
+        expanded.setPanEnvelopeIndex(panBase);
         check(expanded.loadLibrary(oldLibrary.data(), oldLibrary.size()),
               "load a version 10 library");
         check(expanded.revision() == 9,
@@ -220,6 +239,14 @@ int main()
         check(grown[static_cast<std::size_t>(w0) + 8u] ==
                   oldParams[static_cast<std::size_t>(w0) + 7u],
               "the params after an operator block stay aligned");
+        check(grown[static_cast<std::size_t>(panBase)] == 1 &&
+                  grown[static_cast<std::size_t>(panBase) + 4u] == 11 &&
+                  grown[static_cast<std::size_t>(panBase) + 5u] == 22 &&
+                  grown[static_cast<std::size_t>(panBase) + 6u] == 33 &&
+                  grown[static_cast<std::size_t>(panBase) + 7u] == 55 &&
+                  grown[static_cast<std::size_t>(panBase) + 8u] == -44 &&
+                  grown[static_cast<std::size_t>(panBase) + 9u] == 1,
+              "the pan envelope maps r4 to the release rate and depth to the mode");
         check(grown[static_cast<std::size_t>(kP1PartCutoffIndex)] == 12345,
               "a current-law cutoff is not converted twice");
     }

@@ -15,7 +15,7 @@ namespace {
 
 constexpr double kCoreRate = 48000.0;
 constexpr int kControlBlock = 32;
-constexpr int kStateVersion = 9;
+constexpr int kStateVersion = 10;
 /* The state version whose cutoff values already use the current law. A later
  * version bump must not run the cutoff conversion again. */
 constexpr int kCutoffLawStateVersion = 5;
@@ -47,6 +47,17 @@ std::array<int, 4> operatorEnvelopeIndices()
         }
     }
     return out;
+}
+
+/* The part-block index of the pan envelope, for the version 11 remap. */
+int panEnvelopeIndex()
+{
+    for (int i = 0; i < kP1PartParamCount; ++i) {
+        if (std::string("pan_env_on.p0") ==
+            kP1ParamSpecs[static_cast<std::size_t>(i)].id)
+            return i;
+    }
+    return -1;
 }
 
 } // namespace
@@ -124,6 +135,7 @@ TypePAlphaAudioProcessor::TypePAlphaAudioProcessor()
       apvts_(*this, nullptr, P1_STATE_TREE_ID, createLayout())
 {
     presets_.setOperatorEnvelopeIndices(operatorEnvelopeIndices());
+    presets_.setPanEnvelopeIndex(panEnvelopeIndex());
     lastParams_.fill(std::numeric_limits<int32_t>::min());
     for (int i = 0; i < kP1ParamCount; ++i)
         paramValues_[static_cast<std::size_t>(i)] =

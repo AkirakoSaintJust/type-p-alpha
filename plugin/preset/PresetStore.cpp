@@ -13,6 +13,35 @@ extern "C" {
 
 namespace p1 {
 
+namespace {
+
+/* The version 11 pan envelope block: on, r1, r2, r3, r4, l1, l2, l3, l4, depth.
+ * The version 12 block: on, r1, r2, r3, l1, l2, l3, rel rate, rel level, mode.
+ * The release rate and level come from the old r4 and l4, and the depth becomes
+ * the mode: a non-zero depth was a live envelope, which maps to sustain on. */
+void remapPanBlock(std::vector<int32_t>& params, int base)
+{
+    if (base < 0 || base + 10 > static_cast<int>(params.size()))
+        return;
+    const auto at = [base, &params](int k) -> int32_t& {
+        return params[static_cast<std::size_t>(base + k)];
+    };
+    const int32_t relRate = at(4);
+    const int32_t l1 = at(5);
+    const int32_t l2 = at(6);
+    const int32_t l3 = at(7);
+    const int32_t relLevel = at(8);
+    const int32_t depth = at(9);
+    at(4) = l1;
+    at(5) = l2;
+    at(6) = l3;
+    at(7) = relRate;
+    at(8) = relLevel;
+    at(9) = depth != 0 ? 1 : 0;
+}
+
+} // namespace
+
 PresetStore::PresetStore(int partParamCount, int partCount,
                          std::vector<int32_t> defaults, int cutoffIndex)
     : cutoffIndex_(cutoffIndex >= 0 && cutoffIndex < partParamCount
@@ -170,6 +199,8 @@ bool PresetStore::loadPartBank(const uint8_t* data, std::size_t size)
         std::vector<int32_t> params(static_cast<std::size_t>(partParamCount_));
         if (preset_part_unpack(raw, static_cast<uint32_t>(partParamCount_), name,
                                params.data())) {
+            if (panEnvBase_ >= 0 && raw[0] < 12u)
+                remapPanBlock(params, panEnvBase_);
             if (raw[0] < PRESET_CUTOFF_LAW_VERSION && cutoffIndex_ >= 0)
                 params[static_cast<std::size_t>(cutoffIndex_)] =
                     p1::cutoffOldToNew(
@@ -414,6 +445,9 @@ bool PresetStore::migratePartBank(const uint8_t* data, uint32_t oldCount,
             for (std::size_t i = 0; i < copy; ++i)
                 grown[i] = params[i];
         }
+        if (panEnvBase_ >= 4 &&
+            panEnvBase_ + 6 <= static_cast<int>(oldCount))
+            remapPanBlock(grown, panEnvBase_);
         if (raw[0] < PRESET_CUTOFF_LAW_VERSION && cutoffIndex_ >= 0 &&
             cutoffIndex_ < partParamCount_)
             grown[static_cast<std::size_t>(cutoffIndex_)] =
