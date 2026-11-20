@@ -1113,14 +1113,19 @@ void P1SpectrumDisplay::paint(juce::Graphics& g)
 
 P1Envelope::P1Envelope(APVTS& state, juce::StringArray rateIDs,
                        juce::StringArray levelIDs, juce::Colour curveColour,
-                       double levelMin, double levelMax, bool zeroLine)
+                       double levelMin, double levelMax, bool zeroLine,
+                       EnvelopeShape shape, juce::String modeID,
+                       juce::String startID)
     : state_(state),
       rateIDs_(std::move(rateIDs)),
       levelIDs_(std::move(levelIDs)),
       colour_(curveColour),
       levelMin_(levelMin),
       levelMax_(levelMax),
-      zeroLine_(zeroLine)
+      zeroLine_(zeroLine),
+      shape_(shape),
+      modeID_(std::move(modeID)),
+      startID_(std::move(startID))
 {
     setInterceptsMouseClicks(false, false);
 }
@@ -1136,48 +1141,32 @@ void P1Envelope::paint(juce::Graphics& g)
         g.setColour(colour(tokens::lineStrong));
         g.drawLine(area.getX(), mid, area.getRight(), mid, 1.0f);
     }
-    std::array<int32_t, 4> rates{};
-    std::array<double, 4> levels{};
-    for (int i = 0; i < 4; ++i) {
+
+    std::array<int32_t, 5> rates{};
+    for (int i = 0; i < rateIDs_.size() && i < 5; ++i) {
         if (auto* v = state_.getRawParameterValue(rateIDs_[i]))
             rates[static_cast<size_t>(i)] =
                 static_cast<int32_t>(std::lround(v->load()));
     }
-    for (int i = 0; i < 4 && i < levelIDs_.size(); ++i) {
+    std::array<double, 4> levels{};
+    for (int i = 0; i < levelIDs_.size() && i < 4; ++i) {
         if (auto* v = state_.getRawParameterValue(levelIDs_[i]))
             levels[static_cast<size_t>(i)] = static_cast<double>(v->load());
     }
-
-    /* Stage weight is the square of the rate's distance from 99, so 99 has no
-     * horizontal run and reads as vertical whatever its target level. The four
-     * weights are normalised to fill the graph, which keeps the usual 50 to 80
-     * settings full width instead of cramming them into the left edge.
-     *
-     * A four-level envelope (pitch, feedback) uses one stage per rate, so it has
-     * no sustain hold. The three-level amplitude and spectral envelopes keep the
-     * short hold between the last decay and the release. */
-    const auto stageWeight = [](int32_t rate) -> float {
-        const float t = static_cast<float>(99 - juce::jlimit(0, 99, rate));
-        return t * t;
-    };
-    const bool fourStage = levelIDs_.size() >= 4;
-    const std::array<float, 4> weight = {
-        stageWeight(rates[0]), stageWeight(rates[1]), stageWeight(rates[2]),
-        stageWeight(rates[3])};
-    const float sum = weight[0] + weight[1] + weight[2] + weight[3];
-    const float sustain = fourStage ? 0.0f : 8.0f;
-    const float scale = sum > 0.0f
-                            ? (area.getWidth() - 8.0f - sustain) / sum
-                            : 0.0f;
-    const std::array<float, 5> len = {
-        weight[0] * scale, weight[1] * scale, weight[2] * scale,
-        fourStage ? weight[3] * scale : sustain,
-        fourStage ? 0.0f : weight[3] * scale};
+    int mode = 0;
+    if (modeID_.isNotEmpty()) {
+        if (auto* v = state_.getRawParameterValue(modeID_))
+            mode = static_cast<int>(std::lround(v->load()));
+    }
 
     auto levelY = [this, area, mid](double level) {
         if (zeroLine_) {
-            return static_cast<float>(mid - level * (area.getHeight() * 0.5 - 4.0) /
-                                                32768.0);
+            const double extreme =
+                juce::jmax(std::abs(levelMin_), std::abs(levelMax_));
+            const double denom = extreme > 1.0 ? extreme : 32768.0;
+            return static_cast<float>(mid - level *
+                                               (area.getHeight() * 0.5 - 4.0) /
+                                               denom);
         }
         const double range = levelMax_ - levelMin_;
         const double norm = range > 0.0 ? (level - levelMin_) / range : 0.0;
@@ -1185,25 +1174,190 @@ void P1Envelope::paint(juce::Graphics& g)
                                   norm * (area.getHeight() - 8.0));
     };
 
-    const float right = area.getRight() - 4.0f;
-    float x = area.getX() + 4.0f;
-    const auto advance = [&x, right](float stage) {
-        x += stage;
-        if (x > right)
-            x = right;
-        return x;
-    };
-    juce::Path path;
-    path.startNewSubPath(x, levelY(0.0));
-    path.lineTo(advance(len[0]), levelY(levels[0]));
-    path.lineTo(advance(len[1]), levelY(levels[1]));
-    path.lineTo(advance(len[2]), levelY(levels[2]));
-    if (fourStage) {
-        path.lineTo(advance(len[3]), levelY(levels[3]));
-    } else {
-        path.lineTo(advance(len[3]), levelY(levels[2]));
-        path.lineTo(advance(len[4]), levelY(levels[3]));
+    /* The old four-rate, three-level shape, still used by the filter and
+     * spectral envelopes until their absolute migration lands. */
+    if (shape_ == EnvelopeShape::legacyFourStage) {
+        /* Stage weight is the square of the rate's distance from 99, so 99 has
+         * no horizontal run and reads as vertical whatever its target level.
+         * The four weights are normalised to fill the graph, which keeps the
+         * usual 50 to 80 settings full width instead of cramming them into the
+         * left edge. A four-level envelope uses one stage per rate, so it has
+         * no sustain hold. The three-level amplitude and spectral envelopes
+         * keep the short hold between the last decay and the release. */
+        const auto stageWeight = [](int32_t rate) -> float {
+            const float t = static_cast<float>(99 - juce::jlimit(0, 99, rate));
+            return t * t;
+        };
+        const bool fourStage = levelIDs_.size() >= 4;
+        const std::array<float, 4> weight = {
+            stageWeight(rates[0]), stageWeight(rates[1]), stageWeight(rates[2]),
+            stageWeight(rates[3])};
+        const float sum = weight[0] + weight[1] + weight[2] + weight[3];
+        const float sustain = fourStage ? 0.0f : 8.0f;
+        const float scale = sum > 0.0f
+                                ? (area.getWidth() - 8.0f - sustain) / sum
+                                : 0.0f;
+        const std::array<float, 5> len = {
+            weight[0] * scale, weight[1] * scale, weight[2] * scale,
+            fourStage ? weight[3] * scale : sustain,
+            fourStage ? 0.0f : weight[3] * scale};
+
+        const float right = area.getRight() - 4.0f;
+        float x = area.getX() + 4.0f;
+        const auto advance = [&x, right](float stage) {
+            x += stage;
+            if (x > right)
+                x = right;
+            return x;
+        };
+        juce::Path path;
+        path.startNewSubPath(x, levelY(0.0));
+        path.lineTo(advance(len[0]), levelY(levels[0]));
+        path.lineTo(advance(len[1]), levelY(levels[1]));
+        path.lineTo(advance(len[2]), levelY(levels[2]));
+        if (fourStage) {
+            path.lineTo(advance(len[3]), levelY(levels[3]));
+        } else {
+            path.lineTo(advance(len[3]), levelY(levels[2]));
+            path.lineTo(advance(len[4]), levelY(levels[3]));
+        }
+        g.setColour(colour_);
+        g.strokePath(path, juce::PathStrokeType(1.4f));
+        return;
     }
+
+    const float left = area.getX() + 4.0f;
+    const float right = area.getRight() - 4.0f;
+    const float total = juce::jmax(1.0f, right - left);
+    const auto rateWeight = [](int32_t rate) -> float {
+        const float t = static_cast<float>(99 - juce::jlimit(0, 99, rate));
+        return t * t;
+    };
+    const auto doubleBar = [this, &g](float bx, float by) {
+        g.setColour(colour(tokens::dim));
+        g.drawLine(bx - 1.5f, by - 7.0f, bx - 1.5f, by + 7.0f, 1.0f);
+        g.drawLine(bx + 1.5f, by - 7.0f, bx + 1.5f, by + 7.0f, 1.0f);
+    };
+    const auto loopArrow = [this, &g, area](float x0, float x1) {
+        const float ay = area.getBottom() - 1.0f;
+        g.setColour(colour(tokens::dim));
+        g.drawLine(x0, ay, x1, ay, 1.0f);
+        g.drawLine(x0, ay, x0 + 4.0f, ay - 3.0f, 1.0f);
+        g.drawLine(x0, ay, x0 + 4.0f, ay + 3.0f, 1.0f);
+    };
+
+    std::array<float, 5> weight{};
+    std::array<double, 4> stageLevels{};
+    int rateCount = 0;
+    double startLevel = 0.0;
+    if (shape_ == EnvelopeShape::operatorAmp) {
+        const int32_t warm = rates[0];
+        const int32_t surge = rates[1];
+        weight[0] = warm > 0 ? juce::jmax(4.0f, rateWeight(warm)) : 0.0f;
+        weight[1] = surge > 0 ? juce::jmax(4.0f, rateWeight(surge)) : 0.0f;
+        weight[2] = juce::jmax(4.0f, rateWeight(rates[2]));
+        weight[3] = juce::jmax(4.0f, rateWeight(rates[3]));
+        weight[4] = juce::jmax(4.0f, rateWeight(rates[4]));
+        rateCount = 5;
+        stageLevels[0] = levels[0];
+        stageLevels[1] = levels[1];
+    } else {
+        for (int i = 0; i < 4; ++i)
+            weight[static_cast<size_t>(i)] =
+                juce::jmax(4.0f, rateWeight(rates[i]));
+        rateCount = 4;
+        for (int i = 0; i < 4; ++i)
+            stageLevels[static_cast<size_t>(i)] = levels[i];
+        if (startID_.isNotEmpty()) {
+            if (auto* v = state_.getRawParameterValue(startID_))
+                startLevel = static_cast<double>(v->load());
+        }
+    }
+
+    const bool hold = mode == 1 &&
+                      (shape_ == EnvelopeShape::bipolar ||
+                       stageLevels[1] > 0.5);
+    const bool loop = mode >= 2;
+    const float holdWidth = hold ? 8.0f : 0.0f;
+    const float loopWidth = loop ? total * 0.18f : 0.0f;
+    const float available = juce::jmax(8.0f, total - holdWidth - loopWidth);
+    float sum = 0.0f;
+    for (int i = 0; i < rateCount; ++i)
+        sum += weight[static_cast<size_t>(i)];
+    const float scale =
+        sum > 0.0f ? available / sum : available / static_cast<float>(rateCount);
+
+    float x = left;
+    float y = levelY(startLevel);
+    juce::Path path;
+    path.startNewSubPath(x, y);
+    const auto lineTo = [&path, &x, &y](float nx, float ny) {
+        path.lineTo(nx, ny);
+        x = nx;
+        y = ny;
+    };
+    const auto curveTo = [&path, &x, &y](float nx, float ny, bool convex) {
+        const float dx = nx - x;
+        if (convex)
+            path.cubicTo(x + dx * 0.55f, y, nx - dx * 0.10f, ny, nx, ny);
+        else
+            path.cubicTo(x + dx * 0.10f, ny, nx - dx * 0.45f, ny, nx, ny);
+        x = nx;
+        y = ny;
+    };
+
+    if (shape_ == EnvelopeShape::operatorAmp) {
+        if (weight[0] > 0.0f) {
+            const double target = weight[1] > 0.0f ? 49.5 : 99.0;
+            curveTo(x + weight[0] * scale, levelY(target), true);
+        }
+        if (weight[1] > 0.0f)
+            curveTo(x + weight[1] * scale, levelY(99.0), false);
+        lineTo(x + weight[2] * scale, levelY(stageLevels[0]));
+        lineTo(x + weight[3] * scale, levelY(stageLevels[1]));
+        const float releaseTarget = 0.0f;
+        if (mode == 0) {
+            lineTo(x + weight[4] * scale, levelY(releaseTarget));
+        } else if (hold) {
+            const float bx = x;
+            lineTo(x + holdWidth, y);
+            doubleBar(bx, y);
+            doubleBar(x, y);
+            lineTo(x + weight[4] * scale, levelY(releaseTarget));
+        } else if (loop) {
+            const float bx = x;
+            lineTo(x + loopWidth * 0.5f, levelY(stageLevels[0]));
+            doubleBar(bx, levelY(stageLevels[1]));
+            doubleBar(x, y);
+            lineTo(x + loopWidth * 0.5f, levelY(stageLevels[1]));
+            doubleBar(x, levelY(stageLevels[1]));
+            loopArrow(bx, x);
+            lineTo(x + weight[4] * scale, levelY(releaseTarget));
+        }
+    } else {
+        lineTo(x + weight[0] * scale, levelY(stageLevels[0]));
+        lineTo(x + weight[1] * scale, levelY(stageLevels[1]));
+        lineTo(x + weight[2] * scale, levelY(stageLevels[2]));
+        if (mode == 0) {
+            lineTo(x + weight[3] * scale, levelY(stageLevels[3]));
+        } else if (hold) {
+            const float bx = x;
+            lineTo(x + holdWidth, y);
+            doubleBar(bx, y);
+            doubleBar(x, y);
+            lineTo(x + weight[3] * scale, levelY(stageLevels[3]));
+        } else if (loop) {
+            const float bx = x;
+            lineTo(x + loopWidth * 0.5f, levelY(stageLevels[1]));
+            doubleBar(bx, levelY(stageLevels[2]));
+            doubleBar(x, y);
+            lineTo(x + loopWidth * 0.5f, levelY(stageLevels[2]));
+            doubleBar(x, levelY(stageLevels[2]));
+            loopArrow(bx, x);
+            lineTo(x + weight[3] * scale, levelY(stageLevels[3]));
+        }
+    }
+
     g.setColour(colour_);
     g.strokePath(path, juce::PathStrokeType(1.4f));
 }

@@ -119,16 +119,17 @@ libraries are remapped, not rejected.
   the release level, and the loop2 cycle between level2 and level3.
 - `preset_smoke` migrates a fabricated version 10 record and a version 12 record,
   covering the operator, pan and offset envelope blocks in one chain.
-- The Linux snapshot set shows the operator, pitch and feedback cards with the new
-  controls.
+- The Linux snapshot set shows the operator, pitch, feedback and pan cards with the
+  new controls. `editor-envelope-loops.png` and `editor-fxmod-loops.png` show the
+  double bars at the sustain and loop boundaries and the left arrow under the loop.
+- The operator graph draws the warm-up convex, the surge concave and the decays and
+  release straight, with the sustain or loop boundaries marked.
 
 ## Limits and open work
 
 - The filter and spectral envelopes still use the old four-rate, three-level shape;
-  they need the absolute start input and the depth removal.
-- The envelope graphs still draw the old stage shape. The double bars at the sustain
-  and loop boundaries, the left arrow under the loop, the convex warm-up and the
-  concave surge are still to draw, and the snapshots do not yet describe them.
+  they need the absolute start input and the depth removal. Their cards keep the old
+  graph until that lands.
 - The web panel carries the new parameter names but still draws the old graph shape.
 
 ## Safe experiment and stop criterion

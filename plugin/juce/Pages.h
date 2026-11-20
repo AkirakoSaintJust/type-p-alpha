@@ -203,11 +203,13 @@ public:
                    {params::opEnv(op, "warm", part),
                     params::opEnv(op, "surge", part),
                     params::opEnv(op, "d1r", part),
-                    params::opEnv(op, "d2r", part)},
+                    params::opEnv(op, "d2r", part),
+                    params::opEnv(op, "rel", part)},
                    {params::opEnv(op, "d1l", part),
-                    params::opEnv(op, "d2l", part),
                     params::opEnv(op, "d2l", part)},
-                   colour(tokens::purple), 0.0, 99.0, false)
+                   colour(tokens::purple), 0.0, 99.0, false,
+                   EnvelopeShape::operatorAmp,
+                   params::opEnv(op, "mode", part))
     {
         addAndMakeVisible(envView_);
         const std::array<const char*, 8> fields = {
@@ -268,7 +270,9 @@ public:
                     params::opFeedbackLevel(op, 1, part),
                     params::opFeedbackLevel(op, 2, part),
                     params::opFeedbackRelLevel(op, part)},
-                   colour(tokens::purple), -32768.0, 32767.0, true),
+                   colour(tokens::purple), -32768.0, 32767.0, true,
+                   EnvelopeShape::bipolar,
+                   params::opFeedbackMode(op, part)),
           on_(editor.state(), params::opFeedbackOn(op, part), "on"),
           mode_(editor.state(), params::opFeedbackMode(op, part),
                 {"off", "sustain", "loop1", "loop2"})

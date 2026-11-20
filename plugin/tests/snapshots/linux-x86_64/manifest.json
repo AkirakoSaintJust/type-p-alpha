@@ -2,27 +2,37 @@
   "images": {
     "editor-algorithm.png": {
       "height": 985,
-      "sha256": "6e426a2e8fd4caa6e9c79745fa6c7b635b0fb7c462a8871fad37875929a18118",
+      "sha256": "8ac0d9a1dfc9f3e433e98b72a0cc35426feba365018244aec1579e8e448059c8",
       "width": 1240
     },
     "editor-confirm.png": {
       "height": 985,
-      "sha256": "56fca9265d2cf055ae2bd45d88237605eb6448b9ab322ead2cd22eaa1bbbc47e",
+      "sha256": "154279419fe3b4d55317dc186162ca734836045389bc9919afb2cc1632766cf1",
+      "width": 1240
+    },
+    "editor-envelope-loops.png": {
+      "height": 985,
+      "sha256": "fd1b798e745f45ec026d8b1e719da3042425979ab375063a5422f0e47c10dfe2",
+      "width": 1240
+    },
+    "editor-fxmod-loops.png": {
+      "height": 985,
+      "sha256": "91c08fdb35e74acdf1b9ede50af7d26d1aa27a2de248631332ec09699a7ba3ef",
       "width": 1240
     },
     "editor-fxmod.png": {
       "height": 985,
-      "sha256": "84c620546590a9ec329f5c9545cd86a3656338397eae479a98e85eefdb036da1",
+      "sha256": "d27c17c916eff92d59a40b8d51ce09cc499c2f82daecb14a083962536b3596f6",
       "width": 1240
     },
     "editor-half.png": {
       "height": 493,
-      "sha256": "c051b20c541dd89a6c38dd9aeb7e7cb9db7cee0516206dc81433ce8dee147629",
+      "sha256": "0ec0f0f0115520c3fb48c4e3187600370728757f1ecce8bc545f03767eb8fda8",
       "width": 620
     },
     "editor-long-name.png": {
       "height": 985,
-      "sha256": "012d6c40d3cd077cf6f385c28b3222091836d2341aad7ee9b8b747d20ea448bb",
+      "sha256": "37c7a722b077a3883795486db65f6b952519397578545480c45cc449c96da1e6",
       "width": 1240
     },
     "editor-op-spectra-mod-levels.png": {
@@ -37,17 +47,17 @@
     },
     "editor-op-spectra-mod.png": {
       "height": 985,
-      "sha256": "72bca57d2b1b88b62964bd4c926543c50695445f008d47743a99d0f01e0f4638",
+      "sha256": "4fcb7d1f5a519c789ef56470230212c2ffa8b5f739685b6ff44260389d110404",
       "width": 1240
     },
     "editor-operator-envs.png": {
       "height": 985,
-      "sha256": "4144e88917684481dd29919915d55915aa9ed68686ca188eaca46eeb162eaff0",
+      "sha256": "27294b9e9c7b3557710d65ff0a202be8d2c59b59443ae0512342188514be9549",
       "width": 1240
     },
     "editor-operator-lfos.png": {
       "height": 985,
-      "sha256": "c2395b57eba2ed68574f15e77f93504479390928d10845ab702c491e2614db4f",
+      "sha256": "c99ab81d5976985f9213c6bc1aab8936acb82ab071f9afd22d08b6ad56f87065",
       "width": 1240
     },
     "editor-operator-spectra-b.png": {
@@ -62,12 +72,12 @@
     },
     "editor-operator-spectra.png": {
       "height": 985,
-      "sha256": "00b487ffaf4ade82c3f75db8e11d66020e90796ac3f9e609bfff83ac6decfd8e",
+      "sha256": "d84b5a56e22f31cc04fd793a87e4fe68559bb158ece4d2591202536b77cfcd59",
       "width": 1240
     },
     "editor-part2.png": {
       "height": 985,
-      "sha256": "104856fbb12e28727aff2881e6792b2f110f43185b7c4688504b2bb1876c308b",
+      "sha256": "57e3e260f1dd3b7c6ae5efe19d2102beb7ed811ddf632b68d051a4138f42cc91",
       "width": 1240
     },
     "editor-patch.png": {
@@ -77,22 +87,22 @@
     },
     "editor-patches.png": {
       "height": 985,
-      "sha256": "82bbf23c949d442e41cc5d081ac095b6ce295891600034596c3da606e3ae69e7",
+      "sha256": "417d19027eaa8d9f0a42b653b0d2dbedeb37c7467f3dacdeb489e3e8daf7f000",
       "width": 1240
     },
     "editor-rename.png": {
       "height": 985,
-      "sha256": "36e39045349301dfd7357ada2fb2427f93eccb7935c4fcaf677f4b57ef41072b",
+      "sha256": "116684c38ea7c5c0c6074d19b59ec2b6159ab229ee15386e4f863a47bef1d56a",
       "width": 1240
     },
     "editor-save-mode.png": {
       "height": 985,
-      "sha256": "84daca0e752977c84d764791e7c2cb3d940e75d7085493cd4eb4e83e349b3e58",
+      "sha256": "8e967cbf28ef77eecddc96ca07ba0b1b585ce6cf59880ad4f620a3adc4598763",
       "width": 1240
     },
     "editor-single-parts.png": {
       "height": 985,
-      "sha256": "de1d6b46aa1eac2407e278e3723ea94bb3198fb320113ed806e9e20dadd99d08",
+      "sha256": "68e4d0cd7ecd8895f2607a3dcc6bca3dc6c54b151e7adfc0909ac18d03193a9a",
       "width": 1240
     }
   },

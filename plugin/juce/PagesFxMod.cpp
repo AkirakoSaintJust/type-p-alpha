@@ -163,7 +163,8 @@ public:
                    {params::pitchEnvLevel(0, part_), params::pitchEnvLevel(1, part_),
                     params::pitchEnvLevel(2, part_),
                     params::pitchEnvRelLevel(part_)},
-                   colour(tokens::purple), -32768.0, 32767.0, true),
+                   colour(tokens::purple), -32768.0, 32767.0, true,
+                   EnvelopeShape::bipolar, params::pitchEnvMode(part_)),
           on_(editor.state(), params::pitchEnvOn(part_), "on"),
           mode_(editor.state(), params::pitchEnvMode(part_), "mode", 42.0f)
     {
@@ -229,8 +230,11 @@ public:
                     params::panEnvRate(2, part_),
                     params::panEnvRelRate(part_)},
                    {params::panEnvLevel(0, part_), params::panEnvLevel(1, part_),
-                    params::panEnvLevel(2, part_)},
-                   colour(tokens::purple), -99.0, 99.0, true),
+                    params::panEnvLevel(2, part_),
+                    params::panEnvRelLevel(part_)},
+                   colour(tokens::purple), -99.0, 99.0, true,
+                   EnvelopeShape::bipolar, params::panEnvMode(part_),
+                   params::pan(part_)),
           on_(editor.state(), params::panEnvOn(part_), "on"),
           mode_(editor.state(), params::panEnvMode(part_), "mode", 42.0f)
     {

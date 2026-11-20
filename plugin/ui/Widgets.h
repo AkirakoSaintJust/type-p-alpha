@@ -226,11 +226,19 @@ private:
     double liveMorph_ = -1.0;
 };
 
+enum class EnvelopeShape {
+    legacyFourStage,
+    operatorAmp,
+    bipolar,
+};
+
 class P1Envelope : public juce::Component {
 public:
     P1Envelope(APVTS& state, juce::StringArray rateIDs,
                juce::StringArray levelIDs, juce::Colour curveColour,
-               double levelMin, double levelMax, bool zeroLine);
+               double levelMin, double levelMax, bool zeroLine,
+               EnvelopeShape shape = EnvelopeShape::legacyFourStage,
+               juce::String modeID = {}, juce::String startID = {});
     void paint(juce::Graphics& g) override;
     void refresh() { repaint(); }
 
@@ -242,6 +250,9 @@ private:
     double levelMin_ = 0.0;
     double levelMax_ = 99.0;
     bool zeroLine_ = false;
+    EnvelopeShape shape_ = EnvelopeShape::legacyFourStage;
+    juce::String modeID_;
+    juce::String startID_;
 };
 
 class P1Wave : public juce::Component {

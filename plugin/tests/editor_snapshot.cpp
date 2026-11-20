@@ -85,10 +85,65 @@ int main(int argc, char** argv)
     p1editor->showTab(1);
     fill();
     ok = saveSnapshot(*editor, directory.getChildFile("editor-fxmod.png")) && ok;
+    /* Bipolar loop1 on the pitch and pan cards draws the turn boundaries and
+     * the left arrow against a non-zero level. */
+    {
+        const std::array<std::pair<const char*, float>, 10> loop{{
+            {"penv_l1.p0", 8192.0f}, {"penv_l2.p0", 4096.0f},
+            {"penv_l3.p0", 8192.0f}, {"penv_rell.p0", 4096.0f},
+            {"penv_mode.p0", 2.0f},
+            {"pan_env_l1.p0", 60.0f}, {"pan_env_l2.p0", -60.0f},
+            {"pan_env_l3.p0", 60.0f}, {"pan_env_rell.p0", 0.0f},
+            {"pan_env_mode.p0", 2.0f}}};
+        for (const auto& [id, value] : loop)
+            if (auto* parameter = p1editor->state().getParameter(id))
+                parameter->setValueNotifyingHost(
+                    parameter->convertTo0to1(value));
+        fill();
+        ok = saveSnapshot(*editor,
+                          directory.getChildFile("editor-fxmod-loops.png")) &&
+             ok;
+        const std::array<std::pair<const char*, float>, 10> restore{{
+            {"penv_l1.p0", 5461.0f}, {"penv_l2.p0", 2731.0f},
+            {"penv_l3.p0", 0.0f}, {"penv_rell.p0", 0.0f},
+            {"penv_mode.p0", 1.0f},
+            {"pan_env_l1.p0", 0.0f}, {"pan_env_l2.p0", 0.0f},
+            {"pan_env_l3.p0", 0.0f}, {"pan_env_rell.p0", 0.0f},
+            {"pan_env_mode.p0", 0.0f}}};
+        for (const auto& [id, value] : restore)
+            if (auto* parameter = p1editor->state().getParameter(id))
+                parameter->setValueNotifyingHost(
+                    parameter->convertTo0to1(value));
+        fill();
+    }
     p1editor->showTab(2);
     fill();
     ok = saveSnapshot(*editor,
                       directory.getChildFile("editor-operator-envs.png")) && ok;
+    /* A loop mode draws the repeat boundaries and the left arrow. */
+    {
+        const std::array<std::pair<const char*, float>, 6> loop{{
+            {"op1.eg.mode.p0", 2.0f}, {"op2.eg.mode.p0", 3.0f},
+            {"op1_fbenv_mode.p0", 2.0f}, {"op1_fbenv_l1.p0", 8000.0f},
+            {"op1_fbenv_l2.p0", 4000.0f}, {"op1_fbenv_l3.p0", 8000.0f}}};
+        for (const auto& [id, value] : loop)
+            if (auto* parameter = p1editor->state().getParameter(id))
+                parameter->setValueNotifyingHost(
+                    parameter->convertTo0to1(value));
+        fill();
+        ok = saveSnapshot(*editor,
+                          directory.getChildFile("editor-envelope-loops.png")) &&
+             ok;
+        const std::array<std::pair<const char*, float>, 6> restore{{
+            {"op1.eg.mode.p0", 1.0f}, {"op2.eg.mode.p0", 1.0f},
+            {"op1_fbenv_mode.p0", 1.0f}, {"op1_fbenv_l1.p0", 0.0f},
+            {"op1_fbenv_l2.p0", 0.0f}, {"op1_fbenv_l3.p0", 0.0f}}};
+        for (const auto& [id, value] : restore)
+            if (auto* parameter = p1editor->state().getParameter(id))
+                parameter->setValueNotifyingHost(
+                    parameter->convertTo0to1(value));
+        fill();
+    }
     p1editor->showTab(3);
     fill();
     ok = saveSnapshot(*editor,
