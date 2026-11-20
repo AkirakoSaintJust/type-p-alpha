@@ -1,0 +1,215 @@
+:root {
+  --ground: #0a0a0a;
+  --surface: #101010;
+  --surface-2: #151515;
+  --line: #252525;
+  --text: #d6d6d6;
+  --dim: #8b8b8b;
+  --pink: #ff2e7e;
+  --green: #3dff9e;
+  --purple: #c780ff;
+  --brand-shadow: #c2ad00;
+  --body: "Libre Franklin", "Helvetica Neue", Arial, sans-serif;
+  --display: "Zen Dots", "Libre Franklin", sans-serif;
+  --mono: "Fira Mono", ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html { background: var(--ground); }
+
+body {
+  margin: 0;
+  color: var(--text);
+  font: 17px/1.65 var(--body);
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--pink); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.site-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 24px;
+  padding: 18px 32px;
+  background: #000;
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.brand {
+  color: var(--text);
+  font-family: var(--display);
+  font-size: 30px;
+  line-height: 1;
+  letter-spacing: .02em;
+  text-shadow: 4px 4px 0 var(--brand-shadow);
+}
+
+.brand:hover { text-decoration: none; }
+.brand-type { color: var(--text); }
+.brand-alpha { font-family: var(--body); font-size: .8em; }
+.brand-type::after { content: "."; color: var(--pink); }
+
+.doc-kind {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: .04em;
+  color: var(--dim);
+  text-transform: lowercase;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 760px);
+  gap: 56px;
+  justify-content: center;
+  padding: 48px 32px 96px;
+}
+
+.toc {
+  position: sticky;
+  top: 92px;
+  align-self: start;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--dim);
+}
+
+.toc ul { list-style: none; margin: 0; padding: 0; }
+.toc li { margin: 0 0 7px; }
+.toc ul ul { margin-left: 12px; }
+.toc a { color: var(--dim); }
+.toc a:hover { color: var(--text); }
+
+.book { min-width: 0; }
+
+.book h1 {
+  font-family: var(--display);
+  font-size: 34px;
+  line-height: 1.15;
+  font-weight: 400;
+  letter-spacing: .01em;
+  margin: 0 0 24px;
+}
+
+.book h2 {
+  font-size: 22px;
+  line-height: 1.25;
+  font-weight: 600;
+  margin: 44px 0 12px;
+}
+
+.book h3 {
+  font-size: 17px;
+  font-weight: 600;
+  margin: 28px 0 8px;
+}
+
+.book p { margin: 0 0 18px; }
+
+.lede {
+  font-size: 20px;
+  line-height: 1.5;
+  color: #e8e8e8;
+}
+
+.book ul,
+.book ol { margin: 0 0 18px 1.1em; padding: 0; }
+.book li { margin: 0 0 6px; }
+
+.book code {
+  font-family: var(--mono);
+  font-size: 14px;
+  background: var(--surface-2);
+  padding: 1px 5px;
+  border-radius: 2px;
+}
+
+.book pre {
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  padding: 16px;
+  overflow: auto;
+  margin: 0 0 20px;
+}
+
+.book pre code { background: none; padding: 0; font-size: 13px; }
+
+.book figure { margin: 32px 0; }
+.book figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+  background: #000;
+}
+.book figcaption {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--dim);
+  margin-top: 10px;
+}
+
+.book table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  margin: 0 0 18px;
+}
+.book th,
+.book td {
+  text-align: left;
+  padding: 7px 10px;
+  border-bottom: 1px solid var(--line);
+}
+.book th { color: var(--dim); font-weight: 500; }
+
+.patch-card {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  padding: 18px 20px;
+  margin: 28px 0;
+}
+.patch-card h3 {
+  margin-top: 0;
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--pink);
+}
+.patch-card table { margin-bottom: 0; font-size: 13px; }
+.patch-card p { margin: 12px 0 0; font-size: 13px; color: var(--dim); }
+
+.callout {
+  border-left: 2px solid var(--green);
+  background: #0c1511;
+  padding: 14px 18px;
+  margin: 24px 0;
+}
+
+.site-foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 18px 32px;
+  border-top: 1px solid var(--line);
+  color: var(--dim);
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 32px 20px 64px;
+  }
+  .toc { position: static; }
+  .site-head { padding: 14px 20px; }
+  .book h1 { font-size: 28px; }
+}

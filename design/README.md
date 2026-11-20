@@ -122,6 +122,10 @@ alpha and does not read as one, because I could not find an OFL family with the
 Greek alphabet in the shape I wanted. Zen Dots also has caps that read odd rather
 than futuristic or techno to me.
 
+The panel token is 30px for the mark, with the solid 4px shadow and the 12px brand
+line below it. The shadow and the caps make it read larger than the number, which is
+the optical size I want in the header.
+
 The next wordmark is an experiment rather than a decided design. The spirit is the
 Foley Room-era Amon Tobin mark, and a cut-up and layered Rexlia is one candidate.
 Rexlia is the contemporary industrial display in the list, which is the quality I

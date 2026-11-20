@@ -1,0 +1,7 @@
+{
+  "title": "Type P.α manual",
+  "doc_kind": "player manual",
+  "chapters": [
+    { "file": "01-make-a-sound.md", "title": "Make a sound" }
+  ]
+}

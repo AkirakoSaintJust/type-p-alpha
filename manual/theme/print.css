@@ -1,0 +1,226 @@
+:root {
+  --ink: #111;
+  --muted: #555;
+  --line: #d8d4cc;
+  --paper: #fbfaf6;
+  --wash: #f4f1ea;
+  --pink: #b0004f;
+  --green: #0f6b45;
+  --purple: #5a2a86;
+  --brand-shadow: #a38f00;
+  --body: "Libre Franklin", "Helvetica Neue", Arial, sans-serif;
+  --display: "Zen Dots", "Libre Franklin", sans-serif;
+  --mono: "Fira Mono", ui-monospace, monospace;
+}
+
+@page {
+  size: A4;
+  margin: 20mm 18mm 18mm;
+}
+
+@page :first {
+  margin: 0;
+}
+
+* { box-sizing: border-box; }
+
+html,
+body {
+  background: var(--paper);
+  color: var(--ink);
+  margin: 0;
+}
+
+body { font: 10.5pt/15pt var(--body); }
+
+a { color: var(--pink); text-decoration: none; }
+
+.site-head,
+.site-foot,
+.toc { display: none; }
+
+.layout { display: block; padding: 0; }
+.book { max-width: none; }
+
+.cover {
+  page-break-after: always;
+  height: 297mm;
+  padding: 28mm 24mm 22mm;
+  background: #000;
+  color: #d6d6d6;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.cover-mark {
+  font-family: var(--display);
+  font-size: 64pt;
+  line-height: 1;
+  letter-spacing: .02em;
+  text-shadow: 6pt 6pt 0 var(--brand-shadow);
+  margin-bottom: auto;
+}
+.cover-mark .dot { color: #ff2e7e; }
+.cover-mark .alpha { font-family: var(--body); font-size: .8em; }
+
+.cover-kicker {
+  font-family: var(--mono);
+  font-size: 10pt;
+  letter-spacing: .06em;
+  color: #8b8b8b;
+  text-transform: lowercase;
+  margin: 0 0 6mm;
+}
+
+.cover-title {
+  font-family: var(--display);
+  font-size: 28pt;
+  font-weight: 400;
+  line-height: 1.1;
+  margin: 0 0 4mm;
+}
+
+.cover-sub {
+  font-size: 12pt;
+  line-height: 1.4;
+  color: #bdbdbd;
+  margin: 0 0 10mm;
+}
+
+.cover-meta {
+  font-family: var(--mono);
+  font-size: 8pt;
+  color: #8b8b8b;
+  margin: 0;
+}
+
+.book h1 {
+  font-family: var(--display);
+  font-size: 24pt;
+  line-height: 1.15;
+  font-weight: 400;
+  margin: 0 0 8mm;
+  page-break-before: always;
+}
+
+.book h1:first-of-type { page-break-before: auto; }
+
+.book h2 {
+  font-size: 14pt;
+  line-height: 1.25;
+  font-weight: 600;
+  margin: 8mm 0 3mm;
+  page-break-after: avoid;
+}
+
+.book h3 {
+  font-size: 11pt;
+  font-weight: 600;
+  margin: 6mm 0 2mm;
+  page-break-after: avoid;
+}
+
+.book p {
+  margin: 0 0 3.5mm;
+  orphans: 3;
+  widows: 3;
+}
+
+.lede {
+  font-size: 13pt;
+  line-height: 1.45;
+  color: #222;
+}
+
+.book ul,
+.book ol { margin: 0 0 3.5mm 5mm; padding: 0; }
+.book li { margin: 0 0 1.5mm; }
+
+.book code {
+  font-family: var(--mono);
+  font-size: 9pt;
+  background: var(--wash);
+  padding: 0 1mm;
+}
+
+.book pre {
+  background: var(--wash);
+  border: 1px solid var(--line);
+  padding: 3mm;
+  font-family: var(--mono);
+  font-size: 8.5pt;
+  line-height: 11pt;
+  overflow: visible;
+  page-break-inside: avoid;
+}
+.book pre code { background: none; padding: 0; }
+
+.book figure {
+  margin: 6mm 0;
+  page-break-inside: avoid;
+}
+.book figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+}
+.book figcaption {
+  font-size: 8pt;
+  line-height: 1.45;
+  color: var(--muted);
+  margin-top: 2mm;
+}
+
+.book table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 9pt;
+  margin: 0 0 4mm;
+  page-break-inside: avoid;
+}
+.book th,
+.book td {
+  text-align: left;
+  padding: 1.5mm 2mm;
+  border-bottom: 1px solid var(--line);
+}
+.book th { color: var(--muted); font-weight: 500; }
+
+.patch-card {
+  border: 1px solid var(--line);
+  background: var(--wash);
+  padding: 3mm 4mm;
+  margin: 5mm 0;
+  page-break-inside: avoid;
+}
+.patch-card h3 {
+  margin-top: 0;
+  font-family: var(--mono);
+  font-size: 9pt;
+  font-weight: 500;
+  color: var(--pink);
+}
+.patch-card table { margin-bottom: 0; }
+.patch-card p { margin: 2mm 0 0; font-size: 9pt; color: var(--muted); }
+
+.callout {
+  border-left: 2pt solid var(--green);
+  background: #eef5f0;
+  padding: 3mm 4mm;
+  margin: 4mm 0;
+  page-break-inside: avoid;
+}
+
+.colophon {
+  page-break-before: always;
+  font-size: 8pt;
+  line-height: 1.5;
+  color: var(--muted);
+}
+.colophon h2 {
+  font-family: var(--display);
+  font-size: 14pt;
+  color: var(--ink);
+}
