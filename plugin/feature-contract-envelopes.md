@@ -8,10 +8,10 @@
 - **Brief section:** the operator envelope page, the part fx/mod cards and the
   research note on envelopes.
 - **Owner / date:** P1Onken, 2026-11-20.
-- **Disposition:** in progress. The operator amplitude envelope and the pitch and
-  feedback offset envelopes are implemented, with their UI cards and the version 13
-  migration. The filter and spectral absolute envelopes, the graph shapes and the
-  mode selectors on the graphs are not done, and no layer is claimed as passed.
+- **Disposition:** in progress. The operator amplitude envelope, the pitch and
+  feedback offset envelopes, the absolute spectral envelope and the absolute pan
+  envelope are implemented, with their UI cards, graphs and the version 14 migration.
+  The absolute filter envelope is not done, and no layer is claimed as passed.
 
 ## Operator amplitude envelope
 
@@ -57,12 +57,14 @@ Eight controls per envelope plus its on switch:
 | mode | 0 to 3 | Same four modes; sustain holds level3 and the loops cycle level2 and level3. |
 
 The envelope starts from the target parameter's value at note-on for an absolute
-envelope, and from a zero offset for the pitch and feedback envelopes. For the filter,
-spectral and pan envelopes the levels are absolute positions in the target's range,
-so the knob is the starting point and the depth control retires. The pitch envelope
-stays an offset in Q15 because its target is the note, so its signed levels are the
-whole modulation and it has no depth control. Feedback keeps its Q15 levels as
-offsets on the feedback amount.
+envelope, and from a zero offset for the pitch and feedback envelopes. The spectral
+and pan envelopes are absolute positions in the target's range, so the knob is the
+starting point and the depth control retires. The pitch envelope stays an offset in
+Q15 because its target is the note, so its signed levels are the whole modulation
+and it has no depth control. Feedback keeps its Q15 levels as offsets on the feedback
+amount. The filter envelope is still the old relative shape, because its starting
+cutoff is a per-voice signal and the control-rate envelope reading it closes a graph
+cycle; it keeps its depth until the start signal is available.
 
 - **Sustain off:** release at the end of stage 3, with the gate still high.
 - **Sustain on:** hold level3 until note-off, then release to the release level.
@@ -102,11 +104,13 @@ pan targets, a depth. The migration maps:
 - The pitch and feedback envelopes keep their signed levels, so they map across with
   the new stage count and mode.
 
-The operator and offset envelopes each add a slot, so `PRESET_VERSION` moves to 13
-and the part record grows by five params. The version 10 record is expanded through
-the operator blocks, the version 11 record is reordered through the pan block, and
-the version 12 record gets one inserted slot per pitch and feedback envelope. Old
-libraries are remapped, not rejected.
+The operator and offset envelopes add four and five slots, and the spectral envelope
+adds two slots per operator, so `PRESET_VERSION` moves to 14 and the part record
+grows by seventeen params from version 10. The version 10 record is expanded through
+the operator blocks, the version 11 record is reordered through the pan block, the
+version 12 record gets one inserted slot per pitch and feedback envelope, and the
+version 13 record gets two inserted slots per spectral envelope. Old libraries are
+remapped, not rejected.
 
 ## Evidence
 
@@ -117,20 +121,26 @@ libraries are remapped, not rejected.
   move the signed feedback amount.
 - `pitch_envelope` covers the zero start, the slow first stage, sustain on and off,
   the release level, and the loop2 cycle between level2 and level3.
-- `preset_smoke` migrates a fabricated version 10 record and a version 12 record,
-  covering the operator, pan and offset envelope blocks in one chain.
-- The Linux snapshot set shows the operator, pitch, feedback and pan cards with the
-  new controls. `editor-envelope-loops.png` and `editor-fxmod-loops.png` show the
-  double bars at the sustain and loop boundaries and the left arrow under the loop.
+- `preset_smoke` migrates a fabricated version 10 record, a version 12 record and a
+  version 13 record, covering the operator, pan, offset and spectral envelope blocks
+  in one chain.
+- `spectral` checks that the absolute morph envelope starts at the morph knob, reaches
+  its levels, and stops moving the morph when the envelope is off.
+- The Linux snapshot set shows the operator, pitch, feedback, pan and spectral cards
+  with the new controls. `editor-envelope-loops.png` and `editor-fxmod-loops.png`
+  show the double bars at the sustain and loop boundaries and the left arrow under
+  the loop.
 - The operator graph draws the warm-up convex, the surge concave and the decays and
   release straight, with the sustain or loop boundaries marked.
 
 ## Limits and open work
 
-- The filter and spectral envelopes still use the old four-rate, three-level shape;
-  they need the absolute start input and the depth removal. Their cards keep the old
-  graph until that lands.
-- The web panel carries the new parameter names but still draws the old graph shape.
+- The filter envelope still uses the old four-rate, three-level relative shape and
+  keeps its depth. Making it absolute needs the cutoff position as a separate
+  control signal that does not close a cycle with the filter. The generator's
+  cross-rate read of an audio output by a control node is the missing piece.
+- The web panel carries the new spectral names but still draws the old graph shape.
+  The filter card keeps its old graph with the relative envelope.
 
 ## Safe experiment and stop criterion
 

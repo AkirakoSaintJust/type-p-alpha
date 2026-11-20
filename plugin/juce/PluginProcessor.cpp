@@ -15,7 +15,7 @@ namespace {
 
 constexpr double kCoreRate = 48000.0;
 constexpr int kControlBlock = 32;
-constexpr int kStateVersion = 11;
+constexpr int kStateVersion = 12;
 /* The state version whose cutoff values already use the current law. A later
  * version bump must not run the cutoff conversion again. */
 constexpr int kCutoffLawStateVersion = 5;
@@ -152,6 +152,11 @@ TypePAlphaAudioProcessor::TypePAlphaAudioProcessor()
     presets_.setPanEnvelopeIndex(panEnvelopeIndex());
     presets_.setOffsetEnvelopeIndices(feedbackEnvelopeIndices(),
                                       partParamIndex("penv_on.p0"));
+    presets_.setAbsEnvelopeIndices(
+        {partParamIndex("op1_spec_env_on.p0"),
+         partParamIndex("op2_spec_env_on.p0"),
+         partParamIndex("op3_spec_env_on.p0"),
+         partParamIndex("op4_spec_env_on.p0")});
     lastParams_.fill(std::numeric_limits<int32_t>::min());
     for (int i = 0; i < kP1ParamCount; ++i)
         paramValues_[static_cast<std::size_t>(i)] =

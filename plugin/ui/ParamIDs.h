@@ -162,9 +162,21 @@ inline juce::String opSpecEnvLevel(int op, int index, int part)
 {
     return withPart(opBase(op, "_spec_env_l") + juce::String(index + 1), part);
 }
-inline juce::String opSpecEnvDepth(int op, int part)
+inline juce::String opSpecEnvOn(int op, int part)
 {
-    return withPart(opBase(op, "_spec_env_depth"), part);
+    return withPart(opBase(op, "_spec_env_on"), part);
+}
+inline juce::String opSpecEnvRelRate(int op, int part)
+{
+    return withPart(opBase(op, "_spec_env_relr"), part);
+}
+inline juce::String opSpecEnvRelLevel(int op, int part)
+{
+    return withPart(opBase(op, "_spec_env_rell"), part);
+}
+inline juce::String opSpecEnvMode(int op, int part)
+{
+    return withPart(opBase(op, "_spec_env_mode"), part);
 }
 inline juce::String opSpecLfoRate(int op, int part)
 {

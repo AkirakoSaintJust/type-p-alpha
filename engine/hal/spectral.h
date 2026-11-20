@@ -49,15 +49,12 @@ static inline int32_t p1_spectral_clamp99(int32_t v)
     return v < 0 ? 0 : (v > 99 ? 99 : v);
 }
 
-/* The morph in the 0..99 panel scale. The envelope is a Q15 gain from the
- * dx_env node, and the LFO is already in panel units because the lfo node's
- * depth is the spec_lfo_depth parameter. */
-static inline int32_t p1_spectral_morph(int32_t base, int32_t depth,
-                                        int32_t env_q15, int32_t lfo)
+/* The morph in the 0..99 panel scale. `position` is the absolute morph
+ * envelope (or the knob when the envelope is off), and the LFO is already in
+ * panel units because the lfo node's depth is the spec_lfo_depth parameter. */
+static inline int32_t p1_spectral_morph(int32_t position, int32_t lfo)
 {
-    const int32_t env99 = (env_q15 * 99) >> 15;
-    const int32_t env_contrib = (depth * env99 * 662) >> 16;
-    return p1_spectral_clamp99(base + env_contrib + lfo);
+    return p1_spectral_clamp99(position + lfo);
 }
 
 /* One spectrum, all seven mips, peak normalised to Q15. The levels are the

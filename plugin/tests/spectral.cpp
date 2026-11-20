@@ -75,7 +75,7 @@ bool setupCarrier(p1::Engine& engine)
         {"op1_waveform.p0", 13},
         {"op2_mute.p0", 1}, {"op3_mute.p0", 1}, {"op4_mute.p0", 1},
         {"op1_spec_morph.p0", 0},
-        {"op1_spec_env_depth.p0", 0},
+        {"op1_spec_env_on.p0", 0},
         {"op1_spec_lfo_depth.p0", 0},
     });
 }
@@ -136,7 +136,7 @@ bool checkMorphEnvelope()
             {"op1_spec_env_r3.p0", 99},
             {"op1_spec_env_l1.p0", 99}, {"op1_spec_env_l2.p0", 99},
             {"op1_spec_env_l3.p0", 99},
-            {"op1_spec_env_depth.p0", 99},
+            {"op1_spec_env_on.p0", 1},
         })) {
         return false;
     }
@@ -181,7 +181,7 @@ bool checkMorphEnvelope()
             {"op1_spec_a1.p0", 99}, {"op1_spec_a2.p0", 0},
             {"op1_spec_b1.p0", 0}, {"op1_spec_b2.p0", 99},
             {"op1_spec_morph.p0", 0},
-            {"op1_spec_env_depth.p0", 0},
+            {"op1_spec_env_on.p0", 0},
         })) {
         return false;
     }

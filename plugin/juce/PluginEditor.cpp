@@ -1163,11 +1163,14 @@ std::vector<juce::String> sectionParamIDs(int op, int part,
             add(p1::params::opSpecB(op, h, part));
         break;
     case PluginEditor::OperatorSection::spectrumEnvelope:
-        add(p1::params::opSpecEnvDepth(op, part));
-        for (int i = 0; i < 4; ++i)
+        add(p1::params::opSpecEnvOn(op, part));
+        for (int i = 0; i < 3; ++i)
             add(p1::params::opSpecEnvRate(op, i, part));
+        add(p1::params::opSpecEnvRelRate(op, part));
         for (int i = 0; i < 3; ++i)
             add(p1::params::opSpecEnvLevel(op, i, part));
+        add(p1::params::opSpecEnvRelLevel(op, part));
+        add(p1::params::opSpecEnvMode(op, part));
         break;
     case PluginEditor::OperatorSection::spectrumLfo:
         add(p1::params::opSpecLfoRate(op, part));

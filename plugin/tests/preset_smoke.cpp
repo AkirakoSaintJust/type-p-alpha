@@ -192,7 +192,7 @@ int main()
               "find the operator and pan envelope blocks");
         /* The version 10 record is nine params shorter: four operator slots and
          * the five offset envelope slots all precede the cutoff and pan blocks. */
-        const uint32_t oldCount = kP1PartParamCount - 9u;
+        const uint32_t oldCount = kP1PartParamCount - 17u;
         const auto oldRecord = PP_RECORD(oldCount);
         std::vector<uint8_t> oldBank(static_cast<std::size_t>(oldRecord) * 128u,
                                      0xFF);
@@ -200,8 +200,8 @@ int main()
         for (int k = 0; k < 7; ++k)
             oldParams[static_cast<std::size_t>(w0) + static_cast<std::size_t>(k)] =
                 11 + k;
-        oldParams[static_cast<std::size_t>(kP1PartCutoffIndex) - 9u] = 12345;
-        const int oldPan = panBase - 9;
+        oldParams[static_cast<std::size_t>(kP1PartCutoffIndex) - 17u] = 12345;
+        const int oldPan = panBase - 17;
         oldParams[static_cast<std::size_t>(oldPan)] = 1;
         oldParams[static_cast<std::size_t>(oldPan) + 4u] = 55;
         oldParams[static_cast<std::size_t>(oldPan) + 5u] = 11;
@@ -241,6 +241,9 @@ int main()
             {indexOf("op1_fbenv_on.p0"), indexOf("op2_fbenv_on.p0"),
              indexOf("op3_fbenv_on.p0"), indexOf("op4_fbenv_on.p0")},
             indexOf("penv_on.p0"));
+        expanded.setAbsEnvelopeIndices(
+            {indexOf("op1_spec_env_on.p0"), indexOf("op2_spec_env_on.p0"),
+             indexOf("op3_spec_env_on.p0"), indexOf("op4_spec_env_on.p0")});
         check(expanded.loadLibrary(oldLibrary.data(), oldLibrary.size()),
               "load a version 10 library");
         check(expanded.revision() == 9,
@@ -289,17 +292,23 @@ int main()
             indexOf("op3_fbenv_on.p0"), indexOf("op4_fbenv_on.p0"),
             indexOf("penv_on.p0")};
         const int panBase = indexOf("pan_env_on.p0");
+        const std::array<int, 4> absBases = {
+            indexOf("op1_spec_env_on.p0"), indexOf("op2_spec_env_on.p0"),
+            indexOf("op3_spec_env_on.p0"), indexOf("op4_spec_env_on.p0")};
         check(bases[0] > 0 && bases[4] > bases[0] && panBase > bases[4],
               "find the offset and pan envelope blocks");
-        const auto oldIndex = [&bases](int target) {
+        const auto oldIndex = [&bases, &absBases](int target) {
             int shift = 0;
             for (int base : bases)
                 if (base < target)
                     ++shift;
+            for (int base : absBases)
+                if (base < target)
+                    shift += 2;
             return target - shift;
         };
 
-        const uint32_t oldCount = kP1PartParamCount - 5u;
+        const uint32_t oldCount = kP1PartParamCount - 13u;
         const auto oldRecord = PP_RECORD(oldCount);
         std::vector<uint8_t> oldBank(static_cast<std::size_t>(oldRecord) * 128u,
                                      0xFF);
@@ -348,6 +357,8 @@ int main()
         loaded.setPanEnvelopeIndex(panBase);
         loaded.setOffsetEnvelopeIndices(
             {bases[0], bases[1], bases[2], bases[3]}, bases[4]);
+        loaded.setAbsEnvelopeIndices(
+            {absBases[0], absBases[1], absBases[2], absBases[3]});
         check(loaded.loadLibrary(oldLibrary.data(), oldLibrary.size()),
               "load a version 12 library");
         const auto& grown = loaded.partParams(5);
@@ -371,6 +382,82 @@ int main()
                   grown[static_cast<std::size_t>(panBase) + 7u] == 47 &&
                   grown[static_cast<std::size_t>(panBase) + 9u] == 2,
               "the pan block keeps its version 12 layout after the insert");
+    }
+
+    /* A version 13 part record, before the spectral envelope became absolute
+     * and gained its on, release and mode controls. */
+    {
+        const auto indexOf = [](const char* name) {
+            for (int i = 0; i < kP1PartParamCount; ++i) {
+                if (std::string(name) ==
+                    kP1ParamSpecs[static_cast<std::size_t>(i)].id)
+                    return i;
+            }
+            return -1;
+        };
+        const std::array<int, 4> absBases = {
+            indexOf("op1_spec_env_on.p0"), indexOf("op2_spec_env_on.p0"),
+            indexOf("op3_spec_env_on.p0"), indexOf("op4_spec_env_on.p0")};
+        check(absBases[0] > 0 && absBases[3] > absBases[0],
+              "find the absolute spectral blocks");
+        const auto oldIndex = [&absBases](int target) {
+            int shift = 0;
+            for (int base : absBases)
+                if (base < target)
+                    shift += 2;
+            return target - shift;
+        };
+
+        const uint32_t oldCount = kP1PartParamCount - 8u;
+        const auto oldRecord = PP_RECORD(oldCount);
+        std::vector<uint8_t> oldBank(static_cast<std::size_t>(oldRecord) * 128u,
+                                     0xFF);
+        std::vector<int32_t> oldParams(oldCount, 3);
+        const std::array<int, 8> spectral = {61, 62, 63, 64, 65, 66, 67, 2};
+        const int oldBase = oldIndex(absBases[0]);
+        for (std::size_t k = 0; k < spectral.size(); ++k)
+            oldParams[static_cast<std::size_t>(oldBase) + k] = spectral[k];
+
+        const auto slot = static_cast<std::size_t>(5) * oldRecord;
+        preset_part_pack(oldBank.data() + slot, "absolute", oldParams.data(),
+                         oldCount);
+        setRecordVersion(oldBank.data() + slot, oldCount, 13u);
+
+        std::vector<uint8_t> oldLibrary;
+        const auto put32 = [&oldLibrary](uint32_t value) {
+            oldLibrary.push_back(static_cast<uint8_t>(value & 0xFFu));
+            oldLibrary.push_back(static_cast<uint8_t>((value >> 8) & 0xFFu));
+            oldLibrary.push_back(static_cast<uint8_t>((value >> 16) & 0xFFu));
+            oldLibrary.push_back(static_cast<uint8_t>((value >> 24) & 0xFFu));
+        };
+        static const uint8_t magic[7] = {'P', '1', 'L', 'I', 'B', '3', '\n'};
+        oldLibrary.insert(oldLibrary.end(), magic, magic + 7);
+        put32(11);
+        put32(static_cast<uint32_t>(oldBank.size()));
+        oldLibrary.insert(oldLibrary.end(), oldBank.begin(), oldBank.end());
+        const auto multiSize =
+            MP_RECORD(static_cast<uint32_t>(kP1PartCount)) * 64u;
+        put32(static_cast<uint32_t>(multiSize));
+        oldLibrary.insert(oldLibrary.end(), multiSize, 0xFF);
+
+        p1::PresetStore loaded{kP1PartParamCount, kP1PartCount,
+                               p1::partParamDefaults(), kP1PartCutoffIndex};
+        loaded.setAbsEnvelopeIndices(
+            {absBases[0], absBases[1], absBases[2], absBases[3]});
+        check(loaded.loadLibrary(oldLibrary.data(), oldLibrary.size()),
+              "load a version 13 library");
+        const auto& grown = loaded.partParams(5);
+        check(grown[static_cast<std::size_t>(absBases[0])] == 1 &&
+                  grown[static_cast<std::size_t>(absBases[0]) + 1u] == 61 &&
+                  grown[static_cast<std::size_t>(absBases[0]) + 2u] == 62 &&
+                  grown[static_cast<std::size_t>(absBases[0]) + 3u] == 63 &&
+                  grown[static_cast<std::size_t>(absBases[0]) + 4u] == 65 &&
+                  grown[static_cast<std::size_t>(absBases[0]) + 5u] == 66 &&
+                  grown[static_cast<std::size_t>(absBases[0]) + 6u] == 67 &&
+                  grown[static_cast<std::size_t>(absBases[0]) + 7u] == 64 &&
+                  grown[static_cast<std::size_t>(absBases[0]) + 8u] == 0 &&
+                  grown[static_cast<std::size_t>(absBases[0]) + 9u] == 1,
+              "the spectral envelope maps its depth to on and keeps the levels");
     }
 
     /* Two instances over one file: independent slots merge, a slot both changed

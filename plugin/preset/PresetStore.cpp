@@ -19,6 +19,10 @@ namespace {
  * feedback envelope for each operator. */
 constexpr int kOffsetEnvelopeBlocks = 5;
 
+/* The four spectral envelope blocks that gained two slots in version 14. */
+constexpr int kAbsEnvelopeBlocks = 4;
+constexpr int kAbsEnvelopeSlots = 2;
+
 /* The version 11 pan envelope block: on, r1, r2, r3, r4, l1, l2, l3, l4, depth.
  * The version 12 block: on, r1, r2, r3, l1, l2, l3, rel rate, rel level, mode.
  * The release rate and level come from the old r4 and l4, and the depth becomes
@@ -66,6 +70,30 @@ void remapOffsetBlock(const std::vector<int32_t>& in, int oldBase,
     put(6, at(7));
     put(7, at(4));
     put(8, at(8));
+    put(9, 1);
+}
+
+/* The version 13 spectral envelope block: r1, r2, r3, r4, l1, l2, l3, depth.
+ * The version 14 block: on, r1, r2, r3, l1, l2, l3, rel rate, rel level, mode.
+ * A non-zero depth meant a live envelope, so the mode is sustain on. */
+void remapAbsSpecBlock(const std::vector<int32_t>& in, int oldBase,
+                       std::vector<int32_t>& out, int newBase)
+{
+    const auto at = [oldBase, &in](int k) -> int32_t {
+        return in[static_cast<std::size_t>(oldBase + k)];
+    };
+    const auto put = [newBase, &out](int k, int32_t value) {
+        out[static_cast<std::size_t>(newBase + k)] = value;
+    };
+    put(0, at(7) != 0 ? 1 : 0);
+    put(1, at(0));
+    put(2, at(1));
+    put(3, at(2));
+    put(4, at(4));
+    put(5, at(5));
+    put(6, at(6));
+    put(7, at(3));
+    put(8, 0);
     put(9, 1);
 }
 
@@ -408,6 +436,15 @@ bool PresetStore::loadLibrary(const uint8_t* data, std::size_t size)
     return true;
 }
 
+int PresetStore::toVersion13Index(int targetIndex) const
+{
+    int shift = 0;
+    for (int base : specEnvBase_)
+        if (base >= 0 && base < targetIndex)
+            shift += kAbsEnvelopeSlots;
+    return targetIndex - shift;
+}
+
 int PresetStore::toVersion12Index(int targetIndex) const
 {
     int shift = 0;
@@ -416,7 +453,7 @@ int PresetStore::toVersion12Index(int targetIndex) const
     for (int base : fbEnvBase_)
         if (base >= 0 && base < targetIndex)
             ++shift;
-    return targetIndex - shift;
+    return toVersion13Index(targetIndex) - shift;
 }
 
 bool PresetStore::migratePartBank(const uint8_t* data, uint32_t oldCount,
@@ -426,13 +463,17 @@ bool PresetStore::migratePartBank(const uint8_t* data, uint32_t oldCount,
     const auto newRecord = partRecordSize();
     out.assign(newRecord * kPartSlots, 0xFF);
     const auto target = static_cast<std::size_t>(partParamCount_);
-    const auto v12Count =
-        target >= static_cast<std::size_t>(kOffsetEnvelopeBlocks)
-            ? target - static_cast<std::size_t>(kOffsetEnvelopeBlocks)
+    const auto v13Count =
+        target >= static_cast<std::size_t>(kAbsEnvelopeBlocks * kAbsEnvelopeSlots)
+            ? target - static_cast<std::size_t>(kAbsEnvelopeBlocks *
+                                               kAbsEnvelopeSlots)
             : target;
+    const auto v12Count =
+        v13Count >= static_cast<std::size_t>(kOffsetEnvelopeBlocks)
+            ? v13Count - static_cast<std::size_t>(kOffsetEnvelopeBlocks)
+            : v13Count;
 
-    /* The version 12 operator warm-up indices, before the five offset envelope
-     * slots were inserted. */
+    /* The version 12 operator warm-up indices. */
     std::array<int, 4> opWarm12{{-1, -1, -1, -1}};
     for (int op = 0; op < 4; ++op) {
         const int warm = opEnvWarm_[static_cast<std::size_t>(op)];
@@ -444,16 +485,38 @@ bool PresetStore::migratePartBank(const uint8_t* data, uint32_t oldCount,
         opWarm12[3] >= 0 &&
         static_cast<std::size_t>(oldCount) + 4u == v12Count;
 
-    /* The five inserted blocks, in ascending target order. */
+    /* The five offset blocks in version 13 coordinates. */
     std::array<int, kOffsetEnvelopeBlocks> offsetBases{};
     int offsetCount = 0;
     for (int base : fbEnvBase_)
         if (base >= 0)
-            offsetBases[static_cast<std::size_t>(offsetCount++)] = base;
+            offsetBases[static_cast<std::size_t>(offsetCount++)] =
+                toVersion13Index(base);
     if (pitchEnvBase_ >= 0)
-        offsetBases[static_cast<std::size_t>(offsetCount++)] = pitchEnvBase_;
+        offsetBases[static_cast<std::size_t>(offsetCount++)] =
+            toVersion13Index(pitchEnvBase_);
     std::sort(offsetBases.begin(),
               offsetBases.begin() + static_cast<std::ptrdiff_t>(offsetCount));
+
+    /* The absolute blocks: target index and version 13 old index. */
+    struct AbsBlock {
+        int targetBase = -1;
+        int oldBase = -1;
+    };
+    std::array<AbsBlock, kAbsEnvelopeBlocks> absBlocks{};
+    int absCount = 0;
+    for (int base : specEnvBase_) {
+        if (base < 0 || absCount >= kAbsEnvelopeBlocks)
+            continue;
+        absBlocks[static_cast<std::size_t>(absCount)] = {
+            base, toVersion13Index(base)};
+        ++absCount;
+    }
+    std::sort(absBlocks.begin(),
+              absBlocks.begin() + static_cast<std::ptrdiff_t>(absCount),
+              [](const AbsBlock& a, const AbsBlock& b) {
+                  return a.targetBase < b.targetBase;
+              });
 
     std::vector<int32_t> grown;
     std::vector<int32_t> expanded;
@@ -507,6 +570,10 @@ bool PresetStore::migratePartBank(const uint8_t* data, uint32_t oldCount,
                 grown[i] = oldIndex < params.size() ? params[oldIndex]
                                                     : defaults_[i];
             }
+        } else if (oldCount == static_cast<uint32_t>(v13Count)) {
+            grown.assign(v13Count, 0);
+            for (std::size_t i = 0; i < v13Count; ++i)
+                grown[i] = params[i];
         } else {
             grown.assign(v12Count, 0);
             const auto copy = std::min<std::size_t>(oldCount, v12Count);
@@ -515,14 +582,55 @@ bool PresetStore::migratePartBank(const uint8_t* data, uint32_t oldCount,
             for (std::size_t i = copy; i < v12Count; ++i)
                 grown[i] = i < defaults_.size() ? defaults_[i] : 0;
         }
-        const int pan12 =
-            panEnvBase_ >= 0 ? toVersion12Index(panEnvBase_) : -1;
-        if (raw[0] < 12u && pan12 >= 4 &&
-            pan12 + 6 <= static_cast<int>(v12Count))
-            remapPanBlock(grown, pan12);
-        if (raw[0] < 13u) {
+
+        if (grown.size() == v12Count) {
+            const int pan12 =
+                panEnvBase_ >= 0 ? toVersion12Index(panEnvBase_) : -1;
+            if (raw[0] < 12u && pan12 >= 4 &&
+                pan12 + 6 <= static_cast<int>(v12Count))
+                remapPanBlock(grown, pan12);
+            if (raw[0] < 13u) {
+                expanded.assign(v13Count, 0);
+                if (offsetCount != kOffsetEnvelopeBlocks) {
+                    const auto copy =
+                        std::min<std::size_t>(grown.size(), v13Count);
+                    for (std::size_t i = 0; i < copy; ++i)
+                        expanded[i] = grown[i];
+                } else {
+                    int shift = 0;
+                    int next = 0;
+                    for (int i = 0; i < static_cast<int>(v13Count); ++i) {
+                        if (next < offsetCount && i == offsetBases[next]) {
+                            const int oldBase = i - shift;
+                            if (oldBase < 0 ||
+                                static_cast<std::size_t>(oldBase) + 9u >
+                                    grown.size())
+                                return false;
+                            remapOffsetBlock(grown, oldBase, expanded, i);
+                            i += 9;
+                            ++shift;
+                            ++next;
+                            continue;
+                        }
+                        const int oldIndex = i - shift;
+                        expanded[static_cast<std::size_t>(i)] =
+                            oldIndex >= 0 &&
+                                    static_cast<std::size_t>(oldIndex) <
+                                        grown.size()
+                                ? grown[static_cast<std::size_t>(oldIndex)]
+                                : (static_cast<std::size_t>(i) <
+                                           defaults_.size()
+                                       ? defaults_[static_cast<std::size_t>(i)]
+                                       : 0);
+                    }
+                }
+                grown.swap(expanded);
+            }
+        }
+
+        if (grown.size() == v13Count && raw[0] < 14u) {
             expanded.assign(target, 0);
-            if (offsetCount != kOffsetEnvelopeBlocks) {
+            if (absCount != kAbsEnvelopeBlocks) {
                 const auto copy = std::min<std::size_t>(grown.size(), target);
                 for (std::size_t i = 0; i < copy; ++i)
                     expanded[i] = grown[i];
@@ -530,15 +638,17 @@ bool PresetStore::migratePartBank(const uint8_t* data, uint32_t oldCount,
                 int shift = 0;
                 int next = 0;
                 for (int i = 0; i < static_cast<int>(target); ++i) {
-                    if (next < offsetCount && i == offsetBases[next]) {
-                        const int oldBase = i - shift;
-                        if (oldBase < 0 ||
-                            static_cast<std::size_t>(oldBase) + 9u >
+                    if (next < absCount &&
+                        i == absBlocks[static_cast<std::size_t>(next)].targetBase) {
+                        const AbsBlock& block =
+                            absBlocks[static_cast<std::size_t>(next)];
+                        if (block.oldBase < 0 ||
+                            static_cast<std::size_t>(block.oldBase) + 8u >
                                 grown.size())
                             return false;
-                        remapOffsetBlock(grown, oldBase, expanded, i);
+                        remapAbsSpecBlock(grown, block.oldBase, expanded, i);
                         i += 9;
-                        ++shift;
+                        shift += kAbsEnvelopeSlots;
                         ++next;
                         continue;
                     }
@@ -554,6 +664,7 @@ bool PresetStore::migratePartBank(const uint8_t* data, uint32_t oldCount,
             }
             grown.swap(expanded);
         }
+
         if (grown.size() < target)
             grown.resize(target, 0);
         if (raw[0] < PRESET_CUTOFF_LAW_VERSION && cutoffIndex_ >= 0 &&

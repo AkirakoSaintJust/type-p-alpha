@@ -252,31 +252,42 @@ public:
                {params::opSpecEnvRate(op, 0, part),
                 params::opSpecEnvRate(op, 1, part),
                 params::opSpecEnvRate(op, 2, part),
-                params::opSpecEnvRate(op, 3, part)},
+                params::opSpecEnvRelRate(op, part)},
                {params::opSpecEnvLevel(op, 0, part),
                 params::opSpecEnvLevel(op, 1, part),
-                params::opSpecEnvLevel(op, 2, part)},
-               colour(tokens::purple), 0.0, 99.0, false),
-          depth_(editor.state(), params::opSpecEnvDepth(op, part), "depth",
-                 28.0f)
+                params::opSpecEnvLevel(op, 2, part),
+                params::opSpecEnvRelLevel(op, part)},
+               colour(tokens::purple), 0.0, 99.0, false,
+               EnvelopeShape::bipolar, params::opSpecEnvMode(op, part)),
+          on_(editor.state(), params::opSpecEnvOn(op, part), "on"),
+          mode_(editor.state(), params::opSpecEnvMode(op, part),
+                {"off", "sustain", "loop1", "loop2"})
     {
         addAndMakeVisible(env_);
-        addAndMakeVisible(depth_);
-        depth_.onUserEditEnd = [&ed = editor, op, part] {
-            ensureSpectrumMode(ed, op, part, params::opSpecEnvDepth(op, part));
+        addAndMakeVisible(on_);
+        addAndMakeVisible(mode_);
+        on_.onClick = [&ed = editor, op, part] {
+            ensureSpectrumMode(ed, op, part, params::opSpecEnvOn(op, part));
         };
-        for (int i = 0; i < 4; ++i) {
+        for (int i = 0; i < 3; ++i) {
             rates_[static_cast<std::size_t>(i)] = std::make_unique<ParamKnob>(
                 editor.state(), params::opSpecEnvRate(op, i, part),
                 "r" + juce::String(i + 1), 28.0f);
             addAndMakeVisible(*rates_[static_cast<std::size_t>(i)]);
         }
+        rates_[3] = std::make_unique<ParamKnob>(
+            editor.state(), params::opSpecEnvRelRate(op, part), "rel", 28.0f);
+        addAndMakeVisible(*rates_[3]);
         for (int i = 0; i < 3; ++i) {
             levels_[static_cast<std::size_t>(i)] = std::make_unique<ParamKnob>(
                 editor.state(), params::opSpecEnvLevel(op, i, part),
                 "l" + juce::String(i + 1), 28.0f);
             addAndMakeVisible(*levels_[static_cast<std::size_t>(i)]);
         }
+        levels_[3] = std::make_unique<ParamKnob>(
+            editor.state(), params::opSpecEnvRelLevel(op, part), "rl", 28.0f);
+        addAndMakeVisible(*levels_[3]);
+        setHeaderTrailingWidth(48);
     }
 
     void resized() override
@@ -293,16 +304,19 @@ public:
         const int levelCell = levels.getWidth() / 4;
         for (auto& knob : levels_)
             knob->setBounds(levels.removeFromLeft(levelCell));
-        depth_.setBounds(levels.removeFromLeft(levelCell));
+        auto modeRow = area.removeFromTop(24);
+        mode_.setBounds(modeRow.removeFromLeft(96).withSizeKeepingCentre(96, 22));
+        on_.setBounds(headerTrailingBounds());
     }
 
     void tick() { env_.repaint(); }
 
 private:
     P1Envelope env_;
-    ParamKnob depth_;
+    P1Toggle on_;
+    ParamChoice mode_;
     std::array<std::unique_ptr<ParamKnob>, 4> rates_{};
-    std::array<std::unique_ptr<ParamKnob>, 3> levels_{};
+    std::array<std::unique_ptr<ParamKnob>, 4> levels_{};
 };
 
 class SpectrumRow : public P1Card {

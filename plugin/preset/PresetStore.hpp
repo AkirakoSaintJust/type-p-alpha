@@ -116,6 +116,15 @@ public:
         pitchEnvBase_ = pitch;
     }
 
+    /* The part-block index of each operator's `spec_env_on`, used to remap a
+     * version 13 record where the spectral envelope became absolute and gained
+     * on, release and mode controls. -1 in any slot means no layout was
+     * supplied. */
+    void setAbsEnvelopeIndices(const std::array<int, 4>& spectral)
+    {
+        specEnvBase_ = spectral;
+    }
+
     /* Drop the queued changes after the file holds them. */
     void markSaved();
 
@@ -133,8 +142,12 @@ private:
     static std::string shortName(const std::string& name);
 
     /* The part-block index in the version 12 layout, before the five offset
-     * envelope slots were inserted. Every inserted block is one slot. */
+     * slots and the five absolute blocks were inserted. */
     int toVersion12Index(int targetIndex) const;
+
+    /* The part-block index in the version 13 layout, before the ten absolute
+     * envelope slots were inserted. */
+    int toVersion13Index(int targetIndex) const;
 
     /* Expand a part bank saved with `oldCount` params per record to the current
      * count. The chain runs version 10 operator blocks, the version 11 pan
@@ -164,6 +177,7 @@ private:
     int panEnvBase_ = -1;
     std::array<int, 4> fbEnvBase_{{ -1, -1, -1, -1 }};
     int pitchEnvBase_ = -1;
+    std::array<int, 4> specEnvBase_{{ -1, -1, -1, -1 }};
 };
 
 } // namespace p1

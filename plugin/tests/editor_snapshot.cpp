@@ -497,11 +497,14 @@ int main(int argc, char** argv)
         };
         auto morphEnv = [](int op) {
             std::vector<juce::String> ids;
-            ids.push_back(p1::params::opSpecEnvDepth(op, 0));
-            for (int i = 0; i < 4; ++i)
+            ids.push_back(p1::params::opSpecEnvOn(op, 0));
+            for (int i = 0; i < 3; ++i)
                 ids.push_back(p1::params::opSpecEnvRate(op, i, 0));
+            ids.push_back(p1::params::opSpecEnvRelRate(op, 0));
             for (int i = 0; i < 3; ++i)
                 ids.push_back(p1::params::opSpecEnvLevel(op, i, 0));
+            ids.push_back(p1::params::opSpecEnvRelLevel(op, 0));
+            ids.push_back(p1::params::opSpecEnvMode(op, 0));
             return ids;
         };
         auto lfo = [](int op, int kind) {

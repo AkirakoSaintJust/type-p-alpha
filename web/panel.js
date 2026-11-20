@@ -539,8 +539,7 @@
 
   function pageOf(base) {
     if (base === "attack" || base === "release") return "envs";
-    if (/^op[1-4]_spec_(env_|lfo_)/.test(base) ||
-        /^op[1-4]_spec_env_depth$/.test(base))
+    if (/^op[1-4]_spec_(env_|lfo_)/.test(base))
       return "mod";
     if (/^op[1-4]_spec_a\d+$/.test(base) ||
         /^op[1-4]_spec_range_a$/.test(base) ||
@@ -834,14 +833,16 @@
 
   function morphRateNames(op, part) {
     const n = op + 1;
-    return [1, 2, 3, 4].map((i) =>
-      namePart("op" + n + "_spec_env_r" + i, part));
+    return [1, 2, 3].map((i) =>
+      namePart("op" + n + "_spec_env_r" + i, part)).concat(
+      namePart("op" + n + "_spec_env_relr", part));
   }
 
   function morphLevelNames(op, part) {
     const n = op + 1;
     return [1, 2, 3].map((i) =>
-      namePart("op" + n + "_spec_env_l" + i, part));
+      namePart("op" + n + "_spec_env_l" + i, part)).concat(
+      namePart("op" + n + "_spec_env_rell", part));
   }
 
   function pitchRateNames(part) {
@@ -2788,12 +2789,8 @@
     const columns = div("panel-opcols");
     for (let op = 0; op < 4; ++op) {
       const all = specsForOp(activePart, op);
-      const envAll = all.filter((spec) =>
-        /^op[1-4]_spec_(env_|env_depth$)/.test(baseName(spec.name)));
-      const envDepth = envAll.filter((spec) =>
-        baseName(spec.name).endsWith("_spec_env_depth"));
-      const env = envAll.filter((spec) =>
-        !baseName(spec.name).endsWith("_spec_env_depth")).concat(envDepth);
+      const env = all.filter((spec) =>
+        /^op[1-4]_spec_env_/.test(baseName(spec.name)));
       const lfo = all.filter((spec) =>
         /^op[1-4]_spec_lfo_/.test(baseName(spec.name)));
       const aSpecs = all.filter((spec) =>

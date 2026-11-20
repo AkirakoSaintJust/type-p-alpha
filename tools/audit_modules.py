@@ -93,12 +93,12 @@ def main() -> int:
                      if p["name"] in (
                          "op1_spec_a1.p0", "op1_spec_a2.p0",
                          "op1_spec_b1.p0", "op1_spec_b2.p0",
-                         "op1_spec_morph.p0", "op1_spec_env_depth.p0",
+                         "op1_spec_morph.p0", "op1_spec_env_on.p0",
                          "op1_spec_range_a.p0", "op1_spec_range_b.p0")}
     expected_defaults = {
         "op1_spec_a1.p0": 99, "op1_spec_a2.p0": 0,
         "op1_spec_b1.p0": 99, "op1_spec_b2.p0": 45,
-        "op1_spec_morph.p0": 0, "op1_spec_env_depth.p0": 0,
+        "op1_spec_morph.p0": 0, "op1_spec_env_on.p0": 0,
         "op1_spec_range_a.p0": 0, "op1_spec_range_b.p0": 0,
     }
 

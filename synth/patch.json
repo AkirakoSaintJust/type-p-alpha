@@ -2392,10 +2392,17 @@
       "curve": "linear"
     },
     "op1_spec_morph": {
-      "target": "op1.osc.spec_morph",
+      "target": "op1.morphbase.value",
       "min": 0,
       "max": 99,
       "curve": "linear"
+    },
+    "op1_spec_env_on": {
+      "target": "op1.specenv.on",
+      "min": 0,
+      "max": 1,
+      "curve": "linear",
+      "display": "onoff"
     },
     "op1_spec_env_r1": {
       "target": "op1.specenv.r1",
@@ -2411,12 +2418,6 @@
     },
     "op1_spec_env_r3": {
       "target": "op1.specenv.r3",
-      "min": 0,
-      "max": 99,
-      "curve": "linear"
-    },
-    "op1_spec_env_r4": {
-      "target": "op1.specenv.r4",
       "min": 0,
       "max": 99,
       "curve": "linear"
@@ -2439,10 +2440,22 @@
       "max": 99,
       "curve": "linear"
     },
-    "op1_spec_env_depth": {
-      "target": "op1.osc.spec_env_depth",
-      "min": -99,
+    "op1_spec_env_relr": {
+      "target": "op1.specenv.relr",
+      "min": 0,
       "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_env_rell": {
+      "target": "op1.specenv.rell",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op1_spec_env_mode": {
+      "target": "op1.specenv.mode",
+      "min": 0,
+      "max": 3,
       "curve": "linear"
     },
     "op1_spec_lfo_rate": {
@@ -3255,10 +3268,17 @@
       "curve": "linear"
     },
     "op2_spec_morph": {
-      "target": "op2.osc.spec_morph",
+      "target": "op2.morphbase.value",
       "min": 0,
       "max": 99,
       "curve": "linear"
+    },
+    "op2_spec_env_on": {
+      "target": "op2.specenv.on",
+      "min": 0,
+      "max": 1,
+      "curve": "linear",
+      "display": "onoff"
     },
     "op2_spec_env_r1": {
       "target": "op2.specenv.r1",
@@ -3274,12 +3294,6 @@
     },
     "op2_spec_env_r3": {
       "target": "op2.specenv.r3",
-      "min": 0,
-      "max": 99,
-      "curve": "linear"
-    },
-    "op2_spec_env_r4": {
-      "target": "op2.specenv.r4",
       "min": 0,
       "max": 99,
       "curve": "linear"
@@ -3302,10 +3316,22 @@
       "max": 99,
       "curve": "linear"
     },
-    "op2_spec_env_depth": {
-      "target": "op2.osc.spec_env_depth",
-      "min": -99,
+    "op2_spec_env_relr": {
+      "target": "op2.specenv.relr",
+      "min": 0,
       "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_env_rell": {
+      "target": "op2.specenv.rell",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op2_spec_env_mode": {
+      "target": "op2.specenv.mode",
+      "min": 0,
+      "max": 3,
       "curve": "linear"
     },
     "op2_spec_lfo_rate": {
@@ -4118,10 +4144,17 @@
       "curve": "linear"
     },
     "op3_spec_morph": {
-      "target": "op3.osc.spec_morph",
+      "target": "op3.morphbase.value",
       "min": 0,
       "max": 99,
       "curve": "linear"
+    },
+    "op3_spec_env_on": {
+      "target": "op3.specenv.on",
+      "min": 0,
+      "max": 1,
+      "curve": "linear",
+      "display": "onoff"
     },
     "op3_spec_env_r1": {
       "target": "op3.specenv.r1",
@@ -4137,12 +4170,6 @@
     },
     "op3_spec_env_r3": {
       "target": "op3.specenv.r3",
-      "min": 0,
-      "max": 99,
-      "curve": "linear"
-    },
-    "op3_spec_env_r4": {
-      "target": "op3.specenv.r4",
       "min": 0,
       "max": 99,
       "curve": "linear"
@@ -4165,10 +4192,22 @@
       "max": 99,
       "curve": "linear"
     },
-    "op3_spec_env_depth": {
-      "target": "op3.osc.spec_env_depth",
-      "min": -99,
+    "op3_spec_env_relr": {
+      "target": "op3.specenv.relr",
+      "min": 0,
       "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_env_rell": {
+      "target": "op3.specenv.rell",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op3_spec_env_mode": {
+      "target": "op3.specenv.mode",
+      "min": 0,
+      "max": 3,
       "curve": "linear"
     },
     "op3_spec_lfo_rate": {
@@ -4981,10 +5020,17 @@
       "curve": "linear"
     },
     "op4_spec_morph": {
-      "target": "op4.osc.spec_morph",
+      "target": "op4.morphbase.value",
       "min": 0,
       "max": 99,
       "curve": "linear"
+    },
+    "op4_spec_env_on": {
+      "target": "op4.specenv.on",
+      "min": 0,
+      "max": 1,
+      "curve": "linear",
+      "display": "onoff"
     },
     "op4_spec_env_r1": {
       "target": "op4.specenv.r1",
@@ -5000,12 +5046,6 @@
     },
     "op4_spec_env_r3": {
       "target": "op4.specenv.r3",
-      "min": 0,
-      "max": 99,
-      "curve": "linear"
-    },
-    "op4_spec_env_r4": {
-      "target": "op4.specenv.r4",
       "min": 0,
       "max": 99,
       "curve": "linear"
@@ -5028,10 +5068,22 @@
       "max": 99,
       "curve": "linear"
     },
-    "op4_spec_env_depth": {
-      "target": "op4.osc.spec_env_depth",
-      "min": -99,
+    "op4_spec_env_relr": {
+      "target": "op4.specenv.relr",
+      "min": 0,
       "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_env_rell": {
+      "target": "op4.specenv.rell",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "op4_spec_env_mode": {
+      "target": "op4.specenv.mode",
+      "min": 0,
+      "max": 3,
       "curve": "linear"
     },
     "op4_spec_lfo_rate": {
@@ -5149,14 +5201,16 @@
           "spec_b15": 0,
           "spec_b16": 0,
           "spec_morph": 0,
+          "spec_env_on": 0,
           "spec_env_r1": 80,
           "spec_env_r2": 60,
           "spec_env_r3": 50,
-          "spec_env_r4": 80,
           "spec_env_l1": 99,
           "spec_env_l2": 60,
           "spec_env_l3": 0,
-          "spec_env_depth": 0,
+          "spec_env_relr": 80,
+          "spec_env_rell": 0,
+          "spec_env_mode": 1,
           "spec_lfo_rate": 357914,
           "spec_lfo_depth": 0,
           "spec_lfo_wave": 0,
@@ -5236,14 +5290,16 @@
           "spec_b15": 0,
           "spec_b16": 0,
           "spec_morph": 0,
+          "spec_env_on": 0,
           "spec_env_r1": 80,
           "spec_env_r2": 60,
           "spec_env_r3": 50,
-          "spec_env_r4": 80,
           "spec_env_l1": 99,
           "spec_env_l2": 60,
           "spec_env_l3": 0,
-          "spec_env_depth": 0,
+          "spec_env_relr": 80,
+          "spec_env_rell": 0,
+          "spec_env_mode": 1,
           "spec_lfo_rate": 357914,
           "spec_lfo_depth": 0,
           "spec_lfo_wave": 0,
@@ -5323,14 +5379,16 @@
           "spec_b15": 0,
           "spec_b16": 0,
           "spec_morph": 0,
+          "spec_env_on": 0,
           "spec_env_r1": 80,
           "spec_env_r2": 60,
           "spec_env_r3": 50,
-          "spec_env_r4": 80,
           "spec_env_l1": 99,
           "spec_env_l2": 60,
           "spec_env_l3": 0,
-          "spec_env_depth": 0,
+          "spec_env_relr": 80,
+          "spec_env_rell": 0,
+          "spec_env_mode": 1,
           "spec_lfo_rate": 357914,
           "spec_lfo_depth": 0,
           "spec_lfo_wave": 0,
@@ -5410,14 +5468,16 @@
           "spec_b15": 0,
           "spec_b16": 0,
           "spec_morph": 0,
+          "spec_env_on": 0,
           "spec_env_r1": 80,
           "spec_env_r2": 60,
           "spec_env_r3": 50,
-          "spec_env_r4": 80,
           "spec_env_l1": 99,
           "spec_env_l2": 60,
           "spec_env_l3": 0,
-          "spec_env_depth": 0,
+          "spec_env_relr": 80,
+          "spec_env_rell": 0,
+          "spec_env_mode": 1,
           "spec_lfo_rate": 357914,
           "spec_lfo_depth": 0,
           "spec_lfo_wave": 0,
