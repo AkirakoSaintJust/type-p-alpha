@@ -1083,14 +1083,14 @@ void PluginEditor::pasteOperator(int op)
         juce::String base = storedBase;
         if (base.startsWith(source + "_") || base.startsWith(source + "."))
             base = destination + base.substring(source.length());
-        if (op == 0 && base == "op1.eg.r1")
+        if (op == 0 && base == "op1.eg.surge")
             base = "attack";
-        else if (op == 0 && base == "op1.eg.r4")
+        else if (op == 0 && base == "op1.eg.rel")
             base = "release";
         else if (op != 0 && base == "attack")
-            base = destination + ".eg.r1";
+            base = destination + ".eg.surge";
         else if (op != 0 && base == "release")
-            base = destination + ".eg.r4";
+            base = destination + ".eg.rel";
         if (auto* parameter = state().getParameter(base + suffix))
             parameter->setValueNotifyingHost(
                 parameter->convertTo0to1(static_cast<float>(value)));
@@ -1103,8 +1103,8 @@ namespace {
 /* The parameters each operator card owns, in its display order. The list is the
  * card's contract: copy fills the clipboard from it and paste writes back through
  * it, so a card cannot copy some of its controls and miss others. The amplitude
- * envelope's first and last rates are the op1-only `attack` and `release` names,
- * and opEnvRate maps them for the source and destination op. */
+ * envelope's surge and release are the op1-only `attack` and `release` names, and
+ * opEnv maps them for the source and destination op. */
 std::vector<juce::String> sectionParamIDs(int op, int part,
                                           PluginEditor::OperatorSection section)
 {
@@ -1120,10 +1120,9 @@ std::vector<juce::String> sectionParamIDs(int op, int part,
         add(p1::params::opSpecMorph(op, part));
         break;
     case PluginEditor::OperatorSection::amplitudeEnvelope:
-        for (int i = 0; i < 4; ++i)
-            add(p1::params::opEnvRate(op, i, part));
-        for (int i = 0; i < 3; ++i)
-            add(p1::params::opEnvLevel(op, i, part));
+        for (const char* field :
+             {"warm", "surge", "d1r", "d1l", "d2r", "d2l", "rel", "mode"})
+            add(p1::params::opEnv(op, field, part));
         break;
     case PluginEditor::OperatorSection::feedbackEnvelope:
         add(p1::params::opFeedbackOn(op, part));

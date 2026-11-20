@@ -152,16 +152,31 @@ int main()
     check(v2Loaded.partUsed(3) && v2Loaded.partName(3) == "lead",
           "a v2 library keeps its part records");
 
-    /* A library whose part record has one fewer param, as every library written
-     * before the bend range. The loader has to expand the record and default the
-     * new value without touching the old ones. */
+    /* A version 10 part record, before the operator envelope grew from seven to
+     * eight parameters. The loader has to remap each operator block and keep the
+     * rest of the record aligned. */
     {
-        const uint32_t oldCount = kP1PartParamCount - 10u;
+        const auto warmIndex = [](int op) {
+            const std::string wanted =
+                "op" + std::to_string(op + 1) + ".eg.warm.p0";
+            for (int i = 0; i < kP1PartParamCount; ++i) {
+                if (wanted == kP1ParamSpecs[static_cast<std::size_t>(i)].id)
+                    return i;
+            }
+            return -1;
+        };
+        const int w0 = warmIndex(0);
+        const int w1 = warmIndex(1);
+        check(w0 > 0 && w1 > w0, "find the operator envelope blocks");
+        const uint32_t oldCount = kP1PartParamCount - 4u;
         const auto oldRecord = PP_RECORD(oldCount);
         std::vector<uint8_t> oldBank(static_cast<std::size_t>(oldRecord) * 128u,
                                      0xFF);
         std::vector<int32_t> oldParams(oldCount, 3);
-        oldParams[static_cast<std::size_t>(kP1PartCutoffIndex)] = 12345;
+        for (int k = 0; k < 7; ++k)
+            oldParams[static_cast<std::size_t>(w0) + static_cast<std::size_t>(k)] =
+                11 + k;
+        oldParams[static_cast<std::size_t>(kP1PartCutoffIndex) - 4u] = 12345;
         preset_part_pack(oldBank.data() +
                              static_cast<std::size_t>(3u) * oldRecord,
                          "older", oldParams.data(), oldCount);
@@ -185,18 +200,26 @@ int main()
 
         p1::PresetStore expanded{kP1PartParamCount, kP1PartCount,
                                  p1::partParamDefaults(), kP1PartCutoffIndex};
+        expanded.setOperatorEnvelopeIndices({w0, w1, warmIndex(2), warmIndex(3)});
         check(expanded.loadLibrary(oldLibrary.data(), oldLibrary.size()),
-              "load a library with the old part record size");
+              "load a version 10 library");
         check(expanded.revision() == 9,
               "the old library keeps its revision through the migration");
         check(expanded.partName(3) == "older",
-              "the old part name survives the record expansion");
+              "the old part name survives the record migration");
         const auto& grown = expanded.partParams(3);
-        check(grown[5] == 3 &&
-                  grown[800] == 3 && grown[801] == 3 &&
-                  grown[802] == 1 && grown[803] == 80 &&
-                  grown[static_cast<std::size_t>(kP1PartParamCount - 1)] == 0,
-              "the appended pan envelope defaults to on, a slow attack and no depth");
+        check(grown[static_cast<std::size_t>(w0)] == 0 &&
+                  grown[static_cast<std::size_t>(w0) + 1u] == 11 &&
+                  grown[static_cast<std::size_t>(w0) + 2u] == 12 &&
+                  grown[static_cast<std::size_t>(w0) + 3u] == 16 &&
+                  grown[static_cast<std::size_t>(w0) + 4u] == 13 &&
+                  grown[static_cast<std::size_t>(w0) + 5u] == 17 &&
+                  grown[static_cast<std::size_t>(w0) + 6u] == 14 &&
+                  grown[static_cast<std::size_t>(w0) + 7u] == 1,
+              "the operator envelope maps r1 to surge, l2 to d1l and l3 to d2l");
+        check(grown[static_cast<std::size_t>(w0) + 8u] ==
+                  oldParams[static_cast<std::size_t>(w0) + 7u],
+              "the params after an operator block stay aligned");
         check(grown[static_cast<std::size_t>(kP1PartCutoffIndex)] == 12345,
               "a current-law cutoff is not converted twice");
     }

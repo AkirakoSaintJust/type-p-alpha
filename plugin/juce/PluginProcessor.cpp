@@ -15,7 +15,7 @@ namespace {
 
 constexpr double kCoreRate = 48000.0;
 constexpr int kControlBlock = 32;
-constexpr int kStateVersion = 8;
+constexpr int kStateVersion = 9;
 /* The state version whose cutoff values already use the current law. A later
  * version bump must not run the cutoff conversion again. */
 constexpr int kCutoffLawStateVersion = 5;
@@ -28,6 +28,25 @@ bool isEngineMessage(const juce::MidiMessage& message)
         return false;
     return message.isNoteOnOrOff() || message.isController() ||
            message.isPitchWheel();
+}
+
+/* The part-block indices of the four operator warm-up rates. The migration
+ * needs them because the operator envelope grew from seven to eight parameters
+ * inside each operator block. */
+std::array<int, 4> operatorEnvelopeIndices()
+{
+    std::array<int, 4> out{{-1, -1, -1, -1}};
+    for (int op = 0; op < 4; ++op) {
+        const std::string wanted =
+            "op" + std::to_string(op + 1) + ".eg.warm.p0";
+        for (int i = 0; i < kP1PartParamCount; ++i) {
+            if (wanted == kP1ParamSpecs[static_cast<std::size_t>(i)].id) {
+                out[static_cast<std::size_t>(op)] = i;
+                break;
+            }
+        }
+    }
+    return out;
 }
 
 } // namespace
@@ -104,6 +123,7 @@ TypePAlphaAudioProcessor::TypePAlphaAudioProcessor()
       midi_(engine_),
       apvts_(*this, nullptr, P1_STATE_TREE_ID, createLayout())
 {
+    presets_.setOperatorEnvelopeIndices(operatorEnvelopeIndices());
     lastParams_.fill(std::numeric_limits<int32_t>::min());
     for (int i = 0; i < kP1ParamCount; ++i)
         paramValues_[static_cast<std::size_t>(i)] =

@@ -60,11 +60,11 @@ bool setup(p1::Engine& engine, int32_t feedbackLfoDepth, int32_t detuneLfoDepth,
     ok &= set_param(engine, "op4_mute.p0", 1);
     ok &= set_param(engine, "attack.p0", 99);
     ok &= set_param(engine, "release.p0", 99);
-    ok &= set_param(engine, "op1.eg.r2.p0", 99);
-    ok &= set_param(engine, "op1.eg.r3.p0", 99);
-    ok &= set_param(engine, "op1.eg.l1.p0", 99);
-    ok &= set_param(engine, "op1.eg.l2.p0", 99);
-    ok &= set_param(engine, "op1.eg.l3.p0", 99);
+    ok &= set_param(engine, "op1.eg.d1r.p0", 99);
+    ok &= set_param(engine, "op1.eg.d2r.p0", 99);
+    ok &= set_param(engine, "op1.eg.d1l.p0", 99);
+    ok &= set_param(engine, "op1.eg.d2l.p0", 99);
+    ok &= set_param(engine, "op1.eg.d2l.p0", 99);
     ok &= set_param(engine, "op1_trem_depth.p0", 0);
     ok &= set_param(engine, "filter_on.p0", 0);
 

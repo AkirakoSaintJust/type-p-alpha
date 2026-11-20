@@ -177,19 +177,19 @@ int main(int argc, char** argv)
             const auto* value = params.getRawParameterValue(id);
             return value == nullptr ? 0.0f : value->load();
         };
-        const float srcAmp = readRaw("op1.eg.l1.p0");
-        const float dstAmp = readRaw("op2.eg.l1.p0");
-        setRaw("op1.eg.l1.p0", 42.0f);
+        const float srcAmp = readRaw("op1.eg.d1l.p0");
+        const float dstAmp = readRaw("op2.eg.d1l.p0");
+        setRaw("op1.eg.d1l.p0", 42.0f);
         p1editor->copyOperatorSection(
             0, 0, PluginEditor::OperatorSection::amplitudeEnvelope);
         p1editor->pasteOperatorSection(
             1, 0, PluginEditor::OperatorSection::amplitudeEnvelope);
-        if (std::lround(readRaw("op2.eg.l1.p0")) != 42) {
+        if (std::lround(readRaw("op2.eg.d1l.p0")) != 42) {
             std::printf("editor snapshot: amp envelope section paste failed\n");
             ok = false;
         }
-        setRaw("op1.eg.l1.p0", srcAmp);
-        setRaw("op2.eg.l1.p0", dstAmp);
+        setRaw("op1.eg.d1l.p0", srcAmp);
+        setRaw("op2.eg.d1l.p0", dstAmp);
 
         const float srcLfo = readRaw("op1_dlfo_depth.p0");
         const float dstLfo = readRaw("op2_dlfo_depth.p0");
@@ -432,10 +432,9 @@ int main(int argc, char** argv)
         };
         auto amplitudeEnv = [](int op) {
             std::vector<juce::String> ids;
-            for (int i = 0; i < 4; ++i)
-                ids.push_back(p1::params::opEnvRate(op, i, 0));
-            for (int i = 0; i < 3; ++i)
-                ids.push_back(p1::params::opEnvLevel(op, i, 0));
+            for (const char* field :
+                 {"warm", "surge", "d1r", "d1l", "d2r", "d2l", "rel", "mode"})
+                ids.push_back(p1::params::opEnv(op, field, 0));
             return ids;
         };
         auto morphEnv = [](int op) {
@@ -530,20 +529,20 @@ int main(int argc, char** argv)
         };
         p1editor->setActivePart(0);
         setNorm("attack.p0", 0.37f);
-        setNorm("op1.eg.l1.p0", 0.37f);
-        setNorm("op2.eg.l1.p0", 0.11f);
+        setNorm("op1.eg.d1l.p0", 0.37f);
+        setNorm("op2.eg.d1l.p0", 0.11f);
         p1editor->copyOperator(0);
         p1editor->pasteOperator(1);
-        if (std::abs(raw("op2.eg.r1.p0") - raw("attack.p0")) > 0.51 ||
-            std::abs(raw("op2.eg.l1.p0") - raw("op1.eg.l1.p0")) > 0.51) {
+        if (std::abs(raw("op2.eg.surge.p0") - raw("attack.p0")) > 0.51 ||
+            std::abs(raw("op2.eg.d1l.p0") - raw("op1.eg.d1l.p0")) > 0.51) {
             std::printf("editor snapshot: operator copy missed op1 attack or level\n");
             ok = false;
         }
-        setNorm("op2.eg.r1.p0", 0.37f);
-        setNorm("op1.eg.l1.p0", 0.11f);
+        setNorm("op2.eg.surge.p0", 0.37f);
+        setNorm("op1.eg.d1l.p0", 0.11f);
         p1editor->copyOperator(1);
         p1editor->pasteOperator(0);
-        if (std::abs(raw("attack.p0") - raw("op2.eg.r1.p0")) > 0.51) {
+        if (std::abs(raw("attack.p0") - raw("op2.eg.surge.p0")) > 0.51) {
             std::printf("editor snapshot: operator copy missed the attack edge\n");
             ok = false;
         }

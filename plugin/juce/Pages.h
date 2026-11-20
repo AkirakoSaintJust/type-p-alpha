@@ -200,24 +200,23 @@ public:
                          PluginEditor::OperatorSection::amplitudeEnvelope);
                  }),
           envView_(editor.state(),
-                   {params::opEnvRate(op, 0, part), params::opEnvRate(op, 1, part),
-                    params::opEnvRate(op, 2, part), params::opEnvRate(op, 3, part)},
-                   {params::opEnvLevel(op, 0, part), params::opEnvLevel(op, 1, part),
-                    params::opEnvLevel(op, 2, part)},
+                   {params::opEnv(op, "warm", part),
+                    params::opEnv(op, "surge", part),
+                    params::opEnv(op, "d1r", part),
+                    params::opEnv(op, "d2r", part)},
+                   {params::opEnv(op, "d1l", part),
+                    params::opEnv(op, "d2l", part),
+                    params::opEnv(op, "d2l", part)},
                    colour(tokens::purple), 0.0, 99.0, false)
     {
         addAndMakeVisible(envView_);
-        for (int i = 0; i < 4; ++i) {
-            rates_[static_cast<std::size_t>(i)] = std::make_unique<ParamKnob>(
-                editor.state(), params::opEnvRate(op, i, part),
-                "r" + juce::String(i + 1), 28.0f);
-            addAndMakeVisible(*rates_[static_cast<std::size_t>(i)]);
-        }
-        for (int i = 0; i < 3; ++i) {
-            levels_[static_cast<std::size_t>(i)] = std::make_unique<ParamKnob>(
-                editor.state(), params::opEnvLevel(op, i, part),
-                "l" + juce::String(i + 1), 28.0f);
-            addAndMakeVisible(*levels_[static_cast<std::size_t>(i)]);
+        const std::array<const char*, 8> fields = {
+            "warm", "surge", "d1r", "d2r", "d1l", "d2l", "rel", "mode"};
+        for (std::size_t i = 0; i < fields.size(); ++i) {
+            knobs_[i] = std::make_unique<ParamKnob>(
+                editor.state(), params::opEnv(op, fields[i], part), fields[i],
+                28.0f);
+            addAndMakeVisible(*knobs_[i]);
         }
     }
 
@@ -229,20 +228,21 @@ public:
         envView_.setBounds(area.removeFromTop(40));
         auto rates = area.removeFromTop(64);
         const int rateCell = rates.getWidth() / 4;
-        for (auto& knob : rates_)
-            knob->setBounds(rates.removeFromLeft(rateCell));
+        for (int i = 0; i < 4; ++i)
+            knobs_[static_cast<std::size_t>(i)]->setBounds(
+                rates.removeFromLeft(rateCell));
         auto levels = area.removeFromTop(64);
-        const int levelCell = levels.getWidth() / 3;
-        for (auto& knob : levels_)
-            knob->setBounds(levels.removeFromLeft(levelCell));
+        const int levelCell = levels.getWidth() / 4;
+        for (int i = 4; i < 8; ++i)
+            knobs_[static_cast<std::size_t>(i)]->setBounds(
+                levels.removeFromLeft(levelCell));
     }
 
     void tick() { envView_.repaint(); }
 
 private:
     P1Envelope envView_;
-    std::array<std::unique_ptr<ParamKnob>, 4> rates_{};
-    std::array<std::unique_ptr<ParamKnob>, 3> levels_{};
+    std::array<std::unique_ptr<ParamKnob>, 8> knobs_{};
 };
 
 class FeedbackEnvelopeCard : public P1Card {

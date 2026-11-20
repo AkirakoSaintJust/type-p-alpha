@@ -17,7 +17,7 @@ page.on("console", (message) => {
 try {
   await page.goto(url, { waitUntil: "load" });
   await page.waitForFunction(
-    () => window.__p1 && window.__p1.paramCount === 1638, {
+    () => window.__p1 && window.__p1.paramCount === 1646, {
     timeout: 20000,
   });
   const tabs = await page.locator(".tab").allTextContents();
@@ -32,7 +32,7 @@ try {
   const ready = await page.evaluate(() => window.__p1);
   console.log("ready:", ready);
   if (!ready.ready) throw new Error(ready.error || "engine did not start");
-  if (ready.paramCount !== 1638)
+  if (ready.paramCount !== 1646)
     throw new Error(`param count ${ready.paramCount}`);
 
   await page.click('#visSeg button[data-mode="spectro"]');
@@ -446,7 +446,7 @@ try {
 
   await page.reload({ waitUntil: "load" });
   await page.waitForFunction(
-    () => window.__p1 && window.__p1.paramCount === 1638, {
+    () => window.__p1 && window.__p1.paramCount === 1646, {
     timeout: 20000,
   });
   const persisted = await page.evaluate(() => window.__p1.patchName());
@@ -472,7 +472,7 @@ try {
   });
   await page.reload({ waitUntil: "load" });
   await page.waitForFunction(
-    () => window.__p1 && window.__p1.paramCount === 1638, {
+    () => window.__p1 && window.__p1.paramCount === 1646, {
     timeout: 20000,
   });
   const migratedCutoff = await page.evaluate(() =>
@@ -486,7 +486,7 @@ try {
   const fallback = await browser.newPage();
   await fallback.goto(fallbackUrl.toString(), { waitUntil: "load" });
   await fallback.waitForFunction(
-    () => window.__p1 && window.__p1.paramCount === 1638, {
+    () => window.__p1 && window.__p1.paramCount === 1646, {
     timeout: 20000,
   });
   await fallback.click("#start");

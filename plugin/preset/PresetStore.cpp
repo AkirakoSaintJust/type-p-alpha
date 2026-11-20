@@ -354,7 +354,12 @@ bool PresetStore::migratePartBank(const uint8_t* data, uint32_t oldCount,
     const auto oldRecord = PP_RECORD(oldCount);
     const auto newRecord = partRecordSize();
     out.assign(newRecord * kPartSlots, 0xFF);
-    std::vector<int32_t> grown(static_cast<std::size_t>(partParamCount_));
+    const auto target = static_cast<std::size_t>(partParamCount_);
+    const bool remapOperators =
+        opEnvWarm_[0] >= 0 && opEnvWarm_[1] >= 0 && opEnvWarm_[2] >= 0 &&
+        opEnvWarm_[3] >= 0 && static_cast<std::size_t>(oldCount) + 4u == target;
+    std::vector<int32_t> grown;
+    std::vector<uint8_t> inOperatorEnvelope;
     for (int slot = 0; slot < kPartSlots; ++slot) {
         const auto* raw = data + static_cast<std::size_t>(slot) * oldRecord;
         if (raw[0] == PRESET_EMPTY)
@@ -363,9 +368,52 @@ bool PresetStore::migratePartBank(const uint8_t* data, uint32_t oldCount,
         std::vector<int32_t> params(static_cast<std::size_t>(oldCount));
         if (!preset_part_unpack(raw, oldCount, name, params.data()))
             return false;
-        grown = defaults_;
-        for (uint32_t i = 0; i < oldCount; ++i)
-            grown[i] = params[i];
+        if (remapOperators) {
+            grown.assign(target, 0);
+            inOperatorEnvelope.assign(target, 0);
+            for (int op = 0; op < 4; ++op) {
+                const int start = opEnvWarm_[static_cast<std::size_t>(op)];
+                const int oldStart = start - op;
+                if (start < 0 || static_cast<std::size_t>(start) + 8u > target ||
+                    oldStart < 0 ||
+                    static_cast<std::size_t>(oldStart) + 6u >= params.size())
+                    return false;
+                /* warm, surge, d1r, d1l, d2r, d2l, rel, mode from the old
+                 * r1, r2, r3, r4, l1, l2, l3 block. */
+                grown[static_cast<std::size_t>(start)] = 0;
+                grown[static_cast<std::size_t>(start) + 1u] =
+                    params[static_cast<std::size_t>(oldStart)];
+                grown[static_cast<std::size_t>(start) + 2u] =
+                    params[static_cast<std::size_t>(oldStart) + 1u];
+                grown[static_cast<std::size_t>(start) + 3u] =
+                    params[static_cast<std::size_t>(oldStart) + 5u];
+                grown[static_cast<std::size_t>(start) + 4u] =
+                    params[static_cast<std::size_t>(oldStart) + 2u];
+                grown[static_cast<std::size_t>(start) + 5u] =
+                    params[static_cast<std::size_t>(oldStart) + 6u];
+                grown[static_cast<std::size_t>(start) + 6u] =
+                    params[static_cast<std::size_t>(oldStart) + 3u];
+                grown[static_cast<std::size_t>(start) + 7u] = 1;
+                for (int k = 0; k < 8; ++k)
+                    inOperatorEnvelope[static_cast<std::size_t>(start + k)] = 1;
+            }
+            for (std::size_t i = 0; i < target; ++i) {
+                if (inOperatorEnvelope[i])
+                    continue;
+                std::size_t shift = 0;
+                for (int warm : opEnvWarm_)
+                    if (static_cast<std::size_t>(warm) < i)
+                        ++shift;
+                const auto oldIndex = i - shift;
+                grown[i] = oldIndex < params.size() ? params[oldIndex]
+                                                    : defaults_[i];
+            }
+        } else {
+            grown = defaults_;
+            const auto copy = std::min<std::size_t>(oldCount, target);
+            for (std::size_t i = 0; i < copy; ++i)
+                grown[i] = params[i];
+        }
         if (raw[0] < PRESET_CUTOFF_LAW_VERSION && cutoffIndex_ >= 0 &&
             cutoffIndex_ < partParamCount_)
             grown[static_cast<std::size_t>(cutoffIndex_)] =

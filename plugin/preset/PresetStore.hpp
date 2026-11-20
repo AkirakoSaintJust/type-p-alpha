@@ -91,6 +91,15 @@ public:
     /* Take the merged banks back, keeping the routing state the user chose. */
     void adoptLibrary(const PresetStore& other);
 
+    /* The part-block indices of the four operator warm-up rates, used to remap
+     * a version 10 record where the operator envelope grew by one parameter.
+     * -1 in any slot means the caller has no layout, so the older append-only
+     * migration runs instead. */
+    void setOperatorEnvelopeIndices(const std::array<int, 4>& indices)
+    {
+        opEnvWarm_ = indices;
+    }
+
     /* Drop the queued changes after the file holds them. */
     void markSaved();
 
@@ -131,6 +140,7 @@ private:
     std::array<bool, kMultiSlots> dirtyMultis_{};
     std::array<Part, kPartSlots> baseParts_{};
     std::array<Multi, kMultiSlots> baseMultis_{};
+    std::array<int, 4> opEnvWarm_{{ -1, -1, -1, -1 }};
 };
 
 } // namespace p1
