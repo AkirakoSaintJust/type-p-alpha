@@ -256,6 +256,8 @@ typedef struct type_p_alpha_state {
     int32_t lp_z4[NVOICE];
     int32_t lp_fc[NVOICE];
     int32_t lp_res_k[NVOICE];
+    int32_t lp_env[NVOICE];
+    int32_t lp_gate[NVOICE];
     uint32_t fenv_stage[NVOICE];
     int32_t fenv_level[NVOICE];
     uint32_t fenv_r1_eff[NVOICE];
@@ -4939,6 +4941,8 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define lp_z4 (S->lp_z4)
 #define lp_fc (S->lp_fc)
 #define lp_res_k (S->lp_res_k)
+#define lp_env (S->lp_env)
+#define lp_gate (S->lp_gate)
 #define fenv_stage (S->fenv_stage)
 #define fenv_level (S->fenv_level)
 #define fenv_r1_eff (S->fenv_r1_eff)
@@ -7979,7 +7983,8 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                self-oscillation amplitude does not follow the input level. The feedback drops the passband by
                `1/(1+res_k)`, so `comp` is 0 to 100 percent of a `1+res_k` makeup applied to the
                LP4 output, with negative values clamped to 0. At 22 percent the output matches the
-               SH-101's partial `1 + a` sum. `mode` selects the output:
+               SH-101's partial `1 + a` sum. The output gate follows the carrier input, so the
+               loop's self-oscillation cannot sound on its own. `mode` selects the output:
                0 = LP4, 1 = the band tap, 2 = the 2-pole highpass, the (1 - L)^2 tap whose
                corner lines up with the LP pole. Locals are scoped so several instances can
                coexist. */
@@ -7988,6 +7993,17 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             int32_t lp_band_x = 0;
             int32_t lp_hp_x = 0;
             if (lp_on[voice_part[v]]) {
+                /* The output gate follows the carrier input, so the feedback loop cannot sound
+                   on its own. The follower has a 1.3 ms attack and a 42 ms release, and the gate
+                   fades over 0.3 ms in and 10.7 ms out. The threshold is -60 dBFS. */
+                int32_t in_abs = route_car_x < 0 ? -route_car_x : route_car_x;
+                int32_t env = lp_env[v];
+                env += (in_abs - env) >> (in_abs > env ? 6 : 11);
+                lp_env[v] = env;
+                int32_t gate_target = env > 32 ? 32767 : 0;
+                int32_t gate = lp_gate[v];
+                gate += (gate_target - gate) >> (gate_target ? 4 : 9);
+                lp_gate[v] = gate;
                 int32_t fb = p1_q16_mul(lp_res_k[v], lp_z4[v]);
                 int32_t fbc;
                 if (fb > 32767) {
@@ -8020,6 +8036,10 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                     lp_hp_x = hp;
                     lp_out_x = (lp_mode[voice_part[v]] == 1u) ? lp_band_x
                                : ((lp_mode[voice_part[v]] == 2u) ? hp : lp4);
+                    lp_out_x = p1_q15_mul32(lp_out_x, gate);
+                    lp_lp2_x = p1_q15_mul32(lp_lp2_x, gate);
+                    lp_band_x = p1_q15_mul32(lp_band_x, gate);
+                    lp_hp_x = p1_q15_mul32(lp_hp_x, gate);
                 }
             } else {
                 lp_out_x = route_car_x;

@@ -150,7 +150,7 @@ void test_filter_is_per_part()
     check(!same(ra, rb, 512), "part 1 uses its own cutoff");
 }
 
-double filter_tail_rms(int32_t resonance)
+double filter_rms(int32_t resonance, bool carriers)
 {
     const uint32_t on = param_id("filter_on.p0");
     const uint32_t cut = param_id("cutoff.p0");
@@ -173,11 +173,16 @@ double filter_tail_rms(int32_t resonance)
     engine.setParam(part, 99);
     engine.noteOn(60, 100, 0);
     engine.render(buffer, 256);
-    engine.setParam(op1, 0);
-    engine.setParam(op2, 0);
-    engine.setParam(op3, 0);
-    engine.setParam(op4, 0);
-    engine.render(buffer, 256);
+    if (!carriers) {
+        engine.setParam(op1, 0);
+        engine.setParam(op2, 0);
+        engine.setParam(op3, 0);
+        engine.setParam(op4, 0);
+        /* The output gate follows the carriers, so let the follower release and
+         * the gate close before the tail is measured. */
+        for (int block = 0; block < 32; ++block)
+            engine.render(buffer, 256);
+    }
 
     std::int64_t sum = 0;
     for (int block = 0; block < 40; ++block) {
@@ -188,14 +193,19 @@ double filter_tail_rms(int32_t resonance)
     return std::sqrt(static_cast<double>(sum) / (40.0 * 512.0));
 }
 
-void test_filter_self_oscillation()
+void test_filter_output_gate()
 {
-    const double high = filter_tail_rms(37748); /* 90 percent */
-    const double low = filter_tail_rms(20000);  /* 48 percent */
-    check(high > 200.0,
-          "the filter self-oscillates at 90 percent resonance");
-    check(low < high * 0.1,
-          "the resonance below onset decays");
+    const double sounding = filter_rms(37748, true);  /* 90 percent */
+    const double tail = filter_rms(37748, false);     /* 90 percent, carriers off */
+    const double low = filter_rms(20000, false);      /* 48 percent, carriers off */
+    std::printf("filter gate: sounding %.1f tail %.1f low %.1f\n",
+                sounding, tail, low);
+    check(sounding > 200.0,
+          "the filter is audible with the carriers sounding");
+    check(tail < 50.0,
+          "the filter tail is silent once the carriers are silent");
+    check(low < 50.0,
+          "the resonance below onset is silent too");
 }
 
 void test_sustain_isolation()
@@ -369,7 +379,7 @@ int main(int argc, char** argv)
     test_engine_render();
     test_state_isolation();
     test_filter_is_per_part();
-    test_filter_self_oscillation();
+    test_filter_output_gate();
     test_sustain_isolation();
     test_channel_separation();
     test_sustain_per_channel();

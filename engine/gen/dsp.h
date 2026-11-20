@@ -256,6 +256,8 @@ typedef struct type_p_alpha_state {
     int32_t lp_z4[NVOICE];
     int32_t lp_fc[NVOICE];
     int32_t lp_res_k[NVOICE];
+    int32_t lp_env[NVOICE];
+    int32_t lp_gate[NVOICE];
     uint32_t fenv_stage[NVOICE];
     int32_t fenv_level[NVOICE];
     uint32_t fenv_r1_eff[NVOICE];

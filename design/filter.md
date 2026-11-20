@@ -78,6 +78,24 @@ self-oscillation amplitude does not follow the input level.
 I measured the knee at -12, -6, -3 and 0 dBFS, and the -12 dBFS figure is at the
 integer floor, which is intended behaviour, i.e. hot inputs clip, normal inputs don't.
 
+## Output gate
+
+The loop self-oscillates, and the output follows the carrier input so it cannot
+sound on its own. The problem it fixes is structural: the filter sits after the
+operator amplitude envelopes and there is no VCA after it, so a resonant loop kept
+sounding with the operators silent and after a release. The JUCE plugin and the
+standalone call the same generated engine, so the behaviour was there too.
+
+The gate rectifies the filter input, follows it with a 1.3 ms attack and a 42 ms
+release, and opens above -60 dBFS. The gate itself fades over 0.3 ms in and 10.7 ms
+out, and it scales all four outputs. The engine test measures 6,422 RMS with the
+carriers sounding at 90 percent resonance, then 1.0 RMS once the carriers stop, and
+0.0 at 48 percent.
+
+The trade-off is that the filter is no longer a free-running oscillator. A patch
+that wants a sine from the loop alone needs another source, and a very quiet
+carrier can close the gate early. The threshold and the release are fixed for now.
+
 ## Envelope position
 
 The filter envelope is absolute. `fenv_on` enables it, the levels are 0 to 99
@@ -93,8 +111,8 @@ the release level, with sustain on.
 The old cutoff was a coefficient in 0 to 55296, scaled by 60211/65536 to keep
 the old 44.1 kHz cutoff in hertz. Saved values are mapped through the old
 one-pole frequency and then into the new log position, so an old patch keeps its
-cutoff. It'd be worth it to test the conversion properly, because an old patch that loads with the right cutoff but the wrong resonance might be hard to notice. The preset record, the plugin state
-and the web library have all been version bumped, and convert older patches on load. The migration
+cutoff. It'd be worth it to test the conversion properly, because an old patch that loads with the right cutoff but the wrong resonance might be hard to notice. The preset record and the
+plugin state have both been version bumped, and convert older patches on load. The migration
 test builds a version 6 record with the old 8000 default to prove it all works.
 Host automation lanes have no version, so their raw values just shift.
 
