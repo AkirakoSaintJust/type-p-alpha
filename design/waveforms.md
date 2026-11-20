@@ -1,8 +1,11 @@
 # Waveforms
 
 The oscillator carries fourteen selectable entries: thirteen single-cycle tables
-and the spectrum mode. This note covers the list, the `rect tri` table, the
-spectrum mode and the harmonic analysis behind the spectral pages.
+and the spectrum mode. The twelve non-`rect tri` entries cover the OPL3 and
+OPZ/TX81z/DX11/V50 waveform sets. The tables are generated from the formulas in
+`tools/gen_wavetable.py`, not sampled from the chips, and `rect tri` is the
+addition. This note covers the list, the `rect tri` table, the spectrum mode and
+the harmonic analysis behind the spectral pages.
 
 I keep this note because the waveform list is the one place where a stored number, a
 panel label and a table offset have to agree, and they've disagreed before. The list

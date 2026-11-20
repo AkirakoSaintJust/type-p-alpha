@@ -12,8 +12,8 @@ The reasons for abandoning Type P.fm1 are that I've decided to disengage from th
 
 - The usual output level, frequency ratio and detune controls.
 - Bipolar phase modulation feedback, with a dedicated LFO and envelope.
-- A set of 13 waveforms more or less modelled after the OPL3 and the OPZ/TX81z/DX11/V50.
-- An amplitude LFO on top of the usual amplitude envelope.
+- A set of 13 waveforms: the full OPL3 and OPZ/TX81z/DX11/V50 set, plus `rect tri`, with the tables generated from formulas rather than copied from the chips.
+- An amplitude LFO over a warm-up, a surge and two decay stages, with four modes.
 - A pitch LFO for evolving PM timbres.
 - An additive spectral mode with two 64-harmonic tables, an LFO and envelope for morphing between them, and spectral controls inspired by the Kawai K5.
 
@@ -36,7 +36,7 @@ I've also tried to make sound design easier by restraining components to a relat
 
 Phase modulation indices are calibrated to be similar to Yamaha's OPN, OPM, OPL and OPZ families, rather than the softer sound of synths like the DX7, DX9 and Reface DX. Feedback scales with the operator's amplitude, as in Yamaha's traditional DX synths and unlike the Reface DX, but like the Reface DX's feedback, it is bipolar and the negative (or more accurately, rectified) half adds odd harmonics when applied to a sine wave. Feedback also has an LFO and envelope per operator, which I think is a powerful addition. I'm well chuffed with how it works but I wonder whether having a feedback envelope would make more sense with Reface DX-style amplitude-independent feedback? Anyway, for more details, see the [operator feedback](plugin/feature-contract-feedback.md) and [operator LFOs](plugin/feature-contract-operator-lfos.md) contracts, and the [the feedback research study](docs/research/README.md).
 
-Results so far seem to be fit for intent. I've been able to easily make rudimentary additive patches that sound a bit like the PPG sounds Tangerine Dream used circa Exit, additive brass, woodwinds and strings; and pseudo-PWM pads and leads by pairing saw operators with sine operators at 20-35% feedback, which gives them a ramp waveform. Conversion of OPM patches to Type P ranges produces spectrally similar results to the originals, and I reckon they are easy to edit. Confirmation from external testers is still pending though.
+Results so far seem to be fit for intent. I've been able to easily make rudimentary additive patches that sound a bit like the PPG sounds Tangerine Dream used circa Exit, additive brass, woodwinds and strings; and pseudo-PWM pads and leads by pairing saw operators with sine operators at 20-35% feedback, which gives them a ramp waveform. Conversion of OPM patches to Type P ranges produces spectrally similar results to the originals, and I reckon they are easy to edit. Nobody else has played or heard it yet, and I haven't designed a test.
 
 ## Lines of research
 
@@ -72,12 +72,14 @@ Results so far seem to be fit for intent. I've been able to easily make rudiment
 
 I'd like to make a better wordmark and complementary materials such as posters, a web with custom assets, etc. The panel is mostly there but I guess everything can always be refined.
 
+I don't know which direction the wordmark takes yet, so the first step is to experiment. A cut-up and layered Rexlia is one candidate. The alpha can be built from existing font components, since most free fonts have no Greek glyphs. The mark will probably work better as vector art than as an embedded font, which also makes the licensing simpler.
+
 References:
 
 - A Novarese (Eurostile, Stop)
 - Openmind (Amon Tobin's Foley Room)
 - R Mitchell (Corporate)
-- The Designer's Republic (Wipeout i portades d'Autechre)
+- The Designer's Republic (Wipeout and Autechre covers)
 - N2-Antireal (Terminal)
 - Maniackers
 - Nakamura Y and Hashimoto K  (Gona)

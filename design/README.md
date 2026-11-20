@@ -38,7 +38,8 @@ one that counts when they disagree.
 
 ## References
 
-The visual language borrows from these:
+The visual language draws on these. Some shape a decision directly, and some are
+typefaces I admire for the spirit they carry:
 
 - A Novarese's Eurostile and Stop for the squared, technical letterforms.
 - Openmind's work for Amon Tobin's Foley Room for the cut-up, layered surfaces.
@@ -111,6 +112,25 @@ Zen Dots does the shouting and DotGothic16 does the reading, whilst Unbounded
 appears only in the wordmark. I'd keep it that way, because a third family would
 give me one more thing to license and one more way to make a label look important
 when it isn't.
+
+### Wordmark
+
+The shipped wordmark is `TYPE P.` in Zen Dots with a pink dot and an Unbounded
+lowercase `a`. Both families are OFL, so they can travel in the binary and the
+mockup, and they fit the spirit. The compromise is visible: the `a` is not a Greek
+alpha and does not read as one, because I could not find an OFL family with the
+Greek alphabet in the shape I wanted. Zen Dots also has caps that read odd rather
+than futuristic or techno to me.
+
+The next wordmark is an experiment rather than a decided design. The spirit is the
+Foley Room-era Amon Tobin mark, and a cut-up and layered Rexlia is one candidate.
+Rexlia is the contemporary industrial display in the list, which is the quality I
+want the custom mark to keep. The alpha can be built from existing font components,
+because most free families have no Greek glyphs. The mark will probably work better
+as vector art than as an embedded font: the alpha is easier to draw, and the
+licensing is simpler. Eurostile, Stop, Corporate and VDL's Line and Giga stay
+references for the character, not models to trace. The wordmark is the first
+material to design, and the manual, the posters and the web graphics follow it.
 
 Scale:
 
@@ -470,3 +490,6 @@ where the transcription drifted.
   two part visualisers, so do not add filler widgets to fill space.
 - The wordmark, the manual, the posters and the web graphics are still to be
   designed. The interface language is ahead of the surrounding material.
+- A vector wordmark would remove Unbounded from the bundle, because it appears only
+  in the wordmark. The licence list follows the binary, so update it when the mark
+  lands.
