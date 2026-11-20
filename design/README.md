@@ -4,9 +4,8 @@ The shared visual language for the Type P.alpha editor. The clickable mockup at
 `design/mockup.html` carries the first-pass layout, and `tokens.json` is the
 machine-readable source. The CSS projection is `tokens.css`, the platform notes are
 in `juce.md`, the spectral control map is in `spectral.md`, the filter law is in
-`filter.md`, and the waveform list and analysis are in `waveforms.md`. The shipped
-panel is `web/panel.html`, so where the mockup and the panel differ, the panel and
-`spectral.md` carry the current layout.
+`filter.md`, and the waveform list and analysis are in `waveforms.md`. The shipped panel is the JUCE editor, so where the mockup and the editor differ,
+the editor and `spectral.md` carry the current layout.
 
 Status: v1.7 draft, 2026-11-19. v1.6 added the spectrum template menus, the
 multi-patch header block, the named part buttons, the centred tilt and the
@@ -49,6 +48,14 @@ The visual language borrows from these:
 - Maniackers, Nakamura Y and Hashimoto K's Gona for the compact, coded labels.
 - VDL's Line and Giga for the thin rules and modular blocks.
 - R Larabie's Rexlia for the wide, industrial display type.
+
+The panel carries the language today, since `tokens.json` and the snapshots keep it
+honest. The front door carries the short list, and this page carries what each
+reference contributes.
+
+The wordmark, the manual, the posters and the web graphics are the next material to
+design. They draw on the same references, and the panel is where each one appears
+first.
 
 ## Colour
 
@@ -461,5 +468,5 @@ where the transcription drifted.
   lowercase `a`, so the brand font licence does not block packaging.
 - The `part settings` page is intentionally sparse at the top and fills with the
   two part visualisers, so do not add filler widgets to fill space.
-- The posters and the wordmark are still to be designed. The interface language is
-  ahead of the surrounding material.
+- The wordmark, the manual, the posters and the web graphics are still to be
+  designed. The interface language is ahead of the surrounding material.

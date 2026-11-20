@@ -2,8 +2,8 @@
 
 The plugin is native code, and the builds use clang everywhere: clang and lld on
 Linux, clang-cl with lld-link on Windows, and AppleClang on macOS. Docker builds the
-Linux targets and the WASM app, whilst the Windows and macOS targets need their
-native SDKs, which is why neither one builds in a container.
+Linux targets, whilst the Windows and macOS targets need their native SDKs, which is
+why neither one builds in a container.
 
 | Target | Where it builds | Compiler | Architecture |
 | --- | --- | --- | --- |
@@ -11,7 +11,6 @@ native SDKs, which is why neither one builds in a container.
 | Linux aarch64 | `docker/build.sh linux/arm64`, or `ubuntu-24.04-arm` | clang + lld | aarch64 |
 | Windows x86_64 | `windows/build.ps1` | clang-cl + lld-link | x86_64 |
 | macOS | `macos-14` | AppleClang | universal `arm64` and `x86_64` |
-| Web app | `docker/Dockerfile.wasm` | Emscripten | WASM |
 
 ## Linux
 
@@ -139,30 +138,3 @@ The sanitizer build instruments the engine, the editor and the tests, and skips 
 VST3 and CLAP plugin formats. A sanitizer-instrumented shared module needs a runtime
 that the host doesn't load, so build the plugin binaries with the normal
 configuration.
-
-## WASM
-
-`docker/Dockerfile.wasm` pins Emscripten 6.0.13, the same version as the engine
-parity check. The first web stage is in `wasm/`: the generated C engine compiles to
-`build/web/p1.wasm`, and `wasm/parity.mjs` compares its 48 kHz render with the
-native capture.
-
-```sh
-docker build -f docker/Dockerfile.wasm -t type-p-alpha-wasm .
-docker run --rm -v "$PWD:/work" -w /work type-p-alpha-wasm sh -c "./wasm/build.sh"
-```
-
-The module is about 205 KB, has no imports and exports `memory` plus the wrapper
-functions in `wasm/p1_wasm.c`. The AudioWorklet and the browser pages are in `web/`:
-`index.html` redirects to `panel.html`, the full parameter panel, and `bare.html` is
-the bare audio and parameter smoke test. The panel loads `engine/gen/params.json`,
-groups the parameters into the seven tabs and sends every control through the
-worklet, and it carries the algorithm graph, the output scope and spectro toggle,
-the two-part patch page, the six-card FX page, the envelope graphs, the 64-bar
-spectrum editors, the spectrum template menus, the `op spectra mod` A/B display and
-the per-operator tap scopes. A patch and part library keeps 64 multi-patches and 128
-part slots in `localStorage` and exports them as JSON.
-
-The engine runs at 48 kHz and the worklet resamples at the output boundary when the
-context rate differs. The cosmetic pass against the mockup is the work I've got
-left. The JUCE editor itself is not a browser target.

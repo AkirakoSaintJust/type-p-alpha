@@ -1,7 +1,6 @@
 {
   "name": "type-p-alpha",
   "voices": 24,
-  "cpu0_voices": 12,
   "model": 64,
   "cc": [
     "algorithm.p0",

@@ -1,11 +1,8 @@
 # Feature contract: operator LFOs and per-operator envelopes
 
-> The envelope stages have since moved to the operator amplitude family and the
-> modulation family. The current stage, release and mode semantics are in
-> [`feature-contract-envelopes.md`](feature-contract-envelopes.md); this contract keeps
-> the per-operator split, the LFOs and their measurements. The parameter and byte
-> counts below are the per-operator split's numbers, before the envelope family
-> changed the parameter count.
+The envelope stages are in
+[`feature-contract-envelopes.md`](feature-contract-envelopes.md). This contract covers
+the per-operator split, the three LFO families and their evidence.
 
 ## Identity
 
@@ -43,10 +40,10 @@
   the shared pitch input, the editor pages and the preset store.
 - **Platform/API/HAL changes:** none, because the engine stays integer C and every new
   node is a control-rate body of an existing shape.
-- **Persistence/version impact:** the part block grows from 171 to 228 parameters and
-  the manifest from 356 to 470, and the library stays `P1LIB2` with the new record
-  size. The 171 layout is not read, so a pre-change library needs conversion outside
-  the plugin, and I'd rather flag that here than let a player find it at load time.
+- **Persistence/version impact:** the per-operator split moved the envelope and LFO
+  parameters into each operator. The current manifest is 1,676 parameters, the part
+  block is 831, and the preset chain migrates older record sizes by prefix, so a
+  pre-change library loads with defaults for the added tail.
 - **MIDI/clock impact:** none, since the new parameters are host-automatable and stay
   out of the default CC map.
 
@@ -57,13 +54,19 @@ The envelope, feedback LFO and detune LFO are per operator and per part.
 | Parameter | Target | Range | Default | Display |
 | --- | --- | --- | --- | --- |
 | `opN_fbenv_on` | `opN.fbenv.on` | 0..1 | 1 | `onoff` |
-| `opN_fbenv_r1` ... `opN_fbenv_r4` | `opN.fbenv.r1` ... `r4` | 0..99 | 80, 60, 50, 80 | raw |
-| `opN_fbenv_l1` ... `opN_fbenv_l4` | `opN.fbenv.l1` ... `l4` | -32768..32767 | 0, 0, 0, 0 | `pct_bip` |
-| `opN_fblfo_rate` | `opN.fblfo.rate` | 0..20000000 | 389566 | `hz` |
+| `opN_fbenv_r1` ... `r3` | `opN.fbenv.rN` | 0..99 | 80, 60, 50 | raw |
+| `opN_fbenv_l1` ... `l3` | `opN.fbenv.lN` | -32768..32767 | 0 | `pct_bip` |
+| `opN_fbenv_relr`, `rell` | `opN.fbenv.*` | 0..99, -32768..32767 | 80, 0 | raw, `pct_bip` |
+| `opN_fbenv_mode` | `opN.fbenv.mode` | 0..3 | 1 | raw |
+| `opN_trem_rate` | `opN.lfo.rate` | 0..20000000 | 357914 | `hz` |
+| `opN_trem_depth` | `opN.lfo.depth` | -99..99 | 0 | raw |
+| `opN_trem_wave` | `opN.lfo.wave` | 0..11 | 0 | `wave` |
+| `opN_trem_mode` | `opN.lfo.mode` | 0..1 | 1 | `onoff` |
+| `opN_fblfo_rate` | `opN.fblfo.rate` | 0..20000000 | 357914 | `hz` |
 | `opN_fblfo_depth` | `opN.fblfo.depth` | -32767..32767 | 0 | `pct_bip` |
 | `opN_fblfo_wave` | `opN.fblfo.wave` | 0..11 | 0 | `wave` |
 | `opN_fblfo_mode` | `opN.fblfo.mode` | 0..1 | 1 | `onoff` |
-| `opN_dlfo_rate` | `opN.dlfo.rate` | 0..20000000 | 389566 | `hz` |
+| `opN_dlfo_rate` | `opN.dlfo.rate` | 0..20000000 | 357914 | `hz` |
 | `opN_dlfo_depth` | `opN.dlfo.depth` | -32768..32768 | 0 | `semi_lfo` |
 | `opN_dlfo_wave` | `opN.dlfo.wave` | 0..11 | 0 | `wave` |
 | `opN_dlfo_mode` | `opN.dlfo.mode` | 0..1 | 1 | `onoff` |
@@ -97,16 +100,15 @@ outputs 0 whilst a flat envelope outputs 0, so the existing render stays exact.
 
 ## Bounds and resources
 
-- **Maximum voices/events/effects:** 20 voices and two parts, unchanged.
+- **Maximum voices/events/effects:** 24 voices and two parts.
 - **Per-sample and per-block operations:** four feedback envelopes and eight LFO nodes
   per part, all at control rate. The feedback envelope body is the `mod_env`
   shape and the LFO body is the existing `lfo` shape, whilst the feedback
   level adds one Q15 input and the pitch adds one saturation.
-- **Instance memory, CPU, preset size:** the part block adds 57 parameters, so 228
-  bytes per part and 456 bytes across the two parts. Four `mod_env` states replace
-  one shared state per voice, and each operator adds two LFO states, so the voice
-  state grows by 42 `int32_t` fields, 3,360 bytes at 20 voices, and each library
-  record grows by 228 bytes, so the 128-slot part bank grows by 29,184 bytes.
+- **Instance memory, CPU, preset size:** the part block is 831 parameters. Four
+  `mod_env` states replace one shared state per voice, and each operator adds three
+  LFO states, so the voice state grows by 42 `int32_t` fields, 4,032 bytes at 24
+  voices.
 - **Overflow/overload policy:** the feedback LFO is Q15 and the feedback level is
   clamped to 0..32767, the detune LFO is Q15 and the pitch sum is clamped, and the
   existing peak-bound tests cover the extremes.
@@ -140,20 +142,16 @@ outputs 0 whilst a flat envelope outputs 0, so the existing render stays exact.
   through the host block and restores every manifest parameter, `plugin_stability`
   drives every parameter to its bounds, and `editor_snapshot` checks that the
   oscillator, amp envelope and detune LFO sections paste to another operator.
-- **Browser vector (if applicable):**
-  the mockup check covers the operators tab, the operator lfos tab, the four feedback
-  envelopes with four signed levels, and the two new LFO cards.
 - **Target package check:** the Linux and Windows builds link the editor, the engine
   and the tests.
-- **Host timing and platform check:** Linux `ctest` passes 11 of 11, including the
-  13-image snapshot diff, and the Windows suite passes 10 of 10.
+- **Host timing and platform check:** the Linux suite passes 15 of 15, including
+  the snapshot diff, and the Windows and macOS jobs pass the same suite.
 - **Tolerance/metric:** the flat and off envelope renders and the depth-0 LFO renders
   are bit-exact, the nonzero LFO and envelope renders differ, and the family selection
   and the peak bound keep their existing tolerances. The snapshot diff is exact.
 - **Evidence artefact:** `plugin/tests/operator_lfos.cpp`,
   `plugin/tests/feedback_envelope.cpp`, `plugin/tests/voice_alloc.cpp`, the Linux
-  snapshots `editor-operators.png` and `editor-operator-lfos.png`, and the mockup
-  check.
+  snapshots `editor-operators.png` and `editor-operator-lfos.png`.
 
 ## Risks and fallback
 
@@ -167,5 +165,6 @@ outputs 0 whilst a flat envelope outputs 0, so the existing render stays exact.
 - **Smaller alternative:** keep the unipolar envelope and its depth knob, which was
   rejected because the feedback path is bipolar and the depth only rescales the same
   signed offset.
-- **Rollback:** restore the shared `fbenv` node and the 171 layout, and remove the
-  `mod_env`, `fblfo`, `dlfo` and `dsum` nodes. The old contract remains as history.
+- **Rollback:** restore the shared `fbenv` node and the older record layout, and
+  remove the `mod_env`, `fblfo`, `dlfo` and `dsum` nodes. The shared-envelope
+  measurement stays in `docs/research/feedback-envelope.md` as history.

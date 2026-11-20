@@ -174,9 +174,9 @@ away from zero writes the waveform as 13, so the modulation has something to mov
   parameter resolves to the `.dev` module library. The Windows `ctest` run is 12 of
   12, the Linux CI build and ctest also pass on commit `98a1cc7`, and the platform
   pass still needs pluginval and the Linux DAW matrix.
-- **Browser vector:** the seven-tab panel in `web/panel.html` is the design reference,
-  and the mockup is the first-pass prototype. The editor snapshot covers the two
-  spectrum pages and the mod page.
+- **Editor vector:** the seven-tab editor is the reference, and the mockup is the
+  first-pass prototype. The editor snapshot covers the two spectrum pages and the mod
+  page.
 - **Target package check:** the Windows VST3, CLAP and standalone build is in, and the
   Linux build and the pluginval pass are still to run.
 - **Host timing and platform check:** the 20-voice benchmark and a real Linux and

@@ -85,9 +85,6 @@
 - **Host vector(s):** `preset_smoke` covers the 32-character round trip and the current
   `P1LIB2` library, `plugin_smoke` covers the state and the global library, and
   `p1_stability` is unchanged.
-- **Browser vector (if applicable):** the mockup browser check covers the single parts
-  library with the slot scroller and the nine actions, the cancel order, the
-  32-character rename field, the LFO modes and the library flow.
 - **Target package check:** the Linux build and the Windows build both link the editor,
   the smoke tests and the stability test.
 - **Host timing and platform check:** Linux `ctest` passes 11 of 11, and the Linux

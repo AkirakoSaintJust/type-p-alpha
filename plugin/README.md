@@ -6,11 +6,12 @@ the voice engine is generated into `../engine/gen`, the editor is split between
 `engine/gen/params.json`, so nobody has to keep a second copy of the parameter list
 in step with the first.
 
-The feature contracts in this folder record each milestone at its date, which is why
-their voice counts are the maximum for the engine at that time rather than a
-description of the engine you have now. The current engine is 24 voices at 48 kHz,
-and the current contracts include the filter law, the spectral oscillator, the
-feedback set and the 48 kHz core.
+The feature contracts in this folder describe the current features. Each one carries
+the current semantics, the measured evidence and a short research-progress note for
+the layers it replaced. The research pages in `../docs/research/` keep the
+measurements of the discarded experiments. The current engine is 24 voices at
+48 kHz, and the current contracts include the filter law, the spectral oscillator,
+operator feedback, the envelope family and the 48 kHz core.
 
 ## Build
 

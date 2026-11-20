@@ -2,7 +2,7 @@
 
 This is the shipped feedback control after the envelope and shaper experiments.
 The contract is
-[`../../plugin/feature-contract-feedback-bipolar.md`](../../plugin/feature-contract-feedback-bipolar.md).
+[`../../plugin/feature-contract-feedback.md`](../../plugin/feature-contract-feedback.md).
 
 ## The control
 

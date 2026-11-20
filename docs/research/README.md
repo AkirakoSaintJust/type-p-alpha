@@ -5,9 +5,9 @@ have an answer. The plain polarity toggle did not ship, whilst the bipolar
 feedback, the feedback envelope and the feedback LFO did. I took the measurements
 below on the 44.1 kHz, 20-voice engine and I've kept them as the evidence for
 that time, even though the current engine runs at 48 kHz with 24 voices, so read
-them as the historical numbers they are. The current contracts are
-[`../../plugin/feature-contract-feedback-bipolar.md`](../../plugin/feature-contract-feedback-bipolar.md)
-and
+them as the historical numbers they are. The current feedback contract is
+[`../../plugin/feature-contract-feedback.md`](../../plugin/feature-contract-feedback.md),
+and the operator LFOs are in
 [`../../plugin/feature-contract-operator-lfos.md`](../../plugin/feature-contract-operator-lfos.md).
 The current envelope stages are in
 [`../../plugin/feature-contract-envelopes.md`](../../plugin/feature-contract-envelopes.md).
@@ -37,10 +37,10 @@ that expectation. The sign flip doesn't give a reliable odd-harmonic rise in the
 useful feedback range, so the polarity is a bounded experiment rather than a
 promised feature. It failed its stop criterion at 25 and 50 percent feedback, so
 the toggle is not shipped. The envelope does modulate the feedback magnitude,
-which the spectrum follows, so it is the next feature. The contract is
-[`../../plugin/feature-contract-feedback-polarity.md`](../../plugin/feature-contract-feedback-polarity.md)
-and the measured table is
-[`feedback-polarity.md`](feedback-polarity.md).
+which the spectrum follows, so it is the next feature. The result became the
+negative half of the bipolar knob in
+[`../../plugin/feature-contract-feedback.md`](../../plugin/feature-contract-feedback.md),
+and the measured table is [`feedback-polarity.md`](feedback-polarity.md).
 
 ## The feedback path as it ships
 

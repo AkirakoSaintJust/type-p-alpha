@@ -8,8 +8,9 @@
 > stages, release level and modes are in
 > [`../../plugin/feature-contract-envelopes.md`](../../plugin/feature-contract-envelopes.md).
 
-This is the engine evidence for
-[`../feature-contract-feedback-envelope.md`](../../plugin/feature-contract-feedback-envelope.md),
+This is the historical engine evidence for the shared envelope. The current
+feedback contract is
+[`../../plugin/feature-contract-feedback.md`](../../plugin/feature-contract-feedback.md),
 and the page and its snapshots are recorded below.
 
 ## Verdict

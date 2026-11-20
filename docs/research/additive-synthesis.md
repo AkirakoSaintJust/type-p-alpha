@@ -1,5 +1,9 @@
 # Additive synthesis for the operator spectrum
 
+The measurements below come from the 20-voice engine of 2026-11. The current engine
+is 24 voices at 48 kHz, so read the numbers as the historical evidence for the
+design choice, not as the current budget.
+
 ## The research question
 
 The README asks whether each operator can carry a 16, 32 or 64 harmonic waveform
@@ -389,8 +393,7 @@ tables, plus the shadow during a crossfade, with one linear read each. No
 per-voice state or memory grows, so the 24-voice allocation is unaffected, and
 the bank size for four operators and both parts, seven mips, both spectra and one
 shadow spectrum per part is 87,040 bytes at 256 samples and 173,056 bytes at 512
-samples, header included. The 16-harmonic bank was 65,536 bytes, and the WASM
-memory is fixed at 32 MB.
+samples, header included. The 16-harmonic bank was 65,536 bytes.
 
 `spectral_bench` measures the generator on this machine:
 

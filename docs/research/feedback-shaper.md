@@ -1,7 +1,8 @@
 # Feedback shaper: measured result
 
-This is the evidence for
-[`../feature-contract-feedback-shaper.md`](../../plugin/feature-contract-feedback-shaper.md).
+This is the evidence for the shaper experiment, which is not in the product. The
+current feedback contract is
+[`../../plugin/feature-contract-feedback.md`](../../plugin/feature-contract-feedback.md).
 The shape and filter choices were measured for the feedback page, and the shipped
 control is the bipolar knob, which uses the abs and the average.
 

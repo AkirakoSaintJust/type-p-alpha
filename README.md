@@ -34,7 +34,7 @@ I believe two 4-operator parts is the sweet spot for balancing usability and pow
 
 I've also tried to make sound design easier by restraining components to a relatively small maximum parameter count, making sure the state of every operator can be compared and edited from a single page, ensuring mutes are accessible from any page, and providing visual guidance through envelope graphs, spectrograms and oscilloscopes.
 
-Phase modulation indices are calibrated to be similar to Yamaha's OPN, OPM, OPL and OPZ families, rather than the softer sound of synths like the DX7, DX9 and Reface DX. Feedback scales with the operator's amplitude, as in Yamaha's traditional DX synths and unlike the Reface DX, but like the Reface DX's feedback, it is bipolar and the negative (or more accurately, rectified) half adds odd harmonics when applied to a sine wave. Feedback also has an LFO and envelope per operator, which I think is a powerful addition. I'm well chuffed with how it works but I wonder whether having a feedback envelope would make more sense with Reface DX-style amplitude-independent feedback? Anyway, for more details, see the [bipolar feedback](plugin/feature-contract-feedback-bipolar.md) and [operator LFOs](plugin/feature-contract-operator-lfos.md) contracts, and the [the feedback research study](docs/research/README.md).
+Phase modulation indices are calibrated to be similar to Yamaha's OPN, OPM, OPL and OPZ families, rather than the softer sound of synths like the DX7, DX9 and Reface DX. Feedback scales with the operator's amplitude, as in Yamaha's traditional DX synths and unlike the Reface DX, but like the Reface DX's feedback, it is bipolar and the negative (or more accurately, rectified) half adds odd harmonics when applied to a sine wave. Feedback also has an LFO and envelope per operator, which I think is a powerful addition. I'm well chuffed with how it works but I wonder whether having a feedback envelope would make more sense with Reface DX-style amplitude-independent feedback? Anyway, for more details, see the [operator feedback](plugin/feature-contract-feedback.md) and [operator LFOs](plugin/feature-contract-operator-lfos.md) contracts, and the [the feedback research study](docs/research/README.md).
 
 Results so far seem to be fit for intent. I've been able to easily make rudimentary additive patches that sound a bit like the PPG sounds Tangerine Dream used circa Exit, additive brass, woodwinds and strings; and pseudo-PWM pads and leads by pairing saw operators with sine operators at 20-35% feedback, which gives them a ramp waveform. Conversion of OPM patches to Type P ranges produces spectrally similar results to the originals, and I reckon they are easy to edit. Confirmation from external testers is still pending though.
 
@@ -53,14 +53,12 @@ Results so far seem to be fit for intent. I've been able to easily make rudiment
 ## Done
 
 1. More precise spectrograms, with clear differentiation of odd and even harmonics, and maybe some numbers for easier reading. Being able to reliably see the spectra is essential for additive-style synthesis.
-2. Exploiting parallelism if possible!
-3. A web app made from the same engine and panel design (see [web panel contract](plugin/feature-contract-web-panel.md).) Performance is poor and the panel is kind of wonky, so I'm inclined to remove it. It's ok as an internal testing tool for convenience I guess.
-4. A 64-harmonic spectral oscillator per operator, with two editable spectra, a morph envelope and a morph LFO, and K5-style editing controls expanded and modified for the Type P (see the [additive synthesis note](docs/research/additive-synthesis.md) and [the spectral contract](plugin/feature-contract-spectral.md)).
-5. A 48 kHz core with a 128-tap output bridge, so a 48 kHz host takes the core output untouched and the other rates are resampled at the boundary. See the [48 kHz contract](plugin/feature-contract-48k-core.md).
-6. Giving the filter an SH-101-ish character (see [the filter law](plugin/feature-contract-filter-law.md) contract.)
-7. Envelope redesign.
-8. Per-part stereo panning.
-9. Library synchronisation across running instances.
+2. A 64-harmonic spectral oscillator per operator, with two editable spectra, a morph envelope and a morph LFO, and K5-style editing controls expanded and modified for the Type P (see the [additive synthesis note](docs/research/additive-synthesis.md) and [the spectral contract](plugin/feature-contract-spectral.md)).
+3. A 48 kHz core with a 128-tap output bridge, so a 48 kHz host takes the core output untouched and the other rates are resampled at the boundary. See the [48 kHz contract](plugin/feature-contract-48k-core.md).
+4. Giving the filter an SH-101-ish character (see [the filter law](plugin/feature-contract-filter-law.md) contract.)
+5. Envelope redesign.
+6. Per-part stereo panning.
+7. Library synchronisation across running instances.
 
 ## Experiments I'd like to try
 
@@ -168,5 +166,5 @@ The plugin passes pluginval at strictness 5 on Linux x86_64, with the editor ope
 and the audio, state and automation checks included. The CLAP validator reports no
 failures and one warning, because its random-state test loads garbage without crashing. The Linux suite runs in CTest, and the Windows clang-cl and macOS universal
 VST3, CLAP and standalone builds pass in CI. The Linux DAW matrix runs when Ardour, Carla and
-JACK are installed, but the AU target and the macOS DAW
-validation are still untested, pending access to an actual Mac.
+JACK are installed, but the macOS DAW validation is still untested, pending
+access to an actual Mac.

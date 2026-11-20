@@ -29,8 +29,7 @@
 ## Dependencies and interactions
 
 - **Other features:** the voice sum, the global DC blocker, the part card, the part
-  fx/mod page, the parameter manifest, the part record, the editor snapshots and the
-  web panel.
+  fx/mod page, the parameter manifest, the part record and the editor snapshots.
 - **Platform/API/HAL changes:** `render_voices_block` takes a second bus, and
   `render_post_block` takes left and right sources. The engine stays integer C.
 - **Persistence/version impact:** the pan slice added the ten envelope parameters at
@@ -75,8 +74,6 @@
   mode; the version 12 record keeps the pan block through the later inserts.
 - The editor snapshots `editor-fxmod.png` and `editor-fxmod-loops.png` show the pan
   card and its loop boundaries.
-- The web panel has a pan card with the pan knob, the envelope controls and the
-  graph.
 
 ## Limits
 

@@ -4,8 +4,8 @@ This maps the p1onken interface language to a JUCE editor. The visual reference 
 `design/mockup.html`, the source values are `tokens.json`, and the
 product rules are in `README.md`.
 
-Scope: the Type P.alpha plugin host and its generated project. The first targets
-are VST3 and CLAP on Linux and Windows, and AU is a later macOS addition.
+Scope: the Type P.alpha plugin host and its generated project. The targets are
+VST3, CLAP and the standalone app on Linux, Windows and macOS.
 
 Status: Milestone 3 implements this mapping. `plugin/tools/gen_tokens.py` emits
 `UiTokens.h`, the editor is `plugin/juce/PluginEditor.*` and `plugin/ui/*`, and
@@ -281,7 +281,7 @@ order.
 - global: algorithm and patch name.
 
 Use stable parameter IDs derived from the manifest. Host automation, state save and
-restore, and the web lab must all agree.
+restore must all agree.
 
 The parameter list is generated from the manifest, so the editor does not have a
 second list to maintain. That is the only reason I can add a control on one page and
@@ -299,7 +299,8 @@ the input and the core rate untouched.
 - Plugin code: GPL-3.0-only, the same licence as my personal framework tooling.
 - Fonts: DotGothic16 and Zen Dots under the SIL Open Font License. Include the
   licence text with the binaries.
-- Brand font: not bundled until the licence is verified.
+- Brand font: not bundled. The wordmark uses Zen Dots with an Unbounded lowercase
+  `a`, and Digital Desolation Plus stays out of the binary.
 - JUCE: use the AGPLv3 path or a commercial JUCE licence, and record the JUCE
   version in the build manifest, because JUCE 9 is not GPLv3, and the source
   stays GPL-3.0-only, where GPLv3 section 13 permits the combined binary.
@@ -308,6 +309,6 @@ the input and the core rate untouched.
 
 - The brand font licence is no longer a blocker. The wordmark is all Zen Dots, and
   Digital Desolation Plus is not used or bundled.
-- Decide whether AU joins VST3 and CLAP in the first macOS build.
+- The macOS DAW matrix needs a Mac with two hosts before it can run.
 - The in-plugin 64 multi and 128 part banks are in. SysEx import is not part
   of this product.

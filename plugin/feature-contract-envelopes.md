@@ -11,9 +11,8 @@
 - **Disposition:** implemented. The operator amplitude envelope and the pitch,
   feedback, filter, spectral and pan modulation envelopes are on the new stages,
   with their UI cards, graphs and the version 14 migration. The product targets are
-  VST3, CLAP and standalone through JUCE, plus the web app for internal testing. The
-  CI plugin validators on Linux, Windows and macOS, the WASM parity gate and the
-  browser smoke tests are the evidence. The CI does not run the DAW matrix; the
+  VST3, CLAP and standalone through JUCE. The CI plugin validators on Linux, Windows
+  and macOS are the evidence. The CI does not run the DAW matrix; the
 `linux_daws` test is available locally.
 
 ## Operator amplitude envelope
@@ -135,16 +134,13 @@ Old libraries are remapped, not rejected.
   pan cards with the new controls. `editor-envelope-loops.png` and
   `editor-fxmod-loops.png` show the double bars at the sustain and loop boundaries
   and the left arrow under the loop.
-- The web panel draws the operator, pitch, feedback, filter, spectral and pan graphs
-  with the new shapes, the mode read from the manifest, and the pan card on the fx
-  page.
 - The operator graph draws the warm-up convex, the surge concave and the decays and
   release straight, with the sustain or loop boundaries marked.
 
 ## Limits and open work
 
 - The CI does not run the DAW matrix; the `linux_daws` test is available locally. The
-  plugin validators and the browser smoke tests are the automated evidence.
+  plugin validators are the automated evidence.
 
 ## Safe experiment and stop criterion
 

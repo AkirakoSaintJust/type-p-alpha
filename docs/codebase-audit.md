@@ -112,30 +112,6 @@ bypasses it, so the core stays exact. The kernel is 128 taps by 1024 phases, and
 `latencySamples` reports its delay in host samples. The bypass is the part to test
 first, because a resampler that is almost right is worse than one that is obviously
 wrong.
-
-## WebAssembly seam
-
-`wasm/p1_wasm.c` is the narrow web seam. It owns one static generated state and a
-fixed interleaved output buffer, then exports the small `p1_*` API. The state is
-initialised once outside the render loop, which keeps the worklet callback
-predictable. The module has no imports, so an AudioWorklet can instantiate it
-without an Emscripten runtime, and that is the constraint I care about when the
-browser build grows.
-
-The table below is the whole seam, and the parity script is the reason I trust it. If
-the WASM note-on and release stop matching the native 48 kHz capture, the web build
-is wrong even when it still makes a sound.
-
-| File | Job |
-| --- | --- |
-| `wasm/p1_wasm.c` | Static engine state and the C exports. |
-| `wasm/build.sh` | Emscripten standalone build and the parity gate. |
-| `wasm/make_reference.py`, `wasm/parity.mjs` | Native capture to JSON, then the WASM comparison. |
-| `web/p1-worklet.js` | Own the module and post the output and tap scopes. |
-| `web/main.js`, `web/bare.html` | The bare audio and parameter page. |
-| `web/panel.js`, `web/panel.html` | The seven-page panel. |
-| `web/smoke.mjs`, `web/panel-smoke.mjs` | Browser smoke tests. |
-
 ## Preset store
 
 `plugin/preset/PresetStore.hpp` and `PresetStore.cpp` own the 128 part slots and the
@@ -205,7 +181,7 @@ one-line functions and let the compiler catch the misspelt id.
 
 | File | Job |
 | --- | --- |
-| `engine_parity.cpp` | Compare the generated engine with the independent reference and check the filter self-oscillation. |
+| `engine_parity.cpp` | Compare the generated engine with the independent reference and check the filter output gate. |
 | `filter_law.cpp` | Check the cutoff table, the resonance onset, the input knee and the SH-101 passband. |
 | `feedback_envelope.cpp` | Check the per-operator envelope family, the flat path, the partial negative level and the peak bound. |
 | `feedback_bipolar.cpp` | Check the positive path, the rectified negative half, the signed envelope level and the peak bound. |
@@ -236,21 +212,17 @@ gates.
 
 `design/mockup.html` is a clickable reference, not the product. It carries the data,
 controls, views, library and dialogs in one file, and the CSS mirrors
-`design/tokens.css` rather than duplicating the logic. The shipped panel is
-`web/panel.html`, so where the mockup and the panel differ, the panel and
+`design/tokens.css` rather than duplicating the logic. The shipped panel is the
+JUCE editor, so where the mockup and the editor differ, the editor and
 `design/spectral.md` carry the current layout.
 
 ## Current evidence
 
-The feature contracts are the dated evidence. The current ones are the 48 kHz core,
-the spectral oscillator, the feedback set and the filter law. The old contracts stay
-as records of their milestones, and their voice counts and host rates describe the
-engine at that time. If a contract and this page disagree, the contract wins for its
-date and the code wins for today, which sounds obvious until you are staring at a
-voice count from a milestone that shipped before the polyphony change and wondering
-which number the test actually reads, at which point the dated contract is the only
-honest answer for the old result and the test is the only honest answer for the
-current one. Read both.
+The feature contracts describe the current features. Each one carries the current
+semantics, the measured evidence and a short research-progress note for the layers
+it replaced. The research pages in `docs/research/` carry the measurements of the
+discarded experiments. If a contract and this page disagree, the code and the
+current contract win, and the research page keeps the old number as history.
 
 ## History
 
