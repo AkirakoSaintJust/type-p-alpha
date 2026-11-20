@@ -110,16 +110,20 @@ Selecting `spectrum` uses the stored a and b spectra. Selecting a wave returns t
 operator to that wave and keeps the stored spectra for the next `spectrum`
 selection.
 
-The morph value is the base for the two modulation sources. The engine computes
+The morph value is the start for the envelope and the base when the envelope is off.
+The engine computes
 
 ```
-m = morph / 99 + (envDepth / 99) * (env / 99) + (lfoDepth / 99) * lfo
+env = envOn ? envelope : morph
+m = (env + lfo) / 99
 m = clamp(m, 0, 1)
 sample = (1 - m) * tableA + m * tableB
 ```
 
-The envelope and the LFO run per voice. The tables are shared per part, because
-the levels are part parameters and do not vary per voice.
+The envelope is an absolute 0 to 99 position, so it starts at the morph knob and
+moves through its levels, release level and mode. The envelope and the LFO run per
+voice. The tables are shared per part, because the levels are part parameters and do
+not vary per voice.
 
 ## Loading a spectrum template
 
@@ -132,13 +136,13 @@ forward transform, and the engine still rebuilds the time table from the levels.
 
 Loading a template does not change the waveform. The operator keeps its current
 wave, and the new levels wait for `spectrum` in the wave select, a spectrum paste,
-or a morph depth edit that leaves zero. A load writes 64 parameters, and a host
-undo may not group them.
+or the morph envelope switch. A load writes 64 parameters, and a host undo may not
+group them.
 
 The wave select is the only mode switch. Selecting a wave keeps the stored spectra,
-and selecting `spectrum` plays them with the 10 ms crossfade. A morph envelope or
-morph LFO depth that the player moves away from zero also selects `spectrum`, so
-the modulation has something to move.
+and selecting `spectrum` plays them with the 10 ms crossfade. The morph envelope
+switch or a morph LFO depth that the player moves away from zero also selects
+`spectrum`, so the modulation has something to move.
 
 The template is a starting point. A sine, triangle or half sine survives the
 64-harmonic limit closely. A saw, square, pulse or rectified shape loses the
@@ -222,19 +226,21 @@ the formant width, and the interaction stays the same if a curve changes.
 
 ## Morph envelope card
 
-The card holds a graph, a depth knob, four rates and three levels. It uses the
-operator envelope shape: the envelope starts at zero, rises to L1 over R1, falls
-to L2 over R2, falls to L3 over R3, and returns to zero over R4.
+The card holds a graph, an on switch, three rates, three levels, a release rate and
+level, and a mode. It uses the modulation envelope shape: the envelope starts at the
+morph knob, moves to L1 over R1, to L2 over R2 and to L3 over R3, then holds or loops
+by mode and releases to RL over the release rate.
 
 | Control | Meaning |
 | --- | --- |
-| depth | how far the envelope moves the morph, -99 to +99 |
-| R1 to R4 | envelope rates, 0 to 99 |
+| on | bypasses the envelope and leaves the morph at the knob |
+| R1 to R3 | envelope rates, 0 to 99 |
 | L1 to L3 | envelope levels, 0 to 99 |
+| release rate | the rate to the release level |
+| release level | the level the release ends at |
+| mode | sustain off, sustain on, loop1, loop2 |
 
-A depth of zero leaves the base morph alone, so the envelope does not need an on
-switch of its own. Zero depth is the bypass. The graph is the same envelope view
-as the amp env card.
+The graph is the same envelope view as the pitch and feedback cards.
 
 ## Morph LFO card
 
@@ -277,9 +283,11 @@ and 11 to 10, 11 and 12, and the preset version moved to 3.
 | spectrum a | h1 99, h2 to h64 zero |
 | spectrum b | 99, 45, 30, 15, 55, 40, 25, 12, 8, 5, 3, 2, 1, then zero to h64 |
 | morph | 0 |
-| envelope rates | 80, 60, 50, 80 |
+| envelope | off |
+| envelope rates | 80, 60, 50 |
 | envelope levels | 99, 60, 0 |
-| envelope depth | 0 |
+| envelope release | 80, 0 |
+| envelope mode | sustain on |
 | lfo rate | 4.0 Hz |
 | lfo depth | 0 |
 | lfo wave | sine |
@@ -302,16 +310,20 @@ waveform parameter grows from 0 to 11 to 0 to 13, where 13 selects `spectrum`.
 | spectrum a | `opN_spec_a1.pP` to `opN_spec_a64.pP` | 64 | 0 to 99 | 99, then zero |
 | spectrum b | `opN_spec_b1.pP` to `opN_spec_b64.pP` | 64 | 0 to 99 | as the defaults table |
 | morph | `opN_spec_morph.pP` | 1 | 0 to 99 | 0 |
-| envelope rates | `opN_spec_env_r1.pP` to `opN_spec_env_r4.pP` | 4 | 0 to 99 | 80, 60, 50, 80 |
+| envelope on | `opN_spec_env_on.pP` | 1 | 0 to 1 | 0 |
+| envelope rates | `opN_spec_env_r1.pP` to `opN_spec_env_r3.pP` | 3 | 0 to 99 | 80, 60, 50 |
 | envelope levels | `opN_spec_env_l1.pP` to `opN_spec_env_l3.pP` | 3 | 0 to 99 | 99, 60, 0 |
-| envelope depth | `opN_spec_env_depth.pP` | 1 | -99 to +99 | 0 |
+| envelope release | `opN_spec_env_relr.pP`, `opN_spec_env_rell.pP` | 2 | 0 to 99 | 80, 0 |
+| envelope mode | `opN_spec_env_mode.pP` | 1 | 0 to 3 | sustain on |
 | lfo rate | `opN_spec_lfo_rate.pP` | 1 | 0 to 20 Hz | 4.0 Hz |
 | lfo depth | `opN_spec_lfo_depth.pP` | 1 | -99 to +99 | 0 |
 | lfo wave | `opN_spec_lfo_wave.pP` | 1 | six waves | sine |
 | lfo mode | `opN_spec_lfo_mode.pP` | 1 | unipolar, bipolar | bipolar |
 
-That is 143 parameters per operator, 572 per part, and 1,144 in the manifest. The
-part block grows from 228 to 800, and the manifest from 470 to 1,614.
+That is 145 parameters per operator, 580 per part, and 1,160 for the spectral group.
+The part block grew from 228 to 800 at this slice, and the manifest from 470 to
+1,614. The later envelope family moved the current totals to 1,676 manifest
+parameters and an 831 part block.
 
 The range is the harmonic block the 64 bars address: 0 is 1 to 64 and 1 is
 65 to 128. A and b each carry their own range, so the mod display zooms

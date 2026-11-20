@@ -98,7 +98,7 @@ Two extended contracts:
 
 Tests:
 
-- `plugin_smoke` gains four-rate cases: events on tick boundaries, a note that
+- `plugin_smoke` gains four sample-rate cases: events on tick boundaries, a note that
   crosses a tick, and a same-tick pair that must sound for one tick.
 - An engine test beside `engine_parity` covers two parts on different channels at
   the same note, sustain on one channel, and bend on one part.

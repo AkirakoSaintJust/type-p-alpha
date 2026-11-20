@@ -196,7 +196,8 @@ spectrum pair and the operator pair have to be visible at once.
 mechanical, so the file is the readable parameter map rather than a table I want to
 duplicate here. The families cover the part, the operator oscillator and envelopes,
 the amplitude, feedback and detune LFOs, the spectra and their morph envelope and
-LFO, the pitch LFO and envelope, the filter and its envelope, and the key and
+LFO, the pitch LFO and envelope, the filter and its envelope, the pan envelope, and
+the key and
 velocity follow targets. A macro would hide typos and gain very little, so I keep the
 one-line functions and let the compiler catch the misspelt id.
 

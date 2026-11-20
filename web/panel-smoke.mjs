@@ -376,7 +376,7 @@ try {
   const followCards = await page.locator(".followcard").count();
   const filterTypes = await page.locator(".fxmod-grid select").count();
   console.log("fx cards:", fxCards, "follow cards:", followCards);
-  if (fxCards !== 6) throw new Error(`expected 6 fx cards, got ${fxCards}`);
+  if (fxCards !== 7) throw new Error(`expected 7 fx cards, got ${fxCards}`);
   if (followCards !== 2) throw new Error("the follow cards are missing");
   if (filterTypes < 2) throw new Error("the filter type select is missing");
 

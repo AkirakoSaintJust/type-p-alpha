@@ -72,18 +72,21 @@ brings part of it back at the output, rather than the input.
 The filter input passes through `p1_soft_clip`, `y = x - x^5/8` with `x` clamped
 at full scale. The fifth-order term is 0.2 percent at -12 dBFS, 2.5 percent at
 -3 dBFS and 12.5 percent at 0 dBFS. Normal levels stay clean and hot mix levels
-compres like the OTA input pair. The feedback clip stays separate, so the
+compresses like the OTA input pair. The feedback clip stays separate, so the
 self-oscillation amplitude does not follow the input level.
 
 I measured the knee at -12, -6, -3 and 0 dBFS, and the -12 dBFS figure is at the
 integer floor, which is intended behaviour, i.e. hot inputs clip, normal inputs don't.
 
-## Envelope depth
+## Envelope position
 
-`fenv_depth` is now a 0 to 8 octave range, Q16 of the range. The envelope
-value is doubled to Q16, scaled by the depth, multiplied by 8 and added to the
-log position. The panel now shows the value in octaves, instead of a percentage of the old coefficient
-range.
+The filter envelope is absolute. `fenv_on` enables it, the levels are 0 to 99
+positions in the cutoff range, and the envelope replaces the cutoff while it is on.
+It starts at the key- and velocity-followed cutoff, which `cutoff_pos` carries both
+as a Q16 log position and as a 0 to 99 position, so the envelope start does not need
+to read the filter output back. The old depth scaling is gone. The version 13
+migration maps the old depth to the on switch, `r4` to the release rate and `l4` to
+the release level, with sustain on.
 
 ## Migration
 

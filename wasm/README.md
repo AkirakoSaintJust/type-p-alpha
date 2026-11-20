@@ -82,7 +82,7 @@ spectrum template menus and the `op spectra mod` A/B display. Its waveform overl
 and morph marker follow the live morph the engine publishes with the taps, so they
 advance with the envelope and the LFO. A template menu analyses a wave into either
 spectrum, and the waveform switches to spectrum through the wave select, a spectrum
-paste, or a morph depth moved away from zero.
+paste, or the morph envelope switch or a morph LFO depth moved away from zero.
 
 The card header has range, a live, dead or both mask, a selection window in seven
 steps that follows the card's range, and a group selector. The group picks a

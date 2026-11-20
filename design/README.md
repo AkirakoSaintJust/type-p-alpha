@@ -275,10 +275,11 @@ filter and its own envelope.
 
 The pitch LFO card carries rate, depth, the wave select and the `bipolar` switch.
 
-The pan envelope card carries an on switch, four rates, four signed levels, a
-depth knob and the envelope graph. Its levels are percentage points either side of
-the part's pan, and the depth scales them. The envelope retriggers when a note
-starts on the part and releases when the part's last voice releases.
+The pan envelope card carries an on switch, three rates, three levels, a release
+rate and level, a mode and the envelope graph. Its levels are absolute percentage
+points across the field, and the envelope starts at the part's pan. The envelope
+retriggers when a note starts on the part and releases when the part's last voice
+releases.
 
 Key follow and velocity follow are separate cards. Each has an on switch, a
 `wipe all` button and its own target selector. Key follow has a breakpoint and below
@@ -295,9 +296,11 @@ and spectro pair, and three cards: `oscillator`, `amp env`, `fb env`. The
 oscillator card holds ratio, detune, level, feedback and the wave select. The wave
 select lists sine, triangle, half sine, half tri, 2x sine, 2x tri, 2x half sine,
 2x half tri, rect sine, rect tri, pulse, square, saw and spectrum. The `amp
-env` card holds R1 to R4 on the first row and L1 to L3 on the second row. The `fb
-env` card holds its own R1 to R4 and L1 to L4 rows, with signed levels in feedback
-units and an `on` switch in the card header. The signed sum of the feedback knob,
+env` card holds the warm-up, surge, decay1 and decay2 rates on the first row, then
+the two decay levels, the release rate and the mode on the second. The `fb env` card
+holds R1 to R3 and the release rate on the first row, then L1 to L3 and the release
+level on the second, with signed levels in feedback units, a mode select in the card
+and an `on` switch in the card header. The signed sum of the feedback knob,
 the envelope and the LFO chooses the feedback family, so a negative level can cross
 zero into the negative family. Every envelope and LFO card carries
 `copy` and `paste` in its header, so a shape or an LFO moves between operators
@@ -337,8 +340,8 @@ release leaves the result in place.
 
 The template button opens the thirteen wave names and writes that wave's analysis
 into the row. It does not touch the waveform, so the stored levels wait for
-`spectrum` in the wave select, a spectrum paste, or a morph depth moved away from
-zero. A and b each carry their own button, so either spectrum can start from a
+`spectrum` in the wave select, a spectrum paste, or the morph envelope switch or a
+morph LFO depth moved away from zero. A and b each carry their own button, so either spectrum can start from a
 wave. The row header carries copy and paste for the whole spectrum, so a spectrum
 moves between operators, and `to b` or `to a` copies it to the other spectrum of the
 same operator.
@@ -351,7 +354,8 @@ gap, the `oscillator` card, a `spectra` display, then the `morph env` and
 purple outline and spectrum b is a pink outline, with a marker under them that runs
 from `a` to `b` at the current morph value. The marker and the faint waveform follow
 the live morph of the newest rendering voice. The display does not take a drag. The `morph
-env` card holds the graph, the depth knob, R1 to R4 and L1 to L3. The `morph lfo`
+env` card holds the graph, the on switch, R1 to R3, L1 to L3, the release rate and
+level, and the mode. The `morph lfo`
 card holds rate, depth, the wave select and the `bipolar` switch.
 
 ### Dialogs

@@ -6116,10 +6116,11 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
         int32_t f = p1_key_apply(cutoff_pos_cutoff[voice_part[v]], p1_key_add(f1_ks_k_x[v], f1_vs_k_x[v]), 0, 55296);
         cutoff_pos_f_x[v] = f;
         cutoff_pos_pos_x[v] = (int32_t)(((int64_t)f * 99 + 27648) / 55296);
-        /* Offset modulation envelope (control rate). Starts at a zero offset and moves
-           through l1, l2 and l3, then holds or loops by mode and releases to the release
-           level. The one-pole is concave rising and convex falling. Stages: 0 to l1,
-           1 to l2, 2 to l3, 3 sustain, 4 release, 5 loop up, 6 loop down. No local
+        /* Modulation envelope (control rate). Starts at the `start` input, which is a
+           zero offset when it is unconnected and the target knob when it is wired, then
+           moves through l1, l2 and l3, holds or loops by mode, and releases to the
+           release level. The one-pole is concave rising and convex falling. Stages: 0 to
+           l1, 1 to l2, 2 to l3, 3 sustain, 4 release, 5 loop up, 6 loop down. No local
            declarations, because the body is inlined once per instance. */
         if (voice_trig[v]) {
             fenv_stage[v] = 0u; fenv_level[v] = cutoff_pos_pos_x[v];
@@ -6215,10 +6216,11 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
            the breakpoint, and LO/HI. The output copies it. That is one block of ~0.7 ms
            latency, which is inaudible for a timbre-shaping parameter. */
         penv_ks_k_x[v] = penv_ks_k[v];
-        /* Offset modulation envelope (control rate). Starts at a zero offset and moves
-           through l1, l2 and l3, then holds or loops by mode and releases to the release
-           level. The one-pole is concave rising and convex falling. Stages: 0 to l1,
-           1 to l2, 2 to l3, 3 sustain, 4 release, 5 loop up, 6 loop down. No local
+        /* Modulation envelope (control rate). Starts at the `start` input, which is a
+           zero offset when it is unconnected and the target knob when it is wired, then
+           moves through l1, l2 and l3, holds or loops by mode, and releases to the
+           release level. The one-pole is concave rising and convex falling. Stages: 0 to
+           l1, 1 to l2, 2 to l3, 3 sustain, 4 release, 5 loop up, 6 loop down. No local
            declarations, because the body is inlined once per instance. */
         if (voice_trig[v]) {
             penv_stage[v] = 0u; penv_level[v] = 0;
@@ -6478,10 +6480,11 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
         op4_fblfo_cv_x[v] = op4_fblfo_mode[voice_part[v]]
             ? p1_q15_mul(op4_fblfo_w[v], op4_fblfo_depth[voice_part[v]])
             : p1_q15_mul((op4_fblfo_w[v] + 32768) >> 1, op4_fblfo_depth[voice_part[v]]);
-        /* Offset modulation envelope (control rate). Starts at a zero offset and moves
-           through l1, l2 and l3, then holds or loops by mode and releases to the release
-           level. The one-pole is concave rising and convex falling. Stages: 0 to l1,
-           1 to l2, 2 to l3, 3 sustain, 4 release, 5 loop up, 6 loop down. No local
+        /* Modulation envelope (control rate). Starts at the `start` input, which is a
+           zero offset when it is unconnected and the target knob when it is wired, then
+           moves through l1, l2 and l3, holds or loops by mode, and releases to the
+           release level. The one-pole is concave rising and convex falling. Stages: 0 to
+           l1, 1 to l2, 2 to l3, 3 sustain, 4 release, 5 loop up, 6 loop down. No local
            declarations, because the body is inlined once per instance. */
         if (voice_trig[v]) {
             op4_fbenv_stage[v] = 0u; op4_fbenv_level[v] = 0;
@@ -6574,10 +6577,11 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
         /* A block-rate constant: the parameter is passed straight through as a control
            signal. No inputs, so it cannot close a graph cycle. */
         op4_morphbase_out_x[v] = op4_morphbase_value[voice_part[v]];
-        /* Offset modulation envelope (control rate). Starts at a zero offset and moves
-           through l1, l2 and l3, then holds or loops by mode and releases to the release
-           level. The one-pole is concave rising and convex falling. Stages: 0 to l1,
-           1 to l2, 2 to l3, 3 sustain, 4 release, 5 loop up, 6 loop down. No local
+        /* Modulation envelope (control rate). Starts at the `start` input, which is a
+           zero offset when it is unconnected and the target knob when it is wired, then
+           moves through l1, l2 and l3, holds or loops by mode, and releases to the
+           release level. The one-pole is concave rising and convex falling. Stages: 0 to
+           l1, 1 to l2, 2 to l3, 3 sustain, 4 release, 5 loop up, 6 loop down. No local
            declarations, because the body is inlined once per instance. */
         if (voice_trig[v]) {
             op4_specenv_stage[v] = 0u; op4_specenv_level[v] = op4_morphbase_out_x[v];
@@ -6830,10 +6834,11 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
         op3_fblfo_cv_x[v] = op3_fblfo_mode[voice_part[v]]
             ? p1_q15_mul(op3_fblfo_w[v], op3_fblfo_depth[voice_part[v]])
             : p1_q15_mul((op3_fblfo_w[v] + 32768) >> 1, op3_fblfo_depth[voice_part[v]]);
-        /* Offset modulation envelope (control rate). Starts at a zero offset and moves
-           through l1, l2 and l3, then holds or loops by mode and releases to the release
-           level. The one-pole is concave rising and convex falling. Stages: 0 to l1,
-           1 to l2, 2 to l3, 3 sustain, 4 release, 5 loop up, 6 loop down. No local
+        /* Modulation envelope (control rate). Starts at the `start` input, which is a
+           zero offset when it is unconnected and the target knob when it is wired, then
+           moves through l1, l2 and l3, holds or loops by mode, and releases to the
+           release level. The one-pole is concave rising and convex falling. Stages: 0 to
+           l1, 1 to l2, 2 to l3, 3 sustain, 4 release, 5 loop up, 6 loop down. No local
            declarations, because the body is inlined once per instance. */
         if (voice_trig[v]) {
             op3_fbenv_stage[v] = 0u; op3_fbenv_level[v] = 0;
@@ -6926,10 +6931,11 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
         /* A block-rate constant: the parameter is passed straight through as a control
            signal. No inputs, so it cannot close a graph cycle. */
         op3_morphbase_out_x[v] = op3_morphbase_value[voice_part[v]];
-        /* Offset modulation envelope (control rate). Starts at a zero offset and moves
-           through l1, l2 and l3, then holds or loops by mode and releases to the release
-           level. The one-pole is concave rising and convex falling. Stages: 0 to l1,
-           1 to l2, 2 to l3, 3 sustain, 4 release, 5 loop up, 6 loop down. No local
+        /* Modulation envelope (control rate). Starts at the `start` input, which is a
+           zero offset when it is unconnected and the target knob when it is wired, then
+           moves through l1, l2 and l3, holds or loops by mode, and releases to the
+           release level. The one-pole is concave rising and convex falling. Stages: 0 to
+           l1, 1 to l2, 2 to l3, 3 sustain, 4 release, 5 loop up, 6 loop down. No local
            declarations, because the body is inlined once per instance. */
         if (voice_trig[v]) {
             op3_specenv_stage[v] = 0u; op3_specenv_level[v] = op3_morphbase_out_x[v];
@@ -7182,10 +7188,11 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
         op2_fblfo_cv_x[v] = op2_fblfo_mode[voice_part[v]]
             ? p1_q15_mul(op2_fblfo_w[v], op2_fblfo_depth[voice_part[v]])
             : p1_q15_mul((op2_fblfo_w[v] + 32768) >> 1, op2_fblfo_depth[voice_part[v]]);
-        /* Offset modulation envelope (control rate). Starts at a zero offset and moves
-           through l1, l2 and l3, then holds or loops by mode and releases to the release
-           level. The one-pole is concave rising and convex falling. Stages: 0 to l1,
-           1 to l2, 2 to l3, 3 sustain, 4 release, 5 loop up, 6 loop down. No local
+        /* Modulation envelope (control rate). Starts at the `start` input, which is a
+           zero offset when it is unconnected and the target knob when it is wired, then
+           moves through l1, l2 and l3, holds or loops by mode, and releases to the
+           release level. The one-pole is concave rising and convex falling. Stages: 0 to
+           l1, 1 to l2, 2 to l3, 3 sustain, 4 release, 5 loop up, 6 loop down. No local
            declarations, because the body is inlined once per instance. */
         if (voice_trig[v]) {
             op2_fbenv_stage[v] = 0u; op2_fbenv_level[v] = 0;
@@ -7278,10 +7285,11 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
         /* A block-rate constant: the parameter is passed straight through as a control
            signal. No inputs, so it cannot close a graph cycle. */
         op2_morphbase_out_x[v] = op2_morphbase_value[voice_part[v]];
-        /* Offset modulation envelope (control rate). Starts at a zero offset and moves
-           through l1, l2 and l3, then holds or loops by mode and releases to the release
-           level. The one-pole is concave rising and convex falling. Stages: 0 to l1,
-           1 to l2, 2 to l3, 3 sustain, 4 release, 5 loop up, 6 loop down. No local
+        /* Modulation envelope (control rate). Starts at the `start` input, which is a
+           zero offset when it is unconnected and the target knob when it is wired, then
+           moves through l1, l2 and l3, holds or loops by mode, and releases to the
+           release level. The one-pole is concave rising and convex falling. Stages: 0 to
+           l1, 1 to l2, 2 to l3, 3 sustain, 4 release, 5 loop up, 6 loop down. No local
            declarations, because the body is inlined once per instance. */
         if (voice_trig[v]) {
             op2_specenv_stage[v] = 0u; op2_specenv_level[v] = op2_morphbase_out_x[v];
@@ -7534,10 +7542,11 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
         op1_fblfo_cv_x[v] = op1_fblfo_mode[voice_part[v]]
             ? p1_q15_mul(op1_fblfo_w[v], op1_fblfo_depth[voice_part[v]])
             : p1_q15_mul((op1_fblfo_w[v] + 32768) >> 1, op1_fblfo_depth[voice_part[v]]);
-        /* Offset modulation envelope (control rate). Starts at a zero offset and moves
-           through l1, l2 and l3, then holds or loops by mode and releases to the release
-           level. The one-pole is concave rising and convex falling. Stages: 0 to l1,
-           1 to l2, 2 to l3, 3 sustain, 4 release, 5 loop up, 6 loop down. No local
+        /* Modulation envelope (control rate). Starts at the `start` input, which is a
+           zero offset when it is unconnected and the target knob when it is wired, then
+           moves through l1, l2 and l3, holds or loops by mode, and releases to the
+           release level. The one-pole is concave rising and convex falling. Stages: 0 to
+           l1, 1 to l2, 2 to l3, 3 sustain, 4 release, 5 loop up, 6 loop down. No local
            declarations, because the body is inlined once per instance. */
         if (voice_trig[v]) {
             op1_fbenv_stage[v] = 0u; op1_fbenv_level[v] = 0;
@@ -7630,10 +7639,11 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
         /* A block-rate constant: the parameter is passed straight through as a control
            signal. No inputs, so it cannot close a graph cycle. */
         op1_morphbase_out_x[v] = op1_morphbase_value[voice_part[v]];
-        /* Offset modulation envelope (control rate). Starts at a zero offset and moves
-           through l1, l2 and l3, then holds or loops by mode and releases to the release
-           level. The one-pole is concave rising and convex falling. Stages: 0 to l1,
-           1 to l2, 2 to l3, 3 sustain, 4 release, 5 loop up, 6 loop down. No local
+        /* Modulation envelope (control rate). Starts at the `start` input, which is a
+           zero offset when it is unconnected and the target knob when it is wired, then
+           moves through l1, l2 and l3, holds or loops by mode, and releases to the
+           release level. The one-pole is concave rising and convex falling. Stages: 0 to
+           l1, 1 to l2, 2 to l3, 3 sustain, 4 release, 5 loop up, 6 loop down. No local
            declarations, because the body is inlined once per instance. */
         if (voice_trig[v]) {
             op1_specenv_stage[v] = 0u; op1_specenv_level[v] = op1_morphbase_out_x[v];

@@ -56,7 +56,7 @@
 
 The panel reads `engine/gen/params.json` at load, every control writes the raw value of
 one manifest parameter through the worklet, and the worklet returns the engine's stored
-value. The page groups the 1,614 parameters as:
+value. The page groups the 1,676 parameters as:
 
 | Page | Controls |
 | --- | --- |
@@ -150,13 +150,13 @@ and `error`.
 
 - **Host vector(s):** the WASM parity gate renders note-on and release at 48 kHz and
   compares all 1,024 interleaved samples with the native capture, and it also checks the
-  sine, saw and high-range analyses. The module reports 1,614 parameters.
+  sine, saw and high-range analyses. The module reports 1,676 parameters.
 - **Browser vector:** `web/smoke.mjs` drives the bare page and checks a level round
   trip, whilst `web/panel-smoke.mjs` drives the root redirect and checks the seven tabs,
   the saw template, the bar and morph values, and the select group legend. It also
   checks the mask, the selection window and its composition with the live mask, the
-  level, formant and tilt springs and their return to centre, the morph depth mode
-  switch, the output and tap peaks, the algorithm round trip and the operator copy and
+  level, formant and tilt springs and their return to centre, the morph envelope switch,
+  the output and tap peaks, the algorithm round trip and the operator copy and
   paste. The operator mute switch, its toolbar box, the four oscillator cards on each
   page, the card copy and paste and the spectrum copy across operators are checked too.
   The smoke then walks the part switch, the six FX cards, the part rename and paste, the
@@ -172,7 +172,7 @@ and `error`.
 - **Tolerance/metric:** the 48 kHz output is sample exact against the native capture,
   whilst the browser checks are thresholds rather than exact audio: a scope peak, tap
   peak and route peak above 0.0001, a template whose second harmonic is above 5, a
-  spectrum bar value above 0, waveform 13 after a morph depth edit, and the seven page
+  spectrum bar value above 0, waveform 13 after the morph envelope switch, and the seven page
   control counts. I'd keep those as thresholds, since the parity gate already owns the
   exact number.
 - **Evidence artefact:** the parity log, the two smoke logs, the measured page counts
@@ -180,7 +180,7 @@ and `error`.
 
 ### Measured evidence
 
-1. **WASM parity:** 1,614 parameters, note-on and release match the 48 kHz capture, the
+1. **WASM parity:** 1,676 parameters, note-on and release match the 48 kHz capture, the
    sine analysis passes with the first harmonic at least 90 and the second at most 5, the
    saw analysis passes with the first harmonic at least 80 and the second at least 20,
    and the high range passes at 50 or more. Module size 205,656 bytes, no imports.

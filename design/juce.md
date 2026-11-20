@@ -137,8 +137,8 @@ Every page fills the same height:
   waveform follow the live morph of the newest rendering voice, so they advance
   with the envelope and the LFO while a note sounds. The display takes no drag.
   When a and b use different ranges, the display zooms out to the union of the two
-  spans. The envelope card carries the graph, the depth knob, R1 to R4 and L1 to
-  L3.
+  spans. The envelope card carries the graph, the on switch, R1 to R3, L1 to L3,
+  the release rate and level, and the mode.
 
 The current layout has seven tabs: patch settings at 0, part fx/mod at 1, operator
 envs at 2, operator lfos at 3, op spectra a at 4, op spectra b at 5 and op spectra

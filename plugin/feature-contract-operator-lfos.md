@@ -1,5 +1,12 @@
 # Feature contract: operator LFOs and per-operator envelopes
 
+> The envelope stages have since moved to the operator amplitude family and the
+> modulation family. The current stage, release and mode semantics are in
+> [`feature-contract-envelopes.md`](feature-contract-envelopes.md); this contract keeps
+> the per-operator split, the LFOs and their measurements. The parameter and byte
+> counts below are the per-operator split's numbers, before the envelope family
+> changed the parameter count.
+
 ## Identity
 
 - **Feature:** Per-operator amplitude and signed feedback envelopes, plus the
@@ -32,7 +39,7 @@
 
 ## Dependencies and interactions
 
-- **Other features:** `fm_op`, `fb_tap`, the `lfo`, `dx_env` and `pitch_env` nodes,
+- **Other features:** `fm_op`, `fb_tap`, the `lfo`, `amp_env` and `mod_env` nodes,
   the shared pitch input, the editor pages and the preset store.
 - **Platform/API/HAL changes:** none, because the engine stays integer C and every new
   node is a control-rate body of an existing shape.
@@ -81,10 +88,9 @@ operator pitch input:
 pitch = p1_clamp(pitch_shared + dlfo, -32768, 32767)
 ```
 
-The `fm_op` macro owns one `pitch_env` for the feedback envelope, one `lfo` for each
-new family, and a `csum` for the pitch pair. The feedback envelope keeps the pitch
-envelope's signed Q15 levels, four rates and on switch, with its release level fixed
-at zero, and the `fb_tap` node gains the `lfo` input, sums both control inputs with the
+The `fm_op` macro owns one `mod_env` for the feedback envelope, one `lfo` for each
+new family, and a `csum` for the pitch pair. The feedback envelope uses the `mod_env`
+signed Q15 levels, three rates, a release rate and level, and the four modes, and the `fb_tap` node gains the `lfo` input, sums both control inputs with the
 signed base, and uses the sign of that sum for the family. The bipolar `lfo` mode uses
 the signed depth, so a negative depth inverts the phase, and at depth 0 each LFO
 outputs 0 whilst a flat envelope outputs 0, so the existing render stays exact.
@@ -93,11 +99,11 @@ outputs 0 whilst a flat envelope outputs 0, so the existing render stays exact.
 
 - **Maximum voices/events/effects:** 20 voices and two parts, unchanged.
 - **Per-sample and per-block operations:** four feedback envelopes and eight LFO nodes
-  per part, all at control rate. The feedback envelope body is the existing
-  `pitch_env` shape and the LFO body is the existing `lfo` shape, whilst the feedback
+  per part, all at control rate. The feedback envelope body is the `mod_env`
+  shape and the LFO body is the existing `lfo` shape, whilst the feedback
   level adds one Q15 input and the pitch adds one saturation.
 - **Instance memory, CPU, preset size:** the part block adds 57 parameters, so 228
-  bytes per part and 456 bytes across the two parts. Four `pitch_env` states replace
+  bytes per part and 456 bytes across the two parts. Four `mod_env` states replace
   one shared state per voice, and each operator adds two LFO states, so the voice
   state grows by 42 `int32_t` fields, 3,360 bytes at 20 voices, and each library
   record grows by 228 bytes, so the 128-slot part bank grows by 29,184 bytes.
@@ -153,8 +159,8 @@ outputs 0 whilst a flat envelope outputs 0, so the existing render stays exact.
 
 - **Assumptions/open research:** the detune LFO uses the shared pitch scale, so full
   depth is one octave, and the feedback LFO is a percentage of the Q15 feedback range.
-  The feedback envelope uses the pitch envelope's signed levels and on switch, with a
-  fixed zero release level, and the per-operator envelope is the design I chose.
+  The feedback envelope uses the `mod_env` signed levels, on switch, release level
+  and modes, and the per-operator envelope is the design I chose.
 - **Safe experiment and stop criterion:** if a flat envelope or the off switch changes
   the render, if one operator envelope or LFO reaches another operator, or if the pitch
   sum wraps, stop and fix the graph before the UI.
@@ -162,4 +168,4 @@ outputs 0 whilst a flat envelope outputs 0, so the existing render stays exact.
   rejected because the feedback path is bipolar and the depth only rescales the same
   signed offset.
 - **Rollback:** restore the shared `fbenv` node and the 171 layout, and remove the
-  `pitch_env`, `fblfo`, `dlfo` and `dsum` nodes. The old contract remains as history.
+  `mod_env`, `fblfo`, `dlfo` and `dsum` nodes. The old contract remains as history.

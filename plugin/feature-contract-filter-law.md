@@ -18,8 +18,9 @@
 ## Player outcome
 
 - **New player action:** set `cutoff` by hertz over about 3.5 Hz to 14.3 kHz and set
-  `res` as a linear percentage, whilst the filter envelope amount reads in octaves.
-  The passband makeup is internal, so the player does not manage it.
+  `res` as a linear percentage. The filter envelope moves the cutoff through its own 0
+  to 99 positions, and the passband makeup is internal, so the player does not manage
+  it.
 - **Sound and behaviour:** the cutoff knob is exponential, with its midpoint about
   224 Hz, so the musical range is spread over the travel rather than crowded into the
   top. Resonance self-oscillates from about 79 percent, matching the SH-101's VR18 at
@@ -41,10 +42,10 @@
 ## Dependencies and interactions
 
 - **Other features:** the `liquid_filter` node and its `.dev` source, the
-  `f1_cutoff_ks` and `fenv_ks` follow nodes, the `dx_env` filter envelope, the
-  `p1_math.h` helpers, the `math_tables.h` generator, the manifest and its display
-  forms, the native filter card and web panel, the preset store, the plugin state, the
-  web library and the editor snapshots.
+  `f1_cutoff_ks` and `fenv_ks` follow nodes, the `cutoff_pos` control node, the
+  `mod_env` filter envelope, the `p1_math.h` helpers, the `math_tables.h` generator,
+  the manifest and its display forms, the native filter card and web panel, the preset
+  store, the plugin state, the web library and the editor snapshots.
 - **Platform/API/HAL changes:** none, because the engine stays integer C, the core
   stays at 48 kHz, and the output rate bridge is unchanged.
 - **Persistence/version impact:** `PRESET_VERSION` moves from 6 to 7, the plugin state
@@ -61,7 +62,11 @@
 | `cutoff` | 0 to 55296 | 36958 | Hz | Log position, 3.5 Hz to 14.336 kHz over 12 octaves |
 | `res` | 0 to 41942 | 16000 | percent | Linear resonance, self-oscillation at about 79 percent |
 | `comp` | -32768 to 32767 | 7209 | raw | Internal, 22 percent of the `1 + res_k` makeup, hidden from the panel |
-| `fenv_depth` | 0 to 65535 | 0 | octaves | 0 to 8 octaves of envelope sweep |
+
+The filter envelope is the absolute `mod_env` family: `fenv_on`, `fenv_r1` to `r3`,
+`fenv_l1` to `l3`, `fenv_relr`, `fenv_rell` and `fenv_mode`. It starts at the
+key- and velocity-followed cutoff and replaces it while it is on. The parameters and
+their migration are in [`feature-contract-envelopes.md`](feature-contract-envelopes.md).
 
 The cutoff table at selected positions:
 
@@ -95,14 +100,15 @@ only at the sub-audio bottom.
 - **Migration:** `plugin/tests/preset_smoke.cpp` builds a version 6 record with the old
   8000 default, loads it through `PresetStore`, and checks that the cutoff lands on
   position 36958, the 909 Hz point, whilst a version 7 record keeps its raw value.
-- **UI:** the native filter card reads `909Hz`, `38%` and `0.00 oct` and keeps the
-  `comp` trim off the panel, and the Linux `editor-fxmod.png` golden is regenerated.
-  The host text for `cutoff`, `res` and `fenv_depth` round-trips at 21 normalised
-  points per parameter, which is the check the CLAP `param-conversions` validator
-  makes.
-- **Web:** the wasm module rebuilds at 206,862 bytes and the parity script reports
-  1,614 parameters with the note-on and release matching the 48 kHz capture, and the
-  panel and bare browser smokes pass.
+- **UI:** the native filter card reads `909Hz` and `38%` and keeps the `comp` trim
+  off the panel, and the Linux `editor-fxmod.png` golden is regenerated. The filter
+  envelope card carries its own on switch, rates, levels, release and mode. The host
+  text for `cutoff` and `res` round-trips at 21 normalised points per parameter, which
+  is the check the CLAP `param-conversions` validator makes.
+- **Web:** at this slice the wasm module rebuilt at 206,862 bytes and the parity
+  script reported 1,614 parameters with the note-on and release matching the 48 kHz
+  capture, and the panel and bare browser smokes passed. The current manifest is
+  1,676 parameters.
 
 ## Bounds and resources
 
@@ -110,8 +116,8 @@ only at the sub-audio bottom.
   voice, and the interpolation is one division by 216 and one multiply per voice per
   block.
 - The input knee adds four multiplies per sample per active voice.
-- The manifest stays at 1,614 parameters and the part block at 800, and the node state
-  gains `res_k`.
+- The manifest grew from 1,614 to 1,676 parameters and the part block from 800 to 831
+  across the later envelope work, and the node state gains `res_k`.
 - The preset and state record sizes do not change.
 
 ## Limits
@@ -123,8 +129,8 @@ only at the sub-audio bottom.
 - Input knee fixed, with no drive parameter to push it.
 - Inside the Type P panel the `comp` trim is hidden and fixed at 22 percent, though it
   remains a module parameter and a host automation lane.
-- Only `cutoff`, `res` and `fenv_depth` get the human-readable host text, and the other
-  parameters keep the host's numeric text, so their automation lanes are unchanged.
+- Only `cutoff` and `res` get the human-readable host text, and the other parameters
+  keep the host's numeric text, so their automation lanes are unchanged.
 - Key follow still uses the proportional push, so 100 percent does not track at exactly
   one octave per octave.
 - Resonance and `comp` raw values are not migrated, so an old patch keeps its cutoff

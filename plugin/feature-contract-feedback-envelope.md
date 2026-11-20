@@ -2,8 +2,9 @@
 
 > Superseded by
 > [`feature-contract-operator-lfos.md`](feature-contract-operator-lfos.md). The
-> feedback envelope is now per operator, and this contract keeps the shared-envelope
-> design and measurement as history.
+> feedback envelope is now per operator, its stages are in
+> [`feature-contract-envelopes.md`](feature-contract-envelopes.md), and this contract
+> keeps the shared-envelope design and measurement as history.
 
 ## Identity
 

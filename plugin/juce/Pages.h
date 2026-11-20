@@ -22,12 +22,13 @@ inline double getParam(PluginEditor& editor, const juce::String& id)
     return 0.0;
 }
 
-/* A depth edit that ends away from zero puts the operator in spectrum mode, so
- * the envelope or LFO the player just set has something to move. */
+/* A depth edit or an envelope switch that ends away from zero puts the operator
+ * in spectrum mode, so the envelope or LFO the player just set has something to
+ * move. */
 inline void ensureSpectrumMode(PluginEditor& editor, int op, int part,
-                               const juce::String& depthID)
+                               const juce::String& valueID)
 {
-    if (std::lround(getParam(editor, depthID)) == 0)
+    if (std::lround(getParam(editor, valueID)) == 0)
         return;
     const auto waveID = params::opWaveform(op, part);
     if (std::lround(getParam(editor, waveID)) == 13)

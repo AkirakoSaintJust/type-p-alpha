@@ -9,6 +9,8 @@ them as the historical numbers they are. The current contracts are
 [`../../plugin/feature-contract-feedback-bipolar.md`](../../plugin/feature-contract-feedback-bipolar.md)
 and
 [`../../plugin/feature-contract-operator-lfos.md`](../../plugin/feature-contract-operator-lfos.md).
+The current envelope stages are in
+[`../../plugin/feature-contract-envelopes.md`](../../plugin/feature-contract-envelopes.md).
 
 The experiments are recorded one per file:
 

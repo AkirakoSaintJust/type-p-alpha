@@ -152,7 +152,8 @@ private:
 
     /* Expand a part bank saved with `oldCount` params per record to the current
      * count. The chain runs version 10 operator blocks, the version 11 pan
-     * reorder, and the version 12 offset envelope insert. */
+     * reorder, the version 12 offset envelope insert, and the version 13 filter
+     * and spectral insert. */
     bool migratePartBank(const uint8_t* data, uint32_t oldCount,
                          std::vector<uint8_t>& out) const;
 

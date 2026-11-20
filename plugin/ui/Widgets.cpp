@@ -1175,8 +1175,8 @@ void P1Envelope::paint(juce::Graphics& g)
                                   norm * (area.getHeight() - 8.0));
     };
 
-    /* The old four-rate, three-level shape, still used by the filter and
-     * spectral envelopes until their absolute migration lands. */
+    /* The legacy four-rate, three-level shape, used when a card passes no
+     * explicit envelope shape. */
     if (shape_ == EnvelopeShape::legacyFourStage) {
         /* Stage weight is the square of the rate's distance from 99, so 99 has
          * no horizontal run and reads as vertical whatever its target level.

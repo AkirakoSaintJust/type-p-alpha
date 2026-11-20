@@ -1,7 +1,9 @@
 # Feature contract: bipolar feedback
 
-> The envelope and depth rows below are the 171 shared-envelope design. The
-> current per-operator signed envelope and LFOs are in
+> The envelope and depth rows below are the 171 shared-envelope design. The current
+> per-operator signed envelope is in
+> [`feature-contract-envelopes.md`](feature-contract-envelopes.md), and the operator
+> split and LFOs are in
 > [`feature-contract-operator-lfos.md`](feature-contract-operator-lfos.md).
 
 ## Identity

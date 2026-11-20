@@ -13,8 +13,8 @@
 - **Owner / date:** P1Onken, 2026-11-13.
 - **Disposition:** complete for the engine and the seven-tab editor pages. Each row
   loads a wave analysis through its `load spectrum template...` button, the wave
-  select is the only mode switch, and a morph depth moved away from zero also selects
-  `spectrum`. The cold commit and the crossfade direction are in, with the schedule
+  select is the only mode switch, and the morph envelope switch or a morph LFO depth
+  moved away from zero also selects `spectrum`. The cold commit and the crossfade direction are in, with the schedule
   bench in `plugin/tests/spectral_bench.cpp`, and the Linux snapshot goldens were
   regenerated for the 64-bar bands, the new header and toolbar text, the envelope
   graph and the live morph cursor.
@@ -38,7 +38,8 @@
   The selection window composes with the group and the live or dead mask for both the
   springs and the freehand editor, and it is editor state, so it adds no manifest
   parameters. A template load does not change the waveform, whilst the wave select, a
-  spectrum paste, or a morph depth moved away from zero selects `spectrum`.
+  spectrum paste, or the morph envelope switch or a morph LFO depth moved away from
+  zero selects `spectrum`.
   The mode switch crossfades over 10 ms, a silent part commits a new spectrum at once
   so its next note starts on the new table, and an audible part ramps from the old
   table to the new one. The mod display reads the morph the newest rendering voice
@@ -50,7 +51,7 @@
 
 ## Dependencies and interactions
 
-- **Other features:** the `fm_op` macro and its `osc` node, the `lfo` and `pitch_env`
+- **Other features:** the `fm_op` macro and its `osc` node, the `lfo` and `mod_env`
   shapes, the table generator, the preset store, the editor pages, the analysis table
   and the editor snapshot set.
 - **Platform/API/HAL changes:** none, because the engine stays integer C, the core
@@ -60,10 +61,11 @@
   to 3 for this feature, to 4 for the 48 kHz core change, to 5 for the harmonic range
   change, and to 6 for the 64-harmonic change, the old test banks are regenerated, and
   the plugin state version moves to 4. The project has no release, so no migration
-  path is provided and the values are stable. The part block grows from 416 to 800
-  parameters, the manifest from 846 to 1,614, and each part record by 1,536 bytes, and
-  the plugin's `uiPage` needs the `part fx/mod` remap and the split remap for the mod
-  page, keyed on `uiPageLayout` 3.
+  path is provided and the values are stable. The part block grew from 416 to 800
+  parameters at this slice, the manifest from 846 to 1,614, and each part record by
+  1,536 bytes, and the plugin's `uiPage` needs the `part fx/mod` remap and the split
+  remap for the mod page, keyed on `uiPageLayout` 3. The later envelope family moved
+  the current totals to 1,676 manifest parameters and an 831 part block.
 - **MIDI/clock impact:** none, since the new parameters are host-automatable and stay
   out of the default CC map. The spectrum mode is the waveform parameter, so a host
   can automate the mode.
@@ -80,10 +82,13 @@ waveform parameter grows from 0 to 11 to 0 to 13.
 | `opN_spec_range_b` | `opN.osc.spec_range_b` | 0..1 | 0 | `range` |
 | `opN_spec_a1` ... `opN_spec_a64` | `opN.osc.spec_a1` ... `a64` | 0..99 | 99, then 0 | raw |
 | `opN_spec_b1` ... `opN_spec_b64` | `opN.osc.spec_b1` ... `b64` | 0..99 | formant at h5 | raw |
-| `opN_spec_morph` | `opN.osc.spec_morph` | 0..99 | 0 | raw |
-| `opN_spec_env_r1` ... `r4` | `opN.specenv.r1` ... `r4` | 0..99 | 80, 60, 50, 80 | raw |
+| `opN_spec_morph` | `opN.morphbase.value` | 0..99 | 0 | raw |
+| `opN_spec_env_on` | `opN.specenv.on` | 0..1 | 0 | `onoff` |
+| `opN_spec_env_r1` ... `r3` | `opN.specenv.r1` ... `r3` | 0..99 | 80, 60, 50 | raw |
 | `opN_spec_env_l1` ... `l3` | `opN.specenv.l1` ... `l3` | 0..99 | 99, 60, 0 | raw |
-| `opN_spec_env_depth` | `opN.osc.spec_env_depth` | -99..99 | 0 | raw |
+| `opN_spec_env_relr` | `opN.specenv.relr` | 0..99 | 80 | raw |
+| `opN_spec_env_rell` | `opN.specenv.rell` | 0..99 | 0 | raw |
+| `opN_spec_env_mode` | `opN.specenv.mode` | 0..3 | 1 | raw |
 | `opN_spec_lfo_rate` | `opN.speclfo.rate` | 0..20 Hz | 4.0 Hz | `hz` |
 | `opN_spec_lfo_depth` | `opN.speclfo.depth` | -99..99 | 0 | raw |
 | `opN_spec_lfo_wave` | `opN.speclfo.wave` | six waves | sine | `wave` |
@@ -92,19 +97,20 @@ waveform parameter grows from 0 to 11 to 0 to 13.
 The morph is:
 
 ```c
-m = clamp(morph / 99 + (envDepth / 99) * (env / 99)
-          + (lfoDepth / 99) * lfo, 0, 1);
+position = envOn ? env : morph;      /* the envelope starts at the morph knob */
+m = clamp((position + lfo) / 99, 0, 1);
 sample = ((1 - m) * tableA + m * tableB) >> 15;
 ```
 
-The envelope and LFO run per voice, the a and b tables are per part, and each spectrum
-has its own 64-harmonic range. The wave values are the mode: 13 reads the additive
-bank, and 0 to 12 read the wave table.
+The envelope is an absolute 0..99 position: it starts at the morph knob, moves through
+its levels, and holds, loops or releases by mode. The envelope and LFO run per voice,
+the a and b tables are per part, and each spectrum has its own 64-harmonic range. The
+wave values are the mode: 13 reads the additive bank, and 0 to 12 read the wave table.
 
 The editor writes a template into the chosen row only, 64 parameters at a time, and
 selecting a wave keeps the stored spectra, so the editor does not write the waveform
-when a template loads. A morph envelope or morph LFO depth edit that ends away from
-zero writes the waveform as 13, so the modulation has something to move.
+when a template loads. The morph envelope switch or a morph LFO depth edit that ends
+away from zero writes the waveform as 13, so the modulation has something to move.
 
 ## Bounds and resources
 
@@ -181,10 +187,10 @@ zero writes the waveform as 13, so the modulation has something to move.
   alone, the selection window must gate both freehand writes and the springs, and the
   mod display must show both outlines, the morph marker and the waveform trace.
   `editor_snapshot` also copies every operator card from op1 to op2 and back and
-  compares every control, including the four fb envelope levels, the morph envelope
-  depth, the spectrum range and the op1 attack and release names.
+  compares every control, including the feedback envelope levels, the morph envelope
+  switch, the spectrum range and the op1 attack and release names.
   `spectral` also checks that the engine publishes the live morph for the newest
-  voice, and that the base morph stays still with zero envelope depth. The part block
+  voice, and that the base morph stays still with the envelope off. The part block
   and manifest counts must match 800 and 1,614.
 - **Evidence artefact:** a wave table checksum test, a spectral table and morph test, a
   cold-commit and crossfade-direction test, the schedule bench, an editor page
@@ -208,7 +214,7 @@ zero writes the waveform as 13, so the modulation has something to move.
 3. **Editor pages:** in. The two spectrum tabs (`op spectra a` and `op spectra b`), the
    seven-tab bar, the 64-bar editor, the group and mask selectors, the select-group
    legend, the spring-loaded tilt, level and formant controls, the
-   `load spectrum template...` menu, the selection window, the morph depth mode switch,
+   `load spectrum template...` menu, the selection window, the morph envelope mode switch,
    the copy and paste, and the page index remap are all in. The A and B tabs each carry
    four spectrum cards, each with its header selectors, the 64-bar editor and the three
    springs, and the four cards fit without a scroll. The shaped spectrum snapshot is

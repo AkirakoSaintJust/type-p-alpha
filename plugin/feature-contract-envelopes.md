@@ -13,7 +13,8 @@
   with their UI cards, graphs and the version 14 migration. The product targets are
   VST3, CLAP and standalone through JUCE, plus the web app for internal testing. The
   CI plugin validators on Linux, Windows and macOS, the WASM parity gate and the
-  browser smoke tests are the evidence. The DAW matrix is not run in this tree.
+  browser smoke tests are the evidence. The CI does not run the DAW matrix; the
+`linux_daws` test is available locally.
 
 ## Operator amplitude envelope
 
@@ -130,8 +131,8 @@ Old libraries are remapped, not rejected.
   its levels, and stops moving the morph when the envelope is off.
 - `engine_parity` keeps the default note-on and release renders bit-exact with the
   filter envelope off.
-- The Linux snapshot set shows the operator, pitch, feedback, filter and spectral
-  cards with the new controls. `editor-envelope-loops.png` and
+- The Linux snapshot set shows the operator, pitch, feedback, filter, spectral and
+  pan cards with the new controls. `editor-envelope-loops.png` and
   `editor-fxmod-loops.png` show the double bars at the sustain and loop boundaries
   and the left arrow under the loop.
 - The web panel draws the operator, pitch, feedback, filter, spectral and pan graphs
@@ -142,8 +143,8 @@ Old libraries are remapped, not rejected.
 
 ## Limits and open work
 
-- The DAW matrix is not run in this tree. The plugin validators and the browser
-  smoke tests are the automated evidence.
+- The CI does not run the DAW matrix; the `linux_daws` test is available locally. The
+  plugin validators and the browser smoke tests are the automated evidence.
 
 ## Safe experiment and stop criterion
 
