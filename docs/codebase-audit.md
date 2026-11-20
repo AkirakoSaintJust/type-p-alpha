@@ -27,7 +27,7 @@ scope, so anything that only makes sense for the old device belongs in that hist
 | `plugin/tests/` | parity, DSP, preset, host and snapshot tests | hand-written |
 | `plugin/tools/` | parameter, token, ratio, figure and snapshot tools | hand-written |
 | `design/` | tokens, design notes and the clickable mockup | hand-written |
-| `synth/` | patch, panel and plugin descriptions | data |
+| `synth/` | patch and plugin descriptions | data |
 
 ## Engine HAL
 

@@ -144,10 +144,6 @@ Old libraries are remapped, not rejected.
 
 - The DAW matrix is not run in this tree. The plugin validators and the browser
   smoke tests are the automated evidence.
-- `synth/panel.json` is a legacy device panel map from the original hardware
-  design. No current target builds it, so its old envelope names and seven-parameter
-  widgets are left as they are. The plugin editor and the web app read the
-  parameter manifest.
 
 ## Safe experiment and stop criterion
 
