@@ -122,6 +122,27 @@ P1_MATH_INLINE int32_t p1_ease_in(int32_t start, int32_t target,
            (int32_t)(((int64_t)(target - start) * shaped) >> 16);
 }
 
+/* The linear step for an LFO's rate or depth fade, in Q16 per control tick.
+ * The 1..99 values use the envelope rate table's 99 percent time, so a fade
+ * value and an envelope rate value mean the same duration. 0 is off and 99 is
+ * instant; the integer division rounds to the nearest step, so the ramp ends
+ * within one tick of the table time. */
+P1_MATH_INLINE int32_t p1_fade_step(int32_t rate)
+{
+    if (rate <= 0)
+        return 0;
+    if (rate >= 99)
+        return 65536;
+    int32_t coeff = p1_rate_coeff[rate];
+    if (coeff <= 0)
+        return 65536;
+    int32_t ticks =
+        (int32_t)(((int64_t)4605 * 65536) / (1000 * (int64_t)coeff));
+    if (ticks < 1)
+        return 65536;
+    return (65536 + ticks / 2) / ticks;
+}
+
 /* ------------------------------------------------------ transcendental tables */
 
 /* Full-cycle sine, Q15, from the quarter table (p1_sin_q15, midpoint-sampled).
