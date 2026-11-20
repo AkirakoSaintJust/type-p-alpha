@@ -109,6 +109,19 @@ P1_MATH_INLINE int32_t p1_onepole(int32_t level, int32_t target, int32_t coeff)
     return p1_sat_add32(level, u);
 }
 
+/* Slow-start (ease-in) interpolation for the attack warm-up. `progress` runs
+ * 0..65536, and the squared progress makes the motion start slowly and
+ * accelerate toward the target, which is the convex "slow then abrupt" shape.
+ * At progress 32768 the value is a quarter of the way, not a half. */
+P1_MATH_INLINE int32_t p1_ease_in(int32_t start, int32_t target,
+                                  uint32_t progress)
+{
+    if (progress > 65536u) progress = 65536u;
+    int64_t shaped = ((int64_t)progress * (int64_t)progress) >> 16;
+    return start +
+           (int32_t)(((int64_t)(target - start) * shaped) >> 16);
+}
+
 /* ------------------------------------------------------ transcendental tables */
 
 /* Full-cycle sine, Q15, from the quarter table (p1_sin_q15, midpoint-sampled).
