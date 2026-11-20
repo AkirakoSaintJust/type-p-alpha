@@ -175,20 +175,13 @@ inline juce::String opSpecLfoMode(int op, int part)
     return withPart(opBase(op, "_spec_lfo_mode"), part);
 }
 
-inline juce::String opEnvRate(int op, int index, int part)
+inline juce::String opEnv(int op, const char* field, int part)
 {
-    if (op == 0 && index == 0)
+    if (op == 0 && juce::String(field) == "surge")
         return withPart("attack", part);
-    if (op == 0 && index == 3)
+    if (op == 0 && juce::String(field) == "rel")
         return withPart("release", part);
-    return "op" + juce::String(op + 1) + ".eg.r" + juce::String(index + 1) +
-           partSuffix(part);
-}
-
-inline juce::String opEnvLevel(int op, int index, int part)
-{
-    return "op" + juce::String(op + 1) + ".eg.l" + juce::String(index + 1) +
-           partSuffix(part);
+    return "op" + juce::String(op + 1) + ".eg." + field + partSuffix(part);
 }
 
 inline juce::String opFeedbackRate(int op, int index, int part)
