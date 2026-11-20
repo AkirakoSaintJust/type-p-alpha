@@ -271,8 +271,8 @@ parameter set and the same ranges, grouped to match the pages rather than the JS
 order.
 
 - patch settings: parts, keyzones, levels, delays, voice mode.
-- part fx/mod: filter, filter envelope, pitch LFO, pitch envelope, key and velocity
-  follow.
+- part fx/mod: filter, filter envelope, pitch LFO, pitch envelope, pan envelope,
+  key and velocity follow, in a four by two grid.
 - operator envs: four sets of oscillator, amplitude envelope, feedback envelope and
   the three LFO parameters.
 - op spectra a and op spectra b: per operator, the 64 a levels, the 64 b levels,

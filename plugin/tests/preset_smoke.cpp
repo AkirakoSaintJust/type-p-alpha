@@ -156,7 +156,7 @@ int main()
      * before the bend range. The loader has to expand the record and default the
      * new value without touching the old ones. */
     {
-        const uint32_t oldCount = kP1PartParamCount - 2u;
+        const uint32_t oldCount = kP1PartParamCount - 10u;
         const auto oldRecord = PP_RECORD(oldCount);
         std::vector<uint8_t> oldBank(static_cast<std::size_t>(oldRecord) * 128u,
                                      0xFF);
@@ -193,9 +193,10 @@ int main()
               "the old part name survives the record expansion");
         const auto& grown = expanded.partParams(3);
         check(grown[5] == 3 &&
-                  grown[static_cast<std::size_t>(kP1PartParamCount - 2)] == 2 &&
+                  grown[800] == 3 && grown[801] == 3 &&
+                  grown[802] == 1 && grown[803] == 80 &&
                   grown[static_cast<std::size_t>(kP1PartParamCount - 1)] == 0,
-              "the old params survive, the bend range defaults to 2 and pan to centre");
+              "the appended pan envelope defaults to on, a slow attack and no depth");
         check(grown[static_cast<std::size_t>(kP1PartCutoffIndex)] == 12345,
               "a current-law cutoff is not converted twice");
     }

@@ -20,6 +20,16 @@ inline juce::String withPart(const juce::String& base, int part)
 inline juce::String algorithm(int part) { return withPart("algorithm", part); }
 inline juce::String channel(int part) { return withPart("channel", part); }
 inline juce::String pan(int part) { return withPart("pan", part); }
+inline juce::String panEnvOn(int part) { return withPart("pan_env_on", part); }
+inline juce::String panEnvDepth(int part) { return withPart("pan_env_depth", part); }
+inline juce::String panEnvRate(int index, int part)
+{
+    return withPart("pan_env_r" + juce::String(index + 1), part);
+}
+inline juce::String panEnvLevel(int index, int part)
+{
+    return withPart("pan_env_l" + juce::String(index + 1), part);
+}
 inline juce::String bendRange(int part) { return withPart("bend_range", part); }
 inline juce::String keyLow(int part) { return withPart("low", part); }
 inline juce::String keyHigh(int part) { return withPart("high", part); }

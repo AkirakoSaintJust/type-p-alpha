@@ -30,8 +30,8 @@ if (typeof e.memory !== "object")
   fail("the module does not export memory");
 
 e.p1_create();
-if (e.p1_param_count() !== 1618)
-  fail(`parameter count is ${e.p1_param_count()}, expected 1618`);
+if (e.p1_param_count() !== 1638)
+  fail(`parameter count is ${e.p1_param_count()}, expected 1638`);
 
 function analysis(wave, first) {
   e.p1_analyze(wave, first);
@@ -69,4 +69,4 @@ for (let i = 0; i < release.length; ++i) {
     fail(`release sample ${i}: ${release[i]} != ${reference.release[i]}`);
 }
 
-console.log("wasm: 1618 parameters, note-on and release match the 48 kHz capture");
+console.log("wasm: 1638 parameters, note-on and release match the 48 kHz capture");

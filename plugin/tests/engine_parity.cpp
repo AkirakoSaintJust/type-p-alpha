@@ -317,6 +317,32 @@ void test_pan_per_part()
           "centre pan is exactly unity on both channels");
 }
 
+void test_pan_envelope()
+{
+    p1::Engine engine;
+    engine.reset();
+    engine.setParam(param_id("pan_env_depth.p0"), 100);
+    engine.setParam(param_id("pan_env_l1.p0"), 99);
+    engine.setParam(param_id("pan_env_l2.p0"), 99);
+    engine.setParam(param_id("pan_env_l3.p0"), 99);
+    engine.setParam(param_id("pan_env_r1.p0"), 99);
+    engine.noteOn(60, 100);
+    int32_t buffer[512] = {};
+    for (int i = 0; i < 16; ++i)
+        engine.render(buffer, 256);
+    check(engine.state()->pan_r_q16[0] > 90000 &&
+              engine.state()->pan_l_q16[0] < 1000,
+          "the pan envelope swings to the right");
+
+    engine.setParam(param_id("pan_env_r4.p0"), 99);
+    engine.noteOff(60);
+    for (int i = 0; i < 64; ++i)
+        engine.render(buffer, 256);
+    check(engine.state()->pan_l_q16[0] == 65536 &&
+              engine.state()->pan_r_q16[0] == 65536,
+          "the release returns the pan to centre");
+}
+
 } // namespace
 
 int main(int argc, char** argv)
@@ -347,6 +373,7 @@ int main(int argc, char** argv)
     test_sustain_per_channel();
     test_bend_per_part();
     test_pan_per_part();
+    test_pan_envelope();
     std::printf("engine: %s\n", failures ? "FAILED" : "passed");
     return failures ? 1 : 0;
 }

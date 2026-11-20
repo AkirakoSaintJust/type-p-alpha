@@ -206,6 +206,66 @@ private:
     std::array<std::unique_ptr<ParamKnob>, 4> levels_{};
 };
 
+class PanEnvelopeCard : public P1Card {
+public:
+    explicit PanEnvelopeCard(PluginEditor& editor)
+        : P1Card("pan envelope"),
+          part_(editor.activePart()),
+          envView_(editor.state(),
+                   {params::panEnvRate(0, part_), params::panEnvRate(1, part_),
+                    params::panEnvRate(2, part_), params::panEnvRate(3, part_)},
+                   {params::panEnvLevel(0, part_), params::panEnvLevel(1, part_),
+                    params::panEnvLevel(2, part_), params::panEnvLevel(3, part_)},
+                   colour(tokens::purple), -99.0, 99.0, true),
+          on_(editor.state(), params::panEnvOn(part_), "on"),
+          depth_(editor.state(), params::panEnvDepth(part_), "depth", 42.0f)
+    {
+        addAndMakeVisible(envView_);
+        addAndMakeVisible(on_);
+        addAndMakeVisible(depth_);
+        for (int i = 0; i < 4; ++i) {
+            rates_[static_cast<size_t>(i)] = std::make_unique<ParamKnob>(
+                editor.state(), params::panEnvRate(i, part_),
+                "r" + juce::String(i + 1), 42.0f);
+            addAndMakeVisible(*rates_[static_cast<size_t>(i)]);
+        }
+        for (int i = 0; i < 4; ++i) {
+            levels_[static_cast<size_t>(i)] = std::make_unique<ParamKnob>(
+                editor.state(), params::panEnvLevel(i, part_),
+                "l" + juce::String(i + 1), 42.0f);
+            addAndMakeVisible(*levels_[static_cast<size_t>(i)]);
+        }
+    }
+
+    void resized() override
+    {
+        auto area = contentArea();
+        envView_.setBounds(area.removeFromTop(56));
+        area.removeFromTop(4);
+        auto row = area.removeFromTop(84);
+        const int cell = row.getWidth() / 4;
+        for (auto& knob : rates_)
+            knob->setBounds(row.removeFromLeft(cell));
+        auto levelRow = area.removeFromTop(84);
+        const int levelCell = levelRow.getWidth() / 4;
+        for (auto& knob : levels_)
+            knob->setBounds(levelRow.removeFromLeft(levelCell));
+        auto depthRow = area.removeFromTop(84);
+        depth_.setBounds(depthRow.removeFromLeft(cell));
+        on_.setBounds(getWidth() - 56, 0, 48, 18);
+    }
+
+    void tick() { envView_.repaint(); }
+
+private:
+    int part_ = 0;
+    P1Envelope envView_;
+    P1Toggle on_;
+    ParamKnob depth_;
+    std::array<std::unique_ptr<ParamKnob>, 4> rates_{};
+    std::array<std::unique_ptr<ParamKnob>, 4> levels_{};
+};
+
 class FollowCard : public P1Card {
 public:
     FollowCard(PluginEditor& editor, bool key, juce::String title)
@@ -349,12 +409,14 @@ public:
         filterEnv_ = std::make_unique<FilterEnvelopeCard>(editor, part);
         pitchLfo_ = std::make_unique<PitchLfoCard>(editor);
         pitchEnv_ = std::make_unique<PitchEnvelopeCard>(editor);
+        panEnv_ = std::make_unique<PanEnvelopeCard>(editor);
         keyFollow_ = std::make_unique<FollowCard>(editor, true, "key follow");
         velFollow_ = std::make_unique<FollowCard>(editor, false, "velocity follow");
         addAndMakeVisible(*filter1_);
         addAndMakeVisible(*filterEnv_);
         addAndMakeVisible(*pitchLfo_);
         addAndMakeVisible(*pitchEnv_);
+        addAndMakeVisible(*panEnv_);
         addAndMakeVisible(*keyFollow_);
         addAndMakeVisible(*velFollow_);
     }
@@ -362,14 +424,18 @@ public:
     void resized() override
     {
         auto area = getLocalBounds();
-        const int width = (area.getWidth() - 20) / 3;
+        const int columns = 4;
+        const int width = (area.getWidth() - (columns - 1) * 10) / columns;
         const int height = (area.getHeight() - 10) / 2;
-        std::array<P1Card*, 6> cards = {
+        std::array<P1Card*, 8> cards = {
             filter1_.get(),  filterEnv_.get(), pitchLfo_.get(),
-            pitchEnv_.get(), keyFollow_.get(), velFollow_.get()};
-        for (int i = 0; i < 6; ++i) {
-            const int column = i % 3;
-            const int row = i / 3;
+            pitchEnv_.get(), panEnv_.get(),   keyFollow_.get(),
+            velFollow_.get(), nullptr};
+        for (int i = 0; i < 8; ++i) {
+            if (cards[static_cast<size_t>(i)] == nullptr)
+                continue;
+            const int column = i % columns;
+            const int row = i / columns;
             cards[static_cast<size_t>(i)]->setBounds(
                 column * (width + 10), row * (height + 10), width, height);
         }
@@ -380,6 +446,7 @@ public:
         filterEnv_->tick();
         pitchLfo_->tick();
         pitchEnv_->tick();
+        panEnv_->tick();
         keyFollow_->refresh();
         velFollow_->refresh();
     }
@@ -389,6 +456,7 @@ private:
     std::unique_ptr<FilterEnvelopeCard> filterEnv_;
     std::unique_ptr<PitchLfoCard> pitchLfo_;
     std::unique_ptr<PitchEnvelopeCard> pitchEnv_;
+    std::unique_ptr<PanEnvelopeCard> panEnv_;
     std::unique_ptr<FollowCard> keyFollow_;
     std::unique_ptr<FollowCard> velFollow_;
 };

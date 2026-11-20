@@ -265,14 +265,20 @@ sit next to the mode buttons with a 32px gap rather than at the card edge.
 
 ### Part fx/mod
 
-One page, a three by two grid that fills the window. Filter 1, the filter envelope
-and the pitch LFO fill the first row. Pitch envelope, key follow and velocity follow
-fill the second row. The filter card has cutoff, resonance and env amount, whilst
-key and velocity tracking sit in the two follow cards rather than on the filter
-card. The filter, its envelope and its two follow targets address the active part,
-because each part has its own filter and its own envelope.
+One page, a four by two grid that fills the window. Filter 1, the filter envelope,
+the pitch LFO and the pitch envelope fill the first row. Pan envelope, key follow
+and velocity follow fill the second row, and the last cell stays empty. The filter
+card has cutoff, resonance and env amount, whilst key and velocity tracking sit in
+the two follow cards rather than on the filter card. The filter, its envelope and
+its two follow targets address the active part, because each part has its own
+filter and its own envelope.
 
 The pitch LFO card carries rate, depth, the wave select and the `bipolar` switch.
+
+The pan envelope card carries an on switch, four rates, four signed levels, a
+depth knob and the envelope graph. Its levels are percentage points either side of
+the part's pan, and the depth scales them. The envelope retriggers when a note
+starts on the part and releases when the part's last voice releases.
 
 Key follow and velocity follow are separate cards. Each has an on switch, a
 `wipe all` button and its own target selector. Key follow has a breakpoint and below
