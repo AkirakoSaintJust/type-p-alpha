@@ -240,6 +240,8 @@
   .envbox .ecurve { fill: none; stroke: var(--purple); stroke-width: 1.4; }
   .envbox .ecurve2 { fill: none; stroke: var(--green); stroke-width: 1.4; }
   .envbox .ezero { stroke: #3a3a3a; stroke-width: 1; stroke-dasharray: 2 3; }
+  .envbox .ebar { stroke: #3a3a3a; stroke-width: 1; }
+  .envbox .earrow { fill: none; stroke: #3a3a3a; stroke-width: 1; }
 
   /* ---------------- operators ---------------- */
   .ops-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }

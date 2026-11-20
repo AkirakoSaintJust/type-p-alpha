@@ -595,6 +595,10 @@
       f1_cutoff_ks_lo: "cut lo", f1_cutoff_ks_hi: "cut hi",
       f1_cutoff_vs: "cut vs", fenv_ks_lo: "env lo",
       fenv_ks_hi: "env hi", fenv_vs: "env vs",
+      pan: "pan", pan_env_on: "on", pan_env_r1: "r1", pan_env_r2: "r2",
+      pan_env_r3: "r3", pan_env_relr: "rel", pan_env_l1: "l1",
+      pan_env_l2: "l2", pan_env_l3: "l3", pan_env_rell: "rl",
+      pan_env_mode: "mode",
       pitch_ks_lo: "pitch lo", pitch_ks_hi: "pitch hi", pitch_vs: "pitch vs",
       "lp.comp": "comp", "dc.r": "dc r",
     };
@@ -791,32 +795,178 @@
     return base + ".p" + part;
   }
 
+  function svgBar(x, y) {
+    const a = (x - 1.5).toFixed(1);
+    const b = (x + 1.5).toFixed(1);
+    const t = (y - 6).toFixed(1);
+    const u = (y + 6).toFixed(1);
+    return '<line class="ebar" x1="' + a + '" y1="' + t + '" x2="' + a +
+      '" y2="' + u + '"/><line class="ebar" x1="' + b + '" y1="' + t +
+      '" x2="' + b + '" y2="' + u + '"/>';
+  }
+
+  function svgLoopArrow(x0, x1) {
+    const y = 59;
+    return '<path class="earrow" d="M ' + x1.toFixed(1) + ' ' + y +
+      ' L ' + x0.toFixed(1) + ' ' + y + ' M ' + x0.toFixed(1) + ' ' + y +
+      ' l 4 -3 M ' + x0.toFixed(1) + ' ' + y + ' l 4 3"/>';
+  }
+
+  function ampSvg(r, l, mode) {
+    const W = 240;
+    const H = 62;
+    const w = [
+      r[0] > 0 ? Math.max(4, envStageWeight(r[0])) : 0,
+      r[1] > 0 ? Math.max(4, envStageWeight(r[1])) : 0,
+      Math.max(4, envStageWeight(r[2])),
+      Math.max(4, envStageWeight(r[3])),
+      Math.max(4, envStageWeight(r[4])),
+    ];
+    const hold = mode === 1 && (l[1] || 0) > 0 ? 8 : 0;
+    const loop = mode >= 2 ? 30 : 0;
+    const available = 228 - hold - loop;
+    const sum = w.reduce((a, b) => a + b, 0);
+    const scale = sum > 0 ? available / sum : available / 5;
+    const y = (v) => H - 3 - Math.max(0, Math.min(99, v)) / 99 * (H - 10);
+    let x = 6;
+    let cy = y(0);
+    let d = "M 6 " + cy.toFixed(1);
+    const line = (nx, ny) => {
+      d += " L " + nx.toFixed(1) + " " + ny.toFixed(1);
+      x = nx;
+      cy = ny;
+    };
+    const curve = (nx, ny, convex) => {
+      const dx = nx - x;
+      const c1x = convex ? x + dx * 0.55 : x + dx * 0.1;
+      const c2x = convex ? nx - dx * 0.1 : nx - dx * 0.45;
+      const c1y = convex ? cy : ny;
+      d += " C " + c1x.toFixed(1) + " " + c1y.toFixed(1) + " " +
+        c2x.toFixed(1) + " " + ny.toFixed(1) + " " + nx.toFixed(1) + " " +
+        ny.toFixed(1);
+      x = nx;
+      cy = ny;
+    };
+    if (w[0] > 0)
+      curve(x + w[0] * scale, y(w[1] > 0 ? 49.5 : 99), true);
+    if (w[1] > 0) curve(x + w[1] * scale, y(99), false);
+    line(x + w[2] * scale, y(l[0] || 0));
+    line(x + w[3] * scale, y(l[1] || 0));
+    let bars = "";
+    if (mode === 0) {
+      line(x + w[4] * scale, y(0));
+    } else if (hold > 0) {
+      const bx = x;
+      line(x + hold, cy);
+      bars += svgBar(bx, cy) + svgBar(x, cy);
+      line(x + w[4] * scale, y(0));
+    } else if (loop > 0) {
+      const bx = x;
+      const d2 = cy;
+      line(x + loop * 0.5, y(l[0] || 0));
+      const d1 = cy;
+      bars += svgBar(bx, d2) + svgBar(x, d1);
+      line(x + loop * 0.5, d2);
+      bars += svgBar(x, d2);
+      bars += svgLoopArrow(bx, x);
+      line(x + w[4] * scale, y(0));
+    }
+    return '<svg viewBox="0 0 ' + W + " " + H + '">' +
+      '<line class="egrid" x1="6" y1="' + (H - 3) + '" x2="' + (W - 6) +
+      '" y2="' + (H - 3) + '"/>' +
+      '<path class="ecurve" d="' + d + '"/>' + bars + "</svg>";
+  }
+
+  function bipolarSvg(r, l, mode, options) {
+    options = options || {};
+    const W = 240;
+    const H = 62;
+    const signed = options.signed !== false;
+    const top = options.top || (signed ? 12 : 99);
+    const mid = signed ? H / 2 : H - 3;
+    const y = (v) => signed
+      ? mid - v / top * (H / 2 - 5)
+      : H - 3 - Math.max(0, Math.min(top, v)) / top * (H - 10);
+    const w = [0, 1, 2, 3].map((i) =>
+      Math.max(4, envStageWeight(r[i])));
+    const hold = mode === 1 ? 8 : 0;
+    const loop = mode >= 2 ? 30 : 0;
+    const available = 228 - hold - loop;
+    const sum = w.reduce((a, b) => a + b, 0);
+    const scale = sum > 0 ? available / sum : available / 4;
+    let x = 6;
+    let cy = y(options.start || 0);
+    let d = "M 6 " + cy.toFixed(1);
+    const line = (nx, ny) => {
+      d += " L " + nx.toFixed(1) + " " + ny.toFixed(1);
+      x = nx;
+      cy = ny;
+    };
+    line(x + w[0] * scale, y(l[0] || 0));
+    line(x + w[1] * scale, y(l[1] || 0));
+    line(x + w[2] * scale, y(l[2] || 0));
+    let bars = "";
+    if (mode === 0) {
+      line(x + w[3] * scale, y(l[3] || 0));
+    } else if (hold > 0) {
+      const bx = x;
+      line(x + hold, cy);
+      bars += svgBar(bx, cy) + svgBar(x, cy);
+      line(x + w[3] * scale, y(l[3] || 0));
+    } else if (loop > 0) {
+      const bx = x;
+      const d3 = cy;
+      line(x + loop * 0.5, y(l[1] || 0));
+      const d2 = cy;
+      bars += svgBar(bx, d3) + svgBar(x, d2);
+      line(x + loop * 0.5, d3);
+      bars += svgBar(x, d3);
+      bars += svgLoopArrow(bx, x);
+      line(x + w[3] * scale, y(l[3] || 0));
+    }
+    const grid = signed
+      ? '<line class="ezero" x1="6" y1="' + (H / 2) + '" x2="' + (W - 6) +
+        '" y2="' + (H / 2) + '"/>'
+      : '<line class="egrid" x1="6" y1="' + (H - 3) + '" x2="' + (W - 6) +
+        '" y2="' + (H - 3) + '"/>';
+    return '<svg viewBox="0 0 ' + W + " " + H + '">' + grid +
+      '<path class="ecurve" d="' + d + '"/>' + bars + "</svg>";
+  }
+
   function graphFor(rateNames, levelNames, options) {
     options = options || {};
     const rateIDs = idOf(rateNames);
     const levelIDs = idOf(levelNames);
+    const modeID = options.modeName ? idOf([options.modeName])[0] : null;
+    const startID = options.startName ? idOf([options.startName])[0] : null;
     return function () {
       const rates = rateIDs.map((id) => values.get(id) ?? 0);
       let levels = levelIDs.map((id) => values.get(id) ?? 0);
       if (options.transform) levels = levels.map(options.transform);
-      return options.signed
-        ? penvSvg(rates, levels, options.scaleMax)
-        : envSvg(rates, levels, options.curve);
+      const mode = modeID === null ? 0 : (values.get(modeID) ?? 0);
+      const start = startID === null ? 0
+        : (values.get(startID) ?? 0) * (options.startScale ?? 1);
+      if (options.kind === "amp") return ampSvg(rates, levels, mode);
+      return bipolarSvg(rates, levels, mode, {
+        signed: options.signed !== false,
+        top: options.top,
+        start,
+      });
     };
   }
 
   function ampRateNames(op, part) {
     const base = "op" + (op + 1) + ".eg.";
-    return ["warm", "surge", "d1r", "d2r"].map((field) =>
-      field === "surge" && op === 0
-        ? namePart("attack", part)
-        : namePart(base + field, part));
+    return ["warm", "surge", "d1r", "d2r", "rel"].map((field) => {
+      if (op === 0 && field === "surge") return namePart("attack", part);
+      if (op === 0 && field === "rel") return namePart("release", part);
+      return namePart(base + field, part);
+    });
   }
 
   function ampLevelNames(op, part) {
     const base = "op" + (op + 1) + ".eg.";
-    return [namePart(base + "d1l", part), namePart(base + "d2l", part),
-            namePart(base + "d2l", part)];
+    return [namePart(base + "d1l", part), namePart(base + "d2l", part)];
   }
 
   function fbRateNames(op, part) {
@@ -865,6 +1015,16 @@
   function filterLevelNames(part) {
     return [1, 2, 3].map((i) => namePart("fenv_l" + i, part)).concat(
       namePart("fenv_rell", part));
+  }
+
+  function panRateNames(part) {
+    return [1, 2, 3].map((i) => namePart("pan_env_r" + i, part)).concat(
+      namePart("pan_env_relr", part));
+  }
+
+  function panLevelNames(part) {
+    return [1, 2, 3].map((i) => namePart("pan_env_l" + i, part)).concat(
+      namePart("pan_env_rell", part));
   }
 
   function appendGraph(el, graph) {
@@ -2533,7 +2693,10 @@
       .map(specByBase).filter((spec) => spec !== undefined);
     const fenvCard = card("filter envelope", fenvSpecs, {
       graph: graphFor(filterRateNames(activePart), filterLevelNames(activePart),
-        { curve: "ecurve2" }),
+        { kind: "bipolar", signed: false, top: 99,
+          modeName: namePart("fenv_mode", activePart),
+          startName: namePart("cutoff", activePart),
+          startScale: 99 / 55296 }),
     });
     if (fenvCard) grid.append(fenvCard);
 
@@ -2579,7 +2742,8 @@
     });
     appendGraph(penvCard, graphFor(pitchRateNames(activePart),
       pitchLevelNames(activePart),
-      { signed: true, scaleMax: 12,
+      { kind: "bipolar", signed: true, scaleMax: 12,
+        modeName: namePart("penv_mode", activePart),
         transform: (value) => value * 12 / 32768 }));
     const penvKnobs = div("knobs");
     for (const base of ["penv_r1", "penv_r2", "penv_r3", "penv_relr",
@@ -2589,6 +2753,19 @@
     }
     penvCard.append(penvKnobs);
     grid.append(penvCard);
+
+    const panSpecs = ["pan", "pan_env_on", "pan_env_r1", "pan_env_r2",
+      "pan_env_r3", "pan_env_relr", "pan_env_l1", "pan_env_l2",
+      "pan_env_l3", "pan_env_rell", "pan_env_mode"]
+      .map(specByBase).filter((spec) => spec !== undefined);
+    const panCard = card("pan envelope", panSpecs, {
+      className: "penvcard", kind: "pan env",
+      graph: graphFor(panRateNames(activePart), panLevelNames(activePart),
+        { kind: "bipolar", signed: true, top: 100,
+          modeName: namePart("pan_env_mode", activePart),
+          startName: namePart("pan", activePart) }),
+    });
+    if (panCard) grid.append(panCard);
 
     function followCard(kind) {
       const isKey = kind === "key";
@@ -2687,13 +2864,18 @@
         {
           title: "amp env", specs: amp, className: "env", kind: "amp env",
           graph: graphFor(ampRateNames(op, activePart),
-                          ampLevelNames(op, activePart)),
+                          ampLevelNames(op, activePart),
+                          { kind: "amp",
+                            modeName: namePart("op" + (op + 1) + ".eg.mode",
+                                              activePart) }),
         },
         {
           title: "fb env", specs: fb, className: "fbenv", kind: "fb env",
           graph: graphFor(fbRateNames(op, activePart),
                           fbLevelNames(op, activePart),
-                          { signed: true, scaleMax: 100,
+                          { kind: "bipolar", signed: true, scaleMax: 100,
+                            modeName: namePart("op" + (op + 1) + "_fbenv_mode",
+                                               activePart),
                             transform: (value) => value / 327.67 }),
         },
         { title: "key and velocity", specs: follow, kind: "op follow" },
@@ -2823,7 +3005,12 @@
         className: "env",
         kind: "morph env",
         graph: graphFor(morphRateNames(op, activePart),
-                        morphLevelNames(op, activePart)),
+                        morphLevelNames(op, activePart),
+                        { kind: "bipolar", signed: false, top: 99,
+                          modeName: namePart(
+                            "op" + (op + 1) + "_spec_env_mode", activePart),
+                          startName: namePart(
+                            "op" + (op + 1) + "_spec_morph", activePart) }),
       });
       const lfoCard = card("morph lfo", lfo, {
         className: "amplfo",
