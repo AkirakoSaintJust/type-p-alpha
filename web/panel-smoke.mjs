@@ -298,22 +298,15 @@ try {
 
   await page.locator(".tab").nth(6).click();
   await page.waitForTimeout(200);
-  const depthKnob = page.locator(".opcol").nth(1).locator(".env .knob")
-    .filter({ hasText: "depth" }).first();
-  await depthKnob.scrollIntoViewIfNeeded();
-  const depthDial = await depthKnob.locator(".dial").boundingBox();
-  await page.mouse.move(depthDial.x + depthDial.width / 2,
-    depthDial.y + depthDial.height / 2);
-  await page.mouse.down();
-  await page.mouse.move(depthDial.x + depthDial.width / 2,
-    depthDial.y + depthDial.height / 2 - 24);
-  await page.mouse.up();
+  const envOn = page.locator(".opcol").nth(1).locator(".env .toggle").first();
+  await envOn.scrollIntoViewIfNeeded();
+  await envOn.click();
   await page.waitForTimeout(200);
   const depthWave = await page.evaluate(() =>
     window.__p1.paramValue("op2_waveform.p0"));
-  console.log("depth sets spectrum:", depthWave);
+  console.log("envelope on sets spectrum:", depthWave);
   if (depthWave !== 13)
-    throw new Error("the morph envelope depth did not set spectrum mode");
+    throw new Error("the morph envelope switch did not set spectrum mode");
 
   await page.locator(".tab").nth(2).click();
   const box = await page.locator("#note").boundingBox();

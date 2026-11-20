@@ -718,12 +718,14 @@
     if (node !== null) {
       node.port.postMessage({ type: "param", id: spec.id, value });
     }
-    /* A depth edit that ends away from zero puts the operator in spectrum mode,
-       so the envelope or LFO the player just set has something to move. */
-    const depth = baseName(spec.name).match(/^op([1-4])_spec_(env|lfo)_depth$/);
+    /* A depth edit or an envelope switch away from off puts the operator in
+       spectrum mode, so the envelope or LFO the player just set has something
+       to move. */
+    const motion = baseName(spec.name).match(
+      /^op([1-4])_spec_(env|lfo)_depth$|^op([1-4])_spec_env_on$/);
     const partMatch = spec.name.match(/\.p(\d+)$/);
-    if (depth !== null && value !== 0 && partMatch !== null) {
-      const n = depth[1];
+    if (motion !== null && value !== 0 && partMatch !== null) {
+      const n = motion[1] ?? motion[3];
       const part = Number(partMatch[1]);
       const waveSpec = byName.get(`op${n}_waveform.p${part}`);
       if (waveSpec !== undefined && (values.get(waveSpec.id) ?? 0) !== 13)
