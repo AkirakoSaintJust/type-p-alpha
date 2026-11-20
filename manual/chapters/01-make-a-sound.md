@@ -104,7 +104,7 @@ you are editing.
 
 <figure>
 <img src="figures/amp-envelope.svg" alt="A schematic amplitude envelope with the warm-up off, a surge, two decays, a sustain and a release.">
-<figcaption>The amplitude envelope's stages. The warm-up is off in this patch, so the surge is the first rise. The double bar marks the sustain boundary.</figcaption>
+<figcaption>The amplitude envelope's stages. The warm-up is off in this patch, so the surge is the first rise. The double bars mark the start and end of the sustain.</figcaption>
 </figure>
 
 ## Let the filter in

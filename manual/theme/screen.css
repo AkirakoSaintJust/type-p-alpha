@@ -6,6 +6,7 @@
   --text: #d6d6d6;
   --dim: #8b8b8b;
   --pink: #ff2e7e;
+  --pink-bright: #ff4d94;
   --green: #3dff9e;
   --purple: #c780ff;
   --brand-shadow: #c2ad00;
@@ -26,7 +27,8 @@ body {
 }
 
 a { color: var(--pink); text-decoration: none; }
-a:hover { text-decoration: underline; }
+a:hover { color: var(--pink-bright); text-decoration: underline; }
+a:focus-visible { outline: 2px solid var(--pink); outline-offset: 3px; }
 
 .site-head {
   display: flex;

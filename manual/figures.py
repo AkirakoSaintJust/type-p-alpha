@@ -14,8 +14,10 @@ ENVELOPE = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 260" role
 <line x1="50" y1="210" x2="680" y2="210"/>
 <line x1="50" y1="40" x2="50" y2="210"/>
 </g>
-<path d="M 50 210 Q 150 210 150 40 L 250 50 L 380 60 L 520 60 C 570 60 600 160 640 210" fill="none" stroke="#ff2e7e" stroke-width="3"/>
+<path d="M 50 210 C 80 40 130 40 150 40 L 250 50 L 380 60 L 520 60 L 640 210" fill="none" stroke="#ff2e7e" stroke-width="3"/>
 <g stroke="#c780ff" stroke-width="1">
+<line x1="376" y1="40" x2="376" y2="210"/>
+<line x1="384" y1="40" x2="384" y2="210"/>
 <line x1="516" y1="40" x2="516" y2="210"/>
 <line x1="524" y1="40" x2="524" y2="210"/>
 </g>

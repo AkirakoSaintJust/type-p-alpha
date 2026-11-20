@@ -89,6 +89,9 @@ linked as evidence at the end of a section; the section stands alone.
   glyphs. Regular and bold are enough.
 - **Screen document.** 17px body, 1.6 leading, a 65 to 75 character measure, a
   raised surface above the black ground, and the signal colours for accents.
+- **Links.** Body links are pink, hover pinkBright with an underline, and carry a
+  visible pink outline on focus. The contents links are dim and hover to text.
+  Green and purple keep their live and selected meanings.
 - **Print document.** 10.5pt body, 15pt leading, A4, 20mm margins, a 12-column
   grid. A light body, a dark cover and dark chapter openers. The print pink,
   green and purple are darker than the screen values so text and thin marks keep
