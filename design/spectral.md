@@ -322,8 +322,8 @@ waveform parameter grows from 0 to 11 to 0 to 13, where 13 selects `spectrum`.
 
 That is 145 parameters per operator, 580 per part, and 1,160 for the spectral group.
 The part block grew from 228 to 800 at this slice, and the manifest from 470 to
-1,614. The later envelope family moved the current totals to 1,676 manifest
-parameters and an 831 part block.
+1,614. The later envelope family moved the totals to 1,676 manifest parameters and an
+831 part block, and the LFO fade family to 1,744 and 865.
 
 The range is the harmonic block the 64 bars address: 0 is 1 to 64 and 1 is
 65 to 128. A and b each carry their own range, so the mod display zooms

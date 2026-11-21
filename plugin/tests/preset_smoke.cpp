@@ -49,10 +49,28 @@ void setRecordVersion(uint8_t* record, uint32_t count, uint8_t version)
             static_cast<uint8_t>((crc >> (8 * k)) & 0xFFu);
 }
 
+std::array<int, 34> lfoFadeIndices()
+{
+    std::array<int, 34> out{};
+    out.fill(-1);
+    int count = 0;
+    for (int i = 0; i < kP1PartParamCount; ++i) {
+        const std::string id = kP1ParamSpecs[static_cast<std::size_t>(i)].id;
+        if (id.find("_rate_fade.p0") != std::string::npos ||
+            id.find("_depth_fade.p0") != std::string::npos) {
+            if (count < 34)
+                out[static_cast<std::size_t>(count++)] = i;
+        }
+    }
+    return out;
+}
+
 } // namespace
 
 int main()
 {
+    const auto fades = lfoFadeIndices();
+    check(fades[33] >= 0, "find the 34 LFO fade parameters");
     std::setvbuf(stdout, nullptr, _IONBF, 0);
     p1::PresetStore store{kP1PartParamCount, kP1PartCount};
     const auto lead = pattern(11);
@@ -190,18 +208,45 @@ int main()
         const int panBase = indexOf("pan_env_on.p0");
         check(w0 > 0 && w1 > w0 && panBase > w1,
               "find the operator and pan envelope blocks");
-        /* The version 10 record is nine params shorter: four operator slots and
-         * the five offset envelope slots all precede the cutoff and pan blocks. */
-        const uint32_t oldCount = kP1PartParamCount - 19u;
+        const std::array<int, 4> opWarm = {w0, w1, warmIndex(2), warmIndex(3)};
+        const std::array<int, 5> offsetBases = {
+            indexOf("op1_fbenv_on.p0"), indexOf("op2_fbenv_on.p0"),
+            indexOf("op3_fbenv_on.p0"), indexOf("op4_fbenv_on.p0"),
+            indexOf("penv_on.p0")};
+        const std::array<int, 5> absBases = {
+            indexOf("fenv_on.p0"), indexOf("op1_spec_env_on.p0"),
+            indexOf("op2_spec_env_on.p0"), indexOf("op3_spec_env_on.p0"),
+            indexOf("op4_spec_env_on.p0")};
+        const auto oldIndex = [&fades, &opWarm, &offsetBases, &absBases](int target) {
+            int shift = 0;
+            for (int base : fades)
+                if (base >= 0 && base < target)
+                    ++shift;
+            for (int base : opWarm)
+                if (base >= 0 && base < target)
+                    ++shift;
+            for (int base : offsetBases)
+                if (base >= 0 && base < target)
+                    ++shift;
+            for (int base : absBases)
+                if (base >= 0 && base < target)
+                    shift += 2;
+            return target - shift;
+        };
+        /* The version 10 record is 53 params shorter: the 34 fades, the four
+         * operator slots and the five offset and ten absolute envelope slots. */
+        const uint32_t oldCount = kP1PartParamCount - 19u - 34u;
         const auto oldRecord = PP_RECORD(oldCount);
         std::vector<uint8_t> oldBank(static_cast<std::size_t>(oldRecord) * 128u,
                                      0xFF);
         std::vector<int32_t> oldParams(oldCount, 3);
+        const int oldWarm = oldIndex(w0);
         for (int k = 0; k < 7; ++k)
-            oldParams[static_cast<std::size_t>(w0) + static_cast<std::size_t>(k)] =
+            oldParams[static_cast<std::size_t>(oldWarm) + static_cast<std::size_t>(k)] =
                 11 + k;
-        oldParams[static_cast<std::size_t>(kP1PartCutoffIndex) - 17u] = 12345;
-        const int oldPan = panBase - 19;
+        oldParams[static_cast<std::size_t>(kP1PartCutoffIndex) - 17u - 34u] =
+            12345;
+        const int oldPan = oldIndex(panBase);
         oldParams[static_cast<std::size_t>(oldPan)] = 1;
         oldParams[static_cast<std::size_t>(oldPan) + 4u] = 55;
         oldParams[static_cast<std::size_t>(oldPan) + 5u] = 11;
@@ -245,6 +290,7 @@ int main()
             indexOf("fenv_on.p0"),
             {indexOf("op1_spec_env_on.p0"), indexOf("op2_spec_env_on.p0"),
              indexOf("op3_spec_env_on.p0"), indexOf("op4_spec_env_on.p0")});
+        expanded.setLfoFadeIndices(fades);
         check(expanded.loadLibrary(oldLibrary.data(), oldLibrary.size()),
               "load a version 10 library");
         check(expanded.revision() == 9,
@@ -299,8 +345,11 @@ int main()
             indexOf("op4_spec_env_on.p0")};
         check(bases[0] > 0 && bases[4] > bases[0] && panBase > bases[4],
               "find the offset and pan envelope blocks");
-        const auto oldIndex = [&bases, &absBases](int target) {
+        const auto oldIndex = [&fades, &bases, &absBases](int target) {
             int shift = 0;
+            for (int base : fades)
+                if (base >= 0 && base < target)
+                    ++shift;
             for (int base : bases)
                 if (base < target)
                     ++shift;
@@ -310,7 +359,7 @@ int main()
             return target - shift;
         };
 
-        const uint32_t oldCount = kP1PartParamCount - 15u;
+        const uint32_t oldCount = kP1PartParamCount - 15u - 34u;
         const auto oldRecord = PP_RECORD(oldCount);
         std::vector<uint8_t> oldBank(static_cast<std::size_t>(oldRecord) * 128u,
                                      0xFF);
@@ -362,6 +411,7 @@ int main()
         loaded.setAbsEnvelopeIndices(
             absBases[0],
             {absBases[1], absBases[2], absBases[3], absBases[4]});
+        loaded.setLfoFadeIndices(fades);
         check(loaded.loadLibrary(oldLibrary.data(), oldLibrary.size()),
               "load a version 12 library");
         const auto& grown = loaded.partParams(5);
@@ -405,15 +455,18 @@ int main()
         check(absBases[1] > 0 && absBases[4] > absBases[1] &&
                   absBases[0] > absBases[4],
               "find the absolute envelope blocks");
-        const auto oldIndex = [&absBases](int target) {
+        const auto oldIndex = [&fades, &absBases](int target) {
             int shift = 0;
+            for (int base : fades)
+                if (base >= 0 && base < target)
+                    ++shift;
             for (int base : absBases)
                 if (base < target)
                     shift += 2;
             return target - shift;
         };
 
-        const uint32_t oldCount = kP1PartParamCount - 10u;
+        const uint32_t oldCount = kP1PartParamCount - 10u - 34u;
         const auto oldRecord = PP_RECORD(oldCount);
         std::vector<uint8_t> oldBank(static_cast<std::size_t>(oldRecord) * 128u,
                                      0xFF);
@@ -456,6 +509,7 @@ int main()
         loaded.setAbsEnvelopeIndices(
             absBases[0],
             {absBases[1], absBases[2], absBases[3], absBases[4]});
+        loaded.setLfoFadeIndices(fades);
         check(loaded.loadLibrary(oldLibrary.data(), oldLibrary.size()),
               "load a version 13 library");
         const auto& grown = loaded.partParams(5);

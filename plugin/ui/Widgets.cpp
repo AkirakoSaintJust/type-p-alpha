@@ -139,6 +139,25 @@ juce::String formatParamValue(const P1ParamSpec& spec, double value)
             range > 0.0 ? 200.0 * (value - spec.min) / range - 100.0 : 0.0;
         return signedNumber(static_cast<int>(std::lround(percent))) + "%";
     }
+    if (display == "fade") {
+        const int rate = juce::jlimit(0, 99, v);
+        if (rate <= 0)
+            return "off";
+        if (rate >= 99)
+            return "instant";
+        const int32_t coeff = p1_rate_coeff[rate];
+        if (coeff <= 0)
+            return "instant";
+        const int32_t ticks = static_cast<int32_t>(
+            (static_cast<int64_t>(4605) * 65536) /
+            (1000 * static_cast<int64_t>(coeff)));
+        const double seconds = ticks * 32.0 / 48000.0;
+        if (seconds >= 1.0)
+            return juce::String(seconds, 1) + " s";
+        return juce::String(
+                   static_cast<int>(std::lround(seconds * 1000.0))) +
+               " ms";
+    }
     if (display == "filter") {
         static const char* const names[3] = {"lpf", "bpf", "hpf"};
         return v >= 0 && v < 3 ? names[v] : juce::String(v);
@@ -188,6 +207,14 @@ double parseParamValue(const P1ParamSpec& spec, const juce::String& text)
             break;
     }
     const double v = numeric.getDoubleValue();
+    if (display == "fade") {
+        const auto lower = text.trim().toLowerCase();
+        if (lower == "off")
+            return 0.0;
+        if (lower == "instant")
+            return 99.0;
+        return juce::jlimit(0.0, 99.0, v);
+    }
     if (display == "onoff" || display == "onoff_inv") {
         const auto lower = text.trim().toLowerCase();
         if (lower == "on" || lower == "active")

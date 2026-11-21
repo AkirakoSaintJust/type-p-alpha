@@ -135,6 +135,7 @@ PresetStore::PresetStore(int partParamCount, int partCount,
       multis_(static_cast<std::size_t>(kMultiSlots)),
       partSource_(static_cast<std::size_t>(partCount_), -1)
 {
+    fadeBases_.fill(-1);
     if (defaults_.size() != static_cast<std::size_t>(partParamCount_))
         defaults_.assign(static_cast<std::size_t>(partParamCount_), 0);
 }
@@ -434,6 +435,11 @@ bool PresetStore::loadLibrary(const uint8_t* data, std::size_t size)
         return false;
     const auto* multiData = data + offset;
     PresetStore staging(partParamCount_, partCount_, defaults_);
+    staging.setOperatorEnvelopeIndices(opEnvWarm_);
+    staging.setPanEnvelopeIndex(panEnvBase_);
+    staging.setOffsetEnvelopeIndices(fbEnvBase_, pitchEnvBase_);
+    staging.setAbsEnvelopeIndices(filterEnvBase_, specEnvBase_);
+    staging.setLfoFadeIndices(fadeBases_);
     if (!staging.loadPartBank(partData, partSize) ||
         !staging.loadMultiBank(multiData, multiSize))
         return false;
@@ -460,26 +466,48 @@ bool PresetStore::loadLibrary(const uint8_t* data, std::size_t size)
     return true;
 }
 
+int PresetStore::toVersion14Index(int targetIndex) const
+{
+    int shift = 0;
+    for (int base : fadeBases_)
+        if (base >= 0 && base < targetIndex)
+            ++shift;
+    return targetIndex - shift;
+}
+
 int PresetStore::toVersion13Index(int targetIndex) const
 {
     int shift = 0;
-    if (filterEnvBase_ >= 0 && filterEnvBase_ < targetIndex)
+    const int filter =
+        filterEnvBase_ >= 0 ? toVersion14Index(filterEnvBase_) : -1;
+    if (filter >= 0 && filter < targetIndex)
         shift += kAbsEnvelopeSlots;
-    for (int base : specEnvBase_)
-        if (base >= 0 && base < targetIndex)
+    for (int base : specEnvBase_) {
+        const int mapped = base >= 0 ? toVersion14Index(base) : -1;
+        if (mapped >= 0 && mapped < targetIndex)
             shift += kAbsEnvelopeSlots;
+    }
     return targetIndex - shift;
 }
 
 int PresetStore::toVersion12Index(int targetIndex) const
 {
+    const int v14 = toVersion14Index(targetIndex);
+    const int v13 = toVersion13Index(v14);
     int shift = 0;
-    if (pitchEnvBase_ >= 0 && pitchEnvBase_ < targetIndex)
+    const int pitch = pitchEnvBase_ >= 0
+        ? toVersion13Index(toVersion14Index(pitchEnvBase_))
+        : -1;
+    if (pitch >= 0 && pitch < v13)
         ++shift;
-    for (int base : fbEnvBase_)
-        if (base >= 0 && base < targetIndex)
+    for (int base : fbEnvBase_) {
+        const int mapped = base >= 0
+            ? toVersion13Index(toVersion14Index(base))
+            : -1;
+        if (mapped >= 0 && mapped < v13)
             ++shift;
-    return toVersion13Index(targetIndex) - shift;
+    }
+    return v13 - shift;
 }
 
 bool PresetStore::migratePartBank(const uint8_t* data, uint32_t oldCount,
@@ -489,11 +517,12 @@ bool PresetStore::migratePartBank(const uint8_t* data, uint32_t oldCount,
     const auto newRecord = partRecordSize();
     out.assign(newRecord * kPartSlots, 0xFF);
     const auto target = static_cast<std::size_t>(partParamCount_);
+    const auto v14Count = target >= 34u ? target - 34u : target;
     const auto v13Count =
-        target >= static_cast<std::size_t>(kAbsEnvelopeBlocks * kAbsEnvelopeSlots)
-            ? target - static_cast<std::size_t>(kAbsEnvelopeBlocks *
-                                               kAbsEnvelopeSlots)
-            : target;
+        v14Count >= static_cast<std::size_t>(kAbsEnvelopeBlocks * kAbsEnvelopeSlots)
+            ? v14Count - static_cast<std::size_t>(kAbsEnvelopeBlocks *
+                                                  kAbsEnvelopeSlots)
+            : v14Count;
     const auto v12Count =
         v13Count >= static_cast<std::size_t>(kOffsetEnvelopeBlocks)
             ? v13Count - static_cast<std::size_t>(kOffsetEnvelopeBlocks)
@@ -517,10 +546,10 @@ bool PresetStore::migratePartBank(const uint8_t* data, uint32_t oldCount,
     for (int base : fbEnvBase_)
         if (base >= 0)
             offsetBases[static_cast<std::size_t>(offsetCount++)] =
-                toVersion13Index(base);
+                toVersion13Index(toVersion14Index(base));
     if (pitchEnvBase_ >= 0)
         offsetBases[static_cast<std::size_t>(offsetCount++)] =
-            toVersion13Index(pitchEnvBase_);
+            toVersion13Index(toVersion14Index(pitchEnvBase_));
     std::sort(offsetBases.begin(),
               offsetBases.begin() + static_cast<std::ptrdiff_t>(offsetCount));
 
@@ -533,15 +562,17 @@ bool PresetStore::migratePartBank(const uint8_t* data, uint32_t oldCount,
     std::array<AbsBlock, kAbsEnvelopeBlocks> absBlocks{};
     int absCount = 0;
     if (filterEnvBase_ >= 0) {
+        const int targetBase = toVersion14Index(filterEnvBase_);
         absBlocks[static_cast<std::size_t>(absCount)] = {
-            filterEnvBase_, toVersion13Index(filterEnvBase_), true};
+            targetBase, toVersion13Index(targetBase), true};
         ++absCount;
     }
     for (int base : specEnvBase_) {
         if (base < 0 || absCount >= kAbsEnvelopeBlocks)
             continue;
+        const int targetBase = toVersion14Index(base);
         absBlocks[static_cast<std::size_t>(absCount)] = {
-            base, toVersion13Index(base), false};
+            targetBase, toVersion13Index(targetBase), false};
         ++absCount;
     }
     std::sort(absBlocks.begin(),
@@ -602,6 +633,10 @@ bool PresetStore::migratePartBank(const uint8_t* data, uint32_t oldCount,
                 grown[i] = oldIndex < params.size() ? params[oldIndex]
                                                     : defaults_[i];
             }
+        } else if (oldCount == static_cast<uint32_t>(v14Count)) {
+            grown.assign(v14Count, 0);
+            for (std::size_t i = 0; i < v14Count; ++i)
+                grown[i] = params[i];
         } else if (oldCount == static_cast<uint32_t>(v13Count)) {
             grown.assign(v13Count, 0);
             for (std::size_t i = 0; i < v13Count; ++i)
@@ -661,15 +696,15 @@ bool PresetStore::migratePartBank(const uint8_t* data, uint32_t oldCount,
         }
 
         if (grown.size() == v13Count && raw[0] < 14u) {
-            expanded.assign(target, 0);
+            expanded.assign(v14Count, 0);
             if (absCount != kAbsEnvelopeBlocks) {
-                const auto copy = std::min<std::size_t>(grown.size(), target);
+                const auto copy = std::min<std::size_t>(grown.size(), v14Count);
                 for (std::size_t i = 0; i < copy; ++i)
                     expanded[i] = grown[i];
             } else {
                 int shift = 0;
                 int next = 0;
-                for (int i = 0; i < static_cast<int>(target); ++i) {
+                for (int i = 0; i < static_cast<int>(v14Count); ++i) {
                     if (next < absCount &&
                         i == absBlocks[static_cast<std::size_t>(next)].targetBase) {
                         const AbsBlock& block =
@@ -696,6 +731,28 @@ bool PresetStore::migratePartBank(const uint8_t* data, uint32_t oldCount,
                                    ? defaults_[static_cast<std::size_t>(i)]
                                    : 0);
                 }
+            }
+            grown.swap(expanded);
+        }
+
+        if (grown.size() == v14Count && raw[0] < 15u) {
+            expanded.assign(target, 0);
+            int shift = 0;
+            int next = 0;
+            for (int i = 0; i < static_cast<int>(target); ++i) {
+                if (next < 34 && i == fadeBases_[static_cast<std::size_t>(next)]) {
+                    ++next;
+                    ++shift;
+                    continue;
+                }
+                const int oldIndex = i - shift;
+                expanded[static_cast<std::size_t>(i)] =
+                    oldIndex >= 0 &&
+                            static_cast<std::size_t>(oldIndex) < grown.size()
+                        ? grown[static_cast<std::size_t>(oldIndex)]
+                        : (static_cast<std::size_t>(i) < defaults_.size()
+                               ? defaults_[static_cast<std::size_t>(i)]
+                               : 0);
             }
             grown.swap(expanded);
         }

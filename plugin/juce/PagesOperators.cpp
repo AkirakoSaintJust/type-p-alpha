@@ -121,27 +121,31 @@ public:
                       setParam(editor_, params::opMute(op_, part_),
                                muted ? 1 : 0);
                   }),
-          osc_(editor, op, part_),
           ampLfo_(editor, "amp lfo", params::opTremRate(op, part_),
                   params::opTremDepth(op, part_), params::opTremWave(op, part_),
-                  params::opTremMode(op, part_), op, part_,
+                  params::opTremMode(op, part_),
+                  params::opTremRateFade(op, part_),
+                  params::opTremDepthFade(op, part_), op, part_,
                   PluginEditor::OperatorSection::amplitudeLfo),
           feedbackLfo_(editor, "fb lfo",
                        params::opFeedbackLfoRate(op, part_),
                        params::opFeedbackLfoDepth(op, part_),
                        params::opFeedbackLfoWave(op, part_),
-                       params::opFeedbackLfoMode(op, part_), op, part_,
+                       params::opFeedbackLfoMode(op, part_),
+                       params::opFeedbackLfoRateFade(op, part_),
+                       params::opFeedbackLfoDepthFade(op, part_), op, part_,
                        PluginEditor::OperatorSection::feedbackLfo),
           detuneLfo_(editor, "detune lfo", params::opDetuneLfoRate(op, part_),
                      params::opDetuneLfoDepth(op, part_),
                      params::opDetuneLfoWave(op, part_),
-                     params::opDetuneLfoMode(op, part_), op, part_,
+                     params::opDetuneLfoMode(op, part_),
+                     params::opDetuneLfoRateFade(op, part_),
+                     params::opDetuneLfoDepthFade(op, part_), op, part_,
                      PluginEditor::OperatorSection::detuneLfo)
     {
         addAndMakeVisible(header_);
         addAndMakeVisible(scope_);
         addAndMakeVisible(spectro_);
-        addAndMakeVisible(osc_);
         addAndMakeVisible(ampLfo_);
         addAndMakeVisible(feedbackLfo_);
         addAndMakeVisible(detuneLfo_);
@@ -157,13 +161,11 @@ public:
         visual.removeFromLeft(6);
         spectro_.setBounds(visual);
         area.removeFromTop(4);
-        osc_.setBounds(area.removeFromTop(140));
+        ampLfo_.setBounds(area.removeFromTop(192));
         area.removeFromTop(4);
-        ampLfo_.setBounds(area.removeFromTop(140));
+        feedbackLfo_.setBounds(area.removeFromTop(192));
         area.removeFromTop(4);
-        feedbackLfo_.setBounds(area.removeFromTop(140));
-        area.removeFromTop(4);
-        detuneLfo_.setBounds(area.removeFromTop(140));
+        detuneLfo_.setBounds(area.removeFromTop(192));
     }
 
     void paint(juce::Graphics& g) override
@@ -194,7 +196,6 @@ private:
     CardHeader header_;
     P1Scope scope_;
     P1Spectro spectro_;
-    OscillatorCard osc_;
     LfoCard ampLfo_;
     LfoCard feedbackLfo_;
     LfoCard detuneLfo_;

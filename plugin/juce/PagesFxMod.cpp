@@ -126,26 +126,41 @@ public:
         : P1Card("pitch lfo"),
           part_(editor.activePart()),
           waveView_(editor.state(), params::pitchWave(part_), colour(tokens::green)),
-          rate_(editor.state(), params::pitchRate(part_), "rate", 42.0f),
-          depth_(editor.state(), params::pitchDepth(part_), "depth", 42.0f),
+          rate_(editor.state(), params::pitchRate(part_), "rate", 36.0f),
+          depth_(editor.state(), params::pitchDepth(part_), "depth", 36.0f),
+          rateFade_(editor.state(), params::pitchRateFade(part_), "rate fade",
+                    36.0f),
+          depthFade_(editor.state(), params::pitchDepthFade(part_), "depth fade",
+                     36.0f),
           wave_(editor.state(), params::pitchWave(part_), params::lfoWaveNames()),
-          mode_(editor.state(), params::pitchMode(part_), "bipolar")
+          mode_(editor.state(), params::pitchMode(part_), "bipolar"),
+          fadeGraph_(editor.state(), params::pitchRateFade(part_),
+                     params::pitchDepthFade(part_))
     {
         addAndMakeVisible(waveView_);
         addAndMakeVisible(rate_);
         addAndMakeVisible(depth_);
+        addAndMakeVisible(rateFade_);
+        addAndMakeVisible(depthFade_);
         addAndMakeVisible(wave_);
         addAndMakeVisible(mode_);
+        addAndMakeVisible(fadeGraph_);
+        rateFade_.onUserEdit = [this] { fadeGraph_.repaint(); };
+        depthFade_.onUserEdit = [this] { fadeGraph_.repaint(); };
     }
 
     void resized() override
     {
         auto area = contentArea();
-        waveView_.setBounds(area.removeFromTop(62));
+        waveView_.setBounds(area.removeFromTop(54));
         area.removeFromTop(4);
-        auto row = area.removeFromTop(84);
+        auto row = area.removeFromTop(74);
         rate_.setBounds(row.removeFromLeft(row.getWidth() / 2));
         depth_.setBounds(row);
+        auto fadeRow = area.removeFromTop(71);
+        rateFade_.setBounds(fadeRow.removeFromLeft(fadeRow.getWidth() / 2));
+        depthFade_.setBounds(fadeRow);
+        fadeGraph_.setBounds(area.removeFromTop(20).reduced(2, 2));
         auto bottom = area.removeFromTop(18).withTrimmedTop(2);
         wave_.setBounds(bottom.removeFromLeft(150));
         mode_.setBounds(bottom.removeFromLeft(110));
@@ -158,8 +173,11 @@ private:
     P1Wave waveView_;
     ParamKnob rate_;
     ParamKnob depth_;
+    ParamKnob rateFade_;
+    ParamKnob depthFade_;
     ParamChoice wave_;
     P1Toggle mode_;
+    FadeGraph fadeGraph_;
 };
 
 class PitchEnvelopeCard : public P1Card {

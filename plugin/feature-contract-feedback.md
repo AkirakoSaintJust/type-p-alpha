@@ -139,8 +139,8 @@ and no malloc, float, file access or display enters the audio path.
 - The operator envs page carries the feedback envelope card: the on switch in the
   header, the graph, three rates and signed levels, the release rate and level,
   and the mode.
-- The operator lfos page carries the feedback LFO card: rate, depth, wave, mode
-  and the live graph.
+- The operator lfos page carries the feedback LFO card: rate, depth, wave, mode,
+  the rate and depth fades and their shared graph.
 
 ## Verification
 

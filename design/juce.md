@@ -120,9 +120,10 @@ Every page fills the same height:
   envelope uses R1 to R4 and L1 to L4, with signed levels and an on switch in the
   card header. The signed sum of the feedback knob, the envelope and the LFO picks
   the feedback family, so a negative level can cross zero from any knob setting. The two envelope cards carry copy and paste in their headers.
-- operator lfos: four operator columns with the oscillator, then the `amp lfo`,
-  `fb lfo` and `detune lfo` cards. Each LFO card carries copy and paste in its
-  header, and its `bipolar` switch beside the wave select.
+- operator lfos: four operator columns, then the `amp lfo`, `fb lfo` and
+  `detune lfo` cards. The oscillator stays on the operator envs page. Each LFO card
+  carries copy and paste in its header, its `bipolar` switch beside the wave select,
+  and the `rate fade` and `depth fade` pair with the shared two-line graph.
 - op spectra a: four operator and oscillator cards across the top, a 6 px empty
   band, then four spectrum cards of 124 px. Each card header carries `range`,
   `mask`, `selection`, `group`, `load spectrum template...`, `norm`, `to b`, copy
@@ -138,7 +139,8 @@ Every page fills the same height:
   with the envelope and the LFO while a note sounds. The display takes no drag.
   When a and b use different ranges, the display zooms out to the union of the two
   spans. The envelope card carries the graph, the on switch, R1 to R3, L1 to L3,
-  the release rate and level, and the mode.
+  the release rate and level, and the mode. The morph LFO card carries the compact
+  fade row, with 22 px dials and an 18 px graph, because the column is full.
 
 The current layout has seven tabs: patch settings at 0, part fx/mod at 1, operator
 envs at 2, operator lfos at 3, op spectra a at 4, op spectra b at 5 and op spectra

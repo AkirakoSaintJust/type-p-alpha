@@ -1139,18 +1139,24 @@ std::vector<juce::String> sectionParamIDs(int op, int part,
         add(p1::params::opTremDepth(op, part));
         add(p1::params::opTremWave(op, part));
         add(p1::params::opTremMode(op, part));
+        add(p1::params::opTremRateFade(op, part));
+        add(p1::params::opTremDepthFade(op, part));
         break;
     case PluginEditor::OperatorSection::feedbackLfo:
         add(p1::params::opFeedbackLfoRate(op, part));
         add(p1::params::opFeedbackLfoDepth(op, part));
         add(p1::params::opFeedbackLfoWave(op, part));
         add(p1::params::opFeedbackLfoMode(op, part));
+        add(p1::params::opFeedbackLfoRateFade(op, part));
+        add(p1::params::opFeedbackLfoDepthFade(op, part));
         break;
     case PluginEditor::OperatorSection::detuneLfo:
         add(p1::params::opDetuneLfoRate(op, part));
         add(p1::params::opDetuneLfoDepth(op, part));
         add(p1::params::opDetuneLfoWave(op, part));
         add(p1::params::opDetuneLfoMode(op, part));
+        add(p1::params::opDetuneLfoRateFade(op, part));
+        add(p1::params::opDetuneLfoDepthFade(op, part));
         break;
     case PluginEditor::OperatorSection::spectrumA:
         add(p1::params::opSpecRangeA(op, part));
@@ -1177,6 +1183,8 @@ std::vector<juce::String> sectionParamIDs(int op, int part,
         add(p1::params::opSpecLfoDepth(op, part));
         add(p1::params::opSpecLfoWave(op, part));
         add(p1::params::opSpecLfoMode(op, part));
+        add(p1::params::opSpecLfoRateFade(op, part));
+        add(p1::params::opSpecLfoDepthFade(op, part));
         break;
     }
     return ids;

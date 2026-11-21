@@ -35,8 +35,8 @@
 - **Persistence/version impact:** the pan slice added the ten envelope parameters at
   `PRESET_VERSION` 10, moving the part block from 802 to 812. The envelope family
   later changed the fourth level and depth into a release level and a mode, which is
-  the version 12 pan remap. The current manifest is 1,676 parameters with an 831 part
-  block, `PRESET_VERSION` 14 and state version 12. Old libraries are remapped, not
+  the version 12 pan remap. The current manifest is 1,744 parameters with an 865 part
+  block, `PRESET_VERSION` 15 and state version 13. Old libraries are remapped, not
   rejected.
 - **MIDI/clock impact:** none. Pan is a parameter and a control-rate envelope.
 

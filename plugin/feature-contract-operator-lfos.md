@@ -12,14 +12,13 @@ the per-operator split, the three LFO families and their evidence.
   [`../design/README.md`](../design/README.md) Operators and Operator LFOs.
 - **Owner / date:** P1Onken, 2026-11-12.
 - **Disposition:** complete, with the engine, the two pages, the tests and the Linux
-  goldens in. The oscillator appears on both pages, and the envelopes and LFOs split
-  between them.
+  goldens in. The oscillator is on the operator envs page, and the operator lfos
+  page carries the three LFO cards.
 
 ## Player outcome
 
 - **New player action:** open `operators` for the oscillator, amplitude envelope and
-  feedback envelope, or open `operator lfos` for the oscillator and the three
-  per-operator LFOs.
+  feedback envelope, or open `operator lfos` for the three per-operator LFOs.
   Each envelope and LFO card carries `copy` and `paste` in its header, so a shape or
   an LFO moves between operators on its own.
 - **Sound and behaviour:** each operator owns its feedback envelope, and the feedback
@@ -41,9 +40,10 @@ the per-operator split, the three LFO families and their evidence.
 - **Platform/API/HAL changes:** none, because the engine stays integer C and every new
   node is a control-rate body of an existing shape.
 - **Persistence/version impact:** the per-operator split moved the envelope and LFO
-  parameters into each operator. The current manifest is 1,676 parameters, the part
-  block is 831, and the preset chain migrates older record sizes by prefix, so a
-  pre-change library loads with defaults for the added tail.
+  parameters into each operator. The current manifest is 1,744 parameters, the part
+  block is 865, and the preset chain maps older records onto the current block, so a
+  pre-change library loads with defaults for the added tail. The fade pairs add an
+  index map inside the block; see the fade contract.
 - **MIDI/clock impact:** none, since the new parameters are host-automatable and stay
   out of the default CC map.
 
@@ -70,6 +70,11 @@ The envelope, feedback LFO and detune LFO are per operator and per part.
 | `opN_dlfo_depth` | `opN.dlfo.depth` | -32768..32768 | 0 | `semi_lfo` |
 | `opN_dlfo_wave` | `opN.dlfo.wave` | 0..11 | 0 | `wave` |
 | `opN_dlfo_mode` | `opN.dlfo.mode` | 0..1 | 1 | `onoff` |
+
+Each LFO family also carries `rate fade` and `depth fade`. The pair, its law, its
+persistence and its checks are in
+[`feature-contract-lfo-fades.md`](feature-contract-lfo-fades.md). The card section
+copy and paste lists include both values.
 
 The feedback level is signed, the base level keeps its sign after the key and velocity
 scaling, the envelope and LFO offsets are added, and the sign of the sum chooses the
@@ -105,10 +110,11 @@ outputs 0 whilst a flat envelope outputs 0, so the existing render stays exact.
   per part, all at control rate. The feedback envelope body is the `mod_env`
   shape and the LFO body is the existing `lfo` shape, whilst the feedback
   level adds one Q15 input and the pitch adds one saturation.
-- **Instance memory, CPU, preset size:** the part block is 831 parameters. Four
+- **Instance memory, CPU, preset size:** the part block is 865 parameters. Four
   `mod_env` states replace one shared state per voice, and each operator adds three
-  LFO states, so the voice state grows by 42 `int32_t` fields, 4,032 bytes at 24
-  voices.
+  LFO states, so the per-operator split grows the voice state by 42 `int32_t`
+  fields, 4,032 bytes at 24 voices. The fade levels and steps add four `uint32_t`
+  per LFO instance; the fade contract records that state.
 - **Overflow/overload policy:** the feedback LFO is Q15 and the feedback level is
   clamped to 0..32767, the detune LFO is Q15 and the pitch sum is clamped, and the
   existing peak-bound tests cover the extremes.
@@ -141,17 +147,20 @@ outputs 0 whilst a flat envelope outputs 0, so the existing render stays exact.
   both part channels and recycled voices. `plugin_smoke` checks a three-note chord
   through the host block and restores every manifest parameter, `plugin_stability`
   drives every parameter to its bounds, and `editor_snapshot` checks that the
-  oscillator, amp envelope and detune LFO sections paste to another operator.
+  oscillator, amp envelope and detune LFO sections paste to another operator,
+  including both fades on the LFO sections.
 - **Target package check:** the Linux and Windows builds link the editor, the engine
   and the tests.
-- **Host timing and platform check:** the Linux suite passes 15 of 15, including
+- **Host timing and platform check:** the Linux suite passes 16 of 16, including
   the snapshot diff, and the Windows and macOS jobs pass the same suite.
 - **Tolerance/metric:** the flat and off envelope renders and the depth-0 LFO renders
   are bit-exact, the nonzero LFO and envelope renders differ, and the family selection
   and the peak bound keep their existing tolerances. The snapshot diff is exact.
 - **Evidence artefact:** `plugin/tests/operator_lfos.cpp`,
-  `plugin/tests/feedback_envelope.cpp`, `plugin/tests/voice_alloc.cpp`, the Linux
-  snapshots `editor-operators.png` and `editor-operator-lfos.png`.
+  `plugin/tests/feedback_envelope.cpp`, `plugin/tests/voice_alloc.cpp`,
+  `plugin/tests/lfo_fades.cpp`, and the Linux snapshots
+  `editor-operator-envs.png`, `editor-operator-lfos.png` and
+  `editor-operator-lfos-fades.png`.
 
 ## Risks and fallback
 

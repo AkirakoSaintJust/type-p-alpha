@@ -97,6 +97,14 @@ inline juce::String opFeedbackLfoMode(int op, int part)
 {
     return withPart(opBase(op, "_fblfo_mode"), part);
 }
+inline juce::String opFeedbackLfoRateFade(int op, int part)
+{
+    return withPart(opBase(op, "_fblfo_rate_fade"), part);
+}
+inline juce::String opFeedbackLfoDepthFade(int op, int part)
+{
+    return withPart(opBase(op, "_fblfo_depth_fade"), part);
+}
 inline juce::String opDetuneLfoRate(int op, int part)
 {
     return withPart(opBase(op, "_dlfo_rate"), part);
@@ -113,6 +121,14 @@ inline juce::String opDetuneLfoMode(int op, int part)
 {
     return withPart(opBase(op, "_dlfo_mode"), part);
 }
+inline juce::String opDetuneLfoRateFade(int op, int part)
+{
+    return withPart(opBase(op, "_dlfo_rate_fade"), part);
+}
+inline juce::String opDetuneLfoDepthFade(int op, int part)
+{
+    return withPart(opBase(op, "_dlfo_depth_fade"), part);
+}
 inline juce::String opTremRate(int op, int part)
 {
     return withPart(opBase(op, "_trem_rate"), part);
@@ -128,6 +144,14 @@ inline juce::String opTremWave(int op, int part)
 inline juce::String opTremMode(int op, int part)
 {
     return withPart(opBase(op, "_trem_mode"), part);
+}
+inline juce::String opTremRateFade(int op, int part)
+{
+    return withPart(opBase(op, "_trem_rate_fade"), part);
+}
+inline juce::String opTremDepthFade(int op, int part)
+{
+    return withPart(opBase(op, "_trem_depth_fade"), part);
 }
 inline juce::String opMute(int op, int part)
 {
@@ -194,6 +218,14 @@ inline juce::String opSpecLfoMode(int op, int part)
 {
     return withPart(opBase(op, "_spec_lfo_mode"), part);
 }
+inline juce::String opSpecLfoRateFade(int op, int part)
+{
+    return withPart(opBase(op, "_spec_lfo_rate_fade"), part);
+}
+inline juce::String opSpecLfoDepthFade(int op, int part)
+{
+    return withPart(opBase(op, "_spec_lfo_depth_fade"), part);
+}
 
 inline juce::String opEnv(int op, const char* field, int part)
 {
@@ -231,6 +263,14 @@ inline juce::String pitchRate(int part) { return withPart("pitch_rate", part); }
 inline juce::String pitchDepth(int part) { return withPart("pitch_depth", part); }
 inline juce::String pitchWave(int part) { return withPart("pitch_wave", part); }
 inline juce::String pitchMode(int part) { return withPart("pitch_mode", part); }
+inline juce::String pitchRateFade(int part)
+{
+    return withPart("pitch_rate_fade", part);
+}
+inline juce::String pitchDepthFade(int part)
+{
+    return withPart("pitch_depth_fade", part);
+}
 inline juce::String pitchEnvOn(int part) { return withPart("penv_on", part); }
 inline juce::String pitchEnvRate(int index, int part)
 {

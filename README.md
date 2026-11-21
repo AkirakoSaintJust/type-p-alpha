@@ -16,6 +16,7 @@ The reasons for abandoning Type P.fm1 are that I've decided to disengage from th
 - An amplitude LFO over a warm-up, a surge and two decay stages, with four modes.
 - A pitch LFO for evolving PM timbres.
 - An additive spectral mode with two 64-harmonic tables, an LFO and envelope for morphing between them, and spectral controls inspired by the Kawai K5.
+- A rate fade and a depth fade on every LFO, so a tremolo, vibrato or morph can arrive after the note starts.
 
 Parts contain:
 
@@ -45,7 +46,7 @@ Results so far seem to be fit for intent. I've been able to easily make rudiment
    transfer function without extra machinery? To be honest I'm not too eager to implement it because I'm unsure it'll add much for the effort, but I guess it's part of the "phase-based synthesizer" research concept.
 2. Phase granulation as a layer on top of PM and PD, with chaotic and stochastic
    modulators. What should it do exactly, how much RAM and compute does it cost, and which parameters would be the most user-friendly?
-3. LFO envelopes (or fade-in and fade-out, with a possible sustain mode) for rate and depth.
+3. LFO fade-out and a possible sustain stage on the rate and depth fades. The fade-in is done.
 4. Control macros. What kind of macro controls would make the synth friendlier, more performable, and more modulatable, without turning the panel into an overwhelming mod matrix?
 5. Documentation and the graphic design. The panel is already ok, but I'd like to work on the wordmark, a nicely designed manual, and complementary materials such as posters, web graphics, etc. Also refine the panel if needed, although I'm not unhappy with it.
 6. Would ring mod algorithms add anything worth implementing?
@@ -59,6 +60,7 @@ Results so far seem to be fit for intent. I've been able to easily make rudiment
 5. Envelope redesign.
 6. Per-part stereo panning.
 7. Library synchronisation across running instances.
+8. Rate and depth fades on every LFO, with the envelope rate table's time scale and a two-line graph.
 
 ## Experiments I'd like to try
 

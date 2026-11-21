@@ -40,6 +40,8 @@ you go digging.
 - `feedback_envelope` checks the per-operator envelope, the flat path, the partial negative level and the peak bound.
 - `feedback_bipolar` checks the bipolar positive and negative halves and the signed envelope level.
 - `rate_bridge` checks the output-rate adaptation and the exact core-rate bypass.
+- `lfo_fades` checks the LFO rate and depth ramps, their shared time scale and
+  the phase reset.
 - `preset_smoke` checks the preset records.
 - `plugin_smoke` checks the APVTS, the state and the automation.
 - `plugin_stability` checks repeated load and render.

@@ -1,6 +1,7 @@
 /* SPDX-License-Identifier: GPL-3.0-only */
 #pragma once
 
+#include <algorithm>
 #include <array>
 #include <cstddef>
 #include <cstdint>
@@ -126,6 +127,15 @@ public:
         specEnvBase_ = spectral;
     }
 
+    /* The part-block indices of the 34 LFO fade parameters, used to remap a
+     * version 14 record to the version 15 layout. -1 in any slot means the
+     * caller has no layout, so the older append-only migration runs instead. */
+    void setLfoFadeIndices(const std::array<int, 34>& indices)
+    {
+        fadeBases_ = indices;
+        std::sort(fadeBases_.begin(), fadeBases_.end());
+    }
+
     /* Drop the queued changes after the file holds them. */
     void markSaved();
 
@@ -145,6 +155,10 @@ private:
     /* The part-block index in the version 12 layout, before the five offset
      * slots and the five absolute blocks were inserted. */
     int toVersion12Index(int targetIndex) const;
+
+    /* The part-block index in the version 14 layout, before the 34 LFO fade
+     * slots were inserted. */
+    int toVersion14Index(int targetIndex) const;
 
     /* The part-block index in the version 13 layout, before the ten absolute
      * envelope slots were inserted. */
@@ -181,6 +195,7 @@ private:
     int pitchEnvBase_ = -1;
     int filterEnvBase_ = -1;
     std::array<int, 4> specEnvBase_{{ -1, -1, -1, -1 }};
+    std::array<int, 34> fadeBases_{};
 };
 
 } // namespace p1

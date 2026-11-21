@@ -65,7 +65,8 @@
   parameters at this slice, the manifest from 846 to 1,614, and each part record by
   1,536 bytes, and the plugin's `uiPage` needs the `part fx/mod` remap and the split
   remap for the mod page, keyed on `uiPageLayout` 3. The later envelope family moved
-  the current totals to 1,676 manifest parameters and an 831 part block.
+  the totals to 1,676 manifest parameters and an 831 part block, and the LFO fade
+  family to 1,744 and 865.
 - **MIDI/clock impact:** none, since the new parameters are host-automatable and stay
   out of the default CC map. The spectrum mode is the waveform parameter, so a host
   can automate the mode.

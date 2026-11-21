@@ -15,7 +15,7 @@ namespace {
 
 constexpr double kCoreRate = 48000.0;
 constexpr int kControlBlock = 32;
-constexpr int kStateVersion = 12;
+constexpr int kStateVersion = 13;
 /* The state version whose cutoff values already use the current law. A later
  * version bump must not run the cutoff conversion again. */
 constexpr int kCutoffLawStateVersion = 5;
@@ -158,6 +158,22 @@ TypePAlphaAudioProcessor::TypePAlphaAudioProcessor()
          partParamIndex("op2_spec_env_on.p0"),
          partParamIndex("op3_spec_env_on.p0"),
          partParamIndex("op4_spec_env_on.p0")});
+    std::array<int, 34> fadeIndices{};
+    int fadeCount = 0;
+    for (int op = 1; op <= 4; ++op) {
+        for (const char* family : {"trem", "fblfo", "dlfo", "spec_lfo"}) {
+            const auto prefix = "op" + std::to_string(op) + "_" + family;
+            fadeIndices[static_cast<std::size_t>(fadeCount++)] =
+                partParamIndex(prefix + "_rate_fade.p0");
+            fadeIndices[static_cast<std::size_t>(fadeCount++)] =
+                partParamIndex(prefix + "_depth_fade.p0");
+        }
+    }
+    fadeIndices[static_cast<std::size_t>(fadeCount++)] =
+        partParamIndex("pitch_rate_fade.p0");
+    fadeIndices[static_cast<std::size_t>(fadeCount++)] =
+        partParamIndex("pitch_depth_fade.p0");
+    presets_.setLfoFadeIndices(fadeIndices);
     lastParams_.fill(std::numeric_limits<int32_t>::min());
     for (int i = 0; i < kP1ParamCount; ++i)
         paramValues_[static_cast<std::size_t>(i)] =

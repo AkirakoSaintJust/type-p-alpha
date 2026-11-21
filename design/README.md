@@ -202,7 +202,9 @@ Knob cells and dials:
 | --- | --- | --- |
 | default | 52 | 42 |
 | operator envelope | 37 | 34 |
-| operator oscillator and amplitude LFO | 56 | 34 |
+| operator oscillator and LFO | 56 | 28 |
+| operator LFO fade pair | 140 | 28 |
+| spectral LFO fade pair | 140 | 22 |
 | part settings | 62 | 38 |
 | pitch envelope | 52 | 38 |
 | key follow and velocity follow | 64 | 42 |
@@ -304,7 +306,8 @@ the two follow cards rather than on the filter card. The filter, its envelope an
 its two follow targets address the active part, because each part has its own
 filter and its own envelope.
 
-The pitch LFO card carries rate, depth, the wave select and the `bipolar` switch.
+The pitch LFO card carries rate, depth, the wave select, the `bipolar` switch,
+and the `rate fade` and `depth fade` pair with its shared graph.
 
 The pan envelope card carries an on switch, three rates, three levels, a release
 rate and level, a mode and the envelope graph. Its levels are absolute percentage
@@ -341,13 +344,14 @@ the card. The envelope rates and levels each get their own row.
 ### Operator LFOs
 
 Four borderless columns, each with the operator name, copy and paste, the mute
-switch, a scope and spectro pair, then four cards: `oscillator`, `amp lfo`, `fb
-lfo`, and `detune lfo`. The oscillator card repeats the operator oscillator
-controls so the operator stays recognisable on this page. Each LFO card holds rate,
+switch, a scope and spectro pair, then three cards: `amp lfo`, `fb lfo` and
+`detune lfo`. The oscillator stays on the operators page. Each LFO card holds rate,
 depth, the wave select and the `bipolar` switch, and carries `copy` and `paste` in
-its header. The amplitude LFO depth is in level steps, the feedback LFO depth is a
-percentage of the feedback range, and the detune LFO depth is in semitones. A
-negative depth in bipolar mode inverts the LFO phase.
+its header. Below the pair, the `rate fade` and `depth fade` knobs share one time
+scale, and the two-line graph draws the green rate ramp and the purple depth ramp.
+The amplitude LFO depth is in level steps, the feedback LFO depth is a percentage
+of the feedback range, and the detune LFO depth is in semitones. A negative depth
+in bipolar mode inverts the LFO phase.
 
 ### Operator spectra a and b
 
@@ -387,7 +391,8 @@ from `a` to `b` at the current morph value. The marker and the faint waveform fo
 the live morph of the newest rendering voice. The display does not take a drag. The `morph
 env` card holds the graph, the on switch, R1 to R3, L1 to L3, the release rate and
 level, and the mode. The `morph lfo`
-card holds rate, depth, the wave select and the `bipolar` switch.
+card holds rate, depth, the wave select, the `bipolar` switch, and the compact
+`rate fade` and `depth fade` pair with its shared graph.
 
 ### Dialogs
 

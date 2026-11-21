@@ -829,12 +829,15 @@ public:
           lfo_(editor, "morph lfo", params::opSpecLfoRate(op, part_),
                params::opSpecLfoDepth(op, part_),
                params::opSpecLfoWave(op, part_),
-               params::opSpecLfoMode(op, part_), op, part_,
+               params::opSpecLfoMode(op, part_),
+               params::opSpecLfoRateFade(op, part_),
+               params::opSpecLfoDepthFade(op, part_), op, part_,
                PluginEditor::OperatorSection::spectrumLfo,
                [&ed = editor, op] {
                    ensureSpectrumMode(ed, op, ed.activePart(),
                                       params::opSpecLfoDepth(op, ed.activePart()));
-               })
+               },
+               true)
     {
         addAndMakeVisible(header_);
         addAndMakeVisible(osc_);
@@ -847,14 +850,14 @@ public:
     {
         auto area = getLocalBounds().reduced(8);
         header_.setBounds(area.removeFromTop(24));
-        area.removeFromTop(6);
-        osc_.setBounds(area.removeFromTop(140));
+        area.removeFromTop(2);
+        osc_.setBounds(area.removeFromTop(120));
         area.removeFromTop(4);
-        display_.setBounds(area.removeFromTop(120));
+        display_.setBounds(area.removeFromTop(112));
         area.removeFromTop(4);
         env_.setBounds(area.removeFromTop(220));
         area.removeFromTop(4);
-        lfo_.setBounds(area.removeFromTop(140));
+        lfo_.setBounds(area.removeFromTop(180));
     }
 
     void paint(juce::Graphics& g) override

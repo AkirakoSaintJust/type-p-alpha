@@ -148,6 +148,29 @@ int main(int argc, char** argv)
     fill();
     ok = saveSnapshot(*editor,
                       directory.getChildFile("editor-operator-lfos.png")) && ok;
+    /* Different fade times on the first two operators show the shared scale,
+     * the separation and the two time readouts. */
+    {
+        const std::array<std::pair<const char*, float>, 4> fades{{
+            {"op1_trem_rate_fade.p0", 50.0f},
+            {"op1_trem_depth_fade.p0", 70.0f},
+            {"op2_trem_rate_fade.p0", 90.0f},
+            {"op2_trem_depth_fade.p0", 90.0f}}};
+        for (const auto& [id, value] : fades)
+            if (auto* parameter = p1editor->state().getParameter(id))
+                parameter->setValueNotifyingHost(
+                    parameter->convertTo0to1(value));
+        fill();
+        ok = saveSnapshot(
+                 *editor,
+                 directory.getChildFile("editor-operator-lfos-fades.png")) &&
+             ok;
+        for (const auto& [id, value] : fades)
+            if (auto* parameter = p1editor->state().getParameter(id))
+                parameter->setValueNotifyingHost(
+                    parameter->convertTo0to1(0.0f));
+        fill();
+    }
     p1editor->showTab(4);
     fill();
     ok = saveSnapshot(*editor,
@@ -514,21 +537,29 @@ int main(int argc, char** argv)
                 ids.push_back(p1::params::opTremDepth(op, 0));
                 ids.push_back(p1::params::opTremWave(op, 0));
                 ids.push_back(p1::params::opTremMode(op, 0));
+                ids.push_back(p1::params::opTremRateFade(op, 0));
+                ids.push_back(p1::params::opTremDepthFade(op, 0));
             } else if (kind == 1) {
                 ids.push_back(p1::params::opFeedbackLfoRate(op, 0));
                 ids.push_back(p1::params::opFeedbackLfoDepth(op, 0));
                 ids.push_back(p1::params::opFeedbackLfoWave(op, 0));
                 ids.push_back(p1::params::opFeedbackLfoMode(op, 0));
+                ids.push_back(p1::params::opFeedbackLfoRateFade(op, 0));
+                ids.push_back(p1::params::opFeedbackLfoDepthFade(op, 0));
             } else if (kind == 2) {
                 ids.push_back(p1::params::opDetuneLfoRate(op, 0));
                 ids.push_back(p1::params::opDetuneLfoDepth(op, 0));
                 ids.push_back(p1::params::opDetuneLfoWave(op, 0));
                 ids.push_back(p1::params::opDetuneLfoMode(op, 0));
+                ids.push_back(p1::params::opDetuneLfoRateFade(op, 0));
+                ids.push_back(p1::params::opDetuneLfoDepthFade(op, 0));
             } else {
                 ids.push_back(p1::params::opSpecLfoRate(op, 0));
                 ids.push_back(p1::params::opSpecLfoDepth(op, 0));
                 ids.push_back(p1::params::opSpecLfoWave(op, 0));
                 ids.push_back(p1::params::opSpecLfoMode(op, 0));
+                ids.push_back(p1::params::opSpecLfoRateFade(op, 0));
+                ids.push_back(p1::params::opSpecLfoDepthFade(op, 0));
             }
             return ids;
         };
