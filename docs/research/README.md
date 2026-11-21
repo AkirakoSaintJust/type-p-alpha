@@ -24,6 +24,9 @@ Further research:
 
 - [Additive synthesis](additive-synthesis.md): a survey of 16, 32 and 64 harmonic
   operator spectra, table generation and control-rate costs.
+- [Stochastic phase shaping](stochastic-phaseshaping.md): the Phase Transfer
+  Lab's breakpoint, drifting segments, flips and reordering, and the questions
+  it left open.
 
 The note answers two questions:
 
