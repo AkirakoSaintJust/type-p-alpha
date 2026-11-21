@@ -37,9 +37,9 @@ void Engine::noteOff(uint32_t note, uint32_t channel)
     P1_NOTE_OFF_CH(state_.get(), note, channel);
 }
 
-void Engine::allNotesOff()
+void Engine::allNotesOff(uint32_t channel)
 {
-    P1_ALL_NOTES_OFF(state_.get());
+    P1_ALL_NOTES_OFF_CH(state_.get(), channel);
 }
 
 void Engine::setBend(uint32_t bend14, uint32_t channel)

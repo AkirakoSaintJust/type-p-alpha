@@ -9313,12 +9313,23 @@ P1_DSP_API void type_p_alpha_dsp_note_off_s(type_p_alpha_state *state, uint32_t 
     type_p_alpha_dsp_note_off_ch_s(state, note, 0xFFFFFFFFu);
 }
 
-P1_DSP_API void type_p_alpha_dsp_all_notes_off_s(type_p_alpha_state *state) {
+P1_DSP_API void type_p_alpha_dsp_all_notes_off_ch_s(type_p_alpha_state *state, uint32_t channel) {
     S = state;
-    for (uint32_t v = 0; v < NVOICE; v++) { voice_gate[v] = 0; voice_rel[v] = 0; }
-    for (uint32_t v = 0; v < NVOICE; v++) voice_delay[v] = 0;
+    uint8_t part_match[N_PART];
     for (uint32_t p = 0; p < N_PART; p++)
+        part_match[p] = (channel == 0xFFFFFFFFu || part_channel[p] == -1 ||
+                         part_channel[p] == (int32_t)channel) ? 1u : 0u;
+    for (uint32_t v = 0; v < NVOICE; v++)
+        if (part_match[voice_part[v]])
+            { voice_gate[v] = 0; voice_rel[v] = 0; voice_delay[v] = 0; }
+    for (uint32_t p = 0; p < N_PART; p++) {
+        if (!part_match[p]) continue;
         for (uint32_t n = 0; n < 128u; n++) mono_held[p][n] = 0;
+    }
+}
+
+P1_DSP_API void type_p_alpha_dsp_all_notes_off_s(type_p_alpha_state *state) {
+    type_p_alpha_dsp_all_notes_off_ch_s(state, 0xFFFFFFFFu);
 }
 
 P1_DSP_API void type_p_alpha_dsp_set_bend_ch_q16_s(type_p_alpha_state *state, uint32_t bend, uint32_t channel) {

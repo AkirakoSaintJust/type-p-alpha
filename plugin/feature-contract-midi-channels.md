@@ -8,8 +8,8 @@
   channels, and the part settings page in [`../design/README.md`](../design/README.md).
 - **Owner / date:** P1Onken, 2026-11-19.
 - **Disposition:** complete. The engine and preset tests pass in the Linux build
-  image, and the CI run is still to follow. CC routing stays global, as recorded
-  under Limits.
+  image, and the CI run is still to follow. The controller map stays global, as
+  recorded under Limits.
 
 ## Player outcome
 
@@ -36,8 +36,8 @@
   parameter. `PRESET_VERSION` moves from 7 to 8 and the plugin state version from 5
   to 6. State version 5 is the cutoff-law version, so the cutoff conversion no
   longer keys off `kStateVersion` and cannot run twice.
-- **MIDI/clock impact:** note-off and pedal become channel-aware. CC stays global,
-  including CC 123.
+- **MIDI/clock impact:** note-off, pedal and CC 123 are channel-aware. The mapped
+  controllers stay global.
 
 ## Parameter and event semantics
 
@@ -45,8 +45,9 @@
   stored in the part record with the rest of the mode block.
 - A note-on routes by the part channel and key zone. A note-off now routes by the
   part channel as well, so a part only releases voices it started.
-- Sustain is a per-channel flag with a per-channel deferred-note table. CC 123 still
-  cuts every part, because CC routing is global.
+- Sustain is a per-channel flag with a per-channel deferred-note table. CC 123
+  releases the notes and the pedal on its own channel; the global panic still
+  stops every part.
 - The 14-bit wheel is converted per part: `cents = (value - 8192) * range * 100 /
   8192`, then `p1_tune_q16`. Centre is 8192.
 
@@ -57,6 +58,9 @@
   releases its own part`, `sustain holds its own channel and not the other`,
   `lifting the pedal releases the notes it held`, the four bend routing checks, and
   the engine render reference, which is unchanged at centre bend.
+- `engine_parity` passes `CC 123 releases only the part on its channel`, `CC 123
+  on the second channel releases the second part` and `the global panic releases
+  every part`.
 - `preset_smoke` passes the old-record expansion, where the range defaults to 2 and
   a current-law cutoff is not converted twice.
 - The Linux image builds the plugin and runs 14 of 14 tests, including the editor
@@ -64,9 +68,9 @@
 
 ## Limits
 
-- **CC is global.** A controller message sets the mapped parameter whatever channel
-  it arrives on, and CC 123 panics both parts. 0.1.0 promises separate channels for
-  notes, pedal and bend, not for the controller map.
+- **The controller map is global.** A controller message sets the mapped parameter
+  whatever channel it arrives on. Notes, pedal, CC 123 and bend are channel-aware;
+  the mapped controllers are not.
 - **The wheel updates on the control tick.** A 32-sample step at 48 kHz is fast
   enough to hear as a glide, and it is not sample-accurate.
 - **A part on omni (`-1`) receives every channel.** An omni note-off releases every

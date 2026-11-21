@@ -35,7 +35,7 @@ void synth_midi_feed(synth_midi_ctx *ctx, uint8_t st, uint8_t d1, uint8_t d2)
             }
         } else if (d1 == 123u) { /* all notes off */
             uint32_t n;
-            ctx->all_off();
+            ctx->all_off_ch(ch);
             for (n = 0; n < 128u; n++)
                 ctx->sustain_pend[ch][n] = 0;
             ctx->sustain_on[ch] = 0;

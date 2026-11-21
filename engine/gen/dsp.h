@@ -1353,6 +1353,7 @@ void type_p_alpha_dsp_note_on_ch_s(type_p_alpha_state *state, uint32_t note, uin
 void type_p_alpha_dsp_note_off_s(type_p_alpha_state *state, uint32_t note);
 void type_p_alpha_dsp_note_off_ch_s(type_p_alpha_state *state, uint32_t note, uint32_t channel);
 void type_p_alpha_dsp_all_notes_off_s(type_p_alpha_state *state);
+void type_p_alpha_dsp_all_notes_off_ch_s(type_p_alpha_state *state, uint32_t channel);
 void type_p_alpha_dsp_set_bend_q16_s(type_p_alpha_state *state, uint32_t bend);
 void type_p_alpha_dsp_set_bend_ch_q16_s(type_p_alpha_state *state, uint32_t bend, uint32_t channel);
 uint32_t type_p_alpha_dsp_lit_s(type_p_alpha_state *state, uint32_t base);

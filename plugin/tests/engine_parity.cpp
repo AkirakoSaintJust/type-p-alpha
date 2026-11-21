@@ -277,6 +277,32 @@ void test_sustain_per_channel()
           "lifting the pedal releases the notes it held");
 }
 
+void test_all_notes_off_per_channel()
+{
+    p1::Engine engine;
+    p1::MidiBridge midi(engine);
+    engine.reset();
+    midi.reset();
+
+    /* Part 1 listens on channel 0 and part 2 on channel 1. */
+    const uint32_t first = 1u << 7;   /* note 60 from base 53 */
+    const uint32_t second = 1u << 12; /* note 65 from base 53 */
+    midi.feed(0x90, 60, 100);
+    midi.feed(0x91, 65, 100);
+    midi.feed(0xB0, 123, 0);
+    check((engine.lit(53u) & first) == 0 && (engine.lit(53u) & second) != 0,
+          "CC 123 releases only the part on its channel");
+
+    midi.feed(0xB1, 123, 0);
+    check((engine.lit(53u) & second) == 0,
+          "CC 123 on the second channel releases the second part");
+
+    midi.feed(0x90, 60, 100);
+    midi.feed(0x91, 65, 100);
+    engine.allNotesOff();
+    check(engine.lit(53u) == 0, "the global panic releases every part");
+}
+
 void test_bend_per_part()
 {
     p1::Engine engine;
@@ -383,6 +409,7 @@ int main(int argc, char** argv)
     test_sustain_isolation();
     test_channel_separation();
     test_sustain_per_channel();
+    test_all_notes_off_per_channel();
     test_bend_per_part();
     test_pan_per_part();
     test_pan_envelope();

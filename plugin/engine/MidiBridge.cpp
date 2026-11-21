@@ -26,6 +26,12 @@ extern "C" void p1_bridge_all_off()
         current->allNotesOff();
 }
 
+extern "C" void p1_bridge_all_off_ch(uint32_t channel)
+{
+    if (current)
+        current->allNotesOff(channel);
+}
+
 extern "C" int p1_bridge_set_param(uint32_t id, int32_t value)
 {
     return current ? current->setParam(id, value) : 0;
@@ -44,6 +50,7 @@ MidiBridge::MidiBridge(Engine& engine) : engine_(engine)
     ctx_.note_on = p1_bridge_note_on;
     ctx_.note_off = p1_bridge_note_off;
     ctx_.all_off = p1_bridge_all_off;
+    ctx_.all_off_ch = p1_bridge_all_off_ch;
     ctx_.set_param = p1_bridge_set_param;
     ctx_.set_bend = p1_bridge_set_bend;
     ctx_.cc_map = cc_to_param;
