@@ -39,17 +39,13 @@ Phase modulation indices are calibrated to be similar to Yamaha's OPN, OPM, OPL 
 
 Results so far seem to be fit for intent. I've been able to easily make rudimentary additive patches that sound a bit like the PPG sounds Tangerine Dream used circa Exit, additive brass, woodwinds and strings; and pseudo-PWM pads and leads by pairing saw operators with sine operators at 20-35% feedback, which gives them a ramp waveform. Conversion of OPM patches to Type P ranges produces spectrally similar results to the originals, and I reckon they are easy to edit. Nobody else has played or heard it yet, and I haven't designed a test.
 
-## Lines of research
+## Potential things I'm considering
 
-1. Phase distortion and vector phaseshaping. Where should the transfer function's
-   breakpoint be placed? Can phase distortion and phase modulation share one single phase
-   transfer function without extra machinery? To be honest I'm not too eager to implement it because I'm unsure it'll add much for the effort, but I guess it's part of the "phase-based synthesizer" research concept.
-2. Phase granulation as a layer on top of PM and PD, with chaotic and stochastic
-   modulators. What should it do exactly, how much RAM and compute does it cost, and which parameters would be the most user-friendly?
-3. LFO fade-out and a possible sustain stage on the rate and depth fades. The fade-in is done.
-4. Control macros. What kind of macro controls would make the synth friendlier, more performable, and more modulatable, without turning the panel into an overwhelming mod matrix?
-5. Documentation and the graphic design. The panel is already ok, but I'd like to work on the wordmark, a nicely designed manual, and complementary materials such as posters, web graphics, etc. Also refine the panel if needed, although I'm not unhappy with it.
-6. Would ring mod algorithms add anything worth implementing?
+1. Stochastic phaseshaping, inspired by phase distortion/vector phaseshaping and Xenakis' stochastic and granular techniques.
+2. LFO fade-out and a possible sustain stage on the rate and depth fades? Maybe?
+3. Control macros. What kind of macro controls would make the synth friendlier, more performable, and more modulatable, without turning the panel into an overwhelming mod matrix?
+4. Documentation and graphic design. The panel is mostly ok, but I'd like to work on the wordmark, a nicely designed and human-written manual, and complementary materials such as posters, web graphics, etc. Also refine the panel.
+5. Ring mod/AM algorithms?
 
 ## Done
 
@@ -62,7 +58,7 @@ Results so far seem to be fit for intent. I've been able to easily make rudiment
 7. Library synchronisation across running instances.
 8. Rate and depth fades on every LFO, with the envelope rate table's time scale and a two-line graph.
 
-## Experiments I'd like to try
+## Empyrical stuff I'd like to try
 
 1. Replicating DX7 patches to find the limitations of Type P.α's architecture in comparison to 6-op architectures.
 2. Having other people try the synth and provide feedback on UX and sound.
@@ -74,7 +70,7 @@ Results so far seem to be fit for intent. I've been able to easily make rudiment
 
 I'd like to make a better wordmark and complementary materials such as posters, a web with custom assets, etc. The panel is mostly there but I guess everything can always be refined.
 
-I don't know which direction the wordmark takes yet, so the first step is to experiment. A cut-up and layered Rexlia is one candidate. The alpha can be built from existing font components, since most free fonts have no Greek glyphs. The mark will probably work better as vector art than as an embedded font, which also makes the licensing simpler.
+I don't know which direction to take with the wordmark yet, so I've still got to experiment. A cut-up and layered Rexlia is one candidate, or maybe a mix of cut-up typefaces. The alpha can be built from existing font components, since most free fonts have no Greek glyphs. The mark will probably work better as vector art than as an embedded font, which also makes the licensing simpler.
 
 References:
 
@@ -157,14 +153,6 @@ corresponding source for every release. Release packages carry the licensing not
 in `licences/`.
 
 ## Status
-
-The Type P.α engine and editor have grown out of the abandoned Type P.fm1 project. Patch
-and part names are 32 characters rather than the older 15, and the library uses the new `P1LIB2` record
-layout. Each operator carries its own amplitude envelope, signed feedback envelope,
-and amplitude, feedback and detune LFOs, with the three LFO families on the
-`operator lfos` tab. The seven-tab editor has the two 64-harmonic spectra pages and
-the spectra mod page. The filter follows the SH-101's cutoff and resonance law,
-with cutoff values from older versions migrated on load.
 
 The plugin passes pluginval at strictness 5 on Linux x86_64, with the editor open
 and the audio, state and automation checks included. The CLAP validator reports no
