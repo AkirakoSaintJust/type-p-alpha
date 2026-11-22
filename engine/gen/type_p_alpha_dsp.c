@@ -10877,7 +10877,8 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                         for (uint32_t attempt = 0u; attempt < 3u; attempt++) {
                             i = P1_PHASE_MAP_NEXT(pm) % m;
                             uint32_t d = 1u + P1_PHASE_MAP_NEXT(pm) % maxd;
-                            j = (i + d) % m;
+                            j = i + d;
+                            if (j >= m) j = 2u * (m - 1u) - j;
                             uint32_t oi = pm[P1_PM_ORDER + i];
                             uint32_t oj = pm[P1_PM_ORDER + j];
                             if (oi < 1u || oi > m) oi = 1u;
@@ -11455,7 +11456,8 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                         for (uint32_t attempt = 0u; attempt < 3u; attempt++) {
                             i = P1_PHASE_MAP_NEXT(pm) % m;
                             uint32_t d = 1u + P1_PHASE_MAP_NEXT(pm) % maxd;
-                            j = (i + d) % m;
+                            j = i + d;
+                            if (j >= m) j = 2u * (m - 1u) - j;
                             uint32_t oi = pm[P1_PM_ORDER + i];
                             uint32_t oj = pm[P1_PM_ORDER + j];
                             if (oi < 1u || oi > m) oi = 1u;
@@ -12033,7 +12035,8 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                         for (uint32_t attempt = 0u; attempt < 3u; attempt++) {
                             i = P1_PHASE_MAP_NEXT(pm) % m;
                             uint32_t d = 1u + P1_PHASE_MAP_NEXT(pm) % maxd;
-                            j = (i + d) % m;
+                            j = i + d;
+                            if (j >= m) j = 2u * (m - 1u) - j;
                             uint32_t oi = pm[P1_PM_ORDER + i];
                             uint32_t oj = pm[P1_PM_ORDER + j];
                             if (oi < 1u || oi > m) oi = 1u;
@@ -12611,7 +12614,8 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                         for (uint32_t attempt = 0u; attempt < 3u; attempt++) {
                             i = P1_PHASE_MAP_NEXT(pm) % m;
                             uint32_t d = 1u + P1_PHASE_MAP_NEXT(pm) % maxd;
-                            j = (i + d) % m;
+                            j = i + d;
+                            if (j >= m) j = 2u * (m - 1u) - j;
                             uint32_t oi = pm[P1_PM_ORDER + i];
                             uint32_t oj = pm[P1_PM_ORDER + j];
                             if (oi < 1u || oi > m) oi = 1u;

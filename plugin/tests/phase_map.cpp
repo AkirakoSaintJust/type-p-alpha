@@ -479,8 +479,9 @@ int main()
                 prev[k] = p[kOrder + k];
             }
             if (first >= 0 && second >= 0) {
-                const int d = std::abs(first - second);
-                if (d != 1 && d != static_cast<int>(active) - 1)
+                /* jump 1 is an adjacent swap. The old wrap moved the last
+                 * position to the first; the reflected jump must not. */
+                if (std::abs(first - second) != 1)
                     local = false;
             }
             for (uint32_t k = 0u; k < active; ++k) {

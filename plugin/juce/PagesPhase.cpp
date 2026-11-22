@@ -187,8 +187,8 @@ public:
             "bp", "segments", "flip", "flip_rate", "reorder",
             "reorder_rate", "jump", "drift", "drift_rate"};
         static constexpr const char* labels[9] = {
-            "breakpoint", "segments", "flip", "flip rate", "reorder",
-            "reorder rate", "jump", "drift", "drift rate"};
+            "distort", "segmts", "flip", "fl rate", "reorder",
+            "ro rate", "jump", "drift", "dr rate"};
         for (std::size_t i = 0; i < knobs_.size(); ++i) {
             knobs_[i] = std::make_unique<ParamKnob>(
                 editor.state(), params::opPhase(op, fields[i], part), labels[i],
@@ -204,12 +204,15 @@ public:
         P1Card::resized();
         auto area = contentArea();
         area.removeFromTop(3);
-        for (int row = 0; row < 3; ++row) {
-            auto line = area.removeFromTop(44);
-            const int cell = line.getWidth() / 3;
-            for (int col = 0; col < 3; ++col)
-                knobs_[static_cast<std::size_t>(row * 3 + col)]->setBounds(
+        for (int row = 0; row < 2; ++row) {
+            auto line = area.removeFromTop(63);
+            const int count = row == 0 ? 5 : 4;
+            const int cell = line.getWidth() / count;
+            for (int col = 0; col < count; ++col) {
+                const int index = row == 0 ? col : 5 + col;
+                knobs_[static_cast<std::size_t>(index)]->setBounds(
                     line.removeFromLeft(cell));
+            }
         }
         on_.setBounds(headerTrailingBounds());
     }

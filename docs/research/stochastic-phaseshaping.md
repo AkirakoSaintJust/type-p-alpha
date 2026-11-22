@@ -29,7 +29,7 @@ the map.
 - A protected mask on every wave. The 13 fixed waves use their mip-0 table and
   wave 13 interpolates the a and b masks at the base morph. A span that touches a
   protected point is locked, so it never flips and never moves in a reorder.
-- Drift, flips and local forward swaps on the control tick. The local swap
+- Drift, flips and local reflected swaps on the control tick. The local swap
   replaced the lab's full permutation because it can respect the locks.
 - A per-part LFO and a signed envelope on the breakpoint, with the rate and depth
   fades from the rest of the instrument.
@@ -172,7 +172,7 @@ The design allowed two ways to draw the order, a global permutation of all `M`
 segments or a local jump with wraparound. At 100 percent probability, a 100
 percent jump range and a fast rate, either one ends up as close to a new
 permutation every tick as the control rate allows. The product chose the local
-forward swap because it can check the locks before it commits, and because a
+reflected swap because it can check the locks before it commits, and because a
 full permutation changes every join at once.
 
 ## The lookup
@@ -228,7 +228,7 @@ a contract. Still, it is the note I have.
   musically.
 - **Flips:** a Markov switch so flips cluster into runs, or a group of segments
   flipped together.
-- **Order:** local skips shipped as the forward swap with `jump`.
+- **Order:** local skips shipped as the reflected swap with `jump`.
   Lévy-distributed jumps for rare large leaps and a fixed non-sequential pattern
   are still untried.
 - **The sharing question:** the one the lab was meant to answer and did not.

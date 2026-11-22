@@ -8,19 +8,17 @@
   whose segments can flip and change order, plus a dedicated LFO and a signed
   envelope on the new `op phasemap` tab.
 - **Brief section:** the research line in [`../README.md`](../README.md), the
-  `op phasemap` tab in [`../design/mockup.html`](../design/mockup.html), the
-  measured evidence in
-  [`feature-contract-phase-map.md`](feature-contract-phase-map.md), and the
+  `op phasemap` tab in [`../design/mockup.html`](../design/mockup.html), and the
   research note in
   [`../docs/research/stochastic-phaseshaping.md`](../docs/research/stochastic-phaseshaping.md).
+  This contract carries the measured evidence.
 - **Owner / date:** P1Onken, 2026-11-21, with implementation evidence on
   2026-11-22.
 - **Disposition:** shipped at 1×. The engine nodes, the 232 parameters, the
   editor page, the preset migration and the engine test are in the tree. The 2×
   read, the half-band decimator and the 16-sample alignment delay are not built.
-  The measured 1× cost and the join aliasing are recorded in
-  [`feature-contract-phase-map.md`](feature-contract-phase-map.md), which is the
-  measured evidence artefact for this contract.
+  The measured 1× cost and the join aliasing are recorded in the Evidence and
+  Limits sections below.
 
 ## Player outcome
 
@@ -307,13 +305,15 @@ join changes one at a time, which is audible as an event rather than a new map.
 
 1. Draw `i` uniformly from the active positions and `d` uniformly from
    `1..min(jump, active - 1)`.
-2. `j = (i + d) mod active`. The swap is forward and wraps at the cycle edge.
+2. `j = i + d`. If `j >= active`, `j = 2 * (active - 1) - j`, so the jump
+   reflects at the last position instead of wrapping to the first.
 3. If either position is locked, redraw both up to three times. If all three
    draws touch a lock, the event makes no change.
 4. Swap `order[i]` and `order[j]`.
 
 With fewer than two active segments the event does nothing. `jump = 1` is the
-adjacent swap, including the last-to-first wrap. Larger values widen the swap
+adjacent swap; a jump past the last position reflects back, so the
+last-to-first wrap is gone. Larger values widen the swap
 without returning to a full permutation. A swap is discontinuous at the join,
 which is the inharmonicity, and the display draws it as a pink dashed vertical.
 
@@ -429,7 +429,7 @@ The page is one row of four 294 px columns, the same rhythm as `operator lfos`:
 | --- | --- | --- |
 | operator header | 26 | `opN`, copy, paste, mute |
 | composed map | 99 | the plot and the caption line |
-| `phase` card | 159 | `on`, nine knobs in three rows |
+| `phase` card | 159 | `on`, nine knobs in two rows |
 | `phase lfo` card | 147 | four knobs in one row, with fades and the graph |
 | `phase env` card | 210 | graph, three rate/level rows, mode, `on` |
 
@@ -441,9 +441,12 @@ loses pixels before the value text does.
 
 The `phase` card's nine knobs are, row by row:
 
-1. `breakpoint`, `segments`, `flip`
-2. `flip rate`, `reorder`, `reorder rate`
-3. `jump`, `drift`, `drift rate`
+1. `distort`, `segmts`, `flip`, `fl rate`, `reorder`
+2. `ro rate`, `jump`, `drift`, `dr rate`
+
+The panel labels are shorter than the parameter names. The targets keep
+`bp`, `segments`, `flip_rate`, `reorder_rate` and `drift_rate`, so automation and
+old presets continue to resolve.
 
 The `on` switch is in the card header. The `phase lfo` card puts rate, depth,
 `rate fade` and `depth fade` in one row of 28 px dials, with the wave select and
@@ -534,27 +537,75 @@ the total to 1,976.
 
 ## Evidence
 
-The full 40-check table, the fold range, the lock counts and the CPU method are
-in [`feature-contract-phase-map.md`](feature-contract-phase-map.md). The
-headline results on 2026-11-22:
+The measured state on 2026-11-22. `plugin/tests/phase_map.cpp`, registered as
+`phase_map`, runs 40 checks in one process and prints the fold range, the lock
+counts, the drift slopes, the follow positions and the CPU ratio.
 
-| Evidence | Result |
+| Check | What it renders or reads | Result |
+| --- | --- | --- |
+| off path | two fresh engines, map parameters inert | 0 differing samples in 4,096 frames |
+| `F` at 0.500 | breakpoint 500 | 0 at 0, 512 at 0.5, 1023 at the end |
+| `F` at 0.750 | breakpoint 750 | 512 at 0.75, 170 at 0.25 |
+| fold | 100% triangle LFO, 2,000,000 raw | 2..998, one tick at each edge, reflects |
+| locks | sine, 32 requested | 31 active, 3 locked, crossing span locked |
+| flips | 100%, 20 events | every unlocked span flips, the second event restores |
+| reorder | 16 segments, `jump` 1, 400 events | permutation held, neighbours only, locked spans still |
+| drift | 16 segments, 120 events | slopes 0.5001..2.6584, x sorted |
+| envelope | +25% and -25%, mode hold | breakpoint 750 and 250 |
+| LFO | +50% and -50% | the pooled value inverts exactly |
+| fades | rate and depth fade 99 | both full on the first tick |
+| key follow | notes 48 and 72, amounts -100/+100 | 301 and 679 |
+| velocity follow | velocities 20 and 120, amount 25 | 539 and 736 |
+| trigger | poly and legato | poly resets, legato holds |
+| parts | part 0 and part 1 | separate breakpoints, counts and seeds |
+| wave 13 | a/b spectra and base morph | mask non-empty and unchanged by segment count |
+| render | 48,000 frames | finite and not silent |
+| CPU | 24 voices, four operators, worst case | 2.01× the phase-off baseline |
+
+The velocity row is measured after the `p1_vel_scale` fix. The old divisor made
+the Q15 factor 32,767 times too small, so every velocity follow, including the
+existing level, feedback and envelope follows, was inert. The corrected factor
+is `amount * vel / 100`, and the default patch has zero amounts, so the existing
+renders do not move.
+
+There is no 2× test because the path does not exist. The render is the 1×
+render, and the aliasing limit is recorded below.
+
+| Other evidence | Result |
 | --- | --- |
-| off path | 0 differing samples in 4,096 frames; `engine_parity` unchanged |
-| `F` | 0 at 0, 512 at 0.500, 1023 at the end; 512 at 0.750 |
-| fold | 2..998, one tick at each edge, reflects |
-| locks | 31/32 active on a sine, 3 locked, the crossing span locked |
-| flips | every unlocked span flips at 100%, the second event restores |
-| reorder | a permutation over 400 events; `jump = 1` swaps neighbours only |
-| drift | slopes 0.5001..2.6584 over 120 events, x sorted |
-| modulation | +25% gives 750 and -25% gives 250; the LFO sign inverts |
-| follow | key 48/72 gives 301/679; velocity 20/120 gives 539/736 |
-| trigger | poly resets, legato holds |
-| parts | separate breakpoints, counts and seeds |
-| wave 13 | a non-empty mask, unchanged by the segment count |
-| render | finite and not silent over 48,000 frames |
-| CPU | 2.01× the phase-off baseline at the maximum event rates |
+| `preset_smoke` | versions 13, 14 and 15 load at 981 values |
+| snapshots | 24 PNGs and the manifest; the two phase pages are new |
+| manifest | 1,976 parameters and a 981-value part block |
 | suite | 17/17 local; the feature run passed Linux, Windows, macOS, TSan and CodeQL |
+
+### Existing checks
+
+- `engine_parity`: the phase-off reference is unchanged and the new parameter
+  defaults do not move existing renders.
+- `preset_smoke`: versions 13, 14 and 15 load with the phase block appended; the
+  part count is 981 and the defaults are in place.
+- `editor_snapshot`: the copy/paste checks, the two new goldens and the follow
+  target count changing from 15 to 19.
+- `plugin_smoke`, `rate_bridge`, `lfo_fades`, `spectral_bench`: unchanged, run
+  after the manifest and tab changes.
+- The full Linux CTest suite and the macOS/Windows CI matrix.
+
+### Gates and failure criteria
+
+- **CPU:** baseline 24 voices, four operators, phase off, 48 kHz; worst case 24
+  voices, four operators all on, 32 segments, the maximum event rates, 100% flip
+  and reorder, both modulation sources, wave 13. Render 1,000 blocks and divide
+  by the baseline. The measured 1× ratio is **2.01×**. The 1.6× gate was the
+  budget for the 2× design; the 1× map does not meet it, and the 2× path is not
+  shipped. The ratio is recorded rather than rounded down.
+- **Aliasing:** the 2× read and the half-band filter are not built, so the
+  20.5–24 kHz fold-back is **unmeasured**. The joins are step discontinuities and
+  the feature does not claim a clean spectrum.
+- **Timing:** a mapped carrier and an unmapped modulator stay aligned at 1×
+  because there is one read and no filter delay. The 16-sample alignment problem
+  belongs to the unbuilt 2× path.
+- **Display:** the four columns do not clip at 1,240 × 985, and the map stays
+  readable at 270 × 86. The snapshot at 1,240 × 985 is the evidence.
 
 ## Limits
 
@@ -571,12 +622,55 @@ headline results on 2026-11-22:
   not in the lock mask.
 - **The breakpoint fold is a reflection.** At the edge the geometry turns
   around. It does not continue past the edge or wrap.
-- **Reorder is local swaps.** It is not the lab's full permutation or its forward
-  jump. The `jump` knob widens the swap distance.
+- **Reorder is local reflected swaps.** It is not the lab's full permutation or
+  its forward jump with wraparound. The `jump` knob widens the distance, and a
+  jump past the last position reflects back into the active range.
 - **The map is not a new oscillator.** The 13 waves and the additive bank are
   unchanged. Only the phase walking through them moves.
 - **No factory preset.** The init state is fully off. The demo above is for the
   golden, not a bank slot.
+
+## Risks and fallback
+
+- **CPU.** The 2× path plus the filter was the original risk. The 1× path measures
+  2.01× the phase-off baseline, above the 1.6× target for 2×, so the 2× branch is
+  not built. If the 1× cost needs to fall, the map's per-block rebuild is the
+  first place to look; the per-sample read is one F lookup, one segment lookup
+  and two multiplies.
+- **Timing.** At 1× there is one read and no filter delay, so a mapped carrier
+  and an unmapped modulator stay aligned. A future 2× path would need the
+  per-voice alignment delay described in the 2× design note.
+- **Locks.** The full lab rule is in the node: the fixed waves build a mask from
+  their mip-0 table, and wave 13 interpolates the a and b masks at the base
+  morph. A voice's live morph is not in the mask; that is the recorded limit.
+- **Clicks.** Reorder jumps are intentional and no crossfade was added. If a
+  listening test asks for one, add a short crossfade at the join and re-measure;
+  the contract would then record the ramp.
+- **Display.** If the 30 Hz snapshot reads as a stutter, raise the UI timer or
+  interpolate the dot; do not move the map computation to the UI thread.
+- **Migration.** The 116 values are appended, but the existing fade insertion
+  uses the current target count. Set `v15Count` and `v14Count` as above and test
+  v15 before v14/v13; otherwise the fade slots land in the wrong place.
+- **Rollback.** Remove the tab and the 232 parameters. A pre-release rollback can
+  return `PRESET_VERSION` to 15; a shipped v16 record must keep the version.
+
+## Files
+
+- **Engine and generation:** `engine/gen/params.json`, `dsp.h`,
+  `type_p_alpha_dsp.c`, `tables.c`, `cc_map.h`, `engine/hal/p1_math.h`;
+  `.dev/modules/nodes/phase_map/`, `phase_add/`, `phasor/` and
+  `macros/fm_op/macro.json`; `_frontend.py` for the macro fan-out.
+- **Plugin and state:** `plugin/ui/ParamIDs.h`, `plugin/ui/Widgets.h/.cpp`,
+  `plugin/juce/PluginProcessor.h/.cpp`, `plugin/juce/PluginEditor.h/.cpp`,
+  `plugin/preset/PresetStore.hpp/.cpp`.
+- **Editor:** `plugin/juce/Pages.h`, `plugin/juce/PagesPhase.cpp` (new),
+  `plugin/juce/CMakeLists.txt`.
+- **Tests:** `plugin/tests/phase_map.cpp` (new), `engine_parity.cpp`,
+  `preset_smoke.cpp`, `editor_snapshot.cpp`, `plugin/tests/snapshots/linux-x86_64/`.
+- **Docs:** this contract, `design/mockup.html`, `design/README.md`,
+  `design/juce.md`, `docs/research/stochastic-phaseshaping.md`,
+  `docs/research/stochastic-phaseshaping-lab.html`, `README.md`,
+  `plugin/README.md`.
 
 ## Research
 

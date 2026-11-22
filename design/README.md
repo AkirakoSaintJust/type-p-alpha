@@ -409,9 +409,9 @@ dot at the newest voice's phase. The caption reads `bp 0.500 · π`, the active 
 requested segment counts, and the locked count when it is above zero. The map
 does not take a drag.
 
-The `phase` card holds `on` in its header and nine knobs in three rows:
-`breakpoint`, `segments`, `flip`; `flip rate`, `reorder`, `reorder rate`; `jump`,
-`drift`, `drift rate`. The `phase lfo` card puts rate, depth, `rate fade` and
+The `phase` card holds `on` in its header and nine knobs in two rows: `distort`,
+`segmts`, `flip`, `fl rate` and `reorder` on the first, then `ro rate`, `jump`,
+`drift` and `dr rate` on the second. The `phase lfo` card puts rate, depth, `rate fade` and
 `depth fade` in one row, with the wave select and `on` below. The `phase env`
 card is the signed envelope with a 48 px purple graph, `r1..r3`, `l1..l3`, `rel`,
 `rl`, the mode dropdown and `on`. All three cards carry `copy` and `paste` in their
