@@ -56,7 +56,7 @@ Results so far seem to be fit for intent. I've been able to easily make rudiment
 6. Per-part stereo panning.
 7. Library synchronisation across running instances.
 8. Rate and depth fades on every LFO, with the envelope rate table's time scale and a two-line graph.
-9. Per-operator stochastic phaseshaping, with a live composed map, zero-crossing locks, drift, flips, a local reorder, and a dedicated LFO and signed envelope on the `op phasemap` tab (see [the phase map contract](plugin/feature-contract-phase-map.md)). The read is 1×. The 2× half-band was designed but not built, because the 1× path measured 1.76× the phase-off baseline and the aliasing would need a fresh CPU budget.
+9. Per-operator stochastic phaseshaping, with a live composed map, zero-crossing locks, drift, flips, a local reorder, and a dedicated LFO and signed envelope on the `op phasemap` tab (see [the phase map contract](plugin/feature-contract-phase-map.md)). The read is 1×. The 2× half-band was designed but not built, because the 1× path measured 2.01× the phase-off baseline and the aliasing would need a fresh CPU budget.
 
 ## Empyrical stuff I'd like to try
 

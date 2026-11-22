@@ -5409,8 +5409,8 @@
     "op1_phase_flip_rate": {
       "target": "op1.phase.flip_rate",
       "min": 0,
-      "max": 2684355,
-      "curve": "linear",
+      "max": 20000000,
+      "curve": "log",
       "display": "hz"
     },
     "op1_phase_reorder": {
@@ -5423,8 +5423,8 @@
     "op1_phase_reorder_rate": {
       "target": "op1.phase.reorder_rate",
       "min": 0,
-      "max": 2684355,
-      "curve": "linear",
+      "max": 20000000,
+      "curve": "log",
       "display": "hz"
     },
     "op1_phase_jump": {
@@ -5444,8 +5444,8 @@
     "op1_phase_drift_rate": {
       "target": "op1.phase.drift_rate",
       "min": 0,
-      "max": 2684355,
-      "curve": "linear",
+      "max": 20000000,
+      "curve": "log",
       "display": "hz"
     },
     "op1_phase_lfo_rate": {
@@ -5612,8 +5612,8 @@
     "op2_phase_flip_rate": {
       "target": "op2.phase.flip_rate",
       "min": 0,
-      "max": 2684355,
-      "curve": "linear",
+      "max": 20000000,
+      "curve": "log",
       "display": "hz"
     },
     "op2_phase_reorder": {
@@ -5626,8 +5626,8 @@
     "op2_phase_reorder_rate": {
       "target": "op2.phase.reorder_rate",
       "min": 0,
-      "max": 2684355,
-      "curve": "linear",
+      "max": 20000000,
+      "curve": "log",
       "display": "hz"
     },
     "op2_phase_jump": {
@@ -5647,8 +5647,8 @@
     "op2_phase_drift_rate": {
       "target": "op2.phase.drift_rate",
       "min": 0,
-      "max": 2684355,
-      "curve": "linear",
+      "max": 20000000,
+      "curve": "log",
       "display": "hz"
     },
     "op2_phase_lfo_rate": {
@@ -5815,8 +5815,8 @@
     "op3_phase_flip_rate": {
       "target": "op3.phase.flip_rate",
       "min": 0,
-      "max": 2684355,
-      "curve": "linear",
+      "max": 20000000,
+      "curve": "log",
       "display": "hz"
     },
     "op3_phase_reorder": {
@@ -5829,8 +5829,8 @@
     "op3_phase_reorder_rate": {
       "target": "op3.phase.reorder_rate",
       "min": 0,
-      "max": 2684355,
-      "curve": "linear",
+      "max": 20000000,
+      "curve": "log",
       "display": "hz"
     },
     "op3_phase_jump": {
@@ -5850,8 +5850,8 @@
     "op3_phase_drift_rate": {
       "target": "op3.phase.drift_rate",
       "min": 0,
-      "max": 2684355,
-      "curve": "linear",
+      "max": 20000000,
+      "curve": "log",
       "display": "hz"
     },
     "op3_phase_lfo_rate": {
@@ -6018,8 +6018,8 @@
     "op4_phase_flip_rate": {
       "target": "op4.phase.flip_rate",
       "min": 0,
-      "max": 2684355,
-      "curve": "linear",
+      "max": 20000000,
+      "curve": "log",
       "display": "hz"
     },
     "op4_phase_reorder": {
@@ -6032,8 +6032,8 @@
     "op4_phase_reorder_rate": {
       "target": "op4.phase.reorder_rate",
       "min": 0,
-      "max": 2684355,
-      "curve": "linear",
+      "max": 20000000,
+      "curve": "log",
       "display": "hz"
     },
     "op4_phase_jump": {
@@ -6053,8 +6053,8 @@
     "op4_phase_drift_rate": {
       "target": "op4.phase.drift_rate",
       "min": 0,
-      "max": 2684355,
-      "curve": "linear",
+      "max": 20000000,
+      "curve": "log",
       "display": "hz"
     },
     "op4_phase_lfo_rate": {

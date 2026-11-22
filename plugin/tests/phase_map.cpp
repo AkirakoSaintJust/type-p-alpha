@@ -810,15 +810,15 @@ int main()
                 std::snprintf(name, sizeof(name), "op%d_phase_flip.p0", op);
                 set_param(e, name, worst ? 100 : 0);
                 std::snprintf(name, sizeof(name), "op%d_phase_flip_rate.p0", op);
-                set_param(e, name, 2684355);
+                set_param(e, name, 20000000);
                 std::snprintf(name, sizeof(name), "op%d_phase_reorder.p0", op);
                 set_param(e, name, worst ? 100 : 0);
                 std::snprintf(name, sizeof(name), "op%d_phase_reorder_rate.p0", op);
-                set_param(e, name, 2684355);
+                set_param(e, name, 20000000);
                 std::snprintf(name, sizeof(name), "op%d_phase_drift.p0", op);
                 set_param(e, name, worst ? 100 : 0);
                 std::snprintf(name, sizeof(name), "op%d_phase_drift_rate.p0", op);
-                set_param(e, name, 2684355);
+                set_param(e, name, 20000000);
                 std::snprintf(name, sizeof(name), "op%d_phase_lfo_depth.p0", op);
                 set_param(e, name, worst ? 50 : 0);
                 std::snprintf(name, sizeof(name), "op%d_phase_env_on.p0", op);

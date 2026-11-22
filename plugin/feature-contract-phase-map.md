@@ -81,12 +81,12 @@ and host-automatable, and none joins the default CC map.
 | 2 | `opN_phase_bp` | `opN.phase.bp` | 1..999 | 500 | `frac3` |
 | 3 | `opN_phase_segments` | `opN.phase.segments` | 1..32 | 8 | `raw` |
 | 4 | `opN_phase_flip` | `opN.phase.flip` | 0..100 | 0 | `pct` |
-| 5 | `opN_phase_flip_rate` | `opN.phase.flip_rate` | 0..2,684,355 | 178,956 | `hz` |
+| 5 | `opN_phase_flip_rate` | `opN.phase.flip_rate` | 0..20,000,000 | 178,956 | `hz` |
 | 6 | `opN_phase_reorder` | `opN.phase.reorder` | 0..100 | 0 | `pct` |
-| 7 | `opN_phase_reorder_rate` | `opN.phase.reorder_rate` | 0..2,684,355 | 0 | `hz` |
+| 7 | `opN_phase_reorder_rate` | `opN.phase.reorder_rate` | 0..20,000,000 | 0 | `hz` |
 | 8 | `opN_phase_jump` | `opN.phase.jump` | 1..32 | 1 | `raw` |
 | 9 | `opN_phase_drift` | `opN.phase.drift` | 0..100 | 0 | `pct` |
-| 10 | `opN_phase_drift_rate` | `opN.phase.drift_rate` | 0..2,684,355 | 107,374 | `hz` |
+| 10 | `opN_phase_drift_rate` | `opN.phase.drift_rate` | 0..20,000,000 | 107,374 | `hz` |
 | 11 | `opN_phase_lfo_rate` | `opN.phase.lfo.rate` | 0..20,000,000 | 44,739 | `hz` |
 | 12 | `opN_phase_lfo_depth` | `opN.phase.lfo.depth` | -100..100 | 0 | `pct_bip` |
 | 13 | `opN_phase_lfo_wave` | `opN.phase.lfo.wave` | 0..5 | 0 | `lfo_wave` |
@@ -107,7 +107,7 @@ and host-automatable, and none joins the default CC map.
 | 28 | `opN_phase_ks_hi` | `opN.phase_ks.hi` | -100..100 | 0 | `pct_bip` |
 | 29 | `opN_phase_vs` | `opN.phase_vs.amount` | -100..100 | 0 | `pct_bip` |
 
-The `hz` display is the existing one (`raw * 48000 / 2^32`): 2,684,355 is 30 Hz,
+The `hz` display is the existing one (`raw * 48000 / 2^32`): 20,000,000 is 223 Hz,
 178,956 is 2 Hz, 107,374 is 1.2 Hz and 44,739 is 0.5 Hz.
 
 `frac3` is new: `value / 1000` to three decimals, so the breakpoint knob reads
@@ -166,7 +166,7 @@ per-instance xorshift32 seed is `0x9E3779B9 + part * 4 + op`; a fresh engine is
 deterministic for tests and a playing engine keeps its texture. The stochastic
 clock is the 1,500 Hz control tick: drift, flip and reorder each own a 32-bit
 accumulator advanced by `rate_raw * CONTROL_BLOCK`, and the wrap is the event,
-giving 0..30 Hz on the existing `hz` scale.
+giving 0..223 Hz on the existing `hz` scale.
 
 ### The 4096 grid and `F`
 
@@ -286,7 +286,7 @@ There is no pull toward 1. The OU option in the research note is not in v1.
 At each flip event, every eligible segment rerolls its orientation against the
 `flip` probability. A flip reverses the segment's y span and slope; a second
 flip restores it. `flip = 0` leaves every eligible segment forward; `flip = 100`
-flips every eligible segment on every event. Events run on the 30 Hz stochastic
+flips every eligible segment on every event. Events run on the 1,500 Hz control
 tick, not per sample.
 
 At each reorder event, with `reorder` probability, one swap is attempted:
@@ -371,7 +371,7 @@ A 2× path would need a second map and table read plus a filter for every mapped
 operator, so it is a separate piece of work rather than a flag.
 
 The measured 1× worst case is 1.75× the phase-off baseline: 24 voices, four
-operators on, 32 segments, 30 Hz drift, 100% flip and reorder, both modulation
+operators on, 32 segments, the maximum event rates, 100% flip and reorder, both modulation
 sources, wave 13, 1,000 blocks. The 1.6× figure in §3.17 of the spec was the
 budget for the 2× design. The 1× path already costs more than that, so the 2×
 design is not viable on this evidence and is not shipped.
@@ -604,9 +604,9 @@ render is the 1× render, and the aliasing limit is recorded below.
 ### Gates and failure criteria
 
 - **CPU:** baseline 24 voices, four operators, phase off, 48 kHz; worst case 24
-  voices, four operators all on, 32 segments, 30 Hz drift, 100% flip and reorder,
+  voices, four operators all on, 32 segments, the maximum event rates, 100% flip and reorder,
   both modulation sources, wave 13. Render 1,000 blocks and divide by the
-  baseline. The measured 1× ratio is **1.76×**. The 1.6× gate was the budget for
+  baseline. The measured 1× ratio is **2.01×**. The 1.6× gate was the budget for
   the 2× design; the 1× map does not meet it, and the 2× path is not shipped.
   The ratio is recorded rather than rounded down.
 - **Aliasing:** the 2× read and the half-band filter are not built, so the
@@ -627,7 +627,7 @@ The measured state on 2026-11-22:
 | Off-path render | bit-exact against the current reference | pass: 0 differing samples in 4,096 frames, and `engine_parity` is unchanged |
 | `preset_smoke` | versions 13/14/15 load at 981 values | pass |
 | `phase_map` | all checks above | pass: 40 checks |
-| worst-case CPU | 1.6× baseline for the 2× design | **1.76× on the 1× path; the 2× design is not built** |
+| worst-case CPU | 1.6× baseline for the 2× design | **2.01× on the 1× path; the 2× design is not built** |
 | alias spectrum | measured; 20.5–24 kHz recorded | **not measured; the 1× joins are unband-limited** |
 | snapshots | two new goldens, shared traces re-accepted | pass: 24 PNGs and the manifest; the two phase pages are new |
 | manifest | 1,976 parameters, 981-value part block | pass |
@@ -640,7 +640,7 @@ the missing layer, and no row above calls it passed.
 
 - **The read is 1×, not 2×.** The 2× map read, the half-band decimator and the
   16-sample alignment delay are not built. The join aliasing (20.5–24 kHz
-  fold-back) is therefore unmeasured, and the CPU cost is 1.76× the phase-off
+  fold-back) is therefore unmeasured, and the CPU cost is 2.01× the phase-off
   baseline.
 - **No join ramp.** A reorder jump is a step discontinuity and is heard as the
   intended inharmonic event. A short crossfade remains a future option; no
@@ -663,7 +663,7 @@ the missing layer, and no row above calls it passed.
 ## Risks and fallback
 
 - **CPU.** The 2× path plus the filter was the original risk. The 1× path measures
-  1.76× the phase-off baseline, above the 1.6× target for 2×, so the 2× branch is
+  2.01× the phase-off baseline, above the 1.6× target for 2×, so the 2× branch is
   not built. If the 1× cost needs to fall, the map's per-block rebuild is the
   first place to look; the per-sample read is one F lookup, one segment lookup
   and two multiplies.
@@ -699,4 +699,4 @@ the missing layer, and no row above calls it passed.
   `preset_smoke.cpp`, `editor_snapshot.cpp`, `plugin/tests/snapshots/linux-x86_64/`.
 - **Docs:** this contract, `feature-contract-stochastic-phaseshaping.md`, `design/mockup.html`,
   `design/README.md`, `design/juce.md`, `docs/research/stochastic-phaseshaping.md`,
-  `docs/research/phase-transfer-lab.html`, `README.md`, `plugin/README.md`.
+  `docs/research/stochastic-phaseshaping-lab.html`, `README.md`, `plugin/README.md`.
