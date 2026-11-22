@@ -74,6 +74,7 @@ public:
     void setStateInformation(const void* data, int sizeInBytes) override;
 
     void ensureLibraryLoaded();
+    void resetPhaseMaps();
     LibrarySaveResult saveLibrary();
     juce::File libraryFile() const;
     void setLibraryFileForTesting(const juce::File& file)

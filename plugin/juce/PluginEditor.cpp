@@ -1328,6 +1328,7 @@ void PluginEditor::applyPartParams(int part, const std::vector<int32_t>& params)
                     params[static_cast<std::size_t>(i)])));
         }
     }
+    processor_.resetPhaseMaps();
 }
 
 int PluginEditor::currentRouting(int field, int part)

@@ -138,6 +138,16 @@ Old libraries are remapped, not rejected.
 - The operator graph draws the warm-up convex, the surge concave and the decays and
   release straight, with the sustain or loop boundaries marked.
 
+### Filter envelope rate resolution
+
+The filter envelope's levels are 0..99 on the panel. The engine scales them by
+256 internally and divides the output back before the cutoff, because the
+one-pole enforces a minimum step of one unit. Without the scale, every slow
+rate finished in about 66 ms. The parameter values and the preset block are
+unchanged; the scale is internal to `mod_env`. `filter_envelope` checks that the
+slowest rate is still moving after 100 blocks, that it has not snapped to the
+target after 1,000, that a fast rate is well advanced, and that 99 is instant.
+
 ## Limits and open work
 
 - The CI does not run the DAW matrix; the `linux_daws` test is available locally. The

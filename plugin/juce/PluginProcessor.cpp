@@ -74,6 +74,40 @@ std::array<int, 4> feedbackEnvelopeIndices()
     return out;
 }
 
+/* Every PresetStore that reads an old library needs the same block indices for
+ * the remaps. The in-memory store used to get these, whilst the temporary disk
+ * store in saveLibrary did not, so an old record was migrated with -1 bases and
+ * then written back corrupted. Configure both through this one function. */
+void configurePresetStore(p1::PresetStore& store)
+{
+    store.setOperatorEnvelopeIndices(operatorEnvelopeIndices());
+    store.setPanEnvelopeIndex(panEnvelopeIndex());
+    store.setOffsetEnvelopeIndices(feedbackEnvelopeIndices(),
+                                   partParamIndex("penv_on.p0"));
+    store.setAbsEnvelopeIndices(
+        partParamIndex("fenv_on.p0"),
+        {partParamIndex("op1_spec_env_on.p0"),
+         partParamIndex("op2_spec_env_on.p0"),
+         partParamIndex("op3_spec_env_on.p0"),
+         partParamIndex("op4_spec_env_on.p0")});
+    std::array<int, 34> fadeIndices{};
+    int fadeCount = 0;
+    for (int op = 1; op <= 4; ++op) {
+        for (const char* family : {"trem", "fblfo", "dlfo", "spec_lfo"}) {
+            const auto prefix = "op" + std::to_string(op) + "_" + family;
+            fadeIndices[static_cast<std::size_t>(fadeCount++)] =
+                partParamIndex(prefix + "_rate_fade.p0");
+            fadeIndices[static_cast<std::size_t>(fadeCount++)] =
+                partParamIndex(prefix + "_depth_fade.p0");
+        }
+    }
+    fadeIndices[static_cast<std::size_t>(fadeCount++)] =
+        partParamIndex("pitch_rate_fade.p0");
+    fadeIndices[static_cast<std::size_t>(fadeCount++)] =
+        partParamIndex("pitch_depth_fade.p0");
+    store.setLfoFadeIndices(fadeIndices);
+}
+
 } // namespace
 
 extern "C" int midi_get(uint8_t* status, uint8_t* data1, uint8_t* data2);
@@ -148,32 +182,7 @@ TypePAlphaAudioProcessor::TypePAlphaAudioProcessor()
       midi_(engine_),
       apvts_(*this, nullptr, P1_STATE_TREE_ID, createLayout())
 {
-    presets_.setOperatorEnvelopeIndices(operatorEnvelopeIndices());
-    presets_.setPanEnvelopeIndex(panEnvelopeIndex());
-    presets_.setOffsetEnvelopeIndices(feedbackEnvelopeIndices(),
-                                      partParamIndex("penv_on.p0"));
-    presets_.setAbsEnvelopeIndices(
-        partParamIndex("fenv_on.p0"),
-        {partParamIndex("op1_spec_env_on.p0"),
-         partParamIndex("op2_spec_env_on.p0"),
-         partParamIndex("op3_spec_env_on.p0"),
-         partParamIndex("op4_spec_env_on.p0")});
-    std::array<int, 34> fadeIndices{};
-    int fadeCount = 0;
-    for (int op = 1; op <= 4; ++op) {
-        for (const char* family : {"trem", "fblfo", "dlfo", "spec_lfo"}) {
-            const auto prefix = "op" + std::to_string(op) + "_" + family;
-            fadeIndices[static_cast<std::size_t>(fadeCount++)] =
-                partParamIndex(prefix + "_rate_fade.p0");
-            fadeIndices[static_cast<std::size_t>(fadeCount++)] =
-                partParamIndex(prefix + "_depth_fade.p0");
-        }
-    }
-    fadeIndices[static_cast<std::size_t>(fadeCount++)] =
-        partParamIndex("pitch_rate_fade.p0");
-    fadeIndices[static_cast<std::size_t>(fadeCount++)] =
-        partParamIndex("pitch_depth_fade.p0");
-    presets_.setLfoFadeIndices(fadeIndices);
+    configurePresetStore(presets_);
     lastParams_.fill(std::numeric_limits<int32_t>::min());
     for (int i = 0; i < kP1ParamCount; ++i)
         paramValues_[static_cast<std::size_t>(i)] =
@@ -503,6 +512,11 @@ juce::File TypePAlphaAudioProcessor::libraryFile() const
         .getChildFile("library.p1lib");
 }
 
+void TypePAlphaAudioProcessor::resetPhaseMaps()
+{
+    engine_.resetPhaseMaps();
+}
+
 void TypePAlphaAudioProcessor::ensureLibraryLoaded()
 {
     if (libraryLoaded_)
@@ -548,6 +562,7 @@ LibrarySaveResult TypePAlphaAudioProcessor::saveLibrary()
     juce::MemoryBlock data;
     p1::PresetStore disk(kP1PartParamCount, kP1PartCount, p1::partParamDefaults(),
                          kP1PartCutoffIndex);
+    configurePresetStore(disk);
     if (!file.loadFileAsData(data) ||
         !disk.loadLibrary(static_cast<const uint8_t*>(data.getData()),
                           data.getSize())) {
@@ -678,6 +693,7 @@ void TypePAlphaAudioProcessor::setStateInformation(const void* data, int sizeInB
      * against an older library would otherwise replace every slot on disk at the
      * next save. Restoring the snapshot is a separate, explicit action. */
     apvts_.replaceState(state);
+    resetPhaseMaps();
     paramsDirty_.store(true, std::memory_order_relaxed);
     updateHostDisplay(juce::AudioProcessor::ChangeDetails().withProgramChanged(true));
 }

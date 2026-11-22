@@ -779,6 +779,54 @@ int main()
         check(mask_nonempty(p), "wave 13 keeps a mask at the b end of the morph");
     }
 
+    /* Turning the map off and on, or resetting it for a patch load, clears the
+     * old stochastic geometry. */
+    {
+        p1::Engine engine;
+        engine.reset();
+        if (!base_setup(engine) || !map_on(engine)) {
+            std::printf("phase_map: setup failed\n");
+            return 1;
+        }
+        set_param(engine, "op1_phase_flip.p0", 100);
+        set_param(engine, "op1_phase_flip_rate.p0", 2684355);
+        set_param(engine, "op1_phase_reorder.p0", 100);
+        set_param(engine, "op1_phase_reorder_rate.p0", 2684355);
+        engine.noteOn(60, 100, 0);
+        for (int t = 0; t < 60; ++t)
+            tick(engine);
+        uint32_t* p = pm(engine, 0, 0);
+        bool changed = false;
+        for (uint32_t k = 0u; k < p[kActive]; ++k)
+            if ((p[kNflip + k] & 1u) || p[kOrder + k] != k + 1u)
+                changed = true;
+        check(changed, "the stochastic geometry changes while the map runs");
+
+        set_param(engine, "op1_phase_on.p0", 0);
+        tick(engine);
+        set_param(engine, "op1_phase_on.p0", 1);
+        tick(engine);
+        p = pm(engine, 0, 0);
+        bool defaultOffOn = true;
+        for (uint32_t k = 0u; k < p[kActive]; ++k)
+            if ((p[kNflip + k] & 1u) || p[kOrder + k] != k + 1u)
+                defaultOffOn = false;
+        check(defaultOffOn, "off and on reset the order and the flips");
+
+        set_param(engine, "op1_phase_flip.p0", 100);
+        set_param(engine, "op1_phase_flip_rate.p0", 2684355);
+        for (int t = 0; t < 60; ++t)
+            tick(engine);
+        engine.resetPhaseMaps();
+        tick(engine);
+        p = pm(engine, 0, 0);
+        bool defaultLoad = true;
+        for (uint32_t k = 0u; k < p[kActive]; ++k)
+            if ((p[kNflip + k] & 1u) || p[kOrder + k] != k + 1u)
+                defaultLoad = false;
+        check(defaultLoad, "a patch-load reset clears the order and the flips");
+    }
+
     /* The 1x render is finite and the CPU ratio stays well inside the gate.
      * The 2x read is not built, so this measures the 1x path only. */
     {

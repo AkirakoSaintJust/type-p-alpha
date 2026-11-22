@@ -132,6 +132,12 @@ target_include_directories(lfo_fades PRIVATE "${P1_GENERATED_DIR}")
 add_dependencies(lfo_fades p1_params)
 add_test(NAME lfo_fades COMMAND lfo_fades)
 
+add_executable(filter_envelope tests/filter_envelope.cpp)
+target_link_libraries(filter_envelope PRIVATE p1_engine)
+target_include_directories(filter_envelope PRIVATE "${P1_GENERATED_DIR}")
+add_dependencies(filter_envelope p1_params)
+add_test(NAME filter_envelope COMMAND filter_envelope)
+
 add_executable(phase_map tests/phase_map.cpp)
 target_link_libraries(phase_map PRIVATE p1_engine)
 target_include_directories(phase_map PRIVATE "${P1_GENERATED_DIR}")

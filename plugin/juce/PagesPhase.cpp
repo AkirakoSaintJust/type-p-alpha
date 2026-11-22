@@ -56,8 +56,11 @@ public:
         const int fallbackSegments = juce::jlimit(
             1, 32, static_cast<int>(std::lround(
                        rawValue(state_, params::opPhase(op_, "segments", part_)))));
-        const int segments = hasLive ? live.segments : fallbackSegments;
-        const float bp = hasLive
+        /* Off is the neutral map, not the last live state. The engine also
+         * clears the pool on the switch edge and on a patch load. */
+        const bool liveMap = hasLive && on != 0;
+        const int segments = liveMap ? live.segments : fallbackSegments;
+        const float bp = liveMap
             ? static_cast<float>(live.bp) / 1000.0f
             : rawValue(state_, params::opPhase(op_, "bp", part_)) / 1000.0f;
 
@@ -86,7 +89,7 @@ public:
         g.setColour(colour(tokens::lineStrong).withAlpha(0.55f * alpha));
         g.strokePath(f, juce::PathStrokeType(1.0f));
 
-        if (hasLive) {
+        if (liveMap) {
             const float dashes[] = {2.0f, 2.0f};
             for (int i = 1; i < live.segments; ++i) {
                 const float y = static_cast<float>(i) /
@@ -145,7 +148,7 @@ public:
                            area.getY(), area.getBottom());
 
         int locked = 0;
-        if (hasLive)
+        if (liveMap)
             for (std::size_t k = 0;
                  k < static_cast<std::size_t>(live.active); ++k)
                 locked += live.locked[k] ? 1 : 0;
@@ -154,7 +157,7 @@ public:
         const auto caption = "bp " + juce::String(bp, 3) + " · π";
         g.drawText(caption, captionArea,
                    juce::Justification::centredLeft, false);
-        auto count = juce::String(hasLive ? live.active : segments) + "/" +
+        auto count = juce::String(liveMap ? live.active : segments) + "/" +
                      juce::String(segments) + " seg";
         if (locked > 0)
             count += " " + juce::String(locked) + " locked";

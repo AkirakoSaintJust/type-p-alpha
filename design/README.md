@@ -417,6 +417,8 @@ card is the signed envelope with a 48 px purple graph, `r1..r3`, `l1..l3`, `rel`
 `rl`, the mode dropdown and `on`. All three cards carry `copy` and `paste` in their
 headers, and the operator header copies and pastes the whole operator.
 
+When `on` is off, the plot shows the neutral parameter geometry rather than the
+last live map, so the switch and a patch load both reset the display.
 The map is per part and shared by the voices, so a new note can reshape a held one;
 the caption shows the actual active count when a lock lowers it. The read is 1×,
 so the joins' aliasing stays a recorded limit rather than a drawn quality.

@@ -147,23 +147,13 @@ juce::String formatParamValue(const P1ParamSpec& spec, double value)
         return signedNumber(static_cast<int>(std::lround(percent))) + "%";
     }
     if (display == "fade") {
+        /* The fade is a rate: 1 is the slowest, 99 is the fastest. Show the
+         * rate itself so the value rises with the dial; the two-line graph
+         * carries the time view. */
         const int rate = juce::jlimit(0, 99, v);
         if (rate <= 0)
             return "off";
-        if (rate >= 99)
-            return "instant";
-        const int32_t coeff = p1_rate_coeff[rate];
-        if (coeff <= 0)
-            return "instant";
-        const int32_t ticks = static_cast<int32_t>(
-            (static_cast<int64_t>(4605) * 65536) /
-            (1000 * static_cast<int64_t>(coeff)));
-        const double seconds = ticks * 32.0 / 48000.0;
-        if (seconds >= 1.0)
-            return juce::String(seconds, 1) + " s";
-        return juce::String(
-                   static_cast<int>(std::lround(seconds * 1000.0))) +
-               " ms";
+        return juce::String(rate);
     }
     if (display == "filter") {
         static const char* const names[3] = {"lpf", "bpf", "hpf"};

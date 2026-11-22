@@ -530,6 +530,7 @@ typedef struct type_p_alpha_state {
     int32_t op1_fbenv_relr[2];
     int32_t op1_fbenv_rell[2];
     int32_t op1_fbenv_mode[2];
+    int32_t op1_fbenv_scale[2];
     int32_t op1_fblfo_rate[2];
     int32_t op1_fblfo_depth[2];
     int32_t op1_fblfo_wave[2];
@@ -567,6 +568,7 @@ typedef struct type_p_alpha_state {
     int32_t op1_specenv_relr[2];
     int32_t op1_specenv_rell[2];
     int32_t op1_specenv_mode[2];
+    int32_t op1_specenv_scale[2];
     int32_t op1_speclfo_rate[2];
     int32_t op1_speclfo_depth[2];
     int32_t op1_speclfo_wave[2];
@@ -760,6 +762,7 @@ typedef struct type_p_alpha_state {
     int32_t op2_fbenv_relr[2];
     int32_t op2_fbenv_rell[2];
     int32_t op2_fbenv_mode[2];
+    int32_t op2_fbenv_scale[2];
     int32_t op2_fblfo_rate[2];
     int32_t op2_fblfo_depth[2];
     int32_t op2_fblfo_wave[2];
@@ -797,6 +800,7 @@ typedef struct type_p_alpha_state {
     int32_t op2_specenv_relr[2];
     int32_t op2_specenv_rell[2];
     int32_t op2_specenv_mode[2];
+    int32_t op2_specenv_scale[2];
     int32_t op2_speclfo_rate[2];
     int32_t op2_speclfo_depth[2];
     int32_t op2_speclfo_wave[2];
@@ -990,6 +994,7 @@ typedef struct type_p_alpha_state {
     int32_t op3_fbenv_relr[2];
     int32_t op3_fbenv_rell[2];
     int32_t op3_fbenv_mode[2];
+    int32_t op3_fbenv_scale[2];
     int32_t op3_fblfo_rate[2];
     int32_t op3_fblfo_depth[2];
     int32_t op3_fblfo_wave[2];
@@ -1027,6 +1032,7 @@ typedef struct type_p_alpha_state {
     int32_t op3_specenv_relr[2];
     int32_t op3_specenv_rell[2];
     int32_t op3_specenv_mode[2];
+    int32_t op3_specenv_scale[2];
     int32_t op3_speclfo_rate[2];
     int32_t op3_speclfo_depth[2];
     int32_t op3_speclfo_wave[2];
@@ -1220,6 +1226,7 @@ typedef struct type_p_alpha_state {
     int32_t op4_fbenv_relr[2];
     int32_t op4_fbenv_rell[2];
     int32_t op4_fbenv_mode[2];
+    int32_t op4_fbenv_scale[2];
     int32_t op4_fblfo_rate[2];
     int32_t op4_fblfo_depth[2];
     int32_t op4_fblfo_wave[2];
@@ -1257,6 +1264,7 @@ typedef struct type_p_alpha_state {
     int32_t op4_specenv_relr[2];
     int32_t op4_specenv_rell[2];
     int32_t op4_specenv_mode[2];
+    int32_t op4_specenv_scale[2];
     int32_t op4_speclfo_rate[2];
     int32_t op4_speclfo_depth[2];
     int32_t op4_speclfo_wave[2];
@@ -1303,6 +1311,7 @@ typedef struct type_p_alpha_state {
     int32_t penv_relr[2];
     int32_t penv_rell[2];
     int32_t penv_mode[2];
+    int32_t penv_scale[2];
     int32_t penv_ks_lo[2];
     int32_t penv_ks_hi[2];
     int32_t penv_vs_amount[2];
@@ -1333,6 +1342,7 @@ typedef struct type_p_alpha_state {
     int32_t fenv_relr[2];
     int32_t fenv_rell[2];
     int32_t fenv_mode[2];
+    int32_t fenv_scale[2];
     int32_t key_bp_bp;
     int32_t key_on_on;
     int32_t vel_on_on;
@@ -1553,11 +1563,11 @@ static const int32_t pan_r_table[201] = {
     92682,
 };
 
-#define PARAM_COUNT 1976
+#define PARAM_COUNT 1996
 
 typedef struct { uint32_t id; const char *name; int32_t min, max, def;
                  uint8_t curve; uint8_t rate; const char *unit; } dsp_param;
-const dsp_param type_p_alpha_dsp_params[1976] = {
+const dsp_param type_p_alpha_dsp_params[1996] = {
     { 0u, "op1_ratio.p0", 32768, 1048576, 65536, 0u, 0u, "" },
     { 1u, "op1_detune.p0", -50, 50, 0, 0u, 0u, "" },
     { 2u, "op1_waveform.p0", 0, 13, 0, 0u, 0u, "" },
@@ -1716,1827 +1726,1847 @@ const dsp_param type_p_alpha_dsp_params[1976] = {
     { 155u, "op1_fbenv_relr.p0", 0, 99, 80, 0u, 0u, "" },
     { 156u, "op1_fbenv_rell.p0", -32768, 32767, 0, 0u, 0u, "" },
     { 157u, "op1_fbenv_mode.p0", 0, 3, 1, 0u, 0u, "" },
-    { 158u, "op1_fblfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
-    { 159u, "op1_fblfo_depth.p0", -32767, 32767, 0, 0u, 0u, "" },
-    { 160u, "op1_fblfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
-    { 161u, "op1_fblfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 162u, "op1_fblfo_rate_fade.p0", 0, 99, 0, 0u, 0u, "" },
-    { 163u, "op1_fblfo_depth_fade.p0", 0, 99, 0, 0u, 0u, "" },
-    { 164u, "op1_dlfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
-    { 165u, "op1_dlfo_depth.p0", -32768, 32768, 0, 0u, 0u, "" },
-    { 166u, "op1_dlfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
-    { 167u, "op1_dlfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 168u, "op1_dlfo_rate_fade.p0", 0, 99, 0, 0u, 0u, "" },
-    { 169u, "op1_dlfo_depth_fade.p0", 0, 99, 0, 0u, 0u, "" },
-    { 170u, "op1.velamp.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 171u, "op1.velfm.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 172u, "op1.velrate.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 173u, "op1_level.p0", 0, 99, 75, 0u, 0u, "" },
-    { 174u, "op1_feedback.p0", -32767, 32767, 0, 0u, 0u, "" },
-    { 175u, "op1_level_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
-    { 176u, "op1_level_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
-    { 177u, "op1_fb_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
-    { 178u, "op1_fb_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
-    { 179u, "op1_aenv_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
-    { 180u, "op1_aenv_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
-    { 181u, "op1_level_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 182u, "op1_fb_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 183u, "op1_aenv_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 184u, "op1_mute.p0", 0, 1, 0, 0u, 0u, "" },
-    { 185u, "op1_spec_env_on.p0", 0, 1, 0, 0u, 0u, "" },
-    { 186u, "op1_spec_env_r1.p0", 0, 99, 80, 0u, 0u, "" },
-    { 187u, "op1_spec_env_r2.p0", 0, 99, 60, 0u, 0u, "" },
-    { 188u, "op1_spec_env_r3.p0", 0, 99, 50, 0u, 0u, "" },
-    { 189u, "op1_spec_env_l1.p0", 0, 99, 99, 0u, 0u, "" },
-    { 190u, "op1_spec_env_l2.p0", 0, 99, 60, 0u, 0u, "" },
-    { 191u, "op1_spec_env_l3.p0", 0, 99, 0, 0u, 0u, "" },
-    { 192u, "op1_spec_env_relr.p0", 0, 99, 80, 0u, 0u, "" },
-    { 193u, "op1_spec_env_rell.p0", 0, 99, 0, 0u, 0u, "" },
-    { 194u, "op1_spec_env_mode.p0", 0, 3, 1, 0u, 0u, "" },
-    { 195u, "op1_spec_lfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
-    { 196u, "op1_spec_lfo_depth.p0", -99, 99, 0, 0u, 0u, "" },
-    { 197u, "op1_spec_lfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
-    { 198u, "op1_spec_lfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 199u, "op1_spec_lfo_rate_fade.p0", 0, 99, 0, 0u, 0u, "" },
-    { 200u, "op1_spec_lfo_depth_fade.p0", 0, 99, 0, 0u, 0u, "" },
-    { 201u, "op2_ratio.p0", 32768, 1048576, 65536, 0u, 0u, "" },
-    { 202u, "op2_detune.p0", -50, 50, 0, 0u, 0u, "" },
-    { 203u, "op2_waveform.p0", 0, 13, 0, 0u, 0u, "" },
-    { 204u, "op2_spec_range_a.p0", 0, 1, 0, 0u, 0u, "" },
-    { 205u, "op2_spec_range_b.p0", 0, 1, 0, 0u, 0u, "" },
-    { 206u, "op2_spec_a1.p0", 0, 99, 99, 0u, 0u, "" },
-    { 207u, "op2_spec_a2.p0", 0, 99, 0, 0u, 0u, "" },
-    { 208u, "op2_spec_a3.p0", 0, 99, 0, 0u, 0u, "" },
-    { 209u, "op2_spec_a4.p0", 0, 99, 0, 0u, 0u, "" },
-    { 210u, "op2_spec_a5.p0", 0, 99, 0, 0u, 0u, "" },
-    { 211u, "op2_spec_a6.p0", 0, 99, 0, 0u, 0u, "" },
-    { 212u, "op2_spec_a7.p0", 0, 99, 0, 0u, 0u, "" },
-    { 213u, "op2_spec_a8.p0", 0, 99, 0, 0u, 0u, "" },
-    { 214u, "op2_spec_a9.p0", 0, 99, 0, 0u, 0u, "" },
-    { 215u, "op2_spec_a10.p0", 0, 99, 0, 0u, 0u, "" },
-    { 216u, "op2_spec_a11.p0", 0, 99, 0, 0u, 0u, "" },
-    { 217u, "op2_spec_a12.p0", 0, 99, 0, 0u, 0u, "" },
-    { 218u, "op2_spec_a13.p0", 0, 99, 0, 0u, 0u, "" },
-    { 219u, "op2_spec_a14.p0", 0, 99, 0, 0u, 0u, "" },
-    { 220u, "op2_spec_a15.p0", 0, 99, 0, 0u, 0u, "" },
-    { 221u, "op2_spec_a16.p0", 0, 99, 0, 0u, 0u, "" },
-    { 222u, "op2_spec_a17.p0", 0, 99, 0, 0u, 0u, "" },
-    { 223u, "op2_spec_a18.p0", 0, 99, 0, 0u, 0u, "" },
-    { 224u, "op2_spec_a19.p0", 0, 99, 0, 0u, 0u, "" },
-    { 225u, "op2_spec_a20.p0", 0, 99, 0, 0u, 0u, "" },
-    { 226u, "op2_spec_a21.p0", 0, 99, 0, 0u, 0u, "" },
-    { 227u, "op2_spec_a22.p0", 0, 99, 0, 0u, 0u, "" },
-    { 228u, "op2_spec_a23.p0", 0, 99, 0, 0u, 0u, "" },
-    { 229u, "op2_spec_a24.p0", 0, 99, 0, 0u, 0u, "" },
-    { 230u, "op2_spec_a25.p0", 0, 99, 0, 0u, 0u, "" },
-    { 231u, "op2_spec_a26.p0", 0, 99, 0, 0u, 0u, "" },
-    { 232u, "op2_spec_a27.p0", 0, 99, 0, 0u, 0u, "" },
-    { 233u, "op2_spec_a28.p0", 0, 99, 0, 0u, 0u, "" },
-    { 234u, "op2_spec_a29.p0", 0, 99, 0, 0u, 0u, "" },
-    { 235u, "op2_spec_a30.p0", 0, 99, 0, 0u, 0u, "" },
-    { 236u, "op2_spec_a31.p0", 0, 99, 0, 0u, 0u, "" },
-    { 237u, "op2_spec_a32.p0", 0, 99, 0, 0u, 0u, "" },
-    { 238u, "op2_spec_a33.p0", 0, 99, 0, 0u, 0u, "" },
-    { 239u, "op2_spec_a34.p0", 0, 99, 0, 0u, 0u, "" },
-    { 240u, "op2_spec_a35.p0", 0, 99, 0, 0u, 0u, "" },
-    { 241u, "op2_spec_a36.p0", 0, 99, 0, 0u, 0u, "" },
-    { 242u, "op2_spec_a37.p0", 0, 99, 0, 0u, 0u, "" },
-    { 243u, "op2_spec_a38.p0", 0, 99, 0, 0u, 0u, "" },
-    { 244u, "op2_spec_a39.p0", 0, 99, 0, 0u, 0u, "" },
-    { 245u, "op2_spec_a40.p0", 0, 99, 0, 0u, 0u, "" },
-    { 246u, "op2_spec_a41.p0", 0, 99, 0, 0u, 0u, "" },
-    { 247u, "op2_spec_a42.p0", 0, 99, 0, 0u, 0u, "" },
-    { 248u, "op2_spec_a43.p0", 0, 99, 0, 0u, 0u, "" },
-    { 249u, "op2_spec_a44.p0", 0, 99, 0, 0u, 0u, "" },
-    { 250u, "op2_spec_a45.p0", 0, 99, 0, 0u, 0u, "" },
-    { 251u, "op2_spec_a46.p0", 0, 99, 0, 0u, 0u, "" },
-    { 252u, "op2_spec_a47.p0", 0, 99, 0, 0u, 0u, "" },
-    { 253u, "op2_spec_a48.p0", 0, 99, 0, 0u, 0u, "" },
-    { 254u, "op2_spec_a49.p0", 0, 99, 0, 0u, 0u, "" },
-    { 255u, "op2_spec_a50.p0", 0, 99, 0, 0u, 0u, "" },
-    { 256u, "op2_spec_a51.p0", 0, 99, 0, 0u, 0u, "" },
-    { 257u, "op2_spec_a52.p0", 0, 99, 0, 0u, 0u, "" },
-    { 258u, "op2_spec_a53.p0", 0, 99, 0, 0u, 0u, "" },
-    { 259u, "op2_spec_a54.p0", 0, 99, 0, 0u, 0u, "" },
-    { 260u, "op2_spec_a55.p0", 0, 99, 0, 0u, 0u, "" },
-    { 261u, "op2_spec_a56.p0", 0, 99, 0, 0u, 0u, "" },
-    { 262u, "op2_spec_a57.p0", 0, 99, 0, 0u, 0u, "" },
-    { 263u, "op2_spec_a58.p0", 0, 99, 0, 0u, 0u, "" },
-    { 264u, "op2_spec_a59.p0", 0, 99, 0, 0u, 0u, "" },
-    { 265u, "op2_spec_a60.p0", 0, 99, 0, 0u, 0u, "" },
-    { 266u, "op2_spec_a61.p0", 0, 99, 0, 0u, 0u, "" },
-    { 267u, "op2_spec_a62.p0", 0, 99, 0, 0u, 0u, "" },
-    { 268u, "op2_spec_a63.p0", 0, 99, 0, 0u, 0u, "" },
-    { 269u, "op2_spec_a64.p0", 0, 99, 0, 0u, 0u, "" },
-    { 270u, "op2_spec_b1.p0", 0, 99, 99, 0u, 0u, "" },
-    { 271u, "op2_spec_b2.p0", 0, 99, 45, 0u, 0u, "" },
-    { 272u, "op2_spec_b3.p0", 0, 99, 30, 0u, 0u, "" },
-    { 273u, "op2_spec_b4.p0", 0, 99, 15, 0u, 0u, "" },
-    { 274u, "op2_spec_b5.p0", 0, 99, 55, 0u, 0u, "" },
-    { 275u, "op2_spec_b6.p0", 0, 99, 40, 0u, 0u, "" },
-    { 276u, "op2_spec_b7.p0", 0, 99, 25, 0u, 0u, "" },
-    { 277u, "op2_spec_b8.p0", 0, 99, 12, 0u, 0u, "" },
-    { 278u, "op2_spec_b9.p0", 0, 99, 8, 0u, 0u, "" },
-    { 279u, "op2_spec_b10.p0", 0, 99, 5, 0u, 0u, "" },
-    { 280u, "op2_spec_b11.p0", 0, 99, 3, 0u, 0u, "" },
-    { 281u, "op2_spec_b12.p0", 0, 99, 2, 0u, 0u, "" },
-    { 282u, "op2_spec_b13.p0", 0, 99, 1, 0u, 0u, "" },
-    { 283u, "op2_spec_b14.p0", 0, 99, 0, 0u, 0u, "" },
-    { 284u, "op2_spec_b15.p0", 0, 99, 0, 0u, 0u, "" },
-    { 285u, "op2_spec_b16.p0", 0, 99, 0, 0u, 0u, "" },
-    { 286u, "op2_spec_b17.p0", 0, 99, 0, 0u, 0u, "" },
-    { 287u, "op2_spec_b18.p0", 0, 99, 0, 0u, 0u, "" },
-    { 288u, "op2_spec_b19.p0", 0, 99, 0, 0u, 0u, "" },
-    { 289u, "op2_spec_b20.p0", 0, 99, 0, 0u, 0u, "" },
-    { 290u, "op2_spec_b21.p0", 0, 99, 0, 0u, 0u, "" },
-    { 291u, "op2_spec_b22.p0", 0, 99, 0, 0u, 0u, "" },
-    { 292u, "op2_spec_b23.p0", 0, 99, 0, 0u, 0u, "" },
-    { 293u, "op2_spec_b24.p0", 0, 99, 0, 0u, 0u, "" },
-    { 294u, "op2_spec_b25.p0", 0, 99, 0, 0u, 0u, "" },
-    { 295u, "op2_spec_b26.p0", 0, 99, 0, 0u, 0u, "" },
-    { 296u, "op2_spec_b27.p0", 0, 99, 0, 0u, 0u, "" },
-    { 297u, "op2_spec_b28.p0", 0, 99, 0, 0u, 0u, "" },
-    { 298u, "op2_spec_b29.p0", 0, 99, 0, 0u, 0u, "" },
-    { 299u, "op2_spec_b30.p0", 0, 99, 0, 0u, 0u, "" },
-    { 300u, "op2_spec_b31.p0", 0, 99, 0, 0u, 0u, "" },
-    { 301u, "op2_spec_b32.p0", 0, 99, 0, 0u, 0u, "" },
-    { 302u, "op2_spec_b33.p0", 0, 99, 0, 0u, 0u, "" },
-    { 303u, "op2_spec_b34.p0", 0, 99, 0, 0u, 0u, "" },
-    { 304u, "op2_spec_b35.p0", 0, 99, 0, 0u, 0u, "" },
-    { 305u, "op2_spec_b36.p0", 0, 99, 0, 0u, 0u, "" },
-    { 306u, "op2_spec_b37.p0", 0, 99, 0, 0u, 0u, "" },
-    { 307u, "op2_spec_b38.p0", 0, 99, 0, 0u, 0u, "" },
-    { 308u, "op2_spec_b39.p0", 0, 99, 0, 0u, 0u, "" },
-    { 309u, "op2_spec_b40.p0", 0, 99, 0, 0u, 0u, "" },
-    { 310u, "op2_spec_b41.p0", 0, 99, 0, 0u, 0u, "" },
-    { 311u, "op2_spec_b42.p0", 0, 99, 0, 0u, 0u, "" },
-    { 312u, "op2_spec_b43.p0", 0, 99, 0, 0u, 0u, "" },
-    { 313u, "op2_spec_b44.p0", 0, 99, 0, 0u, 0u, "" },
-    { 314u, "op2_spec_b45.p0", 0, 99, 0, 0u, 0u, "" },
-    { 315u, "op2_spec_b46.p0", 0, 99, 0, 0u, 0u, "" },
-    { 316u, "op2_spec_b47.p0", 0, 99, 0, 0u, 0u, "" },
-    { 317u, "op2_spec_b48.p0", 0, 99, 0, 0u, 0u, "" },
-    { 318u, "op2_spec_b49.p0", 0, 99, 0, 0u, 0u, "" },
-    { 319u, "op2_spec_b50.p0", 0, 99, 0, 0u, 0u, "" },
-    { 320u, "op2_spec_b51.p0", 0, 99, 0, 0u, 0u, "" },
-    { 321u, "op2_spec_b52.p0", 0, 99, 0, 0u, 0u, "" },
-    { 322u, "op2_spec_b53.p0", 0, 99, 0, 0u, 0u, "" },
-    { 323u, "op2_spec_b54.p0", 0, 99, 0, 0u, 0u, "" },
-    { 324u, "op2_spec_b55.p0", 0, 99, 0, 0u, 0u, "" },
-    { 325u, "op2_spec_b56.p0", 0, 99, 0, 0u, 0u, "" },
-    { 326u, "op2_spec_b57.p0", 0, 99, 0, 0u, 0u, "" },
-    { 327u, "op2_spec_b58.p0", 0, 99, 0, 0u, 0u, "" },
-    { 328u, "op2_spec_b59.p0", 0, 99, 0, 0u, 0u, "" },
-    { 329u, "op2_spec_b60.p0", 0, 99, 0, 0u, 0u, "" },
-    { 330u, "op2_spec_b61.p0", 0, 99, 0, 0u, 0u, "" },
-    { 331u, "op2_spec_b62.p0", 0, 99, 0, 0u, 0u, "" },
-    { 332u, "op2_spec_b63.p0", 0, 99, 0, 0u, 0u, "" },
-    { 333u, "op2_spec_b64.p0", 0, 99, 0, 0u, 0u, "" },
-    { 334u, "op2_spec_morph.p0", 0, 99, 0, 0u, 0u, "" },
-    { 335u, "op2.eg.warm.p0", 0, 99, 0, 0u, 0u, "" },
-    { 336u, "op2.eg.surge.p0", 0, 99, 80, 0u, 0u, "" },
-    { 337u, "op2.eg.d1r.p0", 0, 99, 60, 0u, 0u, "" },
-    { 338u, "op2.eg.d1l.p0", 0, 99, 93, 0u, 0u, "" },
-    { 339u, "op2.eg.d2r.p0", 0, 99, 50, 0u, 0u, "" },
-    { 340u, "op2.eg.d2l.p0", 0, 99, 87, 0u, 0u, "" },
-    { 341u, "op2.eg.rel.p0", 0, 99, 80, 0u, 0u, "" },
-    { 342u, "op2.eg.mode.p0", 0, 3, 1, 0u, 0u, "" },
-    { 343u, "op2_trem_rate.p0", 0, 20000000, 447392, 1u, 0u, "" },
-    { 344u, "op2_trem_depth.p0", -99, 99, 0, 0u, 0u, "" },
-    { 345u, "op2_trem_wave.p0", 0, 11, 0, 0u, 0u, "" },
-    { 346u, "op2_trem_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 347u, "op2_trem_rate_fade.p0", 0, 99, 0, 0u, 0u, "" },
-    { 348u, "op2_trem_depth_fade.p0", 0, 99, 0, 0u, 0u, "" },
-    { 349u, "op2_fbenv_on.p0", 0, 1, 1, 0u, 0u, "" },
-    { 350u, "op2_fbenv_r1.p0", 0, 99, 80, 0u, 0u, "" },
-    { 351u, "op2_fbenv_r2.p0", 0, 99, 60, 0u, 0u, "" },
-    { 352u, "op2_fbenv_r3.p0", 0, 99, 50, 0u, 0u, "" },
-    { 353u, "op2_fbenv_l1.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 354u, "op2_fbenv_l2.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 355u, "op2_fbenv_l3.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 356u, "op2_fbenv_relr.p0", 0, 99, 80, 0u, 0u, "" },
-    { 357u, "op2_fbenv_rell.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 358u, "op2_fbenv_mode.p0", 0, 3, 1, 0u, 0u, "" },
-    { 359u, "op2_fblfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
-    { 360u, "op2_fblfo_depth.p0", -32767, 32767, 0, 0u, 0u, "" },
-    { 361u, "op2_fblfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
-    { 362u, "op2_fblfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 363u, "op2_fblfo_rate_fade.p0", 0, 99, 0, 0u, 0u, "" },
-    { 364u, "op2_fblfo_depth_fade.p0", 0, 99, 0, 0u, 0u, "" },
-    { 365u, "op2_dlfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
-    { 366u, "op2_dlfo_depth.p0", -32768, 32768, 0, 0u, 0u, "" },
-    { 367u, "op2_dlfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
-    { 368u, "op2_dlfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 369u, "op2_dlfo_rate_fade.p0", 0, 99, 0, 0u, 0u, "" },
-    { 370u, "op2_dlfo_depth_fade.p0", 0, 99, 0, 0u, 0u, "" },
-    { 371u, "op2.velamp.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 372u, "op2.velfm.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 373u, "op2.velrate.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 374u, "op2_level.p0", 0, 99, 85, 0u, 0u, "" },
-    { 375u, "op2_feedback.p0", -32767, 32767, 0, 0u, 0u, "" },
-    { 376u, "op2_level_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
-    { 377u, "op2_level_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
-    { 378u, "op2_fb_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
-    { 379u, "op2_fb_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
-    { 380u, "op2_aenv_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
-    { 381u, "op2_aenv_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
-    { 382u, "op2_level_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 383u, "op2_fb_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 384u, "op2_aenv_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 385u, "op2_mute.p0", 0, 1, 0, 0u, 0u, "" },
-    { 386u, "op2_spec_env_on.p0", 0, 1, 0, 0u, 0u, "" },
-    { 387u, "op2_spec_env_r1.p0", 0, 99, 80, 0u, 0u, "" },
-    { 388u, "op2_spec_env_r2.p0", 0, 99, 60, 0u, 0u, "" },
-    { 389u, "op2_spec_env_r3.p0", 0, 99, 50, 0u, 0u, "" },
-    { 390u, "op2_spec_env_l1.p0", 0, 99, 99, 0u, 0u, "" },
-    { 391u, "op2_spec_env_l2.p0", 0, 99, 60, 0u, 0u, "" },
-    { 392u, "op2_spec_env_l3.p0", 0, 99, 0, 0u, 0u, "" },
-    { 393u, "op2_spec_env_relr.p0", 0, 99, 80, 0u, 0u, "" },
-    { 394u, "op2_spec_env_rell.p0", 0, 99, 0, 0u, 0u, "" },
-    { 395u, "op2_spec_env_mode.p0", 0, 3, 1, 0u, 0u, "" },
-    { 396u, "op2_spec_lfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
-    { 397u, "op2_spec_lfo_depth.p0", -99, 99, 0, 0u, 0u, "" },
-    { 398u, "op2_spec_lfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
-    { 399u, "op2_spec_lfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 400u, "op2_spec_lfo_rate_fade.p0", 0, 99, 0, 0u, 0u, "" },
-    { 401u, "op2_spec_lfo_depth_fade.p0", 0, 99, 0, 0u, 0u, "" },
-    { 402u, "op3_ratio.p0", 32768, 1048576, 196608, 0u, 0u, "" },
-    { 403u, "op3_detune.p0", -50, 50, 0, 0u, 0u, "" },
-    { 404u, "op3_waveform.p0", 0, 13, 0, 0u, 0u, "" },
-    { 405u, "op3_spec_range_a.p0", 0, 1, 0, 0u, 0u, "" },
-    { 406u, "op3_spec_range_b.p0", 0, 1, 0, 0u, 0u, "" },
-    { 407u, "op3_spec_a1.p0", 0, 99, 99, 0u, 0u, "" },
-    { 408u, "op3_spec_a2.p0", 0, 99, 0, 0u, 0u, "" },
-    { 409u, "op3_spec_a3.p0", 0, 99, 0, 0u, 0u, "" },
-    { 410u, "op3_spec_a4.p0", 0, 99, 0, 0u, 0u, "" },
-    { 411u, "op3_spec_a5.p0", 0, 99, 0, 0u, 0u, "" },
-    { 412u, "op3_spec_a6.p0", 0, 99, 0, 0u, 0u, "" },
-    { 413u, "op3_spec_a7.p0", 0, 99, 0, 0u, 0u, "" },
-    { 414u, "op3_spec_a8.p0", 0, 99, 0, 0u, 0u, "" },
-    { 415u, "op3_spec_a9.p0", 0, 99, 0, 0u, 0u, "" },
-    { 416u, "op3_spec_a10.p0", 0, 99, 0, 0u, 0u, "" },
-    { 417u, "op3_spec_a11.p0", 0, 99, 0, 0u, 0u, "" },
-    { 418u, "op3_spec_a12.p0", 0, 99, 0, 0u, 0u, "" },
-    { 419u, "op3_spec_a13.p0", 0, 99, 0, 0u, 0u, "" },
-    { 420u, "op3_spec_a14.p0", 0, 99, 0, 0u, 0u, "" },
-    { 421u, "op3_spec_a15.p0", 0, 99, 0, 0u, 0u, "" },
-    { 422u, "op3_spec_a16.p0", 0, 99, 0, 0u, 0u, "" },
-    { 423u, "op3_spec_a17.p0", 0, 99, 0, 0u, 0u, "" },
-    { 424u, "op3_spec_a18.p0", 0, 99, 0, 0u, 0u, "" },
-    { 425u, "op3_spec_a19.p0", 0, 99, 0, 0u, 0u, "" },
-    { 426u, "op3_spec_a20.p0", 0, 99, 0, 0u, 0u, "" },
-    { 427u, "op3_spec_a21.p0", 0, 99, 0, 0u, 0u, "" },
-    { 428u, "op3_spec_a22.p0", 0, 99, 0, 0u, 0u, "" },
-    { 429u, "op3_spec_a23.p0", 0, 99, 0, 0u, 0u, "" },
-    { 430u, "op3_spec_a24.p0", 0, 99, 0, 0u, 0u, "" },
-    { 431u, "op3_spec_a25.p0", 0, 99, 0, 0u, 0u, "" },
-    { 432u, "op3_spec_a26.p0", 0, 99, 0, 0u, 0u, "" },
-    { 433u, "op3_spec_a27.p0", 0, 99, 0, 0u, 0u, "" },
-    { 434u, "op3_spec_a28.p0", 0, 99, 0, 0u, 0u, "" },
-    { 435u, "op3_spec_a29.p0", 0, 99, 0, 0u, 0u, "" },
-    { 436u, "op3_spec_a30.p0", 0, 99, 0, 0u, 0u, "" },
-    { 437u, "op3_spec_a31.p0", 0, 99, 0, 0u, 0u, "" },
-    { 438u, "op3_spec_a32.p0", 0, 99, 0, 0u, 0u, "" },
-    { 439u, "op3_spec_a33.p0", 0, 99, 0, 0u, 0u, "" },
-    { 440u, "op3_spec_a34.p0", 0, 99, 0, 0u, 0u, "" },
-    { 441u, "op3_spec_a35.p0", 0, 99, 0, 0u, 0u, "" },
-    { 442u, "op3_spec_a36.p0", 0, 99, 0, 0u, 0u, "" },
-    { 443u, "op3_spec_a37.p0", 0, 99, 0, 0u, 0u, "" },
-    { 444u, "op3_spec_a38.p0", 0, 99, 0, 0u, 0u, "" },
-    { 445u, "op3_spec_a39.p0", 0, 99, 0, 0u, 0u, "" },
-    { 446u, "op3_spec_a40.p0", 0, 99, 0, 0u, 0u, "" },
-    { 447u, "op3_spec_a41.p0", 0, 99, 0, 0u, 0u, "" },
-    { 448u, "op3_spec_a42.p0", 0, 99, 0, 0u, 0u, "" },
-    { 449u, "op3_spec_a43.p0", 0, 99, 0, 0u, 0u, "" },
-    { 450u, "op3_spec_a44.p0", 0, 99, 0, 0u, 0u, "" },
-    { 451u, "op3_spec_a45.p0", 0, 99, 0, 0u, 0u, "" },
-    { 452u, "op3_spec_a46.p0", 0, 99, 0, 0u, 0u, "" },
-    { 453u, "op3_spec_a47.p0", 0, 99, 0, 0u, 0u, "" },
-    { 454u, "op3_spec_a48.p0", 0, 99, 0, 0u, 0u, "" },
-    { 455u, "op3_spec_a49.p0", 0, 99, 0, 0u, 0u, "" },
-    { 456u, "op3_spec_a50.p0", 0, 99, 0, 0u, 0u, "" },
-    { 457u, "op3_spec_a51.p0", 0, 99, 0, 0u, 0u, "" },
-    { 458u, "op3_spec_a52.p0", 0, 99, 0, 0u, 0u, "" },
-    { 459u, "op3_spec_a53.p0", 0, 99, 0, 0u, 0u, "" },
-    { 460u, "op3_spec_a54.p0", 0, 99, 0, 0u, 0u, "" },
-    { 461u, "op3_spec_a55.p0", 0, 99, 0, 0u, 0u, "" },
-    { 462u, "op3_spec_a56.p0", 0, 99, 0, 0u, 0u, "" },
-    { 463u, "op3_spec_a57.p0", 0, 99, 0, 0u, 0u, "" },
-    { 464u, "op3_spec_a58.p0", 0, 99, 0, 0u, 0u, "" },
-    { 465u, "op3_spec_a59.p0", 0, 99, 0, 0u, 0u, "" },
-    { 466u, "op3_spec_a60.p0", 0, 99, 0, 0u, 0u, "" },
-    { 467u, "op3_spec_a61.p0", 0, 99, 0, 0u, 0u, "" },
-    { 468u, "op3_spec_a62.p0", 0, 99, 0, 0u, 0u, "" },
-    { 469u, "op3_spec_a63.p0", 0, 99, 0, 0u, 0u, "" },
-    { 470u, "op3_spec_a64.p0", 0, 99, 0, 0u, 0u, "" },
-    { 471u, "op3_spec_b1.p0", 0, 99, 99, 0u, 0u, "" },
-    { 472u, "op3_spec_b2.p0", 0, 99, 45, 0u, 0u, "" },
-    { 473u, "op3_spec_b3.p0", 0, 99, 30, 0u, 0u, "" },
-    { 474u, "op3_spec_b4.p0", 0, 99, 15, 0u, 0u, "" },
-    { 475u, "op3_spec_b5.p0", 0, 99, 55, 0u, 0u, "" },
-    { 476u, "op3_spec_b6.p0", 0, 99, 40, 0u, 0u, "" },
-    { 477u, "op3_spec_b7.p0", 0, 99, 25, 0u, 0u, "" },
-    { 478u, "op3_spec_b8.p0", 0, 99, 12, 0u, 0u, "" },
-    { 479u, "op3_spec_b9.p0", 0, 99, 8, 0u, 0u, "" },
-    { 480u, "op3_spec_b10.p0", 0, 99, 5, 0u, 0u, "" },
-    { 481u, "op3_spec_b11.p0", 0, 99, 3, 0u, 0u, "" },
-    { 482u, "op3_spec_b12.p0", 0, 99, 2, 0u, 0u, "" },
-    { 483u, "op3_spec_b13.p0", 0, 99, 1, 0u, 0u, "" },
-    { 484u, "op3_spec_b14.p0", 0, 99, 0, 0u, 0u, "" },
-    { 485u, "op3_spec_b15.p0", 0, 99, 0, 0u, 0u, "" },
-    { 486u, "op3_spec_b16.p0", 0, 99, 0, 0u, 0u, "" },
-    { 487u, "op3_spec_b17.p0", 0, 99, 0, 0u, 0u, "" },
-    { 488u, "op3_spec_b18.p0", 0, 99, 0, 0u, 0u, "" },
-    { 489u, "op3_spec_b19.p0", 0, 99, 0, 0u, 0u, "" },
-    { 490u, "op3_spec_b20.p0", 0, 99, 0, 0u, 0u, "" },
-    { 491u, "op3_spec_b21.p0", 0, 99, 0, 0u, 0u, "" },
-    { 492u, "op3_spec_b22.p0", 0, 99, 0, 0u, 0u, "" },
-    { 493u, "op3_spec_b23.p0", 0, 99, 0, 0u, 0u, "" },
-    { 494u, "op3_spec_b24.p0", 0, 99, 0, 0u, 0u, "" },
-    { 495u, "op3_spec_b25.p0", 0, 99, 0, 0u, 0u, "" },
-    { 496u, "op3_spec_b26.p0", 0, 99, 0, 0u, 0u, "" },
-    { 497u, "op3_spec_b27.p0", 0, 99, 0, 0u, 0u, "" },
-    { 498u, "op3_spec_b28.p0", 0, 99, 0, 0u, 0u, "" },
-    { 499u, "op3_spec_b29.p0", 0, 99, 0, 0u, 0u, "" },
-    { 500u, "op3_spec_b30.p0", 0, 99, 0, 0u, 0u, "" },
-    { 501u, "op3_spec_b31.p0", 0, 99, 0, 0u, 0u, "" },
-    { 502u, "op3_spec_b32.p0", 0, 99, 0, 0u, 0u, "" },
-    { 503u, "op3_spec_b33.p0", 0, 99, 0, 0u, 0u, "" },
-    { 504u, "op3_spec_b34.p0", 0, 99, 0, 0u, 0u, "" },
-    { 505u, "op3_spec_b35.p0", 0, 99, 0, 0u, 0u, "" },
-    { 506u, "op3_spec_b36.p0", 0, 99, 0, 0u, 0u, "" },
-    { 507u, "op3_spec_b37.p0", 0, 99, 0, 0u, 0u, "" },
-    { 508u, "op3_spec_b38.p0", 0, 99, 0, 0u, 0u, "" },
-    { 509u, "op3_spec_b39.p0", 0, 99, 0, 0u, 0u, "" },
-    { 510u, "op3_spec_b40.p0", 0, 99, 0, 0u, 0u, "" },
-    { 511u, "op3_spec_b41.p0", 0, 99, 0, 0u, 0u, "" },
-    { 512u, "op3_spec_b42.p0", 0, 99, 0, 0u, 0u, "" },
-    { 513u, "op3_spec_b43.p0", 0, 99, 0, 0u, 0u, "" },
-    { 514u, "op3_spec_b44.p0", 0, 99, 0, 0u, 0u, "" },
-    { 515u, "op3_spec_b45.p0", 0, 99, 0, 0u, 0u, "" },
-    { 516u, "op3_spec_b46.p0", 0, 99, 0, 0u, 0u, "" },
-    { 517u, "op3_spec_b47.p0", 0, 99, 0, 0u, 0u, "" },
-    { 518u, "op3_spec_b48.p0", 0, 99, 0, 0u, 0u, "" },
-    { 519u, "op3_spec_b49.p0", 0, 99, 0, 0u, 0u, "" },
-    { 520u, "op3_spec_b50.p0", 0, 99, 0, 0u, 0u, "" },
-    { 521u, "op3_spec_b51.p0", 0, 99, 0, 0u, 0u, "" },
-    { 522u, "op3_spec_b52.p0", 0, 99, 0, 0u, 0u, "" },
-    { 523u, "op3_spec_b53.p0", 0, 99, 0, 0u, 0u, "" },
-    { 524u, "op3_spec_b54.p0", 0, 99, 0, 0u, 0u, "" },
-    { 525u, "op3_spec_b55.p0", 0, 99, 0, 0u, 0u, "" },
-    { 526u, "op3_spec_b56.p0", 0, 99, 0, 0u, 0u, "" },
-    { 527u, "op3_spec_b57.p0", 0, 99, 0, 0u, 0u, "" },
-    { 528u, "op3_spec_b58.p0", 0, 99, 0, 0u, 0u, "" },
-    { 529u, "op3_spec_b59.p0", 0, 99, 0, 0u, 0u, "" },
-    { 530u, "op3_spec_b60.p0", 0, 99, 0, 0u, 0u, "" },
-    { 531u, "op3_spec_b61.p0", 0, 99, 0, 0u, 0u, "" },
-    { 532u, "op3_spec_b62.p0", 0, 99, 0, 0u, 0u, "" },
-    { 533u, "op3_spec_b63.p0", 0, 99, 0, 0u, 0u, "" },
-    { 534u, "op3_spec_b64.p0", 0, 99, 0, 0u, 0u, "" },
-    { 535u, "op3_spec_morph.p0", 0, 99, 0, 0u, 0u, "" },
-    { 536u, "op3.eg.warm.p0", 0, 99, 0, 0u, 0u, "" },
-    { 537u, "op3.eg.surge.p0", 0, 99, 80, 0u, 0u, "" },
-    { 538u, "op3.eg.d1r.p0", 0, 99, 60, 0u, 0u, "" },
-    { 539u, "op3.eg.d1l.p0", 0, 99, 93, 0u, 0u, "" },
-    { 540u, "op3.eg.d2r.p0", 0, 99, 50, 0u, 0u, "" },
-    { 541u, "op3.eg.d2l.p0", 0, 99, 87, 0u, 0u, "" },
-    { 542u, "op3.eg.rel.p0", 0, 99, 80, 0u, 0u, "" },
-    { 543u, "op3.eg.mode.p0", 0, 3, 1, 0u, 0u, "" },
-    { 544u, "op3_trem_rate.p0", 0, 20000000, 292174, 1u, 0u, "" },
-    { 545u, "op3_trem_depth.p0", -99, 99, 0, 0u, 0u, "" },
-    { 546u, "op3_trem_wave.p0", 0, 11, 0, 0u, 0u, "" },
-    { 547u, "op3_trem_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 548u, "op3_trem_rate_fade.p0", 0, 99, 0, 0u, 0u, "" },
-    { 549u, "op3_trem_depth_fade.p0", 0, 99, 0, 0u, 0u, "" },
-    { 550u, "op3_fbenv_on.p0", 0, 1, 1, 0u, 0u, "" },
-    { 551u, "op3_fbenv_r1.p0", 0, 99, 80, 0u, 0u, "" },
-    { 552u, "op3_fbenv_r2.p0", 0, 99, 60, 0u, 0u, "" },
-    { 553u, "op3_fbenv_r3.p0", 0, 99, 50, 0u, 0u, "" },
-    { 554u, "op3_fbenv_l1.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 555u, "op3_fbenv_l2.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 556u, "op3_fbenv_l3.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 557u, "op3_fbenv_relr.p0", 0, 99, 80, 0u, 0u, "" },
-    { 558u, "op3_fbenv_rell.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 559u, "op3_fbenv_mode.p0", 0, 3, 1, 0u, 0u, "" },
-    { 560u, "op3_fblfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
-    { 561u, "op3_fblfo_depth.p0", -32767, 32767, 0, 0u, 0u, "" },
-    { 562u, "op3_fblfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
-    { 563u, "op3_fblfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 564u, "op3_fblfo_rate_fade.p0", 0, 99, 0, 0u, 0u, "" },
-    { 565u, "op3_fblfo_depth_fade.p0", 0, 99, 0, 0u, 0u, "" },
-    { 566u, "op3_dlfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
-    { 567u, "op3_dlfo_depth.p0", -32768, 32768, 0, 0u, 0u, "" },
-    { 568u, "op3_dlfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
-    { 569u, "op3_dlfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 570u, "op3_dlfo_rate_fade.p0", 0, 99, 0, 0u, 0u, "" },
-    { 571u, "op3_dlfo_depth_fade.p0", 0, 99, 0, 0u, 0u, "" },
-    { 572u, "op3.velamp.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 573u, "op3.velfm.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 574u, "op3.velrate.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 575u, "op3_level.p0", 0, 99, 70, 0u, 0u, "" },
-    { 576u, "op3_feedback.p0", -32767, 32767, 0, 0u, 0u, "" },
-    { 577u, "op3_level_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
-    { 578u, "op3_level_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
-    { 579u, "op3_fb_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
-    { 580u, "op3_fb_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
-    { 581u, "op3_aenv_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
-    { 582u, "op3_aenv_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
-    { 583u, "op3_level_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 584u, "op3_fb_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 585u, "op3_aenv_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 586u, "op3_mute.p0", 0, 1, 0, 0u, 0u, "" },
-    { 587u, "op3_spec_env_on.p0", 0, 1, 0, 0u, 0u, "" },
-    { 588u, "op3_spec_env_r1.p0", 0, 99, 80, 0u, 0u, "" },
-    { 589u, "op3_spec_env_r2.p0", 0, 99, 60, 0u, 0u, "" },
-    { 590u, "op3_spec_env_r3.p0", 0, 99, 50, 0u, 0u, "" },
-    { 591u, "op3_spec_env_l1.p0", 0, 99, 99, 0u, 0u, "" },
-    { 592u, "op3_spec_env_l2.p0", 0, 99, 60, 0u, 0u, "" },
-    { 593u, "op3_spec_env_l3.p0", 0, 99, 0, 0u, 0u, "" },
-    { 594u, "op3_spec_env_relr.p0", 0, 99, 80, 0u, 0u, "" },
-    { 595u, "op3_spec_env_rell.p0", 0, 99, 0, 0u, 0u, "" },
-    { 596u, "op3_spec_env_mode.p0", 0, 3, 1, 0u, 0u, "" },
-    { 597u, "op3_spec_lfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
-    { 598u, "op3_spec_lfo_depth.p0", -99, 99, 0, 0u, 0u, "" },
-    { 599u, "op3_spec_lfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
-    { 600u, "op3_spec_lfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 601u, "op3_spec_lfo_rate_fade.p0", 0, 99, 0, 0u, 0u, "" },
-    { 602u, "op3_spec_lfo_depth_fade.p0", 0, 99, 0, 0u, 0u, "" },
-    { 603u, "op4_ratio.p0", 32768, 1048576, 131072, 0u, 0u, "" },
-    { 604u, "op4_detune.p0", -50, 50, 0, 0u, 0u, "" },
-    { 605u, "op4_waveform.p0", 0, 13, 0, 0u, 0u, "" },
-    { 606u, "op4_spec_range_a.p0", 0, 1, 0, 0u, 0u, "" },
-    { 607u, "op4_spec_range_b.p0", 0, 1, 0, 0u, 0u, "" },
-    { 608u, "op4_spec_a1.p0", 0, 99, 99, 0u, 0u, "" },
-    { 609u, "op4_spec_a2.p0", 0, 99, 0, 0u, 0u, "" },
-    { 610u, "op4_spec_a3.p0", 0, 99, 0, 0u, 0u, "" },
-    { 611u, "op4_spec_a4.p0", 0, 99, 0, 0u, 0u, "" },
-    { 612u, "op4_spec_a5.p0", 0, 99, 0, 0u, 0u, "" },
-    { 613u, "op4_spec_a6.p0", 0, 99, 0, 0u, 0u, "" },
-    { 614u, "op4_spec_a7.p0", 0, 99, 0, 0u, 0u, "" },
-    { 615u, "op4_spec_a8.p0", 0, 99, 0, 0u, 0u, "" },
-    { 616u, "op4_spec_a9.p0", 0, 99, 0, 0u, 0u, "" },
-    { 617u, "op4_spec_a10.p0", 0, 99, 0, 0u, 0u, "" },
-    { 618u, "op4_spec_a11.p0", 0, 99, 0, 0u, 0u, "" },
-    { 619u, "op4_spec_a12.p0", 0, 99, 0, 0u, 0u, "" },
-    { 620u, "op4_spec_a13.p0", 0, 99, 0, 0u, 0u, "" },
-    { 621u, "op4_spec_a14.p0", 0, 99, 0, 0u, 0u, "" },
-    { 622u, "op4_spec_a15.p0", 0, 99, 0, 0u, 0u, "" },
-    { 623u, "op4_spec_a16.p0", 0, 99, 0, 0u, 0u, "" },
-    { 624u, "op4_spec_a17.p0", 0, 99, 0, 0u, 0u, "" },
-    { 625u, "op4_spec_a18.p0", 0, 99, 0, 0u, 0u, "" },
-    { 626u, "op4_spec_a19.p0", 0, 99, 0, 0u, 0u, "" },
-    { 627u, "op4_spec_a20.p0", 0, 99, 0, 0u, 0u, "" },
-    { 628u, "op4_spec_a21.p0", 0, 99, 0, 0u, 0u, "" },
-    { 629u, "op4_spec_a22.p0", 0, 99, 0, 0u, 0u, "" },
-    { 630u, "op4_spec_a23.p0", 0, 99, 0, 0u, 0u, "" },
-    { 631u, "op4_spec_a24.p0", 0, 99, 0, 0u, 0u, "" },
-    { 632u, "op4_spec_a25.p0", 0, 99, 0, 0u, 0u, "" },
-    { 633u, "op4_spec_a26.p0", 0, 99, 0, 0u, 0u, "" },
-    { 634u, "op4_spec_a27.p0", 0, 99, 0, 0u, 0u, "" },
-    { 635u, "op4_spec_a28.p0", 0, 99, 0, 0u, 0u, "" },
-    { 636u, "op4_spec_a29.p0", 0, 99, 0, 0u, 0u, "" },
-    { 637u, "op4_spec_a30.p0", 0, 99, 0, 0u, 0u, "" },
-    { 638u, "op4_spec_a31.p0", 0, 99, 0, 0u, 0u, "" },
-    { 639u, "op4_spec_a32.p0", 0, 99, 0, 0u, 0u, "" },
-    { 640u, "op4_spec_a33.p0", 0, 99, 0, 0u, 0u, "" },
-    { 641u, "op4_spec_a34.p0", 0, 99, 0, 0u, 0u, "" },
-    { 642u, "op4_spec_a35.p0", 0, 99, 0, 0u, 0u, "" },
-    { 643u, "op4_spec_a36.p0", 0, 99, 0, 0u, 0u, "" },
-    { 644u, "op4_spec_a37.p0", 0, 99, 0, 0u, 0u, "" },
-    { 645u, "op4_spec_a38.p0", 0, 99, 0, 0u, 0u, "" },
-    { 646u, "op4_spec_a39.p0", 0, 99, 0, 0u, 0u, "" },
-    { 647u, "op4_spec_a40.p0", 0, 99, 0, 0u, 0u, "" },
-    { 648u, "op4_spec_a41.p0", 0, 99, 0, 0u, 0u, "" },
-    { 649u, "op4_spec_a42.p0", 0, 99, 0, 0u, 0u, "" },
-    { 650u, "op4_spec_a43.p0", 0, 99, 0, 0u, 0u, "" },
-    { 651u, "op4_spec_a44.p0", 0, 99, 0, 0u, 0u, "" },
-    { 652u, "op4_spec_a45.p0", 0, 99, 0, 0u, 0u, "" },
-    { 653u, "op4_spec_a46.p0", 0, 99, 0, 0u, 0u, "" },
-    { 654u, "op4_spec_a47.p0", 0, 99, 0, 0u, 0u, "" },
-    { 655u, "op4_spec_a48.p0", 0, 99, 0, 0u, 0u, "" },
-    { 656u, "op4_spec_a49.p0", 0, 99, 0, 0u, 0u, "" },
-    { 657u, "op4_spec_a50.p0", 0, 99, 0, 0u, 0u, "" },
-    { 658u, "op4_spec_a51.p0", 0, 99, 0, 0u, 0u, "" },
-    { 659u, "op4_spec_a52.p0", 0, 99, 0, 0u, 0u, "" },
-    { 660u, "op4_spec_a53.p0", 0, 99, 0, 0u, 0u, "" },
-    { 661u, "op4_spec_a54.p0", 0, 99, 0, 0u, 0u, "" },
-    { 662u, "op4_spec_a55.p0", 0, 99, 0, 0u, 0u, "" },
-    { 663u, "op4_spec_a56.p0", 0, 99, 0, 0u, 0u, "" },
-    { 664u, "op4_spec_a57.p0", 0, 99, 0, 0u, 0u, "" },
-    { 665u, "op4_spec_a58.p0", 0, 99, 0, 0u, 0u, "" },
-    { 666u, "op4_spec_a59.p0", 0, 99, 0, 0u, 0u, "" },
-    { 667u, "op4_spec_a60.p0", 0, 99, 0, 0u, 0u, "" },
-    { 668u, "op4_spec_a61.p0", 0, 99, 0, 0u, 0u, "" },
-    { 669u, "op4_spec_a62.p0", 0, 99, 0, 0u, 0u, "" },
-    { 670u, "op4_spec_a63.p0", 0, 99, 0, 0u, 0u, "" },
-    { 671u, "op4_spec_a64.p0", 0, 99, 0, 0u, 0u, "" },
-    { 672u, "op4_spec_b1.p0", 0, 99, 99, 0u, 0u, "" },
-    { 673u, "op4_spec_b2.p0", 0, 99, 45, 0u, 0u, "" },
-    { 674u, "op4_spec_b3.p0", 0, 99, 30, 0u, 0u, "" },
-    { 675u, "op4_spec_b4.p0", 0, 99, 15, 0u, 0u, "" },
-    { 676u, "op4_spec_b5.p0", 0, 99, 55, 0u, 0u, "" },
-    { 677u, "op4_spec_b6.p0", 0, 99, 40, 0u, 0u, "" },
-    { 678u, "op4_spec_b7.p0", 0, 99, 25, 0u, 0u, "" },
-    { 679u, "op4_spec_b8.p0", 0, 99, 12, 0u, 0u, "" },
-    { 680u, "op4_spec_b9.p0", 0, 99, 8, 0u, 0u, "" },
-    { 681u, "op4_spec_b10.p0", 0, 99, 5, 0u, 0u, "" },
-    { 682u, "op4_spec_b11.p0", 0, 99, 3, 0u, 0u, "" },
-    { 683u, "op4_spec_b12.p0", 0, 99, 2, 0u, 0u, "" },
-    { 684u, "op4_spec_b13.p0", 0, 99, 1, 0u, 0u, "" },
-    { 685u, "op4_spec_b14.p0", 0, 99, 0, 0u, 0u, "" },
-    { 686u, "op4_spec_b15.p0", 0, 99, 0, 0u, 0u, "" },
-    { 687u, "op4_spec_b16.p0", 0, 99, 0, 0u, 0u, "" },
-    { 688u, "op4_spec_b17.p0", 0, 99, 0, 0u, 0u, "" },
-    { 689u, "op4_spec_b18.p0", 0, 99, 0, 0u, 0u, "" },
-    { 690u, "op4_spec_b19.p0", 0, 99, 0, 0u, 0u, "" },
-    { 691u, "op4_spec_b20.p0", 0, 99, 0, 0u, 0u, "" },
-    { 692u, "op4_spec_b21.p0", 0, 99, 0, 0u, 0u, "" },
-    { 693u, "op4_spec_b22.p0", 0, 99, 0, 0u, 0u, "" },
-    { 694u, "op4_spec_b23.p0", 0, 99, 0, 0u, 0u, "" },
-    { 695u, "op4_spec_b24.p0", 0, 99, 0, 0u, 0u, "" },
-    { 696u, "op4_spec_b25.p0", 0, 99, 0, 0u, 0u, "" },
-    { 697u, "op4_spec_b26.p0", 0, 99, 0, 0u, 0u, "" },
-    { 698u, "op4_spec_b27.p0", 0, 99, 0, 0u, 0u, "" },
-    { 699u, "op4_spec_b28.p0", 0, 99, 0, 0u, 0u, "" },
-    { 700u, "op4_spec_b29.p0", 0, 99, 0, 0u, 0u, "" },
-    { 701u, "op4_spec_b30.p0", 0, 99, 0, 0u, 0u, "" },
-    { 702u, "op4_spec_b31.p0", 0, 99, 0, 0u, 0u, "" },
-    { 703u, "op4_spec_b32.p0", 0, 99, 0, 0u, 0u, "" },
-    { 704u, "op4_spec_b33.p0", 0, 99, 0, 0u, 0u, "" },
-    { 705u, "op4_spec_b34.p0", 0, 99, 0, 0u, 0u, "" },
-    { 706u, "op4_spec_b35.p0", 0, 99, 0, 0u, 0u, "" },
-    { 707u, "op4_spec_b36.p0", 0, 99, 0, 0u, 0u, "" },
-    { 708u, "op4_spec_b37.p0", 0, 99, 0, 0u, 0u, "" },
-    { 709u, "op4_spec_b38.p0", 0, 99, 0, 0u, 0u, "" },
-    { 710u, "op4_spec_b39.p0", 0, 99, 0, 0u, 0u, "" },
-    { 711u, "op4_spec_b40.p0", 0, 99, 0, 0u, 0u, "" },
-    { 712u, "op4_spec_b41.p0", 0, 99, 0, 0u, 0u, "" },
-    { 713u, "op4_spec_b42.p0", 0, 99, 0, 0u, 0u, "" },
-    { 714u, "op4_spec_b43.p0", 0, 99, 0, 0u, 0u, "" },
-    { 715u, "op4_spec_b44.p0", 0, 99, 0, 0u, 0u, "" },
-    { 716u, "op4_spec_b45.p0", 0, 99, 0, 0u, 0u, "" },
-    { 717u, "op4_spec_b46.p0", 0, 99, 0, 0u, 0u, "" },
-    { 718u, "op4_spec_b47.p0", 0, 99, 0, 0u, 0u, "" },
-    { 719u, "op4_spec_b48.p0", 0, 99, 0, 0u, 0u, "" },
-    { 720u, "op4_spec_b49.p0", 0, 99, 0, 0u, 0u, "" },
-    { 721u, "op4_spec_b50.p0", 0, 99, 0, 0u, 0u, "" },
-    { 722u, "op4_spec_b51.p0", 0, 99, 0, 0u, 0u, "" },
-    { 723u, "op4_spec_b52.p0", 0, 99, 0, 0u, 0u, "" },
-    { 724u, "op4_spec_b53.p0", 0, 99, 0, 0u, 0u, "" },
-    { 725u, "op4_spec_b54.p0", 0, 99, 0, 0u, 0u, "" },
-    { 726u, "op4_spec_b55.p0", 0, 99, 0, 0u, 0u, "" },
-    { 727u, "op4_spec_b56.p0", 0, 99, 0, 0u, 0u, "" },
-    { 728u, "op4_spec_b57.p0", 0, 99, 0, 0u, 0u, "" },
-    { 729u, "op4_spec_b58.p0", 0, 99, 0, 0u, 0u, "" },
-    { 730u, "op4_spec_b59.p0", 0, 99, 0, 0u, 0u, "" },
-    { 731u, "op4_spec_b60.p0", 0, 99, 0, 0u, 0u, "" },
-    { 732u, "op4_spec_b61.p0", 0, 99, 0, 0u, 0u, "" },
-    { 733u, "op4_spec_b62.p0", 0, 99, 0, 0u, 0u, "" },
-    { 734u, "op4_spec_b63.p0", 0, 99, 0, 0u, 0u, "" },
-    { 735u, "op4_spec_b64.p0", 0, 99, 0, 0u, 0u, "" },
-    { 736u, "op4_spec_morph.p0", 0, 99, 0, 0u, 0u, "" },
-    { 737u, "op4.eg.warm.p0", 0, 99, 0, 0u, 0u, "" },
-    { 738u, "op4.eg.surge.p0", 0, 99, 80, 0u, 0u, "" },
-    { 739u, "op4.eg.d1r.p0", 0, 99, 60, 0u, 0u, "" },
-    { 740u, "op4.eg.d1l.p0", 0, 99, 93, 0u, 0u, "" },
-    { 741u, "op4.eg.d2r.p0", 0, 99, 50, 0u, 0u, "" },
-    { 742u, "op4.eg.d2l.p0", 0, 99, 87, 0u, 0u, "" },
-    { 743u, "op4.eg.rel.p0", 0, 99, 80, 0u, 0u, "" },
-    { 744u, "op4.eg.mode.p0", 0, 3, 1, 0u, 0u, "" },
-    { 745u, "op4_trem_rate.p0", 0, 20000000, 340870, 1u, 0u, "" },
-    { 746u, "op4_trem_depth.p0", -99, 99, 0, 0u, 0u, "" },
-    { 747u, "op4_trem_wave.p0", 0, 11, 0, 0u, 0u, "" },
-    { 748u, "op4_trem_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 749u, "op4_trem_rate_fade.p0", 0, 99, 0, 0u, 0u, "" },
-    { 750u, "op4_trem_depth_fade.p0", 0, 99, 0, 0u, 0u, "" },
-    { 751u, "op4_fbenv_on.p0", 0, 1, 1, 0u, 0u, "" },
-    { 752u, "op4_fbenv_r1.p0", 0, 99, 80, 0u, 0u, "" },
-    { 753u, "op4_fbenv_r2.p0", 0, 99, 60, 0u, 0u, "" },
-    { 754u, "op4_fbenv_r3.p0", 0, 99, 50, 0u, 0u, "" },
-    { 755u, "op4_fbenv_l1.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 756u, "op4_fbenv_l2.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 757u, "op4_fbenv_l3.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 758u, "op4_fbenv_relr.p0", 0, 99, 80, 0u, 0u, "" },
-    { 759u, "op4_fbenv_rell.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 760u, "op4_fbenv_mode.p0", 0, 3, 1, 0u, 0u, "" },
-    { 761u, "op4_fblfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
-    { 762u, "op4_fblfo_depth.p0", -32767, 32767, 0, 0u, 0u, "" },
-    { 763u, "op4_fblfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
-    { 764u, "op4_fblfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 765u, "op4_fblfo_rate_fade.p0", 0, 99, 0, 0u, 0u, "" },
-    { 766u, "op4_fblfo_depth_fade.p0", 0, 99, 0, 0u, 0u, "" },
-    { 767u, "op4_dlfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
-    { 768u, "op4_dlfo_depth.p0", -32768, 32768, 0, 0u, 0u, "" },
-    { 769u, "op4_dlfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
-    { 770u, "op4_dlfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 771u, "op4_dlfo_rate_fade.p0", 0, 99, 0, 0u, 0u, "" },
-    { 772u, "op4_dlfo_depth_fade.p0", 0, 99, 0, 0u, 0u, "" },
-    { 773u, "op4.velamp.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 774u, "op4.velfm.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 775u, "op4.velrate.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 776u, "op4_level.p0", 0, 99, 85, 0u, 0u, "" },
-    { 777u, "op4_feedback.p0", -32767, 32767, 0, 0u, 0u, "" },
-    { 778u, "op4_level_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
-    { 779u, "op4_level_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
-    { 780u, "op4_fb_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
-    { 781u, "op4_fb_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
-    { 782u, "op4_aenv_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
-    { 783u, "op4_aenv_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
-    { 784u, "op4_level_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 785u, "op4_fb_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 786u, "op4_aenv_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 787u, "op4_mute.p0", 0, 1, 0, 0u, 0u, "" },
-    { 788u, "op4_spec_env_on.p0", 0, 1, 0, 0u, 0u, "" },
-    { 789u, "op4_spec_env_r1.p0", 0, 99, 80, 0u, 0u, "" },
-    { 790u, "op4_spec_env_r2.p0", 0, 99, 60, 0u, 0u, "" },
-    { 791u, "op4_spec_env_r3.p0", 0, 99, 50, 0u, 0u, "" },
-    { 792u, "op4_spec_env_l1.p0", 0, 99, 99, 0u, 0u, "" },
-    { 793u, "op4_spec_env_l2.p0", 0, 99, 60, 0u, 0u, "" },
-    { 794u, "op4_spec_env_l3.p0", 0, 99, 0, 0u, 0u, "" },
-    { 795u, "op4_spec_env_relr.p0", 0, 99, 80, 0u, 0u, "" },
-    { 796u, "op4_spec_env_rell.p0", 0, 99, 0, 0u, 0u, "" },
-    { 797u, "op4_spec_env_mode.p0", 0, 3, 1, 0u, 0u, "" },
-    { 798u, "op4_spec_lfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
-    { 799u, "op4_spec_lfo_depth.p0", -99, 99, 0, 0u, 0u, "" },
-    { 800u, "op4_spec_lfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
-    { 801u, "op4_spec_lfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 802u, "op4_spec_lfo_rate_fade.p0", 0, 99, 0, 0u, 0u, "" },
-    { 803u, "op4_spec_lfo_depth_fade.p0", 0, 99, 0, 0u, 0u, "" },
-    { 804u, "algorithm.p0", 0, 7, 4, 0u, 0u, "" },
-    { 805u, "penv_on.p0", 0, 1, 0, 0u, 0u, "" },
-    { 806u, "penv_r1.p0", 0, 99, 80, 0u, 0u, "" },
-    { 807u, "penv_r2.p0", 0, 99, 60, 0u, 0u, "" },
-    { 808u, "penv_r3.p0", 0, 99, 50, 0u, 0u, "" },
-    { 809u, "penv_l1.p0", -32768, 32767, 5461, 0u, 0u, "" },
-    { 810u, "penv_l2.p0", -32768, 32767, 2731, 0u, 0u, "" },
-    { 811u, "penv_l3.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 812u, "penv_relr.p0", 0, 99, 80, 0u, 0u, "" },
-    { 813u, "penv_rell.p0", -32768, 32767, 0, 0u, 0u, "" },
-    { 814u, "penv_mode.p0", 0, 3, 1, 0u, 0u, "" },
-    { 815u, "penv_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
-    { 816u, "penv_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
-    { 817u, "penv_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 818u, "pitch_rate.p0", 0, 20000000, 447392, 1u, 0u, "" },
-    { 819u, "pitch_depth.p0", -32768, 32768, 273, 0u, 0u, "" },
-    { 820u, "pitch_wave.p0", 0, 11, 0, 0u, 0u, "" },
-    { 821u, "pitch_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 822u, "pitch_rate_fade.p0", 0, 99, 0, 0u, 0u, "" },
-    { 823u, "pitch_depth_fade.p0", 0, 99, 0, 0u, 0u, "" },
-    { 824u, "f1_cutoff_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
-    { 825u, "f1_cutoff_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
-    { 826u, "fenv_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
-    { 827u, "fenv_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
-    { 828u, "f1_cutoff_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 829u, "fenv_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 830u, "cutoff.p0", 0, 55296, 36958, 0u, 0u, "" },
-    { 831u, "res.p0", 0, 41942, 16000, 0u, 0u, "" },
-    { 832u, "lp.comp.p0", -32768, 32767, 7209, 0u, 0u, "" },
-    { 833u, "filter_type.p0", 0, 2, 0, 0u, 0u, "" },
-    { 834u, "filter_on.p0", 0, 1, 0, 0u, 0u, "" },
-    { 835u, "fenv_on.p0", 0, 1, 0, 0u, 0u, "" },
-    { 836u, "fenv_r1.p0", 0, 99, 80, 0u, 0u, "" },
-    { 837u, "fenv_r2.p0", 0, 99, 60, 0u, 0u, "" },
-    { 838u, "fenv_r3.p0", 0, 99, 50, 0u, 0u, "" },
-    { 839u, "fenv_l1.p0", 0, 99, 99, 0u, 0u, "" },
-    { 840u, "fenv_l2.p0", 0, 99, 93, 0u, 0u, "" },
-    { 841u, "fenv_l3.p0", 0, 99, 87, 0u, 0u, "" },
-    { 842u, "fenv_relr.p0", 0, 99, 80, 0u, 0u, "" },
-    { 843u, "fenv_rell.p0", 0, 99, 0, 0u, 0u, "" },
-    { 844u, "fenv_mode.p0", 0, 3, 1, 0u, 0u, "" },
-    { 845u, "mode.p0", 0, 1, 0, 0u, 0u, "" },
-    { 846u, "unison_count.p0", 1, 8, 1, 0u, 0u, "" },
-    { 847u, "unison_detune.p0", 0, 200, 0, 0u, 0u, "cents" },
-    { 848u, "detune.p0", -50, 50, 0, 0u, 0u, "cents" },
-    { 849u, "transpose.p0", -24, 24, 0, 0u, 0u, "st" },
-    { 850u, "legato.p0", 0, 1, 0, 0u, 0u, "" },
-    { 851u, "portamento.p0", 0, 5000, 0, 1u, 0u, "" },
-    { 852u, "note_priority.p0", 0, 2, 0, 0u, 0u, "" },
-    { 853u, "bend_range.p0", 0, 24, 2, 0u, 0u, "st" },
-    { 854u, "pan.p0", -100, 100, 0, 0u, 0u, "%" },
-    { 855u, "pan_env_on.p0", 0, 1, 1, 0u, 0u, "" },
-    { 856u, "pan_env_r1.p0", 0, 99, 80, 0u, 0u, "" },
-    { 857u, "pan_env_r2.p0", 0, 99, 60, 0u, 0u, "" },
-    { 858u, "pan_env_r3.p0", 0, 99, 50, 0u, 0u, "" },
-    { 859u, "pan_env_l1.p0", -99, 99, 0, 0u, 0u, "" },
-    { 860u, "pan_env_l2.p0", -99, 99, 0, 0u, 0u, "" },
-    { 861u, "pan_env_l3.p0", -99, 99, 0, 0u, 0u, "" },
-    { 862u, "pan_env_relr.p0", 0, 99, 80, 0u, 0u, "" },
-    { 863u, "pan_env_rell.p0", -99, 99, 0, 0u, 0u, "" },
-    { 864u, "pan_env_mode.p0", 0, 3, 0, 0u, 0u, "" },
-    { 865u, "op1_phase_on.p0", 0, 1, 0, 0u, 0u, "" },
-    { 866u, "op1_phase_bp.p0", 1, 999, 500, 0u, 0u, "" },
-    { 867u, "op1_phase_segments.p0", 1, 32, 8, 0u, 0u, "" },
-    { 868u, "op1_phase_flip.p0", 0, 100, 0, 0u, 0u, "" },
-    { 869u, "op1_phase_flip_rate.p0", 0, 20000000, 178956, 1u, 0u, "" },
-    { 870u, "op1_phase_reorder.p0", 0, 100, 0, 0u, 0u, "" },
-    { 871u, "op1_phase_reorder_rate.p0", 0, 20000000, 0, 1u, 0u, "" },
-    { 872u, "op1_phase_jump.p0", 1, 32, 1, 0u, 0u, "" },
-    { 873u, "op1_phase_drift.p0", 0, 100, 0, 0u, 0u, "" },
-    { 874u, "op1_phase_drift_rate.p0", 0, 20000000, 107374, 1u, 0u, "" },
-    { 875u, "op1_phase_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
-    { 876u, "op1_phase_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
-    { 877u, "op1_phase_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 878u, "op1_phase_lfo_rate.p0", 0, 20000000, 44739, 1u, 0u, "" },
-    { 879u, "op1_phase_lfo_depth.p0", -100, 100, 0, 0u, 0u, "" },
-    { 880u, "op1_phase_lfo_wave.p0", 0, 5, 0, 0u, 0u, "" },
-    { 881u, "op1_phase_lfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 882u, "op1_phase_lfo_rate_fade.p0", 0, 99, 0, 0u, 0u, "" },
-    { 883u, "op1_phase_lfo_depth_fade.p0", 0, 99, 0, 0u, 0u, "" },
-    { 884u, "op1_phase_env_on.p0", 0, 1, 1, 0u, 0u, "" },
-    { 885u, "op1_phase_env_r1.p0", 0, 99, 80, 0u, 0u, "" },
-    { 886u, "op1_phase_env_r2.p0", 0, 99, 60, 0u, 0u, "" },
-    { 887u, "op1_phase_env_r3.p0", 0, 99, 50, 0u, 0u, "" },
-    { 888u, "op1_phase_env_l1.p0", -100, 100, 0, 0u, 0u, "" },
-    { 889u, "op1_phase_env_l2.p0", -100, 100, 0, 0u, 0u, "" },
-    { 890u, "op1_phase_env_l3.p0", -100, 100, 0, 0u, 0u, "" },
-    { 891u, "op1_phase_env_relr.p0", 0, 99, 80, 0u, 0u, "" },
-    { 892u, "op1_phase_env_rell.p0", -100, 100, 0, 0u, 0u, "" },
-    { 893u, "op1_phase_env_mode.p0", 0, 3, 1, 0u, 0u, "" },
-    { 894u, "op2_phase_on.p0", 0, 1, 0, 0u, 0u, "" },
-    { 895u, "op2_phase_bp.p0", 1, 999, 500, 0u, 0u, "" },
-    { 896u, "op2_phase_segments.p0", 1, 32, 8, 0u, 0u, "" },
-    { 897u, "op2_phase_flip.p0", 0, 100, 0, 0u, 0u, "" },
-    { 898u, "op2_phase_flip_rate.p0", 0, 20000000, 178956, 1u, 0u, "" },
-    { 899u, "op2_phase_reorder.p0", 0, 100, 0, 0u, 0u, "" },
-    { 900u, "op2_phase_reorder_rate.p0", 0, 20000000, 0, 1u, 0u, "" },
-    { 901u, "op2_phase_jump.p0", 1, 32, 1, 0u, 0u, "" },
-    { 902u, "op2_phase_drift.p0", 0, 100, 0, 0u, 0u, "" },
-    { 903u, "op2_phase_drift_rate.p0", 0, 20000000, 107374, 1u, 0u, "" },
-    { 904u, "op2_phase_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
-    { 905u, "op2_phase_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
-    { 906u, "op2_phase_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 907u, "op2_phase_lfo_rate.p0", 0, 20000000, 44739, 1u, 0u, "" },
-    { 908u, "op2_phase_lfo_depth.p0", -100, 100, 0, 0u, 0u, "" },
-    { 909u, "op2_phase_lfo_wave.p0", 0, 5, 0, 0u, 0u, "" },
-    { 910u, "op2_phase_lfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 911u, "op2_phase_lfo_rate_fade.p0", 0, 99, 0, 0u, 0u, "" },
-    { 912u, "op2_phase_lfo_depth_fade.p0", 0, 99, 0, 0u, 0u, "" },
-    { 913u, "op2_phase_env_on.p0", 0, 1, 1, 0u, 0u, "" },
-    { 914u, "op2_phase_env_r1.p0", 0, 99, 80, 0u, 0u, "" },
-    { 915u, "op2_phase_env_r2.p0", 0, 99, 60, 0u, 0u, "" },
-    { 916u, "op2_phase_env_r3.p0", 0, 99, 50, 0u, 0u, "" },
-    { 917u, "op2_phase_env_l1.p0", -100, 100, 0, 0u, 0u, "" },
-    { 918u, "op2_phase_env_l2.p0", -100, 100, 0, 0u, 0u, "" },
-    { 919u, "op2_phase_env_l3.p0", -100, 100, 0, 0u, 0u, "" },
-    { 920u, "op2_phase_env_relr.p0", 0, 99, 80, 0u, 0u, "" },
-    { 921u, "op2_phase_env_rell.p0", -100, 100, 0, 0u, 0u, "" },
-    { 922u, "op2_phase_env_mode.p0", 0, 3, 1, 0u, 0u, "" },
-    { 923u, "op3_phase_on.p0", 0, 1, 0, 0u, 0u, "" },
-    { 924u, "op3_phase_bp.p0", 1, 999, 500, 0u, 0u, "" },
-    { 925u, "op3_phase_segments.p0", 1, 32, 8, 0u, 0u, "" },
-    { 926u, "op3_phase_flip.p0", 0, 100, 0, 0u, 0u, "" },
-    { 927u, "op3_phase_flip_rate.p0", 0, 20000000, 178956, 1u, 0u, "" },
-    { 928u, "op3_phase_reorder.p0", 0, 100, 0, 0u, 0u, "" },
-    { 929u, "op3_phase_reorder_rate.p0", 0, 20000000, 0, 1u, 0u, "" },
-    { 930u, "op3_phase_jump.p0", 1, 32, 1, 0u, 0u, "" },
-    { 931u, "op3_phase_drift.p0", 0, 100, 0, 0u, 0u, "" },
-    { 932u, "op3_phase_drift_rate.p0", 0, 20000000, 107374, 1u, 0u, "" },
-    { 933u, "op3_phase_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
-    { 934u, "op3_phase_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
-    { 935u, "op3_phase_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 936u, "op3_phase_lfo_rate.p0", 0, 20000000, 44739, 1u, 0u, "" },
-    { 937u, "op3_phase_lfo_depth.p0", -100, 100, 0, 0u, 0u, "" },
-    { 938u, "op3_phase_lfo_wave.p0", 0, 5, 0, 0u, 0u, "" },
-    { 939u, "op3_phase_lfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 940u, "op3_phase_lfo_rate_fade.p0", 0, 99, 0, 0u, 0u, "" },
-    { 941u, "op3_phase_lfo_depth_fade.p0", 0, 99, 0, 0u, 0u, "" },
-    { 942u, "op3_phase_env_on.p0", 0, 1, 1, 0u, 0u, "" },
-    { 943u, "op3_phase_env_r1.p0", 0, 99, 80, 0u, 0u, "" },
-    { 944u, "op3_phase_env_r2.p0", 0, 99, 60, 0u, 0u, "" },
-    { 945u, "op3_phase_env_r3.p0", 0, 99, 50, 0u, 0u, "" },
-    { 946u, "op3_phase_env_l1.p0", -100, 100, 0, 0u, 0u, "" },
-    { 947u, "op3_phase_env_l2.p0", -100, 100, 0, 0u, 0u, "" },
-    { 948u, "op3_phase_env_l3.p0", -100, 100, 0, 0u, 0u, "" },
-    { 949u, "op3_phase_env_relr.p0", 0, 99, 80, 0u, 0u, "" },
-    { 950u, "op3_phase_env_rell.p0", -100, 100, 0, 0u, 0u, "" },
-    { 951u, "op3_phase_env_mode.p0", 0, 3, 1, 0u, 0u, "" },
-    { 952u, "op4_phase_on.p0", 0, 1, 0, 0u, 0u, "" },
-    { 953u, "op4_phase_bp.p0", 1, 999, 500, 0u, 0u, "" },
-    { 954u, "op4_phase_segments.p0", 1, 32, 8, 0u, 0u, "" },
-    { 955u, "op4_phase_flip.p0", 0, 100, 0, 0u, 0u, "" },
-    { 956u, "op4_phase_flip_rate.p0", 0, 20000000, 178956, 1u, 0u, "" },
-    { 957u, "op4_phase_reorder.p0", 0, 100, 0, 0u, 0u, "" },
-    { 958u, "op4_phase_reorder_rate.p0", 0, 20000000, 0, 1u, 0u, "" },
-    { 959u, "op4_phase_jump.p0", 1, 32, 1, 0u, 0u, "" },
-    { 960u, "op4_phase_drift.p0", 0, 100, 0, 0u, 0u, "" },
-    { 961u, "op4_phase_drift_rate.p0", 0, 20000000, 107374, 1u, 0u, "" },
-    { 962u, "op4_phase_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
-    { 963u, "op4_phase_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
-    { 964u, "op4_phase_vs.p0", -100, 100, 0, 0u, 0u, "" },
-    { 965u, "op4_phase_lfo_rate.p0", 0, 20000000, 44739, 1u, 0u, "" },
-    { 966u, "op4_phase_lfo_depth.p0", -100, 100, 0, 0u, 0u, "" },
-    { 967u, "op4_phase_lfo_wave.p0", 0, 5, 0, 0u, 0u, "" },
-    { 968u, "op4_phase_lfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
-    { 969u, "op4_phase_lfo_rate_fade.p0", 0, 99, 0, 0u, 0u, "" },
-    { 970u, "op4_phase_lfo_depth_fade.p0", 0, 99, 0, 0u, 0u, "" },
-    { 971u, "op4_phase_env_on.p0", 0, 1, 1, 0u, 0u, "" },
-    { 972u, "op4_phase_env_r1.p0", 0, 99, 80, 0u, 0u, "" },
-    { 973u, "op4_phase_env_r2.p0", 0, 99, 60, 0u, 0u, "" },
-    { 974u, "op4_phase_env_r3.p0", 0, 99, 50, 0u, 0u, "" },
-    { 975u, "op4_phase_env_l1.p0", -100, 100, 0, 0u, 0u, "" },
-    { 976u, "op4_phase_env_l2.p0", -100, 100, 0, 0u, 0u, "" },
-    { 977u, "op4_phase_env_l3.p0", -100, 100, 0, 0u, 0u, "" },
-    { 978u, "op4_phase_env_relr.p0", 0, 99, 80, 0u, 0u, "" },
-    { 979u, "op4_phase_env_rell.p0", -100, 100, 0, 0u, 0u, "" },
-    { 980u, "op4_phase_env_mode.p0", 0, 3, 1, 0u, 0u, "" },
-    { 981u, "op1_ratio.p1", 32768, 1048576, 65536, 0u, 0u, "" },
-    { 982u, "op1_detune.p1", -50, 50, 0, 0u, 0u, "" },
-    { 983u, "op1_waveform.p1", 0, 13, 0, 0u, 0u, "" },
-    { 984u, "op1_spec_range_a.p1", 0, 1, 0, 0u, 0u, "" },
-    { 985u, "op1_spec_range_b.p1", 0, 1, 0, 0u, 0u, "" },
-    { 986u, "op1_spec_a1.p1", 0, 99, 99, 0u, 0u, "" },
-    { 987u, "op1_spec_a2.p1", 0, 99, 0, 0u, 0u, "" },
-    { 988u, "op1_spec_a3.p1", 0, 99, 0, 0u, 0u, "" },
-    { 989u, "op1_spec_a4.p1", 0, 99, 0, 0u, 0u, "" },
-    { 990u, "op1_spec_a5.p1", 0, 99, 0, 0u, 0u, "" },
-    { 991u, "op1_spec_a6.p1", 0, 99, 0, 0u, 0u, "" },
-    { 992u, "op1_spec_a7.p1", 0, 99, 0, 0u, 0u, "" },
-    { 993u, "op1_spec_a8.p1", 0, 99, 0, 0u, 0u, "" },
-    { 994u, "op1_spec_a9.p1", 0, 99, 0, 0u, 0u, "" },
-    { 995u, "op1_spec_a10.p1", 0, 99, 0, 0u, 0u, "" },
-    { 996u, "op1_spec_a11.p1", 0, 99, 0, 0u, 0u, "" },
-    { 997u, "op1_spec_a12.p1", 0, 99, 0, 0u, 0u, "" },
-    { 998u, "op1_spec_a13.p1", 0, 99, 0, 0u, 0u, "" },
-    { 999u, "op1_spec_a14.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1000u, "op1_spec_a15.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1001u, "op1_spec_a16.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1002u, "op1_spec_a17.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1003u, "op1_spec_a18.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1004u, "op1_spec_a19.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1005u, "op1_spec_a20.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1006u, "op1_spec_a21.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1007u, "op1_spec_a22.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1008u, "op1_spec_a23.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1009u, "op1_spec_a24.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1010u, "op1_spec_a25.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1011u, "op1_spec_a26.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1012u, "op1_spec_a27.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1013u, "op1_spec_a28.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1014u, "op1_spec_a29.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1015u, "op1_spec_a30.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1016u, "op1_spec_a31.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1017u, "op1_spec_a32.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1018u, "op1_spec_a33.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1019u, "op1_spec_a34.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1020u, "op1_spec_a35.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1021u, "op1_spec_a36.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1022u, "op1_spec_a37.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1023u, "op1_spec_a38.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1024u, "op1_spec_a39.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1025u, "op1_spec_a40.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1026u, "op1_spec_a41.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1027u, "op1_spec_a42.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1028u, "op1_spec_a43.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1029u, "op1_spec_a44.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1030u, "op1_spec_a45.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1031u, "op1_spec_a46.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1032u, "op1_spec_a47.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1033u, "op1_spec_a48.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1034u, "op1_spec_a49.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1035u, "op1_spec_a50.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1036u, "op1_spec_a51.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1037u, "op1_spec_a52.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1038u, "op1_spec_a53.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1039u, "op1_spec_a54.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1040u, "op1_spec_a55.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1041u, "op1_spec_a56.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1042u, "op1_spec_a57.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1043u, "op1_spec_a58.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1044u, "op1_spec_a59.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1045u, "op1_spec_a60.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1046u, "op1_spec_a61.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1047u, "op1_spec_a62.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1048u, "op1_spec_a63.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1049u, "op1_spec_a64.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1050u, "op1_spec_b1.p1", 0, 99, 99, 0u, 0u, "" },
-    { 1051u, "op1_spec_b2.p1", 0, 99, 45, 0u, 0u, "" },
-    { 1052u, "op1_spec_b3.p1", 0, 99, 30, 0u, 0u, "" },
-    { 1053u, "op1_spec_b4.p1", 0, 99, 15, 0u, 0u, "" },
-    { 1054u, "op1_spec_b5.p1", 0, 99, 55, 0u, 0u, "" },
-    { 1055u, "op1_spec_b6.p1", 0, 99, 40, 0u, 0u, "" },
-    { 1056u, "op1_spec_b7.p1", 0, 99, 25, 0u, 0u, "" },
-    { 1057u, "op1_spec_b8.p1", 0, 99, 12, 0u, 0u, "" },
-    { 1058u, "op1_spec_b9.p1", 0, 99, 8, 0u, 0u, "" },
-    { 1059u, "op1_spec_b10.p1", 0, 99, 5, 0u, 0u, "" },
-    { 1060u, "op1_spec_b11.p1", 0, 99, 3, 0u, 0u, "" },
-    { 1061u, "op1_spec_b12.p1", 0, 99, 2, 0u, 0u, "" },
-    { 1062u, "op1_spec_b13.p1", 0, 99, 1, 0u, 0u, "" },
-    { 1063u, "op1_spec_b14.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1064u, "op1_spec_b15.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1065u, "op1_spec_b16.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1066u, "op1_spec_b17.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1067u, "op1_spec_b18.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1068u, "op1_spec_b19.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1069u, "op1_spec_b20.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1070u, "op1_spec_b21.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1071u, "op1_spec_b22.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1072u, "op1_spec_b23.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1073u, "op1_spec_b24.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1074u, "op1_spec_b25.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1075u, "op1_spec_b26.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1076u, "op1_spec_b27.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1077u, "op1_spec_b28.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1078u, "op1_spec_b29.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1079u, "op1_spec_b30.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1080u, "op1_spec_b31.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1081u, "op1_spec_b32.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1082u, "op1_spec_b33.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1083u, "op1_spec_b34.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1084u, "op1_spec_b35.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1085u, "op1_spec_b36.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1086u, "op1_spec_b37.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1087u, "op1_spec_b38.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1088u, "op1_spec_b39.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1089u, "op1_spec_b40.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1090u, "op1_spec_b41.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1091u, "op1_spec_b42.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1092u, "op1_spec_b43.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1093u, "op1_spec_b44.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1094u, "op1_spec_b45.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1095u, "op1_spec_b46.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1096u, "op1_spec_b47.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1097u, "op1_spec_b48.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1098u, "op1_spec_b49.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1099u, "op1_spec_b50.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1100u, "op1_spec_b51.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1101u, "op1_spec_b52.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1102u, "op1_spec_b53.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1103u, "op1_spec_b54.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1104u, "op1_spec_b55.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1105u, "op1_spec_b56.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1106u, "op1_spec_b57.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1107u, "op1_spec_b58.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1108u, "op1_spec_b59.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1109u, "op1_spec_b60.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1110u, "op1_spec_b61.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1111u, "op1_spec_b62.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1112u, "op1_spec_b63.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1113u, "op1_spec_b64.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1114u, "op1_spec_morph.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1115u, "op1.eg.warm.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1116u, "attack.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1117u, "op1.eg.d1r.p1", 0, 99, 60, 0u, 0u, "" },
-    { 1118u, "op1.eg.d1l.p1", 0, 99, 93, 0u, 0u, "" },
-    { 1119u, "op1.eg.d2r.p1", 0, 99, 50, 0u, 0u, "" },
-    { 1120u, "op1.eg.d2l.p1", 0, 99, 87, 0u, 0u, "" },
-    { 1121u, "release.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1122u, "op1.eg.mode.p1", 0, 3, 1, 0u, 0u, "" },
-    { 1123u, "op1_trem_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
-    { 1124u, "op1_trem_depth.p1", -99, 99, 0, 0u, 0u, "" },
-    { 1125u, "op1_trem_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 1126u, "op1_trem_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1127u, "op1_trem_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1128u, "op1_trem_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1129u, "op1_fbenv_on.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1130u, "op1_fbenv_r1.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1131u, "op1_fbenv_r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 1132u, "op1_fbenv_r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 1133u, "op1_fbenv_l1.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1134u, "op1_fbenv_l2.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1135u, "op1_fbenv_l3.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1136u, "op1_fbenv_relr.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1137u, "op1_fbenv_rell.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1138u, "op1_fbenv_mode.p1", 0, 3, 1, 0u, 0u, "" },
-    { 1139u, "op1_fblfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
-    { 1140u, "op1_fblfo_depth.p1", -32767, 32767, 0, 0u, 0u, "" },
-    { 1141u, "op1_fblfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 1142u, "op1_fblfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1143u, "op1_fblfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1144u, "op1_fblfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1145u, "op1_dlfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
-    { 1146u, "op1_dlfo_depth.p1", -32768, 32768, 0, 0u, 0u, "" },
-    { 1147u, "op1_dlfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 1148u, "op1_dlfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1149u, "op1_dlfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1150u, "op1_dlfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1151u, "op1.velamp.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1152u, "op1.velfm.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1153u, "op1.velrate.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1154u, "op1_level.p1", 0, 99, 75, 0u, 0u, "" },
-    { 1155u, "op1_feedback.p1", -32767, 32767, 0, 0u, 0u, "" },
-    { 1156u, "op1_level_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1157u, "op1_level_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1158u, "op1_fb_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1159u, "op1_fb_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1160u, "op1_aenv_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1161u, "op1_aenv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1162u, "op1_level_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1163u, "op1_fb_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1164u, "op1_aenv_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1165u, "op1_mute.p1", 0, 1, 0, 0u, 0u, "" },
-    { 1166u, "op1_spec_env_on.p1", 0, 1, 0, 0u, 0u, "" },
-    { 1167u, "op1_spec_env_r1.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1168u, "op1_spec_env_r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 1169u, "op1_spec_env_r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 1170u, "op1_spec_env_l1.p1", 0, 99, 99, 0u, 0u, "" },
-    { 1171u, "op1_spec_env_l2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 1172u, "op1_spec_env_l3.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1173u, "op1_spec_env_relr.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1174u, "op1_spec_env_rell.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1175u, "op1_spec_env_mode.p1", 0, 3, 1, 0u, 0u, "" },
-    { 1176u, "op1_spec_lfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
-    { 1177u, "op1_spec_lfo_depth.p1", -99, 99, 0, 0u, 0u, "" },
-    { 1178u, "op1_spec_lfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 1179u, "op1_spec_lfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1180u, "op1_spec_lfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1181u, "op1_spec_lfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1182u, "op2_ratio.p1", 32768, 1048576, 65536, 0u, 0u, "" },
-    { 1183u, "op2_detune.p1", -50, 50, 0, 0u, 0u, "" },
-    { 1184u, "op2_waveform.p1", 0, 13, 0, 0u, 0u, "" },
-    { 1185u, "op2_spec_range_a.p1", 0, 1, 0, 0u, 0u, "" },
-    { 1186u, "op2_spec_range_b.p1", 0, 1, 0, 0u, 0u, "" },
-    { 1187u, "op2_spec_a1.p1", 0, 99, 99, 0u, 0u, "" },
-    { 1188u, "op2_spec_a2.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1189u, "op2_spec_a3.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1190u, "op2_spec_a4.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1191u, "op2_spec_a5.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1192u, "op2_spec_a6.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1193u, "op2_spec_a7.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1194u, "op2_spec_a8.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1195u, "op2_spec_a9.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1196u, "op2_spec_a10.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1197u, "op2_spec_a11.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1198u, "op2_spec_a12.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1199u, "op2_spec_a13.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1200u, "op2_spec_a14.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1201u, "op2_spec_a15.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1202u, "op2_spec_a16.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1203u, "op2_spec_a17.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1204u, "op2_spec_a18.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1205u, "op2_spec_a19.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1206u, "op2_spec_a20.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1207u, "op2_spec_a21.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1208u, "op2_spec_a22.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1209u, "op2_spec_a23.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1210u, "op2_spec_a24.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1211u, "op2_spec_a25.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1212u, "op2_spec_a26.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1213u, "op2_spec_a27.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1214u, "op2_spec_a28.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1215u, "op2_spec_a29.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1216u, "op2_spec_a30.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1217u, "op2_spec_a31.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1218u, "op2_spec_a32.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1219u, "op2_spec_a33.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1220u, "op2_spec_a34.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1221u, "op2_spec_a35.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1222u, "op2_spec_a36.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1223u, "op2_spec_a37.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1224u, "op2_spec_a38.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1225u, "op2_spec_a39.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1226u, "op2_spec_a40.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1227u, "op2_spec_a41.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1228u, "op2_spec_a42.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1229u, "op2_spec_a43.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1230u, "op2_spec_a44.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1231u, "op2_spec_a45.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1232u, "op2_spec_a46.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1233u, "op2_spec_a47.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1234u, "op2_spec_a48.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1235u, "op2_spec_a49.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1236u, "op2_spec_a50.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1237u, "op2_spec_a51.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1238u, "op2_spec_a52.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1239u, "op2_spec_a53.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1240u, "op2_spec_a54.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1241u, "op2_spec_a55.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1242u, "op2_spec_a56.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1243u, "op2_spec_a57.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1244u, "op2_spec_a58.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1245u, "op2_spec_a59.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1246u, "op2_spec_a60.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1247u, "op2_spec_a61.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1248u, "op2_spec_a62.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1249u, "op2_spec_a63.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1250u, "op2_spec_a64.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1251u, "op2_spec_b1.p1", 0, 99, 99, 0u, 0u, "" },
-    { 1252u, "op2_spec_b2.p1", 0, 99, 45, 0u, 0u, "" },
-    { 1253u, "op2_spec_b3.p1", 0, 99, 30, 0u, 0u, "" },
-    { 1254u, "op2_spec_b4.p1", 0, 99, 15, 0u, 0u, "" },
-    { 1255u, "op2_spec_b5.p1", 0, 99, 55, 0u, 0u, "" },
-    { 1256u, "op2_spec_b6.p1", 0, 99, 40, 0u, 0u, "" },
-    { 1257u, "op2_spec_b7.p1", 0, 99, 25, 0u, 0u, "" },
-    { 1258u, "op2_spec_b8.p1", 0, 99, 12, 0u, 0u, "" },
-    { 1259u, "op2_spec_b9.p1", 0, 99, 8, 0u, 0u, "" },
-    { 1260u, "op2_spec_b10.p1", 0, 99, 5, 0u, 0u, "" },
-    { 1261u, "op2_spec_b11.p1", 0, 99, 3, 0u, 0u, "" },
-    { 1262u, "op2_spec_b12.p1", 0, 99, 2, 0u, 0u, "" },
-    { 1263u, "op2_spec_b13.p1", 0, 99, 1, 0u, 0u, "" },
-    { 1264u, "op2_spec_b14.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1265u, "op2_spec_b15.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1266u, "op2_spec_b16.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1267u, "op2_spec_b17.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1268u, "op2_spec_b18.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1269u, "op2_spec_b19.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1270u, "op2_spec_b20.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1271u, "op2_spec_b21.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1272u, "op2_spec_b22.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1273u, "op2_spec_b23.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1274u, "op2_spec_b24.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1275u, "op2_spec_b25.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1276u, "op2_spec_b26.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1277u, "op2_spec_b27.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1278u, "op2_spec_b28.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1279u, "op2_spec_b29.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1280u, "op2_spec_b30.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1281u, "op2_spec_b31.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1282u, "op2_spec_b32.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1283u, "op2_spec_b33.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1284u, "op2_spec_b34.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1285u, "op2_spec_b35.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1286u, "op2_spec_b36.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1287u, "op2_spec_b37.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1288u, "op2_spec_b38.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1289u, "op2_spec_b39.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1290u, "op2_spec_b40.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1291u, "op2_spec_b41.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1292u, "op2_spec_b42.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1293u, "op2_spec_b43.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1294u, "op2_spec_b44.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1295u, "op2_spec_b45.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1296u, "op2_spec_b46.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1297u, "op2_spec_b47.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1298u, "op2_spec_b48.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1299u, "op2_spec_b49.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1300u, "op2_spec_b50.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1301u, "op2_spec_b51.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1302u, "op2_spec_b52.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1303u, "op2_spec_b53.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1304u, "op2_spec_b54.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1305u, "op2_spec_b55.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1306u, "op2_spec_b56.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1307u, "op2_spec_b57.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1308u, "op2_spec_b58.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1309u, "op2_spec_b59.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1310u, "op2_spec_b60.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1311u, "op2_spec_b61.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1312u, "op2_spec_b62.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1313u, "op2_spec_b63.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1314u, "op2_spec_b64.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1315u, "op2_spec_morph.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1316u, "op2.eg.warm.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1317u, "op2.eg.surge.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1318u, "op2.eg.d1r.p1", 0, 99, 60, 0u, 0u, "" },
-    { 1319u, "op2.eg.d1l.p1", 0, 99, 93, 0u, 0u, "" },
-    { 1320u, "op2.eg.d2r.p1", 0, 99, 50, 0u, 0u, "" },
-    { 1321u, "op2.eg.d2l.p1", 0, 99, 87, 0u, 0u, "" },
-    { 1322u, "op2.eg.rel.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1323u, "op2.eg.mode.p1", 0, 3, 1, 0u, 0u, "" },
-    { 1324u, "op2_trem_rate.p1", 0, 20000000, 447392, 1u, 0u, "" },
-    { 1325u, "op2_trem_depth.p1", -99, 99, 0, 0u, 0u, "" },
-    { 1326u, "op2_trem_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 1327u, "op2_trem_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1328u, "op2_trem_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1329u, "op2_trem_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1330u, "op2_fbenv_on.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1331u, "op2_fbenv_r1.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1332u, "op2_fbenv_r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 1333u, "op2_fbenv_r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 1334u, "op2_fbenv_l1.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1335u, "op2_fbenv_l2.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1336u, "op2_fbenv_l3.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1337u, "op2_fbenv_relr.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1338u, "op2_fbenv_rell.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1339u, "op2_fbenv_mode.p1", 0, 3, 1, 0u, 0u, "" },
-    { 1340u, "op2_fblfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
-    { 1341u, "op2_fblfo_depth.p1", -32767, 32767, 0, 0u, 0u, "" },
-    { 1342u, "op2_fblfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 1343u, "op2_fblfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1344u, "op2_fblfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1345u, "op2_fblfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1346u, "op2_dlfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
-    { 1347u, "op2_dlfo_depth.p1", -32768, 32768, 0, 0u, 0u, "" },
-    { 1348u, "op2_dlfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 1349u, "op2_dlfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1350u, "op2_dlfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1351u, "op2_dlfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1352u, "op2.velamp.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1353u, "op2.velfm.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1354u, "op2.velrate.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1355u, "op2_level.p1", 0, 99, 85, 0u, 0u, "" },
-    { 1356u, "op2_feedback.p1", -32767, 32767, 0, 0u, 0u, "" },
-    { 1357u, "op2_level_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1358u, "op2_level_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1359u, "op2_fb_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1360u, "op2_fb_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1361u, "op2_aenv_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1362u, "op2_aenv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1363u, "op2_level_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1364u, "op2_fb_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1365u, "op2_aenv_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1366u, "op2_mute.p1", 0, 1, 0, 0u, 0u, "" },
-    { 1367u, "op2_spec_env_on.p1", 0, 1, 0, 0u, 0u, "" },
-    { 1368u, "op2_spec_env_r1.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1369u, "op2_spec_env_r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 1370u, "op2_spec_env_r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 1371u, "op2_spec_env_l1.p1", 0, 99, 99, 0u, 0u, "" },
-    { 1372u, "op2_spec_env_l2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 1373u, "op2_spec_env_l3.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1374u, "op2_spec_env_relr.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1375u, "op2_spec_env_rell.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1376u, "op2_spec_env_mode.p1", 0, 3, 1, 0u, 0u, "" },
-    { 1377u, "op2_spec_lfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
-    { 1378u, "op2_spec_lfo_depth.p1", -99, 99, 0, 0u, 0u, "" },
-    { 1379u, "op2_spec_lfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 1380u, "op2_spec_lfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1381u, "op2_spec_lfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1382u, "op2_spec_lfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1383u, "op3_ratio.p1", 32768, 1048576, 196608, 0u, 0u, "" },
-    { 1384u, "op3_detune.p1", -50, 50, 0, 0u, 0u, "" },
-    { 1385u, "op3_waveform.p1", 0, 13, 0, 0u, 0u, "" },
-    { 1386u, "op3_spec_range_a.p1", 0, 1, 0, 0u, 0u, "" },
-    { 1387u, "op3_spec_range_b.p1", 0, 1, 0, 0u, 0u, "" },
-    { 1388u, "op3_spec_a1.p1", 0, 99, 99, 0u, 0u, "" },
-    { 1389u, "op3_spec_a2.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1390u, "op3_spec_a3.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1391u, "op3_spec_a4.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1392u, "op3_spec_a5.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1393u, "op3_spec_a6.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1394u, "op3_spec_a7.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1395u, "op3_spec_a8.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1396u, "op3_spec_a9.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1397u, "op3_spec_a10.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1398u, "op3_spec_a11.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1399u, "op3_spec_a12.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1400u, "op3_spec_a13.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1401u, "op3_spec_a14.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1402u, "op3_spec_a15.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1403u, "op3_spec_a16.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1404u, "op3_spec_a17.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1405u, "op3_spec_a18.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1406u, "op3_spec_a19.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1407u, "op3_spec_a20.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1408u, "op3_spec_a21.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1409u, "op3_spec_a22.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1410u, "op3_spec_a23.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1411u, "op3_spec_a24.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1412u, "op3_spec_a25.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1413u, "op3_spec_a26.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1414u, "op3_spec_a27.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1415u, "op3_spec_a28.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1416u, "op3_spec_a29.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1417u, "op3_spec_a30.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1418u, "op3_spec_a31.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1419u, "op3_spec_a32.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1420u, "op3_spec_a33.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1421u, "op3_spec_a34.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1422u, "op3_spec_a35.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1423u, "op3_spec_a36.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1424u, "op3_spec_a37.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1425u, "op3_spec_a38.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1426u, "op3_spec_a39.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1427u, "op3_spec_a40.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1428u, "op3_spec_a41.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1429u, "op3_spec_a42.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1430u, "op3_spec_a43.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1431u, "op3_spec_a44.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1432u, "op3_spec_a45.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1433u, "op3_spec_a46.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1434u, "op3_spec_a47.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1435u, "op3_spec_a48.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1436u, "op3_spec_a49.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1437u, "op3_spec_a50.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1438u, "op3_spec_a51.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1439u, "op3_spec_a52.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1440u, "op3_spec_a53.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1441u, "op3_spec_a54.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1442u, "op3_spec_a55.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1443u, "op3_spec_a56.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1444u, "op3_spec_a57.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1445u, "op3_spec_a58.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1446u, "op3_spec_a59.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1447u, "op3_spec_a60.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1448u, "op3_spec_a61.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1449u, "op3_spec_a62.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1450u, "op3_spec_a63.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1451u, "op3_spec_a64.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1452u, "op3_spec_b1.p1", 0, 99, 99, 0u, 0u, "" },
-    { 1453u, "op3_spec_b2.p1", 0, 99, 45, 0u, 0u, "" },
-    { 1454u, "op3_spec_b3.p1", 0, 99, 30, 0u, 0u, "" },
-    { 1455u, "op3_spec_b4.p1", 0, 99, 15, 0u, 0u, "" },
-    { 1456u, "op3_spec_b5.p1", 0, 99, 55, 0u, 0u, "" },
-    { 1457u, "op3_spec_b6.p1", 0, 99, 40, 0u, 0u, "" },
-    { 1458u, "op3_spec_b7.p1", 0, 99, 25, 0u, 0u, "" },
-    { 1459u, "op3_spec_b8.p1", 0, 99, 12, 0u, 0u, "" },
-    { 1460u, "op3_spec_b9.p1", 0, 99, 8, 0u, 0u, "" },
-    { 1461u, "op3_spec_b10.p1", 0, 99, 5, 0u, 0u, "" },
-    { 1462u, "op3_spec_b11.p1", 0, 99, 3, 0u, 0u, "" },
-    { 1463u, "op3_spec_b12.p1", 0, 99, 2, 0u, 0u, "" },
-    { 1464u, "op3_spec_b13.p1", 0, 99, 1, 0u, 0u, "" },
-    { 1465u, "op3_spec_b14.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1466u, "op3_spec_b15.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1467u, "op3_spec_b16.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1468u, "op3_spec_b17.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1469u, "op3_spec_b18.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1470u, "op3_spec_b19.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1471u, "op3_spec_b20.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1472u, "op3_spec_b21.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1473u, "op3_spec_b22.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1474u, "op3_spec_b23.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1475u, "op3_spec_b24.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1476u, "op3_spec_b25.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1477u, "op3_spec_b26.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1478u, "op3_spec_b27.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1479u, "op3_spec_b28.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1480u, "op3_spec_b29.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1481u, "op3_spec_b30.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1482u, "op3_spec_b31.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1483u, "op3_spec_b32.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1484u, "op3_spec_b33.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1485u, "op3_spec_b34.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1486u, "op3_spec_b35.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1487u, "op3_spec_b36.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1488u, "op3_spec_b37.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1489u, "op3_spec_b38.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1490u, "op3_spec_b39.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1491u, "op3_spec_b40.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1492u, "op3_spec_b41.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1493u, "op3_spec_b42.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1494u, "op3_spec_b43.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1495u, "op3_spec_b44.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1496u, "op3_spec_b45.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1497u, "op3_spec_b46.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1498u, "op3_spec_b47.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1499u, "op3_spec_b48.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1500u, "op3_spec_b49.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1501u, "op3_spec_b50.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1502u, "op3_spec_b51.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1503u, "op3_spec_b52.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1504u, "op3_spec_b53.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1505u, "op3_spec_b54.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1506u, "op3_spec_b55.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1507u, "op3_spec_b56.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1508u, "op3_spec_b57.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1509u, "op3_spec_b58.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1510u, "op3_spec_b59.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1511u, "op3_spec_b60.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1512u, "op3_spec_b61.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1513u, "op3_spec_b62.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1514u, "op3_spec_b63.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1515u, "op3_spec_b64.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1516u, "op3_spec_morph.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1517u, "op3.eg.warm.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1518u, "op3.eg.surge.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1519u, "op3.eg.d1r.p1", 0, 99, 60, 0u, 0u, "" },
-    { 1520u, "op3.eg.d1l.p1", 0, 99, 93, 0u, 0u, "" },
-    { 1521u, "op3.eg.d2r.p1", 0, 99, 50, 0u, 0u, "" },
-    { 1522u, "op3.eg.d2l.p1", 0, 99, 87, 0u, 0u, "" },
-    { 1523u, "op3.eg.rel.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1524u, "op3.eg.mode.p1", 0, 3, 1, 0u, 0u, "" },
-    { 1525u, "op3_trem_rate.p1", 0, 20000000, 292174, 1u, 0u, "" },
-    { 1526u, "op3_trem_depth.p1", -99, 99, 0, 0u, 0u, "" },
-    { 1527u, "op3_trem_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 1528u, "op3_trem_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1529u, "op3_trem_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1530u, "op3_trem_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1531u, "op3_fbenv_on.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1532u, "op3_fbenv_r1.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1533u, "op3_fbenv_r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 1534u, "op3_fbenv_r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 1535u, "op3_fbenv_l1.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1536u, "op3_fbenv_l2.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1537u, "op3_fbenv_l3.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1538u, "op3_fbenv_relr.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1539u, "op3_fbenv_rell.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1540u, "op3_fbenv_mode.p1", 0, 3, 1, 0u, 0u, "" },
-    { 1541u, "op3_fblfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
-    { 1542u, "op3_fblfo_depth.p1", -32767, 32767, 0, 0u, 0u, "" },
-    { 1543u, "op3_fblfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 1544u, "op3_fblfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1545u, "op3_fblfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1546u, "op3_fblfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1547u, "op3_dlfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
-    { 1548u, "op3_dlfo_depth.p1", -32768, 32768, 0, 0u, 0u, "" },
-    { 1549u, "op3_dlfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 1550u, "op3_dlfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1551u, "op3_dlfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1552u, "op3_dlfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1553u, "op3.velamp.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1554u, "op3.velfm.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1555u, "op3.velrate.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1556u, "op3_level.p1", 0, 99, 70, 0u, 0u, "" },
-    { 1557u, "op3_feedback.p1", -32767, 32767, 0, 0u, 0u, "" },
-    { 1558u, "op3_level_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1559u, "op3_level_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1560u, "op3_fb_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1561u, "op3_fb_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1562u, "op3_aenv_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1563u, "op3_aenv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1564u, "op3_level_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1565u, "op3_fb_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1566u, "op3_aenv_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1567u, "op3_mute.p1", 0, 1, 0, 0u, 0u, "" },
-    { 1568u, "op3_spec_env_on.p1", 0, 1, 0, 0u, 0u, "" },
-    { 1569u, "op3_spec_env_r1.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1570u, "op3_spec_env_r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 1571u, "op3_spec_env_r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 1572u, "op3_spec_env_l1.p1", 0, 99, 99, 0u, 0u, "" },
-    { 1573u, "op3_spec_env_l2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 1574u, "op3_spec_env_l3.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1575u, "op3_spec_env_relr.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1576u, "op3_spec_env_rell.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1577u, "op3_spec_env_mode.p1", 0, 3, 1, 0u, 0u, "" },
-    { 1578u, "op3_spec_lfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
-    { 1579u, "op3_spec_lfo_depth.p1", -99, 99, 0, 0u, 0u, "" },
-    { 1580u, "op3_spec_lfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 1581u, "op3_spec_lfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1582u, "op3_spec_lfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1583u, "op3_spec_lfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1584u, "op4_ratio.p1", 32768, 1048576, 131072, 0u, 0u, "" },
-    { 1585u, "op4_detune.p1", -50, 50, 0, 0u, 0u, "" },
-    { 1586u, "op4_waveform.p1", 0, 13, 0, 0u, 0u, "" },
-    { 1587u, "op4_spec_range_a.p1", 0, 1, 0, 0u, 0u, "" },
-    { 1588u, "op4_spec_range_b.p1", 0, 1, 0, 0u, 0u, "" },
-    { 1589u, "op4_spec_a1.p1", 0, 99, 99, 0u, 0u, "" },
-    { 1590u, "op4_spec_a2.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1591u, "op4_spec_a3.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1592u, "op4_spec_a4.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1593u, "op4_spec_a5.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1594u, "op4_spec_a6.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1595u, "op4_spec_a7.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1596u, "op4_spec_a8.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1597u, "op4_spec_a9.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1598u, "op4_spec_a10.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1599u, "op4_spec_a11.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1600u, "op4_spec_a12.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1601u, "op4_spec_a13.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1602u, "op4_spec_a14.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1603u, "op4_spec_a15.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1604u, "op4_spec_a16.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1605u, "op4_spec_a17.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1606u, "op4_spec_a18.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1607u, "op4_spec_a19.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1608u, "op4_spec_a20.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1609u, "op4_spec_a21.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1610u, "op4_spec_a22.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1611u, "op4_spec_a23.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1612u, "op4_spec_a24.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1613u, "op4_spec_a25.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1614u, "op4_spec_a26.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1615u, "op4_spec_a27.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1616u, "op4_spec_a28.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1617u, "op4_spec_a29.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1618u, "op4_spec_a30.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1619u, "op4_spec_a31.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1620u, "op4_spec_a32.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1621u, "op4_spec_a33.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1622u, "op4_spec_a34.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1623u, "op4_spec_a35.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1624u, "op4_spec_a36.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1625u, "op4_spec_a37.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1626u, "op4_spec_a38.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1627u, "op4_spec_a39.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1628u, "op4_spec_a40.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1629u, "op4_spec_a41.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1630u, "op4_spec_a42.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1631u, "op4_spec_a43.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1632u, "op4_spec_a44.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1633u, "op4_spec_a45.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1634u, "op4_spec_a46.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1635u, "op4_spec_a47.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1636u, "op4_spec_a48.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1637u, "op4_spec_a49.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1638u, "op4_spec_a50.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1639u, "op4_spec_a51.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1640u, "op4_spec_a52.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1641u, "op4_spec_a53.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1642u, "op4_spec_a54.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1643u, "op4_spec_a55.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1644u, "op4_spec_a56.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1645u, "op4_spec_a57.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1646u, "op4_spec_a58.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1647u, "op4_spec_a59.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1648u, "op4_spec_a60.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1649u, "op4_spec_a61.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1650u, "op4_spec_a62.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1651u, "op4_spec_a63.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1652u, "op4_spec_a64.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1653u, "op4_spec_b1.p1", 0, 99, 99, 0u, 0u, "" },
-    { 1654u, "op4_spec_b2.p1", 0, 99, 45, 0u, 0u, "" },
-    { 1655u, "op4_spec_b3.p1", 0, 99, 30, 0u, 0u, "" },
-    { 1656u, "op4_spec_b4.p1", 0, 99, 15, 0u, 0u, "" },
-    { 1657u, "op4_spec_b5.p1", 0, 99, 55, 0u, 0u, "" },
-    { 1658u, "op4_spec_b6.p1", 0, 99, 40, 0u, 0u, "" },
-    { 1659u, "op4_spec_b7.p1", 0, 99, 25, 0u, 0u, "" },
-    { 1660u, "op4_spec_b8.p1", 0, 99, 12, 0u, 0u, "" },
-    { 1661u, "op4_spec_b9.p1", 0, 99, 8, 0u, 0u, "" },
-    { 1662u, "op4_spec_b10.p1", 0, 99, 5, 0u, 0u, "" },
-    { 1663u, "op4_spec_b11.p1", 0, 99, 3, 0u, 0u, "" },
-    { 1664u, "op4_spec_b12.p1", 0, 99, 2, 0u, 0u, "" },
-    { 1665u, "op4_spec_b13.p1", 0, 99, 1, 0u, 0u, "" },
-    { 1666u, "op4_spec_b14.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1667u, "op4_spec_b15.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1668u, "op4_spec_b16.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1669u, "op4_spec_b17.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1670u, "op4_spec_b18.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1671u, "op4_spec_b19.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1672u, "op4_spec_b20.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1673u, "op4_spec_b21.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1674u, "op4_spec_b22.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1675u, "op4_spec_b23.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1676u, "op4_spec_b24.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1677u, "op4_spec_b25.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1678u, "op4_spec_b26.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1679u, "op4_spec_b27.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1680u, "op4_spec_b28.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1681u, "op4_spec_b29.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1682u, "op4_spec_b30.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1683u, "op4_spec_b31.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1684u, "op4_spec_b32.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1685u, "op4_spec_b33.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1686u, "op4_spec_b34.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1687u, "op4_spec_b35.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1688u, "op4_spec_b36.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1689u, "op4_spec_b37.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1690u, "op4_spec_b38.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1691u, "op4_spec_b39.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1692u, "op4_spec_b40.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1693u, "op4_spec_b41.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1694u, "op4_spec_b42.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1695u, "op4_spec_b43.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1696u, "op4_spec_b44.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1697u, "op4_spec_b45.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1698u, "op4_spec_b46.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1699u, "op4_spec_b47.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1700u, "op4_spec_b48.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1701u, "op4_spec_b49.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1702u, "op4_spec_b50.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1703u, "op4_spec_b51.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1704u, "op4_spec_b52.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1705u, "op4_spec_b53.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1706u, "op4_spec_b54.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1707u, "op4_spec_b55.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1708u, "op4_spec_b56.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1709u, "op4_spec_b57.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1710u, "op4_spec_b58.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1711u, "op4_spec_b59.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1712u, "op4_spec_b60.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1713u, "op4_spec_b61.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1714u, "op4_spec_b62.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1715u, "op4_spec_b63.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1716u, "op4_spec_b64.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1717u, "op4_spec_morph.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1718u, "op4.eg.warm.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1719u, "op4.eg.surge.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1720u, "op4.eg.d1r.p1", 0, 99, 60, 0u, 0u, "" },
-    { 1721u, "op4.eg.d1l.p1", 0, 99, 93, 0u, 0u, "" },
-    { 1722u, "op4.eg.d2r.p1", 0, 99, 50, 0u, 0u, "" },
-    { 1723u, "op4.eg.d2l.p1", 0, 99, 87, 0u, 0u, "" },
-    { 1724u, "op4.eg.rel.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1725u, "op4.eg.mode.p1", 0, 3, 1, 0u, 0u, "" },
-    { 1726u, "op4_trem_rate.p1", 0, 20000000, 340870, 1u, 0u, "" },
-    { 1727u, "op4_trem_depth.p1", -99, 99, 0, 0u, 0u, "" },
-    { 1728u, "op4_trem_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 1729u, "op4_trem_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1730u, "op4_trem_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1731u, "op4_trem_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1732u, "op4_fbenv_on.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1733u, "op4_fbenv_r1.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1734u, "op4_fbenv_r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 1735u, "op4_fbenv_r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 1736u, "op4_fbenv_l1.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1737u, "op4_fbenv_l2.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1738u, "op4_fbenv_l3.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1739u, "op4_fbenv_relr.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1740u, "op4_fbenv_rell.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1741u, "op4_fbenv_mode.p1", 0, 3, 1, 0u, 0u, "" },
-    { 1742u, "op4_fblfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
-    { 1743u, "op4_fblfo_depth.p1", -32767, 32767, 0, 0u, 0u, "" },
-    { 1744u, "op4_fblfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 1745u, "op4_fblfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1746u, "op4_fblfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1747u, "op4_fblfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1748u, "op4_dlfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
-    { 1749u, "op4_dlfo_depth.p1", -32768, 32768, 0, 0u, 0u, "" },
-    { 1750u, "op4_dlfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 1751u, "op4_dlfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1752u, "op4_dlfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1753u, "op4_dlfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1754u, "op4.velamp.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1755u, "op4.velfm.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1756u, "op4.velrate.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1757u, "op4_level.p1", 0, 99, 85, 0u, 0u, "" },
-    { 1758u, "op4_feedback.p1", -32767, 32767, 0, 0u, 0u, "" },
-    { 1759u, "op4_level_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1760u, "op4_level_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1761u, "op4_fb_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1762u, "op4_fb_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1763u, "op4_aenv_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1764u, "op4_aenv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1765u, "op4_level_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1766u, "op4_fb_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1767u, "op4_aenv_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1768u, "op4_mute.p1", 0, 1, 0, 0u, 0u, "" },
-    { 1769u, "op4_spec_env_on.p1", 0, 1, 0, 0u, 0u, "" },
-    { 1770u, "op4_spec_env_r1.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1771u, "op4_spec_env_r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 1772u, "op4_spec_env_r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 1773u, "op4_spec_env_l1.p1", 0, 99, 99, 0u, 0u, "" },
-    { 1774u, "op4_spec_env_l2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 1775u, "op4_spec_env_l3.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1776u, "op4_spec_env_relr.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1777u, "op4_spec_env_rell.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1778u, "op4_spec_env_mode.p1", 0, 3, 1, 0u, 0u, "" },
-    { 1779u, "op4_spec_lfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
-    { 1780u, "op4_spec_lfo_depth.p1", -99, 99, 0, 0u, 0u, "" },
-    { 1781u, "op4_spec_lfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 1782u, "op4_spec_lfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1783u, "op4_spec_lfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1784u, "op4_spec_lfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1785u, "algorithm.p1", 0, 7, 4, 0u, 0u, "" },
-    { 1786u, "penv_on.p1", 0, 1, 0, 0u, 0u, "" },
-    { 1787u, "penv_r1.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1788u, "penv_r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 1789u, "penv_r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 1790u, "penv_l1.p1", -32768, 32767, 5461, 0u, 0u, "" },
-    { 1791u, "penv_l2.p1", -32768, 32767, 2731, 0u, 0u, "" },
-    { 1792u, "penv_l3.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1793u, "penv_relr.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1794u, "penv_rell.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1795u, "penv_mode.p1", 0, 3, 1, 0u, 0u, "" },
-    { 1796u, "penv_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1797u, "penv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1798u, "penv_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1799u, "pitch_rate.p1", 0, 20000000, 447392, 1u, 0u, "" },
-    { 1800u, "pitch_depth.p1", -32768, 32768, 273, 0u, 0u, "" },
-    { 1801u, "pitch_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 1802u, "pitch_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1803u, "pitch_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1804u, "pitch_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1805u, "f1_cutoff_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1806u, "f1_cutoff_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1807u, "fenv_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1808u, "fenv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1809u, "f1_cutoff_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1810u, "fenv_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1811u, "cutoff.p1", 0, 55296, 36958, 0u, 0u, "" },
-    { 1812u, "res.p1", 0, 41942, 16000, 0u, 0u, "" },
-    { 1813u, "lp.comp.p1", -32768, 32767, 7209, 0u, 0u, "" },
-    { 1814u, "filter_type.p1", 0, 2, 0, 0u, 0u, "" },
-    { 1815u, "filter_on.p1", 0, 1, 0, 0u, 0u, "" },
-    { 1816u, "fenv_on.p1", 0, 1, 0, 0u, 0u, "" },
-    { 1817u, "fenv_r1.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1818u, "fenv_r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 1819u, "fenv_r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 1820u, "fenv_l1.p1", 0, 99, 99, 0u, 0u, "" },
-    { 1821u, "fenv_l2.p1", 0, 99, 93, 0u, 0u, "" },
-    { 1822u, "fenv_l3.p1", 0, 99, 87, 0u, 0u, "" },
-    { 1823u, "fenv_relr.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1824u, "fenv_rell.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1825u, "fenv_mode.p1", 0, 3, 1, 0u, 0u, "" },
-    { 1826u, "mode.p1", 0, 1, 0, 0u, 0u, "" },
-    { 1827u, "unison_count.p1", 1, 8, 1, 0u, 0u, "" },
-    { 1828u, "unison_detune.p1", 0, 200, 0, 0u, 0u, "cents" },
-    { 1829u, "detune.p1", -50, 50, 0, 0u, 0u, "cents" },
-    { 1830u, "transpose.p1", -24, 24, 0, 0u, 0u, "st" },
-    { 1831u, "legato.p1", 0, 1, 0, 0u, 0u, "" },
-    { 1832u, "portamento.p1", 0, 5000, 0, 1u, 0u, "" },
-    { 1833u, "note_priority.p1", 0, 2, 0, 0u, 0u, "" },
-    { 1834u, "bend_range.p1", 0, 24, 2, 0u, 0u, "st" },
-    { 1835u, "pan.p1", -100, 100, 0, 0u, 0u, "%" },
-    { 1836u, "pan_env_on.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1837u, "pan_env_r1.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1838u, "pan_env_r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 1839u, "pan_env_r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 1840u, "pan_env_l1.p1", -99, 99, 0, 0u, 0u, "" },
-    { 1841u, "pan_env_l2.p1", -99, 99, 0, 0u, 0u, "" },
-    { 1842u, "pan_env_l3.p1", -99, 99, 0, 0u, 0u, "" },
-    { 1843u, "pan_env_relr.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1844u, "pan_env_rell.p1", -99, 99, 0, 0u, 0u, "" },
-    { 1845u, "pan_env_mode.p1", 0, 3, 0, 0u, 0u, "" },
-    { 1846u, "op1_phase_on.p1", 0, 1, 0, 0u, 0u, "" },
-    { 1847u, "op1_phase_bp.p1", 1, 999, 500, 0u, 0u, "" },
-    { 1848u, "op1_phase_segments.p1", 1, 32, 8, 0u, 0u, "" },
-    { 1849u, "op1_phase_flip.p1", 0, 100, 0, 0u, 0u, "" },
-    { 1850u, "op1_phase_flip_rate.p1", 0, 20000000, 178956, 1u, 0u, "" },
-    { 1851u, "op1_phase_reorder.p1", 0, 100, 0, 0u, 0u, "" },
-    { 1852u, "op1_phase_reorder_rate.p1", 0, 20000000, 0, 1u, 0u, "" },
-    { 1853u, "op1_phase_jump.p1", 1, 32, 1, 0u, 0u, "" },
-    { 1854u, "op1_phase_drift.p1", 0, 100, 0, 0u, 0u, "" },
-    { 1855u, "op1_phase_drift_rate.p1", 0, 20000000, 107374, 1u, 0u, "" },
-    { 1856u, "op1_phase_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1857u, "op1_phase_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1858u, "op1_phase_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1859u, "op1_phase_lfo_rate.p1", 0, 20000000, 44739, 1u, 0u, "" },
-    { 1860u, "op1_phase_lfo_depth.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1861u, "op1_phase_lfo_wave.p1", 0, 5, 0, 0u, 0u, "" },
-    { 1862u, "op1_phase_lfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1863u, "op1_phase_lfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1864u, "op1_phase_lfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1865u, "op1_phase_env_on.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1866u, "op1_phase_env_r1.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1867u, "op1_phase_env_r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 1868u, "op1_phase_env_r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 1869u, "op1_phase_env_l1.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1870u, "op1_phase_env_l2.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1871u, "op1_phase_env_l3.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1872u, "op1_phase_env_relr.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1873u, "op1_phase_env_rell.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1874u, "op1_phase_env_mode.p1", 0, 3, 1, 0u, 0u, "" },
-    { 1875u, "op2_phase_on.p1", 0, 1, 0, 0u, 0u, "" },
-    { 1876u, "op2_phase_bp.p1", 1, 999, 500, 0u, 0u, "" },
-    { 1877u, "op2_phase_segments.p1", 1, 32, 8, 0u, 0u, "" },
-    { 1878u, "op2_phase_flip.p1", 0, 100, 0, 0u, 0u, "" },
-    { 1879u, "op2_phase_flip_rate.p1", 0, 20000000, 178956, 1u, 0u, "" },
-    { 1880u, "op2_phase_reorder.p1", 0, 100, 0, 0u, 0u, "" },
-    { 1881u, "op2_phase_reorder_rate.p1", 0, 20000000, 0, 1u, 0u, "" },
-    { 1882u, "op2_phase_jump.p1", 1, 32, 1, 0u, 0u, "" },
-    { 1883u, "op2_phase_drift.p1", 0, 100, 0, 0u, 0u, "" },
-    { 1884u, "op2_phase_drift_rate.p1", 0, 20000000, 107374, 1u, 0u, "" },
-    { 1885u, "op2_phase_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1886u, "op2_phase_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1887u, "op2_phase_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1888u, "op2_phase_lfo_rate.p1", 0, 20000000, 44739, 1u, 0u, "" },
-    { 1889u, "op2_phase_lfo_depth.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1890u, "op2_phase_lfo_wave.p1", 0, 5, 0, 0u, 0u, "" },
-    { 1891u, "op2_phase_lfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1892u, "op2_phase_lfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1893u, "op2_phase_lfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1894u, "op2_phase_env_on.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1895u, "op2_phase_env_r1.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1896u, "op2_phase_env_r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 1897u, "op2_phase_env_r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 1898u, "op2_phase_env_l1.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1899u, "op2_phase_env_l2.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1900u, "op2_phase_env_l3.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1901u, "op2_phase_env_relr.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1902u, "op2_phase_env_rell.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1903u, "op2_phase_env_mode.p1", 0, 3, 1, 0u, 0u, "" },
-    { 1904u, "op3_phase_on.p1", 0, 1, 0, 0u, 0u, "" },
-    { 1905u, "op3_phase_bp.p1", 1, 999, 500, 0u, 0u, "" },
-    { 1906u, "op3_phase_segments.p1", 1, 32, 8, 0u, 0u, "" },
-    { 1907u, "op3_phase_flip.p1", 0, 100, 0, 0u, 0u, "" },
-    { 1908u, "op3_phase_flip_rate.p1", 0, 20000000, 178956, 1u, 0u, "" },
-    { 1909u, "op3_phase_reorder.p1", 0, 100, 0, 0u, 0u, "" },
-    { 1910u, "op3_phase_reorder_rate.p1", 0, 20000000, 0, 1u, 0u, "" },
-    { 1911u, "op3_phase_jump.p1", 1, 32, 1, 0u, 0u, "" },
-    { 1912u, "op3_phase_drift.p1", 0, 100, 0, 0u, 0u, "" },
-    { 1913u, "op3_phase_drift_rate.p1", 0, 20000000, 107374, 1u, 0u, "" },
-    { 1914u, "op3_phase_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1915u, "op3_phase_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1916u, "op3_phase_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1917u, "op3_phase_lfo_rate.p1", 0, 20000000, 44739, 1u, 0u, "" },
-    { 1918u, "op3_phase_lfo_depth.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1919u, "op3_phase_lfo_wave.p1", 0, 5, 0, 0u, 0u, "" },
-    { 1920u, "op3_phase_lfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1921u, "op3_phase_lfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1922u, "op3_phase_lfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1923u, "op3_phase_env_on.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1924u, "op3_phase_env_r1.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1925u, "op3_phase_env_r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 1926u, "op3_phase_env_r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 1927u, "op3_phase_env_l1.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1928u, "op3_phase_env_l2.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1929u, "op3_phase_env_l3.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1930u, "op3_phase_env_relr.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1931u, "op3_phase_env_rell.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1932u, "op3_phase_env_mode.p1", 0, 3, 1, 0u, 0u, "" },
-    { 1933u, "op4_phase_on.p1", 0, 1, 0, 0u, 0u, "" },
-    { 1934u, "op4_phase_bp.p1", 1, 999, 500, 0u, 0u, "" },
-    { 1935u, "op4_phase_segments.p1", 1, 32, 8, 0u, 0u, "" },
-    { 1936u, "op4_phase_flip.p1", 0, 100, 0, 0u, 0u, "" },
-    { 1937u, "op4_phase_flip_rate.p1", 0, 20000000, 178956, 1u, 0u, "" },
-    { 1938u, "op4_phase_reorder.p1", 0, 100, 0, 0u, 0u, "" },
-    { 1939u, "op4_phase_reorder_rate.p1", 0, 20000000, 0, 1u, 0u, "" },
-    { 1940u, "op4_phase_jump.p1", 1, 32, 1, 0u, 0u, "" },
-    { 1941u, "op4_phase_drift.p1", 0, 100, 0, 0u, 0u, "" },
-    { 1942u, "op4_phase_drift_rate.p1", 0, 20000000, 107374, 1u, 0u, "" },
-    { 1943u, "op4_phase_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1944u, "op4_phase_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1945u, "op4_phase_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1946u, "op4_phase_lfo_rate.p1", 0, 20000000, 44739, 1u, 0u, "" },
-    { 1947u, "op4_phase_lfo_depth.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1948u, "op4_phase_lfo_wave.p1", 0, 5, 0, 0u, 0u, "" },
-    { 1949u, "op4_phase_lfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1950u, "op4_phase_lfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1951u, "op4_phase_lfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1952u, "op4_phase_env_on.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1953u, "op4_phase_env_r1.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1954u, "op4_phase_env_r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 1955u, "op4_phase_env_r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 1956u, "op4_phase_env_l1.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1957u, "op4_phase_env_l2.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1958u, "op4_phase_env_l3.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1959u, "op4_phase_env_relr.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1960u, "op4_phase_env_rell.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1961u, "op4_phase_env_mode.p1", 0, 3, 1, 0u, 0u, "" },
-    { 1962u, "breakpoint", 0, 127, 60, 0u, 0u, "" },
-    { 1963u, "key_sens_on", 0, 1, 1, 0u, 0u, "" },
-    { 1964u, "vel_sens_on", 0, 1, 1, 0u, 0u, "" },
-    { 1965u, "dc.r", -32768, 32767, 32738, 0u, 0u, "" },
-    { 1966u, "channel.p0", -1, 15, 0, 0u, 0u, "" },
-    { 1967u, "channel.p1", -1, 15, 1, 0u, 0u, "" },
-    { 1968u, "low.p0", 0, 127, 0, 0u, 0u, "" },
-    { 1969u, "low.p1", 0, 127, 0, 0u, 0u, "" },
-    { 1970u, "high.p0", 0, 127, 127, 0u, 0u, "" },
-    { 1971u, "high.p1", 0, 127, 127, 0u, 0u, "" },
-    { 1972u, "level.p0", 0, 99, 99, 0u, 0u, "" },
-    { 1973u, "level.p1", 0, 99, 99, 0u, 0u, "" },
-    { 1974u, "delay.p0", 0, 1000, 0, 0u, 0u, "ms" },
-    { 1975u, "delay.p1", 0, 1000, 0, 0u, 0u, "ms" },
+    { 158u, "op1.fbenv.scale.p0", -2147483648, 2147483647, 0, 0u, 0u, "" },
+    { 159u, "op1_fblfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
+    { 160u, "op1_fblfo_depth.p0", -32767, 32767, 0, 0u, 0u, "" },
+    { 161u, "op1_fblfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 162u, "op1_fblfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 163u, "op1_fblfo_rate_fade.p0", 0, 99, 0, 0u, 0u, "" },
+    { 164u, "op1_fblfo_depth_fade.p0", 0, 99, 0, 0u, 0u, "" },
+    { 165u, "op1_dlfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
+    { 166u, "op1_dlfo_depth.p0", -32768, 32768, 0, 0u, 0u, "" },
+    { 167u, "op1_dlfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 168u, "op1_dlfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 169u, "op1_dlfo_rate_fade.p0", 0, 99, 0, 0u, 0u, "" },
+    { 170u, "op1_dlfo_depth_fade.p0", 0, 99, 0, 0u, 0u, "" },
+    { 171u, "op1.velamp.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 172u, "op1.velfm.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 173u, "op1.velrate.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 174u, "op1_level.p0", 0, 99, 75, 0u, 0u, "" },
+    { 175u, "op1_feedback.p0", -32767, 32767, 0, 0u, 0u, "" },
+    { 176u, "op1_level_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 177u, "op1_level_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 178u, "op1_fb_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 179u, "op1_fb_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 180u, "op1_aenv_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 181u, "op1_aenv_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 182u, "op1_level_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 183u, "op1_fb_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 184u, "op1_aenv_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 185u, "op1_mute.p0", 0, 1, 0, 0u, 0u, "" },
+    { 186u, "op1_spec_env_on.p0", 0, 1, 0, 0u, 0u, "" },
+    { 187u, "op1_spec_env_r1.p0", 0, 99, 80, 0u, 0u, "" },
+    { 188u, "op1_spec_env_r2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 189u, "op1_spec_env_r3.p0", 0, 99, 50, 0u, 0u, "" },
+    { 190u, "op1_spec_env_l1.p0", 0, 99, 99, 0u, 0u, "" },
+    { 191u, "op1_spec_env_l2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 192u, "op1_spec_env_l3.p0", 0, 99, 0, 0u, 0u, "" },
+    { 193u, "op1_spec_env_relr.p0", 0, 99, 80, 0u, 0u, "" },
+    { 194u, "op1_spec_env_rell.p0", 0, 99, 0, 0u, 0u, "" },
+    { 195u, "op1_spec_env_mode.p0", 0, 3, 1, 0u, 0u, "" },
+    { 196u, "op1.specenv.scale.p0", -2147483648, 2147483647, 0, 0u, 0u, "" },
+    { 197u, "op1_spec_lfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
+    { 198u, "op1_spec_lfo_depth.p0", -99, 99, 0, 0u, 0u, "" },
+    { 199u, "op1_spec_lfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 200u, "op1_spec_lfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 201u, "op1_spec_lfo_rate_fade.p0", 0, 99, 0, 0u, 0u, "" },
+    { 202u, "op1_spec_lfo_depth_fade.p0", 0, 99, 0, 0u, 0u, "" },
+    { 203u, "op2_ratio.p0", 32768, 1048576, 65536, 0u, 0u, "" },
+    { 204u, "op2_detune.p0", -50, 50, 0, 0u, 0u, "" },
+    { 205u, "op2_waveform.p0", 0, 13, 0, 0u, 0u, "" },
+    { 206u, "op2_spec_range_a.p0", 0, 1, 0, 0u, 0u, "" },
+    { 207u, "op2_spec_range_b.p0", 0, 1, 0, 0u, 0u, "" },
+    { 208u, "op2_spec_a1.p0", 0, 99, 99, 0u, 0u, "" },
+    { 209u, "op2_spec_a2.p0", 0, 99, 0, 0u, 0u, "" },
+    { 210u, "op2_spec_a3.p0", 0, 99, 0, 0u, 0u, "" },
+    { 211u, "op2_spec_a4.p0", 0, 99, 0, 0u, 0u, "" },
+    { 212u, "op2_spec_a5.p0", 0, 99, 0, 0u, 0u, "" },
+    { 213u, "op2_spec_a6.p0", 0, 99, 0, 0u, 0u, "" },
+    { 214u, "op2_spec_a7.p0", 0, 99, 0, 0u, 0u, "" },
+    { 215u, "op2_spec_a8.p0", 0, 99, 0, 0u, 0u, "" },
+    { 216u, "op2_spec_a9.p0", 0, 99, 0, 0u, 0u, "" },
+    { 217u, "op2_spec_a10.p0", 0, 99, 0, 0u, 0u, "" },
+    { 218u, "op2_spec_a11.p0", 0, 99, 0, 0u, 0u, "" },
+    { 219u, "op2_spec_a12.p0", 0, 99, 0, 0u, 0u, "" },
+    { 220u, "op2_spec_a13.p0", 0, 99, 0, 0u, 0u, "" },
+    { 221u, "op2_spec_a14.p0", 0, 99, 0, 0u, 0u, "" },
+    { 222u, "op2_spec_a15.p0", 0, 99, 0, 0u, 0u, "" },
+    { 223u, "op2_spec_a16.p0", 0, 99, 0, 0u, 0u, "" },
+    { 224u, "op2_spec_a17.p0", 0, 99, 0, 0u, 0u, "" },
+    { 225u, "op2_spec_a18.p0", 0, 99, 0, 0u, 0u, "" },
+    { 226u, "op2_spec_a19.p0", 0, 99, 0, 0u, 0u, "" },
+    { 227u, "op2_spec_a20.p0", 0, 99, 0, 0u, 0u, "" },
+    { 228u, "op2_spec_a21.p0", 0, 99, 0, 0u, 0u, "" },
+    { 229u, "op2_spec_a22.p0", 0, 99, 0, 0u, 0u, "" },
+    { 230u, "op2_spec_a23.p0", 0, 99, 0, 0u, 0u, "" },
+    { 231u, "op2_spec_a24.p0", 0, 99, 0, 0u, 0u, "" },
+    { 232u, "op2_spec_a25.p0", 0, 99, 0, 0u, 0u, "" },
+    { 233u, "op2_spec_a26.p0", 0, 99, 0, 0u, 0u, "" },
+    { 234u, "op2_spec_a27.p0", 0, 99, 0, 0u, 0u, "" },
+    { 235u, "op2_spec_a28.p0", 0, 99, 0, 0u, 0u, "" },
+    { 236u, "op2_spec_a29.p0", 0, 99, 0, 0u, 0u, "" },
+    { 237u, "op2_spec_a30.p0", 0, 99, 0, 0u, 0u, "" },
+    { 238u, "op2_spec_a31.p0", 0, 99, 0, 0u, 0u, "" },
+    { 239u, "op2_spec_a32.p0", 0, 99, 0, 0u, 0u, "" },
+    { 240u, "op2_spec_a33.p0", 0, 99, 0, 0u, 0u, "" },
+    { 241u, "op2_spec_a34.p0", 0, 99, 0, 0u, 0u, "" },
+    { 242u, "op2_spec_a35.p0", 0, 99, 0, 0u, 0u, "" },
+    { 243u, "op2_spec_a36.p0", 0, 99, 0, 0u, 0u, "" },
+    { 244u, "op2_spec_a37.p0", 0, 99, 0, 0u, 0u, "" },
+    { 245u, "op2_spec_a38.p0", 0, 99, 0, 0u, 0u, "" },
+    { 246u, "op2_spec_a39.p0", 0, 99, 0, 0u, 0u, "" },
+    { 247u, "op2_spec_a40.p0", 0, 99, 0, 0u, 0u, "" },
+    { 248u, "op2_spec_a41.p0", 0, 99, 0, 0u, 0u, "" },
+    { 249u, "op2_spec_a42.p0", 0, 99, 0, 0u, 0u, "" },
+    { 250u, "op2_spec_a43.p0", 0, 99, 0, 0u, 0u, "" },
+    { 251u, "op2_spec_a44.p0", 0, 99, 0, 0u, 0u, "" },
+    { 252u, "op2_spec_a45.p0", 0, 99, 0, 0u, 0u, "" },
+    { 253u, "op2_spec_a46.p0", 0, 99, 0, 0u, 0u, "" },
+    { 254u, "op2_spec_a47.p0", 0, 99, 0, 0u, 0u, "" },
+    { 255u, "op2_spec_a48.p0", 0, 99, 0, 0u, 0u, "" },
+    { 256u, "op2_spec_a49.p0", 0, 99, 0, 0u, 0u, "" },
+    { 257u, "op2_spec_a50.p0", 0, 99, 0, 0u, 0u, "" },
+    { 258u, "op2_spec_a51.p0", 0, 99, 0, 0u, 0u, "" },
+    { 259u, "op2_spec_a52.p0", 0, 99, 0, 0u, 0u, "" },
+    { 260u, "op2_spec_a53.p0", 0, 99, 0, 0u, 0u, "" },
+    { 261u, "op2_spec_a54.p0", 0, 99, 0, 0u, 0u, "" },
+    { 262u, "op2_spec_a55.p0", 0, 99, 0, 0u, 0u, "" },
+    { 263u, "op2_spec_a56.p0", 0, 99, 0, 0u, 0u, "" },
+    { 264u, "op2_spec_a57.p0", 0, 99, 0, 0u, 0u, "" },
+    { 265u, "op2_spec_a58.p0", 0, 99, 0, 0u, 0u, "" },
+    { 266u, "op2_spec_a59.p0", 0, 99, 0, 0u, 0u, "" },
+    { 267u, "op2_spec_a60.p0", 0, 99, 0, 0u, 0u, "" },
+    { 268u, "op2_spec_a61.p0", 0, 99, 0, 0u, 0u, "" },
+    { 269u, "op2_spec_a62.p0", 0, 99, 0, 0u, 0u, "" },
+    { 270u, "op2_spec_a63.p0", 0, 99, 0, 0u, 0u, "" },
+    { 271u, "op2_spec_a64.p0", 0, 99, 0, 0u, 0u, "" },
+    { 272u, "op2_spec_b1.p0", 0, 99, 99, 0u, 0u, "" },
+    { 273u, "op2_spec_b2.p0", 0, 99, 45, 0u, 0u, "" },
+    { 274u, "op2_spec_b3.p0", 0, 99, 30, 0u, 0u, "" },
+    { 275u, "op2_spec_b4.p0", 0, 99, 15, 0u, 0u, "" },
+    { 276u, "op2_spec_b5.p0", 0, 99, 55, 0u, 0u, "" },
+    { 277u, "op2_spec_b6.p0", 0, 99, 40, 0u, 0u, "" },
+    { 278u, "op2_spec_b7.p0", 0, 99, 25, 0u, 0u, "" },
+    { 279u, "op2_spec_b8.p0", 0, 99, 12, 0u, 0u, "" },
+    { 280u, "op2_spec_b9.p0", 0, 99, 8, 0u, 0u, "" },
+    { 281u, "op2_spec_b10.p0", 0, 99, 5, 0u, 0u, "" },
+    { 282u, "op2_spec_b11.p0", 0, 99, 3, 0u, 0u, "" },
+    { 283u, "op2_spec_b12.p0", 0, 99, 2, 0u, 0u, "" },
+    { 284u, "op2_spec_b13.p0", 0, 99, 1, 0u, 0u, "" },
+    { 285u, "op2_spec_b14.p0", 0, 99, 0, 0u, 0u, "" },
+    { 286u, "op2_spec_b15.p0", 0, 99, 0, 0u, 0u, "" },
+    { 287u, "op2_spec_b16.p0", 0, 99, 0, 0u, 0u, "" },
+    { 288u, "op2_spec_b17.p0", 0, 99, 0, 0u, 0u, "" },
+    { 289u, "op2_spec_b18.p0", 0, 99, 0, 0u, 0u, "" },
+    { 290u, "op2_spec_b19.p0", 0, 99, 0, 0u, 0u, "" },
+    { 291u, "op2_spec_b20.p0", 0, 99, 0, 0u, 0u, "" },
+    { 292u, "op2_spec_b21.p0", 0, 99, 0, 0u, 0u, "" },
+    { 293u, "op2_spec_b22.p0", 0, 99, 0, 0u, 0u, "" },
+    { 294u, "op2_spec_b23.p0", 0, 99, 0, 0u, 0u, "" },
+    { 295u, "op2_spec_b24.p0", 0, 99, 0, 0u, 0u, "" },
+    { 296u, "op2_spec_b25.p0", 0, 99, 0, 0u, 0u, "" },
+    { 297u, "op2_spec_b26.p0", 0, 99, 0, 0u, 0u, "" },
+    { 298u, "op2_spec_b27.p0", 0, 99, 0, 0u, 0u, "" },
+    { 299u, "op2_spec_b28.p0", 0, 99, 0, 0u, 0u, "" },
+    { 300u, "op2_spec_b29.p0", 0, 99, 0, 0u, 0u, "" },
+    { 301u, "op2_spec_b30.p0", 0, 99, 0, 0u, 0u, "" },
+    { 302u, "op2_spec_b31.p0", 0, 99, 0, 0u, 0u, "" },
+    { 303u, "op2_spec_b32.p0", 0, 99, 0, 0u, 0u, "" },
+    { 304u, "op2_spec_b33.p0", 0, 99, 0, 0u, 0u, "" },
+    { 305u, "op2_spec_b34.p0", 0, 99, 0, 0u, 0u, "" },
+    { 306u, "op2_spec_b35.p0", 0, 99, 0, 0u, 0u, "" },
+    { 307u, "op2_spec_b36.p0", 0, 99, 0, 0u, 0u, "" },
+    { 308u, "op2_spec_b37.p0", 0, 99, 0, 0u, 0u, "" },
+    { 309u, "op2_spec_b38.p0", 0, 99, 0, 0u, 0u, "" },
+    { 310u, "op2_spec_b39.p0", 0, 99, 0, 0u, 0u, "" },
+    { 311u, "op2_spec_b40.p0", 0, 99, 0, 0u, 0u, "" },
+    { 312u, "op2_spec_b41.p0", 0, 99, 0, 0u, 0u, "" },
+    { 313u, "op2_spec_b42.p0", 0, 99, 0, 0u, 0u, "" },
+    { 314u, "op2_spec_b43.p0", 0, 99, 0, 0u, 0u, "" },
+    { 315u, "op2_spec_b44.p0", 0, 99, 0, 0u, 0u, "" },
+    { 316u, "op2_spec_b45.p0", 0, 99, 0, 0u, 0u, "" },
+    { 317u, "op2_spec_b46.p0", 0, 99, 0, 0u, 0u, "" },
+    { 318u, "op2_spec_b47.p0", 0, 99, 0, 0u, 0u, "" },
+    { 319u, "op2_spec_b48.p0", 0, 99, 0, 0u, 0u, "" },
+    { 320u, "op2_spec_b49.p0", 0, 99, 0, 0u, 0u, "" },
+    { 321u, "op2_spec_b50.p0", 0, 99, 0, 0u, 0u, "" },
+    { 322u, "op2_spec_b51.p0", 0, 99, 0, 0u, 0u, "" },
+    { 323u, "op2_spec_b52.p0", 0, 99, 0, 0u, 0u, "" },
+    { 324u, "op2_spec_b53.p0", 0, 99, 0, 0u, 0u, "" },
+    { 325u, "op2_spec_b54.p0", 0, 99, 0, 0u, 0u, "" },
+    { 326u, "op2_spec_b55.p0", 0, 99, 0, 0u, 0u, "" },
+    { 327u, "op2_spec_b56.p0", 0, 99, 0, 0u, 0u, "" },
+    { 328u, "op2_spec_b57.p0", 0, 99, 0, 0u, 0u, "" },
+    { 329u, "op2_spec_b58.p0", 0, 99, 0, 0u, 0u, "" },
+    { 330u, "op2_spec_b59.p0", 0, 99, 0, 0u, 0u, "" },
+    { 331u, "op2_spec_b60.p0", 0, 99, 0, 0u, 0u, "" },
+    { 332u, "op2_spec_b61.p0", 0, 99, 0, 0u, 0u, "" },
+    { 333u, "op2_spec_b62.p0", 0, 99, 0, 0u, 0u, "" },
+    { 334u, "op2_spec_b63.p0", 0, 99, 0, 0u, 0u, "" },
+    { 335u, "op2_spec_b64.p0", 0, 99, 0, 0u, 0u, "" },
+    { 336u, "op2_spec_morph.p0", 0, 99, 0, 0u, 0u, "" },
+    { 337u, "op2.eg.warm.p0", 0, 99, 0, 0u, 0u, "" },
+    { 338u, "op2.eg.surge.p0", 0, 99, 80, 0u, 0u, "" },
+    { 339u, "op2.eg.d1r.p0", 0, 99, 60, 0u, 0u, "" },
+    { 340u, "op2.eg.d1l.p0", 0, 99, 93, 0u, 0u, "" },
+    { 341u, "op2.eg.d2r.p0", 0, 99, 50, 0u, 0u, "" },
+    { 342u, "op2.eg.d2l.p0", 0, 99, 87, 0u, 0u, "" },
+    { 343u, "op2.eg.rel.p0", 0, 99, 80, 0u, 0u, "" },
+    { 344u, "op2.eg.mode.p0", 0, 3, 1, 0u, 0u, "" },
+    { 345u, "op2_trem_rate.p0", 0, 20000000, 447392, 1u, 0u, "" },
+    { 346u, "op2_trem_depth.p0", -99, 99, 0, 0u, 0u, "" },
+    { 347u, "op2_trem_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 348u, "op2_trem_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 349u, "op2_trem_rate_fade.p0", 0, 99, 0, 0u, 0u, "" },
+    { 350u, "op2_trem_depth_fade.p0", 0, 99, 0, 0u, 0u, "" },
+    { 351u, "op2_fbenv_on.p0", 0, 1, 1, 0u, 0u, "" },
+    { 352u, "op2_fbenv_r1.p0", 0, 99, 80, 0u, 0u, "" },
+    { 353u, "op2_fbenv_r2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 354u, "op2_fbenv_r3.p0", 0, 99, 50, 0u, 0u, "" },
+    { 355u, "op2_fbenv_l1.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 356u, "op2_fbenv_l2.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 357u, "op2_fbenv_l3.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 358u, "op2_fbenv_relr.p0", 0, 99, 80, 0u, 0u, "" },
+    { 359u, "op2_fbenv_rell.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 360u, "op2_fbenv_mode.p0", 0, 3, 1, 0u, 0u, "" },
+    { 361u, "op2.fbenv.scale.p0", -2147483648, 2147483647, 0, 0u, 0u, "" },
+    { 362u, "op2_fblfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
+    { 363u, "op2_fblfo_depth.p0", -32767, 32767, 0, 0u, 0u, "" },
+    { 364u, "op2_fblfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 365u, "op2_fblfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 366u, "op2_fblfo_rate_fade.p0", 0, 99, 0, 0u, 0u, "" },
+    { 367u, "op2_fblfo_depth_fade.p0", 0, 99, 0, 0u, 0u, "" },
+    { 368u, "op2_dlfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
+    { 369u, "op2_dlfo_depth.p0", -32768, 32768, 0, 0u, 0u, "" },
+    { 370u, "op2_dlfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 371u, "op2_dlfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 372u, "op2_dlfo_rate_fade.p0", 0, 99, 0, 0u, 0u, "" },
+    { 373u, "op2_dlfo_depth_fade.p0", 0, 99, 0, 0u, 0u, "" },
+    { 374u, "op2.velamp.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 375u, "op2.velfm.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 376u, "op2.velrate.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 377u, "op2_level.p0", 0, 99, 85, 0u, 0u, "" },
+    { 378u, "op2_feedback.p0", -32767, 32767, 0, 0u, 0u, "" },
+    { 379u, "op2_level_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 380u, "op2_level_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 381u, "op2_fb_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 382u, "op2_fb_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 383u, "op2_aenv_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 384u, "op2_aenv_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 385u, "op2_level_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 386u, "op2_fb_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 387u, "op2_aenv_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 388u, "op2_mute.p0", 0, 1, 0, 0u, 0u, "" },
+    { 389u, "op2_spec_env_on.p0", 0, 1, 0, 0u, 0u, "" },
+    { 390u, "op2_spec_env_r1.p0", 0, 99, 80, 0u, 0u, "" },
+    { 391u, "op2_spec_env_r2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 392u, "op2_spec_env_r3.p0", 0, 99, 50, 0u, 0u, "" },
+    { 393u, "op2_spec_env_l1.p0", 0, 99, 99, 0u, 0u, "" },
+    { 394u, "op2_spec_env_l2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 395u, "op2_spec_env_l3.p0", 0, 99, 0, 0u, 0u, "" },
+    { 396u, "op2_spec_env_relr.p0", 0, 99, 80, 0u, 0u, "" },
+    { 397u, "op2_spec_env_rell.p0", 0, 99, 0, 0u, 0u, "" },
+    { 398u, "op2_spec_env_mode.p0", 0, 3, 1, 0u, 0u, "" },
+    { 399u, "op2.specenv.scale.p0", -2147483648, 2147483647, 0, 0u, 0u, "" },
+    { 400u, "op2_spec_lfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
+    { 401u, "op2_spec_lfo_depth.p0", -99, 99, 0, 0u, 0u, "" },
+    { 402u, "op2_spec_lfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 403u, "op2_spec_lfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 404u, "op2_spec_lfo_rate_fade.p0", 0, 99, 0, 0u, 0u, "" },
+    { 405u, "op2_spec_lfo_depth_fade.p0", 0, 99, 0, 0u, 0u, "" },
+    { 406u, "op3_ratio.p0", 32768, 1048576, 196608, 0u, 0u, "" },
+    { 407u, "op3_detune.p0", -50, 50, 0, 0u, 0u, "" },
+    { 408u, "op3_waveform.p0", 0, 13, 0, 0u, 0u, "" },
+    { 409u, "op3_spec_range_a.p0", 0, 1, 0, 0u, 0u, "" },
+    { 410u, "op3_spec_range_b.p0", 0, 1, 0, 0u, 0u, "" },
+    { 411u, "op3_spec_a1.p0", 0, 99, 99, 0u, 0u, "" },
+    { 412u, "op3_spec_a2.p0", 0, 99, 0, 0u, 0u, "" },
+    { 413u, "op3_spec_a3.p0", 0, 99, 0, 0u, 0u, "" },
+    { 414u, "op3_spec_a4.p0", 0, 99, 0, 0u, 0u, "" },
+    { 415u, "op3_spec_a5.p0", 0, 99, 0, 0u, 0u, "" },
+    { 416u, "op3_spec_a6.p0", 0, 99, 0, 0u, 0u, "" },
+    { 417u, "op3_spec_a7.p0", 0, 99, 0, 0u, 0u, "" },
+    { 418u, "op3_spec_a8.p0", 0, 99, 0, 0u, 0u, "" },
+    { 419u, "op3_spec_a9.p0", 0, 99, 0, 0u, 0u, "" },
+    { 420u, "op3_spec_a10.p0", 0, 99, 0, 0u, 0u, "" },
+    { 421u, "op3_spec_a11.p0", 0, 99, 0, 0u, 0u, "" },
+    { 422u, "op3_spec_a12.p0", 0, 99, 0, 0u, 0u, "" },
+    { 423u, "op3_spec_a13.p0", 0, 99, 0, 0u, 0u, "" },
+    { 424u, "op3_spec_a14.p0", 0, 99, 0, 0u, 0u, "" },
+    { 425u, "op3_spec_a15.p0", 0, 99, 0, 0u, 0u, "" },
+    { 426u, "op3_spec_a16.p0", 0, 99, 0, 0u, 0u, "" },
+    { 427u, "op3_spec_a17.p0", 0, 99, 0, 0u, 0u, "" },
+    { 428u, "op3_spec_a18.p0", 0, 99, 0, 0u, 0u, "" },
+    { 429u, "op3_spec_a19.p0", 0, 99, 0, 0u, 0u, "" },
+    { 430u, "op3_spec_a20.p0", 0, 99, 0, 0u, 0u, "" },
+    { 431u, "op3_spec_a21.p0", 0, 99, 0, 0u, 0u, "" },
+    { 432u, "op3_spec_a22.p0", 0, 99, 0, 0u, 0u, "" },
+    { 433u, "op3_spec_a23.p0", 0, 99, 0, 0u, 0u, "" },
+    { 434u, "op3_spec_a24.p0", 0, 99, 0, 0u, 0u, "" },
+    { 435u, "op3_spec_a25.p0", 0, 99, 0, 0u, 0u, "" },
+    { 436u, "op3_spec_a26.p0", 0, 99, 0, 0u, 0u, "" },
+    { 437u, "op3_spec_a27.p0", 0, 99, 0, 0u, 0u, "" },
+    { 438u, "op3_spec_a28.p0", 0, 99, 0, 0u, 0u, "" },
+    { 439u, "op3_spec_a29.p0", 0, 99, 0, 0u, 0u, "" },
+    { 440u, "op3_spec_a30.p0", 0, 99, 0, 0u, 0u, "" },
+    { 441u, "op3_spec_a31.p0", 0, 99, 0, 0u, 0u, "" },
+    { 442u, "op3_spec_a32.p0", 0, 99, 0, 0u, 0u, "" },
+    { 443u, "op3_spec_a33.p0", 0, 99, 0, 0u, 0u, "" },
+    { 444u, "op3_spec_a34.p0", 0, 99, 0, 0u, 0u, "" },
+    { 445u, "op3_spec_a35.p0", 0, 99, 0, 0u, 0u, "" },
+    { 446u, "op3_spec_a36.p0", 0, 99, 0, 0u, 0u, "" },
+    { 447u, "op3_spec_a37.p0", 0, 99, 0, 0u, 0u, "" },
+    { 448u, "op3_spec_a38.p0", 0, 99, 0, 0u, 0u, "" },
+    { 449u, "op3_spec_a39.p0", 0, 99, 0, 0u, 0u, "" },
+    { 450u, "op3_spec_a40.p0", 0, 99, 0, 0u, 0u, "" },
+    { 451u, "op3_spec_a41.p0", 0, 99, 0, 0u, 0u, "" },
+    { 452u, "op3_spec_a42.p0", 0, 99, 0, 0u, 0u, "" },
+    { 453u, "op3_spec_a43.p0", 0, 99, 0, 0u, 0u, "" },
+    { 454u, "op3_spec_a44.p0", 0, 99, 0, 0u, 0u, "" },
+    { 455u, "op3_spec_a45.p0", 0, 99, 0, 0u, 0u, "" },
+    { 456u, "op3_spec_a46.p0", 0, 99, 0, 0u, 0u, "" },
+    { 457u, "op3_spec_a47.p0", 0, 99, 0, 0u, 0u, "" },
+    { 458u, "op3_spec_a48.p0", 0, 99, 0, 0u, 0u, "" },
+    { 459u, "op3_spec_a49.p0", 0, 99, 0, 0u, 0u, "" },
+    { 460u, "op3_spec_a50.p0", 0, 99, 0, 0u, 0u, "" },
+    { 461u, "op3_spec_a51.p0", 0, 99, 0, 0u, 0u, "" },
+    { 462u, "op3_spec_a52.p0", 0, 99, 0, 0u, 0u, "" },
+    { 463u, "op3_spec_a53.p0", 0, 99, 0, 0u, 0u, "" },
+    { 464u, "op3_spec_a54.p0", 0, 99, 0, 0u, 0u, "" },
+    { 465u, "op3_spec_a55.p0", 0, 99, 0, 0u, 0u, "" },
+    { 466u, "op3_spec_a56.p0", 0, 99, 0, 0u, 0u, "" },
+    { 467u, "op3_spec_a57.p0", 0, 99, 0, 0u, 0u, "" },
+    { 468u, "op3_spec_a58.p0", 0, 99, 0, 0u, 0u, "" },
+    { 469u, "op3_spec_a59.p0", 0, 99, 0, 0u, 0u, "" },
+    { 470u, "op3_spec_a60.p0", 0, 99, 0, 0u, 0u, "" },
+    { 471u, "op3_spec_a61.p0", 0, 99, 0, 0u, 0u, "" },
+    { 472u, "op3_spec_a62.p0", 0, 99, 0, 0u, 0u, "" },
+    { 473u, "op3_spec_a63.p0", 0, 99, 0, 0u, 0u, "" },
+    { 474u, "op3_spec_a64.p0", 0, 99, 0, 0u, 0u, "" },
+    { 475u, "op3_spec_b1.p0", 0, 99, 99, 0u, 0u, "" },
+    { 476u, "op3_spec_b2.p0", 0, 99, 45, 0u, 0u, "" },
+    { 477u, "op3_spec_b3.p0", 0, 99, 30, 0u, 0u, "" },
+    { 478u, "op3_spec_b4.p0", 0, 99, 15, 0u, 0u, "" },
+    { 479u, "op3_spec_b5.p0", 0, 99, 55, 0u, 0u, "" },
+    { 480u, "op3_spec_b6.p0", 0, 99, 40, 0u, 0u, "" },
+    { 481u, "op3_spec_b7.p0", 0, 99, 25, 0u, 0u, "" },
+    { 482u, "op3_spec_b8.p0", 0, 99, 12, 0u, 0u, "" },
+    { 483u, "op3_spec_b9.p0", 0, 99, 8, 0u, 0u, "" },
+    { 484u, "op3_spec_b10.p0", 0, 99, 5, 0u, 0u, "" },
+    { 485u, "op3_spec_b11.p0", 0, 99, 3, 0u, 0u, "" },
+    { 486u, "op3_spec_b12.p0", 0, 99, 2, 0u, 0u, "" },
+    { 487u, "op3_spec_b13.p0", 0, 99, 1, 0u, 0u, "" },
+    { 488u, "op3_spec_b14.p0", 0, 99, 0, 0u, 0u, "" },
+    { 489u, "op3_spec_b15.p0", 0, 99, 0, 0u, 0u, "" },
+    { 490u, "op3_spec_b16.p0", 0, 99, 0, 0u, 0u, "" },
+    { 491u, "op3_spec_b17.p0", 0, 99, 0, 0u, 0u, "" },
+    { 492u, "op3_spec_b18.p0", 0, 99, 0, 0u, 0u, "" },
+    { 493u, "op3_spec_b19.p0", 0, 99, 0, 0u, 0u, "" },
+    { 494u, "op3_spec_b20.p0", 0, 99, 0, 0u, 0u, "" },
+    { 495u, "op3_spec_b21.p0", 0, 99, 0, 0u, 0u, "" },
+    { 496u, "op3_spec_b22.p0", 0, 99, 0, 0u, 0u, "" },
+    { 497u, "op3_spec_b23.p0", 0, 99, 0, 0u, 0u, "" },
+    { 498u, "op3_spec_b24.p0", 0, 99, 0, 0u, 0u, "" },
+    { 499u, "op3_spec_b25.p0", 0, 99, 0, 0u, 0u, "" },
+    { 500u, "op3_spec_b26.p0", 0, 99, 0, 0u, 0u, "" },
+    { 501u, "op3_spec_b27.p0", 0, 99, 0, 0u, 0u, "" },
+    { 502u, "op3_spec_b28.p0", 0, 99, 0, 0u, 0u, "" },
+    { 503u, "op3_spec_b29.p0", 0, 99, 0, 0u, 0u, "" },
+    { 504u, "op3_spec_b30.p0", 0, 99, 0, 0u, 0u, "" },
+    { 505u, "op3_spec_b31.p0", 0, 99, 0, 0u, 0u, "" },
+    { 506u, "op3_spec_b32.p0", 0, 99, 0, 0u, 0u, "" },
+    { 507u, "op3_spec_b33.p0", 0, 99, 0, 0u, 0u, "" },
+    { 508u, "op3_spec_b34.p0", 0, 99, 0, 0u, 0u, "" },
+    { 509u, "op3_spec_b35.p0", 0, 99, 0, 0u, 0u, "" },
+    { 510u, "op3_spec_b36.p0", 0, 99, 0, 0u, 0u, "" },
+    { 511u, "op3_spec_b37.p0", 0, 99, 0, 0u, 0u, "" },
+    { 512u, "op3_spec_b38.p0", 0, 99, 0, 0u, 0u, "" },
+    { 513u, "op3_spec_b39.p0", 0, 99, 0, 0u, 0u, "" },
+    { 514u, "op3_spec_b40.p0", 0, 99, 0, 0u, 0u, "" },
+    { 515u, "op3_spec_b41.p0", 0, 99, 0, 0u, 0u, "" },
+    { 516u, "op3_spec_b42.p0", 0, 99, 0, 0u, 0u, "" },
+    { 517u, "op3_spec_b43.p0", 0, 99, 0, 0u, 0u, "" },
+    { 518u, "op3_spec_b44.p0", 0, 99, 0, 0u, 0u, "" },
+    { 519u, "op3_spec_b45.p0", 0, 99, 0, 0u, 0u, "" },
+    { 520u, "op3_spec_b46.p0", 0, 99, 0, 0u, 0u, "" },
+    { 521u, "op3_spec_b47.p0", 0, 99, 0, 0u, 0u, "" },
+    { 522u, "op3_spec_b48.p0", 0, 99, 0, 0u, 0u, "" },
+    { 523u, "op3_spec_b49.p0", 0, 99, 0, 0u, 0u, "" },
+    { 524u, "op3_spec_b50.p0", 0, 99, 0, 0u, 0u, "" },
+    { 525u, "op3_spec_b51.p0", 0, 99, 0, 0u, 0u, "" },
+    { 526u, "op3_spec_b52.p0", 0, 99, 0, 0u, 0u, "" },
+    { 527u, "op3_spec_b53.p0", 0, 99, 0, 0u, 0u, "" },
+    { 528u, "op3_spec_b54.p0", 0, 99, 0, 0u, 0u, "" },
+    { 529u, "op3_spec_b55.p0", 0, 99, 0, 0u, 0u, "" },
+    { 530u, "op3_spec_b56.p0", 0, 99, 0, 0u, 0u, "" },
+    { 531u, "op3_spec_b57.p0", 0, 99, 0, 0u, 0u, "" },
+    { 532u, "op3_spec_b58.p0", 0, 99, 0, 0u, 0u, "" },
+    { 533u, "op3_spec_b59.p0", 0, 99, 0, 0u, 0u, "" },
+    { 534u, "op3_spec_b60.p0", 0, 99, 0, 0u, 0u, "" },
+    { 535u, "op3_spec_b61.p0", 0, 99, 0, 0u, 0u, "" },
+    { 536u, "op3_spec_b62.p0", 0, 99, 0, 0u, 0u, "" },
+    { 537u, "op3_spec_b63.p0", 0, 99, 0, 0u, 0u, "" },
+    { 538u, "op3_spec_b64.p0", 0, 99, 0, 0u, 0u, "" },
+    { 539u, "op3_spec_morph.p0", 0, 99, 0, 0u, 0u, "" },
+    { 540u, "op3.eg.warm.p0", 0, 99, 0, 0u, 0u, "" },
+    { 541u, "op3.eg.surge.p0", 0, 99, 80, 0u, 0u, "" },
+    { 542u, "op3.eg.d1r.p0", 0, 99, 60, 0u, 0u, "" },
+    { 543u, "op3.eg.d1l.p0", 0, 99, 93, 0u, 0u, "" },
+    { 544u, "op3.eg.d2r.p0", 0, 99, 50, 0u, 0u, "" },
+    { 545u, "op3.eg.d2l.p0", 0, 99, 87, 0u, 0u, "" },
+    { 546u, "op3.eg.rel.p0", 0, 99, 80, 0u, 0u, "" },
+    { 547u, "op3.eg.mode.p0", 0, 3, 1, 0u, 0u, "" },
+    { 548u, "op3_trem_rate.p0", 0, 20000000, 292174, 1u, 0u, "" },
+    { 549u, "op3_trem_depth.p0", -99, 99, 0, 0u, 0u, "" },
+    { 550u, "op3_trem_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 551u, "op3_trem_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 552u, "op3_trem_rate_fade.p0", 0, 99, 0, 0u, 0u, "" },
+    { 553u, "op3_trem_depth_fade.p0", 0, 99, 0, 0u, 0u, "" },
+    { 554u, "op3_fbenv_on.p0", 0, 1, 1, 0u, 0u, "" },
+    { 555u, "op3_fbenv_r1.p0", 0, 99, 80, 0u, 0u, "" },
+    { 556u, "op3_fbenv_r2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 557u, "op3_fbenv_r3.p0", 0, 99, 50, 0u, 0u, "" },
+    { 558u, "op3_fbenv_l1.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 559u, "op3_fbenv_l2.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 560u, "op3_fbenv_l3.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 561u, "op3_fbenv_relr.p0", 0, 99, 80, 0u, 0u, "" },
+    { 562u, "op3_fbenv_rell.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 563u, "op3_fbenv_mode.p0", 0, 3, 1, 0u, 0u, "" },
+    { 564u, "op3.fbenv.scale.p0", -2147483648, 2147483647, 0, 0u, 0u, "" },
+    { 565u, "op3_fblfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
+    { 566u, "op3_fblfo_depth.p0", -32767, 32767, 0, 0u, 0u, "" },
+    { 567u, "op3_fblfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 568u, "op3_fblfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 569u, "op3_fblfo_rate_fade.p0", 0, 99, 0, 0u, 0u, "" },
+    { 570u, "op3_fblfo_depth_fade.p0", 0, 99, 0, 0u, 0u, "" },
+    { 571u, "op3_dlfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
+    { 572u, "op3_dlfo_depth.p0", -32768, 32768, 0, 0u, 0u, "" },
+    { 573u, "op3_dlfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 574u, "op3_dlfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 575u, "op3_dlfo_rate_fade.p0", 0, 99, 0, 0u, 0u, "" },
+    { 576u, "op3_dlfo_depth_fade.p0", 0, 99, 0, 0u, 0u, "" },
+    { 577u, "op3.velamp.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 578u, "op3.velfm.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 579u, "op3.velrate.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 580u, "op3_level.p0", 0, 99, 70, 0u, 0u, "" },
+    { 581u, "op3_feedback.p0", -32767, 32767, 0, 0u, 0u, "" },
+    { 582u, "op3_level_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 583u, "op3_level_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 584u, "op3_fb_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 585u, "op3_fb_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 586u, "op3_aenv_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 587u, "op3_aenv_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 588u, "op3_level_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 589u, "op3_fb_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 590u, "op3_aenv_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 591u, "op3_mute.p0", 0, 1, 0, 0u, 0u, "" },
+    { 592u, "op3_spec_env_on.p0", 0, 1, 0, 0u, 0u, "" },
+    { 593u, "op3_spec_env_r1.p0", 0, 99, 80, 0u, 0u, "" },
+    { 594u, "op3_spec_env_r2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 595u, "op3_spec_env_r3.p0", 0, 99, 50, 0u, 0u, "" },
+    { 596u, "op3_spec_env_l1.p0", 0, 99, 99, 0u, 0u, "" },
+    { 597u, "op3_spec_env_l2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 598u, "op3_spec_env_l3.p0", 0, 99, 0, 0u, 0u, "" },
+    { 599u, "op3_spec_env_relr.p0", 0, 99, 80, 0u, 0u, "" },
+    { 600u, "op3_spec_env_rell.p0", 0, 99, 0, 0u, 0u, "" },
+    { 601u, "op3_spec_env_mode.p0", 0, 3, 1, 0u, 0u, "" },
+    { 602u, "op3.specenv.scale.p0", -2147483648, 2147483647, 0, 0u, 0u, "" },
+    { 603u, "op3_spec_lfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
+    { 604u, "op3_spec_lfo_depth.p0", -99, 99, 0, 0u, 0u, "" },
+    { 605u, "op3_spec_lfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 606u, "op3_spec_lfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 607u, "op3_spec_lfo_rate_fade.p0", 0, 99, 0, 0u, 0u, "" },
+    { 608u, "op3_spec_lfo_depth_fade.p0", 0, 99, 0, 0u, 0u, "" },
+    { 609u, "op4_ratio.p0", 32768, 1048576, 131072, 0u, 0u, "" },
+    { 610u, "op4_detune.p0", -50, 50, 0, 0u, 0u, "" },
+    { 611u, "op4_waveform.p0", 0, 13, 0, 0u, 0u, "" },
+    { 612u, "op4_spec_range_a.p0", 0, 1, 0, 0u, 0u, "" },
+    { 613u, "op4_spec_range_b.p0", 0, 1, 0, 0u, 0u, "" },
+    { 614u, "op4_spec_a1.p0", 0, 99, 99, 0u, 0u, "" },
+    { 615u, "op4_spec_a2.p0", 0, 99, 0, 0u, 0u, "" },
+    { 616u, "op4_spec_a3.p0", 0, 99, 0, 0u, 0u, "" },
+    { 617u, "op4_spec_a4.p0", 0, 99, 0, 0u, 0u, "" },
+    { 618u, "op4_spec_a5.p0", 0, 99, 0, 0u, 0u, "" },
+    { 619u, "op4_spec_a6.p0", 0, 99, 0, 0u, 0u, "" },
+    { 620u, "op4_spec_a7.p0", 0, 99, 0, 0u, 0u, "" },
+    { 621u, "op4_spec_a8.p0", 0, 99, 0, 0u, 0u, "" },
+    { 622u, "op4_spec_a9.p0", 0, 99, 0, 0u, 0u, "" },
+    { 623u, "op4_spec_a10.p0", 0, 99, 0, 0u, 0u, "" },
+    { 624u, "op4_spec_a11.p0", 0, 99, 0, 0u, 0u, "" },
+    { 625u, "op4_spec_a12.p0", 0, 99, 0, 0u, 0u, "" },
+    { 626u, "op4_spec_a13.p0", 0, 99, 0, 0u, 0u, "" },
+    { 627u, "op4_spec_a14.p0", 0, 99, 0, 0u, 0u, "" },
+    { 628u, "op4_spec_a15.p0", 0, 99, 0, 0u, 0u, "" },
+    { 629u, "op4_spec_a16.p0", 0, 99, 0, 0u, 0u, "" },
+    { 630u, "op4_spec_a17.p0", 0, 99, 0, 0u, 0u, "" },
+    { 631u, "op4_spec_a18.p0", 0, 99, 0, 0u, 0u, "" },
+    { 632u, "op4_spec_a19.p0", 0, 99, 0, 0u, 0u, "" },
+    { 633u, "op4_spec_a20.p0", 0, 99, 0, 0u, 0u, "" },
+    { 634u, "op4_spec_a21.p0", 0, 99, 0, 0u, 0u, "" },
+    { 635u, "op4_spec_a22.p0", 0, 99, 0, 0u, 0u, "" },
+    { 636u, "op4_spec_a23.p0", 0, 99, 0, 0u, 0u, "" },
+    { 637u, "op4_spec_a24.p0", 0, 99, 0, 0u, 0u, "" },
+    { 638u, "op4_spec_a25.p0", 0, 99, 0, 0u, 0u, "" },
+    { 639u, "op4_spec_a26.p0", 0, 99, 0, 0u, 0u, "" },
+    { 640u, "op4_spec_a27.p0", 0, 99, 0, 0u, 0u, "" },
+    { 641u, "op4_spec_a28.p0", 0, 99, 0, 0u, 0u, "" },
+    { 642u, "op4_spec_a29.p0", 0, 99, 0, 0u, 0u, "" },
+    { 643u, "op4_spec_a30.p0", 0, 99, 0, 0u, 0u, "" },
+    { 644u, "op4_spec_a31.p0", 0, 99, 0, 0u, 0u, "" },
+    { 645u, "op4_spec_a32.p0", 0, 99, 0, 0u, 0u, "" },
+    { 646u, "op4_spec_a33.p0", 0, 99, 0, 0u, 0u, "" },
+    { 647u, "op4_spec_a34.p0", 0, 99, 0, 0u, 0u, "" },
+    { 648u, "op4_spec_a35.p0", 0, 99, 0, 0u, 0u, "" },
+    { 649u, "op4_spec_a36.p0", 0, 99, 0, 0u, 0u, "" },
+    { 650u, "op4_spec_a37.p0", 0, 99, 0, 0u, 0u, "" },
+    { 651u, "op4_spec_a38.p0", 0, 99, 0, 0u, 0u, "" },
+    { 652u, "op4_spec_a39.p0", 0, 99, 0, 0u, 0u, "" },
+    { 653u, "op4_spec_a40.p0", 0, 99, 0, 0u, 0u, "" },
+    { 654u, "op4_spec_a41.p0", 0, 99, 0, 0u, 0u, "" },
+    { 655u, "op4_spec_a42.p0", 0, 99, 0, 0u, 0u, "" },
+    { 656u, "op4_spec_a43.p0", 0, 99, 0, 0u, 0u, "" },
+    { 657u, "op4_spec_a44.p0", 0, 99, 0, 0u, 0u, "" },
+    { 658u, "op4_spec_a45.p0", 0, 99, 0, 0u, 0u, "" },
+    { 659u, "op4_spec_a46.p0", 0, 99, 0, 0u, 0u, "" },
+    { 660u, "op4_spec_a47.p0", 0, 99, 0, 0u, 0u, "" },
+    { 661u, "op4_spec_a48.p0", 0, 99, 0, 0u, 0u, "" },
+    { 662u, "op4_spec_a49.p0", 0, 99, 0, 0u, 0u, "" },
+    { 663u, "op4_spec_a50.p0", 0, 99, 0, 0u, 0u, "" },
+    { 664u, "op4_spec_a51.p0", 0, 99, 0, 0u, 0u, "" },
+    { 665u, "op4_spec_a52.p0", 0, 99, 0, 0u, 0u, "" },
+    { 666u, "op4_spec_a53.p0", 0, 99, 0, 0u, 0u, "" },
+    { 667u, "op4_spec_a54.p0", 0, 99, 0, 0u, 0u, "" },
+    { 668u, "op4_spec_a55.p0", 0, 99, 0, 0u, 0u, "" },
+    { 669u, "op4_spec_a56.p0", 0, 99, 0, 0u, 0u, "" },
+    { 670u, "op4_spec_a57.p0", 0, 99, 0, 0u, 0u, "" },
+    { 671u, "op4_spec_a58.p0", 0, 99, 0, 0u, 0u, "" },
+    { 672u, "op4_spec_a59.p0", 0, 99, 0, 0u, 0u, "" },
+    { 673u, "op4_spec_a60.p0", 0, 99, 0, 0u, 0u, "" },
+    { 674u, "op4_spec_a61.p0", 0, 99, 0, 0u, 0u, "" },
+    { 675u, "op4_spec_a62.p0", 0, 99, 0, 0u, 0u, "" },
+    { 676u, "op4_spec_a63.p0", 0, 99, 0, 0u, 0u, "" },
+    { 677u, "op4_spec_a64.p0", 0, 99, 0, 0u, 0u, "" },
+    { 678u, "op4_spec_b1.p0", 0, 99, 99, 0u, 0u, "" },
+    { 679u, "op4_spec_b2.p0", 0, 99, 45, 0u, 0u, "" },
+    { 680u, "op4_spec_b3.p0", 0, 99, 30, 0u, 0u, "" },
+    { 681u, "op4_spec_b4.p0", 0, 99, 15, 0u, 0u, "" },
+    { 682u, "op4_spec_b5.p0", 0, 99, 55, 0u, 0u, "" },
+    { 683u, "op4_spec_b6.p0", 0, 99, 40, 0u, 0u, "" },
+    { 684u, "op4_spec_b7.p0", 0, 99, 25, 0u, 0u, "" },
+    { 685u, "op4_spec_b8.p0", 0, 99, 12, 0u, 0u, "" },
+    { 686u, "op4_spec_b9.p0", 0, 99, 8, 0u, 0u, "" },
+    { 687u, "op4_spec_b10.p0", 0, 99, 5, 0u, 0u, "" },
+    { 688u, "op4_spec_b11.p0", 0, 99, 3, 0u, 0u, "" },
+    { 689u, "op4_spec_b12.p0", 0, 99, 2, 0u, 0u, "" },
+    { 690u, "op4_spec_b13.p0", 0, 99, 1, 0u, 0u, "" },
+    { 691u, "op4_spec_b14.p0", 0, 99, 0, 0u, 0u, "" },
+    { 692u, "op4_spec_b15.p0", 0, 99, 0, 0u, 0u, "" },
+    { 693u, "op4_spec_b16.p0", 0, 99, 0, 0u, 0u, "" },
+    { 694u, "op4_spec_b17.p0", 0, 99, 0, 0u, 0u, "" },
+    { 695u, "op4_spec_b18.p0", 0, 99, 0, 0u, 0u, "" },
+    { 696u, "op4_spec_b19.p0", 0, 99, 0, 0u, 0u, "" },
+    { 697u, "op4_spec_b20.p0", 0, 99, 0, 0u, 0u, "" },
+    { 698u, "op4_spec_b21.p0", 0, 99, 0, 0u, 0u, "" },
+    { 699u, "op4_spec_b22.p0", 0, 99, 0, 0u, 0u, "" },
+    { 700u, "op4_spec_b23.p0", 0, 99, 0, 0u, 0u, "" },
+    { 701u, "op4_spec_b24.p0", 0, 99, 0, 0u, 0u, "" },
+    { 702u, "op4_spec_b25.p0", 0, 99, 0, 0u, 0u, "" },
+    { 703u, "op4_spec_b26.p0", 0, 99, 0, 0u, 0u, "" },
+    { 704u, "op4_spec_b27.p0", 0, 99, 0, 0u, 0u, "" },
+    { 705u, "op4_spec_b28.p0", 0, 99, 0, 0u, 0u, "" },
+    { 706u, "op4_spec_b29.p0", 0, 99, 0, 0u, 0u, "" },
+    { 707u, "op4_spec_b30.p0", 0, 99, 0, 0u, 0u, "" },
+    { 708u, "op4_spec_b31.p0", 0, 99, 0, 0u, 0u, "" },
+    { 709u, "op4_spec_b32.p0", 0, 99, 0, 0u, 0u, "" },
+    { 710u, "op4_spec_b33.p0", 0, 99, 0, 0u, 0u, "" },
+    { 711u, "op4_spec_b34.p0", 0, 99, 0, 0u, 0u, "" },
+    { 712u, "op4_spec_b35.p0", 0, 99, 0, 0u, 0u, "" },
+    { 713u, "op4_spec_b36.p0", 0, 99, 0, 0u, 0u, "" },
+    { 714u, "op4_spec_b37.p0", 0, 99, 0, 0u, 0u, "" },
+    { 715u, "op4_spec_b38.p0", 0, 99, 0, 0u, 0u, "" },
+    { 716u, "op4_spec_b39.p0", 0, 99, 0, 0u, 0u, "" },
+    { 717u, "op4_spec_b40.p0", 0, 99, 0, 0u, 0u, "" },
+    { 718u, "op4_spec_b41.p0", 0, 99, 0, 0u, 0u, "" },
+    { 719u, "op4_spec_b42.p0", 0, 99, 0, 0u, 0u, "" },
+    { 720u, "op4_spec_b43.p0", 0, 99, 0, 0u, 0u, "" },
+    { 721u, "op4_spec_b44.p0", 0, 99, 0, 0u, 0u, "" },
+    { 722u, "op4_spec_b45.p0", 0, 99, 0, 0u, 0u, "" },
+    { 723u, "op4_spec_b46.p0", 0, 99, 0, 0u, 0u, "" },
+    { 724u, "op4_spec_b47.p0", 0, 99, 0, 0u, 0u, "" },
+    { 725u, "op4_spec_b48.p0", 0, 99, 0, 0u, 0u, "" },
+    { 726u, "op4_spec_b49.p0", 0, 99, 0, 0u, 0u, "" },
+    { 727u, "op4_spec_b50.p0", 0, 99, 0, 0u, 0u, "" },
+    { 728u, "op4_spec_b51.p0", 0, 99, 0, 0u, 0u, "" },
+    { 729u, "op4_spec_b52.p0", 0, 99, 0, 0u, 0u, "" },
+    { 730u, "op4_spec_b53.p0", 0, 99, 0, 0u, 0u, "" },
+    { 731u, "op4_spec_b54.p0", 0, 99, 0, 0u, 0u, "" },
+    { 732u, "op4_spec_b55.p0", 0, 99, 0, 0u, 0u, "" },
+    { 733u, "op4_spec_b56.p0", 0, 99, 0, 0u, 0u, "" },
+    { 734u, "op4_spec_b57.p0", 0, 99, 0, 0u, 0u, "" },
+    { 735u, "op4_spec_b58.p0", 0, 99, 0, 0u, 0u, "" },
+    { 736u, "op4_spec_b59.p0", 0, 99, 0, 0u, 0u, "" },
+    { 737u, "op4_spec_b60.p0", 0, 99, 0, 0u, 0u, "" },
+    { 738u, "op4_spec_b61.p0", 0, 99, 0, 0u, 0u, "" },
+    { 739u, "op4_spec_b62.p0", 0, 99, 0, 0u, 0u, "" },
+    { 740u, "op4_spec_b63.p0", 0, 99, 0, 0u, 0u, "" },
+    { 741u, "op4_spec_b64.p0", 0, 99, 0, 0u, 0u, "" },
+    { 742u, "op4_spec_morph.p0", 0, 99, 0, 0u, 0u, "" },
+    { 743u, "op4.eg.warm.p0", 0, 99, 0, 0u, 0u, "" },
+    { 744u, "op4.eg.surge.p0", 0, 99, 80, 0u, 0u, "" },
+    { 745u, "op4.eg.d1r.p0", 0, 99, 60, 0u, 0u, "" },
+    { 746u, "op4.eg.d1l.p0", 0, 99, 93, 0u, 0u, "" },
+    { 747u, "op4.eg.d2r.p0", 0, 99, 50, 0u, 0u, "" },
+    { 748u, "op4.eg.d2l.p0", 0, 99, 87, 0u, 0u, "" },
+    { 749u, "op4.eg.rel.p0", 0, 99, 80, 0u, 0u, "" },
+    { 750u, "op4.eg.mode.p0", 0, 3, 1, 0u, 0u, "" },
+    { 751u, "op4_trem_rate.p0", 0, 20000000, 340870, 1u, 0u, "" },
+    { 752u, "op4_trem_depth.p0", -99, 99, 0, 0u, 0u, "" },
+    { 753u, "op4_trem_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 754u, "op4_trem_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 755u, "op4_trem_rate_fade.p0", 0, 99, 0, 0u, 0u, "" },
+    { 756u, "op4_trem_depth_fade.p0", 0, 99, 0, 0u, 0u, "" },
+    { 757u, "op4_fbenv_on.p0", 0, 1, 1, 0u, 0u, "" },
+    { 758u, "op4_fbenv_r1.p0", 0, 99, 80, 0u, 0u, "" },
+    { 759u, "op4_fbenv_r2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 760u, "op4_fbenv_r3.p0", 0, 99, 50, 0u, 0u, "" },
+    { 761u, "op4_fbenv_l1.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 762u, "op4_fbenv_l2.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 763u, "op4_fbenv_l3.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 764u, "op4_fbenv_relr.p0", 0, 99, 80, 0u, 0u, "" },
+    { 765u, "op4_fbenv_rell.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 766u, "op4_fbenv_mode.p0", 0, 3, 1, 0u, 0u, "" },
+    { 767u, "op4.fbenv.scale.p0", -2147483648, 2147483647, 0, 0u, 0u, "" },
+    { 768u, "op4_fblfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
+    { 769u, "op4_fblfo_depth.p0", -32767, 32767, 0, 0u, 0u, "" },
+    { 770u, "op4_fblfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 771u, "op4_fblfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 772u, "op4_fblfo_rate_fade.p0", 0, 99, 0, 0u, 0u, "" },
+    { 773u, "op4_fblfo_depth_fade.p0", 0, 99, 0, 0u, 0u, "" },
+    { 774u, "op4_dlfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
+    { 775u, "op4_dlfo_depth.p0", -32768, 32768, 0, 0u, 0u, "" },
+    { 776u, "op4_dlfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 777u, "op4_dlfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 778u, "op4_dlfo_rate_fade.p0", 0, 99, 0, 0u, 0u, "" },
+    { 779u, "op4_dlfo_depth_fade.p0", 0, 99, 0, 0u, 0u, "" },
+    { 780u, "op4.velamp.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 781u, "op4.velfm.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 782u, "op4.velrate.depth.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 783u, "op4_level.p0", 0, 99, 85, 0u, 0u, "" },
+    { 784u, "op4_feedback.p0", -32767, 32767, 0, 0u, 0u, "" },
+    { 785u, "op4_level_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 786u, "op4_level_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 787u, "op4_fb_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 788u, "op4_fb_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 789u, "op4_aenv_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 790u, "op4_aenv_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 791u, "op4_level_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 792u, "op4_fb_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 793u, "op4_aenv_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 794u, "op4_mute.p0", 0, 1, 0, 0u, 0u, "" },
+    { 795u, "op4_spec_env_on.p0", 0, 1, 0, 0u, 0u, "" },
+    { 796u, "op4_spec_env_r1.p0", 0, 99, 80, 0u, 0u, "" },
+    { 797u, "op4_spec_env_r2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 798u, "op4_spec_env_r3.p0", 0, 99, 50, 0u, 0u, "" },
+    { 799u, "op4_spec_env_l1.p0", 0, 99, 99, 0u, 0u, "" },
+    { 800u, "op4_spec_env_l2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 801u, "op4_spec_env_l3.p0", 0, 99, 0, 0u, 0u, "" },
+    { 802u, "op4_spec_env_relr.p0", 0, 99, 80, 0u, 0u, "" },
+    { 803u, "op4_spec_env_rell.p0", 0, 99, 0, 0u, 0u, "" },
+    { 804u, "op4_spec_env_mode.p0", 0, 3, 1, 0u, 0u, "" },
+    { 805u, "op4.specenv.scale.p0", -2147483648, 2147483647, 0, 0u, 0u, "" },
+    { 806u, "op4_spec_lfo_rate.p0", 0, 20000000, 357914, 1u, 0u, "" },
+    { 807u, "op4_spec_lfo_depth.p0", -99, 99, 0, 0u, 0u, "" },
+    { 808u, "op4_spec_lfo_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 809u, "op4_spec_lfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 810u, "op4_spec_lfo_rate_fade.p0", 0, 99, 0, 0u, 0u, "" },
+    { 811u, "op4_spec_lfo_depth_fade.p0", 0, 99, 0, 0u, 0u, "" },
+    { 812u, "algorithm.p0", 0, 7, 4, 0u, 0u, "" },
+    { 813u, "penv_on.p0", 0, 1, 0, 0u, 0u, "" },
+    { 814u, "penv_r1.p0", 0, 99, 80, 0u, 0u, "" },
+    { 815u, "penv_r2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 816u, "penv_r3.p0", 0, 99, 50, 0u, 0u, "" },
+    { 817u, "penv_l1.p0", -32768, 32767, 5461, 0u, 0u, "" },
+    { 818u, "penv_l2.p0", -32768, 32767, 2731, 0u, 0u, "" },
+    { 819u, "penv_l3.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 820u, "penv_relr.p0", 0, 99, 80, 0u, 0u, "" },
+    { 821u, "penv_rell.p0", -32768, 32767, 0, 0u, 0u, "" },
+    { 822u, "penv_mode.p0", 0, 3, 1, 0u, 0u, "" },
+    { 823u, "penv.scale.p0", -2147483648, 2147483647, 0, 0u, 0u, "" },
+    { 824u, "penv_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 825u, "penv_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 826u, "penv_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 827u, "pitch_rate.p0", 0, 20000000, 447392, 1u, 0u, "" },
+    { 828u, "pitch_depth.p0", -32768, 32768, 273, 0u, 0u, "" },
+    { 829u, "pitch_wave.p0", 0, 11, 0, 0u, 0u, "" },
+    { 830u, "pitch_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 831u, "pitch_rate_fade.p0", 0, 99, 0, 0u, 0u, "" },
+    { 832u, "pitch_depth_fade.p0", 0, 99, 0, 0u, 0u, "" },
+    { 833u, "f1_cutoff_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 834u, "f1_cutoff_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 835u, "fenv_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 836u, "fenv_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 837u, "f1_cutoff_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 838u, "fenv_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 839u, "cutoff.p0", 0, 55296, 36958, 0u, 0u, "" },
+    { 840u, "res.p0", 0, 41942, 16000, 0u, 0u, "" },
+    { 841u, "lp.comp.p0", -32768, 32767, 7209, 0u, 0u, "" },
+    { 842u, "filter_type.p0", 0, 2, 0, 0u, 0u, "" },
+    { 843u, "filter_on.p0", 0, 1, 0, 0u, 0u, "" },
+    { 844u, "fenv_on.p0", 0, 1, 0, 0u, 0u, "" },
+    { 845u, "fenv_r1.p0", 0, 99, 80, 0u, 0u, "" },
+    { 846u, "fenv_r2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 847u, "fenv_r3.p0", 0, 99, 50, 0u, 0u, "" },
+    { 848u, "fenv_l1.p0", 0, 99, 99, 0u, 0u, "" },
+    { 849u, "fenv_l2.p0", 0, 99, 93, 0u, 0u, "" },
+    { 850u, "fenv_l3.p0", 0, 99, 87, 0u, 0u, "" },
+    { 851u, "fenv_relr.p0", 0, 99, 80, 0u, 0u, "" },
+    { 852u, "fenv_rell.p0", 0, 99, 0, 0u, 0u, "" },
+    { 853u, "fenv_mode.p0", 0, 3, 1, 0u, 0u, "" },
+    { 854u, "fenv.scale.p0", -2147483648, 2147483647, 256, 0u, 0u, "" },
+    { 855u, "mode.p0", 0, 1, 0, 0u, 0u, "" },
+    { 856u, "unison_count.p0", 1, 8, 1, 0u, 0u, "" },
+    { 857u, "unison_detune.p0", 0, 200, 0, 0u, 0u, "cents" },
+    { 858u, "detune.p0", -50, 50, 0, 0u, 0u, "cents" },
+    { 859u, "transpose.p0", -24, 24, 0, 0u, 0u, "st" },
+    { 860u, "legato.p0", 0, 1, 0, 0u, 0u, "" },
+    { 861u, "portamento.p0", 0, 5000, 0, 1u, 0u, "" },
+    { 862u, "note_priority.p0", 0, 2, 0, 0u, 0u, "" },
+    { 863u, "bend_range.p0", 0, 24, 2, 0u, 0u, "st" },
+    { 864u, "pan.p0", -100, 100, 0, 0u, 0u, "%" },
+    { 865u, "pan_env_on.p0", 0, 1, 1, 0u, 0u, "" },
+    { 866u, "pan_env_r1.p0", 0, 99, 80, 0u, 0u, "" },
+    { 867u, "pan_env_r2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 868u, "pan_env_r3.p0", 0, 99, 50, 0u, 0u, "" },
+    { 869u, "pan_env_l1.p0", -99, 99, 0, 0u, 0u, "" },
+    { 870u, "pan_env_l2.p0", -99, 99, 0, 0u, 0u, "" },
+    { 871u, "pan_env_l3.p0", -99, 99, 0, 0u, 0u, "" },
+    { 872u, "pan_env_relr.p0", 0, 99, 80, 0u, 0u, "" },
+    { 873u, "pan_env_rell.p0", -99, 99, 0, 0u, 0u, "" },
+    { 874u, "pan_env_mode.p0", 0, 3, 0, 0u, 0u, "" },
+    { 875u, "op1_phase_on.p0", 0, 1, 0, 0u, 0u, "" },
+    { 876u, "op1_phase_bp.p0", 1, 999, 500, 0u, 0u, "" },
+    { 877u, "op1_phase_segments.p0", 1, 32, 8, 0u, 0u, "" },
+    { 878u, "op1_phase_flip.p0", 0, 100, 0, 0u, 0u, "" },
+    { 879u, "op1_phase_flip_rate.p0", 0, 20000000, 178956, 1u, 0u, "" },
+    { 880u, "op1_phase_reorder.p0", 0, 100, 0, 0u, 0u, "" },
+    { 881u, "op1_phase_reorder_rate.p0", 0, 20000000, 0, 1u, 0u, "" },
+    { 882u, "op1_phase_jump.p0", 1, 32, 1, 0u, 0u, "" },
+    { 883u, "op1_phase_drift.p0", 0, 100, 0, 0u, 0u, "" },
+    { 884u, "op1_phase_drift_rate.p0", 0, 20000000, 107374, 1u, 0u, "" },
+    { 885u, "op1_phase_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 886u, "op1_phase_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 887u, "op1_phase_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 888u, "op1_phase_lfo_rate.p0", 0, 20000000, 44739, 1u, 0u, "" },
+    { 889u, "op1_phase_lfo_depth.p0", -100, 100, 0, 0u, 0u, "" },
+    { 890u, "op1_phase_lfo_wave.p0", 0, 5, 0, 0u, 0u, "" },
+    { 891u, "op1_phase_lfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 892u, "op1_phase_lfo_rate_fade.p0", 0, 99, 0, 0u, 0u, "" },
+    { 893u, "op1_phase_lfo_depth_fade.p0", 0, 99, 0, 0u, 0u, "" },
+    { 894u, "op1_phase_env_on.p0", 0, 1, 1, 0u, 0u, "" },
+    { 895u, "op1_phase_env_r1.p0", 0, 99, 80, 0u, 0u, "" },
+    { 896u, "op1_phase_env_r2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 897u, "op1_phase_env_r3.p0", 0, 99, 50, 0u, 0u, "" },
+    { 898u, "op1_phase_env_l1.p0", -100, 100, 0, 0u, 0u, "" },
+    { 899u, "op1_phase_env_l2.p0", -100, 100, 0, 0u, 0u, "" },
+    { 900u, "op1_phase_env_l3.p0", -100, 100, 0, 0u, 0u, "" },
+    { 901u, "op1_phase_env_relr.p0", 0, 99, 80, 0u, 0u, "" },
+    { 902u, "op1_phase_env_rell.p0", -100, 100, 0, 0u, 0u, "" },
+    { 903u, "op1_phase_env_mode.p0", 0, 3, 1, 0u, 0u, "" },
+    { 904u, "op2_phase_on.p0", 0, 1, 0, 0u, 0u, "" },
+    { 905u, "op2_phase_bp.p0", 1, 999, 500, 0u, 0u, "" },
+    { 906u, "op2_phase_segments.p0", 1, 32, 8, 0u, 0u, "" },
+    { 907u, "op2_phase_flip.p0", 0, 100, 0, 0u, 0u, "" },
+    { 908u, "op2_phase_flip_rate.p0", 0, 20000000, 178956, 1u, 0u, "" },
+    { 909u, "op2_phase_reorder.p0", 0, 100, 0, 0u, 0u, "" },
+    { 910u, "op2_phase_reorder_rate.p0", 0, 20000000, 0, 1u, 0u, "" },
+    { 911u, "op2_phase_jump.p0", 1, 32, 1, 0u, 0u, "" },
+    { 912u, "op2_phase_drift.p0", 0, 100, 0, 0u, 0u, "" },
+    { 913u, "op2_phase_drift_rate.p0", 0, 20000000, 107374, 1u, 0u, "" },
+    { 914u, "op2_phase_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 915u, "op2_phase_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 916u, "op2_phase_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 917u, "op2_phase_lfo_rate.p0", 0, 20000000, 44739, 1u, 0u, "" },
+    { 918u, "op2_phase_lfo_depth.p0", -100, 100, 0, 0u, 0u, "" },
+    { 919u, "op2_phase_lfo_wave.p0", 0, 5, 0, 0u, 0u, "" },
+    { 920u, "op2_phase_lfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 921u, "op2_phase_lfo_rate_fade.p0", 0, 99, 0, 0u, 0u, "" },
+    { 922u, "op2_phase_lfo_depth_fade.p0", 0, 99, 0, 0u, 0u, "" },
+    { 923u, "op2_phase_env_on.p0", 0, 1, 1, 0u, 0u, "" },
+    { 924u, "op2_phase_env_r1.p0", 0, 99, 80, 0u, 0u, "" },
+    { 925u, "op2_phase_env_r2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 926u, "op2_phase_env_r3.p0", 0, 99, 50, 0u, 0u, "" },
+    { 927u, "op2_phase_env_l1.p0", -100, 100, 0, 0u, 0u, "" },
+    { 928u, "op2_phase_env_l2.p0", -100, 100, 0, 0u, 0u, "" },
+    { 929u, "op2_phase_env_l3.p0", -100, 100, 0, 0u, 0u, "" },
+    { 930u, "op2_phase_env_relr.p0", 0, 99, 80, 0u, 0u, "" },
+    { 931u, "op2_phase_env_rell.p0", -100, 100, 0, 0u, 0u, "" },
+    { 932u, "op2_phase_env_mode.p0", 0, 3, 1, 0u, 0u, "" },
+    { 933u, "op3_phase_on.p0", 0, 1, 0, 0u, 0u, "" },
+    { 934u, "op3_phase_bp.p0", 1, 999, 500, 0u, 0u, "" },
+    { 935u, "op3_phase_segments.p0", 1, 32, 8, 0u, 0u, "" },
+    { 936u, "op3_phase_flip.p0", 0, 100, 0, 0u, 0u, "" },
+    { 937u, "op3_phase_flip_rate.p0", 0, 20000000, 178956, 1u, 0u, "" },
+    { 938u, "op3_phase_reorder.p0", 0, 100, 0, 0u, 0u, "" },
+    { 939u, "op3_phase_reorder_rate.p0", 0, 20000000, 0, 1u, 0u, "" },
+    { 940u, "op3_phase_jump.p0", 1, 32, 1, 0u, 0u, "" },
+    { 941u, "op3_phase_drift.p0", 0, 100, 0, 0u, 0u, "" },
+    { 942u, "op3_phase_drift_rate.p0", 0, 20000000, 107374, 1u, 0u, "" },
+    { 943u, "op3_phase_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 944u, "op3_phase_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 945u, "op3_phase_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 946u, "op3_phase_lfo_rate.p0", 0, 20000000, 44739, 1u, 0u, "" },
+    { 947u, "op3_phase_lfo_depth.p0", -100, 100, 0, 0u, 0u, "" },
+    { 948u, "op3_phase_lfo_wave.p0", 0, 5, 0, 0u, 0u, "" },
+    { 949u, "op3_phase_lfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 950u, "op3_phase_lfo_rate_fade.p0", 0, 99, 0, 0u, 0u, "" },
+    { 951u, "op3_phase_lfo_depth_fade.p0", 0, 99, 0, 0u, 0u, "" },
+    { 952u, "op3_phase_env_on.p0", 0, 1, 1, 0u, 0u, "" },
+    { 953u, "op3_phase_env_r1.p0", 0, 99, 80, 0u, 0u, "" },
+    { 954u, "op3_phase_env_r2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 955u, "op3_phase_env_r3.p0", 0, 99, 50, 0u, 0u, "" },
+    { 956u, "op3_phase_env_l1.p0", -100, 100, 0, 0u, 0u, "" },
+    { 957u, "op3_phase_env_l2.p0", -100, 100, 0, 0u, 0u, "" },
+    { 958u, "op3_phase_env_l3.p0", -100, 100, 0, 0u, 0u, "" },
+    { 959u, "op3_phase_env_relr.p0", 0, 99, 80, 0u, 0u, "" },
+    { 960u, "op3_phase_env_rell.p0", -100, 100, 0, 0u, 0u, "" },
+    { 961u, "op3_phase_env_mode.p0", 0, 3, 1, 0u, 0u, "" },
+    { 962u, "op4_phase_on.p0", 0, 1, 0, 0u, 0u, "" },
+    { 963u, "op4_phase_bp.p0", 1, 999, 500, 0u, 0u, "" },
+    { 964u, "op4_phase_segments.p0", 1, 32, 8, 0u, 0u, "" },
+    { 965u, "op4_phase_flip.p0", 0, 100, 0, 0u, 0u, "" },
+    { 966u, "op4_phase_flip_rate.p0", 0, 20000000, 178956, 1u, 0u, "" },
+    { 967u, "op4_phase_reorder.p0", 0, 100, 0, 0u, 0u, "" },
+    { 968u, "op4_phase_reorder_rate.p0", 0, 20000000, 0, 1u, 0u, "" },
+    { 969u, "op4_phase_jump.p0", 1, 32, 1, 0u, 0u, "" },
+    { 970u, "op4_phase_drift.p0", 0, 100, 0, 0u, 0u, "" },
+    { 971u, "op4_phase_drift_rate.p0", 0, 20000000, 107374, 1u, 0u, "" },
+    { 972u, "op4_phase_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 973u, "op4_phase_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 974u, "op4_phase_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 975u, "op4_phase_lfo_rate.p0", 0, 20000000, 44739, 1u, 0u, "" },
+    { 976u, "op4_phase_lfo_depth.p0", -100, 100, 0, 0u, 0u, "" },
+    { 977u, "op4_phase_lfo_wave.p0", 0, 5, 0, 0u, 0u, "" },
+    { 978u, "op4_phase_lfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 979u, "op4_phase_lfo_rate_fade.p0", 0, 99, 0, 0u, 0u, "" },
+    { 980u, "op4_phase_lfo_depth_fade.p0", 0, 99, 0, 0u, 0u, "" },
+    { 981u, "op4_phase_env_on.p0", 0, 1, 1, 0u, 0u, "" },
+    { 982u, "op4_phase_env_r1.p0", 0, 99, 80, 0u, 0u, "" },
+    { 983u, "op4_phase_env_r2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 984u, "op4_phase_env_r3.p0", 0, 99, 50, 0u, 0u, "" },
+    { 985u, "op4_phase_env_l1.p0", -100, 100, 0, 0u, 0u, "" },
+    { 986u, "op4_phase_env_l2.p0", -100, 100, 0, 0u, 0u, "" },
+    { 987u, "op4_phase_env_l3.p0", -100, 100, 0, 0u, 0u, "" },
+    { 988u, "op4_phase_env_relr.p0", 0, 99, 80, 0u, 0u, "" },
+    { 989u, "op4_phase_env_rell.p0", -100, 100, 0, 0u, 0u, "" },
+    { 990u, "op4_phase_env_mode.p0", 0, 3, 1, 0u, 0u, "" },
+    { 991u, "op1_ratio.p1", 32768, 1048576, 65536, 0u, 0u, "" },
+    { 992u, "op1_detune.p1", -50, 50, 0, 0u, 0u, "" },
+    { 993u, "op1_waveform.p1", 0, 13, 0, 0u, 0u, "" },
+    { 994u, "op1_spec_range_a.p1", 0, 1, 0, 0u, 0u, "" },
+    { 995u, "op1_spec_range_b.p1", 0, 1, 0, 0u, 0u, "" },
+    { 996u, "op1_spec_a1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 997u, "op1_spec_a2.p1", 0, 99, 0, 0u, 0u, "" },
+    { 998u, "op1_spec_a3.p1", 0, 99, 0, 0u, 0u, "" },
+    { 999u, "op1_spec_a4.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1000u, "op1_spec_a5.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1001u, "op1_spec_a6.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1002u, "op1_spec_a7.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1003u, "op1_spec_a8.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1004u, "op1_spec_a9.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1005u, "op1_spec_a10.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1006u, "op1_spec_a11.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1007u, "op1_spec_a12.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1008u, "op1_spec_a13.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1009u, "op1_spec_a14.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1010u, "op1_spec_a15.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1011u, "op1_spec_a16.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1012u, "op1_spec_a17.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1013u, "op1_spec_a18.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1014u, "op1_spec_a19.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1015u, "op1_spec_a20.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1016u, "op1_spec_a21.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1017u, "op1_spec_a22.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1018u, "op1_spec_a23.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1019u, "op1_spec_a24.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1020u, "op1_spec_a25.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1021u, "op1_spec_a26.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1022u, "op1_spec_a27.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1023u, "op1_spec_a28.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1024u, "op1_spec_a29.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1025u, "op1_spec_a30.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1026u, "op1_spec_a31.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1027u, "op1_spec_a32.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1028u, "op1_spec_a33.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1029u, "op1_spec_a34.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1030u, "op1_spec_a35.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1031u, "op1_spec_a36.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1032u, "op1_spec_a37.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1033u, "op1_spec_a38.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1034u, "op1_spec_a39.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1035u, "op1_spec_a40.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1036u, "op1_spec_a41.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1037u, "op1_spec_a42.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1038u, "op1_spec_a43.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1039u, "op1_spec_a44.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1040u, "op1_spec_a45.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1041u, "op1_spec_a46.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1042u, "op1_spec_a47.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1043u, "op1_spec_a48.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1044u, "op1_spec_a49.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1045u, "op1_spec_a50.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1046u, "op1_spec_a51.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1047u, "op1_spec_a52.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1048u, "op1_spec_a53.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1049u, "op1_spec_a54.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1050u, "op1_spec_a55.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1051u, "op1_spec_a56.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1052u, "op1_spec_a57.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1053u, "op1_spec_a58.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1054u, "op1_spec_a59.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1055u, "op1_spec_a60.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1056u, "op1_spec_a61.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1057u, "op1_spec_a62.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1058u, "op1_spec_a63.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1059u, "op1_spec_a64.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1060u, "op1_spec_b1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 1061u, "op1_spec_b2.p1", 0, 99, 45, 0u, 0u, "" },
+    { 1062u, "op1_spec_b3.p1", 0, 99, 30, 0u, 0u, "" },
+    { 1063u, "op1_spec_b4.p1", 0, 99, 15, 0u, 0u, "" },
+    { 1064u, "op1_spec_b5.p1", 0, 99, 55, 0u, 0u, "" },
+    { 1065u, "op1_spec_b6.p1", 0, 99, 40, 0u, 0u, "" },
+    { 1066u, "op1_spec_b7.p1", 0, 99, 25, 0u, 0u, "" },
+    { 1067u, "op1_spec_b8.p1", 0, 99, 12, 0u, 0u, "" },
+    { 1068u, "op1_spec_b9.p1", 0, 99, 8, 0u, 0u, "" },
+    { 1069u, "op1_spec_b10.p1", 0, 99, 5, 0u, 0u, "" },
+    { 1070u, "op1_spec_b11.p1", 0, 99, 3, 0u, 0u, "" },
+    { 1071u, "op1_spec_b12.p1", 0, 99, 2, 0u, 0u, "" },
+    { 1072u, "op1_spec_b13.p1", 0, 99, 1, 0u, 0u, "" },
+    { 1073u, "op1_spec_b14.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1074u, "op1_spec_b15.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1075u, "op1_spec_b16.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1076u, "op1_spec_b17.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1077u, "op1_spec_b18.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1078u, "op1_spec_b19.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1079u, "op1_spec_b20.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1080u, "op1_spec_b21.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1081u, "op1_spec_b22.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1082u, "op1_spec_b23.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1083u, "op1_spec_b24.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1084u, "op1_spec_b25.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1085u, "op1_spec_b26.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1086u, "op1_spec_b27.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1087u, "op1_spec_b28.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1088u, "op1_spec_b29.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1089u, "op1_spec_b30.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1090u, "op1_spec_b31.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1091u, "op1_spec_b32.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1092u, "op1_spec_b33.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1093u, "op1_spec_b34.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1094u, "op1_spec_b35.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1095u, "op1_spec_b36.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1096u, "op1_spec_b37.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1097u, "op1_spec_b38.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1098u, "op1_spec_b39.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1099u, "op1_spec_b40.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1100u, "op1_spec_b41.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1101u, "op1_spec_b42.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1102u, "op1_spec_b43.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1103u, "op1_spec_b44.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1104u, "op1_spec_b45.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1105u, "op1_spec_b46.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1106u, "op1_spec_b47.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1107u, "op1_spec_b48.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1108u, "op1_spec_b49.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1109u, "op1_spec_b50.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1110u, "op1_spec_b51.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1111u, "op1_spec_b52.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1112u, "op1_spec_b53.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1113u, "op1_spec_b54.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1114u, "op1_spec_b55.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1115u, "op1_spec_b56.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1116u, "op1_spec_b57.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1117u, "op1_spec_b58.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1118u, "op1_spec_b59.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1119u, "op1_spec_b60.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1120u, "op1_spec_b61.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1121u, "op1_spec_b62.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1122u, "op1_spec_b63.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1123u, "op1_spec_b64.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1124u, "op1_spec_morph.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1125u, "op1.eg.warm.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1126u, "attack.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1127u, "op1.eg.d1r.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1128u, "op1.eg.d1l.p1", 0, 99, 93, 0u, 0u, "" },
+    { 1129u, "op1.eg.d2r.p1", 0, 99, 50, 0u, 0u, "" },
+    { 1130u, "op1.eg.d2l.p1", 0, 99, 87, 0u, 0u, "" },
+    { 1131u, "release.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1132u, "op1.eg.mode.p1", 0, 3, 1, 0u, 0u, "" },
+    { 1133u, "op1_trem_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
+    { 1134u, "op1_trem_depth.p1", -99, 99, 0, 0u, 0u, "" },
+    { 1135u, "op1_trem_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 1136u, "op1_trem_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1137u, "op1_trem_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1138u, "op1_trem_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1139u, "op1_fbenv_on.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1140u, "op1_fbenv_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1141u, "op1_fbenv_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1142u, "op1_fbenv_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 1143u, "op1_fbenv_l1.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1144u, "op1_fbenv_l2.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1145u, "op1_fbenv_l3.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1146u, "op1_fbenv_relr.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1147u, "op1_fbenv_rell.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1148u, "op1_fbenv_mode.p1", 0, 3, 1, 0u, 0u, "" },
+    { 1149u, "op1.fbenv.scale.p1", -2147483648, 2147483647, 0, 0u, 0u, "" },
+    { 1150u, "op1_fblfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
+    { 1151u, "op1_fblfo_depth.p1", -32767, 32767, 0, 0u, 0u, "" },
+    { 1152u, "op1_fblfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 1153u, "op1_fblfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1154u, "op1_fblfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1155u, "op1_fblfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1156u, "op1_dlfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
+    { 1157u, "op1_dlfo_depth.p1", -32768, 32768, 0, 0u, 0u, "" },
+    { 1158u, "op1_dlfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 1159u, "op1_dlfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1160u, "op1_dlfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1161u, "op1_dlfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1162u, "op1.velamp.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1163u, "op1.velfm.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1164u, "op1.velrate.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1165u, "op1_level.p1", 0, 99, 75, 0u, 0u, "" },
+    { 1166u, "op1_feedback.p1", -32767, 32767, 0, 0u, 0u, "" },
+    { 1167u, "op1_level_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1168u, "op1_level_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1169u, "op1_fb_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1170u, "op1_fb_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1171u, "op1_aenv_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1172u, "op1_aenv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1173u, "op1_level_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1174u, "op1_fb_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1175u, "op1_aenv_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1176u, "op1_mute.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1177u, "op1_spec_env_on.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1178u, "op1_spec_env_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1179u, "op1_spec_env_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1180u, "op1_spec_env_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 1181u, "op1_spec_env_l1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 1182u, "op1_spec_env_l2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1183u, "op1_spec_env_l3.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1184u, "op1_spec_env_relr.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1185u, "op1_spec_env_rell.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1186u, "op1_spec_env_mode.p1", 0, 3, 1, 0u, 0u, "" },
+    { 1187u, "op1.specenv.scale.p1", -2147483648, 2147483647, 0, 0u, 0u, "" },
+    { 1188u, "op1_spec_lfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
+    { 1189u, "op1_spec_lfo_depth.p1", -99, 99, 0, 0u, 0u, "" },
+    { 1190u, "op1_spec_lfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 1191u, "op1_spec_lfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1192u, "op1_spec_lfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1193u, "op1_spec_lfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1194u, "op2_ratio.p1", 32768, 1048576, 65536, 0u, 0u, "" },
+    { 1195u, "op2_detune.p1", -50, 50, 0, 0u, 0u, "" },
+    { 1196u, "op2_waveform.p1", 0, 13, 0, 0u, 0u, "" },
+    { 1197u, "op2_spec_range_a.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1198u, "op2_spec_range_b.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1199u, "op2_spec_a1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 1200u, "op2_spec_a2.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1201u, "op2_spec_a3.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1202u, "op2_spec_a4.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1203u, "op2_spec_a5.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1204u, "op2_spec_a6.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1205u, "op2_spec_a7.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1206u, "op2_spec_a8.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1207u, "op2_spec_a9.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1208u, "op2_spec_a10.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1209u, "op2_spec_a11.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1210u, "op2_spec_a12.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1211u, "op2_spec_a13.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1212u, "op2_spec_a14.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1213u, "op2_spec_a15.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1214u, "op2_spec_a16.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1215u, "op2_spec_a17.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1216u, "op2_spec_a18.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1217u, "op2_spec_a19.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1218u, "op2_spec_a20.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1219u, "op2_spec_a21.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1220u, "op2_spec_a22.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1221u, "op2_spec_a23.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1222u, "op2_spec_a24.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1223u, "op2_spec_a25.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1224u, "op2_spec_a26.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1225u, "op2_spec_a27.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1226u, "op2_spec_a28.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1227u, "op2_spec_a29.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1228u, "op2_spec_a30.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1229u, "op2_spec_a31.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1230u, "op2_spec_a32.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1231u, "op2_spec_a33.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1232u, "op2_spec_a34.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1233u, "op2_spec_a35.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1234u, "op2_spec_a36.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1235u, "op2_spec_a37.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1236u, "op2_spec_a38.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1237u, "op2_spec_a39.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1238u, "op2_spec_a40.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1239u, "op2_spec_a41.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1240u, "op2_spec_a42.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1241u, "op2_spec_a43.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1242u, "op2_spec_a44.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1243u, "op2_spec_a45.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1244u, "op2_spec_a46.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1245u, "op2_spec_a47.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1246u, "op2_spec_a48.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1247u, "op2_spec_a49.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1248u, "op2_spec_a50.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1249u, "op2_spec_a51.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1250u, "op2_spec_a52.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1251u, "op2_spec_a53.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1252u, "op2_spec_a54.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1253u, "op2_spec_a55.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1254u, "op2_spec_a56.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1255u, "op2_spec_a57.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1256u, "op2_spec_a58.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1257u, "op2_spec_a59.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1258u, "op2_spec_a60.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1259u, "op2_spec_a61.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1260u, "op2_spec_a62.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1261u, "op2_spec_a63.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1262u, "op2_spec_a64.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1263u, "op2_spec_b1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 1264u, "op2_spec_b2.p1", 0, 99, 45, 0u, 0u, "" },
+    { 1265u, "op2_spec_b3.p1", 0, 99, 30, 0u, 0u, "" },
+    { 1266u, "op2_spec_b4.p1", 0, 99, 15, 0u, 0u, "" },
+    { 1267u, "op2_spec_b5.p1", 0, 99, 55, 0u, 0u, "" },
+    { 1268u, "op2_spec_b6.p1", 0, 99, 40, 0u, 0u, "" },
+    { 1269u, "op2_spec_b7.p1", 0, 99, 25, 0u, 0u, "" },
+    { 1270u, "op2_spec_b8.p1", 0, 99, 12, 0u, 0u, "" },
+    { 1271u, "op2_spec_b9.p1", 0, 99, 8, 0u, 0u, "" },
+    { 1272u, "op2_spec_b10.p1", 0, 99, 5, 0u, 0u, "" },
+    { 1273u, "op2_spec_b11.p1", 0, 99, 3, 0u, 0u, "" },
+    { 1274u, "op2_spec_b12.p1", 0, 99, 2, 0u, 0u, "" },
+    { 1275u, "op2_spec_b13.p1", 0, 99, 1, 0u, 0u, "" },
+    { 1276u, "op2_spec_b14.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1277u, "op2_spec_b15.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1278u, "op2_spec_b16.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1279u, "op2_spec_b17.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1280u, "op2_spec_b18.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1281u, "op2_spec_b19.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1282u, "op2_spec_b20.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1283u, "op2_spec_b21.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1284u, "op2_spec_b22.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1285u, "op2_spec_b23.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1286u, "op2_spec_b24.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1287u, "op2_spec_b25.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1288u, "op2_spec_b26.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1289u, "op2_spec_b27.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1290u, "op2_spec_b28.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1291u, "op2_spec_b29.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1292u, "op2_spec_b30.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1293u, "op2_spec_b31.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1294u, "op2_spec_b32.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1295u, "op2_spec_b33.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1296u, "op2_spec_b34.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1297u, "op2_spec_b35.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1298u, "op2_spec_b36.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1299u, "op2_spec_b37.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1300u, "op2_spec_b38.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1301u, "op2_spec_b39.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1302u, "op2_spec_b40.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1303u, "op2_spec_b41.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1304u, "op2_spec_b42.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1305u, "op2_spec_b43.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1306u, "op2_spec_b44.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1307u, "op2_spec_b45.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1308u, "op2_spec_b46.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1309u, "op2_spec_b47.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1310u, "op2_spec_b48.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1311u, "op2_spec_b49.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1312u, "op2_spec_b50.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1313u, "op2_spec_b51.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1314u, "op2_spec_b52.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1315u, "op2_spec_b53.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1316u, "op2_spec_b54.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1317u, "op2_spec_b55.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1318u, "op2_spec_b56.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1319u, "op2_spec_b57.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1320u, "op2_spec_b58.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1321u, "op2_spec_b59.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1322u, "op2_spec_b60.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1323u, "op2_spec_b61.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1324u, "op2_spec_b62.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1325u, "op2_spec_b63.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1326u, "op2_spec_b64.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1327u, "op2_spec_morph.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1328u, "op2.eg.warm.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1329u, "op2.eg.surge.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1330u, "op2.eg.d1r.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1331u, "op2.eg.d1l.p1", 0, 99, 93, 0u, 0u, "" },
+    { 1332u, "op2.eg.d2r.p1", 0, 99, 50, 0u, 0u, "" },
+    { 1333u, "op2.eg.d2l.p1", 0, 99, 87, 0u, 0u, "" },
+    { 1334u, "op2.eg.rel.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1335u, "op2.eg.mode.p1", 0, 3, 1, 0u, 0u, "" },
+    { 1336u, "op2_trem_rate.p1", 0, 20000000, 447392, 1u, 0u, "" },
+    { 1337u, "op2_trem_depth.p1", -99, 99, 0, 0u, 0u, "" },
+    { 1338u, "op2_trem_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 1339u, "op2_trem_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1340u, "op2_trem_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1341u, "op2_trem_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1342u, "op2_fbenv_on.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1343u, "op2_fbenv_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1344u, "op2_fbenv_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1345u, "op2_fbenv_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 1346u, "op2_fbenv_l1.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1347u, "op2_fbenv_l2.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1348u, "op2_fbenv_l3.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1349u, "op2_fbenv_relr.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1350u, "op2_fbenv_rell.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1351u, "op2_fbenv_mode.p1", 0, 3, 1, 0u, 0u, "" },
+    { 1352u, "op2.fbenv.scale.p1", -2147483648, 2147483647, 0, 0u, 0u, "" },
+    { 1353u, "op2_fblfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
+    { 1354u, "op2_fblfo_depth.p1", -32767, 32767, 0, 0u, 0u, "" },
+    { 1355u, "op2_fblfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 1356u, "op2_fblfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1357u, "op2_fblfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1358u, "op2_fblfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1359u, "op2_dlfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
+    { 1360u, "op2_dlfo_depth.p1", -32768, 32768, 0, 0u, 0u, "" },
+    { 1361u, "op2_dlfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 1362u, "op2_dlfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1363u, "op2_dlfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1364u, "op2_dlfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1365u, "op2.velamp.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1366u, "op2.velfm.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1367u, "op2.velrate.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1368u, "op2_level.p1", 0, 99, 85, 0u, 0u, "" },
+    { 1369u, "op2_feedback.p1", -32767, 32767, 0, 0u, 0u, "" },
+    { 1370u, "op2_level_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1371u, "op2_level_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1372u, "op2_fb_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1373u, "op2_fb_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1374u, "op2_aenv_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1375u, "op2_aenv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1376u, "op2_level_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1377u, "op2_fb_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1378u, "op2_aenv_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1379u, "op2_mute.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1380u, "op2_spec_env_on.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1381u, "op2_spec_env_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1382u, "op2_spec_env_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1383u, "op2_spec_env_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 1384u, "op2_spec_env_l1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 1385u, "op2_spec_env_l2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1386u, "op2_spec_env_l3.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1387u, "op2_spec_env_relr.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1388u, "op2_spec_env_rell.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1389u, "op2_spec_env_mode.p1", 0, 3, 1, 0u, 0u, "" },
+    { 1390u, "op2.specenv.scale.p1", -2147483648, 2147483647, 0, 0u, 0u, "" },
+    { 1391u, "op2_spec_lfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
+    { 1392u, "op2_spec_lfo_depth.p1", -99, 99, 0, 0u, 0u, "" },
+    { 1393u, "op2_spec_lfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 1394u, "op2_spec_lfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1395u, "op2_spec_lfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1396u, "op2_spec_lfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1397u, "op3_ratio.p1", 32768, 1048576, 196608, 0u, 0u, "" },
+    { 1398u, "op3_detune.p1", -50, 50, 0, 0u, 0u, "" },
+    { 1399u, "op3_waveform.p1", 0, 13, 0, 0u, 0u, "" },
+    { 1400u, "op3_spec_range_a.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1401u, "op3_spec_range_b.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1402u, "op3_spec_a1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 1403u, "op3_spec_a2.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1404u, "op3_spec_a3.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1405u, "op3_spec_a4.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1406u, "op3_spec_a5.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1407u, "op3_spec_a6.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1408u, "op3_spec_a7.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1409u, "op3_spec_a8.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1410u, "op3_spec_a9.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1411u, "op3_spec_a10.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1412u, "op3_spec_a11.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1413u, "op3_spec_a12.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1414u, "op3_spec_a13.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1415u, "op3_spec_a14.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1416u, "op3_spec_a15.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1417u, "op3_spec_a16.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1418u, "op3_spec_a17.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1419u, "op3_spec_a18.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1420u, "op3_spec_a19.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1421u, "op3_spec_a20.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1422u, "op3_spec_a21.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1423u, "op3_spec_a22.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1424u, "op3_spec_a23.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1425u, "op3_spec_a24.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1426u, "op3_spec_a25.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1427u, "op3_spec_a26.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1428u, "op3_spec_a27.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1429u, "op3_spec_a28.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1430u, "op3_spec_a29.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1431u, "op3_spec_a30.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1432u, "op3_spec_a31.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1433u, "op3_spec_a32.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1434u, "op3_spec_a33.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1435u, "op3_spec_a34.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1436u, "op3_spec_a35.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1437u, "op3_spec_a36.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1438u, "op3_spec_a37.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1439u, "op3_spec_a38.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1440u, "op3_spec_a39.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1441u, "op3_spec_a40.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1442u, "op3_spec_a41.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1443u, "op3_spec_a42.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1444u, "op3_spec_a43.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1445u, "op3_spec_a44.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1446u, "op3_spec_a45.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1447u, "op3_spec_a46.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1448u, "op3_spec_a47.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1449u, "op3_spec_a48.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1450u, "op3_spec_a49.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1451u, "op3_spec_a50.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1452u, "op3_spec_a51.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1453u, "op3_spec_a52.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1454u, "op3_spec_a53.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1455u, "op3_spec_a54.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1456u, "op3_spec_a55.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1457u, "op3_spec_a56.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1458u, "op3_spec_a57.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1459u, "op3_spec_a58.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1460u, "op3_spec_a59.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1461u, "op3_spec_a60.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1462u, "op3_spec_a61.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1463u, "op3_spec_a62.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1464u, "op3_spec_a63.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1465u, "op3_spec_a64.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1466u, "op3_spec_b1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 1467u, "op3_spec_b2.p1", 0, 99, 45, 0u, 0u, "" },
+    { 1468u, "op3_spec_b3.p1", 0, 99, 30, 0u, 0u, "" },
+    { 1469u, "op3_spec_b4.p1", 0, 99, 15, 0u, 0u, "" },
+    { 1470u, "op3_spec_b5.p1", 0, 99, 55, 0u, 0u, "" },
+    { 1471u, "op3_spec_b6.p1", 0, 99, 40, 0u, 0u, "" },
+    { 1472u, "op3_spec_b7.p1", 0, 99, 25, 0u, 0u, "" },
+    { 1473u, "op3_spec_b8.p1", 0, 99, 12, 0u, 0u, "" },
+    { 1474u, "op3_spec_b9.p1", 0, 99, 8, 0u, 0u, "" },
+    { 1475u, "op3_spec_b10.p1", 0, 99, 5, 0u, 0u, "" },
+    { 1476u, "op3_spec_b11.p1", 0, 99, 3, 0u, 0u, "" },
+    { 1477u, "op3_spec_b12.p1", 0, 99, 2, 0u, 0u, "" },
+    { 1478u, "op3_spec_b13.p1", 0, 99, 1, 0u, 0u, "" },
+    { 1479u, "op3_spec_b14.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1480u, "op3_spec_b15.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1481u, "op3_spec_b16.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1482u, "op3_spec_b17.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1483u, "op3_spec_b18.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1484u, "op3_spec_b19.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1485u, "op3_spec_b20.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1486u, "op3_spec_b21.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1487u, "op3_spec_b22.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1488u, "op3_spec_b23.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1489u, "op3_spec_b24.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1490u, "op3_spec_b25.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1491u, "op3_spec_b26.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1492u, "op3_spec_b27.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1493u, "op3_spec_b28.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1494u, "op3_spec_b29.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1495u, "op3_spec_b30.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1496u, "op3_spec_b31.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1497u, "op3_spec_b32.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1498u, "op3_spec_b33.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1499u, "op3_spec_b34.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1500u, "op3_spec_b35.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1501u, "op3_spec_b36.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1502u, "op3_spec_b37.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1503u, "op3_spec_b38.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1504u, "op3_spec_b39.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1505u, "op3_spec_b40.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1506u, "op3_spec_b41.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1507u, "op3_spec_b42.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1508u, "op3_spec_b43.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1509u, "op3_spec_b44.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1510u, "op3_spec_b45.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1511u, "op3_spec_b46.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1512u, "op3_spec_b47.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1513u, "op3_spec_b48.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1514u, "op3_spec_b49.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1515u, "op3_spec_b50.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1516u, "op3_spec_b51.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1517u, "op3_spec_b52.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1518u, "op3_spec_b53.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1519u, "op3_spec_b54.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1520u, "op3_spec_b55.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1521u, "op3_spec_b56.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1522u, "op3_spec_b57.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1523u, "op3_spec_b58.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1524u, "op3_spec_b59.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1525u, "op3_spec_b60.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1526u, "op3_spec_b61.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1527u, "op3_spec_b62.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1528u, "op3_spec_b63.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1529u, "op3_spec_b64.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1530u, "op3_spec_morph.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1531u, "op3.eg.warm.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1532u, "op3.eg.surge.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1533u, "op3.eg.d1r.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1534u, "op3.eg.d1l.p1", 0, 99, 93, 0u, 0u, "" },
+    { 1535u, "op3.eg.d2r.p1", 0, 99, 50, 0u, 0u, "" },
+    { 1536u, "op3.eg.d2l.p1", 0, 99, 87, 0u, 0u, "" },
+    { 1537u, "op3.eg.rel.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1538u, "op3.eg.mode.p1", 0, 3, 1, 0u, 0u, "" },
+    { 1539u, "op3_trem_rate.p1", 0, 20000000, 292174, 1u, 0u, "" },
+    { 1540u, "op3_trem_depth.p1", -99, 99, 0, 0u, 0u, "" },
+    { 1541u, "op3_trem_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 1542u, "op3_trem_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1543u, "op3_trem_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1544u, "op3_trem_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1545u, "op3_fbenv_on.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1546u, "op3_fbenv_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1547u, "op3_fbenv_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1548u, "op3_fbenv_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 1549u, "op3_fbenv_l1.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1550u, "op3_fbenv_l2.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1551u, "op3_fbenv_l3.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1552u, "op3_fbenv_relr.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1553u, "op3_fbenv_rell.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1554u, "op3_fbenv_mode.p1", 0, 3, 1, 0u, 0u, "" },
+    { 1555u, "op3.fbenv.scale.p1", -2147483648, 2147483647, 0, 0u, 0u, "" },
+    { 1556u, "op3_fblfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
+    { 1557u, "op3_fblfo_depth.p1", -32767, 32767, 0, 0u, 0u, "" },
+    { 1558u, "op3_fblfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 1559u, "op3_fblfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1560u, "op3_fblfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1561u, "op3_fblfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1562u, "op3_dlfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
+    { 1563u, "op3_dlfo_depth.p1", -32768, 32768, 0, 0u, 0u, "" },
+    { 1564u, "op3_dlfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 1565u, "op3_dlfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1566u, "op3_dlfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1567u, "op3_dlfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1568u, "op3.velamp.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1569u, "op3.velfm.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1570u, "op3.velrate.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1571u, "op3_level.p1", 0, 99, 70, 0u, 0u, "" },
+    { 1572u, "op3_feedback.p1", -32767, 32767, 0, 0u, 0u, "" },
+    { 1573u, "op3_level_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1574u, "op3_level_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1575u, "op3_fb_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1576u, "op3_fb_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1577u, "op3_aenv_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1578u, "op3_aenv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1579u, "op3_level_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1580u, "op3_fb_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1581u, "op3_aenv_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1582u, "op3_mute.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1583u, "op3_spec_env_on.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1584u, "op3_spec_env_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1585u, "op3_spec_env_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1586u, "op3_spec_env_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 1587u, "op3_spec_env_l1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 1588u, "op3_spec_env_l2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1589u, "op3_spec_env_l3.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1590u, "op3_spec_env_relr.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1591u, "op3_spec_env_rell.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1592u, "op3_spec_env_mode.p1", 0, 3, 1, 0u, 0u, "" },
+    { 1593u, "op3.specenv.scale.p1", -2147483648, 2147483647, 0, 0u, 0u, "" },
+    { 1594u, "op3_spec_lfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
+    { 1595u, "op3_spec_lfo_depth.p1", -99, 99, 0, 0u, 0u, "" },
+    { 1596u, "op3_spec_lfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 1597u, "op3_spec_lfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1598u, "op3_spec_lfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1599u, "op3_spec_lfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1600u, "op4_ratio.p1", 32768, 1048576, 131072, 0u, 0u, "" },
+    { 1601u, "op4_detune.p1", -50, 50, 0, 0u, 0u, "" },
+    { 1602u, "op4_waveform.p1", 0, 13, 0, 0u, 0u, "" },
+    { 1603u, "op4_spec_range_a.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1604u, "op4_spec_range_b.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1605u, "op4_spec_a1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 1606u, "op4_spec_a2.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1607u, "op4_spec_a3.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1608u, "op4_spec_a4.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1609u, "op4_spec_a5.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1610u, "op4_spec_a6.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1611u, "op4_spec_a7.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1612u, "op4_spec_a8.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1613u, "op4_spec_a9.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1614u, "op4_spec_a10.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1615u, "op4_spec_a11.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1616u, "op4_spec_a12.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1617u, "op4_spec_a13.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1618u, "op4_spec_a14.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1619u, "op4_spec_a15.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1620u, "op4_spec_a16.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1621u, "op4_spec_a17.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1622u, "op4_spec_a18.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1623u, "op4_spec_a19.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1624u, "op4_spec_a20.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1625u, "op4_spec_a21.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1626u, "op4_spec_a22.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1627u, "op4_spec_a23.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1628u, "op4_spec_a24.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1629u, "op4_spec_a25.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1630u, "op4_spec_a26.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1631u, "op4_spec_a27.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1632u, "op4_spec_a28.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1633u, "op4_spec_a29.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1634u, "op4_spec_a30.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1635u, "op4_spec_a31.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1636u, "op4_spec_a32.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1637u, "op4_spec_a33.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1638u, "op4_spec_a34.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1639u, "op4_spec_a35.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1640u, "op4_spec_a36.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1641u, "op4_spec_a37.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1642u, "op4_spec_a38.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1643u, "op4_spec_a39.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1644u, "op4_spec_a40.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1645u, "op4_spec_a41.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1646u, "op4_spec_a42.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1647u, "op4_spec_a43.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1648u, "op4_spec_a44.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1649u, "op4_spec_a45.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1650u, "op4_spec_a46.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1651u, "op4_spec_a47.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1652u, "op4_spec_a48.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1653u, "op4_spec_a49.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1654u, "op4_spec_a50.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1655u, "op4_spec_a51.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1656u, "op4_spec_a52.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1657u, "op4_spec_a53.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1658u, "op4_spec_a54.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1659u, "op4_spec_a55.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1660u, "op4_spec_a56.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1661u, "op4_spec_a57.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1662u, "op4_spec_a58.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1663u, "op4_spec_a59.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1664u, "op4_spec_a60.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1665u, "op4_spec_a61.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1666u, "op4_spec_a62.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1667u, "op4_spec_a63.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1668u, "op4_spec_a64.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1669u, "op4_spec_b1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 1670u, "op4_spec_b2.p1", 0, 99, 45, 0u, 0u, "" },
+    { 1671u, "op4_spec_b3.p1", 0, 99, 30, 0u, 0u, "" },
+    { 1672u, "op4_spec_b4.p1", 0, 99, 15, 0u, 0u, "" },
+    { 1673u, "op4_spec_b5.p1", 0, 99, 55, 0u, 0u, "" },
+    { 1674u, "op4_spec_b6.p1", 0, 99, 40, 0u, 0u, "" },
+    { 1675u, "op4_spec_b7.p1", 0, 99, 25, 0u, 0u, "" },
+    { 1676u, "op4_spec_b8.p1", 0, 99, 12, 0u, 0u, "" },
+    { 1677u, "op4_spec_b9.p1", 0, 99, 8, 0u, 0u, "" },
+    { 1678u, "op4_spec_b10.p1", 0, 99, 5, 0u, 0u, "" },
+    { 1679u, "op4_spec_b11.p1", 0, 99, 3, 0u, 0u, "" },
+    { 1680u, "op4_spec_b12.p1", 0, 99, 2, 0u, 0u, "" },
+    { 1681u, "op4_spec_b13.p1", 0, 99, 1, 0u, 0u, "" },
+    { 1682u, "op4_spec_b14.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1683u, "op4_spec_b15.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1684u, "op4_spec_b16.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1685u, "op4_spec_b17.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1686u, "op4_spec_b18.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1687u, "op4_spec_b19.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1688u, "op4_spec_b20.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1689u, "op4_spec_b21.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1690u, "op4_spec_b22.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1691u, "op4_spec_b23.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1692u, "op4_spec_b24.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1693u, "op4_spec_b25.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1694u, "op4_spec_b26.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1695u, "op4_spec_b27.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1696u, "op4_spec_b28.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1697u, "op4_spec_b29.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1698u, "op4_spec_b30.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1699u, "op4_spec_b31.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1700u, "op4_spec_b32.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1701u, "op4_spec_b33.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1702u, "op4_spec_b34.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1703u, "op4_spec_b35.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1704u, "op4_spec_b36.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1705u, "op4_spec_b37.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1706u, "op4_spec_b38.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1707u, "op4_spec_b39.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1708u, "op4_spec_b40.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1709u, "op4_spec_b41.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1710u, "op4_spec_b42.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1711u, "op4_spec_b43.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1712u, "op4_spec_b44.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1713u, "op4_spec_b45.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1714u, "op4_spec_b46.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1715u, "op4_spec_b47.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1716u, "op4_spec_b48.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1717u, "op4_spec_b49.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1718u, "op4_spec_b50.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1719u, "op4_spec_b51.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1720u, "op4_spec_b52.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1721u, "op4_spec_b53.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1722u, "op4_spec_b54.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1723u, "op4_spec_b55.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1724u, "op4_spec_b56.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1725u, "op4_spec_b57.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1726u, "op4_spec_b58.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1727u, "op4_spec_b59.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1728u, "op4_spec_b60.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1729u, "op4_spec_b61.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1730u, "op4_spec_b62.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1731u, "op4_spec_b63.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1732u, "op4_spec_b64.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1733u, "op4_spec_morph.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1734u, "op4.eg.warm.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1735u, "op4.eg.surge.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1736u, "op4.eg.d1r.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1737u, "op4.eg.d1l.p1", 0, 99, 93, 0u, 0u, "" },
+    { 1738u, "op4.eg.d2r.p1", 0, 99, 50, 0u, 0u, "" },
+    { 1739u, "op4.eg.d2l.p1", 0, 99, 87, 0u, 0u, "" },
+    { 1740u, "op4.eg.rel.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1741u, "op4.eg.mode.p1", 0, 3, 1, 0u, 0u, "" },
+    { 1742u, "op4_trem_rate.p1", 0, 20000000, 340870, 1u, 0u, "" },
+    { 1743u, "op4_trem_depth.p1", -99, 99, 0, 0u, 0u, "" },
+    { 1744u, "op4_trem_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 1745u, "op4_trem_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1746u, "op4_trem_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1747u, "op4_trem_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1748u, "op4_fbenv_on.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1749u, "op4_fbenv_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1750u, "op4_fbenv_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1751u, "op4_fbenv_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 1752u, "op4_fbenv_l1.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1753u, "op4_fbenv_l2.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1754u, "op4_fbenv_l3.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1755u, "op4_fbenv_relr.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1756u, "op4_fbenv_rell.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1757u, "op4_fbenv_mode.p1", 0, 3, 1, 0u, 0u, "" },
+    { 1758u, "op4.fbenv.scale.p1", -2147483648, 2147483647, 0, 0u, 0u, "" },
+    { 1759u, "op4_fblfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
+    { 1760u, "op4_fblfo_depth.p1", -32767, 32767, 0, 0u, 0u, "" },
+    { 1761u, "op4_fblfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 1762u, "op4_fblfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1763u, "op4_fblfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1764u, "op4_fblfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1765u, "op4_dlfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
+    { 1766u, "op4_dlfo_depth.p1", -32768, 32768, 0, 0u, 0u, "" },
+    { 1767u, "op4_dlfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 1768u, "op4_dlfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1769u, "op4_dlfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1770u, "op4_dlfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1771u, "op4.velamp.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1772u, "op4.velfm.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1773u, "op4.velrate.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1774u, "op4_level.p1", 0, 99, 85, 0u, 0u, "" },
+    { 1775u, "op4_feedback.p1", -32767, 32767, 0, 0u, 0u, "" },
+    { 1776u, "op4_level_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1777u, "op4_level_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1778u, "op4_fb_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1779u, "op4_fb_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1780u, "op4_aenv_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1781u, "op4_aenv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1782u, "op4_level_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1783u, "op4_fb_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1784u, "op4_aenv_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1785u, "op4_mute.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1786u, "op4_spec_env_on.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1787u, "op4_spec_env_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1788u, "op4_spec_env_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1789u, "op4_spec_env_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 1790u, "op4_spec_env_l1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 1791u, "op4_spec_env_l2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1792u, "op4_spec_env_l3.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1793u, "op4_spec_env_relr.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1794u, "op4_spec_env_rell.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1795u, "op4_spec_env_mode.p1", 0, 3, 1, 0u, 0u, "" },
+    { 1796u, "op4.specenv.scale.p1", -2147483648, 2147483647, 0, 0u, 0u, "" },
+    { 1797u, "op4_spec_lfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
+    { 1798u, "op4_spec_lfo_depth.p1", -99, 99, 0, 0u, 0u, "" },
+    { 1799u, "op4_spec_lfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 1800u, "op4_spec_lfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1801u, "op4_spec_lfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1802u, "op4_spec_lfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1803u, "algorithm.p1", 0, 7, 4, 0u, 0u, "" },
+    { 1804u, "penv_on.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1805u, "penv_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1806u, "penv_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1807u, "penv_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 1808u, "penv_l1.p1", -32768, 32767, 5461, 0u, 0u, "" },
+    { 1809u, "penv_l2.p1", -32768, 32767, 2731, 0u, 0u, "" },
+    { 1810u, "penv_l3.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1811u, "penv_relr.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1812u, "penv_rell.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1813u, "penv_mode.p1", 0, 3, 1, 0u, 0u, "" },
+    { 1814u, "penv.scale.p1", -2147483648, 2147483647, 0, 0u, 0u, "" },
+    { 1815u, "penv_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1816u, "penv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1817u, "penv_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1818u, "pitch_rate.p1", 0, 20000000, 447392, 1u, 0u, "" },
+    { 1819u, "pitch_depth.p1", -32768, 32768, 273, 0u, 0u, "" },
+    { 1820u, "pitch_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 1821u, "pitch_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1822u, "pitch_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1823u, "pitch_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1824u, "f1_cutoff_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1825u, "f1_cutoff_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1826u, "fenv_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1827u, "fenv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1828u, "f1_cutoff_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1829u, "fenv_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1830u, "cutoff.p1", 0, 55296, 36958, 0u, 0u, "" },
+    { 1831u, "res.p1", 0, 41942, 16000, 0u, 0u, "" },
+    { 1832u, "lp.comp.p1", -32768, 32767, 7209, 0u, 0u, "" },
+    { 1833u, "filter_type.p1", 0, 2, 0, 0u, 0u, "" },
+    { 1834u, "filter_on.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1835u, "fenv_on.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1836u, "fenv_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1837u, "fenv_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1838u, "fenv_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 1839u, "fenv_l1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 1840u, "fenv_l2.p1", 0, 99, 93, 0u, 0u, "" },
+    { 1841u, "fenv_l3.p1", 0, 99, 87, 0u, 0u, "" },
+    { 1842u, "fenv_relr.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1843u, "fenv_rell.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1844u, "fenv_mode.p1", 0, 3, 1, 0u, 0u, "" },
+    { 1845u, "fenv.scale.p1", -2147483648, 2147483647, 256, 0u, 0u, "" },
+    { 1846u, "mode.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1847u, "unison_count.p1", 1, 8, 1, 0u, 0u, "" },
+    { 1848u, "unison_detune.p1", 0, 200, 0, 0u, 0u, "cents" },
+    { 1849u, "detune.p1", -50, 50, 0, 0u, 0u, "cents" },
+    { 1850u, "transpose.p1", -24, 24, 0, 0u, 0u, "st" },
+    { 1851u, "legato.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1852u, "portamento.p1", 0, 5000, 0, 1u, 0u, "" },
+    { 1853u, "note_priority.p1", 0, 2, 0, 0u, 0u, "" },
+    { 1854u, "bend_range.p1", 0, 24, 2, 0u, 0u, "st" },
+    { 1855u, "pan.p1", -100, 100, 0, 0u, 0u, "%" },
+    { 1856u, "pan_env_on.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1857u, "pan_env_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1858u, "pan_env_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1859u, "pan_env_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 1860u, "pan_env_l1.p1", -99, 99, 0, 0u, 0u, "" },
+    { 1861u, "pan_env_l2.p1", -99, 99, 0, 0u, 0u, "" },
+    { 1862u, "pan_env_l3.p1", -99, 99, 0, 0u, 0u, "" },
+    { 1863u, "pan_env_relr.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1864u, "pan_env_rell.p1", -99, 99, 0, 0u, 0u, "" },
+    { 1865u, "pan_env_mode.p1", 0, 3, 0, 0u, 0u, "" },
+    { 1866u, "op1_phase_on.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1867u, "op1_phase_bp.p1", 1, 999, 500, 0u, 0u, "" },
+    { 1868u, "op1_phase_segments.p1", 1, 32, 8, 0u, 0u, "" },
+    { 1869u, "op1_phase_flip.p1", 0, 100, 0, 0u, 0u, "" },
+    { 1870u, "op1_phase_flip_rate.p1", 0, 20000000, 178956, 1u, 0u, "" },
+    { 1871u, "op1_phase_reorder.p1", 0, 100, 0, 0u, 0u, "" },
+    { 1872u, "op1_phase_reorder_rate.p1", 0, 20000000, 0, 1u, 0u, "" },
+    { 1873u, "op1_phase_jump.p1", 1, 32, 1, 0u, 0u, "" },
+    { 1874u, "op1_phase_drift.p1", 0, 100, 0, 0u, 0u, "" },
+    { 1875u, "op1_phase_drift_rate.p1", 0, 20000000, 107374, 1u, 0u, "" },
+    { 1876u, "op1_phase_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1877u, "op1_phase_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1878u, "op1_phase_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1879u, "op1_phase_lfo_rate.p1", 0, 20000000, 44739, 1u, 0u, "" },
+    { 1880u, "op1_phase_lfo_depth.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1881u, "op1_phase_lfo_wave.p1", 0, 5, 0, 0u, 0u, "" },
+    { 1882u, "op1_phase_lfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1883u, "op1_phase_lfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1884u, "op1_phase_lfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1885u, "op1_phase_env_on.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1886u, "op1_phase_env_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1887u, "op1_phase_env_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1888u, "op1_phase_env_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 1889u, "op1_phase_env_l1.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1890u, "op1_phase_env_l2.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1891u, "op1_phase_env_l3.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1892u, "op1_phase_env_relr.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1893u, "op1_phase_env_rell.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1894u, "op1_phase_env_mode.p1", 0, 3, 1, 0u, 0u, "" },
+    { 1895u, "op2_phase_on.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1896u, "op2_phase_bp.p1", 1, 999, 500, 0u, 0u, "" },
+    { 1897u, "op2_phase_segments.p1", 1, 32, 8, 0u, 0u, "" },
+    { 1898u, "op2_phase_flip.p1", 0, 100, 0, 0u, 0u, "" },
+    { 1899u, "op2_phase_flip_rate.p1", 0, 20000000, 178956, 1u, 0u, "" },
+    { 1900u, "op2_phase_reorder.p1", 0, 100, 0, 0u, 0u, "" },
+    { 1901u, "op2_phase_reorder_rate.p1", 0, 20000000, 0, 1u, 0u, "" },
+    { 1902u, "op2_phase_jump.p1", 1, 32, 1, 0u, 0u, "" },
+    { 1903u, "op2_phase_drift.p1", 0, 100, 0, 0u, 0u, "" },
+    { 1904u, "op2_phase_drift_rate.p1", 0, 20000000, 107374, 1u, 0u, "" },
+    { 1905u, "op2_phase_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1906u, "op2_phase_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1907u, "op2_phase_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1908u, "op2_phase_lfo_rate.p1", 0, 20000000, 44739, 1u, 0u, "" },
+    { 1909u, "op2_phase_lfo_depth.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1910u, "op2_phase_lfo_wave.p1", 0, 5, 0, 0u, 0u, "" },
+    { 1911u, "op2_phase_lfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1912u, "op2_phase_lfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1913u, "op2_phase_lfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1914u, "op2_phase_env_on.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1915u, "op2_phase_env_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1916u, "op2_phase_env_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1917u, "op2_phase_env_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 1918u, "op2_phase_env_l1.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1919u, "op2_phase_env_l2.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1920u, "op2_phase_env_l3.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1921u, "op2_phase_env_relr.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1922u, "op2_phase_env_rell.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1923u, "op2_phase_env_mode.p1", 0, 3, 1, 0u, 0u, "" },
+    { 1924u, "op3_phase_on.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1925u, "op3_phase_bp.p1", 1, 999, 500, 0u, 0u, "" },
+    { 1926u, "op3_phase_segments.p1", 1, 32, 8, 0u, 0u, "" },
+    { 1927u, "op3_phase_flip.p1", 0, 100, 0, 0u, 0u, "" },
+    { 1928u, "op3_phase_flip_rate.p1", 0, 20000000, 178956, 1u, 0u, "" },
+    { 1929u, "op3_phase_reorder.p1", 0, 100, 0, 0u, 0u, "" },
+    { 1930u, "op3_phase_reorder_rate.p1", 0, 20000000, 0, 1u, 0u, "" },
+    { 1931u, "op3_phase_jump.p1", 1, 32, 1, 0u, 0u, "" },
+    { 1932u, "op3_phase_drift.p1", 0, 100, 0, 0u, 0u, "" },
+    { 1933u, "op3_phase_drift_rate.p1", 0, 20000000, 107374, 1u, 0u, "" },
+    { 1934u, "op3_phase_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1935u, "op3_phase_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1936u, "op3_phase_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1937u, "op3_phase_lfo_rate.p1", 0, 20000000, 44739, 1u, 0u, "" },
+    { 1938u, "op3_phase_lfo_depth.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1939u, "op3_phase_lfo_wave.p1", 0, 5, 0, 0u, 0u, "" },
+    { 1940u, "op3_phase_lfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1941u, "op3_phase_lfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1942u, "op3_phase_lfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1943u, "op3_phase_env_on.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1944u, "op3_phase_env_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1945u, "op3_phase_env_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1946u, "op3_phase_env_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 1947u, "op3_phase_env_l1.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1948u, "op3_phase_env_l2.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1949u, "op3_phase_env_l3.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1950u, "op3_phase_env_relr.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1951u, "op3_phase_env_rell.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1952u, "op3_phase_env_mode.p1", 0, 3, 1, 0u, 0u, "" },
+    { 1953u, "op4_phase_on.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1954u, "op4_phase_bp.p1", 1, 999, 500, 0u, 0u, "" },
+    { 1955u, "op4_phase_segments.p1", 1, 32, 8, 0u, 0u, "" },
+    { 1956u, "op4_phase_flip.p1", 0, 100, 0, 0u, 0u, "" },
+    { 1957u, "op4_phase_flip_rate.p1", 0, 20000000, 178956, 1u, 0u, "" },
+    { 1958u, "op4_phase_reorder.p1", 0, 100, 0, 0u, 0u, "" },
+    { 1959u, "op4_phase_reorder_rate.p1", 0, 20000000, 0, 1u, 0u, "" },
+    { 1960u, "op4_phase_jump.p1", 1, 32, 1, 0u, 0u, "" },
+    { 1961u, "op4_phase_drift.p1", 0, 100, 0, 0u, 0u, "" },
+    { 1962u, "op4_phase_drift_rate.p1", 0, 20000000, 107374, 1u, 0u, "" },
+    { 1963u, "op4_phase_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1964u, "op4_phase_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1965u, "op4_phase_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1966u, "op4_phase_lfo_rate.p1", 0, 20000000, 44739, 1u, 0u, "" },
+    { 1967u, "op4_phase_lfo_depth.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1968u, "op4_phase_lfo_wave.p1", 0, 5, 0, 0u, 0u, "" },
+    { 1969u, "op4_phase_lfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1970u, "op4_phase_lfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1971u, "op4_phase_lfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1972u, "op4_phase_env_on.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1973u, "op4_phase_env_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1974u, "op4_phase_env_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1975u, "op4_phase_env_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 1976u, "op4_phase_env_l1.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1977u, "op4_phase_env_l2.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1978u, "op4_phase_env_l3.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1979u, "op4_phase_env_relr.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1980u, "op4_phase_env_rell.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1981u, "op4_phase_env_mode.p1", 0, 3, 1, 0u, 0u, "" },
+    { 1982u, "breakpoint", 0, 127, 60, 0u, 0u, "" },
+    { 1983u, "key_sens_on", 0, 1, 1, 0u, 0u, "" },
+    { 1984u, "vel_sens_on", 0, 1, 1, 0u, 0u, "" },
+    { 1985u, "dc.r", -32768, 32767, 32738, 0u, 0u, "" },
+    { 1986u, "channel.p0", -1, 15, 0, 0u, 0u, "" },
+    { 1987u, "channel.p1", -1, 15, 1, 0u, 0u, "" },
+    { 1988u, "low.p0", 0, 127, 0, 0u, 0u, "" },
+    { 1989u, "low.p1", 0, 127, 0, 0u, 0u, "" },
+    { 1990u, "high.p0", 0, 127, 127, 0u, 0u, "" },
+    { 1991u, "high.p1", 0, 127, 127, 0u, 0u, "" },
+    { 1992u, "level.p0", 0, 99, 99, 0u, 0u, "" },
+    { 1993u, "level.p1", 0, 99, 99, 0u, 0u, "" },
+    { 1994u, "delay.p0", 0, 1000, 0, 0u, 0u, "ms" },
+    { 1995u, "delay.p1", 0, 1000, 0, 0u, 0u, "ms" },
 };
 typedef struct { uint32_t off; uint8_t part; } type_p_alpha_slot_t;
-static const type_p_alpha_slot_t type_p_alpha_slots[1976] = {
+static const type_p_alpha_slot_t type_p_alpha_slots[1996] = {
     { (uint32_t)offsetof(type_p_alpha_state, op1_ph_inc_ratio), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_ph_detune), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_osc_waveform), 0u },
@@ -3695,6 +3725,7 @@ static const type_p_alpha_slot_t type_p_alpha_slots[1976] = {
     { (uint32_t)offsetof(type_p_alpha_state, op1_fbenv_relr), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_fbenv_rell), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_fbenv_mode), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_fbenv_scale), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_fblfo_rate), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_fblfo_depth), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_fblfo_wave), 0u },
@@ -3732,6 +3763,7 @@ static const type_p_alpha_slot_t type_p_alpha_slots[1976] = {
     { (uint32_t)offsetof(type_p_alpha_state, op1_specenv_relr), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_specenv_rell), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_specenv_mode), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_specenv_scale), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_speclfo_rate), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_speclfo_depth), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_speclfo_wave), 0u },
@@ -3896,6 +3928,7 @@ static const type_p_alpha_slot_t type_p_alpha_slots[1976] = {
     { (uint32_t)offsetof(type_p_alpha_state, op2_fbenv_relr), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_fbenv_rell), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_fbenv_mode), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_fbenv_scale), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_fblfo_rate), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_fblfo_depth), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_fblfo_wave), 0u },
@@ -3933,6 +3966,7 @@ static const type_p_alpha_slot_t type_p_alpha_slots[1976] = {
     { (uint32_t)offsetof(type_p_alpha_state, op2_specenv_relr), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_specenv_rell), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_specenv_mode), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_specenv_scale), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_speclfo_rate), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_speclfo_depth), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_speclfo_wave), 0u },
@@ -4097,6 +4131,7 @@ static const type_p_alpha_slot_t type_p_alpha_slots[1976] = {
     { (uint32_t)offsetof(type_p_alpha_state, op3_fbenv_relr), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_fbenv_rell), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_fbenv_mode), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_fbenv_scale), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_fblfo_rate), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_fblfo_depth), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_fblfo_wave), 0u },
@@ -4134,6 +4169,7 @@ static const type_p_alpha_slot_t type_p_alpha_slots[1976] = {
     { (uint32_t)offsetof(type_p_alpha_state, op3_specenv_relr), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_specenv_rell), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_specenv_mode), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_specenv_scale), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_speclfo_rate), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_speclfo_depth), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_speclfo_wave), 0u },
@@ -4298,6 +4334,7 @@ static const type_p_alpha_slot_t type_p_alpha_slots[1976] = {
     { (uint32_t)offsetof(type_p_alpha_state, op4_fbenv_relr), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_fbenv_rell), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_fbenv_mode), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_fbenv_scale), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_fblfo_rate), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_fblfo_depth), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_fblfo_wave), 0u },
@@ -4335,6 +4372,7 @@ static const type_p_alpha_slot_t type_p_alpha_slots[1976] = {
     { (uint32_t)offsetof(type_p_alpha_state, op4_specenv_relr), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_specenv_rell), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_specenv_mode), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_specenv_scale), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_speclfo_rate), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_speclfo_depth), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_speclfo_wave), 0u },
@@ -4352,6 +4390,7 @@ static const type_p_alpha_slot_t type_p_alpha_slots[1976] = {
     { (uint32_t)offsetof(type_p_alpha_state, penv_relr), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, penv_rell), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, penv_mode), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, penv_scale), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, penv_ks_lo), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, penv_ks_hi), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, penv_vs_amount), 0u },
@@ -4382,6 +4421,7 @@ static const type_p_alpha_slot_t type_p_alpha_slots[1976] = {
     { (uint32_t)offsetof(type_p_alpha_state, fenv_relr), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, fenv_rell), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, fenv_mode), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, fenv_scale), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, vm_mode), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, vm_unison_count), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, vm_unison_detune), 0u },
@@ -4676,6 +4716,7 @@ static const type_p_alpha_slot_t type_p_alpha_slots[1976] = {
     { (uint32_t)offsetof(type_p_alpha_state, op1_fbenv_relr), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_fbenv_rell), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_fbenv_mode), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_fbenv_scale), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_fblfo_rate), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_fblfo_depth), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_fblfo_wave), 1u },
@@ -4713,6 +4754,7 @@ static const type_p_alpha_slot_t type_p_alpha_slots[1976] = {
     { (uint32_t)offsetof(type_p_alpha_state, op1_specenv_relr), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_specenv_rell), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_specenv_mode), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_specenv_scale), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_speclfo_rate), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_speclfo_depth), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_speclfo_wave), 1u },
@@ -4877,6 +4919,7 @@ static const type_p_alpha_slot_t type_p_alpha_slots[1976] = {
     { (uint32_t)offsetof(type_p_alpha_state, op2_fbenv_relr), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_fbenv_rell), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_fbenv_mode), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_fbenv_scale), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_fblfo_rate), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_fblfo_depth), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_fblfo_wave), 1u },
@@ -4914,6 +4957,7 @@ static const type_p_alpha_slot_t type_p_alpha_slots[1976] = {
     { (uint32_t)offsetof(type_p_alpha_state, op2_specenv_relr), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_specenv_rell), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_specenv_mode), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_specenv_scale), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_speclfo_rate), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_speclfo_depth), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op2_speclfo_wave), 1u },
@@ -5078,6 +5122,7 @@ static const type_p_alpha_slot_t type_p_alpha_slots[1976] = {
     { (uint32_t)offsetof(type_p_alpha_state, op3_fbenv_relr), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_fbenv_rell), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_fbenv_mode), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_fbenv_scale), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_fblfo_rate), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_fblfo_depth), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_fblfo_wave), 1u },
@@ -5115,6 +5160,7 @@ static const type_p_alpha_slot_t type_p_alpha_slots[1976] = {
     { (uint32_t)offsetof(type_p_alpha_state, op3_specenv_relr), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_specenv_rell), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_specenv_mode), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_specenv_scale), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_speclfo_rate), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_speclfo_depth), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op3_speclfo_wave), 1u },
@@ -5279,6 +5325,7 @@ static const type_p_alpha_slot_t type_p_alpha_slots[1976] = {
     { (uint32_t)offsetof(type_p_alpha_state, op4_fbenv_relr), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_fbenv_rell), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_fbenv_mode), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_fbenv_scale), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_fblfo_rate), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_fblfo_depth), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_fblfo_wave), 1u },
@@ -5316,6 +5363,7 @@ static const type_p_alpha_slot_t type_p_alpha_slots[1976] = {
     { (uint32_t)offsetof(type_p_alpha_state, op4_specenv_relr), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_specenv_rell), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_specenv_mode), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_specenv_scale), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_speclfo_rate), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_speclfo_depth), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op4_speclfo_wave), 1u },
@@ -5333,6 +5381,7 @@ static const type_p_alpha_slot_t type_p_alpha_slots[1976] = {
     { (uint32_t)offsetof(type_p_alpha_state, penv_relr), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, penv_rell), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, penv_mode), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, penv_scale), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, penv_ks_lo), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, penv_ks_hi), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, penv_vs_amount), 1u },
@@ -5363,6 +5412,7 @@ static const type_p_alpha_slot_t type_p_alpha_slots[1976] = {
     { (uint32_t)offsetof(type_p_alpha_state, fenv_relr), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, fenv_rell), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, fenv_mode), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, fenv_scale), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, vm_mode), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, vm_unison_count), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, vm_unison_detune), 1u },
@@ -6058,6 +6108,7 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op1_fbenv_relr (S->op1_fbenv_relr)
 #define op1_fbenv_rell (S->op1_fbenv_rell)
 #define op1_fbenv_mode (S->op1_fbenv_mode)
+#define op1_fbenv_scale (S->op1_fbenv_scale)
 #define op1_fblfo_rate (S->op1_fblfo_rate)
 #define op1_fblfo_depth (S->op1_fblfo_depth)
 #define op1_fblfo_wave (S->op1_fblfo_wave)
@@ -6095,6 +6146,7 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op1_specenv_relr (S->op1_specenv_relr)
 #define op1_specenv_rell (S->op1_specenv_rell)
 #define op1_specenv_mode (S->op1_specenv_mode)
+#define op1_specenv_scale (S->op1_specenv_scale)
 #define op1_speclfo_rate (S->op1_speclfo_rate)
 #define op1_speclfo_depth (S->op1_speclfo_depth)
 #define op1_speclfo_wave (S->op1_speclfo_wave)
@@ -6288,6 +6340,7 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op2_fbenv_relr (S->op2_fbenv_relr)
 #define op2_fbenv_rell (S->op2_fbenv_rell)
 #define op2_fbenv_mode (S->op2_fbenv_mode)
+#define op2_fbenv_scale (S->op2_fbenv_scale)
 #define op2_fblfo_rate (S->op2_fblfo_rate)
 #define op2_fblfo_depth (S->op2_fblfo_depth)
 #define op2_fblfo_wave (S->op2_fblfo_wave)
@@ -6325,6 +6378,7 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op2_specenv_relr (S->op2_specenv_relr)
 #define op2_specenv_rell (S->op2_specenv_rell)
 #define op2_specenv_mode (S->op2_specenv_mode)
+#define op2_specenv_scale (S->op2_specenv_scale)
 #define op2_speclfo_rate (S->op2_speclfo_rate)
 #define op2_speclfo_depth (S->op2_speclfo_depth)
 #define op2_speclfo_wave (S->op2_speclfo_wave)
@@ -6518,6 +6572,7 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op3_fbenv_relr (S->op3_fbenv_relr)
 #define op3_fbenv_rell (S->op3_fbenv_rell)
 #define op3_fbenv_mode (S->op3_fbenv_mode)
+#define op3_fbenv_scale (S->op3_fbenv_scale)
 #define op3_fblfo_rate (S->op3_fblfo_rate)
 #define op3_fblfo_depth (S->op3_fblfo_depth)
 #define op3_fblfo_wave (S->op3_fblfo_wave)
@@ -6555,6 +6610,7 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op3_specenv_relr (S->op3_specenv_relr)
 #define op3_specenv_rell (S->op3_specenv_rell)
 #define op3_specenv_mode (S->op3_specenv_mode)
+#define op3_specenv_scale (S->op3_specenv_scale)
 #define op3_speclfo_rate (S->op3_speclfo_rate)
 #define op3_speclfo_depth (S->op3_speclfo_depth)
 #define op3_speclfo_wave (S->op3_speclfo_wave)
@@ -6748,6 +6804,7 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op4_fbenv_relr (S->op4_fbenv_relr)
 #define op4_fbenv_rell (S->op4_fbenv_rell)
 #define op4_fbenv_mode (S->op4_fbenv_mode)
+#define op4_fbenv_scale (S->op4_fbenv_scale)
 #define op4_fblfo_rate (S->op4_fblfo_rate)
 #define op4_fblfo_depth (S->op4_fblfo_depth)
 #define op4_fblfo_wave (S->op4_fblfo_wave)
@@ -6785,6 +6842,7 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op4_specenv_relr (S->op4_specenv_relr)
 #define op4_specenv_rell (S->op4_specenv_rell)
 #define op4_specenv_mode (S->op4_specenv_mode)
+#define op4_specenv_scale (S->op4_specenv_scale)
 #define op4_speclfo_rate (S->op4_speclfo_rate)
 #define op4_speclfo_depth (S->op4_speclfo_depth)
 #define op4_speclfo_wave (S->op4_speclfo_wave)
@@ -6831,6 +6889,7 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define penv_relr (S->penv_relr)
 #define penv_rell (S->penv_rell)
 #define penv_mode (S->penv_mode)
+#define penv_scale (S->penv_scale)
 #define penv_ks_lo (S->penv_ks_lo)
 #define penv_ks_hi (S->penv_ks_hi)
 #define penv_vs_amount (S->penv_vs_amount)
@@ -6861,6 +6920,7 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define fenv_relr (S->fenv_relr)
 #define fenv_rell (S->fenv_rell)
 #define fenv_mode (S->fenv_mode)
+#define fenv_scale (S->fenv_scale)
 #define key_bp_bp (S->key_bp_bp)
 #define key_on_on (S->key_on_on)
 #define vel_on_on (S->vel_on_on)
@@ -7214,7 +7274,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
            l1, 1 to l2, 2 to l3, 3 sustain, 4 release, 5 loop up, 6 loop down. No local
            declarations, because the body is inlined once per instance. */
         if (voice_trig[v]) {
-            fenv_stage[v] = 0u; fenv_level[v] = cutoff_pos_pos_x[v];
+            fenv_stage[v] = 0u; fenv_level[v] = cutoff_pos_pos_x[v] * (fenv_scale[voice_part[v]] > 0 ? fenv_scale[voice_part[v]] : 1);
         }
         if (voice_gate[v]) {
             /* A fresh gate after a gate-off release restarts the attack. Mode 0
@@ -7227,30 +7287,30 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             fenv_stage[v] = 4u;
         }
         if (fenv_stage[v] == 0u) {
-            fenv_level[v] = p1_onepole(fenv_level[v], fenv_l1[voice_part[v]],
+            fenv_level[v] = p1_onepole(fenv_level[v], fenv_l1[voice_part[v]] * (fenv_scale[voice_part[v]] > 0 ? fenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[fenv_r1_eff[v]]);
-            if (fenv_l1[voice_part[v]] >= fenv_level[v]
-                    ? fenv_level[v] >= fenv_l1[voice_part[v]] - 8
-                    : fenv_level[v] <= fenv_l1[voice_part[v]] + 8) {
-                fenv_level[v] = fenv_l1[voice_part[v]]; fenv_stage[v] = 1u;
+            if (fenv_l1[voice_part[v]] * (fenv_scale[voice_part[v]] > 0 ? fenv_scale[voice_part[v]] : 1) >= fenv_level[v]
+                    ? fenv_level[v] >= fenv_l1[voice_part[v]] * (fenv_scale[voice_part[v]] > 0 ? fenv_scale[voice_part[v]] : 1) - 8 * (fenv_scale[voice_part[v]] > 0 ? fenv_scale[voice_part[v]] : 1)
+                    : fenv_level[v] <= fenv_l1[voice_part[v]] * (fenv_scale[voice_part[v]] > 0 ? fenv_scale[voice_part[v]] : 1) + 8 * (fenv_scale[voice_part[v]] > 0 ? fenv_scale[voice_part[v]] : 1)) {
+                fenv_level[v] = fenv_l1[voice_part[v]] * (fenv_scale[voice_part[v]] > 0 ? fenv_scale[voice_part[v]] : 1); fenv_stage[v] = 1u;
             }
         }
         if (fenv_stage[v] == 1u) {
-            fenv_level[v] = p1_onepole(fenv_level[v], fenv_l2[voice_part[v]],
+            fenv_level[v] = p1_onepole(fenv_level[v], fenv_l2[voice_part[v]] * (fenv_scale[voice_part[v]] > 0 ? fenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[fenv_r2_eff[v]]);
-            if (fenv_l2[voice_part[v]] >= fenv_level[v]
-                    ? fenv_level[v] >= fenv_l2[voice_part[v]] - 8
-                    : fenv_level[v] <= fenv_l2[voice_part[v]] + 8) {
-                fenv_level[v] = fenv_l2[voice_part[v]]; fenv_stage[v] = 2u;
+            if (fenv_l2[voice_part[v]] * (fenv_scale[voice_part[v]] > 0 ? fenv_scale[voice_part[v]] : 1) >= fenv_level[v]
+                    ? fenv_level[v] >= fenv_l2[voice_part[v]] * (fenv_scale[voice_part[v]] > 0 ? fenv_scale[voice_part[v]] : 1) - 8 * (fenv_scale[voice_part[v]] > 0 ? fenv_scale[voice_part[v]] : 1)
+                    : fenv_level[v] <= fenv_l2[voice_part[v]] * (fenv_scale[voice_part[v]] > 0 ? fenv_scale[voice_part[v]] : 1) + 8 * (fenv_scale[voice_part[v]] > 0 ? fenv_scale[voice_part[v]] : 1)) {
+                fenv_level[v] = fenv_l2[voice_part[v]] * (fenv_scale[voice_part[v]] > 0 ? fenv_scale[voice_part[v]] : 1); fenv_stage[v] = 2u;
             }
         }
         if (fenv_stage[v] == 2u) {
-            fenv_level[v] = p1_onepole(fenv_level[v], fenv_l3[voice_part[v]],
+            fenv_level[v] = p1_onepole(fenv_level[v], fenv_l3[voice_part[v]] * (fenv_scale[voice_part[v]] > 0 ? fenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[fenv_r3_eff[v]]);
-            if (fenv_l3[voice_part[v]] >= fenv_level[v]
-                    ? fenv_level[v] >= fenv_l3[voice_part[v]] - 8
-                    : fenv_level[v] <= fenv_l3[voice_part[v]] + 8) {
-                fenv_level[v] = fenv_l3[voice_part[v]];
+            if (fenv_l3[voice_part[v]] * (fenv_scale[voice_part[v]] > 0 ? fenv_scale[voice_part[v]] : 1) >= fenv_level[v]
+                    ? fenv_level[v] >= fenv_l3[voice_part[v]] * (fenv_scale[voice_part[v]] > 0 ? fenv_scale[voice_part[v]] : 1) - 8 * (fenv_scale[voice_part[v]] > 0 ? fenv_scale[voice_part[v]] : 1)
+                    : fenv_level[v] <= fenv_l3[voice_part[v]] * (fenv_scale[voice_part[v]] > 0 ? fenv_scale[voice_part[v]] : 1) + 8 * (fenv_scale[voice_part[v]] > 0 ? fenv_scale[voice_part[v]] : 1)) {
+                fenv_level[v] = fenv_l3[voice_part[v]] * (fenv_scale[voice_part[v]] > 0 ? fenv_scale[voice_part[v]] : 1);
                 if (fenv_mode[voice_part[v]] == 0u)
                     fenv_stage[v] = 4u;
                 else if (fenv_mode[voice_part[v]] == 1u)
@@ -7260,34 +7320,34 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             }
         }
         if (fenv_stage[v] == 3u)
-            fenv_level[v] = fenv_l3[voice_part[v]];
+            fenv_level[v] = fenv_l3[voice_part[v]] * (fenv_scale[voice_part[v]] > 0 ? fenv_scale[voice_part[v]] : 1);
         if (fenv_stage[v] == 5u) {
-            fenv_level[v] = p1_onepole(fenv_level[v], fenv_l2[voice_part[v]],
+            fenv_level[v] = p1_onepole(fenv_level[v], fenv_l2[voice_part[v]] * (fenv_scale[voice_part[v]] > 0 ? fenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[(fenv_mode[voice_part[v]] == 2u) ? fenv_r2_eff[v] : fenv_r3_eff[v]]);
-            if (fenv_l2[voice_part[v]] >= fenv_level[v]
-                    ? fenv_level[v] >= fenv_l2[voice_part[v]] - 8
-                    : fenv_level[v] <= fenv_l2[voice_part[v]] + 8) {
-                fenv_level[v] = fenv_l2[voice_part[v]]; fenv_stage[v] = 6u;
+            if (fenv_l2[voice_part[v]] * (fenv_scale[voice_part[v]] > 0 ? fenv_scale[voice_part[v]] : 1) >= fenv_level[v]
+                    ? fenv_level[v] >= fenv_l2[voice_part[v]] * (fenv_scale[voice_part[v]] > 0 ? fenv_scale[voice_part[v]] : 1) - 8 * (fenv_scale[voice_part[v]] > 0 ? fenv_scale[voice_part[v]] : 1)
+                    : fenv_level[v] <= fenv_l2[voice_part[v]] * (fenv_scale[voice_part[v]] > 0 ? fenv_scale[voice_part[v]] : 1) + 8 * (fenv_scale[voice_part[v]] > 0 ? fenv_scale[voice_part[v]] : 1)) {
+                fenv_level[v] = fenv_l2[voice_part[v]] * (fenv_scale[voice_part[v]] > 0 ? fenv_scale[voice_part[v]] : 1); fenv_stage[v] = 6u;
             }
         }
         if (fenv_stage[v] == 6u) {
-            fenv_level[v] = p1_onepole(fenv_level[v], fenv_l3[voice_part[v]],
+            fenv_level[v] = p1_onepole(fenv_level[v], fenv_l3[voice_part[v]] * (fenv_scale[voice_part[v]] > 0 ? fenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[fenv_r3_eff[v]]);
-            if (fenv_l3[voice_part[v]] >= fenv_level[v]
-                    ? fenv_level[v] >= fenv_l3[voice_part[v]] - 8
-                    : fenv_level[v] <= fenv_l3[voice_part[v]] + 8) {
-                fenv_level[v] = fenv_l3[voice_part[v]]; fenv_stage[v] = 5u;
+            if (fenv_l3[voice_part[v]] * (fenv_scale[voice_part[v]] > 0 ? fenv_scale[voice_part[v]] : 1) >= fenv_level[v]
+                    ? fenv_level[v] >= fenv_l3[voice_part[v]] * (fenv_scale[voice_part[v]] > 0 ? fenv_scale[voice_part[v]] : 1) - 8 * (fenv_scale[voice_part[v]] > 0 ? fenv_scale[voice_part[v]] : 1)
+                    : fenv_level[v] <= fenv_l3[voice_part[v]] * (fenv_scale[voice_part[v]] > 0 ? fenv_scale[voice_part[v]] : 1) + 8 * (fenv_scale[voice_part[v]] > 0 ? fenv_scale[voice_part[v]] : 1)) {
+                fenv_level[v] = fenv_l3[voice_part[v]] * (fenv_scale[voice_part[v]] > 0 ? fenv_scale[voice_part[v]] : 1); fenv_stage[v] = 5u;
             }
         }
         if (fenv_stage[v] == 4u) {
-            fenv_level[v] = p1_onepole(fenv_level[v], fenv_rell[voice_part[v]],
+            fenv_level[v] = p1_onepole(fenv_level[v], fenv_rell[voice_part[v]] * (fenv_scale[voice_part[v]] > 0 ? fenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[fenv_r4_eff[v]]);
-            if (fenv_rell[voice_part[v]] >= fenv_level[v]
-                    ? fenv_level[v] >= fenv_rell[voice_part[v]] - 8
-                    : fenv_level[v] <= fenv_rell[voice_part[v]] + 8)
-                fenv_level[v] = fenv_rell[voice_part[v]];
+            if (fenv_rell[voice_part[v]] * (fenv_scale[voice_part[v]] > 0 ? fenv_scale[voice_part[v]] : 1) >= fenv_level[v]
+                    ? fenv_level[v] >= fenv_rell[voice_part[v]] * (fenv_scale[voice_part[v]] > 0 ? fenv_scale[voice_part[v]] : 1) - 8 * (fenv_scale[voice_part[v]] > 0 ? fenv_scale[voice_part[v]] : 1)
+                    : fenv_level[v] <= fenv_rell[voice_part[v]] * (fenv_scale[voice_part[v]] > 0 ? fenv_scale[voice_part[v]] : 1) + 8 * (fenv_scale[voice_part[v]] > 0 ? fenv_scale[voice_part[v]] : 1))
+                fenv_level[v] = fenv_rell[voice_part[v]] * (fenv_scale[voice_part[v]] > 0 ? fenv_scale[voice_part[v]] : 1);
         }
-        fenv_cv_x[v] = fenv_on[voice_part[v]] ? fenv_level[v] : cutoff_pos_pos_x[v];
+        fenv_cv_x[v] = fenv_on[voice_part[v]] ? fenv_level[v] / (fenv_scale[voice_part[v]] > 0 ? fenv_scale[voice_part[v]] : 1) : cutoff_pos_pos_x[v];
         fenv_active_x[v] = fenv_on[voice_part[v]] ? 1 : 0;
         /* Low-frequency oscillator (control rate): phase advances by `rate` per sample
            (`rate * CONTROL_BLOCK` per control tick, where CONTROL_BLOCK is the emitted
@@ -7333,7 +7393,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
            l1, 1 to l2, 2 to l3, 3 sustain, 4 release, 5 loop up, 6 loop down. No local
            declarations, because the body is inlined once per instance. */
         if (voice_trig[v]) {
-            penv_stage[v] = 0u; penv_level[v] = 0;
+            penv_stage[v] = 0u; penv_level[v] = 0 * (penv_scale[voice_part[v]] > 0 ? penv_scale[voice_part[v]] : 1);
         }
         if (voice_gate[v]) {
             /* A fresh gate after a gate-off release restarts the attack. Mode 0
@@ -7346,30 +7406,30 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             penv_stage[v] = 4u;
         }
         if (penv_stage[v] == 0u) {
-            penv_level[v] = p1_onepole(penv_level[v], penv_l1[voice_part[v]],
+            penv_level[v] = p1_onepole(penv_level[v], penv_l1[voice_part[v]] * (penv_scale[voice_part[v]] > 0 ? penv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[penv_r1_eff[v]]);
-            if (penv_l1[voice_part[v]] >= penv_level[v]
-                    ? penv_level[v] >= penv_l1[voice_part[v]] - 8
-                    : penv_level[v] <= penv_l1[voice_part[v]] + 8) {
-                penv_level[v] = penv_l1[voice_part[v]]; penv_stage[v] = 1u;
+            if (penv_l1[voice_part[v]] * (penv_scale[voice_part[v]] > 0 ? penv_scale[voice_part[v]] : 1) >= penv_level[v]
+                    ? penv_level[v] >= penv_l1[voice_part[v]] * (penv_scale[voice_part[v]] > 0 ? penv_scale[voice_part[v]] : 1) - 8 * (penv_scale[voice_part[v]] > 0 ? penv_scale[voice_part[v]] : 1)
+                    : penv_level[v] <= penv_l1[voice_part[v]] * (penv_scale[voice_part[v]] > 0 ? penv_scale[voice_part[v]] : 1) + 8 * (penv_scale[voice_part[v]] > 0 ? penv_scale[voice_part[v]] : 1)) {
+                penv_level[v] = penv_l1[voice_part[v]] * (penv_scale[voice_part[v]] > 0 ? penv_scale[voice_part[v]] : 1); penv_stage[v] = 1u;
             }
         }
         if (penv_stage[v] == 1u) {
-            penv_level[v] = p1_onepole(penv_level[v], penv_l2[voice_part[v]],
+            penv_level[v] = p1_onepole(penv_level[v], penv_l2[voice_part[v]] * (penv_scale[voice_part[v]] > 0 ? penv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[penv_r2_eff[v]]);
-            if (penv_l2[voice_part[v]] >= penv_level[v]
-                    ? penv_level[v] >= penv_l2[voice_part[v]] - 8
-                    : penv_level[v] <= penv_l2[voice_part[v]] + 8) {
-                penv_level[v] = penv_l2[voice_part[v]]; penv_stage[v] = 2u;
+            if (penv_l2[voice_part[v]] * (penv_scale[voice_part[v]] > 0 ? penv_scale[voice_part[v]] : 1) >= penv_level[v]
+                    ? penv_level[v] >= penv_l2[voice_part[v]] * (penv_scale[voice_part[v]] > 0 ? penv_scale[voice_part[v]] : 1) - 8 * (penv_scale[voice_part[v]] > 0 ? penv_scale[voice_part[v]] : 1)
+                    : penv_level[v] <= penv_l2[voice_part[v]] * (penv_scale[voice_part[v]] > 0 ? penv_scale[voice_part[v]] : 1) + 8 * (penv_scale[voice_part[v]] > 0 ? penv_scale[voice_part[v]] : 1)) {
+                penv_level[v] = penv_l2[voice_part[v]] * (penv_scale[voice_part[v]] > 0 ? penv_scale[voice_part[v]] : 1); penv_stage[v] = 2u;
             }
         }
         if (penv_stage[v] == 2u) {
-            penv_level[v] = p1_onepole(penv_level[v], penv_l3[voice_part[v]],
+            penv_level[v] = p1_onepole(penv_level[v], penv_l3[voice_part[v]] * (penv_scale[voice_part[v]] > 0 ? penv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[penv_r3_eff[v]]);
-            if (penv_l3[voice_part[v]] >= penv_level[v]
-                    ? penv_level[v] >= penv_l3[voice_part[v]] - 8
-                    : penv_level[v] <= penv_l3[voice_part[v]] + 8) {
-                penv_level[v] = penv_l3[voice_part[v]];
+            if (penv_l3[voice_part[v]] * (penv_scale[voice_part[v]] > 0 ? penv_scale[voice_part[v]] : 1) >= penv_level[v]
+                    ? penv_level[v] >= penv_l3[voice_part[v]] * (penv_scale[voice_part[v]] > 0 ? penv_scale[voice_part[v]] : 1) - 8 * (penv_scale[voice_part[v]] > 0 ? penv_scale[voice_part[v]] : 1)
+                    : penv_level[v] <= penv_l3[voice_part[v]] * (penv_scale[voice_part[v]] > 0 ? penv_scale[voice_part[v]] : 1) + 8 * (penv_scale[voice_part[v]] > 0 ? penv_scale[voice_part[v]] : 1)) {
+                penv_level[v] = penv_l3[voice_part[v]] * (penv_scale[voice_part[v]] > 0 ? penv_scale[voice_part[v]] : 1);
                 if (penv_mode[voice_part[v]] == 0u)
                     penv_stage[v] = 4u;
                 else if (penv_mode[voice_part[v]] == 1u)
@@ -7379,34 +7439,34 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             }
         }
         if (penv_stage[v] == 3u)
-            penv_level[v] = penv_l3[voice_part[v]];
+            penv_level[v] = penv_l3[voice_part[v]] * (penv_scale[voice_part[v]] > 0 ? penv_scale[voice_part[v]] : 1);
         if (penv_stage[v] == 5u) {
-            penv_level[v] = p1_onepole(penv_level[v], penv_l2[voice_part[v]],
+            penv_level[v] = p1_onepole(penv_level[v], penv_l2[voice_part[v]] * (penv_scale[voice_part[v]] > 0 ? penv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[(penv_mode[voice_part[v]] == 2u) ? penv_r2_eff[v] : penv_r3_eff[v]]);
-            if (penv_l2[voice_part[v]] >= penv_level[v]
-                    ? penv_level[v] >= penv_l2[voice_part[v]] - 8
-                    : penv_level[v] <= penv_l2[voice_part[v]] + 8) {
-                penv_level[v] = penv_l2[voice_part[v]]; penv_stage[v] = 6u;
+            if (penv_l2[voice_part[v]] * (penv_scale[voice_part[v]] > 0 ? penv_scale[voice_part[v]] : 1) >= penv_level[v]
+                    ? penv_level[v] >= penv_l2[voice_part[v]] * (penv_scale[voice_part[v]] > 0 ? penv_scale[voice_part[v]] : 1) - 8 * (penv_scale[voice_part[v]] > 0 ? penv_scale[voice_part[v]] : 1)
+                    : penv_level[v] <= penv_l2[voice_part[v]] * (penv_scale[voice_part[v]] > 0 ? penv_scale[voice_part[v]] : 1) + 8 * (penv_scale[voice_part[v]] > 0 ? penv_scale[voice_part[v]] : 1)) {
+                penv_level[v] = penv_l2[voice_part[v]] * (penv_scale[voice_part[v]] > 0 ? penv_scale[voice_part[v]] : 1); penv_stage[v] = 6u;
             }
         }
         if (penv_stage[v] == 6u) {
-            penv_level[v] = p1_onepole(penv_level[v], penv_l3[voice_part[v]],
+            penv_level[v] = p1_onepole(penv_level[v], penv_l3[voice_part[v]] * (penv_scale[voice_part[v]] > 0 ? penv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[penv_r3_eff[v]]);
-            if (penv_l3[voice_part[v]] >= penv_level[v]
-                    ? penv_level[v] >= penv_l3[voice_part[v]] - 8
-                    : penv_level[v] <= penv_l3[voice_part[v]] + 8) {
-                penv_level[v] = penv_l3[voice_part[v]]; penv_stage[v] = 5u;
+            if (penv_l3[voice_part[v]] * (penv_scale[voice_part[v]] > 0 ? penv_scale[voice_part[v]] : 1) >= penv_level[v]
+                    ? penv_level[v] >= penv_l3[voice_part[v]] * (penv_scale[voice_part[v]] > 0 ? penv_scale[voice_part[v]] : 1) - 8 * (penv_scale[voice_part[v]] > 0 ? penv_scale[voice_part[v]] : 1)
+                    : penv_level[v] <= penv_l3[voice_part[v]] * (penv_scale[voice_part[v]] > 0 ? penv_scale[voice_part[v]] : 1) + 8 * (penv_scale[voice_part[v]] > 0 ? penv_scale[voice_part[v]] : 1)) {
+                penv_level[v] = penv_l3[voice_part[v]] * (penv_scale[voice_part[v]] > 0 ? penv_scale[voice_part[v]] : 1); penv_stage[v] = 5u;
             }
         }
         if (penv_stage[v] == 4u) {
-            penv_level[v] = p1_onepole(penv_level[v], penv_rell[voice_part[v]],
+            penv_level[v] = p1_onepole(penv_level[v], penv_rell[voice_part[v]] * (penv_scale[voice_part[v]] > 0 ? penv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[penv_r4_eff[v]]);
-            if (penv_rell[voice_part[v]] >= penv_level[v]
-                    ? penv_level[v] >= penv_rell[voice_part[v]] - 8
-                    : penv_level[v] <= penv_rell[voice_part[v]] + 8)
-                penv_level[v] = penv_rell[voice_part[v]];
+            if (penv_rell[voice_part[v]] * (penv_scale[voice_part[v]] > 0 ? penv_scale[voice_part[v]] : 1) >= penv_level[v]
+                    ? penv_level[v] >= penv_rell[voice_part[v]] * (penv_scale[voice_part[v]] > 0 ? penv_scale[voice_part[v]] : 1) - 8 * (penv_scale[voice_part[v]] > 0 ? penv_scale[voice_part[v]] : 1)
+                    : penv_level[v] <= penv_rell[voice_part[v]] * (penv_scale[voice_part[v]] > 0 ? penv_scale[voice_part[v]] : 1) + 8 * (penv_scale[voice_part[v]] > 0 ? penv_scale[voice_part[v]] : 1))
+                penv_level[v] = penv_rell[voice_part[v]] * (penv_scale[voice_part[v]] > 0 ? penv_scale[voice_part[v]] : 1);
         }
-        penv_cv_x[v] = penv_on[voice_part[v]] ? penv_level[v] : 0;
+        penv_cv_x[v] = penv_on[voice_part[v]] ? penv_level[v] / (penv_scale[voice_part[v]] > 0 ? penv_scale[voice_part[v]] : 1) : 0;
         penv_active_x[v] = penv_on[voice_part[v]] ? 1 : 0;
         (void)penv_active_x[v];
         /* control-rate summer: add the two control inputs. */
@@ -7878,7 +7938,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
            l1, 1 to l2, 2 to l3, 3 sustain, 4 release, 5 loop up, 6 loop down. No local
            declarations, because the body is inlined once per instance. */
         if (voice_trig[v]) {
-            op4_fbenv_stage[v] = 0u; op4_fbenv_level[v] = 0;
+            op4_fbenv_stage[v] = 0u; op4_fbenv_level[v] = 0 * (op4_fbenv_scale[voice_part[v]] > 0 ? op4_fbenv_scale[voice_part[v]] : 1);
         }
         if (voice_gate[v]) {
             /* A fresh gate after a gate-off release restarts the attack. Mode 0
@@ -7891,30 +7951,30 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             op4_fbenv_stage[v] = 4u;
         }
         if (op4_fbenv_stage[v] == 0u) {
-            op4_fbenv_level[v] = p1_onepole(op4_fbenv_level[v], op4_fbenv_l1[voice_part[v]],
+            op4_fbenv_level[v] = p1_onepole(op4_fbenv_level[v], op4_fbenv_l1[voice_part[v]] * (op4_fbenv_scale[voice_part[v]] > 0 ? op4_fbenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[op4_fbenv_r1_eff[v]]);
-            if (op4_fbenv_l1[voice_part[v]] >= op4_fbenv_level[v]
-                    ? op4_fbenv_level[v] >= op4_fbenv_l1[voice_part[v]] - 8
-                    : op4_fbenv_level[v] <= op4_fbenv_l1[voice_part[v]] + 8) {
-                op4_fbenv_level[v] = op4_fbenv_l1[voice_part[v]]; op4_fbenv_stage[v] = 1u;
+            if (op4_fbenv_l1[voice_part[v]] * (op4_fbenv_scale[voice_part[v]] > 0 ? op4_fbenv_scale[voice_part[v]] : 1) >= op4_fbenv_level[v]
+                    ? op4_fbenv_level[v] >= op4_fbenv_l1[voice_part[v]] * (op4_fbenv_scale[voice_part[v]] > 0 ? op4_fbenv_scale[voice_part[v]] : 1) - 8 * (op4_fbenv_scale[voice_part[v]] > 0 ? op4_fbenv_scale[voice_part[v]] : 1)
+                    : op4_fbenv_level[v] <= op4_fbenv_l1[voice_part[v]] * (op4_fbenv_scale[voice_part[v]] > 0 ? op4_fbenv_scale[voice_part[v]] : 1) + 8 * (op4_fbenv_scale[voice_part[v]] > 0 ? op4_fbenv_scale[voice_part[v]] : 1)) {
+                op4_fbenv_level[v] = op4_fbenv_l1[voice_part[v]] * (op4_fbenv_scale[voice_part[v]] > 0 ? op4_fbenv_scale[voice_part[v]] : 1); op4_fbenv_stage[v] = 1u;
             }
         }
         if (op4_fbenv_stage[v] == 1u) {
-            op4_fbenv_level[v] = p1_onepole(op4_fbenv_level[v], op4_fbenv_l2[voice_part[v]],
+            op4_fbenv_level[v] = p1_onepole(op4_fbenv_level[v], op4_fbenv_l2[voice_part[v]] * (op4_fbenv_scale[voice_part[v]] > 0 ? op4_fbenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[op4_fbenv_r2_eff[v]]);
-            if (op4_fbenv_l2[voice_part[v]] >= op4_fbenv_level[v]
-                    ? op4_fbenv_level[v] >= op4_fbenv_l2[voice_part[v]] - 8
-                    : op4_fbenv_level[v] <= op4_fbenv_l2[voice_part[v]] + 8) {
-                op4_fbenv_level[v] = op4_fbenv_l2[voice_part[v]]; op4_fbenv_stage[v] = 2u;
+            if (op4_fbenv_l2[voice_part[v]] * (op4_fbenv_scale[voice_part[v]] > 0 ? op4_fbenv_scale[voice_part[v]] : 1) >= op4_fbenv_level[v]
+                    ? op4_fbenv_level[v] >= op4_fbenv_l2[voice_part[v]] * (op4_fbenv_scale[voice_part[v]] > 0 ? op4_fbenv_scale[voice_part[v]] : 1) - 8 * (op4_fbenv_scale[voice_part[v]] > 0 ? op4_fbenv_scale[voice_part[v]] : 1)
+                    : op4_fbenv_level[v] <= op4_fbenv_l2[voice_part[v]] * (op4_fbenv_scale[voice_part[v]] > 0 ? op4_fbenv_scale[voice_part[v]] : 1) + 8 * (op4_fbenv_scale[voice_part[v]] > 0 ? op4_fbenv_scale[voice_part[v]] : 1)) {
+                op4_fbenv_level[v] = op4_fbenv_l2[voice_part[v]] * (op4_fbenv_scale[voice_part[v]] > 0 ? op4_fbenv_scale[voice_part[v]] : 1); op4_fbenv_stage[v] = 2u;
             }
         }
         if (op4_fbenv_stage[v] == 2u) {
-            op4_fbenv_level[v] = p1_onepole(op4_fbenv_level[v], op4_fbenv_l3[voice_part[v]],
+            op4_fbenv_level[v] = p1_onepole(op4_fbenv_level[v], op4_fbenv_l3[voice_part[v]] * (op4_fbenv_scale[voice_part[v]] > 0 ? op4_fbenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[op4_fbenv_r3_eff[v]]);
-            if (op4_fbenv_l3[voice_part[v]] >= op4_fbenv_level[v]
-                    ? op4_fbenv_level[v] >= op4_fbenv_l3[voice_part[v]] - 8
-                    : op4_fbenv_level[v] <= op4_fbenv_l3[voice_part[v]] + 8) {
-                op4_fbenv_level[v] = op4_fbenv_l3[voice_part[v]];
+            if (op4_fbenv_l3[voice_part[v]] * (op4_fbenv_scale[voice_part[v]] > 0 ? op4_fbenv_scale[voice_part[v]] : 1) >= op4_fbenv_level[v]
+                    ? op4_fbenv_level[v] >= op4_fbenv_l3[voice_part[v]] * (op4_fbenv_scale[voice_part[v]] > 0 ? op4_fbenv_scale[voice_part[v]] : 1) - 8 * (op4_fbenv_scale[voice_part[v]] > 0 ? op4_fbenv_scale[voice_part[v]] : 1)
+                    : op4_fbenv_level[v] <= op4_fbenv_l3[voice_part[v]] * (op4_fbenv_scale[voice_part[v]] > 0 ? op4_fbenv_scale[voice_part[v]] : 1) + 8 * (op4_fbenv_scale[voice_part[v]] > 0 ? op4_fbenv_scale[voice_part[v]] : 1)) {
+                op4_fbenv_level[v] = op4_fbenv_l3[voice_part[v]] * (op4_fbenv_scale[voice_part[v]] > 0 ? op4_fbenv_scale[voice_part[v]] : 1);
                 if (op4_fbenv_mode[voice_part[v]] == 0u)
                     op4_fbenv_stage[v] = 4u;
                 else if (op4_fbenv_mode[voice_part[v]] == 1u)
@@ -7924,34 +7984,34 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             }
         }
         if (op4_fbenv_stage[v] == 3u)
-            op4_fbenv_level[v] = op4_fbenv_l3[voice_part[v]];
+            op4_fbenv_level[v] = op4_fbenv_l3[voice_part[v]] * (op4_fbenv_scale[voice_part[v]] > 0 ? op4_fbenv_scale[voice_part[v]] : 1);
         if (op4_fbenv_stage[v] == 5u) {
-            op4_fbenv_level[v] = p1_onepole(op4_fbenv_level[v], op4_fbenv_l2[voice_part[v]],
+            op4_fbenv_level[v] = p1_onepole(op4_fbenv_level[v], op4_fbenv_l2[voice_part[v]] * (op4_fbenv_scale[voice_part[v]] > 0 ? op4_fbenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[(op4_fbenv_mode[voice_part[v]] == 2u) ? op4_fbenv_r2_eff[v] : op4_fbenv_r3_eff[v]]);
-            if (op4_fbenv_l2[voice_part[v]] >= op4_fbenv_level[v]
-                    ? op4_fbenv_level[v] >= op4_fbenv_l2[voice_part[v]] - 8
-                    : op4_fbenv_level[v] <= op4_fbenv_l2[voice_part[v]] + 8) {
-                op4_fbenv_level[v] = op4_fbenv_l2[voice_part[v]]; op4_fbenv_stage[v] = 6u;
+            if (op4_fbenv_l2[voice_part[v]] * (op4_fbenv_scale[voice_part[v]] > 0 ? op4_fbenv_scale[voice_part[v]] : 1) >= op4_fbenv_level[v]
+                    ? op4_fbenv_level[v] >= op4_fbenv_l2[voice_part[v]] * (op4_fbenv_scale[voice_part[v]] > 0 ? op4_fbenv_scale[voice_part[v]] : 1) - 8 * (op4_fbenv_scale[voice_part[v]] > 0 ? op4_fbenv_scale[voice_part[v]] : 1)
+                    : op4_fbenv_level[v] <= op4_fbenv_l2[voice_part[v]] * (op4_fbenv_scale[voice_part[v]] > 0 ? op4_fbenv_scale[voice_part[v]] : 1) + 8 * (op4_fbenv_scale[voice_part[v]] > 0 ? op4_fbenv_scale[voice_part[v]] : 1)) {
+                op4_fbenv_level[v] = op4_fbenv_l2[voice_part[v]] * (op4_fbenv_scale[voice_part[v]] > 0 ? op4_fbenv_scale[voice_part[v]] : 1); op4_fbenv_stage[v] = 6u;
             }
         }
         if (op4_fbenv_stage[v] == 6u) {
-            op4_fbenv_level[v] = p1_onepole(op4_fbenv_level[v], op4_fbenv_l3[voice_part[v]],
+            op4_fbenv_level[v] = p1_onepole(op4_fbenv_level[v], op4_fbenv_l3[voice_part[v]] * (op4_fbenv_scale[voice_part[v]] > 0 ? op4_fbenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[op4_fbenv_r3_eff[v]]);
-            if (op4_fbenv_l3[voice_part[v]] >= op4_fbenv_level[v]
-                    ? op4_fbenv_level[v] >= op4_fbenv_l3[voice_part[v]] - 8
-                    : op4_fbenv_level[v] <= op4_fbenv_l3[voice_part[v]] + 8) {
-                op4_fbenv_level[v] = op4_fbenv_l3[voice_part[v]]; op4_fbenv_stage[v] = 5u;
+            if (op4_fbenv_l3[voice_part[v]] * (op4_fbenv_scale[voice_part[v]] > 0 ? op4_fbenv_scale[voice_part[v]] : 1) >= op4_fbenv_level[v]
+                    ? op4_fbenv_level[v] >= op4_fbenv_l3[voice_part[v]] * (op4_fbenv_scale[voice_part[v]] > 0 ? op4_fbenv_scale[voice_part[v]] : 1) - 8 * (op4_fbenv_scale[voice_part[v]] > 0 ? op4_fbenv_scale[voice_part[v]] : 1)
+                    : op4_fbenv_level[v] <= op4_fbenv_l3[voice_part[v]] * (op4_fbenv_scale[voice_part[v]] > 0 ? op4_fbenv_scale[voice_part[v]] : 1) + 8 * (op4_fbenv_scale[voice_part[v]] > 0 ? op4_fbenv_scale[voice_part[v]] : 1)) {
+                op4_fbenv_level[v] = op4_fbenv_l3[voice_part[v]] * (op4_fbenv_scale[voice_part[v]] > 0 ? op4_fbenv_scale[voice_part[v]] : 1); op4_fbenv_stage[v] = 5u;
             }
         }
         if (op4_fbenv_stage[v] == 4u) {
-            op4_fbenv_level[v] = p1_onepole(op4_fbenv_level[v], op4_fbenv_rell[voice_part[v]],
+            op4_fbenv_level[v] = p1_onepole(op4_fbenv_level[v], op4_fbenv_rell[voice_part[v]] * (op4_fbenv_scale[voice_part[v]] > 0 ? op4_fbenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[op4_fbenv_r4_eff[v]]);
-            if (op4_fbenv_rell[voice_part[v]] >= op4_fbenv_level[v]
-                    ? op4_fbenv_level[v] >= op4_fbenv_rell[voice_part[v]] - 8
-                    : op4_fbenv_level[v] <= op4_fbenv_rell[voice_part[v]] + 8)
-                op4_fbenv_level[v] = op4_fbenv_rell[voice_part[v]];
+            if (op4_fbenv_rell[voice_part[v]] * (op4_fbenv_scale[voice_part[v]] > 0 ? op4_fbenv_scale[voice_part[v]] : 1) >= op4_fbenv_level[v]
+                    ? op4_fbenv_level[v] >= op4_fbenv_rell[voice_part[v]] * (op4_fbenv_scale[voice_part[v]] > 0 ? op4_fbenv_scale[voice_part[v]] : 1) - 8 * (op4_fbenv_scale[voice_part[v]] > 0 ? op4_fbenv_scale[voice_part[v]] : 1)
+                    : op4_fbenv_level[v] <= op4_fbenv_rell[voice_part[v]] * (op4_fbenv_scale[voice_part[v]] > 0 ? op4_fbenv_scale[voice_part[v]] : 1) + 8 * (op4_fbenv_scale[voice_part[v]] > 0 ? op4_fbenv_scale[voice_part[v]] : 1))
+                op4_fbenv_level[v] = op4_fbenv_rell[voice_part[v]] * (op4_fbenv_scale[voice_part[v]] > 0 ? op4_fbenv_scale[voice_part[v]] : 1);
         }
-        op4_fbenv_cv_x[v] = op4_fbenv_on[voice_part[v]] ? op4_fbenv_level[v] : 0;
+        op4_fbenv_cv_x[v] = op4_fbenv_on[voice_part[v]] ? op4_fbenv_level[v] / (op4_fbenv_scale[voice_part[v]] > 0 ? op4_fbenv_scale[voice_part[v]] : 1) : 0;
         op4_fbenv_active_x[v] = op4_fbenv_on[voice_part[v]] ? 1 : 0;
         (void)op4_fbenv_active_x[v];
         /* Low-frequency oscillator (control rate): phase advances by `rate` per sample
@@ -7994,7 +8054,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
            l1, 1 to l2, 2 to l3, 3 sustain, 4 release, 5 loop up, 6 loop down. No local
            declarations, because the body is inlined once per instance. */
         if (voice_trig[v]) {
-            op4_specenv_stage[v] = 0u; op4_specenv_level[v] = op4_morphbase_out_x[v];
+            op4_specenv_stage[v] = 0u; op4_specenv_level[v] = op4_morphbase_out_x[v] * (op4_specenv_scale[voice_part[v]] > 0 ? op4_specenv_scale[voice_part[v]] : 1);
         }
         if (voice_gate[v]) {
             /* A fresh gate after a gate-off release restarts the attack. Mode 0
@@ -8007,30 +8067,30 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             op4_specenv_stage[v] = 4u;
         }
         if (op4_specenv_stage[v] == 0u) {
-            op4_specenv_level[v] = p1_onepole(op4_specenv_level[v], op4_specenv_l1[voice_part[v]],
+            op4_specenv_level[v] = p1_onepole(op4_specenv_level[v], op4_specenv_l1[voice_part[v]] * (op4_specenv_scale[voice_part[v]] > 0 ? op4_specenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[op4_specenv_r1_eff[v]]);
-            if (op4_specenv_l1[voice_part[v]] >= op4_specenv_level[v]
-                    ? op4_specenv_level[v] >= op4_specenv_l1[voice_part[v]] - 8
-                    : op4_specenv_level[v] <= op4_specenv_l1[voice_part[v]] + 8) {
-                op4_specenv_level[v] = op4_specenv_l1[voice_part[v]]; op4_specenv_stage[v] = 1u;
+            if (op4_specenv_l1[voice_part[v]] * (op4_specenv_scale[voice_part[v]] > 0 ? op4_specenv_scale[voice_part[v]] : 1) >= op4_specenv_level[v]
+                    ? op4_specenv_level[v] >= op4_specenv_l1[voice_part[v]] * (op4_specenv_scale[voice_part[v]] > 0 ? op4_specenv_scale[voice_part[v]] : 1) - 8 * (op4_specenv_scale[voice_part[v]] > 0 ? op4_specenv_scale[voice_part[v]] : 1)
+                    : op4_specenv_level[v] <= op4_specenv_l1[voice_part[v]] * (op4_specenv_scale[voice_part[v]] > 0 ? op4_specenv_scale[voice_part[v]] : 1) + 8 * (op4_specenv_scale[voice_part[v]] > 0 ? op4_specenv_scale[voice_part[v]] : 1)) {
+                op4_specenv_level[v] = op4_specenv_l1[voice_part[v]] * (op4_specenv_scale[voice_part[v]] > 0 ? op4_specenv_scale[voice_part[v]] : 1); op4_specenv_stage[v] = 1u;
             }
         }
         if (op4_specenv_stage[v] == 1u) {
-            op4_specenv_level[v] = p1_onepole(op4_specenv_level[v], op4_specenv_l2[voice_part[v]],
+            op4_specenv_level[v] = p1_onepole(op4_specenv_level[v], op4_specenv_l2[voice_part[v]] * (op4_specenv_scale[voice_part[v]] > 0 ? op4_specenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[op4_specenv_r2_eff[v]]);
-            if (op4_specenv_l2[voice_part[v]] >= op4_specenv_level[v]
-                    ? op4_specenv_level[v] >= op4_specenv_l2[voice_part[v]] - 8
-                    : op4_specenv_level[v] <= op4_specenv_l2[voice_part[v]] + 8) {
-                op4_specenv_level[v] = op4_specenv_l2[voice_part[v]]; op4_specenv_stage[v] = 2u;
+            if (op4_specenv_l2[voice_part[v]] * (op4_specenv_scale[voice_part[v]] > 0 ? op4_specenv_scale[voice_part[v]] : 1) >= op4_specenv_level[v]
+                    ? op4_specenv_level[v] >= op4_specenv_l2[voice_part[v]] * (op4_specenv_scale[voice_part[v]] > 0 ? op4_specenv_scale[voice_part[v]] : 1) - 8 * (op4_specenv_scale[voice_part[v]] > 0 ? op4_specenv_scale[voice_part[v]] : 1)
+                    : op4_specenv_level[v] <= op4_specenv_l2[voice_part[v]] * (op4_specenv_scale[voice_part[v]] > 0 ? op4_specenv_scale[voice_part[v]] : 1) + 8 * (op4_specenv_scale[voice_part[v]] > 0 ? op4_specenv_scale[voice_part[v]] : 1)) {
+                op4_specenv_level[v] = op4_specenv_l2[voice_part[v]] * (op4_specenv_scale[voice_part[v]] > 0 ? op4_specenv_scale[voice_part[v]] : 1); op4_specenv_stage[v] = 2u;
             }
         }
         if (op4_specenv_stage[v] == 2u) {
-            op4_specenv_level[v] = p1_onepole(op4_specenv_level[v], op4_specenv_l3[voice_part[v]],
+            op4_specenv_level[v] = p1_onepole(op4_specenv_level[v], op4_specenv_l3[voice_part[v]] * (op4_specenv_scale[voice_part[v]] > 0 ? op4_specenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[op4_specenv_r3_eff[v]]);
-            if (op4_specenv_l3[voice_part[v]] >= op4_specenv_level[v]
-                    ? op4_specenv_level[v] >= op4_specenv_l3[voice_part[v]] - 8
-                    : op4_specenv_level[v] <= op4_specenv_l3[voice_part[v]] + 8) {
-                op4_specenv_level[v] = op4_specenv_l3[voice_part[v]];
+            if (op4_specenv_l3[voice_part[v]] * (op4_specenv_scale[voice_part[v]] > 0 ? op4_specenv_scale[voice_part[v]] : 1) >= op4_specenv_level[v]
+                    ? op4_specenv_level[v] >= op4_specenv_l3[voice_part[v]] * (op4_specenv_scale[voice_part[v]] > 0 ? op4_specenv_scale[voice_part[v]] : 1) - 8 * (op4_specenv_scale[voice_part[v]] > 0 ? op4_specenv_scale[voice_part[v]] : 1)
+                    : op4_specenv_level[v] <= op4_specenv_l3[voice_part[v]] * (op4_specenv_scale[voice_part[v]] > 0 ? op4_specenv_scale[voice_part[v]] : 1) + 8 * (op4_specenv_scale[voice_part[v]] > 0 ? op4_specenv_scale[voice_part[v]] : 1)) {
+                op4_specenv_level[v] = op4_specenv_l3[voice_part[v]] * (op4_specenv_scale[voice_part[v]] > 0 ? op4_specenv_scale[voice_part[v]] : 1);
                 if (op4_specenv_mode[voice_part[v]] == 0u)
                     op4_specenv_stage[v] = 4u;
                 else if (op4_specenv_mode[voice_part[v]] == 1u)
@@ -8040,34 +8100,34 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             }
         }
         if (op4_specenv_stage[v] == 3u)
-            op4_specenv_level[v] = op4_specenv_l3[voice_part[v]];
+            op4_specenv_level[v] = op4_specenv_l3[voice_part[v]] * (op4_specenv_scale[voice_part[v]] > 0 ? op4_specenv_scale[voice_part[v]] : 1);
         if (op4_specenv_stage[v] == 5u) {
-            op4_specenv_level[v] = p1_onepole(op4_specenv_level[v], op4_specenv_l2[voice_part[v]],
+            op4_specenv_level[v] = p1_onepole(op4_specenv_level[v], op4_specenv_l2[voice_part[v]] * (op4_specenv_scale[voice_part[v]] > 0 ? op4_specenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[(op4_specenv_mode[voice_part[v]] == 2u) ? op4_specenv_r2_eff[v] : op4_specenv_r3_eff[v]]);
-            if (op4_specenv_l2[voice_part[v]] >= op4_specenv_level[v]
-                    ? op4_specenv_level[v] >= op4_specenv_l2[voice_part[v]] - 8
-                    : op4_specenv_level[v] <= op4_specenv_l2[voice_part[v]] + 8) {
-                op4_specenv_level[v] = op4_specenv_l2[voice_part[v]]; op4_specenv_stage[v] = 6u;
+            if (op4_specenv_l2[voice_part[v]] * (op4_specenv_scale[voice_part[v]] > 0 ? op4_specenv_scale[voice_part[v]] : 1) >= op4_specenv_level[v]
+                    ? op4_specenv_level[v] >= op4_specenv_l2[voice_part[v]] * (op4_specenv_scale[voice_part[v]] > 0 ? op4_specenv_scale[voice_part[v]] : 1) - 8 * (op4_specenv_scale[voice_part[v]] > 0 ? op4_specenv_scale[voice_part[v]] : 1)
+                    : op4_specenv_level[v] <= op4_specenv_l2[voice_part[v]] * (op4_specenv_scale[voice_part[v]] > 0 ? op4_specenv_scale[voice_part[v]] : 1) + 8 * (op4_specenv_scale[voice_part[v]] > 0 ? op4_specenv_scale[voice_part[v]] : 1)) {
+                op4_specenv_level[v] = op4_specenv_l2[voice_part[v]] * (op4_specenv_scale[voice_part[v]] > 0 ? op4_specenv_scale[voice_part[v]] : 1); op4_specenv_stage[v] = 6u;
             }
         }
         if (op4_specenv_stage[v] == 6u) {
-            op4_specenv_level[v] = p1_onepole(op4_specenv_level[v], op4_specenv_l3[voice_part[v]],
+            op4_specenv_level[v] = p1_onepole(op4_specenv_level[v], op4_specenv_l3[voice_part[v]] * (op4_specenv_scale[voice_part[v]] > 0 ? op4_specenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[op4_specenv_r3_eff[v]]);
-            if (op4_specenv_l3[voice_part[v]] >= op4_specenv_level[v]
-                    ? op4_specenv_level[v] >= op4_specenv_l3[voice_part[v]] - 8
-                    : op4_specenv_level[v] <= op4_specenv_l3[voice_part[v]] + 8) {
-                op4_specenv_level[v] = op4_specenv_l3[voice_part[v]]; op4_specenv_stage[v] = 5u;
+            if (op4_specenv_l3[voice_part[v]] * (op4_specenv_scale[voice_part[v]] > 0 ? op4_specenv_scale[voice_part[v]] : 1) >= op4_specenv_level[v]
+                    ? op4_specenv_level[v] >= op4_specenv_l3[voice_part[v]] * (op4_specenv_scale[voice_part[v]] > 0 ? op4_specenv_scale[voice_part[v]] : 1) - 8 * (op4_specenv_scale[voice_part[v]] > 0 ? op4_specenv_scale[voice_part[v]] : 1)
+                    : op4_specenv_level[v] <= op4_specenv_l3[voice_part[v]] * (op4_specenv_scale[voice_part[v]] > 0 ? op4_specenv_scale[voice_part[v]] : 1) + 8 * (op4_specenv_scale[voice_part[v]] > 0 ? op4_specenv_scale[voice_part[v]] : 1)) {
+                op4_specenv_level[v] = op4_specenv_l3[voice_part[v]] * (op4_specenv_scale[voice_part[v]] > 0 ? op4_specenv_scale[voice_part[v]] : 1); op4_specenv_stage[v] = 5u;
             }
         }
         if (op4_specenv_stage[v] == 4u) {
-            op4_specenv_level[v] = p1_onepole(op4_specenv_level[v], op4_specenv_rell[voice_part[v]],
+            op4_specenv_level[v] = p1_onepole(op4_specenv_level[v], op4_specenv_rell[voice_part[v]] * (op4_specenv_scale[voice_part[v]] > 0 ? op4_specenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[op4_specenv_r4_eff[v]]);
-            if (op4_specenv_rell[voice_part[v]] >= op4_specenv_level[v]
-                    ? op4_specenv_level[v] >= op4_specenv_rell[voice_part[v]] - 8
-                    : op4_specenv_level[v] <= op4_specenv_rell[voice_part[v]] + 8)
-                op4_specenv_level[v] = op4_specenv_rell[voice_part[v]];
+            if (op4_specenv_rell[voice_part[v]] * (op4_specenv_scale[voice_part[v]] > 0 ? op4_specenv_scale[voice_part[v]] : 1) >= op4_specenv_level[v]
+                    ? op4_specenv_level[v] >= op4_specenv_rell[voice_part[v]] * (op4_specenv_scale[voice_part[v]] > 0 ? op4_specenv_scale[voice_part[v]] : 1) - 8 * (op4_specenv_scale[voice_part[v]] > 0 ? op4_specenv_scale[voice_part[v]] : 1)
+                    : op4_specenv_level[v] <= op4_specenv_rell[voice_part[v]] * (op4_specenv_scale[voice_part[v]] > 0 ? op4_specenv_scale[voice_part[v]] : 1) + 8 * (op4_specenv_scale[voice_part[v]] > 0 ? op4_specenv_scale[voice_part[v]] : 1))
+                op4_specenv_level[v] = op4_specenv_rell[voice_part[v]] * (op4_specenv_scale[voice_part[v]] > 0 ? op4_specenv_scale[voice_part[v]] : 1);
         }
-        op4_specenv_cv_x[v] = op4_specenv_on[voice_part[v]] ? op4_specenv_level[v] : op4_morphbase_out_x[v];
+        op4_specenv_cv_x[v] = op4_specenv_on[voice_part[v]] ? op4_specenv_level[v] / (op4_specenv_scale[voice_part[v]] > 0 ? op4_specenv_scale[voice_part[v]] : 1) : op4_morphbase_out_x[v];
         op4_specenv_active_x[v] = op4_specenv_on[voice_part[v]] ? 1 : 0;
         /* Per-part signed phase envelope. The pool is one per operator, indexed by the
            part; the first active voice advances it once per control block. A trigger on
@@ -8532,7 +8592,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
            l1, 1 to l2, 2 to l3, 3 sustain, 4 release, 5 loop up, 6 loop down. No local
            declarations, because the body is inlined once per instance. */
         if (voice_trig[v]) {
-            op3_fbenv_stage[v] = 0u; op3_fbenv_level[v] = 0;
+            op3_fbenv_stage[v] = 0u; op3_fbenv_level[v] = 0 * (op3_fbenv_scale[voice_part[v]] > 0 ? op3_fbenv_scale[voice_part[v]] : 1);
         }
         if (voice_gate[v]) {
             /* A fresh gate after a gate-off release restarts the attack. Mode 0
@@ -8545,30 +8605,30 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             op3_fbenv_stage[v] = 4u;
         }
         if (op3_fbenv_stage[v] == 0u) {
-            op3_fbenv_level[v] = p1_onepole(op3_fbenv_level[v], op3_fbenv_l1[voice_part[v]],
+            op3_fbenv_level[v] = p1_onepole(op3_fbenv_level[v], op3_fbenv_l1[voice_part[v]] * (op3_fbenv_scale[voice_part[v]] > 0 ? op3_fbenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[op3_fbenv_r1_eff[v]]);
-            if (op3_fbenv_l1[voice_part[v]] >= op3_fbenv_level[v]
-                    ? op3_fbenv_level[v] >= op3_fbenv_l1[voice_part[v]] - 8
-                    : op3_fbenv_level[v] <= op3_fbenv_l1[voice_part[v]] + 8) {
-                op3_fbenv_level[v] = op3_fbenv_l1[voice_part[v]]; op3_fbenv_stage[v] = 1u;
+            if (op3_fbenv_l1[voice_part[v]] * (op3_fbenv_scale[voice_part[v]] > 0 ? op3_fbenv_scale[voice_part[v]] : 1) >= op3_fbenv_level[v]
+                    ? op3_fbenv_level[v] >= op3_fbenv_l1[voice_part[v]] * (op3_fbenv_scale[voice_part[v]] > 0 ? op3_fbenv_scale[voice_part[v]] : 1) - 8 * (op3_fbenv_scale[voice_part[v]] > 0 ? op3_fbenv_scale[voice_part[v]] : 1)
+                    : op3_fbenv_level[v] <= op3_fbenv_l1[voice_part[v]] * (op3_fbenv_scale[voice_part[v]] > 0 ? op3_fbenv_scale[voice_part[v]] : 1) + 8 * (op3_fbenv_scale[voice_part[v]] > 0 ? op3_fbenv_scale[voice_part[v]] : 1)) {
+                op3_fbenv_level[v] = op3_fbenv_l1[voice_part[v]] * (op3_fbenv_scale[voice_part[v]] > 0 ? op3_fbenv_scale[voice_part[v]] : 1); op3_fbenv_stage[v] = 1u;
             }
         }
         if (op3_fbenv_stage[v] == 1u) {
-            op3_fbenv_level[v] = p1_onepole(op3_fbenv_level[v], op3_fbenv_l2[voice_part[v]],
+            op3_fbenv_level[v] = p1_onepole(op3_fbenv_level[v], op3_fbenv_l2[voice_part[v]] * (op3_fbenv_scale[voice_part[v]] > 0 ? op3_fbenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[op3_fbenv_r2_eff[v]]);
-            if (op3_fbenv_l2[voice_part[v]] >= op3_fbenv_level[v]
-                    ? op3_fbenv_level[v] >= op3_fbenv_l2[voice_part[v]] - 8
-                    : op3_fbenv_level[v] <= op3_fbenv_l2[voice_part[v]] + 8) {
-                op3_fbenv_level[v] = op3_fbenv_l2[voice_part[v]]; op3_fbenv_stage[v] = 2u;
+            if (op3_fbenv_l2[voice_part[v]] * (op3_fbenv_scale[voice_part[v]] > 0 ? op3_fbenv_scale[voice_part[v]] : 1) >= op3_fbenv_level[v]
+                    ? op3_fbenv_level[v] >= op3_fbenv_l2[voice_part[v]] * (op3_fbenv_scale[voice_part[v]] > 0 ? op3_fbenv_scale[voice_part[v]] : 1) - 8 * (op3_fbenv_scale[voice_part[v]] > 0 ? op3_fbenv_scale[voice_part[v]] : 1)
+                    : op3_fbenv_level[v] <= op3_fbenv_l2[voice_part[v]] * (op3_fbenv_scale[voice_part[v]] > 0 ? op3_fbenv_scale[voice_part[v]] : 1) + 8 * (op3_fbenv_scale[voice_part[v]] > 0 ? op3_fbenv_scale[voice_part[v]] : 1)) {
+                op3_fbenv_level[v] = op3_fbenv_l2[voice_part[v]] * (op3_fbenv_scale[voice_part[v]] > 0 ? op3_fbenv_scale[voice_part[v]] : 1); op3_fbenv_stage[v] = 2u;
             }
         }
         if (op3_fbenv_stage[v] == 2u) {
-            op3_fbenv_level[v] = p1_onepole(op3_fbenv_level[v], op3_fbenv_l3[voice_part[v]],
+            op3_fbenv_level[v] = p1_onepole(op3_fbenv_level[v], op3_fbenv_l3[voice_part[v]] * (op3_fbenv_scale[voice_part[v]] > 0 ? op3_fbenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[op3_fbenv_r3_eff[v]]);
-            if (op3_fbenv_l3[voice_part[v]] >= op3_fbenv_level[v]
-                    ? op3_fbenv_level[v] >= op3_fbenv_l3[voice_part[v]] - 8
-                    : op3_fbenv_level[v] <= op3_fbenv_l3[voice_part[v]] + 8) {
-                op3_fbenv_level[v] = op3_fbenv_l3[voice_part[v]];
+            if (op3_fbenv_l3[voice_part[v]] * (op3_fbenv_scale[voice_part[v]] > 0 ? op3_fbenv_scale[voice_part[v]] : 1) >= op3_fbenv_level[v]
+                    ? op3_fbenv_level[v] >= op3_fbenv_l3[voice_part[v]] * (op3_fbenv_scale[voice_part[v]] > 0 ? op3_fbenv_scale[voice_part[v]] : 1) - 8 * (op3_fbenv_scale[voice_part[v]] > 0 ? op3_fbenv_scale[voice_part[v]] : 1)
+                    : op3_fbenv_level[v] <= op3_fbenv_l3[voice_part[v]] * (op3_fbenv_scale[voice_part[v]] > 0 ? op3_fbenv_scale[voice_part[v]] : 1) + 8 * (op3_fbenv_scale[voice_part[v]] > 0 ? op3_fbenv_scale[voice_part[v]] : 1)) {
+                op3_fbenv_level[v] = op3_fbenv_l3[voice_part[v]] * (op3_fbenv_scale[voice_part[v]] > 0 ? op3_fbenv_scale[voice_part[v]] : 1);
                 if (op3_fbenv_mode[voice_part[v]] == 0u)
                     op3_fbenv_stage[v] = 4u;
                 else if (op3_fbenv_mode[voice_part[v]] == 1u)
@@ -8578,34 +8638,34 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             }
         }
         if (op3_fbenv_stage[v] == 3u)
-            op3_fbenv_level[v] = op3_fbenv_l3[voice_part[v]];
+            op3_fbenv_level[v] = op3_fbenv_l3[voice_part[v]] * (op3_fbenv_scale[voice_part[v]] > 0 ? op3_fbenv_scale[voice_part[v]] : 1);
         if (op3_fbenv_stage[v] == 5u) {
-            op3_fbenv_level[v] = p1_onepole(op3_fbenv_level[v], op3_fbenv_l2[voice_part[v]],
+            op3_fbenv_level[v] = p1_onepole(op3_fbenv_level[v], op3_fbenv_l2[voice_part[v]] * (op3_fbenv_scale[voice_part[v]] > 0 ? op3_fbenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[(op3_fbenv_mode[voice_part[v]] == 2u) ? op3_fbenv_r2_eff[v] : op3_fbenv_r3_eff[v]]);
-            if (op3_fbenv_l2[voice_part[v]] >= op3_fbenv_level[v]
-                    ? op3_fbenv_level[v] >= op3_fbenv_l2[voice_part[v]] - 8
-                    : op3_fbenv_level[v] <= op3_fbenv_l2[voice_part[v]] + 8) {
-                op3_fbenv_level[v] = op3_fbenv_l2[voice_part[v]]; op3_fbenv_stage[v] = 6u;
+            if (op3_fbenv_l2[voice_part[v]] * (op3_fbenv_scale[voice_part[v]] > 0 ? op3_fbenv_scale[voice_part[v]] : 1) >= op3_fbenv_level[v]
+                    ? op3_fbenv_level[v] >= op3_fbenv_l2[voice_part[v]] * (op3_fbenv_scale[voice_part[v]] > 0 ? op3_fbenv_scale[voice_part[v]] : 1) - 8 * (op3_fbenv_scale[voice_part[v]] > 0 ? op3_fbenv_scale[voice_part[v]] : 1)
+                    : op3_fbenv_level[v] <= op3_fbenv_l2[voice_part[v]] * (op3_fbenv_scale[voice_part[v]] > 0 ? op3_fbenv_scale[voice_part[v]] : 1) + 8 * (op3_fbenv_scale[voice_part[v]] > 0 ? op3_fbenv_scale[voice_part[v]] : 1)) {
+                op3_fbenv_level[v] = op3_fbenv_l2[voice_part[v]] * (op3_fbenv_scale[voice_part[v]] > 0 ? op3_fbenv_scale[voice_part[v]] : 1); op3_fbenv_stage[v] = 6u;
             }
         }
         if (op3_fbenv_stage[v] == 6u) {
-            op3_fbenv_level[v] = p1_onepole(op3_fbenv_level[v], op3_fbenv_l3[voice_part[v]],
+            op3_fbenv_level[v] = p1_onepole(op3_fbenv_level[v], op3_fbenv_l3[voice_part[v]] * (op3_fbenv_scale[voice_part[v]] > 0 ? op3_fbenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[op3_fbenv_r3_eff[v]]);
-            if (op3_fbenv_l3[voice_part[v]] >= op3_fbenv_level[v]
-                    ? op3_fbenv_level[v] >= op3_fbenv_l3[voice_part[v]] - 8
-                    : op3_fbenv_level[v] <= op3_fbenv_l3[voice_part[v]] + 8) {
-                op3_fbenv_level[v] = op3_fbenv_l3[voice_part[v]]; op3_fbenv_stage[v] = 5u;
+            if (op3_fbenv_l3[voice_part[v]] * (op3_fbenv_scale[voice_part[v]] > 0 ? op3_fbenv_scale[voice_part[v]] : 1) >= op3_fbenv_level[v]
+                    ? op3_fbenv_level[v] >= op3_fbenv_l3[voice_part[v]] * (op3_fbenv_scale[voice_part[v]] > 0 ? op3_fbenv_scale[voice_part[v]] : 1) - 8 * (op3_fbenv_scale[voice_part[v]] > 0 ? op3_fbenv_scale[voice_part[v]] : 1)
+                    : op3_fbenv_level[v] <= op3_fbenv_l3[voice_part[v]] * (op3_fbenv_scale[voice_part[v]] > 0 ? op3_fbenv_scale[voice_part[v]] : 1) + 8 * (op3_fbenv_scale[voice_part[v]] > 0 ? op3_fbenv_scale[voice_part[v]] : 1)) {
+                op3_fbenv_level[v] = op3_fbenv_l3[voice_part[v]] * (op3_fbenv_scale[voice_part[v]] > 0 ? op3_fbenv_scale[voice_part[v]] : 1); op3_fbenv_stage[v] = 5u;
             }
         }
         if (op3_fbenv_stage[v] == 4u) {
-            op3_fbenv_level[v] = p1_onepole(op3_fbenv_level[v], op3_fbenv_rell[voice_part[v]],
+            op3_fbenv_level[v] = p1_onepole(op3_fbenv_level[v], op3_fbenv_rell[voice_part[v]] * (op3_fbenv_scale[voice_part[v]] > 0 ? op3_fbenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[op3_fbenv_r4_eff[v]]);
-            if (op3_fbenv_rell[voice_part[v]] >= op3_fbenv_level[v]
-                    ? op3_fbenv_level[v] >= op3_fbenv_rell[voice_part[v]] - 8
-                    : op3_fbenv_level[v] <= op3_fbenv_rell[voice_part[v]] + 8)
-                op3_fbenv_level[v] = op3_fbenv_rell[voice_part[v]];
+            if (op3_fbenv_rell[voice_part[v]] * (op3_fbenv_scale[voice_part[v]] > 0 ? op3_fbenv_scale[voice_part[v]] : 1) >= op3_fbenv_level[v]
+                    ? op3_fbenv_level[v] >= op3_fbenv_rell[voice_part[v]] * (op3_fbenv_scale[voice_part[v]] > 0 ? op3_fbenv_scale[voice_part[v]] : 1) - 8 * (op3_fbenv_scale[voice_part[v]] > 0 ? op3_fbenv_scale[voice_part[v]] : 1)
+                    : op3_fbenv_level[v] <= op3_fbenv_rell[voice_part[v]] * (op3_fbenv_scale[voice_part[v]] > 0 ? op3_fbenv_scale[voice_part[v]] : 1) + 8 * (op3_fbenv_scale[voice_part[v]] > 0 ? op3_fbenv_scale[voice_part[v]] : 1))
+                op3_fbenv_level[v] = op3_fbenv_rell[voice_part[v]] * (op3_fbenv_scale[voice_part[v]] > 0 ? op3_fbenv_scale[voice_part[v]] : 1);
         }
-        op3_fbenv_cv_x[v] = op3_fbenv_on[voice_part[v]] ? op3_fbenv_level[v] : 0;
+        op3_fbenv_cv_x[v] = op3_fbenv_on[voice_part[v]] ? op3_fbenv_level[v] / (op3_fbenv_scale[voice_part[v]] > 0 ? op3_fbenv_scale[voice_part[v]] : 1) : 0;
         op3_fbenv_active_x[v] = op3_fbenv_on[voice_part[v]] ? 1 : 0;
         (void)op3_fbenv_active_x[v];
         /* Low-frequency oscillator (control rate): phase advances by `rate` per sample
@@ -8648,7 +8708,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
            l1, 1 to l2, 2 to l3, 3 sustain, 4 release, 5 loop up, 6 loop down. No local
            declarations, because the body is inlined once per instance. */
         if (voice_trig[v]) {
-            op3_specenv_stage[v] = 0u; op3_specenv_level[v] = op3_morphbase_out_x[v];
+            op3_specenv_stage[v] = 0u; op3_specenv_level[v] = op3_morphbase_out_x[v] * (op3_specenv_scale[voice_part[v]] > 0 ? op3_specenv_scale[voice_part[v]] : 1);
         }
         if (voice_gate[v]) {
             /* A fresh gate after a gate-off release restarts the attack. Mode 0
@@ -8661,30 +8721,30 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             op3_specenv_stage[v] = 4u;
         }
         if (op3_specenv_stage[v] == 0u) {
-            op3_specenv_level[v] = p1_onepole(op3_specenv_level[v], op3_specenv_l1[voice_part[v]],
+            op3_specenv_level[v] = p1_onepole(op3_specenv_level[v], op3_specenv_l1[voice_part[v]] * (op3_specenv_scale[voice_part[v]] > 0 ? op3_specenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[op3_specenv_r1_eff[v]]);
-            if (op3_specenv_l1[voice_part[v]] >= op3_specenv_level[v]
-                    ? op3_specenv_level[v] >= op3_specenv_l1[voice_part[v]] - 8
-                    : op3_specenv_level[v] <= op3_specenv_l1[voice_part[v]] + 8) {
-                op3_specenv_level[v] = op3_specenv_l1[voice_part[v]]; op3_specenv_stage[v] = 1u;
+            if (op3_specenv_l1[voice_part[v]] * (op3_specenv_scale[voice_part[v]] > 0 ? op3_specenv_scale[voice_part[v]] : 1) >= op3_specenv_level[v]
+                    ? op3_specenv_level[v] >= op3_specenv_l1[voice_part[v]] * (op3_specenv_scale[voice_part[v]] > 0 ? op3_specenv_scale[voice_part[v]] : 1) - 8 * (op3_specenv_scale[voice_part[v]] > 0 ? op3_specenv_scale[voice_part[v]] : 1)
+                    : op3_specenv_level[v] <= op3_specenv_l1[voice_part[v]] * (op3_specenv_scale[voice_part[v]] > 0 ? op3_specenv_scale[voice_part[v]] : 1) + 8 * (op3_specenv_scale[voice_part[v]] > 0 ? op3_specenv_scale[voice_part[v]] : 1)) {
+                op3_specenv_level[v] = op3_specenv_l1[voice_part[v]] * (op3_specenv_scale[voice_part[v]] > 0 ? op3_specenv_scale[voice_part[v]] : 1); op3_specenv_stage[v] = 1u;
             }
         }
         if (op3_specenv_stage[v] == 1u) {
-            op3_specenv_level[v] = p1_onepole(op3_specenv_level[v], op3_specenv_l2[voice_part[v]],
+            op3_specenv_level[v] = p1_onepole(op3_specenv_level[v], op3_specenv_l2[voice_part[v]] * (op3_specenv_scale[voice_part[v]] > 0 ? op3_specenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[op3_specenv_r2_eff[v]]);
-            if (op3_specenv_l2[voice_part[v]] >= op3_specenv_level[v]
-                    ? op3_specenv_level[v] >= op3_specenv_l2[voice_part[v]] - 8
-                    : op3_specenv_level[v] <= op3_specenv_l2[voice_part[v]] + 8) {
-                op3_specenv_level[v] = op3_specenv_l2[voice_part[v]]; op3_specenv_stage[v] = 2u;
+            if (op3_specenv_l2[voice_part[v]] * (op3_specenv_scale[voice_part[v]] > 0 ? op3_specenv_scale[voice_part[v]] : 1) >= op3_specenv_level[v]
+                    ? op3_specenv_level[v] >= op3_specenv_l2[voice_part[v]] * (op3_specenv_scale[voice_part[v]] > 0 ? op3_specenv_scale[voice_part[v]] : 1) - 8 * (op3_specenv_scale[voice_part[v]] > 0 ? op3_specenv_scale[voice_part[v]] : 1)
+                    : op3_specenv_level[v] <= op3_specenv_l2[voice_part[v]] * (op3_specenv_scale[voice_part[v]] > 0 ? op3_specenv_scale[voice_part[v]] : 1) + 8 * (op3_specenv_scale[voice_part[v]] > 0 ? op3_specenv_scale[voice_part[v]] : 1)) {
+                op3_specenv_level[v] = op3_specenv_l2[voice_part[v]] * (op3_specenv_scale[voice_part[v]] > 0 ? op3_specenv_scale[voice_part[v]] : 1); op3_specenv_stage[v] = 2u;
             }
         }
         if (op3_specenv_stage[v] == 2u) {
-            op3_specenv_level[v] = p1_onepole(op3_specenv_level[v], op3_specenv_l3[voice_part[v]],
+            op3_specenv_level[v] = p1_onepole(op3_specenv_level[v], op3_specenv_l3[voice_part[v]] * (op3_specenv_scale[voice_part[v]] > 0 ? op3_specenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[op3_specenv_r3_eff[v]]);
-            if (op3_specenv_l3[voice_part[v]] >= op3_specenv_level[v]
-                    ? op3_specenv_level[v] >= op3_specenv_l3[voice_part[v]] - 8
-                    : op3_specenv_level[v] <= op3_specenv_l3[voice_part[v]] + 8) {
-                op3_specenv_level[v] = op3_specenv_l3[voice_part[v]];
+            if (op3_specenv_l3[voice_part[v]] * (op3_specenv_scale[voice_part[v]] > 0 ? op3_specenv_scale[voice_part[v]] : 1) >= op3_specenv_level[v]
+                    ? op3_specenv_level[v] >= op3_specenv_l3[voice_part[v]] * (op3_specenv_scale[voice_part[v]] > 0 ? op3_specenv_scale[voice_part[v]] : 1) - 8 * (op3_specenv_scale[voice_part[v]] > 0 ? op3_specenv_scale[voice_part[v]] : 1)
+                    : op3_specenv_level[v] <= op3_specenv_l3[voice_part[v]] * (op3_specenv_scale[voice_part[v]] > 0 ? op3_specenv_scale[voice_part[v]] : 1) + 8 * (op3_specenv_scale[voice_part[v]] > 0 ? op3_specenv_scale[voice_part[v]] : 1)) {
+                op3_specenv_level[v] = op3_specenv_l3[voice_part[v]] * (op3_specenv_scale[voice_part[v]] > 0 ? op3_specenv_scale[voice_part[v]] : 1);
                 if (op3_specenv_mode[voice_part[v]] == 0u)
                     op3_specenv_stage[v] = 4u;
                 else if (op3_specenv_mode[voice_part[v]] == 1u)
@@ -8694,34 +8754,34 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             }
         }
         if (op3_specenv_stage[v] == 3u)
-            op3_specenv_level[v] = op3_specenv_l3[voice_part[v]];
+            op3_specenv_level[v] = op3_specenv_l3[voice_part[v]] * (op3_specenv_scale[voice_part[v]] > 0 ? op3_specenv_scale[voice_part[v]] : 1);
         if (op3_specenv_stage[v] == 5u) {
-            op3_specenv_level[v] = p1_onepole(op3_specenv_level[v], op3_specenv_l2[voice_part[v]],
+            op3_specenv_level[v] = p1_onepole(op3_specenv_level[v], op3_specenv_l2[voice_part[v]] * (op3_specenv_scale[voice_part[v]] > 0 ? op3_specenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[(op3_specenv_mode[voice_part[v]] == 2u) ? op3_specenv_r2_eff[v] : op3_specenv_r3_eff[v]]);
-            if (op3_specenv_l2[voice_part[v]] >= op3_specenv_level[v]
-                    ? op3_specenv_level[v] >= op3_specenv_l2[voice_part[v]] - 8
-                    : op3_specenv_level[v] <= op3_specenv_l2[voice_part[v]] + 8) {
-                op3_specenv_level[v] = op3_specenv_l2[voice_part[v]]; op3_specenv_stage[v] = 6u;
+            if (op3_specenv_l2[voice_part[v]] * (op3_specenv_scale[voice_part[v]] > 0 ? op3_specenv_scale[voice_part[v]] : 1) >= op3_specenv_level[v]
+                    ? op3_specenv_level[v] >= op3_specenv_l2[voice_part[v]] * (op3_specenv_scale[voice_part[v]] > 0 ? op3_specenv_scale[voice_part[v]] : 1) - 8 * (op3_specenv_scale[voice_part[v]] > 0 ? op3_specenv_scale[voice_part[v]] : 1)
+                    : op3_specenv_level[v] <= op3_specenv_l2[voice_part[v]] * (op3_specenv_scale[voice_part[v]] > 0 ? op3_specenv_scale[voice_part[v]] : 1) + 8 * (op3_specenv_scale[voice_part[v]] > 0 ? op3_specenv_scale[voice_part[v]] : 1)) {
+                op3_specenv_level[v] = op3_specenv_l2[voice_part[v]] * (op3_specenv_scale[voice_part[v]] > 0 ? op3_specenv_scale[voice_part[v]] : 1); op3_specenv_stage[v] = 6u;
             }
         }
         if (op3_specenv_stage[v] == 6u) {
-            op3_specenv_level[v] = p1_onepole(op3_specenv_level[v], op3_specenv_l3[voice_part[v]],
+            op3_specenv_level[v] = p1_onepole(op3_specenv_level[v], op3_specenv_l3[voice_part[v]] * (op3_specenv_scale[voice_part[v]] > 0 ? op3_specenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[op3_specenv_r3_eff[v]]);
-            if (op3_specenv_l3[voice_part[v]] >= op3_specenv_level[v]
-                    ? op3_specenv_level[v] >= op3_specenv_l3[voice_part[v]] - 8
-                    : op3_specenv_level[v] <= op3_specenv_l3[voice_part[v]] + 8) {
-                op3_specenv_level[v] = op3_specenv_l3[voice_part[v]]; op3_specenv_stage[v] = 5u;
+            if (op3_specenv_l3[voice_part[v]] * (op3_specenv_scale[voice_part[v]] > 0 ? op3_specenv_scale[voice_part[v]] : 1) >= op3_specenv_level[v]
+                    ? op3_specenv_level[v] >= op3_specenv_l3[voice_part[v]] * (op3_specenv_scale[voice_part[v]] > 0 ? op3_specenv_scale[voice_part[v]] : 1) - 8 * (op3_specenv_scale[voice_part[v]] > 0 ? op3_specenv_scale[voice_part[v]] : 1)
+                    : op3_specenv_level[v] <= op3_specenv_l3[voice_part[v]] * (op3_specenv_scale[voice_part[v]] > 0 ? op3_specenv_scale[voice_part[v]] : 1) + 8 * (op3_specenv_scale[voice_part[v]] > 0 ? op3_specenv_scale[voice_part[v]] : 1)) {
+                op3_specenv_level[v] = op3_specenv_l3[voice_part[v]] * (op3_specenv_scale[voice_part[v]] > 0 ? op3_specenv_scale[voice_part[v]] : 1); op3_specenv_stage[v] = 5u;
             }
         }
         if (op3_specenv_stage[v] == 4u) {
-            op3_specenv_level[v] = p1_onepole(op3_specenv_level[v], op3_specenv_rell[voice_part[v]],
+            op3_specenv_level[v] = p1_onepole(op3_specenv_level[v], op3_specenv_rell[voice_part[v]] * (op3_specenv_scale[voice_part[v]] > 0 ? op3_specenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[op3_specenv_r4_eff[v]]);
-            if (op3_specenv_rell[voice_part[v]] >= op3_specenv_level[v]
-                    ? op3_specenv_level[v] >= op3_specenv_rell[voice_part[v]] - 8
-                    : op3_specenv_level[v] <= op3_specenv_rell[voice_part[v]] + 8)
-                op3_specenv_level[v] = op3_specenv_rell[voice_part[v]];
+            if (op3_specenv_rell[voice_part[v]] * (op3_specenv_scale[voice_part[v]] > 0 ? op3_specenv_scale[voice_part[v]] : 1) >= op3_specenv_level[v]
+                    ? op3_specenv_level[v] >= op3_specenv_rell[voice_part[v]] * (op3_specenv_scale[voice_part[v]] > 0 ? op3_specenv_scale[voice_part[v]] : 1) - 8 * (op3_specenv_scale[voice_part[v]] > 0 ? op3_specenv_scale[voice_part[v]] : 1)
+                    : op3_specenv_level[v] <= op3_specenv_rell[voice_part[v]] * (op3_specenv_scale[voice_part[v]] > 0 ? op3_specenv_scale[voice_part[v]] : 1) + 8 * (op3_specenv_scale[voice_part[v]] > 0 ? op3_specenv_scale[voice_part[v]] : 1))
+                op3_specenv_level[v] = op3_specenv_rell[voice_part[v]] * (op3_specenv_scale[voice_part[v]] > 0 ? op3_specenv_scale[voice_part[v]] : 1);
         }
-        op3_specenv_cv_x[v] = op3_specenv_on[voice_part[v]] ? op3_specenv_level[v] : op3_morphbase_out_x[v];
+        op3_specenv_cv_x[v] = op3_specenv_on[voice_part[v]] ? op3_specenv_level[v] / (op3_specenv_scale[voice_part[v]] > 0 ? op3_specenv_scale[voice_part[v]] : 1) : op3_morphbase_out_x[v];
         op3_specenv_active_x[v] = op3_specenv_on[voice_part[v]] ? 1 : 0;
         /* Per-part signed phase envelope. The pool is one per operator, indexed by the
            part; the first active voice advances it once per control block. A trigger on
@@ -9186,7 +9246,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
            l1, 1 to l2, 2 to l3, 3 sustain, 4 release, 5 loop up, 6 loop down. No local
            declarations, because the body is inlined once per instance. */
         if (voice_trig[v]) {
-            op2_fbenv_stage[v] = 0u; op2_fbenv_level[v] = 0;
+            op2_fbenv_stage[v] = 0u; op2_fbenv_level[v] = 0 * (op2_fbenv_scale[voice_part[v]] > 0 ? op2_fbenv_scale[voice_part[v]] : 1);
         }
         if (voice_gate[v]) {
             /* A fresh gate after a gate-off release restarts the attack. Mode 0
@@ -9199,30 +9259,30 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             op2_fbenv_stage[v] = 4u;
         }
         if (op2_fbenv_stage[v] == 0u) {
-            op2_fbenv_level[v] = p1_onepole(op2_fbenv_level[v], op2_fbenv_l1[voice_part[v]],
+            op2_fbenv_level[v] = p1_onepole(op2_fbenv_level[v], op2_fbenv_l1[voice_part[v]] * (op2_fbenv_scale[voice_part[v]] > 0 ? op2_fbenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[op2_fbenv_r1_eff[v]]);
-            if (op2_fbenv_l1[voice_part[v]] >= op2_fbenv_level[v]
-                    ? op2_fbenv_level[v] >= op2_fbenv_l1[voice_part[v]] - 8
-                    : op2_fbenv_level[v] <= op2_fbenv_l1[voice_part[v]] + 8) {
-                op2_fbenv_level[v] = op2_fbenv_l1[voice_part[v]]; op2_fbenv_stage[v] = 1u;
+            if (op2_fbenv_l1[voice_part[v]] * (op2_fbenv_scale[voice_part[v]] > 0 ? op2_fbenv_scale[voice_part[v]] : 1) >= op2_fbenv_level[v]
+                    ? op2_fbenv_level[v] >= op2_fbenv_l1[voice_part[v]] * (op2_fbenv_scale[voice_part[v]] > 0 ? op2_fbenv_scale[voice_part[v]] : 1) - 8 * (op2_fbenv_scale[voice_part[v]] > 0 ? op2_fbenv_scale[voice_part[v]] : 1)
+                    : op2_fbenv_level[v] <= op2_fbenv_l1[voice_part[v]] * (op2_fbenv_scale[voice_part[v]] > 0 ? op2_fbenv_scale[voice_part[v]] : 1) + 8 * (op2_fbenv_scale[voice_part[v]] > 0 ? op2_fbenv_scale[voice_part[v]] : 1)) {
+                op2_fbenv_level[v] = op2_fbenv_l1[voice_part[v]] * (op2_fbenv_scale[voice_part[v]] > 0 ? op2_fbenv_scale[voice_part[v]] : 1); op2_fbenv_stage[v] = 1u;
             }
         }
         if (op2_fbenv_stage[v] == 1u) {
-            op2_fbenv_level[v] = p1_onepole(op2_fbenv_level[v], op2_fbenv_l2[voice_part[v]],
+            op2_fbenv_level[v] = p1_onepole(op2_fbenv_level[v], op2_fbenv_l2[voice_part[v]] * (op2_fbenv_scale[voice_part[v]] > 0 ? op2_fbenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[op2_fbenv_r2_eff[v]]);
-            if (op2_fbenv_l2[voice_part[v]] >= op2_fbenv_level[v]
-                    ? op2_fbenv_level[v] >= op2_fbenv_l2[voice_part[v]] - 8
-                    : op2_fbenv_level[v] <= op2_fbenv_l2[voice_part[v]] + 8) {
-                op2_fbenv_level[v] = op2_fbenv_l2[voice_part[v]]; op2_fbenv_stage[v] = 2u;
+            if (op2_fbenv_l2[voice_part[v]] * (op2_fbenv_scale[voice_part[v]] > 0 ? op2_fbenv_scale[voice_part[v]] : 1) >= op2_fbenv_level[v]
+                    ? op2_fbenv_level[v] >= op2_fbenv_l2[voice_part[v]] * (op2_fbenv_scale[voice_part[v]] > 0 ? op2_fbenv_scale[voice_part[v]] : 1) - 8 * (op2_fbenv_scale[voice_part[v]] > 0 ? op2_fbenv_scale[voice_part[v]] : 1)
+                    : op2_fbenv_level[v] <= op2_fbenv_l2[voice_part[v]] * (op2_fbenv_scale[voice_part[v]] > 0 ? op2_fbenv_scale[voice_part[v]] : 1) + 8 * (op2_fbenv_scale[voice_part[v]] > 0 ? op2_fbenv_scale[voice_part[v]] : 1)) {
+                op2_fbenv_level[v] = op2_fbenv_l2[voice_part[v]] * (op2_fbenv_scale[voice_part[v]] > 0 ? op2_fbenv_scale[voice_part[v]] : 1); op2_fbenv_stage[v] = 2u;
             }
         }
         if (op2_fbenv_stage[v] == 2u) {
-            op2_fbenv_level[v] = p1_onepole(op2_fbenv_level[v], op2_fbenv_l3[voice_part[v]],
+            op2_fbenv_level[v] = p1_onepole(op2_fbenv_level[v], op2_fbenv_l3[voice_part[v]] * (op2_fbenv_scale[voice_part[v]] > 0 ? op2_fbenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[op2_fbenv_r3_eff[v]]);
-            if (op2_fbenv_l3[voice_part[v]] >= op2_fbenv_level[v]
-                    ? op2_fbenv_level[v] >= op2_fbenv_l3[voice_part[v]] - 8
-                    : op2_fbenv_level[v] <= op2_fbenv_l3[voice_part[v]] + 8) {
-                op2_fbenv_level[v] = op2_fbenv_l3[voice_part[v]];
+            if (op2_fbenv_l3[voice_part[v]] * (op2_fbenv_scale[voice_part[v]] > 0 ? op2_fbenv_scale[voice_part[v]] : 1) >= op2_fbenv_level[v]
+                    ? op2_fbenv_level[v] >= op2_fbenv_l3[voice_part[v]] * (op2_fbenv_scale[voice_part[v]] > 0 ? op2_fbenv_scale[voice_part[v]] : 1) - 8 * (op2_fbenv_scale[voice_part[v]] > 0 ? op2_fbenv_scale[voice_part[v]] : 1)
+                    : op2_fbenv_level[v] <= op2_fbenv_l3[voice_part[v]] * (op2_fbenv_scale[voice_part[v]] > 0 ? op2_fbenv_scale[voice_part[v]] : 1) + 8 * (op2_fbenv_scale[voice_part[v]] > 0 ? op2_fbenv_scale[voice_part[v]] : 1)) {
+                op2_fbenv_level[v] = op2_fbenv_l3[voice_part[v]] * (op2_fbenv_scale[voice_part[v]] > 0 ? op2_fbenv_scale[voice_part[v]] : 1);
                 if (op2_fbenv_mode[voice_part[v]] == 0u)
                     op2_fbenv_stage[v] = 4u;
                 else if (op2_fbenv_mode[voice_part[v]] == 1u)
@@ -9232,34 +9292,34 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             }
         }
         if (op2_fbenv_stage[v] == 3u)
-            op2_fbenv_level[v] = op2_fbenv_l3[voice_part[v]];
+            op2_fbenv_level[v] = op2_fbenv_l3[voice_part[v]] * (op2_fbenv_scale[voice_part[v]] > 0 ? op2_fbenv_scale[voice_part[v]] : 1);
         if (op2_fbenv_stage[v] == 5u) {
-            op2_fbenv_level[v] = p1_onepole(op2_fbenv_level[v], op2_fbenv_l2[voice_part[v]],
+            op2_fbenv_level[v] = p1_onepole(op2_fbenv_level[v], op2_fbenv_l2[voice_part[v]] * (op2_fbenv_scale[voice_part[v]] > 0 ? op2_fbenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[(op2_fbenv_mode[voice_part[v]] == 2u) ? op2_fbenv_r2_eff[v] : op2_fbenv_r3_eff[v]]);
-            if (op2_fbenv_l2[voice_part[v]] >= op2_fbenv_level[v]
-                    ? op2_fbenv_level[v] >= op2_fbenv_l2[voice_part[v]] - 8
-                    : op2_fbenv_level[v] <= op2_fbenv_l2[voice_part[v]] + 8) {
-                op2_fbenv_level[v] = op2_fbenv_l2[voice_part[v]]; op2_fbenv_stage[v] = 6u;
+            if (op2_fbenv_l2[voice_part[v]] * (op2_fbenv_scale[voice_part[v]] > 0 ? op2_fbenv_scale[voice_part[v]] : 1) >= op2_fbenv_level[v]
+                    ? op2_fbenv_level[v] >= op2_fbenv_l2[voice_part[v]] * (op2_fbenv_scale[voice_part[v]] > 0 ? op2_fbenv_scale[voice_part[v]] : 1) - 8 * (op2_fbenv_scale[voice_part[v]] > 0 ? op2_fbenv_scale[voice_part[v]] : 1)
+                    : op2_fbenv_level[v] <= op2_fbenv_l2[voice_part[v]] * (op2_fbenv_scale[voice_part[v]] > 0 ? op2_fbenv_scale[voice_part[v]] : 1) + 8 * (op2_fbenv_scale[voice_part[v]] > 0 ? op2_fbenv_scale[voice_part[v]] : 1)) {
+                op2_fbenv_level[v] = op2_fbenv_l2[voice_part[v]] * (op2_fbenv_scale[voice_part[v]] > 0 ? op2_fbenv_scale[voice_part[v]] : 1); op2_fbenv_stage[v] = 6u;
             }
         }
         if (op2_fbenv_stage[v] == 6u) {
-            op2_fbenv_level[v] = p1_onepole(op2_fbenv_level[v], op2_fbenv_l3[voice_part[v]],
+            op2_fbenv_level[v] = p1_onepole(op2_fbenv_level[v], op2_fbenv_l3[voice_part[v]] * (op2_fbenv_scale[voice_part[v]] > 0 ? op2_fbenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[op2_fbenv_r3_eff[v]]);
-            if (op2_fbenv_l3[voice_part[v]] >= op2_fbenv_level[v]
-                    ? op2_fbenv_level[v] >= op2_fbenv_l3[voice_part[v]] - 8
-                    : op2_fbenv_level[v] <= op2_fbenv_l3[voice_part[v]] + 8) {
-                op2_fbenv_level[v] = op2_fbenv_l3[voice_part[v]]; op2_fbenv_stage[v] = 5u;
+            if (op2_fbenv_l3[voice_part[v]] * (op2_fbenv_scale[voice_part[v]] > 0 ? op2_fbenv_scale[voice_part[v]] : 1) >= op2_fbenv_level[v]
+                    ? op2_fbenv_level[v] >= op2_fbenv_l3[voice_part[v]] * (op2_fbenv_scale[voice_part[v]] > 0 ? op2_fbenv_scale[voice_part[v]] : 1) - 8 * (op2_fbenv_scale[voice_part[v]] > 0 ? op2_fbenv_scale[voice_part[v]] : 1)
+                    : op2_fbenv_level[v] <= op2_fbenv_l3[voice_part[v]] * (op2_fbenv_scale[voice_part[v]] > 0 ? op2_fbenv_scale[voice_part[v]] : 1) + 8 * (op2_fbenv_scale[voice_part[v]] > 0 ? op2_fbenv_scale[voice_part[v]] : 1)) {
+                op2_fbenv_level[v] = op2_fbenv_l3[voice_part[v]] * (op2_fbenv_scale[voice_part[v]] > 0 ? op2_fbenv_scale[voice_part[v]] : 1); op2_fbenv_stage[v] = 5u;
             }
         }
         if (op2_fbenv_stage[v] == 4u) {
-            op2_fbenv_level[v] = p1_onepole(op2_fbenv_level[v], op2_fbenv_rell[voice_part[v]],
+            op2_fbenv_level[v] = p1_onepole(op2_fbenv_level[v], op2_fbenv_rell[voice_part[v]] * (op2_fbenv_scale[voice_part[v]] > 0 ? op2_fbenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[op2_fbenv_r4_eff[v]]);
-            if (op2_fbenv_rell[voice_part[v]] >= op2_fbenv_level[v]
-                    ? op2_fbenv_level[v] >= op2_fbenv_rell[voice_part[v]] - 8
-                    : op2_fbenv_level[v] <= op2_fbenv_rell[voice_part[v]] + 8)
-                op2_fbenv_level[v] = op2_fbenv_rell[voice_part[v]];
+            if (op2_fbenv_rell[voice_part[v]] * (op2_fbenv_scale[voice_part[v]] > 0 ? op2_fbenv_scale[voice_part[v]] : 1) >= op2_fbenv_level[v]
+                    ? op2_fbenv_level[v] >= op2_fbenv_rell[voice_part[v]] * (op2_fbenv_scale[voice_part[v]] > 0 ? op2_fbenv_scale[voice_part[v]] : 1) - 8 * (op2_fbenv_scale[voice_part[v]] > 0 ? op2_fbenv_scale[voice_part[v]] : 1)
+                    : op2_fbenv_level[v] <= op2_fbenv_rell[voice_part[v]] * (op2_fbenv_scale[voice_part[v]] > 0 ? op2_fbenv_scale[voice_part[v]] : 1) + 8 * (op2_fbenv_scale[voice_part[v]] > 0 ? op2_fbenv_scale[voice_part[v]] : 1))
+                op2_fbenv_level[v] = op2_fbenv_rell[voice_part[v]] * (op2_fbenv_scale[voice_part[v]] > 0 ? op2_fbenv_scale[voice_part[v]] : 1);
         }
-        op2_fbenv_cv_x[v] = op2_fbenv_on[voice_part[v]] ? op2_fbenv_level[v] : 0;
+        op2_fbenv_cv_x[v] = op2_fbenv_on[voice_part[v]] ? op2_fbenv_level[v] / (op2_fbenv_scale[voice_part[v]] > 0 ? op2_fbenv_scale[voice_part[v]] : 1) : 0;
         op2_fbenv_active_x[v] = op2_fbenv_on[voice_part[v]] ? 1 : 0;
         (void)op2_fbenv_active_x[v];
         /* Low-frequency oscillator (control rate): phase advances by `rate` per sample
@@ -9302,7 +9362,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
            l1, 1 to l2, 2 to l3, 3 sustain, 4 release, 5 loop up, 6 loop down. No local
            declarations, because the body is inlined once per instance. */
         if (voice_trig[v]) {
-            op2_specenv_stage[v] = 0u; op2_specenv_level[v] = op2_morphbase_out_x[v];
+            op2_specenv_stage[v] = 0u; op2_specenv_level[v] = op2_morphbase_out_x[v] * (op2_specenv_scale[voice_part[v]] > 0 ? op2_specenv_scale[voice_part[v]] : 1);
         }
         if (voice_gate[v]) {
             /* A fresh gate after a gate-off release restarts the attack. Mode 0
@@ -9315,30 +9375,30 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             op2_specenv_stage[v] = 4u;
         }
         if (op2_specenv_stage[v] == 0u) {
-            op2_specenv_level[v] = p1_onepole(op2_specenv_level[v], op2_specenv_l1[voice_part[v]],
+            op2_specenv_level[v] = p1_onepole(op2_specenv_level[v], op2_specenv_l1[voice_part[v]] * (op2_specenv_scale[voice_part[v]] > 0 ? op2_specenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[op2_specenv_r1_eff[v]]);
-            if (op2_specenv_l1[voice_part[v]] >= op2_specenv_level[v]
-                    ? op2_specenv_level[v] >= op2_specenv_l1[voice_part[v]] - 8
-                    : op2_specenv_level[v] <= op2_specenv_l1[voice_part[v]] + 8) {
-                op2_specenv_level[v] = op2_specenv_l1[voice_part[v]]; op2_specenv_stage[v] = 1u;
+            if (op2_specenv_l1[voice_part[v]] * (op2_specenv_scale[voice_part[v]] > 0 ? op2_specenv_scale[voice_part[v]] : 1) >= op2_specenv_level[v]
+                    ? op2_specenv_level[v] >= op2_specenv_l1[voice_part[v]] * (op2_specenv_scale[voice_part[v]] > 0 ? op2_specenv_scale[voice_part[v]] : 1) - 8 * (op2_specenv_scale[voice_part[v]] > 0 ? op2_specenv_scale[voice_part[v]] : 1)
+                    : op2_specenv_level[v] <= op2_specenv_l1[voice_part[v]] * (op2_specenv_scale[voice_part[v]] > 0 ? op2_specenv_scale[voice_part[v]] : 1) + 8 * (op2_specenv_scale[voice_part[v]] > 0 ? op2_specenv_scale[voice_part[v]] : 1)) {
+                op2_specenv_level[v] = op2_specenv_l1[voice_part[v]] * (op2_specenv_scale[voice_part[v]] > 0 ? op2_specenv_scale[voice_part[v]] : 1); op2_specenv_stage[v] = 1u;
             }
         }
         if (op2_specenv_stage[v] == 1u) {
-            op2_specenv_level[v] = p1_onepole(op2_specenv_level[v], op2_specenv_l2[voice_part[v]],
+            op2_specenv_level[v] = p1_onepole(op2_specenv_level[v], op2_specenv_l2[voice_part[v]] * (op2_specenv_scale[voice_part[v]] > 0 ? op2_specenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[op2_specenv_r2_eff[v]]);
-            if (op2_specenv_l2[voice_part[v]] >= op2_specenv_level[v]
-                    ? op2_specenv_level[v] >= op2_specenv_l2[voice_part[v]] - 8
-                    : op2_specenv_level[v] <= op2_specenv_l2[voice_part[v]] + 8) {
-                op2_specenv_level[v] = op2_specenv_l2[voice_part[v]]; op2_specenv_stage[v] = 2u;
+            if (op2_specenv_l2[voice_part[v]] * (op2_specenv_scale[voice_part[v]] > 0 ? op2_specenv_scale[voice_part[v]] : 1) >= op2_specenv_level[v]
+                    ? op2_specenv_level[v] >= op2_specenv_l2[voice_part[v]] * (op2_specenv_scale[voice_part[v]] > 0 ? op2_specenv_scale[voice_part[v]] : 1) - 8 * (op2_specenv_scale[voice_part[v]] > 0 ? op2_specenv_scale[voice_part[v]] : 1)
+                    : op2_specenv_level[v] <= op2_specenv_l2[voice_part[v]] * (op2_specenv_scale[voice_part[v]] > 0 ? op2_specenv_scale[voice_part[v]] : 1) + 8 * (op2_specenv_scale[voice_part[v]] > 0 ? op2_specenv_scale[voice_part[v]] : 1)) {
+                op2_specenv_level[v] = op2_specenv_l2[voice_part[v]] * (op2_specenv_scale[voice_part[v]] > 0 ? op2_specenv_scale[voice_part[v]] : 1); op2_specenv_stage[v] = 2u;
             }
         }
         if (op2_specenv_stage[v] == 2u) {
-            op2_specenv_level[v] = p1_onepole(op2_specenv_level[v], op2_specenv_l3[voice_part[v]],
+            op2_specenv_level[v] = p1_onepole(op2_specenv_level[v], op2_specenv_l3[voice_part[v]] * (op2_specenv_scale[voice_part[v]] > 0 ? op2_specenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[op2_specenv_r3_eff[v]]);
-            if (op2_specenv_l3[voice_part[v]] >= op2_specenv_level[v]
-                    ? op2_specenv_level[v] >= op2_specenv_l3[voice_part[v]] - 8
-                    : op2_specenv_level[v] <= op2_specenv_l3[voice_part[v]] + 8) {
-                op2_specenv_level[v] = op2_specenv_l3[voice_part[v]];
+            if (op2_specenv_l3[voice_part[v]] * (op2_specenv_scale[voice_part[v]] > 0 ? op2_specenv_scale[voice_part[v]] : 1) >= op2_specenv_level[v]
+                    ? op2_specenv_level[v] >= op2_specenv_l3[voice_part[v]] * (op2_specenv_scale[voice_part[v]] > 0 ? op2_specenv_scale[voice_part[v]] : 1) - 8 * (op2_specenv_scale[voice_part[v]] > 0 ? op2_specenv_scale[voice_part[v]] : 1)
+                    : op2_specenv_level[v] <= op2_specenv_l3[voice_part[v]] * (op2_specenv_scale[voice_part[v]] > 0 ? op2_specenv_scale[voice_part[v]] : 1) + 8 * (op2_specenv_scale[voice_part[v]] > 0 ? op2_specenv_scale[voice_part[v]] : 1)) {
+                op2_specenv_level[v] = op2_specenv_l3[voice_part[v]] * (op2_specenv_scale[voice_part[v]] > 0 ? op2_specenv_scale[voice_part[v]] : 1);
                 if (op2_specenv_mode[voice_part[v]] == 0u)
                     op2_specenv_stage[v] = 4u;
                 else if (op2_specenv_mode[voice_part[v]] == 1u)
@@ -9348,34 +9408,34 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             }
         }
         if (op2_specenv_stage[v] == 3u)
-            op2_specenv_level[v] = op2_specenv_l3[voice_part[v]];
+            op2_specenv_level[v] = op2_specenv_l3[voice_part[v]] * (op2_specenv_scale[voice_part[v]] > 0 ? op2_specenv_scale[voice_part[v]] : 1);
         if (op2_specenv_stage[v] == 5u) {
-            op2_specenv_level[v] = p1_onepole(op2_specenv_level[v], op2_specenv_l2[voice_part[v]],
+            op2_specenv_level[v] = p1_onepole(op2_specenv_level[v], op2_specenv_l2[voice_part[v]] * (op2_specenv_scale[voice_part[v]] > 0 ? op2_specenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[(op2_specenv_mode[voice_part[v]] == 2u) ? op2_specenv_r2_eff[v] : op2_specenv_r3_eff[v]]);
-            if (op2_specenv_l2[voice_part[v]] >= op2_specenv_level[v]
-                    ? op2_specenv_level[v] >= op2_specenv_l2[voice_part[v]] - 8
-                    : op2_specenv_level[v] <= op2_specenv_l2[voice_part[v]] + 8) {
-                op2_specenv_level[v] = op2_specenv_l2[voice_part[v]]; op2_specenv_stage[v] = 6u;
+            if (op2_specenv_l2[voice_part[v]] * (op2_specenv_scale[voice_part[v]] > 0 ? op2_specenv_scale[voice_part[v]] : 1) >= op2_specenv_level[v]
+                    ? op2_specenv_level[v] >= op2_specenv_l2[voice_part[v]] * (op2_specenv_scale[voice_part[v]] > 0 ? op2_specenv_scale[voice_part[v]] : 1) - 8 * (op2_specenv_scale[voice_part[v]] > 0 ? op2_specenv_scale[voice_part[v]] : 1)
+                    : op2_specenv_level[v] <= op2_specenv_l2[voice_part[v]] * (op2_specenv_scale[voice_part[v]] > 0 ? op2_specenv_scale[voice_part[v]] : 1) + 8 * (op2_specenv_scale[voice_part[v]] > 0 ? op2_specenv_scale[voice_part[v]] : 1)) {
+                op2_specenv_level[v] = op2_specenv_l2[voice_part[v]] * (op2_specenv_scale[voice_part[v]] > 0 ? op2_specenv_scale[voice_part[v]] : 1); op2_specenv_stage[v] = 6u;
             }
         }
         if (op2_specenv_stage[v] == 6u) {
-            op2_specenv_level[v] = p1_onepole(op2_specenv_level[v], op2_specenv_l3[voice_part[v]],
+            op2_specenv_level[v] = p1_onepole(op2_specenv_level[v], op2_specenv_l3[voice_part[v]] * (op2_specenv_scale[voice_part[v]] > 0 ? op2_specenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[op2_specenv_r3_eff[v]]);
-            if (op2_specenv_l3[voice_part[v]] >= op2_specenv_level[v]
-                    ? op2_specenv_level[v] >= op2_specenv_l3[voice_part[v]] - 8
-                    : op2_specenv_level[v] <= op2_specenv_l3[voice_part[v]] + 8) {
-                op2_specenv_level[v] = op2_specenv_l3[voice_part[v]]; op2_specenv_stage[v] = 5u;
+            if (op2_specenv_l3[voice_part[v]] * (op2_specenv_scale[voice_part[v]] > 0 ? op2_specenv_scale[voice_part[v]] : 1) >= op2_specenv_level[v]
+                    ? op2_specenv_level[v] >= op2_specenv_l3[voice_part[v]] * (op2_specenv_scale[voice_part[v]] > 0 ? op2_specenv_scale[voice_part[v]] : 1) - 8 * (op2_specenv_scale[voice_part[v]] > 0 ? op2_specenv_scale[voice_part[v]] : 1)
+                    : op2_specenv_level[v] <= op2_specenv_l3[voice_part[v]] * (op2_specenv_scale[voice_part[v]] > 0 ? op2_specenv_scale[voice_part[v]] : 1) + 8 * (op2_specenv_scale[voice_part[v]] > 0 ? op2_specenv_scale[voice_part[v]] : 1)) {
+                op2_specenv_level[v] = op2_specenv_l3[voice_part[v]] * (op2_specenv_scale[voice_part[v]] > 0 ? op2_specenv_scale[voice_part[v]] : 1); op2_specenv_stage[v] = 5u;
             }
         }
         if (op2_specenv_stage[v] == 4u) {
-            op2_specenv_level[v] = p1_onepole(op2_specenv_level[v], op2_specenv_rell[voice_part[v]],
+            op2_specenv_level[v] = p1_onepole(op2_specenv_level[v], op2_specenv_rell[voice_part[v]] * (op2_specenv_scale[voice_part[v]] > 0 ? op2_specenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[op2_specenv_r4_eff[v]]);
-            if (op2_specenv_rell[voice_part[v]] >= op2_specenv_level[v]
-                    ? op2_specenv_level[v] >= op2_specenv_rell[voice_part[v]] - 8
-                    : op2_specenv_level[v] <= op2_specenv_rell[voice_part[v]] + 8)
-                op2_specenv_level[v] = op2_specenv_rell[voice_part[v]];
+            if (op2_specenv_rell[voice_part[v]] * (op2_specenv_scale[voice_part[v]] > 0 ? op2_specenv_scale[voice_part[v]] : 1) >= op2_specenv_level[v]
+                    ? op2_specenv_level[v] >= op2_specenv_rell[voice_part[v]] * (op2_specenv_scale[voice_part[v]] > 0 ? op2_specenv_scale[voice_part[v]] : 1) - 8 * (op2_specenv_scale[voice_part[v]] > 0 ? op2_specenv_scale[voice_part[v]] : 1)
+                    : op2_specenv_level[v] <= op2_specenv_rell[voice_part[v]] * (op2_specenv_scale[voice_part[v]] > 0 ? op2_specenv_scale[voice_part[v]] : 1) + 8 * (op2_specenv_scale[voice_part[v]] > 0 ? op2_specenv_scale[voice_part[v]] : 1))
+                op2_specenv_level[v] = op2_specenv_rell[voice_part[v]] * (op2_specenv_scale[voice_part[v]] > 0 ? op2_specenv_scale[voice_part[v]] : 1);
         }
-        op2_specenv_cv_x[v] = op2_specenv_on[voice_part[v]] ? op2_specenv_level[v] : op2_morphbase_out_x[v];
+        op2_specenv_cv_x[v] = op2_specenv_on[voice_part[v]] ? op2_specenv_level[v] / (op2_specenv_scale[voice_part[v]] > 0 ? op2_specenv_scale[voice_part[v]] : 1) : op2_morphbase_out_x[v];
         op2_specenv_active_x[v] = op2_specenv_on[voice_part[v]] ? 1 : 0;
         /* Per-part signed phase envelope. The pool is one per operator, indexed by the
            part; the first active voice advances it once per control block. A trigger on
@@ -9840,7 +9900,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
            l1, 1 to l2, 2 to l3, 3 sustain, 4 release, 5 loop up, 6 loop down. No local
            declarations, because the body is inlined once per instance. */
         if (voice_trig[v]) {
-            op1_fbenv_stage[v] = 0u; op1_fbenv_level[v] = 0;
+            op1_fbenv_stage[v] = 0u; op1_fbenv_level[v] = 0 * (op1_fbenv_scale[voice_part[v]] > 0 ? op1_fbenv_scale[voice_part[v]] : 1);
         }
         if (voice_gate[v]) {
             /* A fresh gate after a gate-off release restarts the attack. Mode 0
@@ -9853,30 +9913,30 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             op1_fbenv_stage[v] = 4u;
         }
         if (op1_fbenv_stage[v] == 0u) {
-            op1_fbenv_level[v] = p1_onepole(op1_fbenv_level[v], op1_fbenv_l1[voice_part[v]],
+            op1_fbenv_level[v] = p1_onepole(op1_fbenv_level[v], op1_fbenv_l1[voice_part[v]] * (op1_fbenv_scale[voice_part[v]] > 0 ? op1_fbenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[op1_fbenv_r1_eff[v]]);
-            if (op1_fbenv_l1[voice_part[v]] >= op1_fbenv_level[v]
-                    ? op1_fbenv_level[v] >= op1_fbenv_l1[voice_part[v]] - 8
-                    : op1_fbenv_level[v] <= op1_fbenv_l1[voice_part[v]] + 8) {
-                op1_fbenv_level[v] = op1_fbenv_l1[voice_part[v]]; op1_fbenv_stage[v] = 1u;
+            if (op1_fbenv_l1[voice_part[v]] * (op1_fbenv_scale[voice_part[v]] > 0 ? op1_fbenv_scale[voice_part[v]] : 1) >= op1_fbenv_level[v]
+                    ? op1_fbenv_level[v] >= op1_fbenv_l1[voice_part[v]] * (op1_fbenv_scale[voice_part[v]] > 0 ? op1_fbenv_scale[voice_part[v]] : 1) - 8 * (op1_fbenv_scale[voice_part[v]] > 0 ? op1_fbenv_scale[voice_part[v]] : 1)
+                    : op1_fbenv_level[v] <= op1_fbenv_l1[voice_part[v]] * (op1_fbenv_scale[voice_part[v]] > 0 ? op1_fbenv_scale[voice_part[v]] : 1) + 8 * (op1_fbenv_scale[voice_part[v]] > 0 ? op1_fbenv_scale[voice_part[v]] : 1)) {
+                op1_fbenv_level[v] = op1_fbenv_l1[voice_part[v]] * (op1_fbenv_scale[voice_part[v]] > 0 ? op1_fbenv_scale[voice_part[v]] : 1); op1_fbenv_stage[v] = 1u;
             }
         }
         if (op1_fbenv_stage[v] == 1u) {
-            op1_fbenv_level[v] = p1_onepole(op1_fbenv_level[v], op1_fbenv_l2[voice_part[v]],
+            op1_fbenv_level[v] = p1_onepole(op1_fbenv_level[v], op1_fbenv_l2[voice_part[v]] * (op1_fbenv_scale[voice_part[v]] > 0 ? op1_fbenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[op1_fbenv_r2_eff[v]]);
-            if (op1_fbenv_l2[voice_part[v]] >= op1_fbenv_level[v]
-                    ? op1_fbenv_level[v] >= op1_fbenv_l2[voice_part[v]] - 8
-                    : op1_fbenv_level[v] <= op1_fbenv_l2[voice_part[v]] + 8) {
-                op1_fbenv_level[v] = op1_fbenv_l2[voice_part[v]]; op1_fbenv_stage[v] = 2u;
+            if (op1_fbenv_l2[voice_part[v]] * (op1_fbenv_scale[voice_part[v]] > 0 ? op1_fbenv_scale[voice_part[v]] : 1) >= op1_fbenv_level[v]
+                    ? op1_fbenv_level[v] >= op1_fbenv_l2[voice_part[v]] * (op1_fbenv_scale[voice_part[v]] > 0 ? op1_fbenv_scale[voice_part[v]] : 1) - 8 * (op1_fbenv_scale[voice_part[v]] > 0 ? op1_fbenv_scale[voice_part[v]] : 1)
+                    : op1_fbenv_level[v] <= op1_fbenv_l2[voice_part[v]] * (op1_fbenv_scale[voice_part[v]] > 0 ? op1_fbenv_scale[voice_part[v]] : 1) + 8 * (op1_fbenv_scale[voice_part[v]] > 0 ? op1_fbenv_scale[voice_part[v]] : 1)) {
+                op1_fbenv_level[v] = op1_fbenv_l2[voice_part[v]] * (op1_fbenv_scale[voice_part[v]] > 0 ? op1_fbenv_scale[voice_part[v]] : 1); op1_fbenv_stage[v] = 2u;
             }
         }
         if (op1_fbenv_stage[v] == 2u) {
-            op1_fbenv_level[v] = p1_onepole(op1_fbenv_level[v], op1_fbenv_l3[voice_part[v]],
+            op1_fbenv_level[v] = p1_onepole(op1_fbenv_level[v], op1_fbenv_l3[voice_part[v]] * (op1_fbenv_scale[voice_part[v]] > 0 ? op1_fbenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[op1_fbenv_r3_eff[v]]);
-            if (op1_fbenv_l3[voice_part[v]] >= op1_fbenv_level[v]
-                    ? op1_fbenv_level[v] >= op1_fbenv_l3[voice_part[v]] - 8
-                    : op1_fbenv_level[v] <= op1_fbenv_l3[voice_part[v]] + 8) {
-                op1_fbenv_level[v] = op1_fbenv_l3[voice_part[v]];
+            if (op1_fbenv_l3[voice_part[v]] * (op1_fbenv_scale[voice_part[v]] > 0 ? op1_fbenv_scale[voice_part[v]] : 1) >= op1_fbenv_level[v]
+                    ? op1_fbenv_level[v] >= op1_fbenv_l3[voice_part[v]] * (op1_fbenv_scale[voice_part[v]] > 0 ? op1_fbenv_scale[voice_part[v]] : 1) - 8 * (op1_fbenv_scale[voice_part[v]] > 0 ? op1_fbenv_scale[voice_part[v]] : 1)
+                    : op1_fbenv_level[v] <= op1_fbenv_l3[voice_part[v]] * (op1_fbenv_scale[voice_part[v]] > 0 ? op1_fbenv_scale[voice_part[v]] : 1) + 8 * (op1_fbenv_scale[voice_part[v]] > 0 ? op1_fbenv_scale[voice_part[v]] : 1)) {
+                op1_fbenv_level[v] = op1_fbenv_l3[voice_part[v]] * (op1_fbenv_scale[voice_part[v]] > 0 ? op1_fbenv_scale[voice_part[v]] : 1);
                 if (op1_fbenv_mode[voice_part[v]] == 0u)
                     op1_fbenv_stage[v] = 4u;
                 else if (op1_fbenv_mode[voice_part[v]] == 1u)
@@ -9886,34 +9946,34 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             }
         }
         if (op1_fbenv_stage[v] == 3u)
-            op1_fbenv_level[v] = op1_fbenv_l3[voice_part[v]];
+            op1_fbenv_level[v] = op1_fbenv_l3[voice_part[v]] * (op1_fbenv_scale[voice_part[v]] > 0 ? op1_fbenv_scale[voice_part[v]] : 1);
         if (op1_fbenv_stage[v] == 5u) {
-            op1_fbenv_level[v] = p1_onepole(op1_fbenv_level[v], op1_fbenv_l2[voice_part[v]],
+            op1_fbenv_level[v] = p1_onepole(op1_fbenv_level[v], op1_fbenv_l2[voice_part[v]] * (op1_fbenv_scale[voice_part[v]] > 0 ? op1_fbenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[(op1_fbenv_mode[voice_part[v]] == 2u) ? op1_fbenv_r2_eff[v] : op1_fbenv_r3_eff[v]]);
-            if (op1_fbenv_l2[voice_part[v]] >= op1_fbenv_level[v]
-                    ? op1_fbenv_level[v] >= op1_fbenv_l2[voice_part[v]] - 8
-                    : op1_fbenv_level[v] <= op1_fbenv_l2[voice_part[v]] + 8) {
-                op1_fbenv_level[v] = op1_fbenv_l2[voice_part[v]]; op1_fbenv_stage[v] = 6u;
+            if (op1_fbenv_l2[voice_part[v]] * (op1_fbenv_scale[voice_part[v]] > 0 ? op1_fbenv_scale[voice_part[v]] : 1) >= op1_fbenv_level[v]
+                    ? op1_fbenv_level[v] >= op1_fbenv_l2[voice_part[v]] * (op1_fbenv_scale[voice_part[v]] > 0 ? op1_fbenv_scale[voice_part[v]] : 1) - 8 * (op1_fbenv_scale[voice_part[v]] > 0 ? op1_fbenv_scale[voice_part[v]] : 1)
+                    : op1_fbenv_level[v] <= op1_fbenv_l2[voice_part[v]] * (op1_fbenv_scale[voice_part[v]] > 0 ? op1_fbenv_scale[voice_part[v]] : 1) + 8 * (op1_fbenv_scale[voice_part[v]] > 0 ? op1_fbenv_scale[voice_part[v]] : 1)) {
+                op1_fbenv_level[v] = op1_fbenv_l2[voice_part[v]] * (op1_fbenv_scale[voice_part[v]] > 0 ? op1_fbenv_scale[voice_part[v]] : 1); op1_fbenv_stage[v] = 6u;
             }
         }
         if (op1_fbenv_stage[v] == 6u) {
-            op1_fbenv_level[v] = p1_onepole(op1_fbenv_level[v], op1_fbenv_l3[voice_part[v]],
+            op1_fbenv_level[v] = p1_onepole(op1_fbenv_level[v], op1_fbenv_l3[voice_part[v]] * (op1_fbenv_scale[voice_part[v]] > 0 ? op1_fbenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[op1_fbenv_r3_eff[v]]);
-            if (op1_fbenv_l3[voice_part[v]] >= op1_fbenv_level[v]
-                    ? op1_fbenv_level[v] >= op1_fbenv_l3[voice_part[v]] - 8
-                    : op1_fbenv_level[v] <= op1_fbenv_l3[voice_part[v]] + 8) {
-                op1_fbenv_level[v] = op1_fbenv_l3[voice_part[v]]; op1_fbenv_stage[v] = 5u;
+            if (op1_fbenv_l3[voice_part[v]] * (op1_fbenv_scale[voice_part[v]] > 0 ? op1_fbenv_scale[voice_part[v]] : 1) >= op1_fbenv_level[v]
+                    ? op1_fbenv_level[v] >= op1_fbenv_l3[voice_part[v]] * (op1_fbenv_scale[voice_part[v]] > 0 ? op1_fbenv_scale[voice_part[v]] : 1) - 8 * (op1_fbenv_scale[voice_part[v]] > 0 ? op1_fbenv_scale[voice_part[v]] : 1)
+                    : op1_fbenv_level[v] <= op1_fbenv_l3[voice_part[v]] * (op1_fbenv_scale[voice_part[v]] > 0 ? op1_fbenv_scale[voice_part[v]] : 1) + 8 * (op1_fbenv_scale[voice_part[v]] > 0 ? op1_fbenv_scale[voice_part[v]] : 1)) {
+                op1_fbenv_level[v] = op1_fbenv_l3[voice_part[v]] * (op1_fbenv_scale[voice_part[v]] > 0 ? op1_fbenv_scale[voice_part[v]] : 1); op1_fbenv_stage[v] = 5u;
             }
         }
         if (op1_fbenv_stage[v] == 4u) {
-            op1_fbenv_level[v] = p1_onepole(op1_fbenv_level[v], op1_fbenv_rell[voice_part[v]],
+            op1_fbenv_level[v] = p1_onepole(op1_fbenv_level[v], op1_fbenv_rell[voice_part[v]] * (op1_fbenv_scale[voice_part[v]] > 0 ? op1_fbenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[op1_fbenv_r4_eff[v]]);
-            if (op1_fbenv_rell[voice_part[v]] >= op1_fbenv_level[v]
-                    ? op1_fbenv_level[v] >= op1_fbenv_rell[voice_part[v]] - 8
-                    : op1_fbenv_level[v] <= op1_fbenv_rell[voice_part[v]] + 8)
-                op1_fbenv_level[v] = op1_fbenv_rell[voice_part[v]];
+            if (op1_fbenv_rell[voice_part[v]] * (op1_fbenv_scale[voice_part[v]] > 0 ? op1_fbenv_scale[voice_part[v]] : 1) >= op1_fbenv_level[v]
+                    ? op1_fbenv_level[v] >= op1_fbenv_rell[voice_part[v]] * (op1_fbenv_scale[voice_part[v]] > 0 ? op1_fbenv_scale[voice_part[v]] : 1) - 8 * (op1_fbenv_scale[voice_part[v]] > 0 ? op1_fbenv_scale[voice_part[v]] : 1)
+                    : op1_fbenv_level[v] <= op1_fbenv_rell[voice_part[v]] * (op1_fbenv_scale[voice_part[v]] > 0 ? op1_fbenv_scale[voice_part[v]] : 1) + 8 * (op1_fbenv_scale[voice_part[v]] > 0 ? op1_fbenv_scale[voice_part[v]] : 1))
+                op1_fbenv_level[v] = op1_fbenv_rell[voice_part[v]] * (op1_fbenv_scale[voice_part[v]] > 0 ? op1_fbenv_scale[voice_part[v]] : 1);
         }
-        op1_fbenv_cv_x[v] = op1_fbenv_on[voice_part[v]] ? op1_fbenv_level[v] : 0;
+        op1_fbenv_cv_x[v] = op1_fbenv_on[voice_part[v]] ? op1_fbenv_level[v] / (op1_fbenv_scale[voice_part[v]] > 0 ? op1_fbenv_scale[voice_part[v]] : 1) : 0;
         op1_fbenv_active_x[v] = op1_fbenv_on[voice_part[v]] ? 1 : 0;
         (void)op1_fbenv_active_x[v];
         /* Low-frequency oscillator (control rate): phase advances by `rate` per sample
@@ -9956,7 +10016,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
            l1, 1 to l2, 2 to l3, 3 sustain, 4 release, 5 loop up, 6 loop down. No local
            declarations, because the body is inlined once per instance. */
         if (voice_trig[v]) {
-            op1_specenv_stage[v] = 0u; op1_specenv_level[v] = op1_morphbase_out_x[v];
+            op1_specenv_stage[v] = 0u; op1_specenv_level[v] = op1_morphbase_out_x[v] * (op1_specenv_scale[voice_part[v]] > 0 ? op1_specenv_scale[voice_part[v]] : 1);
         }
         if (voice_gate[v]) {
             /* A fresh gate after a gate-off release restarts the attack. Mode 0
@@ -9969,30 +10029,30 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             op1_specenv_stage[v] = 4u;
         }
         if (op1_specenv_stage[v] == 0u) {
-            op1_specenv_level[v] = p1_onepole(op1_specenv_level[v], op1_specenv_l1[voice_part[v]],
+            op1_specenv_level[v] = p1_onepole(op1_specenv_level[v], op1_specenv_l1[voice_part[v]] * (op1_specenv_scale[voice_part[v]] > 0 ? op1_specenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[op1_specenv_r1_eff[v]]);
-            if (op1_specenv_l1[voice_part[v]] >= op1_specenv_level[v]
-                    ? op1_specenv_level[v] >= op1_specenv_l1[voice_part[v]] - 8
-                    : op1_specenv_level[v] <= op1_specenv_l1[voice_part[v]] + 8) {
-                op1_specenv_level[v] = op1_specenv_l1[voice_part[v]]; op1_specenv_stage[v] = 1u;
+            if (op1_specenv_l1[voice_part[v]] * (op1_specenv_scale[voice_part[v]] > 0 ? op1_specenv_scale[voice_part[v]] : 1) >= op1_specenv_level[v]
+                    ? op1_specenv_level[v] >= op1_specenv_l1[voice_part[v]] * (op1_specenv_scale[voice_part[v]] > 0 ? op1_specenv_scale[voice_part[v]] : 1) - 8 * (op1_specenv_scale[voice_part[v]] > 0 ? op1_specenv_scale[voice_part[v]] : 1)
+                    : op1_specenv_level[v] <= op1_specenv_l1[voice_part[v]] * (op1_specenv_scale[voice_part[v]] > 0 ? op1_specenv_scale[voice_part[v]] : 1) + 8 * (op1_specenv_scale[voice_part[v]] > 0 ? op1_specenv_scale[voice_part[v]] : 1)) {
+                op1_specenv_level[v] = op1_specenv_l1[voice_part[v]] * (op1_specenv_scale[voice_part[v]] > 0 ? op1_specenv_scale[voice_part[v]] : 1); op1_specenv_stage[v] = 1u;
             }
         }
         if (op1_specenv_stage[v] == 1u) {
-            op1_specenv_level[v] = p1_onepole(op1_specenv_level[v], op1_specenv_l2[voice_part[v]],
+            op1_specenv_level[v] = p1_onepole(op1_specenv_level[v], op1_specenv_l2[voice_part[v]] * (op1_specenv_scale[voice_part[v]] > 0 ? op1_specenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[op1_specenv_r2_eff[v]]);
-            if (op1_specenv_l2[voice_part[v]] >= op1_specenv_level[v]
-                    ? op1_specenv_level[v] >= op1_specenv_l2[voice_part[v]] - 8
-                    : op1_specenv_level[v] <= op1_specenv_l2[voice_part[v]] + 8) {
-                op1_specenv_level[v] = op1_specenv_l2[voice_part[v]]; op1_specenv_stage[v] = 2u;
+            if (op1_specenv_l2[voice_part[v]] * (op1_specenv_scale[voice_part[v]] > 0 ? op1_specenv_scale[voice_part[v]] : 1) >= op1_specenv_level[v]
+                    ? op1_specenv_level[v] >= op1_specenv_l2[voice_part[v]] * (op1_specenv_scale[voice_part[v]] > 0 ? op1_specenv_scale[voice_part[v]] : 1) - 8 * (op1_specenv_scale[voice_part[v]] > 0 ? op1_specenv_scale[voice_part[v]] : 1)
+                    : op1_specenv_level[v] <= op1_specenv_l2[voice_part[v]] * (op1_specenv_scale[voice_part[v]] > 0 ? op1_specenv_scale[voice_part[v]] : 1) + 8 * (op1_specenv_scale[voice_part[v]] > 0 ? op1_specenv_scale[voice_part[v]] : 1)) {
+                op1_specenv_level[v] = op1_specenv_l2[voice_part[v]] * (op1_specenv_scale[voice_part[v]] > 0 ? op1_specenv_scale[voice_part[v]] : 1); op1_specenv_stage[v] = 2u;
             }
         }
         if (op1_specenv_stage[v] == 2u) {
-            op1_specenv_level[v] = p1_onepole(op1_specenv_level[v], op1_specenv_l3[voice_part[v]],
+            op1_specenv_level[v] = p1_onepole(op1_specenv_level[v], op1_specenv_l3[voice_part[v]] * (op1_specenv_scale[voice_part[v]] > 0 ? op1_specenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[op1_specenv_r3_eff[v]]);
-            if (op1_specenv_l3[voice_part[v]] >= op1_specenv_level[v]
-                    ? op1_specenv_level[v] >= op1_specenv_l3[voice_part[v]] - 8
-                    : op1_specenv_level[v] <= op1_specenv_l3[voice_part[v]] + 8) {
-                op1_specenv_level[v] = op1_specenv_l3[voice_part[v]];
+            if (op1_specenv_l3[voice_part[v]] * (op1_specenv_scale[voice_part[v]] > 0 ? op1_specenv_scale[voice_part[v]] : 1) >= op1_specenv_level[v]
+                    ? op1_specenv_level[v] >= op1_specenv_l3[voice_part[v]] * (op1_specenv_scale[voice_part[v]] > 0 ? op1_specenv_scale[voice_part[v]] : 1) - 8 * (op1_specenv_scale[voice_part[v]] > 0 ? op1_specenv_scale[voice_part[v]] : 1)
+                    : op1_specenv_level[v] <= op1_specenv_l3[voice_part[v]] * (op1_specenv_scale[voice_part[v]] > 0 ? op1_specenv_scale[voice_part[v]] : 1) + 8 * (op1_specenv_scale[voice_part[v]] > 0 ? op1_specenv_scale[voice_part[v]] : 1)) {
+                op1_specenv_level[v] = op1_specenv_l3[voice_part[v]] * (op1_specenv_scale[voice_part[v]] > 0 ? op1_specenv_scale[voice_part[v]] : 1);
                 if (op1_specenv_mode[voice_part[v]] == 0u)
                     op1_specenv_stage[v] = 4u;
                 else if (op1_specenv_mode[voice_part[v]] == 1u)
@@ -10002,34 +10062,34 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             }
         }
         if (op1_specenv_stage[v] == 3u)
-            op1_specenv_level[v] = op1_specenv_l3[voice_part[v]];
+            op1_specenv_level[v] = op1_specenv_l3[voice_part[v]] * (op1_specenv_scale[voice_part[v]] > 0 ? op1_specenv_scale[voice_part[v]] : 1);
         if (op1_specenv_stage[v] == 5u) {
-            op1_specenv_level[v] = p1_onepole(op1_specenv_level[v], op1_specenv_l2[voice_part[v]],
+            op1_specenv_level[v] = p1_onepole(op1_specenv_level[v], op1_specenv_l2[voice_part[v]] * (op1_specenv_scale[voice_part[v]] > 0 ? op1_specenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[(op1_specenv_mode[voice_part[v]] == 2u) ? op1_specenv_r2_eff[v] : op1_specenv_r3_eff[v]]);
-            if (op1_specenv_l2[voice_part[v]] >= op1_specenv_level[v]
-                    ? op1_specenv_level[v] >= op1_specenv_l2[voice_part[v]] - 8
-                    : op1_specenv_level[v] <= op1_specenv_l2[voice_part[v]] + 8) {
-                op1_specenv_level[v] = op1_specenv_l2[voice_part[v]]; op1_specenv_stage[v] = 6u;
+            if (op1_specenv_l2[voice_part[v]] * (op1_specenv_scale[voice_part[v]] > 0 ? op1_specenv_scale[voice_part[v]] : 1) >= op1_specenv_level[v]
+                    ? op1_specenv_level[v] >= op1_specenv_l2[voice_part[v]] * (op1_specenv_scale[voice_part[v]] > 0 ? op1_specenv_scale[voice_part[v]] : 1) - 8 * (op1_specenv_scale[voice_part[v]] > 0 ? op1_specenv_scale[voice_part[v]] : 1)
+                    : op1_specenv_level[v] <= op1_specenv_l2[voice_part[v]] * (op1_specenv_scale[voice_part[v]] > 0 ? op1_specenv_scale[voice_part[v]] : 1) + 8 * (op1_specenv_scale[voice_part[v]] > 0 ? op1_specenv_scale[voice_part[v]] : 1)) {
+                op1_specenv_level[v] = op1_specenv_l2[voice_part[v]] * (op1_specenv_scale[voice_part[v]] > 0 ? op1_specenv_scale[voice_part[v]] : 1); op1_specenv_stage[v] = 6u;
             }
         }
         if (op1_specenv_stage[v] == 6u) {
-            op1_specenv_level[v] = p1_onepole(op1_specenv_level[v], op1_specenv_l3[voice_part[v]],
+            op1_specenv_level[v] = p1_onepole(op1_specenv_level[v], op1_specenv_l3[voice_part[v]] * (op1_specenv_scale[voice_part[v]] > 0 ? op1_specenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[op1_specenv_r3_eff[v]]);
-            if (op1_specenv_l3[voice_part[v]] >= op1_specenv_level[v]
-                    ? op1_specenv_level[v] >= op1_specenv_l3[voice_part[v]] - 8
-                    : op1_specenv_level[v] <= op1_specenv_l3[voice_part[v]] + 8) {
-                op1_specenv_level[v] = op1_specenv_l3[voice_part[v]]; op1_specenv_stage[v] = 5u;
+            if (op1_specenv_l3[voice_part[v]] * (op1_specenv_scale[voice_part[v]] > 0 ? op1_specenv_scale[voice_part[v]] : 1) >= op1_specenv_level[v]
+                    ? op1_specenv_level[v] >= op1_specenv_l3[voice_part[v]] * (op1_specenv_scale[voice_part[v]] > 0 ? op1_specenv_scale[voice_part[v]] : 1) - 8 * (op1_specenv_scale[voice_part[v]] > 0 ? op1_specenv_scale[voice_part[v]] : 1)
+                    : op1_specenv_level[v] <= op1_specenv_l3[voice_part[v]] * (op1_specenv_scale[voice_part[v]] > 0 ? op1_specenv_scale[voice_part[v]] : 1) + 8 * (op1_specenv_scale[voice_part[v]] > 0 ? op1_specenv_scale[voice_part[v]] : 1)) {
+                op1_specenv_level[v] = op1_specenv_l3[voice_part[v]] * (op1_specenv_scale[voice_part[v]] > 0 ? op1_specenv_scale[voice_part[v]] : 1); op1_specenv_stage[v] = 5u;
             }
         }
         if (op1_specenv_stage[v] == 4u) {
-            op1_specenv_level[v] = p1_onepole(op1_specenv_level[v], op1_specenv_rell[voice_part[v]],
+            op1_specenv_level[v] = p1_onepole(op1_specenv_level[v], op1_specenv_rell[voice_part[v]] * (op1_specenv_scale[voice_part[v]] > 0 ? op1_specenv_scale[voice_part[v]] : 1),
                 p1_rate_coeff[op1_specenv_r4_eff[v]]);
-            if (op1_specenv_rell[voice_part[v]] >= op1_specenv_level[v]
-                    ? op1_specenv_level[v] >= op1_specenv_rell[voice_part[v]] - 8
-                    : op1_specenv_level[v] <= op1_specenv_rell[voice_part[v]] + 8)
-                op1_specenv_level[v] = op1_specenv_rell[voice_part[v]];
+            if (op1_specenv_rell[voice_part[v]] * (op1_specenv_scale[voice_part[v]] > 0 ? op1_specenv_scale[voice_part[v]] : 1) >= op1_specenv_level[v]
+                    ? op1_specenv_level[v] >= op1_specenv_rell[voice_part[v]] * (op1_specenv_scale[voice_part[v]] > 0 ? op1_specenv_scale[voice_part[v]] : 1) - 8 * (op1_specenv_scale[voice_part[v]] > 0 ? op1_specenv_scale[voice_part[v]] : 1)
+                    : op1_specenv_level[v] <= op1_specenv_rell[voice_part[v]] * (op1_specenv_scale[voice_part[v]] > 0 ? op1_specenv_scale[voice_part[v]] : 1) + 8 * (op1_specenv_scale[voice_part[v]] > 0 ? op1_specenv_scale[voice_part[v]] : 1))
+                op1_specenv_level[v] = op1_specenv_rell[voice_part[v]] * (op1_specenv_scale[voice_part[v]] > 0 ? op1_specenv_scale[voice_part[v]] : 1);
         }
-        op1_specenv_cv_x[v] = op1_specenv_on[voice_part[v]] ? op1_specenv_level[v] : op1_morphbase_out_x[v];
+        op1_specenv_cv_x[v] = op1_specenv_on[voice_part[v]] ? op1_specenv_level[v] / (op1_specenv_scale[voice_part[v]] > 0 ? op1_specenv_scale[voice_part[v]] : 1) : op1_morphbase_out_x[v];
         op1_specenv_active_x[v] = op1_specenv_on[voice_part[v]] ? 1 : 0;
         voice_trig[v] = 0; /* one-shot note-on edge, consumed above */
     }
@@ -10461,6 +10521,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             #define P1_PM_LOCK 2411u     /* bit j = y span j is locked */
             #define P1_PM_ACTIVE 2412u
             #define P1_PM_LASTWAVE 2413u
+            #define P1_PM_LASTON 2414u
             #ifndef P1_PM_SAMPLE
             #define P1_PM_SAMPLE(wave, bank, part, q, ab)                              \
                 (((wave) >= 13u)                                                       \
@@ -10622,13 +10683,22 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                  (pm)[P1_PM_SEED])
             #endif
             uint32_t op4_phase_phase_x = op4_ph_acc_x;
-            if (op4_phase_on[voice_part[v]]) {
-                _Static_assert(P1_PM_WORDS * (uint32_t)N_PART <= 5440u,
-                    "phase_map pool layout exceeds the pool");
-                uint32_t *pm = (uint32_t *)(void *)op4_phase_map;
-                uint32_t part = (uint32_t)voice_part[v];
-                if (part >= (uint32_t)N_PART) part = (uint32_t)N_PART - 1u;
-                pm += part * P1_PM_WORDS;
+            {
+            _Static_assert(P1_PM_WORDS * (uint32_t)N_PART <= 5440u,
+                "phase_map pool layout exceeds the pool");
+            uint32_t *pm = (uint32_t *)(void *)op4_phase_map;
+            uint32_t part = (uint32_t)voice_part[v];
+            if (part >= (uint32_t)N_PART) part = (uint32_t)N_PART - 1u;
+            pm += part * P1_PM_WORDS;
+            /* A map is valid only while the switch has stayed on. Turning it off, or
+             * resetting the pool on a patch load, forces the next on block to seed and
+             * rebuild from the current controls rather than the old stochastic state. */
+            uint32_t on = (uint32_t)op4_phase_on[voice_part[v]];
+            if (pm[P1_PM_LASTON] != on) {
+                pm[P1_PM_LASTON] = on;
+                pm[P1_PM_SEEDED] = 0u;
+            }
+            if (on) {
                 uint32_t m = (uint32_t)op4_phase_segments[voice_part[v]];
                 if (m < 1u) m = 1u;
                 if (m > 32u) m = 32u;
@@ -10909,6 +10979,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                      (int32_t)pm[P1_PM_PSLOPE + k] >> 16);
                 op4_phase_phase_x = (uint32_t)y << 20;
             }
+            }
             /* Add the FM/feedback sum after the map. The sum is the same `(fm << 20)` that
                the phasor used, so the off map path is the old accumulator-add-read path. */
             uint32_t op4_padd_phase_x = op4_phase_phase_x + ((uint32_t)op4_sum_audio_x << 20);
@@ -11040,6 +11111,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             #define P1_PM_LOCK 2411u     /* bit j = y span j is locked */
             #define P1_PM_ACTIVE 2412u
             #define P1_PM_LASTWAVE 2413u
+            #define P1_PM_LASTON 2414u
             #ifndef P1_PM_SAMPLE
             #define P1_PM_SAMPLE(wave, bank, part, q, ab)                              \
                 (((wave) >= 13u)                                                       \
@@ -11201,13 +11273,22 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                  (pm)[P1_PM_SEED])
             #endif
             uint32_t op3_phase_phase_x = op3_ph_acc_x;
-            if (op3_phase_on[voice_part[v]]) {
-                _Static_assert(P1_PM_WORDS * (uint32_t)N_PART <= 5440u,
-                    "phase_map pool layout exceeds the pool");
-                uint32_t *pm = (uint32_t *)(void *)op3_phase_map;
-                uint32_t part = (uint32_t)voice_part[v];
-                if (part >= (uint32_t)N_PART) part = (uint32_t)N_PART - 1u;
-                pm += part * P1_PM_WORDS;
+            {
+            _Static_assert(P1_PM_WORDS * (uint32_t)N_PART <= 5440u,
+                "phase_map pool layout exceeds the pool");
+            uint32_t *pm = (uint32_t *)(void *)op3_phase_map;
+            uint32_t part = (uint32_t)voice_part[v];
+            if (part >= (uint32_t)N_PART) part = (uint32_t)N_PART - 1u;
+            pm += part * P1_PM_WORDS;
+            /* A map is valid only while the switch has stayed on. Turning it off, or
+             * resetting the pool on a patch load, forces the next on block to seed and
+             * rebuild from the current controls rather than the old stochastic state. */
+            uint32_t on = (uint32_t)op3_phase_on[voice_part[v]];
+            if (pm[P1_PM_LASTON] != on) {
+                pm[P1_PM_LASTON] = on;
+                pm[P1_PM_SEEDED] = 0u;
+            }
+            if (on) {
                 uint32_t m = (uint32_t)op3_phase_segments[voice_part[v]];
                 if (m < 1u) m = 1u;
                 if (m > 32u) m = 32u;
@@ -11488,6 +11569,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                      (int32_t)pm[P1_PM_PSLOPE + k] >> 16);
                 op3_phase_phase_x = (uint32_t)y << 20;
             }
+            }
             /* Add the FM/feedback sum after the map. The sum is the same `(fm << 20)` that
                the phasor used, so the off map path is the old accumulator-add-read path. */
             uint32_t op3_padd_phase_x = op3_phase_phase_x + ((uint32_t)op3_sum_audio_x << 20);
@@ -11619,6 +11701,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             #define P1_PM_LOCK 2411u     /* bit j = y span j is locked */
             #define P1_PM_ACTIVE 2412u
             #define P1_PM_LASTWAVE 2413u
+            #define P1_PM_LASTON 2414u
             #ifndef P1_PM_SAMPLE
             #define P1_PM_SAMPLE(wave, bank, part, q, ab)                              \
                 (((wave) >= 13u)                                                       \
@@ -11780,13 +11863,22 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                  (pm)[P1_PM_SEED])
             #endif
             uint32_t op2_phase_phase_x = op2_ph_acc_x;
-            if (op2_phase_on[voice_part[v]]) {
-                _Static_assert(P1_PM_WORDS * (uint32_t)N_PART <= 5440u,
-                    "phase_map pool layout exceeds the pool");
-                uint32_t *pm = (uint32_t *)(void *)op2_phase_map;
-                uint32_t part = (uint32_t)voice_part[v];
-                if (part >= (uint32_t)N_PART) part = (uint32_t)N_PART - 1u;
-                pm += part * P1_PM_WORDS;
+            {
+            _Static_assert(P1_PM_WORDS * (uint32_t)N_PART <= 5440u,
+                "phase_map pool layout exceeds the pool");
+            uint32_t *pm = (uint32_t *)(void *)op2_phase_map;
+            uint32_t part = (uint32_t)voice_part[v];
+            if (part >= (uint32_t)N_PART) part = (uint32_t)N_PART - 1u;
+            pm += part * P1_PM_WORDS;
+            /* A map is valid only while the switch has stayed on. Turning it off, or
+             * resetting the pool on a patch load, forces the next on block to seed and
+             * rebuild from the current controls rather than the old stochastic state. */
+            uint32_t on = (uint32_t)op2_phase_on[voice_part[v]];
+            if (pm[P1_PM_LASTON] != on) {
+                pm[P1_PM_LASTON] = on;
+                pm[P1_PM_SEEDED] = 0u;
+            }
+            if (on) {
                 uint32_t m = (uint32_t)op2_phase_segments[voice_part[v]];
                 if (m < 1u) m = 1u;
                 if (m > 32u) m = 32u;
@@ -12067,6 +12159,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                      (int32_t)pm[P1_PM_PSLOPE + k] >> 16);
                 op2_phase_phase_x = (uint32_t)y << 20;
             }
+            }
             /* Add the FM/feedback sum after the map. The sum is the same `(fm << 20)` that
                the phasor used, so the off map path is the old accumulator-add-read path. */
             uint32_t op2_padd_phase_x = op2_phase_phase_x + ((uint32_t)op2_sum_audio_x << 20);
@@ -12198,6 +12291,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             #define P1_PM_LOCK 2411u     /* bit j = y span j is locked */
             #define P1_PM_ACTIVE 2412u
             #define P1_PM_LASTWAVE 2413u
+            #define P1_PM_LASTON 2414u
             #ifndef P1_PM_SAMPLE
             #define P1_PM_SAMPLE(wave, bank, part, q, ab)                              \
                 (((wave) >= 13u)                                                       \
@@ -12359,13 +12453,22 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                  (pm)[P1_PM_SEED])
             #endif
             uint32_t op1_phase_phase_x = op1_ph_acc_x;
-            if (op1_phase_on[voice_part[v]]) {
-                _Static_assert(P1_PM_WORDS * (uint32_t)N_PART <= 5440u,
-                    "phase_map pool layout exceeds the pool");
-                uint32_t *pm = (uint32_t *)(void *)op1_phase_map;
-                uint32_t part = (uint32_t)voice_part[v];
-                if (part >= (uint32_t)N_PART) part = (uint32_t)N_PART - 1u;
-                pm += part * P1_PM_WORDS;
+            {
+            _Static_assert(P1_PM_WORDS * (uint32_t)N_PART <= 5440u,
+                "phase_map pool layout exceeds the pool");
+            uint32_t *pm = (uint32_t *)(void *)op1_phase_map;
+            uint32_t part = (uint32_t)voice_part[v];
+            if (part >= (uint32_t)N_PART) part = (uint32_t)N_PART - 1u;
+            pm += part * P1_PM_WORDS;
+            /* A map is valid only while the switch has stayed on. Turning it off, or
+             * resetting the pool on a patch load, forces the next on block to seed and
+             * rebuild from the current controls rather than the old stochastic state. */
+            uint32_t on = (uint32_t)op1_phase_on[voice_part[v]];
+            if (pm[P1_PM_LASTON] != on) {
+                pm[P1_PM_LASTON] = on;
+                pm[P1_PM_SEEDED] = 0u;
+            }
+            if (on) {
                 uint32_t m = (uint32_t)op1_phase_segments[voice_part[v]];
                 if (m < 1u) m = 1u;
                 if (m > 32u) m = 32u;
@@ -12645,6 +12748,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                     (((int32_t)q - (int32_t)pm[P1_PM_NX + k]) *
                      (int32_t)pm[P1_PM_PSLOPE + k] >> 16);
                 op1_phase_phase_x = (uint32_t)y << 20;
+            }
             }
             /* Add the FM/feedback sum after the map. The sum is the same `(fm << 20)` that
                the phasor used, so the off map path is the old accumulator-add-read path. */

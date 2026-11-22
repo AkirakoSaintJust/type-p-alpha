@@ -54,6 +54,9 @@ public:
      * -1 when the operator has not read the bank since the state reset. */
     int specMorph(int op, int part) const;
     bool phaseMapSnapshot(int op, int part, PhaseMapSnapshot& out) const;
+    /* Clear the per-part phase map, LFO and envelope pools so a patch load, or
+     * switching the map off, starts from the current controls. */
+    void resetPhaseMaps();
 
     P1_STATE* state();
 

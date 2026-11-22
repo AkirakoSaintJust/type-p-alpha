@@ -166,7 +166,9 @@ There is no per-voice phase offset and no per-voice map.
 
 The state is reset by the engine reset and by a part init, not by a note, so a
 fresh engine is deterministic for tests whilst a playing engine keeps its
-texture. The per-instance xorshift32 seed is `0x9E3779B9 + part * 4 + op`. Drift, flip and
+texture. The pool also resets when `phase on` changes, and `Engine::resetPhaseMaps`
+clears it on a patch load, so the next on block rebuilds from the current
+controls. The per-instance xorshift32 seed is `0x9E3779B9 + part * 4 + op`. Drift, flip and
 reorder each own a 32-bit accumulator advanced by `rate_raw * CONTROL_BLOCK` per
 control block, and the wrap is the event. That gives 0..223 Hz on the shared
 `hz` scale.
@@ -474,7 +476,9 @@ The snapshot is published per operator per part at 30 Hz through a double buffer
 with an atomic index, the same pattern as the scope and morph taps. The audio
 thread writes only the fixed snapshot: no allocation, lock or file access. The
 UI timer reads the latest snapshot and draws. It does not read engine internals.
-When `voices == 0` the last map stays on screen and the dot stops. The next note
+When `phase on` is off, the plot draws the neutral parameter geometry, not the
+last live map, so the display resets with the switch and with a patch load. When
+`voices == 0` the last live map stays on screen and the dot stops. The next note
 resumes it. Parameter edits rebuild the static geometry immediately.
 
 ### Copy and paste
@@ -527,6 +531,11 @@ the total to 1,976.
   v14→v15 fade insertion reaches `v15Count`, then 116 defaults are appended.
   Older records (v13, v14, v15) still load. The new values default to phase off,
   env on and the neutral geometry, so an old record renders the current render.
+- Every `PresetStore` that reads an old bank configures the same envelope,
+  offset, absolute and fade indices. The temporary disk store in `saveLibrary`
+  did not, so an old record was migrated with `-1` bases and written back
+  corrupted. The disk store now calls the same configuration function as the
+  in-memory store.
 - `preset_smoke` loads version 13, 14 and 15 records and checks the appended
   counts, `phase_on = 0`, `phase_env_on = 1`, `phase_bp = 500` and the 981 part
   block.
@@ -538,7 +547,7 @@ the total to 1,976.
 ## Evidence
 
 The measured state on 2026-11-22. `plugin/tests/phase_map.cpp`, registered as
-`phase_map`, runs 40 checks in one process and prints the fold range, the lock
+`phase_map`, runs 43 checks in one process and prints the fold range, the lock
 counts, the drift slopes, the follow positions and the CPU ratio.
 
 | Check | What it renders or reads | Result |
@@ -550,6 +559,7 @@ counts, the drift slopes, the follow positions and the CPU ratio.
 | locks | sine, 32 requested | 31 active, 3 locked, crossing span locked |
 | flips | 100%, 20 events | every unlocked span flips, the second event restores |
 | reorder | 16 segments, `jump` 1, 400 events | permutation held, neighbours only, locked spans still |
+| reset | off/on and a patch-load reset | order identity and flips cleared |
 | drift | 16 segments, 120 events | slopes 0.5001..2.6584, x sorted |
 | envelope | +25% and -25%, mode hold | breakpoint 750 and 250 |
 | LFO | +50% and -50% | the pooled value inverts exactly |

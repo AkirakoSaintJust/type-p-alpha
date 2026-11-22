@@ -134,6 +134,8 @@ Every page fills the same height:
   card. The page total is 653 px inside the 669 px budget. The map is a read-only
   `P1PhaseMap` fed by the 30 Hz `PhaseMapSnapshot`; it draws the composed segments,
   the locks, the order jumps, the faint `F`, the breakpoint and the phase dot. The
+  When `on` is off, the map draws the neutral parameter geometry and the live
+  dot disappears.
   `phase` card has nine knobs in two rows: `distort`, `segmts`, `flip`, `fl rate` and `reorder`, then `ro rate`, `jump`, `drift` and `dr rate`. The LFO card puts rate, depth, `rate
   fade` and `depth fade` in one row, and the envelope card is the signed purple
   graph with its rates, levels and mode dropdown.

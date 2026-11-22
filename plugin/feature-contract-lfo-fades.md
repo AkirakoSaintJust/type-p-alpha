@@ -55,11 +55,11 @@ Two parameters per instance is 68 new parameters.
 | `pitch_rate_fade` | `plfo.rate_fade` | 0..99 | 0 | `fade` |
 | `pitch_depth_fade` | `plfo.depth_fade` | 0..99 | 0 | `fade` |
 
-The `fade` display shows `off` at 0 and a time at 1 to 99: `instant` at 99,
-about 8 ms at 98, about 53 ms at 90, about 2.1 s at 50 and about 33.5 s at 1.
-The time is the envelope rate table's 99 percent time, so a fade value means the
-same time as an envelope rate value. The value sits under each knob, so the two
-times read together.
+The `fade` display shows `off` at 0 and the rate value at 1 to 99. The number
+rises with the dial, so 1 is the slowest and 99 is instant. The graph carries
+the time; the rate table's 99 percent times are about 33.5 s at 1, 2.1 s at 50,
+53 ms at 90 and 8 ms at 98. The value sits under each knob, so the two fades
+read together.
 
 ## Fade law
 
@@ -102,9 +102,9 @@ dot at each end point. The time readout sits under each knob, so the two times
 and the graph show where the attacks line up and where they separate.
 
 The operator cards use the full 20 px graph. The spectral morph card keeps its
-180 px height because its column is full, so it uses the compact row: 22 px fade
-dials, a 57 px fade row and an 18 px graph. The values and the two-line graph
-still read in full.
+175 px height because its column is full. It uses the compact row: rate, depth,
+`rate fade` and `depth fade` as four 22 px dials, the wave select and `bipolar`
+below, and the two-line graph between them. The values and graph read in full.
 
 ## Persistence
 
@@ -142,10 +142,12 @@ still read in full.
 
 - `LfoCard` and `PitchLfoCard` gain a row with the two knobs, labelled `rate
   fade` and `depth fade`, and a two-line fade graph under them.
-- The operator LFO cards are 192 px, with 63 px knob rows and a 64 px fade row.
-  The pitch LFO card uses 36 px dials and a 71 px fade row.
-- The spectral morph LFO card uses the compact 180 px row described above.
-- The knobs show `off` at 0 and the time at 1 to 99; 99 shows `instant`.
+- The operator LFO cards are 145 px, with rate, depth, `rate fade` and
+  `depth fade` as four knobs in one row, the wave select and `bipolar` below,
+  and the two-line graph between them. The pitch LFO card keeps its own 36 px
+  layout.
+- The spectral morph LFO card uses the compact 175 px row described above.
+- The knobs show `off` at 0 and the rate at 1 to 99; 99 is instant.
 - The section copy and paste lists include both fade parameters for the
   amplitude, feedback, detune and spectral LFOs.
 - The operator lfos page no longer repeats the oscillator. The oscillator is on

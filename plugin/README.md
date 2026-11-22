@@ -43,6 +43,7 @@ you go digging.
 - `rate_bridge` checks the output-rate adaptation and the exact core-rate bypass.
 - `lfo_fades` checks the LFO rate and depth ramps, their shared time scale and
   the phase reset.
+- `filter_envelope` checks the filter envelope rate resolution, from the slowest setting to instant.
 - `phase_map` checks the per-operator map: the off path, `F`, the reflective fold,
   the locks, flips, reorder, drift, the LFO and envelope, key and velocity follow,
   the trigger rule, the two parts, wave 13's spectral mask and the CPU ratio. The

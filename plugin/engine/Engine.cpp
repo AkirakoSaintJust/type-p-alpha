@@ -1,6 +1,8 @@
 /* SPDX-License-Identifier: GPL-3.0-only */
 #include "Engine.hpp"
 
+#include <cstring>
+
 #include "p1_math.h"  /* brings in spectral.h for the bank offsets */
 
 namespace p1 {
@@ -37,6 +39,22 @@ Engine::~Engine() = default;
 void Engine::reset()
 {
     P1_RESET(state_.get());
+}
+
+void Engine::resetPhaseMaps()
+{
+    std::memset(state_->op1_phase_map, 0, sizeof(state_->op1_phase_map));
+    std::memset(state_->op2_phase_map, 0, sizeof(state_->op2_phase_map));
+    std::memset(state_->op3_phase_map, 0, sizeof(state_->op3_phase_map));
+    std::memset(state_->op4_phase_map, 0, sizeof(state_->op4_phase_map));
+    std::memset(state_->op1_phase_lfo_pool, 0, sizeof(state_->op1_phase_lfo_pool));
+    std::memset(state_->op2_phase_lfo_pool, 0, sizeof(state_->op2_phase_lfo_pool));
+    std::memset(state_->op3_phase_lfo_pool, 0, sizeof(state_->op3_phase_lfo_pool));
+    std::memset(state_->op4_phase_lfo_pool, 0, sizeof(state_->op4_phase_lfo_pool));
+    std::memset(state_->op1_phase_env_pool, 0, sizeof(state_->op1_phase_env_pool));
+    std::memset(state_->op2_phase_env_pool, 0, sizeof(state_->op2_phase_env_pool));
+    std::memset(state_->op3_phase_env_pool, 0, sizeof(state_->op3_phase_env_pool));
+    std::memset(state_->op4_phase_env_pool, 0, sizeof(state_->op4_phase_env_pool));
 }
 
 int Engine::setParam(uint32_t id, int32_t value)
