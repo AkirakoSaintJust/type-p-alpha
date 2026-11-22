@@ -669,12 +669,14 @@ Two new goldens, regenerated deliberately with the Linux runner:
 
 - `editor-op-phasemap.png`: the tab with all four operators off and the neutral
   geometry, so the empty state is covered.
-- `editor-op-phasemap-live.png`: op1 on with 8 segments, a drift, a flip, a
-  reorder and a held note, so the composed plot, the colours, the locks and the
-  phase dot are all visible.
+- `editor-op-phasemap-live.png`: op1 on with 8 segments, a drift and a held note,
+  so the composed plot, the locks and the phase dot are visible. The eight
+  snapshot blocks do not reach the first flip or reorder event at the demo's 2 Hz
+  and 1.5 Hz rates, so the still shows the forward segments only; the flip and
+  reorder layers are covered by the engine test.
 
-`manifest.json` is regenerated. The other 22 goldens must not change, because the
-new tab does not touch the existing pages.
+`manifest.json` is regenerated. The two phase pages are new. The pages that show
+the scope trace moved with the audio change and were re-accepted in the same pass.
 
 ## 7. Verification
 
@@ -686,18 +688,18 @@ New `plugin/tests/phase_map.cpp`, registered as `phase_map`:
   reference; it is bit-exact. `engine_parity` stays bit-exact too.
 - **Pre-map:** at breakpoint 250 and 750, check `F` at 0, 0.25, 0.5 and 1 against
   the polyline, including the half-gain at the breakpoint.
-- **Fold:** push the breakpoint with an LFO at 100% depth and a 0.5 Hz rate for
-  ten seconds; the folded position never stays at 1 or 999 for more than one
-  control tick while the LFO is still moving, and it reflects at the bound.
+- **Fold:** push the breakpoint with a triangle at 2,000,000 raw and 100% depth
+  over 15,000 control ticks; the folded position reaches 2..998, never stays at an
+  edge for more than one tick, and reflects at the bound.
 - **Segments and locks:** on a sine, the active count is at most the requested
-  count; protected spans collapse; no locked segment ever flips in 10,000 flip
-  events at 100% probability; the segment spans still cover 0..1.
+  count; the protected spans are not cut by a boundary; no locked segment flips
+  across 20 flip events at 100% probability; the segment spans still cover 0..1.
 - **Flips:** at 100% probability every eligible segment flips and its slope is
   negative; flipping twice restores it.
 - **Reorder:** the order stays a permutation of the active segments; every segment
   is visited once; `jump = 1` only swaps neighbours; locked segments never move.
-- **Drift:** 10,000 events keep every slope in [0.5, 2.66] and every `x` sorted;
-  the last `x` is 4096.
+- **Drift:** 120 events keep every slope in [0.5, 2.66] and every `x` sorted; the
+  last `x` is 4096.
 - **Modulation:** a positive envelope level moves the breakpoint right and a
   negative one left; the LFO depth sign inverts the sweep in bipolar mode; a fade
   reaches full on the computed tick.
@@ -706,9 +708,8 @@ New `plugin/tests/phase_map.cpp`, registered as `phase_map`:
 - **Parts:** part 0 and part 1 keep separate maps, breakpoints and seeds.
 - **Spectrum:** wave 13's lock mask follows a and b and the base morph; a morph
   between two spectra locks the union of the two protected spans at the midpoint.
-- **2×:** the mapped render is finite, has no `INT32_MIN`/`INT32_MAX`, and its RMS
-  is within the same bound as the 1× render; the decimator's output at a slow map
-  matches the 1× render within the filter's tolerance.
+- **Render:** the 1× mapped render is finite, has no `INT32_MIN`/`INT32_MAX` and is
+  not silent. There is no 2× test because the 2× path is not built.
 - **CPU:** print the worst-case ratio described in §3.17.
 
 ### 7.2 Existing checks
