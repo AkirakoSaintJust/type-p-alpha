@@ -87,8 +87,8 @@ void remapOffsetBlock(const std::vector<int32_t>& in, int oldBase,
  * block, and `depth` far before it. The version 14 block: on, r1, r2, r3, l1,
  * l2, l3, rel rate, rel level, mode. A non-zero depth meant a live envelope, so
  * the mode is sustain on, r4 becomes the release rate and r4 is dropped. */
-void remapAbsSpecBlock(const std::vector<int32_t>& in, int oldBase,
-                       int depthIndex, std::vector<int32_t>& out, int newBase)
+void remapAbsSpecBlock(const std::vector<int32_t>& in, int oldBase, int depthIndex,
+                       std::vector<int32_t>& out, int newBase)
 {
     const auto at = [oldBase, &in](int k) -> int32_t {
         return in[static_cast<std::size_t>(oldBase + k)];
