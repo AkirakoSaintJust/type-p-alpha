@@ -639,7 +639,7 @@ render, and the aliasing limit is recorded below.
   and two multiplies.
 - **Timing.** At 1× there is one read and no filter delay, so a mapped carrier
   and an unmapped modulator stay aligned. A future 2× path would need the
-  per-voice alignment delay described in the 2× design note.
+  per-voice alignment delay described in the 1× section above.
 - **Locks.** The full lab rule is in the node: the fixed waves build a mask from
   their mip-0 table, and wave 13 interpolates the a and b masks at the base
   morph. A voice's live morph is not in the mask; that is the recorded limit.
