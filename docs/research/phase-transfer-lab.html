@@ -1,0 +1,1293 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b1020">
+<title>Phase Transfer Lab — Wavetable Synthesis Experiment</title>
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #0b1020;
+    --panel: #111a2d;
+    --panel-2: #0d1628;
+    --line: #263650;
+    --line-soft: rgba(151, 174, 211, .15);
+    --text: #eef4ff;
+    --muted: #9aacc9;
+    --dim: #6d7f9e;
+    --cyan: #54d7e8;
+    --violet: #b59aff;
+    --amber: #ffc779;
+    --green: #85e1b2;
+    --red: #ff8799;
+    --radius: 18px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    color: var(--text);
+    background:
+      radial-gradient(1000px 600px at 85% -10%, rgba(90, 103, 195, .19), transparent 60%),
+      radial-gradient(800px 500px at -10% 20%, rgba(39, 176, 193, .10), transparent 55%),
+      var(--bg);
+    font: 14px/1.5 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  button, input, select { font: inherit; }
+  .shell { width: min(1440px, calc(100% - 36px)); margin: 0 auto; padding: 34px 0 52px; }
+  .topbar { display:flex; justify-content:space-between; align-items:flex-end; gap:18px; margin-bottom:24px; }
+  .eyebrow { color:var(--cyan); font-size:11px; font-weight:800; letter-spacing:.18em; text-transform:uppercase; margin-bottom:9px; }
+  h1 { font-size:clamp(27px, 4vw, 42px); line-height:1.04; letter-spacing:-.045em; margin:0; font-weight:760; }
+  .subtitle { color:var(--muted); margin:10px 0 0; max-width:780px; font-size:14px; }
+  .engine-pill { display:flex; align-items:center; gap:8px; border:1px solid var(--line); background:rgba(17,26,45,.72); padding:9px 12px; border-radius:999px; color:var(--muted); white-space:nowrap; font-size:12px; }
+  .engine-dot { width:7px; height:7px; border-radius:50%; background:var(--green); box-shadow:0 0 12px rgba(133,225,178,.7); }
+  .layout { display:grid; grid-template-columns: minmax(290px, 360px) minmax(0, 1fr); gap:18px; align-items:start; }
+  .panel { background:linear-gradient(180deg, rgba(19,29,49,.96), rgba(14,23,40,.96)); border:1px solid var(--line); border-radius:var(--radius); box-shadow:0 18px 48px rgba(0,0,0,.18); }
+  .controls { padding:20px; }
+  .panel-heading { display:flex; align-items:center; justify-content:space-between; gap:12px; margin:0 0 16px; }
+  .panel-heading h2 { font-size:14px; letter-spacing:.02em; margin:0; }
+  .panel-kicker { color:var(--dim); font-size:10px; font-weight:800; letter-spacing:.15em; text-transform:uppercase; }
+  .field { margin:0 0 20px; }
+  .field:last-child { margin-bottom:0; }
+  .field-head { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:8px; }
+  label { color:#dce7fa; font-size:12px; font-weight:650; }
+  .value { color:var(--cyan); font-size:12px; font-variant-numeric:tabular-nums; font-weight:750; }
+  select {
+    width:100%; border:1px solid #354663; background:#0c1527; color:var(--text); padding:11px 12px; border-radius:11px; outline:none;
+  }
+  select:focus { border-color:var(--cyan); box-shadow:0 0 0 3px rgba(84,215,232,.12); }
+  input[type="range"] { display:block; width:100%; margin:0; accent-color:var(--cyan); cursor:pointer; }
+  .range-ends { display:flex; justify-content:space-between; color:var(--dim); font-size:10px; margin-top:4px; }
+  .play-row { display:flex; gap:10px; margin:4px 0 19px; }
+  .play-button {
+    display:inline-flex; align-items:center; justify-content:center; gap:10px; flex:1; min-height:48px;
+    border:0; border-radius:12px; color:#07151d; background:linear-gradient(135deg, #7de7ef, #75c7ef);
+    font-weight:800; cursor:pointer; box-shadow:0 8px 26px rgba(84,215,232,.18); transition:transform .15s, filter .15s;
+  }
+  .play-button:hover { filter:brightness(1.06); transform:translateY(-1px); }
+  .play-button:active { transform:translateY(0); }
+  .play-button.playing { color:#fff; background:linear-gradient(135deg, #e37c9a, #b66de0); box-shadow:0 8px 26px rgba(221,119,174,.16); }
+  .play-icon { width:0; height:0; border-top:7px solid transparent; border-bottom:7px solid transparent; border-left:11px solid currentColor; }
+  .playing .play-icon { width:11px; height:14px; border:0; border-left:4px solid currentColor; border-right:4px solid currentColor; }
+  .small-button { border:1px solid #354663; background:#111e34; color:var(--muted); border-radius:12px; padding:0 14px; cursor:pointer; }
+  .small-button:hover { border-color:#6682aa; color:var(--text); }
+  .status-line { display:flex; justify-content:space-between; align-items:center; margin-top:9px; color:var(--muted); font-size:11px; }
+  .status-text { display:flex; gap:7px; align-items:center; }
+  .status-light { width:6px; height:6px; border-radius:50%; background:var(--dim); }
+  .status-light.on { background:var(--green); box-shadow:0 0 9px rgba(133,225,178,.65); }
+  .divider { height:1px; background:var(--line-soft); margin:19px 0; }
+  .readouts { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; margin-top:16px; }
+  .readout { background:rgba(6,13,26,.42); border:1px solid var(--line-soft); border-radius:12px; padding:10px 9px; min-width:0; }
+  .readout .number { font-size:19px; line-height:1.15; font-weight:760; letter-spacing:-.03em; font-variant-numeric:tabular-nums; }
+  .readout .caption { color:var(--dim); font-size:9px; margin-top:5px; text-transform:uppercase; letter-spacing:.09em; white-space:nowrap; }
+  .hint { color:var(--muted); font-size:11px; line-height:1.5; margin:13px 0 0; }
+  .hint strong { color:#dce7fa; font-weight:650; }
+  .visuals { padding:18px; min-width:0; }
+  .visual-top { display:flex; justify-content:space-between; align-items:center; gap:12px; margin:0 0 12px; }
+  .visual-top h2 { margin:0; font-size:14px; }
+  .visual-top span { color:var(--dim); font-size:10px; letter-spacing:.1em; text-transform:uppercase; }
+  .chart-card { background:rgba(6,13,26,.38); border:1px solid var(--line-soft); border-radius:14px; padding:12px 12px 8px; margin-bottom:12px; overflow:hidden; }
+  .chart-header { display:flex; justify-content:space-between; align-items:center; gap:12px; margin:0 2px 8px; }
+  .chart-title { color:#dfeaff; font-size:11px; font-weight:700; }
+  .chart-note { color:var(--dim); font-size:10px; text-align:right; }
+  canvas { display:block; width:100%; height:auto; }
+  .legend { display:flex; flex-wrap:wrap; gap:14px; padding:2px 3px 4px; color:var(--muted); font-size:10px; }
+  .legend-item { display:flex; align-items:center; gap:6px; }
+  .swatch { width:16px; height:3px; border-radius:4px; background:var(--cyan); }
+  .swatch.violet { background:var(--violet); }
+  .swatch.amber { background:var(--amber); }
+  .swatch.locked { background:#71829e; }
+  .swatch.dash { height:0; width:17px; border-top:1px dashed var(--amber); background:none; }
+  .swatch.jump { height:0; width:17px; border-top:2px dashed var(--red); background:none; }
+  .footnote { color:var(--dim); font-size:10px; line-height:1.55; margin:12px 2px 0; }
+  .tooltip { display:inline-flex; align-items:center; justify-content:center; width:15px; height:15px; margin-left:5px; border:1px solid #526580; color:var(--muted); border-radius:50%; font-size:9px; vertical-align:middle; cursor:help; }
+  @media (max-width: 930px) { .layout { grid-template-columns:1fr; } .controls { order:0; } .visuals { order:1; } }
+  @media (max-width: 560px) {
+    .shell { width:calc(100% - 20px); padding-top:22px; }
+    .topbar { align-items:flex-start; flex-direction:column; }
+    .engine-pill { align-self:flex-start; }
+    .controls,.visuals { padding:14px; }
+    .chart-card { padding:9px 8px 6px; }
+    .readouts { gap:6px; }
+    .readout { padding:8px 7px; }
+    .readout .number { font-size:17px; }
+  }
+</style>
+</head>
+<body>
+<div class="shell">
+  <header class="topbar">
+    <div>
+      <div class="eyebrow">Interactive synthesis study</div>
+      <h1>Phase Transfer Lab</h1>
+      <p class="subtitle">A single-cycle wavetable, a modulated one-breakpoint base map, and a stochastic segmented phase-transfer stage. Change the geometry while the oscillator is running and listen to the result.</p>
+    </div>
+    <div class="engine-pill"><span class="engine-dot"></span> Browser-native Web Audio · 30 Hz control</div>
+  </header>
+
+  <main class="layout">
+    <section class="panel controls" aria-label="Synthesis controls">
+      <div class="panel-heading"><h2>Sound &amp; motion</h2><span class="panel-kicker">Controls</span></div>
+      <div class="play-row">
+        <button id="playButton" class="play-button" type="button"><span class="play-icon" aria-hidden="true"></span><span id="playLabel">Start sound</span></button>
+        <button id="resetButton" class="small-button" type="button" title="Reset slopes, flips, ordering and phase">Reset</button>
+      </div>
+      <div class="status-line">
+        <span class="status-text"><span id="statusLight" class="status-light"></span><span id="statusText">Audio stopped</span></span>
+        <span id="audioRate">— Hz</span>
+      </div>
+
+      <div class="divider"></div>
+      <div class="field">
+        <div class="field-head"><label for="waveform">Wavetable contents</label></div>
+        <select id="waveform">
+          <option value="sine">Sine</option>
+          <option value="triangle">Triangle</option>
+          <option value="square">Band-limited square</option>
+          <option value="saw">Band-limited saw</option>
+          <option value="quarter">Quarter sine → silence (0 to π/4)</option>
+          <option value="halfSine">Half sine → silence (0 to π)</option>
+          <option value="halfTriangle">Half triangle → silence (0 to π)</option>
+          <option value="twoHalfSines">Two positive half-sines → silence</option>
+          <option value="twoHalfTriangles">Two positive half-triangles → silence</option>
+          <option value="fullSineHalf">One full sine cycle → silence at π</option>
+          <option value="fullTriangleHalf">One full triangle cycle → silence at π</option>
+          <option value="rectSine">Rectified sine (positive only)</option>
+          <option value="rectTriangle">Rectified triangle (positive only)</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <div class="field-head"><label for="frequency">Pitch / transfer cycles per second</label><output class="value" id="frequencyValue">110 Hz</output></div>
+        <input id="frequency" type="range" min="20" max="880" step="1" value="110">
+        <div class="range-ends"><span>20 Hz</span><span>880 Hz</span></div>
+      </div>
+
+      <div class="divider"></div>
+      <div class="panel-heading"><h2>Pre-segmentation transfer function</h2><span class="panel-kicker">Base map F(x)</span></div>
+      <div class="field">
+        <div class="field-head"><label for="breakpointX">Breakpoint x position · y fixed at 0.5</label><output class="value" id="breakpointXValue">0.500 · π rad</output></div>
+        <input id="breakpointX" type="range" min="1" max="999" step="1" value="500">
+        <div class="range-ends"><span>ε = 0.001</span><span>1 − ε = 0.999</span></div>
+        <p class="hint">The base transfer function is the polyline (0, 0) → (x, 0.5) → (1, 1). The breakpoint x is shown in normalized phase; radians are 0 to 2π.</p>
+      </div>
+      <div class="field">
+        <div class="field-head"><label for="lfoAmount">LFO amount</label><output class="value" id="lfoAmountValue">0%</output></div>
+        <input id="lfoAmount" type="range" min="0" max="100" step="1" value="0">
+        <div class="range-ends"><span>Off</span><span>Full normalized range</span></div>
+      </div>
+      <div class="field">
+        <div class="field-head"><label for="lfoRate">LFO frequency</label><output class="value" id="lfoRateValue">0.5 Hz</output></div>
+        <input id="lfoRate" type="range" min="0" max="30" step="0.1" value="0.5">
+        <div class="range-ends"><span>0 Hz</span><span>30 Hz</span></div>
+      </div>
+      <div class="field">
+        <div class="field-head"><label for="envAmount">Envelope amount</label><output class="value" id="envAmountValue">0%</output></div>
+        <input id="envAmount" type="range" min="-100" max="100" step="1" value="0">
+        <div class="range-ends"><span>Move left</span><span>Move right</span></div>
+        <p class="hint">The ADSR envelope is gated by Start/Stop: Start triggers attack and decay; Stop begins release. Negative amounts move x left, positive amounts move it right. LFO and envelope are summed, then x is clamped to [ε, 1−ε].</p>
+      </div>
+      <div class="field">
+        <div class="field-head"><label for="envAttack">Envelope attack</label><output class="value" id="envAttackValue">0.50 s</output></div>
+        <input id="envAttack" type="range" min="0" max="5" step="0.05" value="0.5">
+        <div class="range-ends"><span>0 s</span><span>5 s</span></div>
+      </div>
+      <div class="field">
+        <div class="field-head"><label for="envDecay">Envelope decay</label><output class="value" id="envDecayValue">0.80 s</output></div>
+        <input id="envDecay" type="range" min="0" max="5" step="0.05" value="0.8">
+        <div class="range-ends"><span>0 s</span><span>5 s</span></div>
+      </div>
+      <div class="field">
+        <div class="field-head"><label for="envSustain">Envelope sustain</label><output class="value" id="envSustainValue">35%</output></div>
+        <input id="envSustain" type="range" min="0" max="100" step="1" value="35">
+        <div class="range-ends"><span>0%</span><span>100%</span></div>
+      </div>
+      <div class="field">
+        <div class="field-head"><label for="envRelease">Envelope release</label><output class="value" id="envReleaseValue">0.75 s</output></div>
+        <input id="envRelease" type="range" min="0" max="5" step="0.05" value="0.75">
+        <div class="range-ends"><span>0 s</span><span>5 s</span></div>
+      </div>
+      <div class="field">
+        <div class="field-head"><label for="envGateButton">Envelope gate</label><button id="envGateButton" class="small-button" type="button">Trigger envelope</button></div>
+        <p class="hint">The gate can be retriggered or released independently while audio is running. Start sound also opens the gate automatically.</p>
+      </div>
+      <div class="readouts" style="margin-top:0">
+        <div class="readout"><div class="number" id="currentBreakpointX">0.500</div><div class="caption">Current breakpoint x</div></div>
+        <div class="readout"><div class="number" id="currentBreakpointRadians">π</div><div class="caption">Current x · radians</div></div>
+      </div>
+
+      <div class="divider"></div>
+      <div class="panel-heading"><h2>Segmented transfer stage</h2><span class="panel-kicker">Piecewise map G(q)</span></div>
+      <div class="field">
+        <div class="field-head"><label for="segments">Requested segments</label><output class="value" id="segmentsValue">8</output></div>
+        <input id="segments" type="range" min="2" max="32" step="1" value="8">
+        <div class="range-ends"><span>2</span><span>32</span></div>
+      </div>
+      <div class="field">
+        <div class="field-head"><label for="flip">Segment flip probability</label><output class="value" id="flipValue">0%</output></div>
+        <input id="flip" type="range" min="0" max="100" step="1" value="0">
+        <div class="range-ends"><span>Never</span><span>Always</span></div>
+      </div>
+      <div class="field">
+        <div class="field-head"><label for="flipInterval">Flip re-decision frequency</label><output class="value" id="flipIntervalValue">0.5 Hz</output></div>
+        <input id="flipInterval" type="range" min="0" max="30" step="0.1" value="0.5">
+        <div class="range-ends"><span>0 Hz · never</span><span>30 Hz · rapid</span></div>
+        <p class="hint">At this frequency, every eligible segment independently rerolls its orientation using the flip probability above. At 0 Hz, orientations remain unchanged. Stochastic controls are evaluated on the shared 30 Hz control clock.</p>
+      </div>
+
+      <div class="divider"></div>
+      <div class="panel-heading"><h2>Segment ordering discontinuity</h2><span class="panel-kicker">Stochastic traversal</span></div>
+      <div class="field">
+        <div class="field-head"><label for="reorderProbability">Discontinuous reordering probability</label><output class="value" id="reorderProbabilityValue">0%</output></div>
+        <input id="reorderProbability" type="range" min="0" max="100" step="1" value="0">
+        <div class="range-ends"><span>Natural order</span><span>Maximum chance</span></div>
+      </div>
+      <div class="field">
+        <div class="field-head"><label for="jumpRange">Segment jump range</label><output class="value" id="jumpRangeValue">0% · max jump 1</output></div>
+        <input id="jumpRange" type="range" min="0" max="100" step="1" value="0">
+        <div class="range-ends"><span>1 segment ahead</span><span>Up to N−1 ahead</span></div>
+        <p class="hint">0% limits a jump to the next segment (distance 1). At 100%, a jump may target any forward offset up to the number of active segments minus one.</p>
+      </div>
+      <div class="field">
+        <div class="field-head"><label for="reorderRate">Reordering frequency</label><output class="value" id="reorderRateValue">0 Hz</output></div>
+        <input id="reorderRate" type="range" min="0" max="30" step="0.1" value="0">
+        <div class="range-ends"><span>0 Hz · stopped</span><span>30 Hz · control limit</span></div>
+        <p class="hint">At each event, a new traversal order is generated. Every segment is visited once per cycle; probabilistic jumps create discontinuities, and skipped segments are visited later in that same cycle. At 0 Hz, the current order is held.</p>
+      </div>
+
+      <div class="divider"></div>
+      <div class="panel-heading"><h2>Continuous stochastic drift</h2><span class="panel-kicker">Slope range [0.5, 2.66]</span></div>
+      <div class="field">
+        <div class="field-head"><label for="driftAmount">Drift amount</label><output class="value" id="driftAmountValue">0%</output></div>
+        <input id="driftAmount" type="range" min="0" max="100" step="1" value="0">
+        <div class="range-ends"><span>Locked at 1</span><span>Full [0.5, 2.66] range</span></div>
+      </div>
+      <div class="field">
+        <div class="field-head"><label for="driftRate">Drift frequency</label><output class="value" id="driftRateValue">1.2 Hz</output></div>
+        <input id="driftRate" type="range" min="0" max="30" step="0.1" value="1.2">
+        <div class="range-ends"><span>0 Hz · stopped</span><span>30 Hz · fast</span></div>
+        <p class="hint">Controls the rate of the continuous stochastic slope walk. Slope targets are updated at the shared 30 Hz control rate and interpolated smoothly between updates. At 0 Hz, slopes hold their current values.</p>
+      </div>
+
+      <div class="readouts">
+        <div class="readout"><div class="number" id="actualSegments">8</div><div class="caption">Active segments</div></div>
+        <div class="readout"><div class="number" id="flippedSegments">0</div><div class="caption">Flipped</div></div>
+        <div class="readout"><div class="number" id="orderingJumps">0</div><div class="caption">Order discontinuities</div></div>
+        <div class="readout"><div class="number" id="currentSlope">1.00</div><div class="caption">Mean slope</div></div>
+      </div>
+      <p class="hint"><strong>Feature protection.</strong> Zero crossings stay inside a segment bounded at ≥ 0.5 of peak amplitude on sloped sides. A transition into or out of a flat-zero span may end at the zero edge; the flat span itself is kept as one segment. Breakpoints are snapped away from protected regions, so the active count can be lower than requested.</p>
+      <p class="hint"><strong>Flip protection.</strong> Any segment containing a wavetable zero crossing or zero-amplitude point, as well as any fully silent segment, is locked in the forward direction. Flip probability and re-decision frequency apply only to eligible segments; locked segments appear grey in the transfer plot.</p>
+      <p class="hint">All stochastic controls share a 30 Hz control clock. The audio oscillator and wavetable lookup still run at the browser audio sample rate. Segment slopes are constrained to [0.5, 2.66]. Reordering introduces intentional phase jumps at segment joins, which can produce sharp transients or clicks at high settings.</p>
+    </section>
+
+    <section class="panel visuals" aria-label="Synthesis visualizations">
+      <div class="visual-top"><h2>Signal &amp; phase geometry</h2><span>Live model view</span></div>
+      <div class="chart-card">
+        <div class="chart-header"><span class="chart-title">01 / Wavetable cycle</span><span class="chart-note">Amplitude · rotated to a safe cycle origin</span></div>
+        <canvas id="waveCanvas" width="1100" height="240" aria-label="Wavetable waveform plot"></canvas>
+      </div>
+      <div class="chart-card">
+        <div class="chart-header"><span class="chart-title">02 / Pre-segmentation transfer function</span><span class="chart-note">F(x) · one movable breakpoint at y = 0.5</span></div>
+        <canvas id="baseTransferCanvas" width="1100" height="230" aria-label="Pre-segmentation transfer function with a movable breakpoint"></canvas>
+      </div>
+      <div class="chart-card">
+        <div class="chart-header"><span class="chart-title">03 / Segmented transfer stage</span><span class="chart-note">G(q) · input q = F(x) → wavetable phase y</span></div>
+        <canvas id="transferCanvas" width="1100" height="270" aria-label="Segmented transfer function plot"></canvas>
+      </div>
+      <div class="chart-card">
+        <div class="chart-header"><span class="chart-title">04 / Output cycle</span><span class="chart-note" id="cycleNote">One complete transfer traversal · live phase marker</span></div>
+        <canvas id="outputCycleCanvas" width="1100" height="210" aria-label="One complete cycle of the phase-distorted output waveform"></canvas>
+      </div>
+      <div class="chart-card">
+        <div class="chart-header"><span class="chart-title">05 / Live audio monitor</span><span class="chart-note" id="scopeNote">Start sound to view the output</span></div>
+        <canvas id="scopeCanvas" width="1100" height="150" aria-label="Live audio waveform monitor"></canvas>
+      </div>
+      <div class="legend">
+        <span class="legend-item"><span class="swatch"></span>Wavetable</span>
+        <span class="legend-item"><span class="swatch violet"></span>Forward segment</span>
+        <span class="legend-item"><span class="swatch amber"></span>Flipped segment</span>
+        <span class="legend-item"><span class="swatch locked"></span>Zero/silence locked</span>
+        <span class="legend-item"><span class="swatch dash"></span>±0.5 peak threshold</span>
+        <span class="legend-item"><span class="swatch jump"></span>Ordering discontinuity</span>
+      </div>
+      <p class="footnote">The final map is T(x) = G(F(x)): the modulated base map F(x) is evaluated first, then its output q drives the segmented stage G(q). The phasor advances at the selected frequency and resets after one complete traversal. Segment slopes stay within [0.5, 2.66], with stochastic updates on the shared 30 Hz control clock.</p>
+    </section>
+  </main>
+</div>
+
+<script>
+(() => {
+  'use strict';
+  const N = 4096;
+  const TAU = Math.PI * 2;
+  const CONTROL_RATE = 30;
+  const CONTROL_DT = 1 / CONTROL_RATE;
+  const MIN_SLOPE = 0.5;
+  const MAX_SLOPE = 2.66;
+  const X_EPSILON = 0.001;
+  const $ = (id) => document.getElementById(id);
+  const els = {
+    waveform: $('waveform'), frequency: $('frequency'), segments: $('segments'), flip: $('flip'), flipInterval: $('flipInterval'),
+    reorderProbability: $('reorderProbability'), jumpRange: $('jumpRange'), reorderRate: $('reorderRate'),
+    driftAmount: $('driftAmount'), driftRate: $('driftRate'),
+    breakpointX: $('breakpointX'), lfoAmount: $('lfoAmount'), lfoRate: $('lfoRate'), envAmount: $('envAmount'),
+    envAttack: $('envAttack'), envDecay: $('envDecay'), envSustain: $('envSustain'), envRelease: $('envRelease'), envGateButton: $('envGateButton'),
+    play: $('playButton'), playLabel: $('playLabel'),
+    reset: $('resetButton'), statusLight: $('statusLight'), statusText: $('statusText'), audioRate: $('audioRate'),
+    frequencyValue: $('frequencyValue'), segmentsValue: $('segmentsValue'), flipValue: $('flipValue'), flipIntervalValue: $('flipIntervalValue'),
+    reorderProbabilityValue: $('reorderProbabilityValue'), jumpRangeValue: $('jumpRangeValue'), reorderRateValue: $('reorderRateValue'),
+    driftAmountValue: $('driftAmountValue'), driftRateValue: $('driftRateValue'),
+    breakpointXValue: $('breakpointXValue'), lfoAmountValue: $('lfoAmountValue'), lfoRateValue: $('lfoRateValue'), envAmountValue: $('envAmountValue'),
+    envAttackValue: $('envAttackValue'), envDecayValue: $('envDecayValue'), envSustainValue: $('envSustainValue'), envReleaseValue: $('envReleaseValue'),
+    currentBreakpointX: $('currentBreakpointX'), currentBreakpointRadians: $('currentBreakpointRadians'), actualSegments: $('actualSegments'),
+    flippedSegments: $('flippedSegments'), orderingJumps: $('orderingJumps'), currentSlope: $('currentSlope'), scopeNote: $('scopeNote'), cycleNote: $('cycleNote'),
+    waveCanvas: $('waveCanvas'), baseTransferCanvas: $('baseTransferCanvas'), transferCanvas: $('transferCanvas'), outputCycleCanvas: $('outputCycleCanvas'), scopeCanvas: $('scopeCanvas')
+  };
+  const waveCtx = els.waveCanvas.getContext('2d');
+  const baseTransferCtx = els.baseTransferCanvas.getContext('2d');
+  const transferCtx = els.transferCanvas.getContext('2d');
+  const outputCycleCtx = els.outputCycleCanvas.getContext('2d');
+  const scopeCtx = els.scopeCanvas.getContext('2d');
+
+  let rawTable = new Float32Array(N);
+  let table = new Float32Array(N);
+  let phaseOrigin = 0;
+  let protectedMask = new Uint8Array(N);
+  let flatMask = new Uint8Array(N);
+  let breakpoints = [0, N];
+  let segments = [];
+  let segmentOrder = [];
+  let orderedSegments = [];
+  let audioContext = null;
+  let processor = null;
+  let masterGain = null;
+  let analyser = null;
+  let isPlaying = false;
+  let progress = 0;
+  let flipPhase = 0;
+  let reorderPhase = 0;
+  let controlAccumulator = 0;
+  let animationId = 0;
+  let timeData = null;
+  let lastSlopeReadout = 1;
+  const pageEpochSeconds = performance.now() / 1000;
+  let envelopeGate = false;
+  let envelopeGateOnTime = 0;
+  let envelopeReleaseTime = -Infinity;
+  let envelopeReleaseStartValue = 0;
+
+  const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+  const tri = (phase) => (2 / Math.PI) * Math.asin(Math.sin(phase));
+
+  function makeWaveform(type) {
+    const a = new Float32Array(N);
+    const maxHarmonics = 24;
+    for (let i = 0; i < N; i++) {
+      const p = (i / N) * TAU;
+      let v = 0;
+      switch (type) {
+        case 'sine': v = Math.sin(p); break;
+        case 'triangle': v = tri(p); break;
+        case 'square': {
+          for (let h = 1; h <= maxHarmonics; h += 2) v += Math.sin(h * p) / h;
+          v *= 4 / Math.PI;
+          break;
+        }
+        case 'saw': {
+          for (let h = 1; h <= maxHarmonics; h++) v += (h % 2 ? 1 : -1) * Math.sin(h * p) / h;
+          v *= 2 / Math.PI;
+          break;
+        }
+        case 'quarter': v = p <= Math.PI / 4 ? Math.sin(2 * p) : 0; break;
+        case 'halfSine': v = p <= Math.PI ? Math.sin(p) : 0; break;
+        case 'halfTriangle': v = p <= Math.PI ? 1 - Math.abs((2 * p / Math.PI) - 1) : 0; break;
+        case 'twoHalfSines': v = p <= Math.PI ? Math.abs(Math.sin(2 * p)) : 0; break;
+        case 'twoHalfTriangles': v = p <= Math.PI ? Math.abs(tri(2 * p)) : 0; break;
+        case 'fullSineHalf': v = p <= Math.PI ? Math.sin(2 * p) : 0; break;
+        case 'fullTriangleHalf': v = p <= Math.PI ? tri(2 * p) : 0; break;
+        case 'rectSine': v = Math.abs(Math.sin(p)); break;
+        case 'rectTriangle': v = Math.abs(tri(p)); break;
+        default: v = Math.sin(p);
+      }
+      a[i] = v;
+    }
+    let peak = 0;
+    for (let i = 0; i < N; i++) peak = Math.max(peak, Math.abs(a[i]));
+    if (peak > 0) for (let i = 0; i < N; i++) a[i] /= peak;
+    return a;
+  }
+
+  function markRange(mask, from, to) {
+    const lo = Math.max(0, from);
+    const hi = Math.min(N - 1, to);
+    for (let i = lo; i <= hi; i++) mask[i] = 1;
+  }
+
+  // Protect sign-changing crossings: each is enclosed by a single segment whose
+  // two sloped-side endpoints are at least half the waveform's peak magnitude.
+  function buildFeatureMasks(a) {
+    const blocked = new Uint8Array(N);
+    const flat = new Uint8Array(N);
+    let peak = 0;
+    for (let i = 0; i < N; i++) peak = Math.max(peak, Math.abs(a[i]));
+    const zeroEps = Math.max(1e-7, peak * 0.00008);
+    const halfPeak = peak * 0.5;
+
+    // Find near-zero runs. Long runs are flat spans: their interior cannot be
+    // split, but their two edges are valid boundaries for the adjacent ramps.
+    let i = 0;
+    while (i < N) {
+      if (Math.abs(a[i]) > zeroEps) { i++; continue; }
+      const start = i;
+      while (i + 1 < N && Math.abs(a[i + 1]) <= zeroEps) i++;
+      const end = i;
+      if (end - start >= 2) {
+        if (end - start > 1) markRange(flat, start + 1, end - 1);
+        // Falling ramp: half-peak point to the flat edge. The flat edge is exempt.
+        let left = start;
+        while (left > 0 && Math.abs(a[left]) < halfPeak) left--;
+        markRange(blocked, left + 1, start - 1);
+        // Rising ramp: flat edge to the half-peak point. The flat edge is exempt.
+        let right = end;
+        while (right < N - 1 && Math.abs(a[right]) < halfPeak) right++;
+        markRange(blocked, end + 1, right - 1);
+      } else {
+        // Isolated zero/touching-zero: keep the complete crossing/touch inside
+        // one segment, with >= half-peak magnitudes at both ends.
+        let left = start;
+        while (left > 0 && Math.abs(a[left]) < halfPeak) left--;
+        let right = end;
+        while (right < N - 1 && Math.abs(a[right]) < halfPeak) right++;
+        markRange(blocked, left + 1, right - 1);
+      }
+      i++;
+    }
+
+    // Catch zero crossings between adjacent samples (no sample exactly equals 0).
+    for (i = 0; i < N - 1; i++) {
+      if (a[i] * a[i + 1] < 0) {
+        let left = i;
+        while (left > 0 && Math.abs(a[left]) < halfPeak) left--;
+        let right = i + 1;
+        while (right < N - 1 && Math.abs(a[right]) < halfPeak) right++;
+        markRange(blocked, left + 1, right - 1);
+      }
+    }
+
+    // Consolidate any other exact flat runs as well (not just silence).
+    const slopeEps = Math.max(1e-10, peak * 1e-10);
+    i = 0;
+    while (i < N - 1) {
+      if (Math.abs(a[i + 1] - a[i]) > slopeEps) { i++; continue; }
+      const start = i;
+      while (i + 1 < N - 1 && Math.abs(a[i + 2] - a[i + 1]) <= slopeEps) i++;
+      const end = i + 1;
+      if (end - start >= 2) markRange(flat, start + 1, end - 1);
+      i++;
+    }
+    for (i = 0; i < N; i++) if (flat[i]) blocked[i] = 1;
+    return { blocked, flat };
+  }
+
+  function chooseCycleOrigin(a) {
+    let bestIndex = 0;
+    let best = -1;
+    for (let i = 0; i < N; i++) {
+      const magnitude = Math.abs(a[i]);
+      if (magnitude > best) { best = magnitude; bestIndex = i; }
+    }
+    return bestIndex;
+  }
+
+  function chooseBreakpoints(blocked, requested) {
+    const safe = [];
+    for (let i = 1; i < N; i++) if (!blocked[i]) safe.push(i);
+    const wanted = requested - 1;
+    const selected = [];
+    const minGap = Math.max(3, Math.floor(N / 2048));
+    let previous = 0;
+    for (let k = 1; k <= wanted; k++) {
+      const remaining = wanted - k;
+      const low = previous + minGap;
+      const high = N - 1 - remaining * minGap;
+      if (low > high || safe.length === 0) break;
+      const target = (k / requested) * N;
+      let bestIndex = -1;
+      let bestDistance = Infinity;
+      // Binary-search to the first candidate at/after the target, then expand
+      // around it while respecting monotonic spacing and room for later points.
+      let lo = 0, hi = safe.length;
+      while (lo < hi) { const mid = (lo + hi) >> 1; if (safe[mid] < target) lo = mid + 1; else hi = mid; }
+      for (let offset = 0; offset < safe.length; offset++) {
+        const candidates = [lo - offset, lo + offset];
+        let any = false;
+        for (const ci of candidates) {
+          if (ci < 0 || ci >= safe.length) continue;
+          const idx = safe[ci];
+          if (idx < low || idx > high) continue;
+          const dist = Math.abs(idx - target);
+          if (dist < bestDistance) { bestDistance = dist; bestIndex = idx; }
+          any = true;
+        }
+        if (any && offset > bestDistance + 2) break;
+      }
+      if (bestIndex < 0) break;
+      selected.push(bestIndex);
+      previous = bestIndex;
+    }
+    return [0, ...selected, N];
+  }
+
+  // A segment is not flippable when its wavetable phase span includes a
+  // zero point/crossing (including a touch at zero) or is entirely silent.
+  // Endpoints are included so a segment cannot flip across a zero-valued join.
+  function isFlipEligible(y0, y1) {
+    const start = clamp(Math.floor(y0 * N), 0, N - 1);
+    const end = clamp(Math.ceil(y1 * N), 0, N - 1);
+    const zeroEps = 0.00008; // makeWaveform() normalizes non-silent tables to peak 1.
+    let allSilent = true;
+    let hasZeroOrCrossing = false;
+    let previous = table[start];
+    if (Math.abs(previous) > zeroEps) allSilent = false;
+    if (Math.abs(previous) <= zeroEps) hasZeroOrCrossing = true;
+    for (let k = start + 1; k <= end; k++) {
+      const current = table[k];
+      if (Math.abs(current) > zeroEps) allSilent = false;
+      if (Math.abs(current) <= zeroEps || previous * current < 0) hasZeroOrCrossing = true;
+      previous = current;
+    }
+    return !(hasZeroOrCrossing || allSilent);
+  }
+
+  function nowSeconds() { return performance.now() / 1000; }
+
+  function envelopeValueAt(timeSeconds) {
+    const attack = Number(els.envAttack.value);
+    const decay = Number(els.envDecay.value);
+    const sustain = Number(els.envSustain.value) / 100;
+    if (envelopeGate) {
+      const elapsed = Math.max(0, timeSeconds - envelopeGateOnTime);
+      if (attack > 0 && elapsed < attack) return elapsed / attack;
+      if (decay > 0 && elapsed < attack + decay) {
+        const d = (elapsed - attack) / decay;
+        return 1 + (sustain - 1) * d;
+      }
+      return sustain;
+    }
+    if (!Number.isFinite(envelopeReleaseTime)) return 0;
+    const release = Number(els.envRelease.value);
+    if (release <= 0) return 0;
+    const elapsed = timeSeconds - envelopeReleaseTime;
+    if (elapsed <= 0) return envelopeReleaseStartValue;
+    if (elapsed >= release) return 0;
+    return envelopeReleaseStartValue * (1 - elapsed / release);
+  }
+
+  function triggerEnvelope() {
+    const t = nowSeconds();
+    envelopeGate = true;
+    envelopeGateOnTime = t;
+    envelopeReleaseTime = -Infinity;
+    envelopeReleaseStartValue = 0;
+  }
+
+  function releaseEnvelope() {
+    if (!envelopeGate) return;
+    const t = nowSeconds();
+    envelopeReleaseStartValue = envelopeValueAt(t);
+    envelopeGate = false;
+    envelopeReleaseTime = t;
+  }
+
+  function currentBreakpointXAt(timeSeconds) {
+    const base = Number(els.breakpointX.value) / 1000;
+    const lfoDepth = Number(els.lfoAmount.value) / 100;
+    const lfoFrequency = Number(els.lfoRate.value);
+    const lfo = Math.sin(TAU * lfoFrequency * (timeSeconds - pageEpochSeconds)) * lfoDepth * 0.5 * (1 - 2 * X_EPSILON);
+    const env = envelopeValueAt(timeSeconds);
+    const envAmount = Number(els.envAmount.value) / 100;
+    const envOffset = envAmount >= 0
+      ? envAmount * env * (1 - X_EPSILON - base)
+      : envAmount * env * (base - X_EPSILON);
+    return clamp(base + lfo + envOffset, X_EPSILON, 1 - X_EPSILON);
+  }
+
+  // F(x) is the pre-segmentation map: (0,0) -> (xb,0.5) -> (1,1).
+  // Its output q is passed into the existing segmented map G(q).
+  function sampleBaseTransfer(x, breakpointX) {
+    const px = clamp(x, 0, 1);
+    const xb = clamp(breakpointX, X_EPSILON, 1 - X_EPSILON);
+    if (px <= xb) return 0.5 * (px / xb);
+    return 0.5 + 0.5 * ((px - xb) / (1 - xb));
+  }
+
+  function rebuildTransfer(randomizeFlips = true) {
+    rawTable = makeWaveform(els.waveform.value);
+    phaseOrigin = chooseCycleOrigin(rawTable);
+    table = new Float32Array(N);
+    for (let i = 0; i < N; i++) table[i] = rawTable[(phaseOrigin + i) % N];
+    const masks = buildFeatureMasks(table);
+    protectedMask = masks.blocked;
+    flatMask = masks.flat;
+    breakpoints = chooseBreakpoints(protectedMask, Number(els.segments.value));
+    const flipChance = Number(els.flip.value) / 100;
+    const previousSegments = segments;
+    segments = [];
+    for (let i = 0; i < breakpoints.length - 1; i++) {
+      const y0 = breakpoints[i] / N;
+      const y1 = breakpoints[i + 1] / N;
+      const flipEligible = isFlipEligible(y0, y1);
+      const keepPrevious = !randomizeFlips && previousSegments[i] && previousSegments[i].flipEligible;
+      const flip = flipEligible && (randomizeFlips
+        ? Math.random() < flipChance
+        : (keepPrevious ? previousSegments[i].flipped : false));
+      segments.push({
+        y0, y1,
+        startY: flip ? y1 : y0,
+        endY: flip ? y0 : y1,
+        flipped: flip,
+        flipEligible,
+        slope: 1,
+        slopeFrom: 1,
+        slopeTarget: 1,
+        width: y1 - y0,
+        x0: 0,
+        x1: 0
+      });
+    }
+    segmentOrder = segments.map((_, index) => index);
+    refreshOrderedSegments();
+    progress = 0;
+    flipPhase = 0;
+    reorderPhase = 0;
+    controlAccumulator = 0;
+    updateReadouts();
+    drawAll();
+  }
+
+  function redecideFlips() {
+    const chance = Number(els.flip.value) / 100;
+    for (const seg of segments) {
+      // Protected segments always stay forward, regardless of probability.
+      seg.flipped = seg.flipEligible && Math.random() < chance;
+      seg.startY = seg.flipped ? seg.y1 : seg.y0;
+      seg.endY = seg.flipped ? seg.y0 : seg.y1;
+    }
+    updateReadouts();
+  }
+
+  function refreshOrderedSegments() {
+    orderedSegments = segmentOrder.map(index => segments[index]).filter(Boolean);
+  }
+
+  function getMaxJumpDistance() {
+    const count = segments.length;
+    if (count <= 1) return 0;
+    const amount = Number(els.jumpRange.value) / 100;
+    return 1 + Math.round((count - 2) * amount);
+  }
+
+  // Build a cyclic permutation using forward jumps. Each source segment appears
+  // exactly once; skipped source segments remain available later in the cycle.
+  function makeSegmentOrder() {
+    const count = segments.length;
+    if (count <= 1) return count ? [0] : [];
+    const probability = Number(els.reorderProbability.value) / 100;
+    const maxJump = getMaxJumpDistance();
+    const order = [0];
+    const remaining = new Set();
+    for (let i = 1; i < count; i++) remaining.add(i);
+    let current = 0;
+
+    while (remaining.size) {
+      const candidates = Array.from(remaining, index => ({
+        index,
+        distance: (index - current + count) % count
+      })).sort((a, b) => a.distance - b.distance);
+
+      let chosen = null;
+      const attemptDiscontinuity = maxJump >= 2 && Math.random() < probability;
+      if (attemptDiscontinuity) {
+        const jumpCandidates = candidates.filter(item => item.distance >= 2 && item.distance <= maxJump);
+        if (jumpCandidates.length) chosen = jumpCandidates[Math.floor(Math.random() * jumpCandidates.length)];
+      }
+
+      // If no random skip is selected, take the natural successor when possible.
+      // When it was already visited by an earlier jump, take the nearest unvisited
+      // forward segment so the permutation still includes every segment once.
+      if (!chosen) chosen = candidates.find(item => item.distance === 1) || candidates[0];
+      order.push(chosen.index);
+      remaining.delete(chosen.index);
+      current = chosen.index;
+    }
+    return order;
+  }
+
+  function redecideSegmentOrder() {
+    segmentOrder = makeSegmentOrder();
+    refreshOrderedSegments();
+    updateReadouts();
+    drawTransfer();
+    drawOutputCycle();
+  }
+
+  function countOrderingDiscontinuities() {
+    const count = segmentOrder.length;
+    if (count <= 1) return 0;
+    let jumps = 0;
+    for (let i = 0; i < count; i++) {
+      const current = segmentOrder[i];
+      const next = segmentOrder[(i + 1) % count];
+      if ((next - current + count) % count !== 1) jumps++;
+    }
+    return jumps;
+  }
+
+  function reflect(value, min, max) {
+    if (max <= min) return min;
+    const span = max - min;
+    let t = (value - min) % (2 * span);
+    if (t < 0) t += 2 * span;
+    return min + (t <= span ? t : 2 * span - t);
+  }
+
+  function currentDriftBounds() {
+    const amount = Number(els.driftAmount.value) / 100;
+    return {
+      min: 1 + (MIN_SLOPE - 1) * amount,
+      max: 1 + (MAX_SLOPE - 1) * amount,
+      amount
+    };
+  }
+
+  function controlTick() {
+    const { min, max, amount } = currentDriftBounds();
+    const driftRate = Number(els.driftRate.value);
+    const stepScale = (amount > 0 && driftRate > 0)
+      ? amount * 0.75 * Math.sqrt(driftRate * CONTROL_DT) * Math.sqrt(3)
+      : 0;
+
+    // Generate new slope targets at 30 Hz. The audio loop interpolates from
+    // the previous target to this one over the control interval, keeping drift smooth.
+    for (const seg of segments) {
+      const base = Number.isFinite(seg.slopeTarget) ? seg.slopeTarget : seg.slope;
+      seg.slopeFrom = amount <= 0 ? 1 : base;
+      const delta = stepScale > 0 ? (Math.random() * 2 - 1) * stepScale : 0;
+      seg.slopeTarget = amount <= 0 ? 1 : clamp(reflect(seg.slopeFrom + delta, min, max), min, max);
+      seg.slope = seg.slopeFrom;
+    }
+
+    const flipFrequency = Number(els.flipInterval.value);
+    if (flipFrequency > 0) {
+      flipPhase += flipFrequency / CONTROL_RATE;
+      if (flipPhase >= 1 - 1e-10) {
+        flipPhase -= 1;
+        redecideFlips();
+      }
+    }
+
+    const reorderFrequency = Number(els.reorderRate.value);
+    if (reorderFrequency > 0) {
+      reorderPhase += reorderFrequency / CONTROL_RATE;
+      if (reorderPhase >= 1 - 1e-10) {
+        reorderPhase -= 1;
+        redecideSegmentOrder();
+      }
+    }
+  }
+
+  function interpolateSlopeState(amount) {
+    const t = clamp(amount, 0, 1);
+    for (const seg of segments) {
+      const from = Number.isFinite(seg.slopeFrom) ? seg.slopeFrom : seg.slope;
+      const target = Number.isFinite(seg.slopeTarget) ? seg.slopeTarget : seg.slope;
+      seg.slope = from + (target - from) * t;
+    }
+  }
+
+  function getWidths() {
+    let total = 0;
+    for (const seg of orderedSegments) {
+      const dy = seg.y1 - seg.y0;
+      seg.width = dy / Math.max(seg.slope, MIN_SLOPE);
+      total += seg.width;
+    }
+    let x = 0;
+    for (const seg of orderedSegments) {
+      seg.x0 = x;
+      x += seg.width;
+      seg.x1 = x;
+    }
+    return total || 1;
+  }
+
+  function sampleTable(phase) {
+    let pos = phase * N;
+    pos %= N;
+    if (pos < 0) pos += N;
+    const i0 = pos | 0;
+    const i1 = (i0 + 1) % N;
+    const frac = pos - i0;
+    return table[i0] + (table[i1] - table[i0]) * frac;
+  }
+
+  function sampleTransfer(p, totalWidth) {
+    const x = p * totalWidth;
+    let seg = orderedSegments[orderedSegments.length - 1];
+    for (let i = 0; i < orderedSegments.length; i++) {
+      if (x <= orderedSegments[i].x1 || i === orderedSegments.length - 1) { seg = orderedSegments[i]; break; }
+    }
+    const local = clamp((x - seg.x0) / Math.max(seg.width, 1e-12), 0, 1);
+    return seg.startY + (seg.endY - seg.startY) * local;
+  }
+
+  function updateReadouts() {
+    const flipped = segments.reduce((n, s) => n + (s.flipped ? 1 : 0), 0);
+    els.actualSegments.textContent = String(segments.length);
+    els.flippedSegments.textContent = String(flipped);
+    els.frequencyValue.textContent = `${els.frequency.value} Hz`;
+    els.segmentsValue.textContent = els.segments.value;
+    els.flipValue.textContent = `${els.flip.value}%`;
+    els.flipIntervalValue.textContent = `${Number(els.flipInterval.value).toFixed(1)} Hz`;
+    els.reorderProbabilityValue.textContent = `${els.reorderProbability.value}%`;
+    els.jumpRangeValue.textContent = `${els.jumpRange.value}% · max jump ${Math.max(1, getMaxJumpDistance())}`;
+    els.reorderRateValue.textContent = `${Number(els.reorderRate.value).toFixed(1)} Hz`;
+    els.driftAmountValue.textContent = `${els.driftAmount.value}%`;
+    els.driftRateValue.textContent = `${Number(els.driftRate.value).toFixed(1)} Hz`;
+    const baseX = Number(els.breakpointX.value) / 1000;
+    const currentX = currentBreakpointXAt(nowSeconds());
+    els.breakpointXValue.textContent = `${baseX.toFixed(3)} · ${(baseX * Math.PI * 2).toFixed(2)} rad`;
+    els.lfoAmountValue.textContent = `${els.lfoAmount.value}%`;
+    els.lfoRateValue.textContent = `${Number(els.lfoRate.value).toFixed(1)} Hz`;
+    els.envAmountValue.textContent = `${Number(els.envAmount.value) > 0 ? '+' : ''}${els.envAmount.value}%`;
+    els.envAttackValue.textContent = `${Number(els.envAttack.value).toFixed(2)} s`;
+    els.envDecayValue.textContent = `${Number(els.envDecay.value).toFixed(2)} s`;
+    els.envSustainValue.textContent = `${els.envSustain.value}%`;
+    els.envReleaseValue.textContent = `${Number(els.envRelease.value).toFixed(2)} s`;
+    els.envGateButton.textContent = envelopeGate ? 'Release envelope' : 'Trigger envelope';
+    els.currentBreakpointX.textContent = currentX.toFixed(3);
+    const radians = currentX * TAU;
+    els.currentBreakpointRadians.textContent = Math.abs(currentX - 0.5) < 0.0005 ? 'π' : radians.toFixed(2);
+    els.orderingJumps.textContent = String(countOrderingDiscontinuities());
+    els.currentSlope.textContent = Number(lastSlopeReadout).toFixed(2);
+  }
+
+  function setupCanvas(ctx, canvas) {
+    const w = canvas.width, h = canvas.height;
+    ctx.clearRect(0, 0, w, h);
+    ctx.fillStyle = '#0a1324';
+    ctx.fillRect(0, 0, w, h);
+    return { w, h };
+  }
+
+  function drawWaveform() {
+    const ctx = waveCtx;
+    const { w, h } = setupCanvas(ctx, els.waveCanvas);
+    const pad = { l: 44, r: 16, t: 14, b: 27 };
+    const plotW = w - pad.l - pad.r, plotH = h - pad.t - pad.b;
+    const xAt = (p) => pad.l + p * plotW;
+    const yAt = (v) => pad.t + (1 - (v + 1.15) / 2.3) * plotH;
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = 'rgba(155,177,211,.12)';
+    for (const val of [-1, -0.5, 0, 0.5, 1]) {
+      const y = yAt(val);
+      ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(w - pad.r, y); ctx.stroke();
+      ctx.fillStyle = '#7083a2'; ctx.font = '11px ui-sans-serif,system-ui'; ctx.textAlign = 'right';
+      ctx.fillText(val.toFixed(1), pad.l - 9, y + 4);
+    }
+    ctx.setLineDash([5, 5]); ctx.strokeStyle = 'rgba(255,199,121,.55)';
+    for (const val of [-0.5, 0.5]) { ctx.beginPath(); ctx.moveTo(pad.l, yAt(val)); ctx.lineTo(w - pad.r, yAt(val)); ctx.stroke(); }
+    ctx.setLineDash([]);
+    // Flat spans and protected feature interiors.
+    ctx.fillStyle = 'rgba(181,154,255,.08)';
+    let inBand = false, bandStart = 0;
+    for (let i = 0; i <= N; i++) {
+      const flag = i < N && flatMask[i] === 1;
+      if (flag && !inBand) { inBand = true; bandStart = i; }
+      if (!flag && inBand) { ctx.fillRect(xAt(bandStart / N), pad.t, Math.max(1, xAt(i / N) - xAt(bandStart / N)), plotH); inBand = false; }
+    }
+    ctx.beginPath();
+    for (let i = 0; i < N; i++) {
+      const x = xAt(i / (N - 1));
+      const y = yAt(table[i]);
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = '#54d7e8'; ctx.lineWidth = 2.2; ctx.stroke();
+    // Phase breakpoints.
+    ctx.strokeStyle = 'rgba(181,154,255,.65)'; ctx.lineWidth = 1;
+    for (let i = 1; i < breakpoints.length - 1; i++) {
+      const x = xAt(breakpoints[i] / N);
+      ctx.beginPath(); ctx.moveTo(x, pad.t); ctx.lineTo(x, pad.t + plotH); ctx.stroke();
+    }
+    ctx.fillStyle = '#7f92b2'; ctx.font = '10px ui-sans-serif,system-ui'; ctx.textAlign = 'center';
+    ctx.fillText('0', pad.l, h - 8); ctx.fillText('π', pad.l + plotW / 2, h - 8); ctx.fillText('2π', w - pad.r, h - 8);
+    ctx.textAlign = 'left'; ctx.fillStyle = '#9aacc9'; ctx.fillText('amplitude', pad.l, 11);
+  }
+
+  function drawBaseTransfer() {
+    const ctx = baseTransferCtx;
+    const { w, h } = setupCanvas(ctx, els.baseTransferCanvas);
+    const pad = { l: 46, r: 18, t: 15, b: 30 };
+    const plotW = w - pad.l - pad.r, plotH = h - pad.t - pad.b;
+    const xAt = (p) => pad.l + p * plotW;
+    const yAt = (v) => pad.t + (1 - v) * plotH;
+    const time = nowSeconds();
+    const xb = currentBreakpointXAt(time);
+    ctx.strokeStyle = 'rgba(155,177,211,.14)'; ctx.lineWidth = 1;
+    for (let i = 0; i <= 4; i++) {
+      const p = i / 4;
+      ctx.beginPath(); ctx.moveTo(xAt(p), pad.t); ctx.lineTo(xAt(p), pad.t + plotH); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(pad.l, yAt(p)); ctx.lineTo(w - pad.r, yAt(p)); ctx.stroke();
+      ctx.fillStyle = '#7083a2'; ctx.font = '10px ui-sans-serif,system-ui'; ctx.textAlign = 'right';
+      ctx.fillText(p.toFixed(2), pad.l - 9, yAt(p) + 4);
+      ctx.textAlign = 'center'; ctx.fillText(p.toFixed(2), xAt(p), h - 9);
+    }
+    // y=x reference and the current two-line base transfer curve.
+    ctx.beginPath(); ctx.moveTo(xAt(0), yAt(0)); ctx.lineTo(xAt(1), yAt(1));
+    ctx.strokeStyle = 'rgba(205,218,239,.28)'; ctx.lineWidth = 1.2; ctx.setLineDash([5, 5]); ctx.stroke(); ctx.setLineDash([]);
+    ctx.beginPath(); ctx.moveTo(xAt(0), yAt(0)); ctx.lineTo(xAt(xb), yAt(0.5)); ctx.lineTo(xAt(1), yAt(1));
+    ctx.strokeStyle = '#54d7e8'; ctx.lineWidth = 3; ctx.lineJoin = 'round'; ctx.stroke();
+    // Breakpoint guides and handle.
+    ctx.setLineDash([4, 4]); ctx.strokeStyle = 'rgba(255,199,121,.7)'; ctx.lineWidth = 1.3;
+    ctx.beginPath(); ctx.moveTo(xAt(xb), pad.t); ctx.lineTo(xAt(xb), pad.t + plotH); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(pad.l, yAt(0.5)); ctx.lineTo(w - pad.r, yAt(0.5)); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.beginPath(); ctx.arc(xAt(xb), yAt(0.5), 6, 0, TAU); ctx.fillStyle = '#ffc779'; ctx.fill();
+    ctx.lineWidth = 2; ctx.strokeStyle = '#0a1324'; ctx.stroke();
+    // Current phasor position projected through F.
+    const currentQ = sampleBaseTransfer(progress, xb);
+    ctx.beginPath(); ctx.arc(xAt(progress), yAt(currentQ), 4.5, 0, TAU); ctx.fillStyle = '#b59aff'; ctx.fill();
+    ctx.fillStyle = '#9aacc9'; ctx.font = '10px ui-sans-serif,system-ui'; ctx.textAlign = 'left';
+    ctx.fillText(`F(x) · xb=${xb.toFixed(3)} (${(xb * TAU).toFixed(2)} rad)`, pad.l, 11);
+    ctx.textAlign = 'right'; ctx.fillText('phasor input x', w - pad.r, h - 9);
+  }
+
+  function drawTransfer() {
+    const ctx = transferCtx;
+    const { w, h } = setupCanvas(ctx, els.transferCanvas);
+    const pad = { l: 46, r: 18, t: 16, b: 31 };
+    const plotW = w - pad.l - pad.r, plotH = h - pad.t - pad.b;
+    const xAt = (p) => pad.l + p * plotW;
+    const yAt = (v) => pad.t + (1 - v) * plotH;
+    ctx.strokeStyle = 'rgba(155,177,211,.14)'; ctx.lineWidth = 1;
+    for (let i = 0; i <= 4; i++) {
+      const p = i / 4;
+      ctx.beginPath(); ctx.moveTo(xAt(p), pad.t); ctx.lineTo(xAt(p), pad.t + plotH); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(pad.l, yAt(p)); ctx.lineTo(w - pad.r, yAt(p)); ctx.stroke();
+      ctx.fillStyle = '#7083a2'; ctx.font = '10px ui-sans-serif,system-ui'; ctx.textAlign = 'right'; ctx.fillText(p.toFixed(2), pad.l - 9, yAt(p) + 4);
+      ctx.textAlign = 'center'; ctx.fillText(p.toFixed(2), xAt(p), h - 10);
+    }
+    // y=x reference, initially identical to the non-flipped transfer function.
+    ctx.beginPath(); ctx.moveTo(xAt(0), yAt(0)); ctx.lineTo(xAt(1), yAt(1));
+    ctx.strokeStyle = 'rgba(205,218,239,.23)'; ctx.lineWidth = 1.2; ctx.setLineDash([5, 5]); ctx.stroke(); ctx.setLineDash([]);
+    const total = getWidths();
+    for (let i = 0; i < orderedSegments.length; i++) {
+      const s = orderedSegments[i];
+      const x0 = s.x0 / total, x1 = s.x1 / total;
+      ctx.beginPath(); ctx.moveTo(xAt(x0), yAt(s.startY)); ctx.lineTo(xAt(x1), yAt(s.endY));
+      const segmentColor = !s.flipEligible ? '#71829e' : (s.flipped ? '#ffc779' : '#b59aff');
+      ctx.strokeStyle = segmentColor; ctx.lineWidth = 3; ctx.lineCap = 'round';
+      if (!s.flipEligible) ctx.setLineDash([5, 3]);
+      ctx.stroke(); ctx.setLineDash([]);
+      ctx.beginPath(); ctx.arc(xAt(x0), yAt(s.startY), 3.2, 0, TAU); ctx.fillStyle = segmentColor; ctx.fill();
+      // Draw jump at the join when orientation changes the next segment's start.
+      if (i < orderedSegments.length - 1) {
+        const next = orderedSegments[i + 1];
+        if (Math.abs(s.endY - next.startY) > 1e-5) {
+          ctx.beginPath(); ctx.moveTo(xAt(x1), yAt(s.endY)); ctx.lineTo(xAt(x1), yAt(next.startY));
+          ctx.strokeStyle = 'rgba(255,135,153,.82)'; ctx.lineWidth = 1.5; ctx.setLineDash([3, 4]); ctx.stroke(); ctx.setLineDash([]);
+        }
+      }
+    }
+    // Draw the join across the phasor reset boundary as well.
+    if (orderedSegments.length > 1) {
+      const last = orderedSegments[orderedSegments.length - 1];
+      const first = orderedSegments[0];
+      if (Math.abs(last.endY - first.startY) > 1e-5) {
+        ctx.beginPath(); ctx.moveTo(xAt(1), yAt(last.endY)); ctx.lineTo(xAt(1), yAt(first.startY));
+        ctx.strokeStyle = 'rgba(255,135,153,.9)'; ctx.lineWidth = 1.7; ctx.setLineDash([3, 4]); ctx.stroke(); ctx.setLineDash([]);
+      }
+    }
+    // Current marker is F(phasor x), because this stage receives q = F(x).
+    const x = sampleBaseTransfer(progress, currentBreakpointXAt(nowSeconds()));
+    ctx.beginPath(); ctx.moveTo(xAt(x), pad.t); ctx.lineTo(xAt(x), pad.t + plotH);
+    ctx.strokeStyle = 'rgba(84,215,232,.75)'; ctx.lineWidth = 1.4; ctx.stroke();
+    ctx.fillStyle = '#54d7e8'; ctx.beginPath(); ctx.arc(xAt(x), pad.t + plotH, 4, 0, TAU); ctx.fill();
+    ctx.fillStyle = '#9aacc9'; ctx.textAlign = 'left'; ctx.font = '10px ui-sans-serif,system-ui'; ctx.fillText('wavetable phase y', pad.l, 11);
+    ctx.textAlign = 'right'; ctx.fillText('pre-map phase q = F(x)', w - pad.r, h - 10);
+  }
+
+  function drawOutputCycle() {
+    const ctx = outputCycleCtx;
+    const { w, h } = setupCanvas(ctx, els.outputCycleCanvas);
+    const pad = { l: 46, r: 18, t: 14, b: 28 };
+    const plotW = w - pad.l - pad.r, plotH = h - pad.t - pad.b;
+    const xAt = (p) => pad.l + p * plotW;
+    const yAt = (v) => pad.t + (1 - (v + 1.15) / 2.3) * plotH;
+
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = 'rgba(155,177,211,.14)';
+    for (const val of [-1, -0.5, 0, 0.5, 1]) {
+      const y = yAt(val);
+      ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(w - pad.r, y); ctx.stroke();
+      ctx.fillStyle = '#7083a2'; ctx.font = '10px ui-sans-serif,system-ui'; ctx.textAlign = 'right';
+      ctx.fillText(val.toFixed(1), pad.l - 9, y + 4);
+    }
+
+    // Snapshot the same composed map T(x)=G(F(x)) used by the audio renderer.
+    const totalWidth = getWidths();
+    const snapshotTime = nowSeconds();
+    const breakpointX = currentBreakpointXAt(snapshotTime);
+    const samples = 1200;
+    ctx.beginPath();
+    for (let i = 0; i < samples; i++) {
+      const xPhase = i / (samples - 1);
+      const preMappedPhase = sampleBaseTransfer(xPhase, breakpointX);
+      const wavetablePhase = sampleTransfer(preMappedPhase, totalWidth);
+      const amplitude = sampleTable(wavetablePhase);
+      const x = xAt(xPhase), y = yAt(amplitude);
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = '#85e1b2'; ctx.lineWidth = 2.4; ctx.lineJoin = 'round'; ctx.stroke();
+
+    // The marker shows where the audio phasor currently is within this displayed cycle.
+    const markerX = xAt(progress);
+    const markerPhase = sampleTransfer(sampleBaseTransfer(progress, breakpointX), totalWidth);
+    ctx.beginPath(); ctx.moveTo(markerX, pad.t); ctx.lineTo(markerX, pad.t + plotH);
+    ctx.strokeStyle = 'rgba(84,215,232,.9)'; ctx.lineWidth = 1.5; ctx.stroke();
+    ctx.beginPath(); ctx.arc(markerX, yAt(sampleTable(markerPhase)), 4.2, 0, TAU);
+    ctx.fillStyle = '#54d7e8'; ctx.fill();
+
+    ctx.fillStyle = '#7f92b2'; ctx.font = '10px ui-sans-serif,system-ui'; ctx.textAlign = 'center';
+    ctx.fillText('0', pad.l, h - 8); ctx.fillText('½ cycle', pad.l + plotW / 2, h - 8); ctx.fillText('1 cycle', w - pad.r, h - 8);
+    ctx.textAlign = 'left'; ctx.fillStyle = '#9aacc9'; ctx.fillText('output amplitude', pad.l, 11);
+    els.cycleNote.textContent = isPlaying
+      ? 'One complete cycle · base LFO/ADSR + live drift, flips and ordering · cyan marker = current phase'
+      : 'One complete cycle · LFO runs continuously; Start triggers the envelope and stochastic controls';
+  }
+
+  function drawScope() {
+    const ctx = scopeCtx;
+    const { w, h } = setupCanvas(ctx, els.scopeCanvas);
+    const mid = h / 2;
+    ctx.strokeStyle = 'rgba(155,177,211,.14)'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(0, mid); ctx.lineTo(w, mid); ctx.stroke();
+    if (analyser && timeData && isPlaying) {
+      analyser.getByteTimeDomainData(timeData);
+      ctx.beginPath();
+      for (let i = 0; i < timeData.length; i++) {
+        const x = (i / (timeData.length - 1)) * w;
+        const y = (timeData[i] / 255) * h;
+        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.strokeStyle = '#85e1b2'; ctx.lineWidth = 2; ctx.stroke();
+      els.scopeNote.textContent = 'Live output · time domain';
+    } else {
+      ctx.fillStyle = '#6d7f9e'; ctx.font = '12px ui-sans-serif,system-ui'; ctx.textAlign = 'center';
+      ctx.fillText('Output appears here while the oscillator is running', w / 2, mid + 4);
+      els.scopeNote.textContent = 'Start sound to view the output';
+    }
+  }
+
+  function drawAll() {
+    drawWaveform();
+    drawBaseTransfer();
+    drawTransfer();
+    drawOutputCycle();
+    drawScope();
+  }
+
+  function audioProcess(event) {
+    const output = event.outputBuffer.getChannelData(0);
+    const sr = audioContext.sampleRate;
+    const frequency = Number(els.frequency.value);
+    const dt = 1 / sr;
+    const widths = new Float64Array(orderedSegments.length);
+    const blockStartTime = nowSeconds();
+
+    for (let n = 0; n < output.length; n++) {
+      controlAccumulator += dt;
+      while (controlAccumulator >= CONTROL_DT) {
+        controlAccumulator -= CONTROL_DT;
+        controlTick();
+      }
+      interpolateSlopeState(controlAccumulator / CONTROL_DT);
+
+      let totalWidth = 0;
+      for (let j = 0; j < orderedSegments.length; j++) {
+        const seg = orderedSegments[j];
+        const width = (seg.y1 - seg.y0) / Math.max(seg.slope, MIN_SLOPE);
+        widths[j] = width;
+        totalWidth += width;
+      }
+      const preMappedX = sampleBaseTransfer(progress, currentBreakpointXAt(blockStartTime + n / sr));
+      const x = preMappedX * totalWidth;
+      let acc = 0;
+      let phase = 0;
+      for (let j = 0; j < orderedSegments.length; j++) {
+        const seg = orderedSegments[j];
+        const next = acc + widths[j];
+        if (x <= next || j === orderedSegments.length - 1) {
+          const local = clamp((x - acc) / Math.max(widths[j], 1e-12), 0, 1);
+          phase = seg.startY + (seg.endY - seg.startY) * local;
+          break;
+        }
+        acc = next;
+      }
+      output[n] = sampleTable(phase) * 0.72;
+      progress += frequency / sr;
+      if (progress >= 1) progress -= 1;
+    }
+    let mean = 0;
+    for (const seg of segments) mean += seg.slope;
+    lastSlopeReadout = segments.length ? mean / segments.length : 1;
+  }
+
+  async function startAudio() {
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if (!AudioCtx) {
+      els.statusText.textContent = 'Web Audio is not supported in this browser';
+      return;
+    }
+    try {
+      audioContext = new AudioCtx();
+      await audioContext.resume();
+      processor = audioContext.createScriptProcessor(1024, 0, 1);
+      masterGain = audioContext.createGain();
+      analyser = audioContext.createAnalyser();
+      analyser.fftSize = 2048;
+      timeData = new Uint8Array(analyser.fftSize);
+      masterGain.gain.value = 0.22;
+      processor.onaudioprocess = audioProcess;
+      processor.connect(masterGain);
+      masterGain.connect(analyser);
+      analyser.connect(audioContext.destination);
+      isPlaying = true;
+      triggerEnvelope();
+      flipPhase = 0;
+      reorderPhase = 0;
+      controlAccumulator = 0;
+      els.play.classList.add('playing');
+      els.playLabel.textContent = 'Stop sound';
+      els.statusLight.classList.add('on');
+      els.statusText.textContent = 'Audio running';
+      els.audioRate.textContent = `${Math.round(audioContext.sampleRate).toLocaleString()} Hz`;
+      els.scopeNote.textContent = 'Live output · time domain';
+      drawAll();
+    } catch (err) {
+      console.error(err);
+      await stopAudio();
+      els.statusText.textContent = 'Could not start audio — try another browser';
+    }
+  }
+
+  async function stopAudio() {
+    releaseEnvelope();
+    isPlaying = false;
+    if (processor) { processor.onaudioprocess = null; try { processor.disconnect(); } catch (_) {} }
+    if (masterGain) { try { masterGain.disconnect(); } catch (_) {} }
+    if (analyser) { try { analyser.disconnect(); } catch (_) {} }
+    if (audioContext) { try { await audioContext.close(); } catch (_) {} }
+    processor = masterGain = analyser = audioContext = null;
+    timeData = null;
+    els.play.classList.remove('playing');
+    els.playLabel.textContent = 'Start sound';
+    els.statusLight.classList.remove('on');
+    els.statusText.textContent = 'Audio stopped';
+    els.audioRate.textContent = '— Hz';
+    drawScope();
+  }
+
+  function animate() {
+    drawBaseTransfer();
+    drawTransfer();
+    drawOutputCycle();
+    drawScope();
+    updateReadouts();
+    if (isPlaying) {
+      let mean = 0;
+      for (const seg of segments) mean += seg.slope;
+      lastSlopeReadout = segments.length ? mean / segments.length : 1;
+      els.currentSlope.textContent = lastSlopeReadout.toFixed(2);
+    }
+    animationId = requestAnimationFrame(animate);
+  }
+
+  els.play.addEventListener('click', () => { if (isPlaying) stopAudio(); else startAudio(); });
+  els.reset.addEventListener('click', () => {
+    for (const seg of segments) {
+      seg.slope = 1;
+      seg.slopeFrom = 1;
+      seg.slopeTarget = 1;
+      seg.flipped = false;
+      seg.startY = seg.y0;
+      seg.endY = seg.y1;
+    }
+    segmentOrder = segments.map((_, index) => index);
+    refreshOrderedSegments();
+    progress = 0;
+    flipPhase = 0;
+    reorderPhase = 0;
+    controlAccumulator = 0;
+    drawAll();
+    updateReadouts();
+  });
+  els.envGateButton.addEventListener('click', () => {
+    if (envelopeGate) releaseEnvelope(); else triggerEnvelope();
+    redrawBaseMap();
+  });
+  const redrawBaseMap = () => {
+    updateReadouts();
+    drawBaseTransfer();
+    drawTransfer();
+    drawOutputCycle();
+  };
+  for (const control of [els.breakpointX, els.lfoAmount, els.lfoRate, els.envAmount, els.envAttack, els.envDecay, els.envSustain, els.envRelease]) {
+    control.addEventListener('input', redrawBaseMap);
+  }
+
+  els.waveform.addEventListener('change', () => rebuildTransfer(true));
+  els.segments.addEventListener('input', () => { updateReadouts(); rebuildTransfer(true); });
+  els.flip.addEventListener('input', () => {
+    redecideFlips();
+    flipPhase = 0;
+    drawAll();
+  });
+  els.flipInterval.addEventListener('input', () => { flipPhase = 0; updateReadouts(); });
+  els.reorderProbability.addEventListener('input', () => {
+    reorderPhase = 0;
+    redecideSegmentOrder();
+    updateReadouts();
+  });
+  els.jumpRange.addEventListener('input', () => {
+    reorderPhase = 0;
+    redecideSegmentOrder();
+    updateReadouts();
+  });
+  els.reorderRate.addEventListener('input', () => { reorderPhase = 0; updateReadouts(); });
+  els.frequency.addEventListener('input', updateReadouts);
+  els.driftAmount.addEventListener('input', () => {
+    updateReadouts();
+    const { min, max, amount } = currentDriftBounds();
+    for (const seg of segments) {
+      const target = amount === 0 ? 1 : clamp(seg.slope, min, max);
+      seg.slope = target;
+      seg.slopeFrom = target;
+      seg.slopeTarget = target;
+    }
+    drawTransfer();
+    drawOutputCycle();
+  });
+  els.driftRate.addEventListener('input', updateReadouts);
+
+  rebuildTransfer(true);
+  if (!orderedSegments.length && segments.length) { segmentOrder = segments.map((_, index) => index); refreshOrderedSegments(); }
+  updateReadouts();
+  drawAll();
+  animate();
+  window.addEventListener('pagehide', () => { if (audioContext) audioContext.close(); });
+})();
+</script>
+</body>
+</html>

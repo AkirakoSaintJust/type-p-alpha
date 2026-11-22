@@ -668,6 +668,7 @@ void PluginEditor::resized()
     const float scale =
         juce::jmin(static_cast<float>(getWidth()) / static_cast<float>(kWidth),
                    static_cast<float>(getHeight()) / static_cast<float>(kHeight));
+    tabs_.setCompact(scale < 0.75f);
     const float x =
         (static_cast<float>(getWidth()) - static_cast<float>(kWidth) * scale) *
         0.5f;
@@ -765,12 +766,13 @@ void PluginEditor::buildUi()
     canvas_.addAndMakeVisible(*toolbar_);
     toolbar_->setBounds(1, 160, 1238, 44);
     tabs_.setBounds(1, 204, 1238, 37);
-    activeTab_ = juce::jlimit(0, 6, activeTab_);
+    activeTab_ = juce::jlimit(0, 7, activeTab_);
     juce::StringArray labels;
     labels.add("patch settings");
     labels.add("part fx/mod");
     labels.add("operator envs");
     labels.add("operator lfos");
+    labels.add("op phasemap");
     labels.add("op spectra a");
     labels.add("op spectra b");
     labels.add("op spectra mod");
@@ -803,12 +805,15 @@ void PluginEditor::buildPage()
         page_ = p1::ui::makeOperatorLfosPage(*this);
         break;
     case 4:
-        page_ = p1::ui::makeOperatorSpectraPage(*this, true);
+        page_ = p1::ui::makePhaseMapPage(*this);
         break;
     case 5:
-        page_ = p1::ui::makeOperatorSpectraPage(*this, false);
+        page_ = p1::ui::makeOperatorSpectraPage(*this, true);
         break;
     case 6:
+        page_ = p1::ui::makeOperatorSpectraPage(*this, false);
+        break;
+    case 7:
         page_ = p1::ui::makeOperatorSpectraModPage(*this);
         break;
     default:
@@ -831,7 +836,7 @@ void PluginEditor::setActivePart(int part)
 
 void PluginEditor::showTab(int tab)
 {
-    tab = juce::jlimit(0, 6, tab);
+    tab = juce::jlimit(0, 7, tab);
     if (tab == activeTab_)
         return;
     activeTab_ = tab;
@@ -1157,6 +1162,29 @@ std::vector<juce::String> sectionParamIDs(int op, int part,
         add(p1::params::opDetuneLfoMode(op, part));
         add(p1::params::opDetuneLfoRateFade(op, part));
         add(p1::params::opDetuneLfoDepthFade(op, part));
+        break;
+    case PluginEditor::OperatorSection::phase:
+        add(p1::params::opPhase(op, "on", part));
+        for (const char* field :
+             {"bp", "segments", "flip", "flip_rate", "reorder",
+              "reorder_rate", "jump", "drift", "drift_rate"})
+            add(p1::params::opPhase(op, field, part));
+        for (const char* field :
+             {"rate", "depth", "wave", "mode", "rate_fade", "depth_fade"})
+            add(p1::params::opPhaseLfo(op, field, part));
+        for (const char* field : {"on", "r1", "r2", "r3", "l1", "l2", "l3",
+                                  "relr", "rell", "mode"})
+            add(p1::params::opPhaseEnv(op, field, part));
+        break;
+    case PluginEditor::OperatorSection::phaseLfo:
+        for (const char* field :
+             {"rate", "depth", "wave", "mode", "rate_fade", "depth_fade"})
+            add(p1::params::opPhaseLfo(op, field, part));
+        break;
+    case PluginEditor::OperatorSection::phaseEnvelope:
+        for (const char* field : {"on", "r1", "r2", "r3", "l1", "l2", "l3",
+                                  "relr", "rell", "mode"})
+            add(p1::params::opPhaseEnv(op, field, part));
         break;
     case PluginEditor::OperatorSection::spectrumA:
         add(p1::params::opSpecRangeA(op, part));

@@ -174,6 +174,81 @@ int main(int argc, char** argv)
     p1editor->showTab(4);
     fill();
     ok = saveSnapshot(*editor,
+                      directory.getChildFile("editor-op-phasemap.png")) && ok;
+    {
+        const std::array<std::pair<const char*, float>, 26> demo{{
+            {"op1_phase_on.p0", 1.0f},
+            {"op1_phase_bp.p0", 620.0f},
+            {"op1_phase_segments.p0", 8.0f},
+            {"op1_phase_flip.p0", 25.0f},
+            {"op1_phase_flip_rate.p0", 178956.0f},
+            {"op1_phase_reorder.p0", 30.0f},
+            {"op1_phase_reorder_rate.p0", 134218.0f},
+            {"op1_phase_jump.p0", 2.0f},
+            {"op1_phase_drift.p0", 35.0f},
+            {"op1_phase_drift_rate.p0", 107374.0f},
+            {"op1_phase_lfo_rate.p0", 44739.0f},
+            {"op1_phase_lfo_depth.p0", 22.0f},
+            {"op1_phase_lfo_wave.p0", 0.0f},
+            {"op1_phase_lfo_mode.p0", 1.0f},
+            {"op1_phase_lfo_rate_fade.p0", 20.0f},
+            {"op1_phase_lfo_depth_fade.p0", 40.0f},
+            {"op1_phase_env_on.p0", 1.0f},
+            {"op1_phase_env_r1.p0", 80.0f},
+            {"op1_phase_env_r2.p0", 60.0f},
+            {"op1_phase_env_r3.p0", 50.0f},
+            {"op1_phase_env_l1.p0", 12.0f},
+            {"op1_phase_env_l2.p0", 28.0f},
+            {"op1_phase_env_l3.p0", 0.0f},
+            {"op1_phase_env_relr.p0", 80.0f},
+            {"op1_phase_env_rell.p0", 0.0f},
+            {"op1_phase_env_mode.p0", 1.0f}}};
+        auto set = [&](const char* id, float value) {
+            if (auto* parameter = p1editor->state().getParameter(id))
+                parameter->setValueNotifyingHost(
+                    parameter->convertTo0to1(value));
+        };
+        for (const auto& [id, value] : demo)
+            set(id, value);
+        fill();
+        ok = saveSnapshot(
+                 *editor,
+                 directory.getChildFile("editor-op-phasemap-live.png")) &&
+             ok;
+        const std::array<std::pair<const char*, float>, 26> neutral{{
+            {"op1_phase_on.p0", 0.0f},
+            {"op1_phase_bp.p0", 500.0f},
+            {"op1_phase_segments.p0", 8.0f},
+            {"op1_phase_flip.p0", 0.0f},
+            {"op1_phase_flip_rate.p0", 178956.0f},
+            {"op1_phase_reorder.p0", 0.0f},
+            {"op1_phase_reorder_rate.p0", 0.0f},
+            {"op1_phase_jump.p0", 1.0f},
+            {"op1_phase_drift.p0", 0.0f},
+            {"op1_phase_drift_rate.p0", 107374.0f},
+            {"op1_phase_lfo_rate.p0", 44739.0f},
+            {"op1_phase_lfo_depth.p0", 0.0f},
+            {"op1_phase_lfo_wave.p0", 0.0f},
+            {"op1_phase_lfo_mode.p0", 1.0f},
+            {"op1_phase_lfo_rate_fade.p0", 0.0f},
+            {"op1_phase_lfo_depth_fade.p0", 0.0f},
+            {"op1_phase_env_on.p0", 1.0f},
+            {"op1_phase_env_r1.p0", 80.0f},
+            {"op1_phase_env_r2.p0", 60.0f},
+            {"op1_phase_env_r3.p0", 50.0f},
+            {"op1_phase_env_l1.p0", 0.0f},
+            {"op1_phase_env_l2.p0", 0.0f},
+            {"op1_phase_env_l3.p0", 0.0f},
+            {"op1_phase_env_relr.p0", 80.0f},
+            {"op1_phase_env_rell.p0", 0.0f},
+            {"op1_phase_env_mode.p0", 1.0f}}};
+        for (const auto& [id, value] : neutral)
+            set(id, value);
+        fill();
+    }
+    p1editor->showTab(5);
+    fill();
+    ok = saveSnapshot(*editor,
                       directory.getChildFile("editor-operator-spectra.png")) && ok;
     {
         const std::array<std::pair<const char*, float>, 8> levels{{
@@ -191,19 +266,19 @@ int main(int argc, char** argv)
                  *editor,
                  directory.getChildFile("editor-operator-spectra-levels.png")) &&
              ok;
-        p1editor->showTab(5);
+        p1editor->showTab(6);
         p1editor->updateVisualizers();
         ok = saveSnapshot(
                  *editor,
                  directory.getChildFile("editor-operator-spectra-b.png")) &&
              ok;
-        p1editor->showTab(6);
+        p1editor->showTab(7);
         p1editor->updateVisualizers();
         ok = saveSnapshot(
                  *editor,
                  directory.getChildFile("editor-op-spectra-mod-levels.png")) &&
              ok;
-        p1editor->showTab(4);
+        p1editor->showTab(5);
         if (auto* parameter =
                 p1editor->state().getParameter("op1_spec_a1.p0")) {
             parameter->setValueNotifyingHost(parameter->convertTo0to1(99.0f));
@@ -217,7 +292,7 @@ int main(int argc, char** argv)
         }
         p1editor->updateVisualizers();
     }
-    p1editor->showTab(6);
+    p1editor->showTab(7);
     fill();
     ok = saveSnapshot(*editor,
                       directory.getChildFile("editor-op-spectra-mod.png")) && ok;
@@ -530,6 +605,36 @@ int main(int argc, char** argv)
             ids.push_back(p1::params::opSpecEnvMode(op, 0));
             return ids;
         };
+        auto phase = [](int op) {
+            std::vector<juce::String> ids;
+            ids.push_back(p1::params::opPhase(op, "on", 0));
+            for (const char* field :
+                 {"bp", "segments", "flip", "flip_rate", "reorder",
+                  "reorder_rate", "jump", "drift", "drift_rate"})
+                ids.push_back(p1::params::opPhase(op, field, 0));
+            for (const char* field :
+                 {"rate", "depth", "wave", "mode", "rate_fade",
+                  "depth_fade"})
+                ids.push_back(p1::params::opPhaseLfo(op, field, 0));
+            for (const char* field : {"on", "r1", "r2", "r3", "l1", "l2",
+                                      "l3", "relr", "rell", "mode"})
+                ids.push_back(p1::params::opPhaseEnv(op, field, 0));
+            return ids;
+        };
+        auto phaseLfo = [](int op) {
+            std::vector<juce::String> ids;
+            for (const char* field :
+                 {"rate", "depth", "wave", "mode", "rate_fade", "depth_fade"})
+                ids.push_back(p1::params::opPhaseLfo(op, field, 0));
+            return ids;
+        };
+        auto phaseEnvelope = [](int op) {
+            std::vector<juce::String> ids;
+            for (const char* field : {"on", "r1", "r2", "r3", "l1", "l2",
+                                      "l3", "relr", "rell", "mode"})
+                ids.push_back(p1::params::opPhaseEnv(op, field, 0));
+            return ids;
+        };
         auto lfo = [](int op, int kind) {
             std::vector<juce::String> ids;
             if (kind == 0) {
@@ -600,6 +705,10 @@ int main(int argc, char** argv)
               lfo(0, 2), lfo(1, 2));
         check("spectrum lfo", Section::spectrumLfo, 0, 1,
               lfo(0, 3), lfo(1, 3));
+        check("phase map", Section::phase, 0, 1, phase(0), phase(1));
+        check("phase lfo", Section::phaseLfo, 0, 1, phaseLfo(0), phaseLfo(1));
+        check("phase envelope", Section::phaseEnvelope, 0, 1, phaseEnvelope(0),
+              phaseEnvelope(1));
         check("oscillator", Section::oscillator, 0, 1,
               oscillator(0), oscillator(1));
         check("spectrum a", Section::spectrumA, 0, 1,

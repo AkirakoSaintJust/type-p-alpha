@@ -124,6 +124,14 @@ Every page fills the same height:
   `detune lfo` cards. The oscillator stays on the operator envs page. Each LFO card
   carries copy and paste in its header, its `bipolar` switch beside the wave select,
   and the `rate fade` and `depth fade` pair with the shared two-line graph.
+- op phasemap: four 294 px operator columns, each with the header, a 99 px live
+  map, a 159 px `phase` card, a 160 px `phase lfo` card and a 176 px `phase env`
+  card. The page total is 660 px inside the 669 px budget. The map is a read-only
+  `P1PhaseMap` fed by the 30 Hz `PhaseMapSnapshot`; it draws the composed segments,
+  the locks, the order jumps, the faint `F`, the breakpoint and the phase dot. The
+  `phase` card has nine knobs in three rows, the LFO card reuses the compact fade
+  row, and the envelope card is the signed purple graph with its rates, levels and
+  mode.
 - op spectra a: four operator and oscillator cards across the top, a 6 px empty
   band, then four spectrum cards of 124 px. Each card header carries `range`,
   `mask`, `selection`, `group`, `load spectrum template...`, `norm`, `to b`, copy
@@ -260,6 +268,11 @@ a save and a load button for each part, so the slot is chosen before the action.
   rather than the base parameter.
 - Routing graph: white modulators, pink carriers, grey modulation lines, purple
   downward arrows under every carrier.
+- Phase map: green forward segments, purple flipped segments at full opacity,
+  locked segments at 35%, a pink dashed vertical at an order jump, a faint `line`
+  polyline for `F`, the pink breakpoint vertical and a white dot at the newest
+  voice's phase. The caption is `bp 0.500 · π`, the active and requested segment
+  counts, and the locked count. It is a read-only view fed by `PhaseMapSnapshot`.
 
 Use a `juce::Timer` at about 30 Hz for repaint, fed from a lock-free ring buffer
 written by the audio thread, with no allocation, locks or file access on the audio
@@ -277,6 +290,9 @@ order.
   key and velocity follow, in a four by two grid.
 - operator envs: four sets of oscillator, amplitude envelope, feedback envelope and
   the three LFO parameters.
+- op phasemap: per operator, the phase map's nine knobs and `on`, the phase LFO's
+  six values and the signed envelope's ten values. The page is the fourth tab, and
+  the map view reads the per-part snapshot rather than the parameters.
 - op spectra a and op spectra b: per operator, the 64 a levels, the 64 b levels,
   the two ranges, the morph value, the morph envelope and the morph LFO. The
   waveform parameter grows to 0 to 13, with `spectrum` at 13.

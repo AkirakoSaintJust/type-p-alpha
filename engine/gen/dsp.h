@@ -573,6 +573,35 @@ typedef struct type_p_alpha_state {
     int32_t op1_speclfo_mode[2];
     int32_t op1_speclfo_rate_fade[2];
     int32_t op1_speclfo_depth_fade[2];
+    int32_t op1_phase_on[2];
+    int32_t op1_phase_bp[2];
+    int32_t op1_phase_segments[2];
+    int32_t op1_phase_flip[2];
+    int32_t op1_phase_flip_rate[2];
+    int32_t op1_phase_reorder[2];
+    int32_t op1_phase_reorder_rate[2];
+    int32_t op1_phase_jump[2];
+    int32_t op1_phase_drift[2];
+    int32_t op1_phase_drift_rate[2];
+    int32_t op1_phase_ks_lo[2];
+    int32_t op1_phase_ks_hi[2];
+    int32_t op1_phase_vs[2];
+    int32_t op1_phase_lfo_rate[2];
+    int32_t op1_phase_lfo_depth[2];
+    int32_t op1_phase_lfo_wave[2];
+    int32_t op1_phase_lfo_mode[2];
+    int32_t op1_phase_lfo_rate_fade[2];
+    int32_t op1_phase_lfo_depth_fade[2];
+    int32_t op1_phase_env_on[2];
+    int32_t op1_phase_env_r1[2];
+    int32_t op1_phase_env_r2[2];
+    int32_t op1_phase_env_r3[2];
+    int32_t op1_phase_env_l1[2];
+    int32_t op1_phase_env_l2[2];
+    int32_t op1_phase_env_l3[2];
+    int32_t op1_phase_env_relr[2];
+    int32_t op1_phase_env_rell[2];
+    int32_t op1_phase_env_mode[2];
     int32_t op2_ph_inc_ratio[2];
     int32_t op2_ph_detune[2];
     int32_t op2_osc_waveform[2];
@@ -774,6 +803,35 @@ typedef struct type_p_alpha_state {
     int32_t op2_speclfo_mode[2];
     int32_t op2_speclfo_rate_fade[2];
     int32_t op2_speclfo_depth_fade[2];
+    int32_t op2_phase_on[2];
+    int32_t op2_phase_bp[2];
+    int32_t op2_phase_segments[2];
+    int32_t op2_phase_flip[2];
+    int32_t op2_phase_flip_rate[2];
+    int32_t op2_phase_reorder[2];
+    int32_t op2_phase_reorder_rate[2];
+    int32_t op2_phase_jump[2];
+    int32_t op2_phase_drift[2];
+    int32_t op2_phase_drift_rate[2];
+    int32_t op2_phase_ks_lo[2];
+    int32_t op2_phase_ks_hi[2];
+    int32_t op2_phase_vs[2];
+    int32_t op2_phase_lfo_rate[2];
+    int32_t op2_phase_lfo_depth[2];
+    int32_t op2_phase_lfo_wave[2];
+    int32_t op2_phase_lfo_mode[2];
+    int32_t op2_phase_lfo_rate_fade[2];
+    int32_t op2_phase_lfo_depth_fade[2];
+    int32_t op2_phase_env_on[2];
+    int32_t op2_phase_env_r1[2];
+    int32_t op2_phase_env_r2[2];
+    int32_t op2_phase_env_r3[2];
+    int32_t op2_phase_env_l1[2];
+    int32_t op2_phase_env_l2[2];
+    int32_t op2_phase_env_l3[2];
+    int32_t op2_phase_env_relr[2];
+    int32_t op2_phase_env_rell[2];
+    int32_t op2_phase_env_mode[2];
     int32_t op3_ph_inc_ratio[2];
     int32_t op3_ph_detune[2];
     int32_t op3_osc_waveform[2];
@@ -975,6 +1033,35 @@ typedef struct type_p_alpha_state {
     int32_t op3_speclfo_mode[2];
     int32_t op3_speclfo_rate_fade[2];
     int32_t op3_speclfo_depth_fade[2];
+    int32_t op3_phase_on[2];
+    int32_t op3_phase_bp[2];
+    int32_t op3_phase_segments[2];
+    int32_t op3_phase_flip[2];
+    int32_t op3_phase_flip_rate[2];
+    int32_t op3_phase_reorder[2];
+    int32_t op3_phase_reorder_rate[2];
+    int32_t op3_phase_jump[2];
+    int32_t op3_phase_drift[2];
+    int32_t op3_phase_drift_rate[2];
+    int32_t op3_phase_ks_lo[2];
+    int32_t op3_phase_ks_hi[2];
+    int32_t op3_phase_vs[2];
+    int32_t op3_phase_lfo_rate[2];
+    int32_t op3_phase_lfo_depth[2];
+    int32_t op3_phase_lfo_wave[2];
+    int32_t op3_phase_lfo_mode[2];
+    int32_t op3_phase_lfo_rate_fade[2];
+    int32_t op3_phase_lfo_depth_fade[2];
+    int32_t op3_phase_env_on[2];
+    int32_t op3_phase_env_r1[2];
+    int32_t op3_phase_env_r2[2];
+    int32_t op3_phase_env_r3[2];
+    int32_t op3_phase_env_l1[2];
+    int32_t op3_phase_env_l2[2];
+    int32_t op3_phase_env_l3[2];
+    int32_t op3_phase_env_relr[2];
+    int32_t op3_phase_env_rell[2];
+    int32_t op3_phase_env_mode[2];
     int32_t op4_ph_inc_ratio[2];
     int32_t op4_ph_detune[2];
     int32_t op4_osc_waveform[2];
@@ -1176,6 +1263,35 @@ typedef struct type_p_alpha_state {
     int32_t op4_speclfo_mode[2];
     int32_t op4_speclfo_rate_fade[2];
     int32_t op4_speclfo_depth_fade[2];
+    int32_t op4_phase_on[2];
+    int32_t op4_phase_bp[2];
+    int32_t op4_phase_segments[2];
+    int32_t op4_phase_flip[2];
+    int32_t op4_phase_flip_rate[2];
+    int32_t op4_phase_reorder[2];
+    int32_t op4_phase_reorder_rate[2];
+    int32_t op4_phase_jump[2];
+    int32_t op4_phase_drift[2];
+    int32_t op4_phase_drift_rate[2];
+    int32_t op4_phase_ks_lo[2];
+    int32_t op4_phase_ks_hi[2];
+    int32_t op4_phase_vs[2];
+    int32_t op4_phase_lfo_rate[2];
+    int32_t op4_phase_lfo_depth[2];
+    int32_t op4_phase_lfo_wave[2];
+    int32_t op4_phase_lfo_mode[2];
+    int32_t op4_phase_lfo_rate_fade[2];
+    int32_t op4_phase_lfo_depth_fade[2];
+    int32_t op4_phase_env_on[2];
+    int32_t op4_phase_env_r1[2];
+    int32_t op4_phase_env_r2[2];
+    int32_t op4_phase_env_r3[2];
+    int32_t op4_phase_env_l1[2];
+    int32_t op4_phase_env_l2[2];
+    int32_t op4_phase_env_l3[2];
+    int32_t op4_phase_env_relr[2];
+    int32_t op4_phase_env_rell[2];
+    int32_t op4_phase_env_mode[2];
     int32_t algo_algorithm[2];
     int32_t penv_on[2];
     int32_t penv_r1[2];
@@ -1221,6 +1337,7 @@ typedef struct type_p_alpha_state {
     int32_t key_on_on;
     int32_t vel_on_on;
     int32_t dc_r;
+    uint32_t ctrl_serial;
     uint32_t patch_gate;
     uint32_t patch_trig;
     int32_t dcr_x1;
@@ -1240,6 +1357,9 @@ typedef struct type_p_alpha_state {
     int32_t penv_active_x[NVOICE];
     int32_t psum_cv_x[NVOICE];
     int32_t algo_alg_x[NVOICE];
+    int32_t op4_phase_env_cv_x[NVOICE];
+    int32_t op4_phase_lfo_cv_x[NVOICE];
+    int32_t op4_phase_mod_cv_x[NVOICE];
     int32_t op4_speclfo_cv_x[NVOICE];
     int32_t op4_eg_vs_k_x[NVOICE];
     int32_t op4_fb_vs_k_x[NVOICE];
@@ -1261,6 +1381,9 @@ typedef struct type_p_alpha_state {
     int32_t op4_morphbase_out_x[NVOICE];
     int32_t op4_specenv_cv_x[NVOICE];
     int32_t op4_specenv_active_x[NVOICE];
+    int32_t op3_phase_env_cv_x[NVOICE];
+    int32_t op3_phase_lfo_cv_x[NVOICE];
+    int32_t op3_phase_mod_cv_x[NVOICE];
     int32_t op3_speclfo_cv_x[NVOICE];
     int32_t op3_eg_vs_k_x[NVOICE];
     int32_t op3_fb_vs_k_x[NVOICE];
@@ -1282,6 +1405,9 @@ typedef struct type_p_alpha_state {
     int32_t op3_morphbase_out_x[NVOICE];
     int32_t op3_specenv_cv_x[NVOICE];
     int32_t op3_specenv_active_x[NVOICE];
+    int32_t op2_phase_env_cv_x[NVOICE];
+    int32_t op2_phase_lfo_cv_x[NVOICE];
+    int32_t op2_phase_mod_cv_x[NVOICE];
     int32_t op2_speclfo_cv_x[NVOICE];
     int32_t op2_eg_vs_k_x[NVOICE];
     int32_t op2_fb_vs_k_x[NVOICE];
@@ -1303,6 +1429,9 @@ typedef struct type_p_alpha_state {
     int32_t op2_morphbase_out_x[NVOICE];
     int32_t op2_specenv_cv_x[NVOICE];
     int32_t op2_specenv_active_x[NVOICE];
+    int32_t op1_phase_env_cv_x[NVOICE];
+    int32_t op1_phase_lfo_cv_x[NVOICE];
+    int32_t op1_phase_mod_cv_x[NVOICE];
     int32_t op1_speclfo_cv_x[NVOICE];
     int32_t op1_eg_vs_k_x[NVOICE];
     int32_t op1_fb_vs_k_x[NVOICE];
@@ -1332,9 +1461,21 @@ typedef struct type_p_alpha_state {
     int32_t type_p_alpha_tap0[N_TAP_CH][DSP_TAP_FRAMES];
     int32_t type_p_alpha_tap1[N_TAP_CH][DSP_TAP_FRAMES];
     int16_t op1_osc_bank[10880];
+    int16_t op1_phase_map[10880];
+    int16_t op1_phase_lfo_pool[10880];
+    int16_t op1_phase_env_pool[10880];
     int16_t op2_osc_bank[10880];
+    int16_t op2_phase_map[10880];
+    int16_t op2_phase_lfo_pool[10880];
+    int16_t op2_phase_env_pool[10880];
     int16_t op3_osc_bank[10880];
+    int16_t op3_phase_map[10880];
+    int16_t op3_phase_lfo_pool[10880];
+    int16_t op3_phase_env_pool[10880];
     int16_t op4_osc_bank[10880];
+    int16_t op4_phase_map[10880];
+    int16_t op4_phase_lfo_pool[10880];
+    int16_t op4_phase_env_pool[10880];
     uint16_t voice_rel[NVOICE];
     uint8_t voice_gate[NVOICE];
     uint8_t voice_note[NVOICE];
@@ -1367,456 +1508,456 @@ const int32_t *type_p_alpha_dsp_tap_s(type_p_alpha_state *state, uint32_t ch);
 typedef struct { uint16_t id; int32_t value; } type_p_alpha_init_entry;
 static const type_p_alpha_init_entry type_p_alpha_init[] = {
     { 804u, 7 },
-    { 1669u, 7 },
+    { 1785u, 7 },
     { 830u, 36958 },
-    { 1695u, 36958 },
+    { 1811u, 36958 },
     { 831u, 16000 },
-    { 1696u, 16000 },
+    { 1812u, 16000 },
     { 833u, 0 },
-    { 1698u, 0 },
+    { 1814u, 0 },
     { 834u, 0 },
-    { 1699u, 0 },
+    { 1815u, 0 },
     { 835u, 0 },
-    { 1700u, 0 },
+    { 1816u, 0 },
     { 836u, 80 },
-    { 1701u, 80 },
+    { 1817u, 80 },
     { 837u, 60 },
-    { 1702u, 60 },
+    { 1818u, 60 },
     { 838u, 50 },
-    { 1703u, 50 },
+    { 1819u, 50 },
     { 839u, 99 },
-    { 1704u, 99 },
+    { 1820u, 99 },
     { 840u, 93 },
-    { 1705u, 93 },
+    { 1821u, 93 },
     { 841u, 87 },
-    { 1706u, 87 },
+    { 1822u, 87 },
     { 842u, 80 },
-    { 1707u, 80 },
+    { 1823u, 80 },
     { 843u, 0 },
-    { 1708u, 0 },
+    { 1824u, 0 },
     { 844u, 1 },
-    { 1709u, 1 },
+    { 1825u, 1 },
     { 818u, 0 },
-    { 1683u, 0 },
+    { 1799u, 0 },
     { 819u, 0 },
-    { 1684u, 0 },
+    { 1800u, 0 },
     { 820u, 0 },
-    { 1685u, 0 },
+    { 1801u, 0 },
     { 821u, 1 },
-    { 1686u, 1 },
+    { 1802u, 1 },
     { 805u, 0 },
-    { 1670u, 0 },
+    { 1786u, 0 },
     { 806u, 80 },
-    { 1671u, 80 },
+    { 1787u, 80 },
     { 807u, 60 },
-    { 1672u, 60 },
+    { 1788u, 60 },
     { 808u, 50 },
-    { 1673u, 50 },
+    { 1789u, 50 },
     { 809u, 5461 },
-    { 1674u, 5461 },
+    { 1790u, 5461 },
     { 810u, 2731 },
-    { 1675u, 2731 },
+    { 1791u, 2731 },
     { 811u, 0 },
-    { 1676u, 0 },
+    { 1792u, 0 },
     { 812u, 80 },
-    { 1677u, 80 },
+    { 1793u, 80 },
     { 813u, 0 },
-    { 1678u, 0 },
+    { 1794u, 0 },
     { 814u, 1 },
-    { 1679u, 1 },
+    { 1795u, 1 },
     { 845u, 0 },
-    { 1710u, 0 },
+    { 1826u, 0 },
     { 846u, 1 },
-    { 1711u, 1 },
+    { 1827u, 1 },
     { 847u, 0 },
-    { 1712u, 0 },
+    { 1828u, 0 },
     { 850u, 0 },
-    { 1715u, 0 },
+    { 1831u, 0 },
     { 851u, 0 },
-    { 1716u, 0 },
+    { 1832u, 0 },
     { 852u, 0 },
-    { 1717u, 0 },
+    { 1833u, 0 },
     { 0u, 65536 },
-    { 865u, 65536 },
+    { 981u, 65536 },
     { 2u, 0 },
-    { 867u, 0 },
+    { 983u, 0 },
     { 173u, 75 },
-    { 1038u, 75 },
+    { 1154u, 75 },
     { 174u, 0 },
-    { 1039u, 0 },
+    { 1155u, 0 },
     { 148u, 1 },
-    { 1013u, 1 },
+    { 1129u, 1 },
     { 149u, 80 },
-    { 1014u, 80 },
+    { 1130u, 80 },
     { 150u, 60 },
-    { 1015u, 60 },
+    { 1131u, 60 },
     { 151u, 50 },
-    { 1016u, 50 },
+    { 1132u, 50 },
     { 155u, 80 },
-    { 1020u, 80 },
+    { 1136u, 80 },
     { 152u, 0 },
-    { 1017u, 0 },
+    { 1133u, 0 },
     { 153u, 0 },
-    { 1018u, 0 },
+    { 1134u, 0 },
     { 154u, 0 },
-    { 1019u, 0 },
+    { 1135u, 0 },
     { 156u, 0 },
-    { 1021u, 0 },
+    { 1137u, 0 },
     { 157u, 1 },
-    { 1022u, 1 },
+    { 1138u, 1 },
     { 158u, 357914 },
-    { 1023u, 357914 },
+    { 1139u, 357914 },
     { 159u, 0 },
-    { 1024u, 0 },
+    { 1140u, 0 },
     { 160u, 0 },
-    { 1025u, 0 },
+    { 1141u, 0 },
     { 161u, 1 },
-    { 1026u, 1 },
+    { 1142u, 1 },
     { 164u, 357914 },
-    { 1029u, 357914 },
+    { 1145u, 357914 },
     { 165u, 0 },
-    { 1030u, 0 },
+    { 1146u, 0 },
     { 166u, 0 },
-    { 1031u, 0 },
+    { 1147u, 0 },
     { 167u, 1 },
-    { 1032u, 1 },
+    { 1148u, 1 },
     { 1u, 0 },
-    { 866u, 0 },
+    { 982u, 0 },
     { 184u, 0 },
-    { 1049u, 0 },
+    { 1165u, 0 },
     { 142u, 0 },
-    { 1007u, 0 },
+    { 1123u, 0 },
     { 143u, 0 },
-    { 1008u, 0 },
+    { 1124u, 0 },
     { 144u, 0 },
-    { 1009u, 0 },
+    { 1125u, 0 },
     { 145u, 1 },
-    { 1010u, 1 },
+    { 1126u, 1 },
     { 134u, 0 },
-    { 999u, 0 },
+    { 1115u, 0 },
     { 135u, 80 },
-    { 1000u, 80 },
+    { 1116u, 80 },
     { 136u, 60 },
-    { 1001u, 60 },
+    { 1117u, 60 },
     { 137u, 93 },
-    { 1002u, 93 },
+    { 1118u, 93 },
     { 138u, 50 },
-    { 1003u, 50 },
+    { 1119u, 50 },
     { 139u, 87 },
-    { 1004u, 87 },
+    { 1120u, 87 },
     { 140u, 80 },
-    { 1005u, 80 },
+    { 1121u, 80 },
     { 141u, 1 },
-    { 1006u, 1 },
+    { 1122u, 1 },
     { 201u, 65536 },
-    { 1066u, 65536 },
+    { 1182u, 65536 },
     { 203u, 0 },
-    { 1068u, 0 },
+    { 1184u, 0 },
     { 374u, 85 },
-    { 1239u, 85 },
+    { 1355u, 85 },
     { 375u, 0 },
-    { 1240u, 0 },
+    { 1356u, 0 },
     { 349u, 1 },
-    { 1214u, 1 },
+    { 1330u, 1 },
     { 350u, 80 },
-    { 1215u, 80 },
+    { 1331u, 80 },
     { 351u, 60 },
-    { 1216u, 60 },
+    { 1332u, 60 },
     { 352u, 50 },
-    { 1217u, 50 },
+    { 1333u, 50 },
     { 356u, 80 },
-    { 1221u, 80 },
+    { 1337u, 80 },
     { 353u, 0 },
-    { 1218u, 0 },
+    { 1334u, 0 },
     { 354u, 0 },
-    { 1219u, 0 },
+    { 1335u, 0 },
     { 355u, 0 },
-    { 1220u, 0 },
+    { 1336u, 0 },
     { 357u, 0 },
-    { 1222u, 0 },
+    { 1338u, 0 },
     { 358u, 1 },
-    { 1223u, 1 },
+    { 1339u, 1 },
     { 359u, 357914 },
-    { 1224u, 357914 },
+    { 1340u, 357914 },
     { 360u, 0 },
-    { 1225u, 0 },
+    { 1341u, 0 },
     { 361u, 0 },
-    { 1226u, 0 },
+    { 1342u, 0 },
     { 362u, 1 },
-    { 1227u, 1 },
+    { 1343u, 1 },
     { 365u, 357914 },
-    { 1230u, 357914 },
+    { 1346u, 357914 },
     { 366u, 0 },
-    { 1231u, 0 },
+    { 1347u, 0 },
     { 367u, 0 },
-    { 1232u, 0 },
+    { 1348u, 0 },
     { 368u, 1 },
-    { 1233u, 1 },
+    { 1349u, 1 },
     { 202u, 0 },
-    { 1067u, 0 },
+    { 1183u, 0 },
     { 385u, 0 },
-    { 1250u, 0 },
+    { 1366u, 0 },
     { 343u, 0 },
-    { 1208u, 0 },
+    { 1324u, 0 },
     { 344u, 0 },
-    { 1209u, 0 },
+    { 1325u, 0 },
     { 345u, 0 },
-    { 1210u, 0 },
+    { 1326u, 0 },
     { 346u, 1 },
-    { 1211u, 1 },
+    { 1327u, 1 },
     { 335u, 0 },
-    { 1200u, 0 },
+    { 1316u, 0 },
     { 336u, 80 },
-    { 1201u, 80 },
+    { 1317u, 80 },
     { 337u, 60 },
-    { 1202u, 60 },
+    { 1318u, 60 },
     { 338u, 93 },
-    { 1203u, 93 },
+    { 1319u, 93 },
     { 339u, 50 },
-    { 1204u, 50 },
+    { 1320u, 50 },
     { 340u, 87 },
-    { 1205u, 87 },
+    { 1321u, 87 },
     { 341u, 80 },
-    { 1206u, 80 },
+    { 1322u, 80 },
     { 342u, 1 },
-    { 1207u, 1 },
+    { 1323u, 1 },
     { 402u, 65536 },
-    { 1267u, 65536 },
+    { 1383u, 65536 },
     { 404u, 0 },
-    { 1269u, 0 },
+    { 1385u, 0 },
     { 575u, 70 },
-    { 1440u, 70 },
+    { 1556u, 70 },
     { 576u, 0 },
-    { 1441u, 0 },
+    { 1557u, 0 },
     { 550u, 1 },
-    { 1415u, 1 },
+    { 1531u, 1 },
     { 551u, 80 },
-    { 1416u, 80 },
+    { 1532u, 80 },
     { 552u, 60 },
-    { 1417u, 60 },
+    { 1533u, 60 },
     { 553u, 50 },
-    { 1418u, 50 },
+    { 1534u, 50 },
     { 557u, 80 },
-    { 1422u, 80 },
+    { 1538u, 80 },
     { 554u, 0 },
-    { 1419u, 0 },
+    { 1535u, 0 },
     { 555u, 0 },
-    { 1420u, 0 },
+    { 1536u, 0 },
     { 556u, 0 },
-    { 1421u, 0 },
+    { 1537u, 0 },
     { 558u, 0 },
-    { 1423u, 0 },
+    { 1539u, 0 },
     { 559u, 1 },
-    { 1424u, 1 },
+    { 1540u, 1 },
     { 560u, 357914 },
-    { 1425u, 357914 },
+    { 1541u, 357914 },
     { 561u, 0 },
-    { 1426u, 0 },
+    { 1542u, 0 },
     { 562u, 0 },
-    { 1427u, 0 },
+    { 1543u, 0 },
     { 563u, 1 },
-    { 1428u, 1 },
+    { 1544u, 1 },
     { 566u, 357914 },
-    { 1431u, 357914 },
+    { 1547u, 357914 },
     { 567u, 0 },
-    { 1432u, 0 },
+    { 1548u, 0 },
     { 568u, 0 },
-    { 1433u, 0 },
+    { 1549u, 0 },
     { 569u, 1 },
-    { 1434u, 1 },
+    { 1550u, 1 },
     { 403u, 0 },
-    { 1268u, 0 },
+    { 1384u, 0 },
     { 586u, 0 },
-    { 1451u, 0 },
+    { 1567u, 0 },
     { 544u, 0 },
-    { 1409u, 0 },
+    { 1525u, 0 },
     { 545u, 0 },
-    { 1410u, 0 },
+    { 1526u, 0 },
     { 546u, 0 },
-    { 1411u, 0 },
+    { 1527u, 0 },
     { 547u, 1 },
-    { 1412u, 1 },
+    { 1528u, 1 },
     { 536u, 0 },
-    { 1401u, 0 },
+    { 1517u, 0 },
     { 537u, 80 },
-    { 1402u, 80 },
+    { 1518u, 80 },
     { 538u, 60 },
-    { 1403u, 60 },
+    { 1519u, 60 },
     { 539u, 93 },
-    { 1404u, 93 },
+    { 1520u, 93 },
     { 540u, 50 },
-    { 1405u, 50 },
+    { 1521u, 50 },
     { 541u, 87 },
-    { 1406u, 87 },
+    { 1522u, 87 },
     { 542u, 80 },
-    { 1407u, 80 },
+    { 1523u, 80 },
     { 543u, 1 },
-    { 1408u, 1 },
+    { 1524u, 1 },
     { 603u, 65536 },
-    { 1468u, 65536 },
+    { 1584u, 65536 },
     { 605u, 0 },
-    { 1470u, 0 },
+    { 1586u, 0 },
     { 776u, 85 },
-    { 1641u, 85 },
+    { 1757u, 85 },
     { 777u, 0 },
-    { 1642u, 0 },
+    { 1758u, 0 },
     { 751u, 1 },
-    { 1616u, 1 },
-    { 752u, 80 },
-    { 1617u, 80 },
-    { 753u, 60 },
-    { 1618u, 60 },
-    { 754u, 50 },
-    { 1619u, 50 },
-    { 758u, 80 },
-    { 1623u, 80 },
-    { 755u, 0 },
-    { 1620u, 0 },
-    { 756u, 0 },
-    { 1621u, 0 },
-    { 757u, 0 },
-    { 1622u, 0 },
-    { 759u, 0 },
-    { 1624u, 0 },
-    { 760u, 1 },
-    { 1625u, 1 },
-    { 761u, 357914 },
-    { 1626u, 357914 },
-    { 762u, 0 },
-    { 1627u, 0 },
-    { 763u, 0 },
-    { 1628u, 0 },
-    { 764u, 1 },
-    { 1629u, 1 },
-    { 767u, 357914 },
-    { 1632u, 357914 },
-    { 768u, 0 },
-    { 1633u, 0 },
-    { 769u, 0 },
-    { 1634u, 0 },
-    { 770u, 1 },
-    { 1635u, 1 },
-    { 604u, 0 },
-    { 1469u, 0 },
-    { 787u, 0 },
-    { 1652u, 0 },
-    { 745u, 0 },
-    { 1610u, 0 },
-    { 746u, 0 },
-    { 1611u, 0 },
-    { 747u, 0 },
-    { 1612u, 0 },
-    { 748u, 1 },
-    { 1613u, 1 },
-    { 737u, 0 },
-    { 1602u, 0 },
-    { 738u, 80 },
-    { 1603u, 80 },
-    { 739u, 60 },
-    { 1604u, 60 },
-    { 740u, 93 },
-    { 1605u, 93 },
-    { 741u, 50 },
-    { 1606u, 50 },
-    { 742u, 87 },
-    { 1607u, 87 },
-    { 743u, 80 },
-    { 1608u, 80 },
-    { 744u, 1 },
-    { 1609u, 1 },
-    { 1730u, 60 },
-    { 175u, -50 },
-    { 1040u, -50 },
-    { 176u, -50 },
-    { 1041u, -50 },
-    { 177u, 0 },
-    { 1042u, 0 },
-    { 178u, 0 },
-    { 1043u, 0 },
-    { 376u, 0 },
-    { 1241u, 0 },
-    { 377u, 0 },
-    { 1242u, 0 },
-    { 378u, 0 },
-    { 1243u, 0 },
-    { 379u, 0 },
-    { 1244u, 0 },
-    { 577u, -50 },
-    { 1442u, -50 },
-    { 578u, 0 },
-    { 1443u, 0 },
-    { 579u, 0 },
-    { 1444u, 0 },
-    { 580u, 0 },
-    { 1445u, 0 },
-    { 778u, 0 },
-    { 1643u, 0 },
-    { 779u, 0 },
-    { 1644u, 0 },
-    { 780u, 0 },
-    { 1645u, 0 },
-    { 781u, 0 },
-    { 1646u, 0 },
-    { 179u, 0 },
-    { 1044u, 0 },
-    { 180u, 0 },
-    { 1045u, 0 },
-    { 380u, 0 },
-    { 1245u, 0 },
-    { 381u, 0 },
-    { 1246u, 0 },
-    { 581u, 0 },
-    { 1446u, 0 },
-    { 582u, 0 },
-    { 1447u, 0 },
-    { 782u, 0 },
-    { 1647u, 0 },
-    { 783u, 0 },
-    { 1648u, 0 },
-    { 815u, 0 },
-    { 1680u, 0 },
-    { 816u, 0 },
-    { 1681u, 0 },
-    { 824u, 0 },
-    { 1689u, 0 },
-    { 825u, 0 },
-    { 1690u, 0 },
-    { 826u, 0 },
-    { 1691u, 0 },
-    { 827u, 0 },
-    { 1692u, 0 },
-    { 1731u, 1 },
     { 1732u, 1 },
+    { 752u, 80 },
+    { 1733u, 80 },
+    { 753u, 60 },
+    { 1734u, 60 },
+    { 754u, 50 },
+    { 1735u, 50 },
+    { 758u, 80 },
+    { 1739u, 80 },
+    { 755u, 0 },
+    { 1736u, 0 },
+    { 756u, 0 },
+    { 1737u, 0 },
+    { 757u, 0 },
+    { 1738u, 0 },
+    { 759u, 0 },
+    { 1740u, 0 },
+    { 760u, 1 },
+    { 1741u, 1 },
+    { 761u, 357914 },
+    { 1742u, 357914 },
+    { 762u, 0 },
+    { 1743u, 0 },
+    { 763u, 0 },
+    { 1744u, 0 },
+    { 764u, 1 },
+    { 1745u, 1 },
+    { 767u, 357914 },
+    { 1748u, 357914 },
+    { 768u, 0 },
+    { 1749u, 0 },
+    { 769u, 0 },
+    { 1750u, 0 },
+    { 770u, 1 },
+    { 1751u, 1 },
+    { 604u, 0 },
+    { 1585u, 0 },
+    { 787u, 0 },
+    { 1768u, 0 },
+    { 745u, 0 },
+    { 1726u, 0 },
+    { 746u, 0 },
+    { 1727u, 0 },
+    { 747u, 0 },
+    { 1728u, 0 },
+    { 748u, 1 },
+    { 1729u, 1 },
+    { 737u, 0 },
+    { 1718u, 0 },
+    { 738u, 80 },
+    { 1719u, 80 },
+    { 739u, 60 },
+    { 1720u, 60 },
+    { 740u, 93 },
+    { 1721u, 93 },
+    { 741u, 50 },
+    { 1722u, 50 },
+    { 742u, 87 },
+    { 1723u, 87 },
+    { 743u, 80 },
+    { 1724u, 80 },
+    { 744u, 1 },
+    { 1725u, 1 },
+    { 1962u, 60 },
+    { 175u, -50 },
+    { 1156u, -50 },
+    { 176u, -50 },
+    { 1157u, -50 },
+    { 177u, 0 },
+    { 1158u, 0 },
+    { 178u, 0 },
+    { 1159u, 0 },
+    { 376u, 0 },
+    { 1357u, 0 },
+    { 377u, 0 },
+    { 1358u, 0 },
+    { 378u, 0 },
+    { 1359u, 0 },
+    { 379u, 0 },
+    { 1360u, 0 },
+    { 577u, -50 },
+    { 1558u, -50 },
+    { 578u, 0 },
+    { 1559u, 0 },
+    { 579u, 0 },
+    { 1560u, 0 },
+    { 580u, 0 },
+    { 1561u, 0 },
+    { 778u, 0 },
+    { 1759u, 0 },
+    { 779u, 0 },
+    { 1760u, 0 },
+    { 780u, 0 },
+    { 1761u, 0 },
+    { 781u, 0 },
+    { 1762u, 0 },
+    { 179u, 0 },
+    { 1160u, 0 },
+    { 180u, 0 },
+    { 1161u, 0 },
+    { 380u, 0 },
+    { 1361u, 0 },
+    { 381u, 0 },
+    { 1362u, 0 },
+    { 581u, 0 },
+    { 1562u, 0 },
+    { 582u, 0 },
+    { 1563u, 0 },
+    { 782u, 0 },
+    { 1763u, 0 },
+    { 783u, 0 },
+    { 1764u, 0 },
+    { 815u, 0 },
+    { 1796u, 0 },
+    { 816u, 0 },
+    { 1797u, 0 },
+    { 824u, 0 },
+    { 1805u, 0 },
+    { 825u, 0 },
+    { 1806u, 0 },
+    { 826u, 0 },
+    { 1807u, 0 },
+    { 827u, 0 },
+    { 1808u, 0 },
+    { 1963u, 1 },
+    { 1964u, 1 },
     { 181u, 0 },
-    { 1046u, 0 },
+    { 1162u, 0 },
     { 182u, 0 },
-    { 1047u, 0 },
+    { 1163u, 0 },
     { 183u, 0 },
-    { 1048u, 0 },
+    { 1164u, 0 },
     { 382u, 0 },
-    { 1247u, 0 },
+    { 1363u, 0 },
     { 383u, 0 },
-    { 1248u, 0 },
+    { 1364u, 0 },
     { 384u, 0 },
-    { 1249u, 0 },
+    { 1365u, 0 },
     { 583u, 0 },
-    { 1448u, 0 },
+    { 1564u, 0 },
     { 584u, 0 },
-    { 1449u, 0 },
+    { 1565u, 0 },
     { 585u, 0 },
-    { 1450u, 0 },
+    { 1566u, 0 },
     { 784u, 0 },
-    { 1649u, 0 },
+    { 1765u, 0 },
     { 785u, 0 },
-    { 1650u, 0 },
+    { 1766u, 0 },
     { 786u, 0 },
-    { 1651u, 0 },
+    { 1767u, 0 },
     { 817u, 0 },
-    { 1682u, 0 },
+    { 1798u, 0 },
     { 828u, 0 },
-    { 1693u, 0 },
+    { 1809u, 0 },
     { 829u, 0 },
-    { 1694u, 0 },
+    { 1810u, 0 },
 };
 #define type_p_alpha_INIT_N (sizeof type_p_alpha_init / sizeof type_p_alpha_init[0])
 #ifdef __cplusplus

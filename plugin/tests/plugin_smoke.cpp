@@ -14,6 +14,7 @@
 #include <juce_audio_processors/juce_audio_processors.h>
 
 #include "Engine.hpp"
+#include "ParamIDs.h"
 #include "Params.h"
 #include "PluginProcessor.h"
 #include "Widgets.h"
@@ -169,8 +170,17 @@ int main()
             processor.copyXmlToBinary(*tree.createXml(), older);
             processor.setStateInformation(older.getData(),
                                           static_cast<int>(older.getSize()));
+            check(processor.getUiPage() == 7,
+                  "the six-tab mod page moves to 7 on restore");
+
+            tree.setProperty("uiPage", 5, nullptr);
+            tree.setProperty("uiPageLayout", 3, nullptr);
+            juce::MemoryBlock previous;
+            processor.copyXmlToBinary(*tree.createXml(), previous);
+            processor.setStateInformation(previous.getData(),
+                                          static_cast<int>(previous.getSize()));
             check(processor.getUiPage() == 6,
-                  "the six-tab mod page moves to 6 on restore");
+                  "the layout-3 spectra b page moves to 6 on restore");
 
             tree.setProperty("uiPage", 3, nullptr);
             tree.removeProperty("uiPageLayout", nullptr);
@@ -417,6 +427,38 @@ int main()
         const double live = morph->specMorph(0, 0);
         check(live >= -1.0 && live <= 1.0,
               "the live morph stays in range after a render");
+    }
+
+    {
+        /* The phase display reads a published copy, not engine state. A fresh
+         * processor has no map; a held note with phase.on builds one and the
+         * newest voice supplies the live dot. */
+        auto phase = std::make_unique<TypePAlphaAudioProcessor>();
+        phase->setRateAndBufferSizeDetails(48000.0, kFrames);
+        phase->prepareToPlay(48000.0, kFrames);
+        p1::PhaseMapSnapshot unpublished;
+        check(!phase->phaseMap(0, 0, unpublished),
+              "the live phase map starts unpublished");
+        if (auto* on = phase->parameters().getParameter(
+                p1::params::opPhase(0, "on", 0))) {
+            on->setValueNotifyingHost(1.0f);
+        }
+        juce::AudioBuffer<float> phaseBlock(2, kFrames);
+        juce::MidiBuffer phaseMidi;
+        phaseMidi.addEvent(
+            juce::MidiMessage::noteOn(1, 60, static_cast<juce::uint8>(100)), 0);
+        phase->processBlock(phaseBlock, phaseMidi);
+        p1::PhaseMapSnapshot live;
+        const bool published = phase->phaseMap(0, 0, live);
+        check(published && live.valid && live.active == live.segments &&
+                  live.segments >= 1 && live.segments <= 32,
+              "the live phase map publishes composed geometry");
+        check(live.voices > 0, "the live phase map sees the held voice");
+        check(live.phaseQ <= 4095 && live.phaseY <= 4095,
+              "the live phase dot stays inside the map");
+        p1::PhaseMapSnapshot otherPart;
+        check(!phase->phaseMap(0, 1, otherPart),
+              "the live phase map is per part");
     }
 
     {

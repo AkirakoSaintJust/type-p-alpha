@@ -573,6 +573,35 @@ typedef struct type_p_alpha_state {
     int32_t op1_speclfo_mode[2];
     int32_t op1_speclfo_rate_fade[2];
     int32_t op1_speclfo_depth_fade[2];
+    int32_t op1_phase_on[2];
+    int32_t op1_phase_bp[2];
+    int32_t op1_phase_segments[2];
+    int32_t op1_phase_flip[2];
+    int32_t op1_phase_flip_rate[2];
+    int32_t op1_phase_reorder[2];
+    int32_t op1_phase_reorder_rate[2];
+    int32_t op1_phase_jump[2];
+    int32_t op1_phase_drift[2];
+    int32_t op1_phase_drift_rate[2];
+    int32_t op1_phase_ks_lo[2];
+    int32_t op1_phase_ks_hi[2];
+    int32_t op1_phase_vs[2];
+    int32_t op1_phase_lfo_rate[2];
+    int32_t op1_phase_lfo_depth[2];
+    int32_t op1_phase_lfo_wave[2];
+    int32_t op1_phase_lfo_mode[2];
+    int32_t op1_phase_lfo_rate_fade[2];
+    int32_t op1_phase_lfo_depth_fade[2];
+    int32_t op1_phase_env_on[2];
+    int32_t op1_phase_env_r1[2];
+    int32_t op1_phase_env_r2[2];
+    int32_t op1_phase_env_r3[2];
+    int32_t op1_phase_env_l1[2];
+    int32_t op1_phase_env_l2[2];
+    int32_t op1_phase_env_l3[2];
+    int32_t op1_phase_env_relr[2];
+    int32_t op1_phase_env_rell[2];
+    int32_t op1_phase_env_mode[2];
     int32_t op2_ph_inc_ratio[2];
     int32_t op2_ph_detune[2];
     int32_t op2_osc_waveform[2];
@@ -774,6 +803,35 @@ typedef struct type_p_alpha_state {
     int32_t op2_speclfo_mode[2];
     int32_t op2_speclfo_rate_fade[2];
     int32_t op2_speclfo_depth_fade[2];
+    int32_t op2_phase_on[2];
+    int32_t op2_phase_bp[2];
+    int32_t op2_phase_segments[2];
+    int32_t op2_phase_flip[2];
+    int32_t op2_phase_flip_rate[2];
+    int32_t op2_phase_reorder[2];
+    int32_t op2_phase_reorder_rate[2];
+    int32_t op2_phase_jump[2];
+    int32_t op2_phase_drift[2];
+    int32_t op2_phase_drift_rate[2];
+    int32_t op2_phase_ks_lo[2];
+    int32_t op2_phase_ks_hi[2];
+    int32_t op2_phase_vs[2];
+    int32_t op2_phase_lfo_rate[2];
+    int32_t op2_phase_lfo_depth[2];
+    int32_t op2_phase_lfo_wave[2];
+    int32_t op2_phase_lfo_mode[2];
+    int32_t op2_phase_lfo_rate_fade[2];
+    int32_t op2_phase_lfo_depth_fade[2];
+    int32_t op2_phase_env_on[2];
+    int32_t op2_phase_env_r1[2];
+    int32_t op2_phase_env_r2[2];
+    int32_t op2_phase_env_r3[2];
+    int32_t op2_phase_env_l1[2];
+    int32_t op2_phase_env_l2[2];
+    int32_t op2_phase_env_l3[2];
+    int32_t op2_phase_env_relr[2];
+    int32_t op2_phase_env_rell[2];
+    int32_t op2_phase_env_mode[2];
     int32_t op3_ph_inc_ratio[2];
     int32_t op3_ph_detune[2];
     int32_t op3_osc_waveform[2];
@@ -975,6 +1033,35 @@ typedef struct type_p_alpha_state {
     int32_t op3_speclfo_mode[2];
     int32_t op3_speclfo_rate_fade[2];
     int32_t op3_speclfo_depth_fade[2];
+    int32_t op3_phase_on[2];
+    int32_t op3_phase_bp[2];
+    int32_t op3_phase_segments[2];
+    int32_t op3_phase_flip[2];
+    int32_t op3_phase_flip_rate[2];
+    int32_t op3_phase_reorder[2];
+    int32_t op3_phase_reorder_rate[2];
+    int32_t op3_phase_jump[2];
+    int32_t op3_phase_drift[2];
+    int32_t op3_phase_drift_rate[2];
+    int32_t op3_phase_ks_lo[2];
+    int32_t op3_phase_ks_hi[2];
+    int32_t op3_phase_vs[2];
+    int32_t op3_phase_lfo_rate[2];
+    int32_t op3_phase_lfo_depth[2];
+    int32_t op3_phase_lfo_wave[2];
+    int32_t op3_phase_lfo_mode[2];
+    int32_t op3_phase_lfo_rate_fade[2];
+    int32_t op3_phase_lfo_depth_fade[2];
+    int32_t op3_phase_env_on[2];
+    int32_t op3_phase_env_r1[2];
+    int32_t op3_phase_env_r2[2];
+    int32_t op3_phase_env_r3[2];
+    int32_t op3_phase_env_l1[2];
+    int32_t op3_phase_env_l2[2];
+    int32_t op3_phase_env_l3[2];
+    int32_t op3_phase_env_relr[2];
+    int32_t op3_phase_env_rell[2];
+    int32_t op3_phase_env_mode[2];
     int32_t op4_ph_inc_ratio[2];
     int32_t op4_ph_detune[2];
     int32_t op4_osc_waveform[2];
@@ -1176,6 +1263,35 @@ typedef struct type_p_alpha_state {
     int32_t op4_speclfo_mode[2];
     int32_t op4_speclfo_rate_fade[2];
     int32_t op4_speclfo_depth_fade[2];
+    int32_t op4_phase_on[2];
+    int32_t op4_phase_bp[2];
+    int32_t op4_phase_segments[2];
+    int32_t op4_phase_flip[2];
+    int32_t op4_phase_flip_rate[2];
+    int32_t op4_phase_reorder[2];
+    int32_t op4_phase_reorder_rate[2];
+    int32_t op4_phase_jump[2];
+    int32_t op4_phase_drift[2];
+    int32_t op4_phase_drift_rate[2];
+    int32_t op4_phase_ks_lo[2];
+    int32_t op4_phase_ks_hi[2];
+    int32_t op4_phase_vs[2];
+    int32_t op4_phase_lfo_rate[2];
+    int32_t op4_phase_lfo_depth[2];
+    int32_t op4_phase_lfo_wave[2];
+    int32_t op4_phase_lfo_mode[2];
+    int32_t op4_phase_lfo_rate_fade[2];
+    int32_t op4_phase_lfo_depth_fade[2];
+    int32_t op4_phase_env_on[2];
+    int32_t op4_phase_env_r1[2];
+    int32_t op4_phase_env_r2[2];
+    int32_t op4_phase_env_r3[2];
+    int32_t op4_phase_env_l1[2];
+    int32_t op4_phase_env_l2[2];
+    int32_t op4_phase_env_l3[2];
+    int32_t op4_phase_env_relr[2];
+    int32_t op4_phase_env_rell[2];
+    int32_t op4_phase_env_mode[2];
     int32_t algo_algorithm[2];
     int32_t penv_on[2];
     int32_t penv_r1[2];
@@ -1221,6 +1337,7 @@ typedef struct type_p_alpha_state {
     int32_t key_on_on;
     int32_t vel_on_on;
     int32_t dc_r;
+    uint32_t ctrl_serial;
     uint32_t patch_gate;
     uint32_t patch_trig;
     int32_t dcr_x1;
@@ -1240,6 +1357,9 @@ typedef struct type_p_alpha_state {
     int32_t penv_active_x[NVOICE];
     int32_t psum_cv_x[NVOICE];
     int32_t algo_alg_x[NVOICE];
+    int32_t op4_phase_env_cv_x[NVOICE];
+    int32_t op4_phase_lfo_cv_x[NVOICE];
+    int32_t op4_phase_mod_cv_x[NVOICE];
     int32_t op4_speclfo_cv_x[NVOICE];
     int32_t op4_eg_vs_k_x[NVOICE];
     int32_t op4_fb_vs_k_x[NVOICE];
@@ -1261,6 +1381,9 @@ typedef struct type_p_alpha_state {
     int32_t op4_morphbase_out_x[NVOICE];
     int32_t op4_specenv_cv_x[NVOICE];
     int32_t op4_specenv_active_x[NVOICE];
+    int32_t op3_phase_env_cv_x[NVOICE];
+    int32_t op3_phase_lfo_cv_x[NVOICE];
+    int32_t op3_phase_mod_cv_x[NVOICE];
     int32_t op3_speclfo_cv_x[NVOICE];
     int32_t op3_eg_vs_k_x[NVOICE];
     int32_t op3_fb_vs_k_x[NVOICE];
@@ -1282,6 +1405,9 @@ typedef struct type_p_alpha_state {
     int32_t op3_morphbase_out_x[NVOICE];
     int32_t op3_specenv_cv_x[NVOICE];
     int32_t op3_specenv_active_x[NVOICE];
+    int32_t op2_phase_env_cv_x[NVOICE];
+    int32_t op2_phase_lfo_cv_x[NVOICE];
+    int32_t op2_phase_mod_cv_x[NVOICE];
     int32_t op2_speclfo_cv_x[NVOICE];
     int32_t op2_eg_vs_k_x[NVOICE];
     int32_t op2_fb_vs_k_x[NVOICE];
@@ -1303,6 +1429,9 @@ typedef struct type_p_alpha_state {
     int32_t op2_morphbase_out_x[NVOICE];
     int32_t op2_specenv_cv_x[NVOICE];
     int32_t op2_specenv_active_x[NVOICE];
+    int32_t op1_phase_env_cv_x[NVOICE];
+    int32_t op1_phase_lfo_cv_x[NVOICE];
+    int32_t op1_phase_mod_cv_x[NVOICE];
     int32_t op1_speclfo_cv_x[NVOICE];
     int32_t op1_eg_vs_k_x[NVOICE];
     int32_t op1_fb_vs_k_x[NVOICE];
@@ -1332,9 +1461,21 @@ typedef struct type_p_alpha_state {
     int32_t type_p_alpha_tap0[N_TAP_CH][DSP_TAP_FRAMES];
     int32_t type_p_alpha_tap1[N_TAP_CH][DSP_TAP_FRAMES];
     int16_t op1_osc_bank[10880];
+    int16_t op1_phase_map[10880];
+    int16_t op1_phase_lfo_pool[10880];
+    int16_t op1_phase_env_pool[10880];
     int16_t op2_osc_bank[10880];
+    int16_t op2_phase_map[10880];
+    int16_t op2_phase_lfo_pool[10880];
+    int16_t op2_phase_env_pool[10880];
     int16_t op3_osc_bank[10880];
+    int16_t op3_phase_map[10880];
+    int16_t op3_phase_lfo_pool[10880];
+    int16_t op3_phase_env_pool[10880];
     int16_t op4_osc_bank[10880];
+    int16_t op4_phase_map[10880];
+    int16_t op4_phase_lfo_pool[10880];
+    int16_t op4_phase_env_pool[10880];
     uint16_t voice_rel[NVOICE];
     uint8_t voice_gate[NVOICE];
     uint8_t voice_note[NVOICE];
@@ -1412,11 +1553,11 @@ static const int32_t pan_r_table[201] = {
     92682,
 };
 
-#define PARAM_COUNT 1744
+#define PARAM_COUNT 1976
 
 typedef struct { uint32_t id; const char *name; int32_t min, max, def;
                  uint8_t curve; uint8_t rate; const char *unit; } dsp_param;
-const dsp_param type_p_alpha_dsp_params[1744] = {
+const dsp_param type_p_alpha_dsp_params[1976] = {
     { 0u, "op1_ratio.p0", 32768, 1048576, 65536, 0u, 0u, "" },
     { 1u, "op1_detune.p0", -50, 50, 0, 0u, 0u, "" },
     { 2u, "op1_waveform.p0", 0, 13, 0, 0u, 0u, "" },
@@ -2282,888 +2423,1120 @@ const dsp_param type_p_alpha_dsp_params[1744] = {
     { 862u, "pan_env_relr.p0", 0, 99, 80, 0u, 0u, "" },
     { 863u, "pan_env_rell.p0", -99, 99, 0, 0u, 0u, "" },
     { 864u, "pan_env_mode.p0", 0, 3, 0, 0u, 0u, "" },
-    { 865u, "op1_ratio.p1", 32768, 1048576, 65536, 0u, 0u, "" },
-    { 866u, "op1_detune.p1", -50, 50, 0, 0u, 0u, "" },
-    { 867u, "op1_waveform.p1", 0, 13, 0, 0u, 0u, "" },
-    { 868u, "op1_spec_range_a.p1", 0, 1, 0, 0u, 0u, "" },
-    { 869u, "op1_spec_range_b.p1", 0, 1, 0, 0u, 0u, "" },
-    { 870u, "op1_spec_a1.p1", 0, 99, 99, 0u, 0u, "" },
-    { 871u, "op1_spec_a2.p1", 0, 99, 0, 0u, 0u, "" },
-    { 872u, "op1_spec_a3.p1", 0, 99, 0, 0u, 0u, "" },
-    { 873u, "op1_spec_a4.p1", 0, 99, 0, 0u, 0u, "" },
-    { 874u, "op1_spec_a5.p1", 0, 99, 0, 0u, 0u, "" },
-    { 875u, "op1_spec_a6.p1", 0, 99, 0, 0u, 0u, "" },
-    { 876u, "op1_spec_a7.p1", 0, 99, 0, 0u, 0u, "" },
-    { 877u, "op1_spec_a8.p1", 0, 99, 0, 0u, 0u, "" },
-    { 878u, "op1_spec_a9.p1", 0, 99, 0, 0u, 0u, "" },
-    { 879u, "op1_spec_a10.p1", 0, 99, 0, 0u, 0u, "" },
-    { 880u, "op1_spec_a11.p1", 0, 99, 0, 0u, 0u, "" },
-    { 881u, "op1_spec_a12.p1", 0, 99, 0, 0u, 0u, "" },
-    { 882u, "op1_spec_a13.p1", 0, 99, 0, 0u, 0u, "" },
-    { 883u, "op1_spec_a14.p1", 0, 99, 0, 0u, 0u, "" },
-    { 884u, "op1_spec_a15.p1", 0, 99, 0, 0u, 0u, "" },
-    { 885u, "op1_spec_a16.p1", 0, 99, 0, 0u, 0u, "" },
-    { 886u, "op1_spec_a17.p1", 0, 99, 0, 0u, 0u, "" },
-    { 887u, "op1_spec_a18.p1", 0, 99, 0, 0u, 0u, "" },
-    { 888u, "op1_spec_a19.p1", 0, 99, 0, 0u, 0u, "" },
-    { 889u, "op1_spec_a20.p1", 0, 99, 0, 0u, 0u, "" },
-    { 890u, "op1_spec_a21.p1", 0, 99, 0, 0u, 0u, "" },
-    { 891u, "op1_spec_a22.p1", 0, 99, 0, 0u, 0u, "" },
-    { 892u, "op1_spec_a23.p1", 0, 99, 0, 0u, 0u, "" },
-    { 893u, "op1_spec_a24.p1", 0, 99, 0, 0u, 0u, "" },
-    { 894u, "op1_spec_a25.p1", 0, 99, 0, 0u, 0u, "" },
-    { 895u, "op1_spec_a26.p1", 0, 99, 0, 0u, 0u, "" },
-    { 896u, "op1_spec_a27.p1", 0, 99, 0, 0u, 0u, "" },
-    { 897u, "op1_spec_a28.p1", 0, 99, 0, 0u, 0u, "" },
-    { 898u, "op1_spec_a29.p1", 0, 99, 0, 0u, 0u, "" },
-    { 899u, "op1_spec_a30.p1", 0, 99, 0, 0u, 0u, "" },
-    { 900u, "op1_spec_a31.p1", 0, 99, 0, 0u, 0u, "" },
-    { 901u, "op1_spec_a32.p1", 0, 99, 0, 0u, 0u, "" },
-    { 902u, "op1_spec_a33.p1", 0, 99, 0, 0u, 0u, "" },
-    { 903u, "op1_spec_a34.p1", 0, 99, 0, 0u, 0u, "" },
-    { 904u, "op1_spec_a35.p1", 0, 99, 0, 0u, 0u, "" },
-    { 905u, "op1_spec_a36.p1", 0, 99, 0, 0u, 0u, "" },
-    { 906u, "op1_spec_a37.p1", 0, 99, 0, 0u, 0u, "" },
-    { 907u, "op1_spec_a38.p1", 0, 99, 0, 0u, 0u, "" },
-    { 908u, "op1_spec_a39.p1", 0, 99, 0, 0u, 0u, "" },
-    { 909u, "op1_spec_a40.p1", 0, 99, 0, 0u, 0u, "" },
-    { 910u, "op1_spec_a41.p1", 0, 99, 0, 0u, 0u, "" },
-    { 911u, "op1_spec_a42.p1", 0, 99, 0, 0u, 0u, "" },
-    { 912u, "op1_spec_a43.p1", 0, 99, 0, 0u, 0u, "" },
-    { 913u, "op1_spec_a44.p1", 0, 99, 0, 0u, 0u, "" },
-    { 914u, "op1_spec_a45.p1", 0, 99, 0, 0u, 0u, "" },
-    { 915u, "op1_spec_a46.p1", 0, 99, 0, 0u, 0u, "" },
-    { 916u, "op1_spec_a47.p1", 0, 99, 0, 0u, 0u, "" },
-    { 917u, "op1_spec_a48.p1", 0, 99, 0, 0u, 0u, "" },
-    { 918u, "op1_spec_a49.p1", 0, 99, 0, 0u, 0u, "" },
-    { 919u, "op1_spec_a50.p1", 0, 99, 0, 0u, 0u, "" },
-    { 920u, "op1_spec_a51.p1", 0, 99, 0, 0u, 0u, "" },
-    { 921u, "op1_spec_a52.p1", 0, 99, 0, 0u, 0u, "" },
-    { 922u, "op1_spec_a53.p1", 0, 99, 0, 0u, 0u, "" },
-    { 923u, "op1_spec_a54.p1", 0, 99, 0, 0u, 0u, "" },
-    { 924u, "op1_spec_a55.p1", 0, 99, 0, 0u, 0u, "" },
-    { 925u, "op1_spec_a56.p1", 0, 99, 0, 0u, 0u, "" },
-    { 926u, "op1_spec_a57.p1", 0, 99, 0, 0u, 0u, "" },
-    { 927u, "op1_spec_a58.p1", 0, 99, 0, 0u, 0u, "" },
-    { 928u, "op1_spec_a59.p1", 0, 99, 0, 0u, 0u, "" },
-    { 929u, "op1_spec_a60.p1", 0, 99, 0, 0u, 0u, "" },
-    { 930u, "op1_spec_a61.p1", 0, 99, 0, 0u, 0u, "" },
-    { 931u, "op1_spec_a62.p1", 0, 99, 0, 0u, 0u, "" },
-    { 932u, "op1_spec_a63.p1", 0, 99, 0, 0u, 0u, "" },
-    { 933u, "op1_spec_a64.p1", 0, 99, 0, 0u, 0u, "" },
-    { 934u, "op1_spec_b1.p1", 0, 99, 99, 0u, 0u, "" },
-    { 935u, "op1_spec_b2.p1", 0, 99, 45, 0u, 0u, "" },
-    { 936u, "op1_spec_b3.p1", 0, 99, 30, 0u, 0u, "" },
-    { 937u, "op1_spec_b4.p1", 0, 99, 15, 0u, 0u, "" },
-    { 938u, "op1_spec_b5.p1", 0, 99, 55, 0u, 0u, "" },
-    { 939u, "op1_spec_b6.p1", 0, 99, 40, 0u, 0u, "" },
-    { 940u, "op1_spec_b7.p1", 0, 99, 25, 0u, 0u, "" },
-    { 941u, "op1_spec_b8.p1", 0, 99, 12, 0u, 0u, "" },
-    { 942u, "op1_spec_b9.p1", 0, 99, 8, 0u, 0u, "" },
-    { 943u, "op1_spec_b10.p1", 0, 99, 5, 0u, 0u, "" },
-    { 944u, "op1_spec_b11.p1", 0, 99, 3, 0u, 0u, "" },
-    { 945u, "op1_spec_b12.p1", 0, 99, 2, 0u, 0u, "" },
-    { 946u, "op1_spec_b13.p1", 0, 99, 1, 0u, 0u, "" },
-    { 947u, "op1_spec_b14.p1", 0, 99, 0, 0u, 0u, "" },
-    { 948u, "op1_spec_b15.p1", 0, 99, 0, 0u, 0u, "" },
-    { 949u, "op1_spec_b16.p1", 0, 99, 0, 0u, 0u, "" },
-    { 950u, "op1_spec_b17.p1", 0, 99, 0, 0u, 0u, "" },
-    { 951u, "op1_spec_b18.p1", 0, 99, 0, 0u, 0u, "" },
-    { 952u, "op1_spec_b19.p1", 0, 99, 0, 0u, 0u, "" },
-    { 953u, "op1_spec_b20.p1", 0, 99, 0, 0u, 0u, "" },
-    { 954u, "op1_spec_b21.p1", 0, 99, 0, 0u, 0u, "" },
-    { 955u, "op1_spec_b22.p1", 0, 99, 0, 0u, 0u, "" },
-    { 956u, "op1_spec_b23.p1", 0, 99, 0, 0u, 0u, "" },
-    { 957u, "op1_spec_b24.p1", 0, 99, 0, 0u, 0u, "" },
-    { 958u, "op1_spec_b25.p1", 0, 99, 0, 0u, 0u, "" },
-    { 959u, "op1_spec_b26.p1", 0, 99, 0, 0u, 0u, "" },
-    { 960u, "op1_spec_b27.p1", 0, 99, 0, 0u, 0u, "" },
-    { 961u, "op1_spec_b28.p1", 0, 99, 0, 0u, 0u, "" },
-    { 962u, "op1_spec_b29.p1", 0, 99, 0, 0u, 0u, "" },
-    { 963u, "op1_spec_b30.p1", 0, 99, 0, 0u, 0u, "" },
-    { 964u, "op1_spec_b31.p1", 0, 99, 0, 0u, 0u, "" },
-    { 965u, "op1_spec_b32.p1", 0, 99, 0, 0u, 0u, "" },
-    { 966u, "op1_spec_b33.p1", 0, 99, 0, 0u, 0u, "" },
-    { 967u, "op1_spec_b34.p1", 0, 99, 0, 0u, 0u, "" },
-    { 968u, "op1_spec_b35.p1", 0, 99, 0, 0u, 0u, "" },
-    { 969u, "op1_spec_b36.p1", 0, 99, 0, 0u, 0u, "" },
-    { 970u, "op1_spec_b37.p1", 0, 99, 0, 0u, 0u, "" },
-    { 971u, "op1_spec_b38.p1", 0, 99, 0, 0u, 0u, "" },
-    { 972u, "op1_spec_b39.p1", 0, 99, 0, 0u, 0u, "" },
-    { 973u, "op1_spec_b40.p1", 0, 99, 0, 0u, 0u, "" },
-    { 974u, "op1_spec_b41.p1", 0, 99, 0, 0u, 0u, "" },
-    { 975u, "op1_spec_b42.p1", 0, 99, 0, 0u, 0u, "" },
-    { 976u, "op1_spec_b43.p1", 0, 99, 0, 0u, 0u, "" },
-    { 977u, "op1_spec_b44.p1", 0, 99, 0, 0u, 0u, "" },
-    { 978u, "op1_spec_b45.p1", 0, 99, 0, 0u, 0u, "" },
-    { 979u, "op1_spec_b46.p1", 0, 99, 0, 0u, 0u, "" },
-    { 980u, "op1_spec_b47.p1", 0, 99, 0, 0u, 0u, "" },
-    { 981u, "op1_spec_b48.p1", 0, 99, 0, 0u, 0u, "" },
-    { 982u, "op1_spec_b49.p1", 0, 99, 0, 0u, 0u, "" },
-    { 983u, "op1_spec_b50.p1", 0, 99, 0, 0u, 0u, "" },
-    { 984u, "op1_spec_b51.p1", 0, 99, 0, 0u, 0u, "" },
-    { 985u, "op1_spec_b52.p1", 0, 99, 0, 0u, 0u, "" },
-    { 986u, "op1_spec_b53.p1", 0, 99, 0, 0u, 0u, "" },
-    { 987u, "op1_spec_b54.p1", 0, 99, 0, 0u, 0u, "" },
-    { 988u, "op1_spec_b55.p1", 0, 99, 0, 0u, 0u, "" },
-    { 989u, "op1_spec_b56.p1", 0, 99, 0, 0u, 0u, "" },
-    { 990u, "op1_spec_b57.p1", 0, 99, 0, 0u, 0u, "" },
-    { 991u, "op1_spec_b58.p1", 0, 99, 0, 0u, 0u, "" },
-    { 992u, "op1_spec_b59.p1", 0, 99, 0, 0u, 0u, "" },
-    { 993u, "op1_spec_b60.p1", 0, 99, 0, 0u, 0u, "" },
-    { 994u, "op1_spec_b61.p1", 0, 99, 0, 0u, 0u, "" },
-    { 995u, "op1_spec_b62.p1", 0, 99, 0, 0u, 0u, "" },
-    { 996u, "op1_spec_b63.p1", 0, 99, 0, 0u, 0u, "" },
-    { 997u, "op1_spec_b64.p1", 0, 99, 0, 0u, 0u, "" },
-    { 998u, "op1_spec_morph.p1", 0, 99, 0, 0u, 0u, "" },
-    { 999u, "op1.eg.warm.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1000u, "attack.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1001u, "op1.eg.d1r.p1", 0, 99, 60, 0u, 0u, "" },
-    { 1002u, "op1.eg.d1l.p1", 0, 99, 93, 0u, 0u, "" },
-    { 1003u, "op1.eg.d2r.p1", 0, 99, 50, 0u, 0u, "" },
-    { 1004u, "op1.eg.d2l.p1", 0, 99, 87, 0u, 0u, "" },
-    { 1005u, "release.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1006u, "op1.eg.mode.p1", 0, 3, 1, 0u, 0u, "" },
-    { 1007u, "op1_trem_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
-    { 1008u, "op1_trem_depth.p1", -99, 99, 0, 0u, 0u, "" },
-    { 1009u, "op1_trem_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 1010u, "op1_trem_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1011u, "op1_trem_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1012u, "op1_trem_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1013u, "op1_fbenv_on.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1014u, "op1_fbenv_r1.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1015u, "op1_fbenv_r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 1016u, "op1_fbenv_r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 1017u, "op1_fbenv_l1.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1018u, "op1_fbenv_l2.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1019u, "op1_fbenv_l3.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1020u, "op1_fbenv_relr.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1021u, "op1_fbenv_rell.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1022u, "op1_fbenv_mode.p1", 0, 3, 1, 0u, 0u, "" },
-    { 1023u, "op1_fblfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
-    { 1024u, "op1_fblfo_depth.p1", -32767, 32767, 0, 0u, 0u, "" },
-    { 1025u, "op1_fblfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 1026u, "op1_fblfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1027u, "op1_fblfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1028u, "op1_fblfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1029u, "op1_dlfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
-    { 1030u, "op1_dlfo_depth.p1", -32768, 32768, 0, 0u, 0u, "" },
-    { 1031u, "op1_dlfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 1032u, "op1_dlfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1033u, "op1_dlfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1034u, "op1_dlfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1035u, "op1.velamp.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1036u, "op1.velfm.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1037u, "op1.velrate.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1038u, "op1_level.p1", 0, 99, 75, 0u, 0u, "" },
-    { 1039u, "op1_feedback.p1", -32767, 32767, 0, 0u, 0u, "" },
-    { 1040u, "op1_level_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1041u, "op1_level_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1042u, "op1_fb_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1043u, "op1_fb_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1044u, "op1_aenv_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1045u, "op1_aenv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1046u, "op1_level_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1047u, "op1_fb_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1048u, "op1_aenv_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1049u, "op1_mute.p1", 0, 1, 0, 0u, 0u, "" },
-    { 1050u, "op1_spec_env_on.p1", 0, 1, 0, 0u, 0u, "" },
-    { 1051u, "op1_spec_env_r1.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1052u, "op1_spec_env_r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 1053u, "op1_spec_env_r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 1054u, "op1_spec_env_l1.p1", 0, 99, 99, 0u, 0u, "" },
-    { 1055u, "op1_spec_env_l2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 1056u, "op1_spec_env_l3.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1057u, "op1_spec_env_relr.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1058u, "op1_spec_env_rell.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1059u, "op1_spec_env_mode.p1", 0, 3, 1, 0u, 0u, "" },
-    { 1060u, "op1_spec_lfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
-    { 1061u, "op1_spec_lfo_depth.p1", -99, 99, 0, 0u, 0u, "" },
-    { 1062u, "op1_spec_lfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 1063u, "op1_spec_lfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1064u, "op1_spec_lfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1065u, "op1_spec_lfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1066u, "op2_ratio.p1", 32768, 1048576, 65536, 0u, 0u, "" },
-    { 1067u, "op2_detune.p1", -50, 50, 0, 0u, 0u, "" },
-    { 1068u, "op2_waveform.p1", 0, 13, 0, 0u, 0u, "" },
-    { 1069u, "op2_spec_range_a.p1", 0, 1, 0, 0u, 0u, "" },
-    { 1070u, "op2_spec_range_b.p1", 0, 1, 0, 0u, 0u, "" },
-    { 1071u, "op2_spec_a1.p1", 0, 99, 99, 0u, 0u, "" },
-    { 1072u, "op2_spec_a2.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1073u, "op2_spec_a3.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1074u, "op2_spec_a4.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1075u, "op2_spec_a5.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1076u, "op2_spec_a6.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1077u, "op2_spec_a7.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1078u, "op2_spec_a8.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1079u, "op2_spec_a9.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1080u, "op2_spec_a10.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1081u, "op2_spec_a11.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1082u, "op2_spec_a12.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1083u, "op2_spec_a13.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1084u, "op2_spec_a14.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1085u, "op2_spec_a15.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1086u, "op2_spec_a16.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1087u, "op2_spec_a17.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1088u, "op2_spec_a18.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1089u, "op2_spec_a19.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1090u, "op2_spec_a20.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1091u, "op2_spec_a21.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1092u, "op2_spec_a22.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1093u, "op2_spec_a23.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1094u, "op2_spec_a24.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1095u, "op2_spec_a25.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1096u, "op2_spec_a26.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1097u, "op2_spec_a27.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1098u, "op2_spec_a28.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1099u, "op2_spec_a29.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1100u, "op2_spec_a30.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1101u, "op2_spec_a31.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1102u, "op2_spec_a32.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1103u, "op2_spec_a33.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1104u, "op2_spec_a34.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1105u, "op2_spec_a35.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1106u, "op2_spec_a36.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1107u, "op2_spec_a37.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1108u, "op2_spec_a38.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1109u, "op2_spec_a39.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1110u, "op2_spec_a40.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1111u, "op2_spec_a41.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1112u, "op2_spec_a42.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1113u, "op2_spec_a43.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1114u, "op2_spec_a44.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1115u, "op2_spec_a45.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1116u, "op2_spec_a46.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1117u, "op2_spec_a47.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1118u, "op2_spec_a48.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1119u, "op2_spec_a49.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1120u, "op2_spec_a50.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1121u, "op2_spec_a51.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1122u, "op2_spec_a52.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1123u, "op2_spec_a53.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1124u, "op2_spec_a54.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1125u, "op2_spec_a55.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1126u, "op2_spec_a56.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1127u, "op2_spec_a57.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1128u, "op2_spec_a58.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1129u, "op2_spec_a59.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1130u, "op2_spec_a60.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1131u, "op2_spec_a61.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1132u, "op2_spec_a62.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1133u, "op2_spec_a63.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1134u, "op2_spec_a64.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1135u, "op2_spec_b1.p1", 0, 99, 99, 0u, 0u, "" },
-    { 1136u, "op2_spec_b2.p1", 0, 99, 45, 0u, 0u, "" },
-    { 1137u, "op2_spec_b3.p1", 0, 99, 30, 0u, 0u, "" },
-    { 1138u, "op2_spec_b4.p1", 0, 99, 15, 0u, 0u, "" },
-    { 1139u, "op2_spec_b5.p1", 0, 99, 55, 0u, 0u, "" },
-    { 1140u, "op2_spec_b6.p1", 0, 99, 40, 0u, 0u, "" },
-    { 1141u, "op2_spec_b7.p1", 0, 99, 25, 0u, 0u, "" },
-    { 1142u, "op2_spec_b8.p1", 0, 99, 12, 0u, 0u, "" },
-    { 1143u, "op2_spec_b9.p1", 0, 99, 8, 0u, 0u, "" },
-    { 1144u, "op2_spec_b10.p1", 0, 99, 5, 0u, 0u, "" },
-    { 1145u, "op2_spec_b11.p1", 0, 99, 3, 0u, 0u, "" },
-    { 1146u, "op2_spec_b12.p1", 0, 99, 2, 0u, 0u, "" },
-    { 1147u, "op2_spec_b13.p1", 0, 99, 1, 0u, 0u, "" },
-    { 1148u, "op2_spec_b14.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1149u, "op2_spec_b15.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1150u, "op2_spec_b16.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1151u, "op2_spec_b17.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1152u, "op2_spec_b18.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1153u, "op2_spec_b19.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1154u, "op2_spec_b20.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1155u, "op2_spec_b21.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1156u, "op2_spec_b22.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1157u, "op2_spec_b23.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1158u, "op2_spec_b24.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1159u, "op2_spec_b25.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1160u, "op2_spec_b26.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1161u, "op2_spec_b27.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1162u, "op2_spec_b28.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1163u, "op2_spec_b29.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1164u, "op2_spec_b30.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1165u, "op2_spec_b31.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1166u, "op2_spec_b32.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1167u, "op2_spec_b33.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1168u, "op2_spec_b34.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1169u, "op2_spec_b35.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1170u, "op2_spec_b36.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1171u, "op2_spec_b37.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1172u, "op2_spec_b38.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1173u, "op2_spec_b39.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1174u, "op2_spec_b40.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1175u, "op2_spec_b41.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1176u, "op2_spec_b42.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1177u, "op2_spec_b43.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1178u, "op2_spec_b44.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1179u, "op2_spec_b45.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1180u, "op2_spec_b46.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1181u, "op2_spec_b47.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1182u, "op2_spec_b48.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1183u, "op2_spec_b49.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1184u, "op2_spec_b50.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1185u, "op2_spec_b51.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1186u, "op2_spec_b52.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1187u, "op2_spec_b53.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1188u, "op2_spec_b54.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1189u, "op2_spec_b55.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1190u, "op2_spec_b56.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1191u, "op2_spec_b57.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1192u, "op2_spec_b58.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1193u, "op2_spec_b59.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1194u, "op2_spec_b60.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1195u, "op2_spec_b61.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1196u, "op2_spec_b62.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1197u, "op2_spec_b63.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1198u, "op2_spec_b64.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1199u, "op2_spec_morph.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1200u, "op2.eg.warm.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1201u, "op2.eg.surge.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1202u, "op2.eg.d1r.p1", 0, 99, 60, 0u, 0u, "" },
-    { 1203u, "op2.eg.d1l.p1", 0, 99, 93, 0u, 0u, "" },
-    { 1204u, "op2.eg.d2r.p1", 0, 99, 50, 0u, 0u, "" },
-    { 1205u, "op2.eg.d2l.p1", 0, 99, 87, 0u, 0u, "" },
-    { 1206u, "op2.eg.rel.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1207u, "op2.eg.mode.p1", 0, 3, 1, 0u, 0u, "" },
-    { 1208u, "op2_trem_rate.p1", 0, 20000000, 447392, 1u, 0u, "" },
-    { 1209u, "op2_trem_depth.p1", -99, 99, 0, 0u, 0u, "" },
-    { 1210u, "op2_trem_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 1211u, "op2_trem_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1212u, "op2_trem_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1213u, "op2_trem_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1214u, "op2_fbenv_on.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1215u, "op2_fbenv_r1.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1216u, "op2_fbenv_r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 1217u, "op2_fbenv_r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 1218u, "op2_fbenv_l1.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1219u, "op2_fbenv_l2.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1220u, "op2_fbenv_l3.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1221u, "op2_fbenv_relr.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1222u, "op2_fbenv_rell.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1223u, "op2_fbenv_mode.p1", 0, 3, 1, 0u, 0u, "" },
-    { 1224u, "op2_fblfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
-    { 1225u, "op2_fblfo_depth.p1", -32767, 32767, 0, 0u, 0u, "" },
-    { 1226u, "op2_fblfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 1227u, "op2_fblfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1228u, "op2_fblfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1229u, "op2_fblfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1230u, "op2_dlfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
-    { 1231u, "op2_dlfo_depth.p1", -32768, 32768, 0, 0u, 0u, "" },
-    { 1232u, "op2_dlfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 1233u, "op2_dlfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1234u, "op2_dlfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1235u, "op2_dlfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1236u, "op2.velamp.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1237u, "op2.velfm.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1238u, "op2.velrate.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1239u, "op2_level.p1", 0, 99, 85, 0u, 0u, "" },
-    { 1240u, "op2_feedback.p1", -32767, 32767, 0, 0u, 0u, "" },
-    { 1241u, "op2_level_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1242u, "op2_level_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1243u, "op2_fb_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1244u, "op2_fb_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1245u, "op2_aenv_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1246u, "op2_aenv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1247u, "op2_level_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1248u, "op2_fb_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1249u, "op2_aenv_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1250u, "op2_mute.p1", 0, 1, 0, 0u, 0u, "" },
-    { 1251u, "op2_spec_env_on.p1", 0, 1, 0, 0u, 0u, "" },
-    { 1252u, "op2_spec_env_r1.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1253u, "op2_spec_env_r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 1254u, "op2_spec_env_r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 1255u, "op2_spec_env_l1.p1", 0, 99, 99, 0u, 0u, "" },
-    { 1256u, "op2_spec_env_l2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 1257u, "op2_spec_env_l3.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1258u, "op2_spec_env_relr.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1259u, "op2_spec_env_rell.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1260u, "op2_spec_env_mode.p1", 0, 3, 1, 0u, 0u, "" },
-    { 1261u, "op2_spec_lfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
-    { 1262u, "op2_spec_lfo_depth.p1", -99, 99, 0, 0u, 0u, "" },
-    { 1263u, "op2_spec_lfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 1264u, "op2_spec_lfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1265u, "op2_spec_lfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1266u, "op2_spec_lfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1267u, "op3_ratio.p1", 32768, 1048576, 196608, 0u, 0u, "" },
-    { 1268u, "op3_detune.p1", -50, 50, 0, 0u, 0u, "" },
-    { 1269u, "op3_waveform.p1", 0, 13, 0, 0u, 0u, "" },
-    { 1270u, "op3_spec_range_a.p1", 0, 1, 0, 0u, 0u, "" },
-    { 1271u, "op3_spec_range_b.p1", 0, 1, 0, 0u, 0u, "" },
-    { 1272u, "op3_spec_a1.p1", 0, 99, 99, 0u, 0u, "" },
-    { 1273u, "op3_spec_a2.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1274u, "op3_spec_a3.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1275u, "op3_spec_a4.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1276u, "op3_spec_a5.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1277u, "op3_spec_a6.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1278u, "op3_spec_a7.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1279u, "op3_spec_a8.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1280u, "op3_spec_a9.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1281u, "op3_spec_a10.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1282u, "op3_spec_a11.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1283u, "op3_spec_a12.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1284u, "op3_spec_a13.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1285u, "op3_spec_a14.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1286u, "op3_spec_a15.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1287u, "op3_spec_a16.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1288u, "op3_spec_a17.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1289u, "op3_spec_a18.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1290u, "op3_spec_a19.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1291u, "op3_spec_a20.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1292u, "op3_spec_a21.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1293u, "op3_spec_a22.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1294u, "op3_spec_a23.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1295u, "op3_spec_a24.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1296u, "op3_spec_a25.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1297u, "op3_spec_a26.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1298u, "op3_spec_a27.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1299u, "op3_spec_a28.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1300u, "op3_spec_a29.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1301u, "op3_spec_a30.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1302u, "op3_spec_a31.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1303u, "op3_spec_a32.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1304u, "op3_spec_a33.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1305u, "op3_spec_a34.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1306u, "op3_spec_a35.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1307u, "op3_spec_a36.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1308u, "op3_spec_a37.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1309u, "op3_spec_a38.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1310u, "op3_spec_a39.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1311u, "op3_spec_a40.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1312u, "op3_spec_a41.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1313u, "op3_spec_a42.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1314u, "op3_spec_a43.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1315u, "op3_spec_a44.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1316u, "op3_spec_a45.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1317u, "op3_spec_a46.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1318u, "op3_spec_a47.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1319u, "op3_spec_a48.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1320u, "op3_spec_a49.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1321u, "op3_spec_a50.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1322u, "op3_spec_a51.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1323u, "op3_spec_a52.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1324u, "op3_spec_a53.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1325u, "op3_spec_a54.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1326u, "op3_spec_a55.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1327u, "op3_spec_a56.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1328u, "op3_spec_a57.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1329u, "op3_spec_a58.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1330u, "op3_spec_a59.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1331u, "op3_spec_a60.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1332u, "op3_spec_a61.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1333u, "op3_spec_a62.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1334u, "op3_spec_a63.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1335u, "op3_spec_a64.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1336u, "op3_spec_b1.p1", 0, 99, 99, 0u, 0u, "" },
-    { 1337u, "op3_spec_b2.p1", 0, 99, 45, 0u, 0u, "" },
-    { 1338u, "op3_spec_b3.p1", 0, 99, 30, 0u, 0u, "" },
-    { 1339u, "op3_spec_b4.p1", 0, 99, 15, 0u, 0u, "" },
-    { 1340u, "op3_spec_b5.p1", 0, 99, 55, 0u, 0u, "" },
-    { 1341u, "op3_spec_b6.p1", 0, 99, 40, 0u, 0u, "" },
-    { 1342u, "op3_spec_b7.p1", 0, 99, 25, 0u, 0u, "" },
-    { 1343u, "op3_spec_b8.p1", 0, 99, 12, 0u, 0u, "" },
-    { 1344u, "op3_spec_b9.p1", 0, 99, 8, 0u, 0u, "" },
-    { 1345u, "op3_spec_b10.p1", 0, 99, 5, 0u, 0u, "" },
-    { 1346u, "op3_spec_b11.p1", 0, 99, 3, 0u, 0u, "" },
-    { 1347u, "op3_spec_b12.p1", 0, 99, 2, 0u, 0u, "" },
-    { 1348u, "op3_spec_b13.p1", 0, 99, 1, 0u, 0u, "" },
-    { 1349u, "op3_spec_b14.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1350u, "op3_spec_b15.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1351u, "op3_spec_b16.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1352u, "op3_spec_b17.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1353u, "op3_spec_b18.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1354u, "op3_spec_b19.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1355u, "op3_spec_b20.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1356u, "op3_spec_b21.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1357u, "op3_spec_b22.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1358u, "op3_spec_b23.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1359u, "op3_spec_b24.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1360u, "op3_spec_b25.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1361u, "op3_spec_b26.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1362u, "op3_spec_b27.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1363u, "op3_spec_b28.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1364u, "op3_spec_b29.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1365u, "op3_spec_b30.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1366u, "op3_spec_b31.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1367u, "op3_spec_b32.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1368u, "op3_spec_b33.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1369u, "op3_spec_b34.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1370u, "op3_spec_b35.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1371u, "op3_spec_b36.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1372u, "op3_spec_b37.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1373u, "op3_spec_b38.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1374u, "op3_spec_b39.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1375u, "op3_spec_b40.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1376u, "op3_spec_b41.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1377u, "op3_spec_b42.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1378u, "op3_spec_b43.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1379u, "op3_spec_b44.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1380u, "op3_spec_b45.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1381u, "op3_spec_b46.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1382u, "op3_spec_b47.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1383u, "op3_spec_b48.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1384u, "op3_spec_b49.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1385u, "op3_spec_b50.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1386u, "op3_spec_b51.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1387u, "op3_spec_b52.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1388u, "op3_spec_b53.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1389u, "op3_spec_b54.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1390u, "op3_spec_b55.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1391u, "op3_spec_b56.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1392u, "op3_spec_b57.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1393u, "op3_spec_b58.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1394u, "op3_spec_b59.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1395u, "op3_spec_b60.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1396u, "op3_spec_b61.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1397u, "op3_spec_b62.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1398u, "op3_spec_b63.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1399u, "op3_spec_b64.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1400u, "op3_spec_morph.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1401u, "op3.eg.warm.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1402u, "op3.eg.surge.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1403u, "op3.eg.d1r.p1", 0, 99, 60, 0u, 0u, "" },
-    { 1404u, "op3.eg.d1l.p1", 0, 99, 93, 0u, 0u, "" },
-    { 1405u, "op3.eg.d2r.p1", 0, 99, 50, 0u, 0u, "" },
-    { 1406u, "op3.eg.d2l.p1", 0, 99, 87, 0u, 0u, "" },
-    { 1407u, "op3.eg.rel.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1408u, "op3.eg.mode.p1", 0, 3, 1, 0u, 0u, "" },
-    { 1409u, "op3_trem_rate.p1", 0, 20000000, 292174, 1u, 0u, "" },
-    { 1410u, "op3_trem_depth.p1", -99, 99, 0, 0u, 0u, "" },
-    { 1411u, "op3_trem_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 1412u, "op3_trem_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1413u, "op3_trem_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1414u, "op3_trem_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1415u, "op3_fbenv_on.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1416u, "op3_fbenv_r1.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1417u, "op3_fbenv_r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 1418u, "op3_fbenv_r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 1419u, "op3_fbenv_l1.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1420u, "op3_fbenv_l2.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1421u, "op3_fbenv_l3.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1422u, "op3_fbenv_relr.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1423u, "op3_fbenv_rell.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1424u, "op3_fbenv_mode.p1", 0, 3, 1, 0u, 0u, "" },
-    { 1425u, "op3_fblfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
-    { 1426u, "op3_fblfo_depth.p1", -32767, 32767, 0, 0u, 0u, "" },
-    { 1427u, "op3_fblfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 1428u, "op3_fblfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1429u, "op3_fblfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1430u, "op3_fblfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1431u, "op3_dlfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
-    { 1432u, "op3_dlfo_depth.p1", -32768, 32768, 0, 0u, 0u, "" },
-    { 1433u, "op3_dlfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 1434u, "op3_dlfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1435u, "op3_dlfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1436u, "op3_dlfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1437u, "op3.velamp.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1438u, "op3.velfm.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1439u, "op3.velrate.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1440u, "op3_level.p1", 0, 99, 70, 0u, 0u, "" },
-    { 1441u, "op3_feedback.p1", -32767, 32767, 0, 0u, 0u, "" },
-    { 1442u, "op3_level_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1443u, "op3_level_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1444u, "op3_fb_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1445u, "op3_fb_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1446u, "op3_aenv_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1447u, "op3_aenv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1448u, "op3_level_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1449u, "op3_fb_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1450u, "op3_aenv_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1451u, "op3_mute.p1", 0, 1, 0, 0u, 0u, "" },
-    { 1452u, "op3_spec_env_on.p1", 0, 1, 0, 0u, 0u, "" },
-    { 1453u, "op3_spec_env_r1.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1454u, "op3_spec_env_r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 1455u, "op3_spec_env_r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 1456u, "op3_spec_env_l1.p1", 0, 99, 99, 0u, 0u, "" },
-    { 1457u, "op3_spec_env_l2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 1458u, "op3_spec_env_l3.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1459u, "op3_spec_env_relr.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1460u, "op3_spec_env_rell.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1461u, "op3_spec_env_mode.p1", 0, 3, 1, 0u, 0u, "" },
-    { 1462u, "op3_spec_lfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
-    { 1463u, "op3_spec_lfo_depth.p1", -99, 99, 0, 0u, 0u, "" },
-    { 1464u, "op3_spec_lfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 1465u, "op3_spec_lfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1466u, "op3_spec_lfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1467u, "op3_spec_lfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1468u, "op4_ratio.p1", 32768, 1048576, 131072, 0u, 0u, "" },
-    { 1469u, "op4_detune.p1", -50, 50, 0, 0u, 0u, "" },
-    { 1470u, "op4_waveform.p1", 0, 13, 0, 0u, 0u, "" },
-    { 1471u, "op4_spec_range_a.p1", 0, 1, 0, 0u, 0u, "" },
-    { 1472u, "op4_spec_range_b.p1", 0, 1, 0, 0u, 0u, "" },
-    { 1473u, "op4_spec_a1.p1", 0, 99, 99, 0u, 0u, "" },
-    { 1474u, "op4_spec_a2.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1475u, "op4_spec_a3.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1476u, "op4_spec_a4.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1477u, "op4_spec_a5.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1478u, "op4_spec_a6.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1479u, "op4_spec_a7.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1480u, "op4_spec_a8.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1481u, "op4_spec_a9.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1482u, "op4_spec_a10.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1483u, "op4_spec_a11.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1484u, "op4_spec_a12.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1485u, "op4_spec_a13.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1486u, "op4_spec_a14.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1487u, "op4_spec_a15.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1488u, "op4_spec_a16.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1489u, "op4_spec_a17.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1490u, "op4_spec_a18.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1491u, "op4_spec_a19.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1492u, "op4_spec_a20.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1493u, "op4_spec_a21.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1494u, "op4_spec_a22.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1495u, "op4_spec_a23.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1496u, "op4_spec_a24.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1497u, "op4_spec_a25.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1498u, "op4_spec_a26.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1499u, "op4_spec_a27.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1500u, "op4_spec_a28.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1501u, "op4_spec_a29.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1502u, "op4_spec_a30.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1503u, "op4_spec_a31.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1504u, "op4_spec_a32.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1505u, "op4_spec_a33.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1506u, "op4_spec_a34.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1507u, "op4_spec_a35.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1508u, "op4_spec_a36.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1509u, "op4_spec_a37.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1510u, "op4_spec_a38.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1511u, "op4_spec_a39.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1512u, "op4_spec_a40.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1513u, "op4_spec_a41.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1514u, "op4_spec_a42.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1515u, "op4_spec_a43.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1516u, "op4_spec_a44.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1517u, "op4_spec_a45.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1518u, "op4_spec_a46.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1519u, "op4_spec_a47.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1520u, "op4_spec_a48.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1521u, "op4_spec_a49.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1522u, "op4_spec_a50.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1523u, "op4_spec_a51.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1524u, "op4_spec_a52.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1525u, "op4_spec_a53.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1526u, "op4_spec_a54.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1527u, "op4_spec_a55.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1528u, "op4_spec_a56.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1529u, "op4_spec_a57.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1530u, "op4_spec_a58.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1531u, "op4_spec_a59.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1532u, "op4_spec_a60.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1533u, "op4_spec_a61.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1534u, "op4_spec_a62.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1535u, "op4_spec_a63.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1536u, "op4_spec_a64.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1537u, "op4_spec_b1.p1", 0, 99, 99, 0u, 0u, "" },
-    { 1538u, "op4_spec_b2.p1", 0, 99, 45, 0u, 0u, "" },
-    { 1539u, "op4_spec_b3.p1", 0, 99, 30, 0u, 0u, "" },
-    { 1540u, "op4_spec_b4.p1", 0, 99, 15, 0u, 0u, "" },
-    { 1541u, "op4_spec_b5.p1", 0, 99, 55, 0u, 0u, "" },
-    { 1542u, "op4_spec_b6.p1", 0, 99, 40, 0u, 0u, "" },
-    { 1543u, "op4_spec_b7.p1", 0, 99, 25, 0u, 0u, "" },
-    { 1544u, "op4_spec_b8.p1", 0, 99, 12, 0u, 0u, "" },
-    { 1545u, "op4_spec_b9.p1", 0, 99, 8, 0u, 0u, "" },
-    { 1546u, "op4_spec_b10.p1", 0, 99, 5, 0u, 0u, "" },
-    { 1547u, "op4_spec_b11.p1", 0, 99, 3, 0u, 0u, "" },
-    { 1548u, "op4_spec_b12.p1", 0, 99, 2, 0u, 0u, "" },
-    { 1549u, "op4_spec_b13.p1", 0, 99, 1, 0u, 0u, "" },
-    { 1550u, "op4_spec_b14.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1551u, "op4_spec_b15.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1552u, "op4_spec_b16.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1553u, "op4_spec_b17.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1554u, "op4_spec_b18.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1555u, "op4_spec_b19.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1556u, "op4_spec_b20.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1557u, "op4_spec_b21.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1558u, "op4_spec_b22.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1559u, "op4_spec_b23.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1560u, "op4_spec_b24.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1561u, "op4_spec_b25.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1562u, "op4_spec_b26.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1563u, "op4_spec_b27.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1564u, "op4_spec_b28.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1565u, "op4_spec_b29.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1566u, "op4_spec_b30.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1567u, "op4_spec_b31.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1568u, "op4_spec_b32.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1569u, "op4_spec_b33.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1570u, "op4_spec_b34.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1571u, "op4_spec_b35.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1572u, "op4_spec_b36.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1573u, "op4_spec_b37.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1574u, "op4_spec_b38.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1575u, "op4_spec_b39.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1576u, "op4_spec_b40.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1577u, "op4_spec_b41.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1578u, "op4_spec_b42.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1579u, "op4_spec_b43.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1580u, "op4_spec_b44.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1581u, "op4_spec_b45.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1582u, "op4_spec_b46.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1583u, "op4_spec_b47.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1584u, "op4_spec_b48.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1585u, "op4_spec_b49.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1586u, "op4_spec_b50.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1587u, "op4_spec_b51.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1588u, "op4_spec_b52.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1589u, "op4_spec_b53.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1590u, "op4_spec_b54.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1591u, "op4_spec_b55.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1592u, "op4_spec_b56.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1593u, "op4_spec_b57.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1594u, "op4_spec_b58.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1595u, "op4_spec_b59.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1596u, "op4_spec_b60.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1597u, "op4_spec_b61.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1598u, "op4_spec_b62.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1599u, "op4_spec_b63.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1600u, "op4_spec_b64.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1601u, "op4_spec_morph.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1602u, "op4.eg.warm.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1603u, "op4.eg.surge.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1604u, "op4.eg.d1r.p1", 0, 99, 60, 0u, 0u, "" },
-    { 1605u, "op4.eg.d1l.p1", 0, 99, 93, 0u, 0u, "" },
-    { 1606u, "op4.eg.d2r.p1", 0, 99, 50, 0u, 0u, "" },
-    { 1607u, "op4.eg.d2l.p1", 0, 99, 87, 0u, 0u, "" },
-    { 1608u, "op4.eg.rel.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1609u, "op4.eg.mode.p1", 0, 3, 1, 0u, 0u, "" },
-    { 1610u, "op4_trem_rate.p1", 0, 20000000, 340870, 1u, 0u, "" },
-    { 1611u, "op4_trem_depth.p1", -99, 99, 0, 0u, 0u, "" },
-    { 1612u, "op4_trem_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 1613u, "op4_trem_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1614u, "op4_trem_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1615u, "op4_trem_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1616u, "op4_fbenv_on.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1617u, "op4_fbenv_r1.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1618u, "op4_fbenv_r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 1619u, "op4_fbenv_r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 1620u, "op4_fbenv_l1.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1621u, "op4_fbenv_l2.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1622u, "op4_fbenv_l3.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1623u, "op4_fbenv_relr.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1624u, "op4_fbenv_rell.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1625u, "op4_fbenv_mode.p1", 0, 3, 1, 0u, 0u, "" },
-    { 1626u, "op4_fblfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
-    { 1627u, "op4_fblfo_depth.p1", -32767, 32767, 0, 0u, 0u, "" },
-    { 1628u, "op4_fblfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 1629u, "op4_fblfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1630u, "op4_fblfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1631u, "op4_fblfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1632u, "op4_dlfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
-    { 1633u, "op4_dlfo_depth.p1", -32768, 32768, 0, 0u, 0u, "" },
-    { 1634u, "op4_dlfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 1635u, "op4_dlfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1636u, "op4_dlfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1637u, "op4_dlfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1638u, "op4.velamp.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1639u, "op4.velfm.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1640u, "op4.velrate.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1641u, "op4_level.p1", 0, 99, 85, 0u, 0u, "" },
-    { 1642u, "op4_feedback.p1", -32767, 32767, 0, 0u, 0u, "" },
-    { 1643u, "op4_level_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1644u, "op4_level_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1645u, "op4_fb_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1646u, "op4_fb_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1647u, "op4_aenv_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1648u, "op4_aenv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1649u, "op4_level_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1650u, "op4_fb_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1651u, "op4_aenv_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1652u, "op4_mute.p1", 0, 1, 0, 0u, 0u, "" },
-    { 1653u, "op4_spec_env_on.p1", 0, 1, 0, 0u, 0u, "" },
-    { 1654u, "op4_spec_env_r1.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1655u, "op4_spec_env_r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 1656u, "op4_spec_env_r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 1657u, "op4_spec_env_l1.p1", 0, 99, 99, 0u, 0u, "" },
-    { 1658u, "op4_spec_env_l2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 1659u, "op4_spec_env_l3.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1660u, "op4_spec_env_relr.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1661u, "op4_spec_env_rell.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1662u, "op4_spec_env_mode.p1", 0, 3, 1, 0u, 0u, "" },
-    { 1663u, "op4_spec_lfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
-    { 1664u, "op4_spec_lfo_depth.p1", -99, 99, 0, 0u, 0u, "" },
-    { 1665u, "op4_spec_lfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 1666u, "op4_spec_lfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1667u, "op4_spec_lfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1668u, "op4_spec_lfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1669u, "algorithm.p1", 0, 7, 4, 0u, 0u, "" },
-    { 1670u, "penv_on.p1", 0, 1, 0, 0u, 0u, "" },
-    { 1671u, "penv_r1.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1672u, "penv_r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 1673u, "penv_r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 1674u, "penv_l1.p1", -32768, 32767, 5461, 0u, 0u, "" },
-    { 1675u, "penv_l2.p1", -32768, 32767, 2731, 0u, 0u, "" },
-    { 1676u, "penv_l3.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1677u, "penv_relr.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1678u, "penv_rell.p1", -32768, 32767, 0, 0u, 0u, "" },
-    { 1679u, "penv_mode.p1", 0, 3, 1, 0u, 0u, "" },
-    { 1680u, "penv_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1681u, "penv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1682u, "penv_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1683u, "pitch_rate.p1", 0, 20000000, 447392, 1u, 0u, "" },
-    { 1684u, "pitch_depth.p1", -32768, 32768, 273, 0u, 0u, "" },
-    { 1685u, "pitch_wave.p1", 0, 11, 0, 0u, 0u, "" },
-    { 1686u, "pitch_mode.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1687u, "pitch_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1688u, "pitch_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1689u, "f1_cutoff_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1690u, "f1_cutoff_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1691u, "fenv_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1692u, "fenv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1693u, "f1_cutoff_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1694u, "fenv_vs.p1", -100, 100, 0, 0u, 0u, "" },
-    { 1695u, "cutoff.p1", 0, 55296, 36958, 0u, 0u, "" },
-    { 1696u, "res.p1", 0, 41942, 16000, 0u, 0u, "" },
-    { 1697u, "lp.comp.p1", -32768, 32767, 7209, 0u, 0u, "" },
-    { 1698u, "filter_type.p1", 0, 2, 0, 0u, 0u, "" },
-    { 1699u, "filter_on.p1", 0, 1, 0, 0u, 0u, "" },
-    { 1700u, "fenv_on.p1", 0, 1, 0, 0u, 0u, "" },
-    { 1701u, "fenv_r1.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1702u, "fenv_r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 1703u, "fenv_r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 1704u, "fenv_l1.p1", 0, 99, 99, 0u, 0u, "" },
-    { 1705u, "fenv_l2.p1", 0, 99, 93, 0u, 0u, "" },
-    { 1706u, "fenv_l3.p1", 0, 99, 87, 0u, 0u, "" },
-    { 1707u, "fenv_relr.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1708u, "fenv_rell.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1709u, "fenv_mode.p1", 0, 3, 1, 0u, 0u, "" },
-    { 1710u, "mode.p1", 0, 1, 0, 0u, 0u, "" },
-    { 1711u, "unison_count.p1", 1, 8, 1, 0u, 0u, "" },
-    { 1712u, "unison_detune.p1", 0, 200, 0, 0u, 0u, "cents" },
-    { 1713u, "detune.p1", -50, 50, 0, 0u, 0u, "cents" },
-    { 1714u, "transpose.p1", -24, 24, 0, 0u, 0u, "st" },
-    { 1715u, "legato.p1", 0, 1, 0, 0u, 0u, "" },
-    { 1716u, "portamento.p1", 0, 5000, 0, 1u, 0u, "" },
-    { 1717u, "note_priority.p1", 0, 2, 0, 0u, 0u, "" },
-    { 1718u, "bend_range.p1", 0, 24, 2, 0u, 0u, "st" },
-    { 1719u, "pan.p1", -100, 100, 0, 0u, 0u, "%" },
-    { 1720u, "pan_env_on.p1", 0, 1, 1, 0u, 0u, "" },
-    { 1721u, "pan_env_r1.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1722u, "pan_env_r2.p1", 0, 99, 60, 0u, 0u, "" },
-    { 1723u, "pan_env_r3.p1", 0, 99, 50, 0u, 0u, "" },
-    { 1724u, "pan_env_l1.p1", -99, 99, 0, 0u, 0u, "" },
-    { 1725u, "pan_env_l2.p1", -99, 99, 0, 0u, 0u, "" },
-    { 1726u, "pan_env_l3.p1", -99, 99, 0, 0u, 0u, "" },
-    { 1727u, "pan_env_relr.p1", 0, 99, 80, 0u, 0u, "" },
-    { 1728u, "pan_env_rell.p1", -99, 99, 0, 0u, 0u, "" },
-    { 1729u, "pan_env_mode.p1", 0, 3, 0, 0u, 0u, "" },
-    { 1730u, "breakpoint", 0, 127, 60, 0u, 0u, "" },
-    { 1731u, "key_sens_on", 0, 1, 1, 0u, 0u, "" },
-    { 1732u, "vel_sens_on", 0, 1, 1, 0u, 0u, "" },
-    { 1733u, "dc.r", -32768, 32767, 32738, 0u, 0u, "" },
-    { 1734u, "channel.p0", -1, 15, 0, 0u, 0u, "" },
-    { 1735u, "channel.p1", -1, 15, 1, 0u, 0u, "" },
-    { 1736u, "low.p0", 0, 127, 0, 0u, 0u, "" },
-    { 1737u, "low.p1", 0, 127, 0, 0u, 0u, "" },
-    { 1738u, "high.p0", 0, 127, 127, 0u, 0u, "" },
-    { 1739u, "high.p1", 0, 127, 127, 0u, 0u, "" },
-    { 1740u, "level.p0", 0, 99, 99, 0u, 0u, "" },
-    { 1741u, "level.p1", 0, 99, 99, 0u, 0u, "" },
-    { 1742u, "delay.p0", 0, 1000, 0, 0u, 0u, "ms" },
-    { 1743u, "delay.p1", 0, 1000, 0, 0u, 0u, "ms" },
+    { 865u, "op1_phase_on.p0", 0, 1, 0, 0u, 0u, "" },
+    { 866u, "op1_phase_bp.p0", 1, 999, 500, 0u, 0u, "" },
+    { 867u, "op1_phase_segments.p0", 1, 32, 8, 0u, 0u, "" },
+    { 868u, "op1_phase_flip.p0", 0, 100, 0, 0u, 0u, "" },
+    { 869u, "op1_phase_flip_rate.p0", 0, 2684355, 178956, 0u, 0u, "" },
+    { 870u, "op1_phase_reorder.p0", 0, 100, 0, 0u, 0u, "" },
+    { 871u, "op1_phase_reorder_rate.p0", 0, 2684355, 0, 0u, 0u, "" },
+    { 872u, "op1_phase_jump.p0", 1, 32, 1, 0u, 0u, "" },
+    { 873u, "op1_phase_drift.p0", 0, 100, 0, 0u, 0u, "" },
+    { 874u, "op1_phase_drift_rate.p0", 0, 2684355, 107374, 0u, 0u, "" },
+    { 875u, "op1_phase_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 876u, "op1_phase_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 877u, "op1_phase_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 878u, "op1_phase_lfo_rate.p0", 0, 20000000, 44739, 1u, 0u, "" },
+    { 879u, "op1_phase_lfo_depth.p0", -100, 100, 0, 0u, 0u, "" },
+    { 880u, "op1_phase_lfo_wave.p0", 0, 5, 0, 0u, 0u, "" },
+    { 881u, "op1_phase_lfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 882u, "op1_phase_lfo_rate_fade.p0", 0, 99, 0, 0u, 0u, "" },
+    { 883u, "op1_phase_lfo_depth_fade.p0", 0, 99, 0, 0u, 0u, "" },
+    { 884u, "op1_phase_env_on.p0", 0, 1, 1, 0u, 0u, "" },
+    { 885u, "op1_phase_env_r1.p0", 0, 99, 80, 0u, 0u, "" },
+    { 886u, "op1_phase_env_r2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 887u, "op1_phase_env_r3.p0", 0, 99, 50, 0u, 0u, "" },
+    { 888u, "op1_phase_env_l1.p0", -100, 100, 0, 0u, 0u, "" },
+    { 889u, "op1_phase_env_l2.p0", -100, 100, 0, 0u, 0u, "" },
+    { 890u, "op1_phase_env_l3.p0", -100, 100, 0, 0u, 0u, "" },
+    { 891u, "op1_phase_env_relr.p0", 0, 99, 80, 0u, 0u, "" },
+    { 892u, "op1_phase_env_rell.p0", -100, 100, 0, 0u, 0u, "" },
+    { 893u, "op1_phase_env_mode.p0", 0, 3, 1, 0u, 0u, "" },
+    { 894u, "op2_phase_on.p0", 0, 1, 0, 0u, 0u, "" },
+    { 895u, "op2_phase_bp.p0", 1, 999, 500, 0u, 0u, "" },
+    { 896u, "op2_phase_segments.p0", 1, 32, 8, 0u, 0u, "" },
+    { 897u, "op2_phase_flip.p0", 0, 100, 0, 0u, 0u, "" },
+    { 898u, "op2_phase_flip_rate.p0", 0, 2684355, 178956, 0u, 0u, "" },
+    { 899u, "op2_phase_reorder.p0", 0, 100, 0, 0u, 0u, "" },
+    { 900u, "op2_phase_reorder_rate.p0", 0, 2684355, 0, 0u, 0u, "" },
+    { 901u, "op2_phase_jump.p0", 1, 32, 1, 0u, 0u, "" },
+    { 902u, "op2_phase_drift.p0", 0, 100, 0, 0u, 0u, "" },
+    { 903u, "op2_phase_drift_rate.p0", 0, 2684355, 107374, 0u, 0u, "" },
+    { 904u, "op2_phase_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 905u, "op2_phase_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 906u, "op2_phase_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 907u, "op2_phase_lfo_rate.p0", 0, 20000000, 44739, 1u, 0u, "" },
+    { 908u, "op2_phase_lfo_depth.p0", -100, 100, 0, 0u, 0u, "" },
+    { 909u, "op2_phase_lfo_wave.p0", 0, 5, 0, 0u, 0u, "" },
+    { 910u, "op2_phase_lfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 911u, "op2_phase_lfo_rate_fade.p0", 0, 99, 0, 0u, 0u, "" },
+    { 912u, "op2_phase_lfo_depth_fade.p0", 0, 99, 0, 0u, 0u, "" },
+    { 913u, "op2_phase_env_on.p0", 0, 1, 1, 0u, 0u, "" },
+    { 914u, "op2_phase_env_r1.p0", 0, 99, 80, 0u, 0u, "" },
+    { 915u, "op2_phase_env_r2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 916u, "op2_phase_env_r3.p0", 0, 99, 50, 0u, 0u, "" },
+    { 917u, "op2_phase_env_l1.p0", -100, 100, 0, 0u, 0u, "" },
+    { 918u, "op2_phase_env_l2.p0", -100, 100, 0, 0u, 0u, "" },
+    { 919u, "op2_phase_env_l3.p0", -100, 100, 0, 0u, 0u, "" },
+    { 920u, "op2_phase_env_relr.p0", 0, 99, 80, 0u, 0u, "" },
+    { 921u, "op2_phase_env_rell.p0", -100, 100, 0, 0u, 0u, "" },
+    { 922u, "op2_phase_env_mode.p0", 0, 3, 1, 0u, 0u, "" },
+    { 923u, "op3_phase_on.p0", 0, 1, 0, 0u, 0u, "" },
+    { 924u, "op3_phase_bp.p0", 1, 999, 500, 0u, 0u, "" },
+    { 925u, "op3_phase_segments.p0", 1, 32, 8, 0u, 0u, "" },
+    { 926u, "op3_phase_flip.p0", 0, 100, 0, 0u, 0u, "" },
+    { 927u, "op3_phase_flip_rate.p0", 0, 2684355, 178956, 0u, 0u, "" },
+    { 928u, "op3_phase_reorder.p0", 0, 100, 0, 0u, 0u, "" },
+    { 929u, "op3_phase_reorder_rate.p0", 0, 2684355, 0, 0u, 0u, "" },
+    { 930u, "op3_phase_jump.p0", 1, 32, 1, 0u, 0u, "" },
+    { 931u, "op3_phase_drift.p0", 0, 100, 0, 0u, 0u, "" },
+    { 932u, "op3_phase_drift_rate.p0", 0, 2684355, 107374, 0u, 0u, "" },
+    { 933u, "op3_phase_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 934u, "op3_phase_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 935u, "op3_phase_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 936u, "op3_phase_lfo_rate.p0", 0, 20000000, 44739, 1u, 0u, "" },
+    { 937u, "op3_phase_lfo_depth.p0", -100, 100, 0, 0u, 0u, "" },
+    { 938u, "op3_phase_lfo_wave.p0", 0, 5, 0, 0u, 0u, "" },
+    { 939u, "op3_phase_lfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 940u, "op3_phase_lfo_rate_fade.p0", 0, 99, 0, 0u, 0u, "" },
+    { 941u, "op3_phase_lfo_depth_fade.p0", 0, 99, 0, 0u, 0u, "" },
+    { 942u, "op3_phase_env_on.p0", 0, 1, 1, 0u, 0u, "" },
+    { 943u, "op3_phase_env_r1.p0", 0, 99, 80, 0u, 0u, "" },
+    { 944u, "op3_phase_env_r2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 945u, "op3_phase_env_r3.p0", 0, 99, 50, 0u, 0u, "" },
+    { 946u, "op3_phase_env_l1.p0", -100, 100, 0, 0u, 0u, "" },
+    { 947u, "op3_phase_env_l2.p0", -100, 100, 0, 0u, 0u, "" },
+    { 948u, "op3_phase_env_l3.p0", -100, 100, 0, 0u, 0u, "" },
+    { 949u, "op3_phase_env_relr.p0", 0, 99, 80, 0u, 0u, "" },
+    { 950u, "op3_phase_env_rell.p0", -100, 100, 0, 0u, 0u, "" },
+    { 951u, "op3_phase_env_mode.p0", 0, 3, 1, 0u, 0u, "" },
+    { 952u, "op4_phase_on.p0", 0, 1, 0, 0u, 0u, "" },
+    { 953u, "op4_phase_bp.p0", 1, 999, 500, 0u, 0u, "" },
+    { 954u, "op4_phase_segments.p0", 1, 32, 8, 0u, 0u, "" },
+    { 955u, "op4_phase_flip.p0", 0, 100, 0, 0u, 0u, "" },
+    { 956u, "op4_phase_flip_rate.p0", 0, 2684355, 178956, 0u, 0u, "" },
+    { 957u, "op4_phase_reorder.p0", 0, 100, 0, 0u, 0u, "" },
+    { 958u, "op4_phase_reorder_rate.p0", 0, 2684355, 0, 0u, 0u, "" },
+    { 959u, "op4_phase_jump.p0", 1, 32, 1, 0u, 0u, "" },
+    { 960u, "op4_phase_drift.p0", 0, 100, 0, 0u, 0u, "" },
+    { 961u, "op4_phase_drift_rate.p0", 0, 2684355, 107374, 0u, 0u, "" },
+    { 962u, "op4_phase_ks_lo.p0", -100, 100, 0, 0u, 0u, "" },
+    { 963u, "op4_phase_ks_hi.p0", -100, 100, 0, 0u, 0u, "" },
+    { 964u, "op4_phase_vs.p0", -100, 100, 0, 0u, 0u, "" },
+    { 965u, "op4_phase_lfo_rate.p0", 0, 20000000, 44739, 1u, 0u, "" },
+    { 966u, "op4_phase_lfo_depth.p0", -100, 100, 0, 0u, 0u, "" },
+    { 967u, "op4_phase_lfo_wave.p0", 0, 5, 0, 0u, 0u, "" },
+    { 968u, "op4_phase_lfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
+    { 969u, "op4_phase_lfo_rate_fade.p0", 0, 99, 0, 0u, 0u, "" },
+    { 970u, "op4_phase_lfo_depth_fade.p0", 0, 99, 0, 0u, 0u, "" },
+    { 971u, "op4_phase_env_on.p0", 0, 1, 1, 0u, 0u, "" },
+    { 972u, "op4_phase_env_r1.p0", 0, 99, 80, 0u, 0u, "" },
+    { 973u, "op4_phase_env_r2.p0", 0, 99, 60, 0u, 0u, "" },
+    { 974u, "op4_phase_env_r3.p0", 0, 99, 50, 0u, 0u, "" },
+    { 975u, "op4_phase_env_l1.p0", -100, 100, 0, 0u, 0u, "" },
+    { 976u, "op4_phase_env_l2.p0", -100, 100, 0, 0u, 0u, "" },
+    { 977u, "op4_phase_env_l3.p0", -100, 100, 0, 0u, 0u, "" },
+    { 978u, "op4_phase_env_relr.p0", 0, 99, 80, 0u, 0u, "" },
+    { 979u, "op4_phase_env_rell.p0", -100, 100, 0, 0u, 0u, "" },
+    { 980u, "op4_phase_env_mode.p0", 0, 3, 1, 0u, 0u, "" },
+    { 981u, "op1_ratio.p1", 32768, 1048576, 65536, 0u, 0u, "" },
+    { 982u, "op1_detune.p1", -50, 50, 0, 0u, 0u, "" },
+    { 983u, "op1_waveform.p1", 0, 13, 0, 0u, 0u, "" },
+    { 984u, "op1_spec_range_a.p1", 0, 1, 0, 0u, 0u, "" },
+    { 985u, "op1_spec_range_b.p1", 0, 1, 0, 0u, 0u, "" },
+    { 986u, "op1_spec_a1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 987u, "op1_spec_a2.p1", 0, 99, 0, 0u, 0u, "" },
+    { 988u, "op1_spec_a3.p1", 0, 99, 0, 0u, 0u, "" },
+    { 989u, "op1_spec_a4.p1", 0, 99, 0, 0u, 0u, "" },
+    { 990u, "op1_spec_a5.p1", 0, 99, 0, 0u, 0u, "" },
+    { 991u, "op1_spec_a6.p1", 0, 99, 0, 0u, 0u, "" },
+    { 992u, "op1_spec_a7.p1", 0, 99, 0, 0u, 0u, "" },
+    { 993u, "op1_spec_a8.p1", 0, 99, 0, 0u, 0u, "" },
+    { 994u, "op1_spec_a9.p1", 0, 99, 0, 0u, 0u, "" },
+    { 995u, "op1_spec_a10.p1", 0, 99, 0, 0u, 0u, "" },
+    { 996u, "op1_spec_a11.p1", 0, 99, 0, 0u, 0u, "" },
+    { 997u, "op1_spec_a12.p1", 0, 99, 0, 0u, 0u, "" },
+    { 998u, "op1_spec_a13.p1", 0, 99, 0, 0u, 0u, "" },
+    { 999u, "op1_spec_a14.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1000u, "op1_spec_a15.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1001u, "op1_spec_a16.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1002u, "op1_spec_a17.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1003u, "op1_spec_a18.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1004u, "op1_spec_a19.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1005u, "op1_spec_a20.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1006u, "op1_spec_a21.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1007u, "op1_spec_a22.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1008u, "op1_spec_a23.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1009u, "op1_spec_a24.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1010u, "op1_spec_a25.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1011u, "op1_spec_a26.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1012u, "op1_spec_a27.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1013u, "op1_spec_a28.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1014u, "op1_spec_a29.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1015u, "op1_spec_a30.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1016u, "op1_spec_a31.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1017u, "op1_spec_a32.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1018u, "op1_spec_a33.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1019u, "op1_spec_a34.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1020u, "op1_spec_a35.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1021u, "op1_spec_a36.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1022u, "op1_spec_a37.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1023u, "op1_spec_a38.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1024u, "op1_spec_a39.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1025u, "op1_spec_a40.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1026u, "op1_spec_a41.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1027u, "op1_spec_a42.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1028u, "op1_spec_a43.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1029u, "op1_spec_a44.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1030u, "op1_spec_a45.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1031u, "op1_spec_a46.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1032u, "op1_spec_a47.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1033u, "op1_spec_a48.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1034u, "op1_spec_a49.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1035u, "op1_spec_a50.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1036u, "op1_spec_a51.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1037u, "op1_spec_a52.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1038u, "op1_spec_a53.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1039u, "op1_spec_a54.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1040u, "op1_spec_a55.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1041u, "op1_spec_a56.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1042u, "op1_spec_a57.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1043u, "op1_spec_a58.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1044u, "op1_spec_a59.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1045u, "op1_spec_a60.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1046u, "op1_spec_a61.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1047u, "op1_spec_a62.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1048u, "op1_spec_a63.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1049u, "op1_spec_a64.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1050u, "op1_spec_b1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 1051u, "op1_spec_b2.p1", 0, 99, 45, 0u, 0u, "" },
+    { 1052u, "op1_spec_b3.p1", 0, 99, 30, 0u, 0u, "" },
+    { 1053u, "op1_spec_b4.p1", 0, 99, 15, 0u, 0u, "" },
+    { 1054u, "op1_spec_b5.p1", 0, 99, 55, 0u, 0u, "" },
+    { 1055u, "op1_spec_b6.p1", 0, 99, 40, 0u, 0u, "" },
+    { 1056u, "op1_spec_b7.p1", 0, 99, 25, 0u, 0u, "" },
+    { 1057u, "op1_spec_b8.p1", 0, 99, 12, 0u, 0u, "" },
+    { 1058u, "op1_spec_b9.p1", 0, 99, 8, 0u, 0u, "" },
+    { 1059u, "op1_spec_b10.p1", 0, 99, 5, 0u, 0u, "" },
+    { 1060u, "op1_spec_b11.p1", 0, 99, 3, 0u, 0u, "" },
+    { 1061u, "op1_spec_b12.p1", 0, 99, 2, 0u, 0u, "" },
+    { 1062u, "op1_spec_b13.p1", 0, 99, 1, 0u, 0u, "" },
+    { 1063u, "op1_spec_b14.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1064u, "op1_spec_b15.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1065u, "op1_spec_b16.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1066u, "op1_spec_b17.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1067u, "op1_spec_b18.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1068u, "op1_spec_b19.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1069u, "op1_spec_b20.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1070u, "op1_spec_b21.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1071u, "op1_spec_b22.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1072u, "op1_spec_b23.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1073u, "op1_spec_b24.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1074u, "op1_spec_b25.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1075u, "op1_spec_b26.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1076u, "op1_spec_b27.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1077u, "op1_spec_b28.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1078u, "op1_spec_b29.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1079u, "op1_spec_b30.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1080u, "op1_spec_b31.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1081u, "op1_spec_b32.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1082u, "op1_spec_b33.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1083u, "op1_spec_b34.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1084u, "op1_spec_b35.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1085u, "op1_spec_b36.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1086u, "op1_spec_b37.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1087u, "op1_spec_b38.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1088u, "op1_spec_b39.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1089u, "op1_spec_b40.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1090u, "op1_spec_b41.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1091u, "op1_spec_b42.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1092u, "op1_spec_b43.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1093u, "op1_spec_b44.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1094u, "op1_spec_b45.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1095u, "op1_spec_b46.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1096u, "op1_spec_b47.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1097u, "op1_spec_b48.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1098u, "op1_spec_b49.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1099u, "op1_spec_b50.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1100u, "op1_spec_b51.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1101u, "op1_spec_b52.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1102u, "op1_spec_b53.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1103u, "op1_spec_b54.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1104u, "op1_spec_b55.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1105u, "op1_spec_b56.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1106u, "op1_spec_b57.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1107u, "op1_spec_b58.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1108u, "op1_spec_b59.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1109u, "op1_spec_b60.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1110u, "op1_spec_b61.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1111u, "op1_spec_b62.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1112u, "op1_spec_b63.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1113u, "op1_spec_b64.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1114u, "op1_spec_morph.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1115u, "op1.eg.warm.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1116u, "attack.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1117u, "op1.eg.d1r.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1118u, "op1.eg.d1l.p1", 0, 99, 93, 0u, 0u, "" },
+    { 1119u, "op1.eg.d2r.p1", 0, 99, 50, 0u, 0u, "" },
+    { 1120u, "op1.eg.d2l.p1", 0, 99, 87, 0u, 0u, "" },
+    { 1121u, "release.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1122u, "op1.eg.mode.p1", 0, 3, 1, 0u, 0u, "" },
+    { 1123u, "op1_trem_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
+    { 1124u, "op1_trem_depth.p1", -99, 99, 0, 0u, 0u, "" },
+    { 1125u, "op1_trem_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 1126u, "op1_trem_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1127u, "op1_trem_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1128u, "op1_trem_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1129u, "op1_fbenv_on.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1130u, "op1_fbenv_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1131u, "op1_fbenv_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1132u, "op1_fbenv_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 1133u, "op1_fbenv_l1.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1134u, "op1_fbenv_l2.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1135u, "op1_fbenv_l3.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1136u, "op1_fbenv_relr.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1137u, "op1_fbenv_rell.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1138u, "op1_fbenv_mode.p1", 0, 3, 1, 0u, 0u, "" },
+    { 1139u, "op1_fblfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
+    { 1140u, "op1_fblfo_depth.p1", -32767, 32767, 0, 0u, 0u, "" },
+    { 1141u, "op1_fblfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 1142u, "op1_fblfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1143u, "op1_fblfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1144u, "op1_fblfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1145u, "op1_dlfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
+    { 1146u, "op1_dlfo_depth.p1", -32768, 32768, 0, 0u, 0u, "" },
+    { 1147u, "op1_dlfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 1148u, "op1_dlfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1149u, "op1_dlfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1150u, "op1_dlfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1151u, "op1.velamp.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1152u, "op1.velfm.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1153u, "op1.velrate.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1154u, "op1_level.p1", 0, 99, 75, 0u, 0u, "" },
+    { 1155u, "op1_feedback.p1", -32767, 32767, 0, 0u, 0u, "" },
+    { 1156u, "op1_level_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1157u, "op1_level_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1158u, "op1_fb_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1159u, "op1_fb_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1160u, "op1_aenv_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1161u, "op1_aenv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1162u, "op1_level_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1163u, "op1_fb_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1164u, "op1_aenv_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1165u, "op1_mute.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1166u, "op1_spec_env_on.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1167u, "op1_spec_env_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1168u, "op1_spec_env_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1169u, "op1_spec_env_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 1170u, "op1_spec_env_l1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 1171u, "op1_spec_env_l2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1172u, "op1_spec_env_l3.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1173u, "op1_spec_env_relr.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1174u, "op1_spec_env_rell.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1175u, "op1_spec_env_mode.p1", 0, 3, 1, 0u, 0u, "" },
+    { 1176u, "op1_spec_lfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
+    { 1177u, "op1_spec_lfo_depth.p1", -99, 99, 0, 0u, 0u, "" },
+    { 1178u, "op1_spec_lfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 1179u, "op1_spec_lfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1180u, "op1_spec_lfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1181u, "op1_spec_lfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1182u, "op2_ratio.p1", 32768, 1048576, 65536, 0u, 0u, "" },
+    { 1183u, "op2_detune.p1", -50, 50, 0, 0u, 0u, "" },
+    { 1184u, "op2_waveform.p1", 0, 13, 0, 0u, 0u, "" },
+    { 1185u, "op2_spec_range_a.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1186u, "op2_spec_range_b.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1187u, "op2_spec_a1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 1188u, "op2_spec_a2.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1189u, "op2_spec_a3.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1190u, "op2_spec_a4.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1191u, "op2_spec_a5.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1192u, "op2_spec_a6.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1193u, "op2_spec_a7.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1194u, "op2_spec_a8.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1195u, "op2_spec_a9.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1196u, "op2_spec_a10.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1197u, "op2_spec_a11.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1198u, "op2_spec_a12.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1199u, "op2_spec_a13.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1200u, "op2_spec_a14.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1201u, "op2_spec_a15.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1202u, "op2_spec_a16.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1203u, "op2_spec_a17.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1204u, "op2_spec_a18.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1205u, "op2_spec_a19.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1206u, "op2_spec_a20.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1207u, "op2_spec_a21.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1208u, "op2_spec_a22.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1209u, "op2_spec_a23.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1210u, "op2_spec_a24.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1211u, "op2_spec_a25.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1212u, "op2_spec_a26.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1213u, "op2_spec_a27.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1214u, "op2_spec_a28.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1215u, "op2_spec_a29.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1216u, "op2_spec_a30.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1217u, "op2_spec_a31.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1218u, "op2_spec_a32.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1219u, "op2_spec_a33.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1220u, "op2_spec_a34.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1221u, "op2_spec_a35.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1222u, "op2_spec_a36.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1223u, "op2_spec_a37.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1224u, "op2_spec_a38.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1225u, "op2_spec_a39.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1226u, "op2_spec_a40.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1227u, "op2_spec_a41.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1228u, "op2_spec_a42.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1229u, "op2_spec_a43.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1230u, "op2_spec_a44.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1231u, "op2_spec_a45.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1232u, "op2_spec_a46.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1233u, "op2_spec_a47.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1234u, "op2_spec_a48.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1235u, "op2_spec_a49.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1236u, "op2_spec_a50.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1237u, "op2_spec_a51.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1238u, "op2_spec_a52.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1239u, "op2_spec_a53.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1240u, "op2_spec_a54.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1241u, "op2_spec_a55.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1242u, "op2_spec_a56.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1243u, "op2_spec_a57.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1244u, "op2_spec_a58.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1245u, "op2_spec_a59.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1246u, "op2_spec_a60.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1247u, "op2_spec_a61.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1248u, "op2_spec_a62.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1249u, "op2_spec_a63.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1250u, "op2_spec_a64.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1251u, "op2_spec_b1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 1252u, "op2_spec_b2.p1", 0, 99, 45, 0u, 0u, "" },
+    { 1253u, "op2_spec_b3.p1", 0, 99, 30, 0u, 0u, "" },
+    { 1254u, "op2_spec_b4.p1", 0, 99, 15, 0u, 0u, "" },
+    { 1255u, "op2_spec_b5.p1", 0, 99, 55, 0u, 0u, "" },
+    { 1256u, "op2_spec_b6.p1", 0, 99, 40, 0u, 0u, "" },
+    { 1257u, "op2_spec_b7.p1", 0, 99, 25, 0u, 0u, "" },
+    { 1258u, "op2_spec_b8.p1", 0, 99, 12, 0u, 0u, "" },
+    { 1259u, "op2_spec_b9.p1", 0, 99, 8, 0u, 0u, "" },
+    { 1260u, "op2_spec_b10.p1", 0, 99, 5, 0u, 0u, "" },
+    { 1261u, "op2_spec_b11.p1", 0, 99, 3, 0u, 0u, "" },
+    { 1262u, "op2_spec_b12.p1", 0, 99, 2, 0u, 0u, "" },
+    { 1263u, "op2_spec_b13.p1", 0, 99, 1, 0u, 0u, "" },
+    { 1264u, "op2_spec_b14.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1265u, "op2_spec_b15.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1266u, "op2_spec_b16.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1267u, "op2_spec_b17.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1268u, "op2_spec_b18.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1269u, "op2_spec_b19.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1270u, "op2_spec_b20.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1271u, "op2_spec_b21.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1272u, "op2_spec_b22.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1273u, "op2_spec_b23.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1274u, "op2_spec_b24.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1275u, "op2_spec_b25.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1276u, "op2_spec_b26.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1277u, "op2_spec_b27.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1278u, "op2_spec_b28.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1279u, "op2_spec_b29.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1280u, "op2_spec_b30.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1281u, "op2_spec_b31.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1282u, "op2_spec_b32.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1283u, "op2_spec_b33.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1284u, "op2_spec_b34.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1285u, "op2_spec_b35.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1286u, "op2_spec_b36.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1287u, "op2_spec_b37.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1288u, "op2_spec_b38.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1289u, "op2_spec_b39.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1290u, "op2_spec_b40.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1291u, "op2_spec_b41.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1292u, "op2_spec_b42.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1293u, "op2_spec_b43.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1294u, "op2_spec_b44.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1295u, "op2_spec_b45.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1296u, "op2_spec_b46.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1297u, "op2_spec_b47.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1298u, "op2_spec_b48.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1299u, "op2_spec_b49.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1300u, "op2_spec_b50.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1301u, "op2_spec_b51.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1302u, "op2_spec_b52.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1303u, "op2_spec_b53.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1304u, "op2_spec_b54.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1305u, "op2_spec_b55.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1306u, "op2_spec_b56.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1307u, "op2_spec_b57.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1308u, "op2_spec_b58.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1309u, "op2_spec_b59.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1310u, "op2_spec_b60.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1311u, "op2_spec_b61.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1312u, "op2_spec_b62.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1313u, "op2_spec_b63.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1314u, "op2_spec_b64.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1315u, "op2_spec_morph.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1316u, "op2.eg.warm.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1317u, "op2.eg.surge.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1318u, "op2.eg.d1r.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1319u, "op2.eg.d1l.p1", 0, 99, 93, 0u, 0u, "" },
+    { 1320u, "op2.eg.d2r.p1", 0, 99, 50, 0u, 0u, "" },
+    { 1321u, "op2.eg.d2l.p1", 0, 99, 87, 0u, 0u, "" },
+    { 1322u, "op2.eg.rel.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1323u, "op2.eg.mode.p1", 0, 3, 1, 0u, 0u, "" },
+    { 1324u, "op2_trem_rate.p1", 0, 20000000, 447392, 1u, 0u, "" },
+    { 1325u, "op2_trem_depth.p1", -99, 99, 0, 0u, 0u, "" },
+    { 1326u, "op2_trem_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 1327u, "op2_trem_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1328u, "op2_trem_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1329u, "op2_trem_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1330u, "op2_fbenv_on.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1331u, "op2_fbenv_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1332u, "op2_fbenv_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1333u, "op2_fbenv_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 1334u, "op2_fbenv_l1.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1335u, "op2_fbenv_l2.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1336u, "op2_fbenv_l3.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1337u, "op2_fbenv_relr.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1338u, "op2_fbenv_rell.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1339u, "op2_fbenv_mode.p1", 0, 3, 1, 0u, 0u, "" },
+    { 1340u, "op2_fblfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
+    { 1341u, "op2_fblfo_depth.p1", -32767, 32767, 0, 0u, 0u, "" },
+    { 1342u, "op2_fblfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 1343u, "op2_fblfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1344u, "op2_fblfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1345u, "op2_fblfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1346u, "op2_dlfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
+    { 1347u, "op2_dlfo_depth.p1", -32768, 32768, 0, 0u, 0u, "" },
+    { 1348u, "op2_dlfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 1349u, "op2_dlfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1350u, "op2_dlfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1351u, "op2_dlfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1352u, "op2.velamp.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1353u, "op2.velfm.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1354u, "op2.velrate.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1355u, "op2_level.p1", 0, 99, 85, 0u, 0u, "" },
+    { 1356u, "op2_feedback.p1", -32767, 32767, 0, 0u, 0u, "" },
+    { 1357u, "op2_level_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1358u, "op2_level_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1359u, "op2_fb_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1360u, "op2_fb_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1361u, "op2_aenv_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1362u, "op2_aenv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1363u, "op2_level_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1364u, "op2_fb_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1365u, "op2_aenv_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1366u, "op2_mute.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1367u, "op2_spec_env_on.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1368u, "op2_spec_env_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1369u, "op2_spec_env_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1370u, "op2_spec_env_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 1371u, "op2_spec_env_l1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 1372u, "op2_spec_env_l2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1373u, "op2_spec_env_l3.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1374u, "op2_spec_env_relr.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1375u, "op2_spec_env_rell.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1376u, "op2_spec_env_mode.p1", 0, 3, 1, 0u, 0u, "" },
+    { 1377u, "op2_spec_lfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
+    { 1378u, "op2_spec_lfo_depth.p1", -99, 99, 0, 0u, 0u, "" },
+    { 1379u, "op2_spec_lfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 1380u, "op2_spec_lfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1381u, "op2_spec_lfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1382u, "op2_spec_lfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1383u, "op3_ratio.p1", 32768, 1048576, 196608, 0u, 0u, "" },
+    { 1384u, "op3_detune.p1", -50, 50, 0, 0u, 0u, "" },
+    { 1385u, "op3_waveform.p1", 0, 13, 0, 0u, 0u, "" },
+    { 1386u, "op3_spec_range_a.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1387u, "op3_spec_range_b.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1388u, "op3_spec_a1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 1389u, "op3_spec_a2.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1390u, "op3_spec_a3.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1391u, "op3_spec_a4.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1392u, "op3_spec_a5.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1393u, "op3_spec_a6.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1394u, "op3_spec_a7.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1395u, "op3_spec_a8.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1396u, "op3_spec_a9.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1397u, "op3_spec_a10.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1398u, "op3_spec_a11.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1399u, "op3_spec_a12.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1400u, "op3_spec_a13.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1401u, "op3_spec_a14.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1402u, "op3_spec_a15.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1403u, "op3_spec_a16.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1404u, "op3_spec_a17.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1405u, "op3_spec_a18.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1406u, "op3_spec_a19.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1407u, "op3_spec_a20.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1408u, "op3_spec_a21.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1409u, "op3_spec_a22.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1410u, "op3_spec_a23.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1411u, "op3_spec_a24.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1412u, "op3_spec_a25.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1413u, "op3_spec_a26.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1414u, "op3_spec_a27.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1415u, "op3_spec_a28.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1416u, "op3_spec_a29.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1417u, "op3_spec_a30.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1418u, "op3_spec_a31.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1419u, "op3_spec_a32.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1420u, "op3_spec_a33.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1421u, "op3_spec_a34.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1422u, "op3_spec_a35.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1423u, "op3_spec_a36.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1424u, "op3_spec_a37.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1425u, "op3_spec_a38.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1426u, "op3_spec_a39.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1427u, "op3_spec_a40.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1428u, "op3_spec_a41.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1429u, "op3_spec_a42.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1430u, "op3_spec_a43.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1431u, "op3_spec_a44.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1432u, "op3_spec_a45.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1433u, "op3_spec_a46.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1434u, "op3_spec_a47.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1435u, "op3_spec_a48.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1436u, "op3_spec_a49.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1437u, "op3_spec_a50.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1438u, "op3_spec_a51.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1439u, "op3_spec_a52.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1440u, "op3_spec_a53.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1441u, "op3_spec_a54.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1442u, "op3_spec_a55.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1443u, "op3_spec_a56.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1444u, "op3_spec_a57.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1445u, "op3_spec_a58.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1446u, "op3_spec_a59.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1447u, "op3_spec_a60.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1448u, "op3_spec_a61.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1449u, "op3_spec_a62.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1450u, "op3_spec_a63.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1451u, "op3_spec_a64.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1452u, "op3_spec_b1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 1453u, "op3_spec_b2.p1", 0, 99, 45, 0u, 0u, "" },
+    { 1454u, "op3_spec_b3.p1", 0, 99, 30, 0u, 0u, "" },
+    { 1455u, "op3_spec_b4.p1", 0, 99, 15, 0u, 0u, "" },
+    { 1456u, "op3_spec_b5.p1", 0, 99, 55, 0u, 0u, "" },
+    { 1457u, "op3_spec_b6.p1", 0, 99, 40, 0u, 0u, "" },
+    { 1458u, "op3_spec_b7.p1", 0, 99, 25, 0u, 0u, "" },
+    { 1459u, "op3_spec_b8.p1", 0, 99, 12, 0u, 0u, "" },
+    { 1460u, "op3_spec_b9.p1", 0, 99, 8, 0u, 0u, "" },
+    { 1461u, "op3_spec_b10.p1", 0, 99, 5, 0u, 0u, "" },
+    { 1462u, "op3_spec_b11.p1", 0, 99, 3, 0u, 0u, "" },
+    { 1463u, "op3_spec_b12.p1", 0, 99, 2, 0u, 0u, "" },
+    { 1464u, "op3_spec_b13.p1", 0, 99, 1, 0u, 0u, "" },
+    { 1465u, "op3_spec_b14.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1466u, "op3_spec_b15.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1467u, "op3_spec_b16.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1468u, "op3_spec_b17.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1469u, "op3_spec_b18.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1470u, "op3_spec_b19.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1471u, "op3_spec_b20.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1472u, "op3_spec_b21.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1473u, "op3_spec_b22.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1474u, "op3_spec_b23.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1475u, "op3_spec_b24.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1476u, "op3_spec_b25.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1477u, "op3_spec_b26.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1478u, "op3_spec_b27.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1479u, "op3_spec_b28.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1480u, "op3_spec_b29.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1481u, "op3_spec_b30.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1482u, "op3_spec_b31.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1483u, "op3_spec_b32.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1484u, "op3_spec_b33.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1485u, "op3_spec_b34.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1486u, "op3_spec_b35.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1487u, "op3_spec_b36.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1488u, "op3_spec_b37.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1489u, "op3_spec_b38.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1490u, "op3_spec_b39.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1491u, "op3_spec_b40.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1492u, "op3_spec_b41.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1493u, "op3_spec_b42.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1494u, "op3_spec_b43.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1495u, "op3_spec_b44.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1496u, "op3_spec_b45.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1497u, "op3_spec_b46.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1498u, "op3_spec_b47.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1499u, "op3_spec_b48.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1500u, "op3_spec_b49.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1501u, "op3_spec_b50.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1502u, "op3_spec_b51.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1503u, "op3_spec_b52.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1504u, "op3_spec_b53.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1505u, "op3_spec_b54.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1506u, "op3_spec_b55.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1507u, "op3_spec_b56.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1508u, "op3_spec_b57.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1509u, "op3_spec_b58.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1510u, "op3_spec_b59.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1511u, "op3_spec_b60.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1512u, "op3_spec_b61.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1513u, "op3_spec_b62.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1514u, "op3_spec_b63.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1515u, "op3_spec_b64.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1516u, "op3_spec_morph.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1517u, "op3.eg.warm.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1518u, "op3.eg.surge.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1519u, "op3.eg.d1r.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1520u, "op3.eg.d1l.p1", 0, 99, 93, 0u, 0u, "" },
+    { 1521u, "op3.eg.d2r.p1", 0, 99, 50, 0u, 0u, "" },
+    { 1522u, "op3.eg.d2l.p1", 0, 99, 87, 0u, 0u, "" },
+    { 1523u, "op3.eg.rel.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1524u, "op3.eg.mode.p1", 0, 3, 1, 0u, 0u, "" },
+    { 1525u, "op3_trem_rate.p1", 0, 20000000, 292174, 1u, 0u, "" },
+    { 1526u, "op3_trem_depth.p1", -99, 99, 0, 0u, 0u, "" },
+    { 1527u, "op3_trem_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 1528u, "op3_trem_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1529u, "op3_trem_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1530u, "op3_trem_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1531u, "op3_fbenv_on.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1532u, "op3_fbenv_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1533u, "op3_fbenv_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1534u, "op3_fbenv_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 1535u, "op3_fbenv_l1.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1536u, "op3_fbenv_l2.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1537u, "op3_fbenv_l3.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1538u, "op3_fbenv_relr.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1539u, "op3_fbenv_rell.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1540u, "op3_fbenv_mode.p1", 0, 3, 1, 0u, 0u, "" },
+    { 1541u, "op3_fblfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
+    { 1542u, "op3_fblfo_depth.p1", -32767, 32767, 0, 0u, 0u, "" },
+    { 1543u, "op3_fblfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 1544u, "op3_fblfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1545u, "op3_fblfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1546u, "op3_fblfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1547u, "op3_dlfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
+    { 1548u, "op3_dlfo_depth.p1", -32768, 32768, 0, 0u, 0u, "" },
+    { 1549u, "op3_dlfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 1550u, "op3_dlfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1551u, "op3_dlfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1552u, "op3_dlfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1553u, "op3.velamp.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1554u, "op3.velfm.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1555u, "op3.velrate.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1556u, "op3_level.p1", 0, 99, 70, 0u, 0u, "" },
+    { 1557u, "op3_feedback.p1", -32767, 32767, 0, 0u, 0u, "" },
+    { 1558u, "op3_level_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1559u, "op3_level_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1560u, "op3_fb_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1561u, "op3_fb_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1562u, "op3_aenv_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1563u, "op3_aenv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1564u, "op3_level_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1565u, "op3_fb_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1566u, "op3_aenv_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1567u, "op3_mute.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1568u, "op3_spec_env_on.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1569u, "op3_spec_env_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1570u, "op3_spec_env_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1571u, "op3_spec_env_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 1572u, "op3_spec_env_l1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 1573u, "op3_spec_env_l2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1574u, "op3_spec_env_l3.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1575u, "op3_spec_env_relr.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1576u, "op3_spec_env_rell.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1577u, "op3_spec_env_mode.p1", 0, 3, 1, 0u, 0u, "" },
+    { 1578u, "op3_spec_lfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
+    { 1579u, "op3_spec_lfo_depth.p1", -99, 99, 0, 0u, 0u, "" },
+    { 1580u, "op3_spec_lfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 1581u, "op3_spec_lfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1582u, "op3_spec_lfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1583u, "op3_spec_lfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1584u, "op4_ratio.p1", 32768, 1048576, 131072, 0u, 0u, "" },
+    { 1585u, "op4_detune.p1", -50, 50, 0, 0u, 0u, "" },
+    { 1586u, "op4_waveform.p1", 0, 13, 0, 0u, 0u, "" },
+    { 1587u, "op4_spec_range_a.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1588u, "op4_spec_range_b.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1589u, "op4_spec_a1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 1590u, "op4_spec_a2.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1591u, "op4_spec_a3.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1592u, "op4_spec_a4.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1593u, "op4_spec_a5.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1594u, "op4_spec_a6.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1595u, "op4_spec_a7.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1596u, "op4_spec_a8.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1597u, "op4_spec_a9.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1598u, "op4_spec_a10.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1599u, "op4_spec_a11.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1600u, "op4_spec_a12.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1601u, "op4_spec_a13.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1602u, "op4_spec_a14.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1603u, "op4_spec_a15.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1604u, "op4_spec_a16.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1605u, "op4_spec_a17.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1606u, "op4_spec_a18.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1607u, "op4_spec_a19.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1608u, "op4_spec_a20.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1609u, "op4_spec_a21.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1610u, "op4_spec_a22.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1611u, "op4_spec_a23.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1612u, "op4_spec_a24.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1613u, "op4_spec_a25.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1614u, "op4_spec_a26.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1615u, "op4_spec_a27.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1616u, "op4_spec_a28.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1617u, "op4_spec_a29.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1618u, "op4_spec_a30.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1619u, "op4_spec_a31.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1620u, "op4_spec_a32.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1621u, "op4_spec_a33.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1622u, "op4_spec_a34.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1623u, "op4_spec_a35.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1624u, "op4_spec_a36.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1625u, "op4_spec_a37.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1626u, "op4_spec_a38.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1627u, "op4_spec_a39.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1628u, "op4_spec_a40.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1629u, "op4_spec_a41.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1630u, "op4_spec_a42.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1631u, "op4_spec_a43.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1632u, "op4_spec_a44.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1633u, "op4_spec_a45.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1634u, "op4_spec_a46.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1635u, "op4_spec_a47.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1636u, "op4_spec_a48.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1637u, "op4_spec_a49.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1638u, "op4_spec_a50.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1639u, "op4_spec_a51.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1640u, "op4_spec_a52.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1641u, "op4_spec_a53.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1642u, "op4_spec_a54.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1643u, "op4_spec_a55.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1644u, "op4_spec_a56.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1645u, "op4_spec_a57.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1646u, "op4_spec_a58.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1647u, "op4_spec_a59.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1648u, "op4_spec_a60.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1649u, "op4_spec_a61.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1650u, "op4_spec_a62.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1651u, "op4_spec_a63.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1652u, "op4_spec_a64.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1653u, "op4_spec_b1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 1654u, "op4_spec_b2.p1", 0, 99, 45, 0u, 0u, "" },
+    { 1655u, "op4_spec_b3.p1", 0, 99, 30, 0u, 0u, "" },
+    { 1656u, "op4_spec_b4.p1", 0, 99, 15, 0u, 0u, "" },
+    { 1657u, "op4_spec_b5.p1", 0, 99, 55, 0u, 0u, "" },
+    { 1658u, "op4_spec_b6.p1", 0, 99, 40, 0u, 0u, "" },
+    { 1659u, "op4_spec_b7.p1", 0, 99, 25, 0u, 0u, "" },
+    { 1660u, "op4_spec_b8.p1", 0, 99, 12, 0u, 0u, "" },
+    { 1661u, "op4_spec_b9.p1", 0, 99, 8, 0u, 0u, "" },
+    { 1662u, "op4_spec_b10.p1", 0, 99, 5, 0u, 0u, "" },
+    { 1663u, "op4_spec_b11.p1", 0, 99, 3, 0u, 0u, "" },
+    { 1664u, "op4_spec_b12.p1", 0, 99, 2, 0u, 0u, "" },
+    { 1665u, "op4_spec_b13.p1", 0, 99, 1, 0u, 0u, "" },
+    { 1666u, "op4_spec_b14.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1667u, "op4_spec_b15.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1668u, "op4_spec_b16.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1669u, "op4_spec_b17.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1670u, "op4_spec_b18.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1671u, "op4_spec_b19.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1672u, "op4_spec_b20.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1673u, "op4_spec_b21.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1674u, "op4_spec_b22.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1675u, "op4_spec_b23.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1676u, "op4_spec_b24.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1677u, "op4_spec_b25.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1678u, "op4_spec_b26.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1679u, "op4_spec_b27.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1680u, "op4_spec_b28.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1681u, "op4_spec_b29.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1682u, "op4_spec_b30.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1683u, "op4_spec_b31.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1684u, "op4_spec_b32.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1685u, "op4_spec_b33.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1686u, "op4_spec_b34.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1687u, "op4_spec_b35.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1688u, "op4_spec_b36.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1689u, "op4_spec_b37.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1690u, "op4_spec_b38.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1691u, "op4_spec_b39.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1692u, "op4_spec_b40.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1693u, "op4_spec_b41.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1694u, "op4_spec_b42.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1695u, "op4_spec_b43.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1696u, "op4_spec_b44.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1697u, "op4_spec_b45.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1698u, "op4_spec_b46.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1699u, "op4_spec_b47.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1700u, "op4_spec_b48.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1701u, "op4_spec_b49.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1702u, "op4_spec_b50.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1703u, "op4_spec_b51.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1704u, "op4_spec_b52.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1705u, "op4_spec_b53.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1706u, "op4_spec_b54.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1707u, "op4_spec_b55.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1708u, "op4_spec_b56.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1709u, "op4_spec_b57.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1710u, "op4_spec_b58.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1711u, "op4_spec_b59.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1712u, "op4_spec_b60.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1713u, "op4_spec_b61.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1714u, "op4_spec_b62.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1715u, "op4_spec_b63.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1716u, "op4_spec_b64.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1717u, "op4_spec_morph.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1718u, "op4.eg.warm.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1719u, "op4.eg.surge.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1720u, "op4.eg.d1r.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1721u, "op4.eg.d1l.p1", 0, 99, 93, 0u, 0u, "" },
+    { 1722u, "op4.eg.d2r.p1", 0, 99, 50, 0u, 0u, "" },
+    { 1723u, "op4.eg.d2l.p1", 0, 99, 87, 0u, 0u, "" },
+    { 1724u, "op4.eg.rel.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1725u, "op4.eg.mode.p1", 0, 3, 1, 0u, 0u, "" },
+    { 1726u, "op4_trem_rate.p1", 0, 20000000, 340870, 1u, 0u, "" },
+    { 1727u, "op4_trem_depth.p1", -99, 99, 0, 0u, 0u, "" },
+    { 1728u, "op4_trem_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 1729u, "op4_trem_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1730u, "op4_trem_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1731u, "op4_trem_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1732u, "op4_fbenv_on.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1733u, "op4_fbenv_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1734u, "op4_fbenv_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1735u, "op4_fbenv_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 1736u, "op4_fbenv_l1.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1737u, "op4_fbenv_l2.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1738u, "op4_fbenv_l3.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1739u, "op4_fbenv_relr.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1740u, "op4_fbenv_rell.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1741u, "op4_fbenv_mode.p1", 0, 3, 1, 0u, 0u, "" },
+    { 1742u, "op4_fblfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
+    { 1743u, "op4_fblfo_depth.p1", -32767, 32767, 0, 0u, 0u, "" },
+    { 1744u, "op4_fblfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 1745u, "op4_fblfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1746u, "op4_fblfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1747u, "op4_fblfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1748u, "op4_dlfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
+    { 1749u, "op4_dlfo_depth.p1", -32768, 32768, 0, 0u, 0u, "" },
+    { 1750u, "op4_dlfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 1751u, "op4_dlfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1752u, "op4_dlfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1753u, "op4_dlfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1754u, "op4.velamp.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1755u, "op4.velfm.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1756u, "op4.velrate.depth.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1757u, "op4_level.p1", 0, 99, 85, 0u, 0u, "" },
+    { 1758u, "op4_feedback.p1", -32767, 32767, 0, 0u, 0u, "" },
+    { 1759u, "op4_level_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1760u, "op4_level_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1761u, "op4_fb_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1762u, "op4_fb_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1763u, "op4_aenv_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1764u, "op4_aenv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1765u, "op4_level_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1766u, "op4_fb_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1767u, "op4_aenv_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1768u, "op4_mute.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1769u, "op4_spec_env_on.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1770u, "op4_spec_env_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1771u, "op4_spec_env_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1772u, "op4_spec_env_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 1773u, "op4_spec_env_l1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 1774u, "op4_spec_env_l2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1775u, "op4_spec_env_l3.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1776u, "op4_spec_env_relr.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1777u, "op4_spec_env_rell.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1778u, "op4_spec_env_mode.p1", 0, 3, 1, 0u, 0u, "" },
+    { 1779u, "op4_spec_lfo_rate.p1", 0, 20000000, 357914, 1u, 0u, "" },
+    { 1780u, "op4_spec_lfo_depth.p1", -99, 99, 0, 0u, 0u, "" },
+    { 1781u, "op4_spec_lfo_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 1782u, "op4_spec_lfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1783u, "op4_spec_lfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1784u, "op4_spec_lfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1785u, "algorithm.p1", 0, 7, 4, 0u, 0u, "" },
+    { 1786u, "penv_on.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1787u, "penv_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1788u, "penv_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1789u, "penv_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 1790u, "penv_l1.p1", -32768, 32767, 5461, 0u, 0u, "" },
+    { 1791u, "penv_l2.p1", -32768, 32767, 2731, 0u, 0u, "" },
+    { 1792u, "penv_l3.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1793u, "penv_relr.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1794u, "penv_rell.p1", -32768, 32767, 0, 0u, 0u, "" },
+    { 1795u, "penv_mode.p1", 0, 3, 1, 0u, 0u, "" },
+    { 1796u, "penv_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1797u, "penv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1798u, "penv_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1799u, "pitch_rate.p1", 0, 20000000, 447392, 1u, 0u, "" },
+    { 1800u, "pitch_depth.p1", -32768, 32768, 273, 0u, 0u, "" },
+    { 1801u, "pitch_wave.p1", 0, 11, 0, 0u, 0u, "" },
+    { 1802u, "pitch_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1803u, "pitch_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1804u, "pitch_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1805u, "f1_cutoff_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1806u, "f1_cutoff_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1807u, "fenv_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1808u, "fenv_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1809u, "f1_cutoff_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1810u, "fenv_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1811u, "cutoff.p1", 0, 55296, 36958, 0u, 0u, "" },
+    { 1812u, "res.p1", 0, 41942, 16000, 0u, 0u, "" },
+    { 1813u, "lp.comp.p1", -32768, 32767, 7209, 0u, 0u, "" },
+    { 1814u, "filter_type.p1", 0, 2, 0, 0u, 0u, "" },
+    { 1815u, "filter_on.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1816u, "fenv_on.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1817u, "fenv_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1818u, "fenv_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1819u, "fenv_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 1820u, "fenv_l1.p1", 0, 99, 99, 0u, 0u, "" },
+    { 1821u, "fenv_l2.p1", 0, 99, 93, 0u, 0u, "" },
+    { 1822u, "fenv_l3.p1", 0, 99, 87, 0u, 0u, "" },
+    { 1823u, "fenv_relr.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1824u, "fenv_rell.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1825u, "fenv_mode.p1", 0, 3, 1, 0u, 0u, "" },
+    { 1826u, "mode.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1827u, "unison_count.p1", 1, 8, 1, 0u, 0u, "" },
+    { 1828u, "unison_detune.p1", 0, 200, 0, 0u, 0u, "cents" },
+    { 1829u, "detune.p1", -50, 50, 0, 0u, 0u, "cents" },
+    { 1830u, "transpose.p1", -24, 24, 0, 0u, 0u, "st" },
+    { 1831u, "legato.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1832u, "portamento.p1", 0, 5000, 0, 1u, 0u, "" },
+    { 1833u, "note_priority.p1", 0, 2, 0, 0u, 0u, "" },
+    { 1834u, "bend_range.p1", 0, 24, 2, 0u, 0u, "st" },
+    { 1835u, "pan.p1", -100, 100, 0, 0u, 0u, "%" },
+    { 1836u, "pan_env_on.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1837u, "pan_env_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1838u, "pan_env_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1839u, "pan_env_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 1840u, "pan_env_l1.p1", -99, 99, 0, 0u, 0u, "" },
+    { 1841u, "pan_env_l2.p1", -99, 99, 0, 0u, 0u, "" },
+    { 1842u, "pan_env_l3.p1", -99, 99, 0, 0u, 0u, "" },
+    { 1843u, "pan_env_relr.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1844u, "pan_env_rell.p1", -99, 99, 0, 0u, 0u, "" },
+    { 1845u, "pan_env_mode.p1", 0, 3, 0, 0u, 0u, "" },
+    { 1846u, "op1_phase_on.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1847u, "op1_phase_bp.p1", 1, 999, 500, 0u, 0u, "" },
+    { 1848u, "op1_phase_segments.p1", 1, 32, 8, 0u, 0u, "" },
+    { 1849u, "op1_phase_flip.p1", 0, 100, 0, 0u, 0u, "" },
+    { 1850u, "op1_phase_flip_rate.p1", 0, 2684355, 178956, 0u, 0u, "" },
+    { 1851u, "op1_phase_reorder.p1", 0, 100, 0, 0u, 0u, "" },
+    { 1852u, "op1_phase_reorder_rate.p1", 0, 2684355, 0, 0u, 0u, "" },
+    { 1853u, "op1_phase_jump.p1", 1, 32, 1, 0u, 0u, "" },
+    { 1854u, "op1_phase_drift.p1", 0, 100, 0, 0u, 0u, "" },
+    { 1855u, "op1_phase_drift_rate.p1", 0, 2684355, 107374, 0u, 0u, "" },
+    { 1856u, "op1_phase_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1857u, "op1_phase_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1858u, "op1_phase_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1859u, "op1_phase_lfo_rate.p1", 0, 20000000, 44739, 1u, 0u, "" },
+    { 1860u, "op1_phase_lfo_depth.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1861u, "op1_phase_lfo_wave.p1", 0, 5, 0, 0u, 0u, "" },
+    { 1862u, "op1_phase_lfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1863u, "op1_phase_lfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1864u, "op1_phase_lfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1865u, "op1_phase_env_on.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1866u, "op1_phase_env_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1867u, "op1_phase_env_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1868u, "op1_phase_env_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 1869u, "op1_phase_env_l1.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1870u, "op1_phase_env_l2.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1871u, "op1_phase_env_l3.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1872u, "op1_phase_env_relr.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1873u, "op1_phase_env_rell.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1874u, "op1_phase_env_mode.p1", 0, 3, 1, 0u, 0u, "" },
+    { 1875u, "op2_phase_on.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1876u, "op2_phase_bp.p1", 1, 999, 500, 0u, 0u, "" },
+    { 1877u, "op2_phase_segments.p1", 1, 32, 8, 0u, 0u, "" },
+    { 1878u, "op2_phase_flip.p1", 0, 100, 0, 0u, 0u, "" },
+    { 1879u, "op2_phase_flip_rate.p1", 0, 2684355, 178956, 0u, 0u, "" },
+    { 1880u, "op2_phase_reorder.p1", 0, 100, 0, 0u, 0u, "" },
+    { 1881u, "op2_phase_reorder_rate.p1", 0, 2684355, 0, 0u, 0u, "" },
+    { 1882u, "op2_phase_jump.p1", 1, 32, 1, 0u, 0u, "" },
+    { 1883u, "op2_phase_drift.p1", 0, 100, 0, 0u, 0u, "" },
+    { 1884u, "op2_phase_drift_rate.p1", 0, 2684355, 107374, 0u, 0u, "" },
+    { 1885u, "op2_phase_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1886u, "op2_phase_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1887u, "op2_phase_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1888u, "op2_phase_lfo_rate.p1", 0, 20000000, 44739, 1u, 0u, "" },
+    { 1889u, "op2_phase_lfo_depth.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1890u, "op2_phase_lfo_wave.p1", 0, 5, 0, 0u, 0u, "" },
+    { 1891u, "op2_phase_lfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1892u, "op2_phase_lfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1893u, "op2_phase_lfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1894u, "op2_phase_env_on.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1895u, "op2_phase_env_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1896u, "op2_phase_env_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1897u, "op2_phase_env_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 1898u, "op2_phase_env_l1.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1899u, "op2_phase_env_l2.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1900u, "op2_phase_env_l3.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1901u, "op2_phase_env_relr.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1902u, "op2_phase_env_rell.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1903u, "op2_phase_env_mode.p1", 0, 3, 1, 0u, 0u, "" },
+    { 1904u, "op3_phase_on.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1905u, "op3_phase_bp.p1", 1, 999, 500, 0u, 0u, "" },
+    { 1906u, "op3_phase_segments.p1", 1, 32, 8, 0u, 0u, "" },
+    { 1907u, "op3_phase_flip.p1", 0, 100, 0, 0u, 0u, "" },
+    { 1908u, "op3_phase_flip_rate.p1", 0, 2684355, 178956, 0u, 0u, "" },
+    { 1909u, "op3_phase_reorder.p1", 0, 100, 0, 0u, 0u, "" },
+    { 1910u, "op3_phase_reorder_rate.p1", 0, 2684355, 0, 0u, 0u, "" },
+    { 1911u, "op3_phase_jump.p1", 1, 32, 1, 0u, 0u, "" },
+    { 1912u, "op3_phase_drift.p1", 0, 100, 0, 0u, 0u, "" },
+    { 1913u, "op3_phase_drift_rate.p1", 0, 2684355, 107374, 0u, 0u, "" },
+    { 1914u, "op3_phase_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1915u, "op3_phase_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1916u, "op3_phase_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1917u, "op3_phase_lfo_rate.p1", 0, 20000000, 44739, 1u, 0u, "" },
+    { 1918u, "op3_phase_lfo_depth.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1919u, "op3_phase_lfo_wave.p1", 0, 5, 0, 0u, 0u, "" },
+    { 1920u, "op3_phase_lfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1921u, "op3_phase_lfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1922u, "op3_phase_lfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1923u, "op3_phase_env_on.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1924u, "op3_phase_env_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1925u, "op3_phase_env_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1926u, "op3_phase_env_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 1927u, "op3_phase_env_l1.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1928u, "op3_phase_env_l2.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1929u, "op3_phase_env_l3.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1930u, "op3_phase_env_relr.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1931u, "op3_phase_env_rell.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1932u, "op3_phase_env_mode.p1", 0, 3, 1, 0u, 0u, "" },
+    { 1933u, "op4_phase_on.p1", 0, 1, 0, 0u, 0u, "" },
+    { 1934u, "op4_phase_bp.p1", 1, 999, 500, 0u, 0u, "" },
+    { 1935u, "op4_phase_segments.p1", 1, 32, 8, 0u, 0u, "" },
+    { 1936u, "op4_phase_flip.p1", 0, 100, 0, 0u, 0u, "" },
+    { 1937u, "op4_phase_flip_rate.p1", 0, 2684355, 178956, 0u, 0u, "" },
+    { 1938u, "op4_phase_reorder.p1", 0, 100, 0, 0u, 0u, "" },
+    { 1939u, "op4_phase_reorder_rate.p1", 0, 2684355, 0, 0u, 0u, "" },
+    { 1940u, "op4_phase_jump.p1", 1, 32, 1, 0u, 0u, "" },
+    { 1941u, "op4_phase_drift.p1", 0, 100, 0, 0u, 0u, "" },
+    { 1942u, "op4_phase_drift_rate.p1", 0, 2684355, 107374, 0u, 0u, "" },
+    { 1943u, "op4_phase_ks_lo.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1944u, "op4_phase_ks_hi.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1945u, "op4_phase_vs.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1946u, "op4_phase_lfo_rate.p1", 0, 20000000, 44739, 1u, 0u, "" },
+    { 1947u, "op4_phase_lfo_depth.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1948u, "op4_phase_lfo_wave.p1", 0, 5, 0, 0u, 0u, "" },
+    { 1949u, "op4_phase_lfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1950u, "op4_phase_lfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1951u, "op4_phase_lfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
+    { 1952u, "op4_phase_env_on.p1", 0, 1, 1, 0u, 0u, "" },
+    { 1953u, "op4_phase_env_r1.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1954u, "op4_phase_env_r2.p1", 0, 99, 60, 0u, 0u, "" },
+    { 1955u, "op4_phase_env_r3.p1", 0, 99, 50, 0u, 0u, "" },
+    { 1956u, "op4_phase_env_l1.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1957u, "op4_phase_env_l2.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1958u, "op4_phase_env_l3.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1959u, "op4_phase_env_relr.p1", 0, 99, 80, 0u, 0u, "" },
+    { 1960u, "op4_phase_env_rell.p1", -100, 100, 0, 0u, 0u, "" },
+    { 1961u, "op4_phase_env_mode.p1", 0, 3, 1, 0u, 0u, "" },
+    { 1962u, "breakpoint", 0, 127, 60, 0u, 0u, "" },
+    { 1963u, "key_sens_on", 0, 1, 1, 0u, 0u, "" },
+    { 1964u, "vel_sens_on", 0, 1, 1, 0u, 0u, "" },
+    { 1965u, "dc.r", -32768, 32767, 32738, 0u, 0u, "" },
+    { 1966u, "channel.p0", -1, 15, 0, 0u, 0u, "" },
+    { 1967u, "channel.p1", -1, 15, 1, 0u, 0u, "" },
+    { 1968u, "low.p0", 0, 127, 0, 0u, 0u, "" },
+    { 1969u, "low.p1", 0, 127, 0, 0u, 0u, "" },
+    { 1970u, "high.p0", 0, 127, 127, 0u, 0u, "" },
+    { 1971u, "high.p1", 0, 127, 127, 0u, 0u, "" },
+    { 1972u, "level.p0", 0, 99, 99, 0u, 0u, "" },
+    { 1973u, "level.p1", 0, 99, 99, 0u, 0u, "" },
+    { 1974u, "delay.p0", 0, 1000, 0, 0u, 0u, "ms" },
+    { 1975u, "delay.p1", 0, 1000, 0, 0u, 0u, "ms" },
 };
 typedef struct { uint32_t off; uint8_t part; } type_p_alpha_slot_t;
-static const type_p_alpha_slot_t type_p_alpha_slots[1744] = {
+static const type_p_alpha_slot_t type_p_alpha_slots[1976] = {
     { (uint32_t)offsetof(type_p_alpha_state, op1_ph_inc_ratio), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_ph_detune), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_osc_waveform), 0u },
@@ -4029,6 +4402,122 @@ static const type_p_alpha_slot_t type_p_alpha_slots[1744] = {
     { (uint32_t)offsetof(type_p_alpha_state, vm_pan_env_relr), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, vm_pan_env_rell), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, vm_pan_env_mode), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_on), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_bp), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_segments), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_flip), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_flip_rate), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_reorder), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_reorder_rate), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_jump), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_drift), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_drift_rate), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_ks_lo), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_ks_hi), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_vs), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_lfo_rate), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_lfo_depth), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_lfo_wave), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_lfo_mode), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_lfo_rate_fade), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_lfo_depth_fade), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_env_on), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_env_r1), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_env_r2), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_env_r3), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_env_l1), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_env_l2), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_env_l3), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_env_relr), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_env_rell), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_env_mode), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_on), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_bp), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_segments), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_flip), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_flip_rate), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_reorder), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_reorder_rate), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_jump), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_drift), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_drift_rate), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_ks_lo), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_ks_hi), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_vs), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_lfo_rate), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_lfo_depth), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_lfo_wave), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_lfo_mode), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_lfo_rate_fade), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_lfo_depth_fade), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_env_on), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_env_r1), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_env_r2), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_env_r3), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_env_l1), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_env_l2), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_env_l3), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_env_relr), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_env_rell), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_env_mode), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_on), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_bp), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_segments), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_flip), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_flip_rate), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_reorder), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_reorder_rate), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_jump), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_drift), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_drift_rate), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_ks_lo), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_ks_hi), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_vs), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_lfo_rate), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_lfo_depth), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_lfo_wave), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_lfo_mode), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_lfo_rate_fade), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_lfo_depth_fade), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_env_on), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_env_r1), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_env_r2), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_env_r3), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_env_l1), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_env_l2), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_env_l3), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_env_relr), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_env_rell), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_env_mode), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_on), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_bp), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_segments), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_flip), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_flip_rate), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_reorder), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_reorder_rate), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_jump), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_drift), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_drift_rate), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_ks_lo), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_ks_hi), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_vs), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_lfo_rate), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_lfo_depth), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_lfo_wave), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_lfo_mode), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_lfo_rate_fade), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_lfo_depth_fade), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_env_on), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_env_r1), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_env_r2), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_env_r3), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_env_l1), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_env_l2), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_env_l3), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_env_relr), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_env_rell), 0u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_env_mode), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_ph_inc_ratio), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_ph_detune), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_osc_waveform), 1u },
@@ -4894,6 +5383,122 @@ static const type_p_alpha_slot_t type_p_alpha_slots[1744] = {
     { (uint32_t)offsetof(type_p_alpha_state, vm_pan_env_relr), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, vm_pan_env_rell), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, vm_pan_env_mode), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_on), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_bp), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_segments), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_flip), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_flip_rate), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_reorder), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_reorder_rate), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_jump), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_drift), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_drift_rate), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_ks_lo), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_ks_hi), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_vs), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_lfo_rate), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_lfo_depth), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_lfo_wave), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_lfo_mode), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_lfo_rate_fade), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_lfo_depth_fade), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_env_on), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_env_r1), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_env_r2), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_env_r3), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_env_l1), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_env_l2), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_env_l3), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_env_relr), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_env_rell), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op1_phase_env_mode), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_on), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_bp), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_segments), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_flip), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_flip_rate), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_reorder), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_reorder_rate), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_jump), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_drift), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_drift_rate), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_ks_lo), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_ks_hi), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_vs), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_lfo_rate), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_lfo_depth), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_lfo_wave), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_lfo_mode), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_lfo_rate_fade), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_lfo_depth_fade), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_env_on), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_env_r1), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_env_r2), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_env_r3), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_env_l1), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_env_l2), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_env_l3), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_env_relr), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_env_rell), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op2_phase_env_mode), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_on), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_bp), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_segments), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_flip), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_flip_rate), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_reorder), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_reorder_rate), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_jump), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_drift), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_drift_rate), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_ks_lo), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_ks_hi), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_vs), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_lfo_rate), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_lfo_depth), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_lfo_wave), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_lfo_mode), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_lfo_rate_fade), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_lfo_depth_fade), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_env_on), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_env_r1), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_env_r2), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_env_r3), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_env_l1), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_env_l2), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_env_l3), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_env_relr), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_env_rell), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op3_phase_env_mode), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_on), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_bp), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_segments), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_flip), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_flip_rate), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_reorder), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_reorder_rate), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_jump), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_drift), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_drift_rate), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_ks_lo), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_ks_hi), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_vs), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_lfo_rate), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_lfo_depth), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_lfo_wave), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_lfo_mode), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_lfo_rate_fade), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_lfo_depth_fade), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_env_on), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_env_r1), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_env_r2), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_env_r3), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_env_l1), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_env_l2), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_env_l3), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_env_relr), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_env_rell), 1u },
+    { (uint32_t)offsetof(type_p_alpha_state, op4_phase_env_mode), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, key_bp_bp), 255u },
     { (uint32_t)offsetof(type_p_alpha_state, key_on_on), 255u },
     { (uint32_t)offsetof(type_p_alpha_state, vel_on_on), 255u },
@@ -5496,6 +6101,35 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op1_speclfo_mode (S->op1_speclfo_mode)
 #define op1_speclfo_rate_fade (S->op1_speclfo_rate_fade)
 #define op1_speclfo_depth_fade (S->op1_speclfo_depth_fade)
+#define op1_phase_on (S->op1_phase_on)
+#define op1_phase_bp (S->op1_phase_bp)
+#define op1_phase_segments (S->op1_phase_segments)
+#define op1_phase_flip (S->op1_phase_flip)
+#define op1_phase_flip_rate (S->op1_phase_flip_rate)
+#define op1_phase_reorder (S->op1_phase_reorder)
+#define op1_phase_reorder_rate (S->op1_phase_reorder_rate)
+#define op1_phase_jump (S->op1_phase_jump)
+#define op1_phase_drift (S->op1_phase_drift)
+#define op1_phase_drift_rate (S->op1_phase_drift_rate)
+#define op1_phase_ks_lo (S->op1_phase_ks_lo)
+#define op1_phase_ks_hi (S->op1_phase_ks_hi)
+#define op1_phase_vs (S->op1_phase_vs)
+#define op1_phase_lfo_rate (S->op1_phase_lfo_rate)
+#define op1_phase_lfo_depth (S->op1_phase_lfo_depth)
+#define op1_phase_lfo_wave (S->op1_phase_lfo_wave)
+#define op1_phase_lfo_mode (S->op1_phase_lfo_mode)
+#define op1_phase_lfo_rate_fade (S->op1_phase_lfo_rate_fade)
+#define op1_phase_lfo_depth_fade (S->op1_phase_lfo_depth_fade)
+#define op1_phase_env_on (S->op1_phase_env_on)
+#define op1_phase_env_r1 (S->op1_phase_env_r1)
+#define op1_phase_env_r2 (S->op1_phase_env_r2)
+#define op1_phase_env_r3 (S->op1_phase_env_r3)
+#define op1_phase_env_l1 (S->op1_phase_env_l1)
+#define op1_phase_env_l2 (S->op1_phase_env_l2)
+#define op1_phase_env_l3 (S->op1_phase_env_l3)
+#define op1_phase_env_relr (S->op1_phase_env_relr)
+#define op1_phase_env_rell (S->op1_phase_env_rell)
+#define op1_phase_env_mode (S->op1_phase_env_mode)
 #define op2_ph_inc_ratio (S->op2_ph_inc_ratio)
 #define op2_ph_detune (S->op2_ph_detune)
 #define op2_osc_waveform (S->op2_osc_waveform)
@@ -5697,6 +6331,35 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op2_speclfo_mode (S->op2_speclfo_mode)
 #define op2_speclfo_rate_fade (S->op2_speclfo_rate_fade)
 #define op2_speclfo_depth_fade (S->op2_speclfo_depth_fade)
+#define op2_phase_on (S->op2_phase_on)
+#define op2_phase_bp (S->op2_phase_bp)
+#define op2_phase_segments (S->op2_phase_segments)
+#define op2_phase_flip (S->op2_phase_flip)
+#define op2_phase_flip_rate (S->op2_phase_flip_rate)
+#define op2_phase_reorder (S->op2_phase_reorder)
+#define op2_phase_reorder_rate (S->op2_phase_reorder_rate)
+#define op2_phase_jump (S->op2_phase_jump)
+#define op2_phase_drift (S->op2_phase_drift)
+#define op2_phase_drift_rate (S->op2_phase_drift_rate)
+#define op2_phase_ks_lo (S->op2_phase_ks_lo)
+#define op2_phase_ks_hi (S->op2_phase_ks_hi)
+#define op2_phase_vs (S->op2_phase_vs)
+#define op2_phase_lfo_rate (S->op2_phase_lfo_rate)
+#define op2_phase_lfo_depth (S->op2_phase_lfo_depth)
+#define op2_phase_lfo_wave (S->op2_phase_lfo_wave)
+#define op2_phase_lfo_mode (S->op2_phase_lfo_mode)
+#define op2_phase_lfo_rate_fade (S->op2_phase_lfo_rate_fade)
+#define op2_phase_lfo_depth_fade (S->op2_phase_lfo_depth_fade)
+#define op2_phase_env_on (S->op2_phase_env_on)
+#define op2_phase_env_r1 (S->op2_phase_env_r1)
+#define op2_phase_env_r2 (S->op2_phase_env_r2)
+#define op2_phase_env_r3 (S->op2_phase_env_r3)
+#define op2_phase_env_l1 (S->op2_phase_env_l1)
+#define op2_phase_env_l2 (S->op2_phase_env_l2)
+#define op2_phase_env_l3 (S->op2_phase_env_l3)
+#define op2_phase_env_relr (S->op2_phase_env_relr)
+#define op2_phase_env_rell (S->op2_phase_env_rell)
+#define op2_phase_env_mode (S->op2_phase_env_mode)
 #define op3_ph_inc_ratio (S->op3_ph_inc_ratio)
 #define op3_ph_detune (S->op3_ph_detune)
 #define op3_osc_waveform (S->op3_osc_waveform)
@@ -5898,6 +6561,35 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op3_speclfo_mode (S->op3_speclfo_mode)
 #define op3_speclfo_rate_fade (S->op3_speclfo_rate_fade)
 #define op3_speclfo_depth_fade (S->op3_speclfo_depth_fade)
+#define op3_phase_on (S->op3_phase_on)
+#define op3_phase_bp (S->op3_phase_bp)
+#define op3_phase_segments (S->op3_phase_segments)
+#define op3_phase_flip (S->op3_phase_flip)
+#define op3_phase_flip_rate (S->op3_phase_flip_rate)
+#define op3_phase_reorder (S->op3_phase_reorder)
+#define op3_phase_reorder_rate (S->op3_phase_reorder_rate)
+#define op3_phase_jump (S->op3_phase_jump)
+#define op3_phase_drift (S->op3_phase_drift)
+#define op3_phase_drift_rate (S->op3_phase_drift_rate)
+#define op3_phase_ks_lo (S->op3_phase_ks_lo)
+#define op3_phase_ks_hi (S->op3_phase_ks_hi)
+#define op3_phase_vs (S->op3_phase_vs)
+#define op3_phase_lfo_rate (S->op3_phase_lfo_rate)
+#define op3_phase_lfo_depth (S->op3_phase_lfo_depth)
+#define op3_phase_lfo_wave (S->op3_phase_lfo_wave)
+#define op3_phase_lfo_mode (S->op3_phase_lfo_mode)
+#define op3_phase_lfo_rate_fade (S->op3_phase_lfo_rate_fade)
+#define op3_phase_lfo_depth_fade (S->op3_phase_lfo_depth_fade)
+#define op3_phase_env_on (S->op3_phase_env_on)
+#define op3_phase_env_r1 (S->op3_phase_env_r1)
+#define op3_phase_env_r2 (S->op3_phase_env_r2)
+#define op3_phase_env_r3 (S->op3_phase_env_r3)
+#define op3_phase_env_l1 (S->op3_phase_env_l1)
+#define op3_phase_env_l2 (S->op3_phase_env_l2)
+#define op3_phase_env_l3 (S->op3_phase_env_l3)
+#define op3_phase_env_relr (S->op3_phase_env_relr)
+#define op3_phase_env_rell (S->op3_phase_env_rell)
+#define op3_phase_env_mode (S->op3_phase_env_mode)
 #define op4_ph_inc_ratio (S->op4_ph_inc_ratio)
 #define op4_ph_detune (S->op4_ph_detune)
 #define op4_osc_waveform (S->op4_osc_waveform)
@@ -6099,6 +6791,35 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op4_speclfo_mode (S->op4_speclfo_mode)
 #define op4_speclfo_rate_fade (S->op4_speclfo_rate_fade)
 #define op4_speclfo_depth_fade (S->op4_speclfo_depth_fade)
+#define op4_phase_on (S->op4_phase_on)
+#define op4_phase_bp (S->op4_phase_bp)
+#define op4_phase_segments (S->op4_phase_segments)
+#define op4_phase_flip (S->op4_phase_flip)
+#define op4_phase_flip_rate (S->op4_phase_flip_rate)
+#define op4_phase_reorder (S->op4_phase_reorder)
+#define op4_phase_reorder_rate (S->op4_phase_reorder_rate)
+#define op4_phase_jump (S->op4_phase_jump)
+#define op4_phase_drift (S->op4_phase_drift)
+#define op4_phase_drift_rate (S->op4_phase_drift_rate)
+#define op4_phase_ks_lo (S->op4_phase_ks_lo)
+#define op4_phase_ks_hi (S->op4_phase_ks_hi)
+#define op4_phase_vs (S->op4_phase_vs)
+#define op4_phase_lfo_rate (S->op4_phase_lfo_rate)
+#define op4_phase_lfo_depth (S->op4_phase_lfo_depth)
+#define op4_phase_lfo_wave (S->op4_phase_lfo_wave)
+#define op4_phase_lfo_mode (S->op4_phase_lfo_mode)
+#define op4_phase_lfo_rate_fade (S->op4_phase_lfo_rate_fade)
+#define op4_phase_lfo_depth_fade (S->op4_phase_lfo_depth_fade)
+#define op4_phase_env_on (S->op4_phase_env_on)
+#define op4_phase_env_r1 (S->op4_phase_env_r1)
+#define op4_phase_env_r2 (S->op4_phase_env_r2)
+#define op4_phase_env_r3 (S->op4_phase_env_r3)
+#define op4_phase_env_l1 (S->op4_phase_env_l1)
+#define op4_phase_env_l2 (S->op4_phase_env_l2)
+#define op4_phase_env_l3 (S->op4_phase_env_l3)
+#define op4_phase_env_relr (S->op4_phase_env_relr)
+#define op4_phase_env_rell (S->op4_phase_env_rell)
+#define op4_phase_env_mode (S->op4_phase_env_mode)
 #define algo_algorithm (S->algo_algorithm)
 #define penv_on (S->penv_on)
 #define penv_r1 (S->penv_r1)
@@ -6144,6 +6865,7 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define key_on_on (S->key_on_on)
 #define vel_on_on (S->vel_on_on)
 #define dc_r (S->dc_r)
+#define ctrl_serial (S->ctrl_serial)
 #define patch_gate (S->patch_gate)
 #define patch_trig (S->patch_trig)
 #define dcr_x1 (S->dcr_x1)
@@ -6163,6 +6885,9 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define penv_active_x (S->penv_active_x)
 #define psum_cv_x (S->psum_cv_x)
 #define algo_alg_x (S->algo_alg_x)
+#define op4_phase_env_cv_x (S->op4_phase_env_cv_x)
+#define op4_phase_lfo_cv_x (S->op4_phase_lfo_cv_x)
+#define op4_phase_mod_cv_x (S->op4_phase_mod_cv_x)
 #define op4_speclfo_cv_x (S->op4_speclfo_cv_x)
 #define op4_eg_vs_k_x (S->op4_eg_vs_k_x)
 #define op4_fb_vs_k_x (S->op4_fb_vs_k_x)
@@ -6184,6 +6909,9 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op4_morphbase_out_x (S->op4_morphbase_out_x)
 #define op4_specenv_cv_x (S->op4_specenv_cv_x)
 #define op4_specenv_active_x (S->op4_specenv_active_x)
+#define op3_phase_env_cv_x (S->op3_phase_env_cv_x)
+#define op3_phase_lfo_cv_x (S->op3_phase_lfo_cv_x)
+#define op3_phase_mod_cv_x (S->op3_phase_mod_cv_x)
 #define op3_speclfo_cv_x (S->op3_speclfo_cv_x)
 #define op3_eg_vs_k_x (S->op3_eg_vs_k_x)
 #define op3_fb_vs_k_x (S->op3_fb_vs_k_x)
@@ -6205,6 +6933,9 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op3_morphbase_out_x (S->op3_morphbase_out_x)
 #define op3_specenv_cv_x (S->op3_specenv_cv_x)
 #define op3_specenv_active_x (S->op3_specenv_active_x)
+#define op2_phase_env_cv_x (S->op2_phase_env_cv_x)
+#define op2_phase_lfo_cv_x (S->op2_phase_lfo_cv_x)
+#define op2_phase_mod_cv_x (S->op2_phase_mod_cv_x)
 #define op2_speclfo_cv_x (S->op2_speclfo_cv_x)
 #define op2_eg_vs_k_x (S->op2_eg_vs_k_x)
 #define op2_fb_vs_k_x (S->op2_fb_vs_k_x)
@@ -6226,6 +6957,9 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op2_morphbase_out_x (S->op2_morphbase_out_x)
 #define op2_specenv_cv_x (S->op2_specenv_cv_x)
 #define op2_specenv_active_x (S->op2_specenv_active_x)
+#define op1_phase_env_cv_x (S->op1_phase_env_cv_x)
+#define op1_phase_lfo_cv_x (S->op1_phase_lfo_cv_x)
+#define op1_phase_mod_cv_x (S->op1_phase_mod_cv_x)
 #define op1_speclfo_cv_x (S->op1_speclfo_cv_x)
 #define op1_eg_vs_k_x (S->op1_eg_vs_k_x)
 #define op1_fb_vs_k_x (S->op1_fb_vs_k_x)
@@ -6255,9 +6989,21 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define type_p_alpha_tap0 (S->type_p_alpha_tap0)
 #define type_p_alpha_tap1 (S->type_p_alpha_tap1)
 #define op1_osc_bank (S->op1_osc_bank)
+#define op1_phase_map (S->op1_phase_map)
+#define op1_phase_lfo_pool (S->op1_phase_lfo_pool)
+#define op1_phase_env_pool (S->op1_phase_env_pool)
 #define op2_osc_bank (S->op2_osc_bank)
+#define op2_phase_map (S->op2_phase_map)
+#define op2_phase_lfo_pool (S->op2_phase_lfo_pool)
+#define op2_phase_env_pool (S->op2_phase_env_pool)
 #define op3_osc_bank (S->op3_osc_bank)
+#define op3_phase_map (S->op3_phase_map)
+#define op3_phase_lfo_pool (S->op3_phase_lfo_pool)
+#define op3_phase_env_pool (S->op3_phase_env_pool)
 #define op4_osc_bank (S->op4_osc_bank)
+#define op4_phase_map (S->op4_phase_map)
+#define op4_phase_lfo_pool (S->op4_phase_lfo_pool)
+#define op4_phase_env_pool (S->op4_phase_env_pool)
 #define voice_rel (S->voice_rel)
 #define voice_gate (S->voice_gate)
 #define voice_note (S->voice_note)
@@ -6319,6 +7065,7 @@ static inline __attribute__((always_inline)) void type_p_alpha_taps_clear(
 
 
 P1_DSP_API void type_p_alpha_render_pre_block(void) {
+    ctrl_serial++;
     for (uint32_t v = 0; v < NVOICE; v++) {
         if (voice_delay[v] == 0u) continue;
         if (voice_delay[v] > CONTROL_BLOCK) {
@@ -6668,6 +7415,230 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
            The 8 shipped routings clamp at 7. */
         uint32_t alg = algo_algorithm[voice_part[v]] > 7u ? 7u : algo_algorithm[voice_part[v]];
         algo_alg_x[v] = (int32_t)alg;
+        /* Per-part signed phase envelope. The pool is one per operator, indexed by the
+           part; the first active voice advances it once per control block. A trigger on
+           any voice of the part restarts the attack. The levels are absolute percent of
+           the breakpoint field. */
+        #define P1_PE_WORDS 64u
+        #define P1_PE_STAGE 0u
+        #define P1_PE_LEVEL 1u
+        #define P1_PE_LASTB 2u
+        #define P1_PE_SEEDED 3u
+        #define P1_PE_HADGATE 4u
+        op4_phase_env_cv_x[v] = 0;
+        {
+            uint32_t part = (uint32_t)voice_part[v];
+            if (part < (uint32_t)N_PART) {
+                _Static_assert(P1_PE_WORDS * (uint32_t)N_PART <= 5440u,
+                    "phase_env pool layout exceeds the pool");
+                uint32_t *pm = (uint32_t *)(void *)op4_phase_env_pool + part * P1_PE_WORDS;
+                if (!pm[P1_PE_SEEDED]) {
+                    pm[P1_PE_SEEDED] = 1u;
+                    pm[P1_PE_STAGE] = 0u;
+                    pm[P1_PE_LEVEL] = 0u;
+                    pm[P1_PE_LASTB] = 0xFFFFFFFFu;
+                    pm[P1_PE_HADGATE] = 0u;
+                }
+                if (pm[P1_PE_LASTB] != ctrl_serial) {
+                    pm[P1_PE_LASTB] = ctrl_serial;
+                    uint32_t trig = 0u;
+                    uint32_t gate = 0u;
+                    for (uint32_t vv = 0u; vv < NVOICE; vv++) {
+                        if ((uint32_t)voice_part[vv] != part) continue;
+                        if (voice_trig[vv]) trig = 1u;
+                        if (voice_gate[vv]) gate = 1u;
+                    }
+                    uint32_t stage = pm[P1_PE_STAGE];
+                    int32_t level = (int32_t)pm[P1_PE_LEVEL];
+                    uint32_t mode = 0u;
+        #ifdef vm_mode
+                    mode = (uint32_t)vm_mode[part];
+        #endif
+                    if (trig && (mode == 0u || !pm[P1_PE_HADGATE])) {
+                        stage = 0u;
+                        level = 0;
+                    }
+                    if (gate) {
+                        if (stage == 4u && op4_phase_env_mode[voice_part[v]] != 0) {
+                            stage = 0u;
+                            level = 0;
+                        }
+                    } else if (stage != 4u) {
+                        stage = 4u;
+                    }
+                    pm[P1_PE_HADGATE] = gate;
+                    int32_t l1 = (int32_t)op4_phase_env_l1[voice_part[v]];
+                    int32_t l2 = (int32_t)op4_phase_env_l2[voice_part[v]];
+                    int32_t l3 = (int32_t)op4_phase_env_l3[voice_part[v]];
+                    int32_t rl = (int32_t)op4_phase_env_rell[voice_part[v]];
+                    if (l1 < -100) l1 = -100;
+                    if (l1 > 100) l1 = 100;
+                    if (l2 < -100) l2 = -100;
+                    if (l2 > 100) l2 = 100;
+                    if (l3 < -100) l3 = -100;
+                    if (l3 > 100) l3 = 100;
+                    if (rl < -100) rl = -100;
+                    if (rl > 100) rl = 100;
+                    int32_t r1 = (int32_t)op4_phase_env_r1[voice_part[v]];
+                    int32_t r2 = (int32_t)op4_phase_env_r2[voice_part[v]];
+                    int32_t r3 = (int32_t)op4_phase_env_r3[voice_part[v]];
+                    int32_t r4 = (int32_t)op4_phase_env_relr[voice_part[v]];
+                    if (r1 < 0) r1 = 0;
+                    if (r1 > 99) r1 = 99;
+                    if (r2 < 0) r2 = 0;
+                    if (r2 > 99) r2 = 99;
+                    if (r3 < 0) r3 = 0;
+                    if (r3 > 99) r3 = 99;
+                    if (r4 < 0) r4 = 0;
+                    if (r4 > 99) r4 = 99;
+                    if (stage == 0u) {
+                        level = p1_onepole(level, l1, p1_rate_coeff[r1]);
+                        if (l1 >= level ? level >= l1 - 8 : level <= l1 + 8) {
+                            level = l1;
+                            stage = 1u;
+                        }
+                    }
+                    if (stage == 1u) {
+                        level = p1_onepole(level, l2, p1_rate_coeff[r2]);
+                        if (l2 >= level ? level >= l2 - 8 : level <= l2 + 8) {
+                            level = l2;
+                            stage = 2u;
+                        }
+                    }
+                    if (stage == 2u) {
+                        level = p1_onepole(level, l3, p1_rate_coeff[r3]);
+                        if (l3 >= level ? level >= l3 - 8 : level <= l3 + 8) {
+                            level = l3;
+                            if (op4_phase_env_mode[voice_part[v]] == 0u)
+                                stage = 4u;
+                            else if (op4_phase_env_mode[voice_part[v]] == 1u)
+                                stage = 3u;
+                            else
+                                stage = 5u;
+                        }
+                    }
+                    if (stage == 3u)
+                        level = l3;
+                    if (stage == 5u) {
+                        level = p1_onepole(level, l2,
+                            p1_rate_coeff[(op4_phase_env_mode[voice_part[v]] == 2u) ? r2 : r3]);
+                        if (l2 >= level ? level >= l2 - 8 : level <= l2 + 8) {
+                            level = l2;
+                            stage = 6u;
+                        }
+                    }
+                    if (stage == 6u) {
+                        level = p1_onepole(level, l3, p1_rate_coeff[r3]);
+                        if (l3 >= level ? level >= l3 - 8 : level <= l3 + 8) {
+                            level = l3;
+                            stage = 5u;
+                        }
+                    }
+                    if (stage == 4u) {
+                        level = p1_onepole(level, rl, p1_rate_coeff[r4]);
+                        if (rl >= level ? level >= rl - 8 : level <= rl + 8)
+                            level = rl;
+                    }
+                    pm[P1_PE_STAGE] = stage;
+                    pm[P1_PE_LEVEL] = (uint32_t)level;
+                }
+                op4_phase_env_cv_x[v] = op4_phase_env_on[voice_part[v]] ? (int32_t)pm[P1_PE_LEVEL] : 0;
+            }
+        }
+        /* Per-part phase LFO. The pool is one per operator, indexed by the part; the
+           first active voice on a part advances it once per control block and every
+           voice reads the held value. The LFO free-runs, so a note does not reset its
+           phase. The output is percent of the breakpoint field. */
+        #define P1_PL_WORDS 64u
+        #define P1_PL_PHASE 0u
+        #define P1_PL_BASE 1u
+        #define P1_PL_RATE_LEVEL 2u
+        #define P1_PL_DEPTH_LEVEL 3u
+        #define P1_PL_RATE_STEP 4u
+        #define P1_PL_DEPTH_STEP 5u
+        #define P1_PL_VALUE 6u
+        #define P1_PL_LASTB 7u
+        #define P1_PL_SEEDED 8u
+        #define P1_PL_RAND 9u
+        #define P1_PL_HOLD 10u
+        op4_phase_lfo_cv_x[v] = 0;
+        {
+            uint32_t part = (uint32_t)voice_part[v];
+            if (part < (uint32_t)N_PART) {
+                _Static_assert(P1_PL_WORDS * (uint32_t)N_PART <= 5440u,
+                    "phase_lfo pool layout exceeds the pool");
+                uint32_t *pm = (uint32_t *)(void *)op4_phase_lfo_pool + part * P1_PL_WORDS;
+                if (!pm[P1_PL_SEEDED]) {
+                    pm[P1_PL_SEEDED] = 1u;
+                    pm[P1_PL_PHASE] = 0u;
+                    pm[P1_PL_VALUE] = 0u;
+                    pm[P1_PL_LASTB] = 0xFFFFFFFFu;
+                    pm[P1_PL_RATE_LEVEL] = (op4_phase_lfo_rate_fade[voice_part[v]] || op4_phase_lfo_depth_fade[voice_part[v]])
+                        ? 0u : 0x80000000u;
+                    pm[P1_PL_DEPTH_LEVEL] = pm[P1_PL_RATE_LEVEL];
+                    pm[P1_PL_RAND] = 0x9E3779B9u + part * 4u;
+                    if (!pm[P1_PL_RAND]) pm[P1_PL_RAND] = 1u;
+                    uint32_t seed = pm[P1_PL_RAND];
+                    seed ^= seed << 13;
+                    seed ^= seed >> 17;
+                    seed ^= seed << 5;
+                    pm[P1_PL_RAND] = seed;
+                    pm[P1_PL_HOLD] = (uint32_t)((int32_t)(seed >> 16) - 32768);
+                }
+                if (pm[P1_PL_LASTB] != ctrl_serial) {
+                    pm[P1_PL_LASTB] = ctrl_serial;
+                    uint32_t wave = (uint32_t)op4_phase_lfo_wave[voice_part[v]];
+                    if (wave > 5u) wave = 0u;
+                    uint32_t base = 0u;
+                    if (wave == 1u) base = (uint32_t)p1_wave_base[1];
+                    else if (wave == 2u || wave == 3u) base = (uint32_t)p1_wave_base[12];
+                    else if (wave == 4u) base = (uint32_t)p1_wave_base[11];
+                    else base = (uint32_t)p1_wave_base[0];
+                    pm[P1_PL_BASE] = base << 10;
+                    pm[P1_PL_RATE_STEP] = p1_fade_step(op4_phase_lfo_rate_fade[voice_part[v]]);
+                    pm[P1_PL_DEPTH_STEP] = p1_fade_step(op4_phase_lfo_depth_fade[voice_part[v]]);
+                    if (pm[P1_PL_RATE_LEVEL] < 0x80000000u) {
+                        pm[P1_PL_RATE_LEVEL] += pm[P1_PL_RATE_STEP];
+                        if (pm[P1_PL_RATE_LEVEL] > 0x80000000u)
+                            pm[P1_PL_RATE_LEVEL] = 0x80000000u;
+                    }
+                    if (pm[P1_PL_DEPTH_LEVEL] < 0x80000000u) {
+                        pm[P1_PL_DEPTH_LEVEL] += pm[P1_PL_DEPTH_STEP];
+                        if (pm[P1_PL_DEPTH_LEVEL] > 0x80000000u)
+                            pm[P1_PL_DEPTH_LEVEL] = 0x80000000u;
+                    }
+                    uint32_t old_phase = pm[P1_PL_PHASE];
+                    pm[P1_PL_PHASE] += (uint32_t)((int32_t)(((int64_t)op4_phase_lfo_rate[voice_part[v]] *
+                        (int32_t)(pm[P1_PL_RATE_LEVEL] >> 15)) >> 16) * CONTROL_BLOCK);
+                    if (pm[P1_PL_PHASE] < old_phase) {
+                        uint32_t r = pm[P1_PL_RAND];
+                        r ^= r << 13;
+                        r ^= r >> 17;
+                        r ^= r << 5;
+                        pm[P1_PL_RAND] = r;
+                        pm[P1_PL_HOLD] = (uint32_t)((int32_t)(r >> 16) - 32768);
+                    }
+                    int32_t w;
+                    if (wave == 5u)
+                        w = (int32_t)pm[P1_PL_HOLD];
+                    else {
+                        w = p1_wave[pm[P1_PL_BASE] + (pm[P1_PL_PHASE] >> 22)];
+                        if (wave == 3u) w = -w;
+                    }
+                    int32_t depth = (int32_t)op4_phase_lfo_depth[voice_part[v]];
+                    if (depth < -100) depth = -100;
+                    if (depth > 100) depth = 100;
+                    depth = (int32_t)(((int64_t)depth *
+                        (int32_t)(pm[P1_PL_DEPTH_LEVEL] >> 15)) >> 16);
+                    pm[P1_PL_VALUE] = (uint32_t)(op4_phase_lfo_mode[voice_part[v]]
+                        ? p1_q15_mul(w, depth)
+                        : p1_q15_mul((w + 32768) >> 1, depth));
+                }
+                op4_phase_lfo_cv_x[v] = (int32_t)pm[P1_PL_VALUE];
+            }
+        }
+        /* control-rate summer: add the two control inputs. */
+        op4_phase_mod_cv_x[v] = op4_phase_lfo_cv_x[v] + op4_phase_env_cv_x[v];
         /* Low-frequency oscillator (control rate): phase advances by `rate` per sample
            (`rate * CONTROL_BLOCK` per control tick, where CONTROL_BLOCK is the emitted
            macro), and the output is a `p1_wave` waveform scaled by `depth` in the target
@@ -7098,6 +8069,230 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
         }
         op4_specenv_cv_x[v] = op4_specenv_on[voice_part[v]] ? op4_specenv_level[v] : op4_morphbase_out_x[v];
         op4_specenv_active_x[v] = op4_specenv_on[voice_part[v]] ? 1 : 0;
+        /* Per-part signed phase envelope. The pool is one per operator, indexed by the
+           part; the first active voice advances it once per control block. A trigger on
+           any voice of the part restarts the attack. The levels are absolute percent of
+           the breakpoint field. */
+        #define P1_PE_WORDS 64u
+        #define P1_PE_STAGE 0u
+        #define P1_PE_LEVEL 1u
+        #define P1_PE_LASTB 2u
+        #define P1_PE_SEEDED 3u
+        #define P1_PE_HADGATE 4u
+        op3_phase_env_cv_x[v] = 0;
+        {
+            uint32_t part = (uint32_t)voice_part[v];
+            if (part < (uint32_t)N_PART) {
+                _Static_assert(P1_PE_WORDS * (uint32_t)N_PART <= 5440u,
+                    "phase_env pool layout exceeds the pool");
+                uint32_t *pm = (uint32_t *)(void *)op3_phase_env_pool + part * P1_PE_WORDS;
+                if (!pm[P1_PE_SEEDED]) {
+                    pm[P1_PE_SEEDED] = 1u;
+                    pm[P1_PE_STAGE] = 0u;
+                    pm[P1_PE_LEVEL] = 0u;
+                    pm[P1_PE_LASTB] = 0xFFFFFFFFu;
+                    pm[P1_PE_HADGATE] = 0u;
+                }
+                if (pm[P1_PE_LASTB] != ctrl_serial) {
+                    pm[P1_PE_LASTB] = ctrl_serial;
+                    uint32_t trig = 0u;
+                    uint32_t gate = 0u;
+                    for (uint32_t vv = 0u; vv < NVOICE; vv++) {
+                        if ((uint32_t)voice_part[vv] != part) continue;
+                        if (voice_trig[vv]) trig = 1u;
+                        if (voice_gate[vv]) gate = 1u;
+                    }
+                    uint32_t stage = pm[P1_PE_STAGE];
+                    int32_t level = (int32_t)pm[P1_PE_LEVEL];
+                    uint32_t mode = 0u;
+        #ifdef vm_mode
+                    mode = (uint32_t)vm_mode[part];
+        #endif
+                    if (trig && (mode == 0u || !pm[P1_PE_HADGATE])) {
+                        stage = 0u;
+                        level = 0;
+                    }
+                    if (gate) {
+                        if (stage == 4u && op3_phase_env_mode[voice_part[v]] != 0) {
+                            stage = 0u;
+                            level = 0;
+                        }
+                    } else if (stage != 4u) {
+                        stage = 4u;
+                    }
+                    pm[P1_PE_HADGATE] = gate;
+                    int32_t l1 = (int32_t)op3_phase_env_l1[voice_part[v]];
+                    int32_t l2 = (int32_t)op3_phase_env_l2[voice_part[v]];
+                    int32_t l3 = (int32_t)op3_phase_env_l3[voice_part[v]];
+                    int32_t rl = (int32_t)op3_phase_env_rell[voice_part[v]];
+                    if (l1 < -100) l1 = -100;
+                    if (l1 > 100) l1 = 100;
+                    if (l2 < -100) l2 = -100;
+                    if (l2 > 100) l2 = 100;
+                    if (l3 < -100) l3 = -100;
+                    if (l3 > 100) l3 = 100;
+                    if (rl < -100) rl = -100;
+                    if (rl > 100) rl = 100;
+                    int32_t r1 = (int32_t)op3_phase_env_r1[voice_part[v]];
+                    int32_t r2 = (int32_t)op3_phase_env_r2[voice_part[v]];
+                    int32_t r3 = (int32_t)op3_phase_env_r3[voice_part[v]];
+                    int32_t r4 = (int32_t)op3_phase_env_relr[voice_part[v]];
+                    if (r1 < 0) r1 = 0;
+                    if (r1 > 99) r1 = 99;
+                    if (r2 < 0) r2 = 0;
+                    if (r2 > 99) r2 = 99;
+                    if (r3 < 0) r3 = 0;
+                    if (r3 > 99) r3 = 99;
+                    if (r4 < 0) r4 = 0;
+                    if (r4 > 99) r4 = 99;
+                    if (stage == 0u) {
+                        level = p1_onepole(level, l1, p1_rate_coeff[r1]);
+                        if (l1 >= level ? level >= l1 - 8 : level <= l1 + 8) {
+                            level = l1;
+                            stage = 1u;
+                        }
+                    }
+                    if (stage == 1u) {
+                        level = p1_onepole(level, l2, p1_rate_coeff[r2]);
+                        if (l2 >= level ? level >= l2 - 8 : level <= l2 + 8) {
+                            level = l2;
+                            stage = 2u;
+                        }
+                    }
+                    if (stage == 2u) {
+                        level = p1_onepole(level, l3, p1_rate_coeff[r3]);
+                        if (l3 >= level ? level >= l3 - 8 : level <= l3 + 8) {
+                            level = l3;
+                            if (op3_phase_env_mode[voice_part[v]] == 0u)
+                                stage = 4u;
+                            else if (op3_phase_env_mode[voice_part[v]] == 1u)
+                                stage = 3u;
+                            else
+                                stage = 5u;
+                        }
+                    }
+                    if (stage == 3u)
+                        level = l3;
+                    if (stage == 5u) {
+                        level = p1_onepole(level, l2,
+                            p1_rate_coeff[(op3_phase_env_mode[voice_part[v]] == 2u) ? r2 : r3]);
+                        if (l2 >= level ? level >= l2 - 8 : level <= l2 + 8) {
+                            level = l2;
+                            stage = 6u;
+                        }
+                    }
+                    if (stage == 6u) {
+                        level = p1_onepole(level, l3, p1_rate_coeff[r3]);
+                        if (l3 >= level ? level >= l3 - 8 : level <= l3 + 8) {
+                            level = l3;
+                            stage = 5u;
+                        }
+                    }
+                    if (stage == 4u) {
+                        level = p1_onepole(level, rl, p1_rate_coeff[r4]);
+                        if (rl >= level ? level >= rl - 8 : level <= rl + 8)
+                            level = rl;
+                    }
+                    pm[P1_PE_STAGE] = stage;
+                    pm[P1_PE_LEVEL] = (uint32_t)level;
+                }
+                op3_phase_env_cv_x[v] = op3_phase_env_on[voice_part[v]] ? (int32_t)pm[P1_PE_LEVEL] : 0;
+            }
+        }
+        /* Per-part phase LFO. The pool is one per operator, indexed by the part; the
+           first active voice on a part advances it once per control block and every
+           voice reads the held value. The LFO free-runs, so a note does not reset its
+           phase. The output is percent of the breakpoint field. */
+        #define P1_PL_WORDS 64u
+        #define P1_PL_PHASE 0u
+        #define P1_PL_BASE 1u
+        #define P1_PL_RATE_LEVEL 2u
+        #define P1_PL_DEPTH_LEVEL 3u
+        #define P1_PL_RATE_STEP 4u
+        #define P1_PL_DEPTH_STEP 5u
+        #define P1_PL_VALUE 6u
+        #define P1_PL_LASTB 7u
+        #define P1_PL_SEEDED 8u
+        #define P1_PL_RAND 9u
+        #define P1_PL_HOLD 10u
+        op3_phase_lfo_cv_x[v] = 0;
+        {
+            uint32_t part = (uint32_t)voice_part[v];
+            if (part < (uint32_t)N_PART) {
+                _Static_assert(P1_PL_WORDS * (uint32_t)N_PART <= 5440u,
+                    "phase_lfo pool layout exceeds the pool");
+                uint32_t *pm = (uint32_t *)(void *)op3_phase_lfo_pool + part * P1_PL_WORDS;
+                if (!pm[P1_PL_SEEDED]) {
+                    pm[P1_PL_SEEDED] = 1u;
+                    pm[P1_PL_PHASE] = 0u;
+                    pm[P1_PL_VALUE] = 0u;
+                    pm[P1_PL_LASTB] = 0xFFFFFFFFu;
+                    pm[P1_PL_RATE_LEVEL] = (op3_phase_lfo_rate_fade[voice_part[v]] || op3_phase_lfo_depth_fade[voice_part[v]])
+                        ? 0u : 0x80000000u;
+                    pm[P1_PL_DEPTH_LEVEL] = pm[P1_PL_RATE_LEVEL];
+                    pm[P1_PL_RAND] = 0x9E3779B9u + part * 4u;
+                    if (!pm[P1_PL_RAND]) pm[P1_PL_RAND] = 1u;
+                    uint32_t seed = pm[P1_PL_RAND];
+                    seed ^= seed << 13;
+                    seed ^= seed >> 17;
+                    seed ^= seed << 5;
+                    pm[P1_PL_RAND] = seed;
+                    pm[P1_PL_HOLD] = (uint32_t)((int32_t)(seed >> 16) - 32768);
+                }
+                if (pm[P1_PL_LASTB] != ctrl_serial) {
+                    pm[P1_PL_LASTB] = ctrl_serial;
+                    uint32_t wave = (uint32_t)op3_phase_lfo_wave[voice_part[v]];
+                    if (wave > 5u) wave = 0u;
+                    uint32_t base = 0u;
+                    if (wave == 1u) base = (uint32_t)p1_wave_base[1];
+                    else if (wave == 2u || wave == 3u) base = (uint32_t)p1_wave_base[12];
+                    else if (wave == 4u) base = (uint32_t)p1_wave_base[11];
+                    else base = (uint32_t)p1_wave_base[0];
+                    pm[P1_PL_BASE] = base << 10;
+                    pm[P1_PL_RATE_STEP] = p1_fade_step(op3_phase_lfo_rate_fade[voice_part[v]]);
+                    pm[P1_PL_DEPTH_STEP] = p1_fade_step(op3_phase_lfo_depth_fade[voice_part[v]]);
+                    if (pm[P1_PL_RATE_LEVEL] < 0x80000000u) {
+                        pm[P1_PL_RATE_LEVEL] += pm[P1_PL_RATE_STEP];
+                        if (pm[P1_PL_RATE_LEVEL] > 0x80000000u)
+                            pm[P1_PL_RATE_LEVEL] = 0x80000000u;
+                    }
+                    if (pm[P1_PL_DEPTH_LEVEL] < 0x80000000u) {
+                        pm[P1_PL_DEPTH_LEVEL] += pm[P1_PL_DEPTH_STEP];
+                        if (pm[P1_PL_DEPTH_LEVEL] > 0x80000000u)
+                            pm[P1_PL_DEPTH_LEVEL] = 0x80000000u;
+                    }
+                    uint32_t old_phase = pm[P1_PL_PHASE];
+                    pm[P1_PL_PHASE] += (uint32_t)((int32_t)(((int64_t)op3_phase_lfo_rate[voice_part[v]] *
+                        (int32_t)(pm[P1_PL_RATE_LEVEL] >> 15)) >> 16) * CONTROL_BLOCK);
+                    if (pm[P1_PL_PHASE] < old_phase) {
+                        uint32_t r = pm[P1_PL_RAND];
+                        r ^= r << 13;
+                        r ^= r >> 17;
+                        r ^= r << 5;
+                        pm[P1_PL_RAND] = r;
+                        pm[P1_PL_HOLD] = (uint32_t)((int32_t)(r >> 16) - 32768);
+                    }
+                    int32_t w;
+                    if (wave == 5u)
+                        w = (int32_t)pm[P1_PL_HOLD];
+                    else {
+                        w = p1_wave[pm[P1_PL_BASE] + (pm[P1_PL_PHASE] >> 22)];
+                        if (wave == 3u) w = -w;
+                    }
+                    int32_t depth = (int32_t)op3_phase_lfo_depth[voice_part[v]];
+                    if (depth < -100) depth = -100;
+                    if (depth > 100) depth = 100;
+                    depth = (int32_t)(((int64_t)depth *
+                        (int32_t)(pm[P1_PL_DEPTH_LEVEL] >> 15)) >> 16);
+                    pm[P1_PL_VALUE] = (uint32_t)(op3_phase_lfo_mode[voice_part[v]]
+                        ? p1_q15_mul(w, depth)
+                        : p1_q15_mul((w + 32768) >> 1, depth));
+                }
+                op3_phase_lfo_cv_x[v] = (int32_t)pm[P1_PL_VALUE];
+            }
+        }
+        /* control-rate summer: add the two control inputs. */
+        op3_phase_mod_cv_x[v] = op3_phase_lfo_cv_x[v] + op3_phase_env_cv_x[v];
         /* Low-frequency oscillator (control rate): phase advances by `rate` per sample
            (`rate * CONTROL_BLOCK` per control tick, where CONTROL_BLOCK is the emitted
            macro), and the output is a `p1_wave` waveform scaled by `depth` in the target
@@ -7528,6 +8723,230 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
         }
         op3_specenv_cv_x[v] = op3_specenv_on[voice_part[v]] ? op3_specenv_level[v] : op3_morphbase_out_x[v];
         op3_specenv_active_x[v] = op3_specenv_on[voice_part[v]] ? 1 : 0;
+        /* Per-part signed phase envelope. The pool is one per operator, indexed by the
+           part; the first active voice advances it once per control block. A trigger on
+           any voice of the part restarts the attack. The levels are absolute percent of
+           the breakpoint field. */
+        #define P1_PE_WORDS 64u
+        #define P1_PE_STAGE 0u
+        #define P1_PE_LEVEL 1u
+        #define P1_PE_LASTB 2u
+        #define P1_PE_SEEDED 3u
+        #define P1_PE_HADGATE 4u
+        op2_phase_env_cv_x[v] = 0;
+        {
+            uint32_t part = (uint32_t)voice_part[v];
+            if (part < (uint32_t)N_PART) {
+                _Static_assert(P1_PE_WORDS * (uint32_t)N_PART <= 5440u,
+                    "phase_env pool layout exceeds the pool");
+                uint32_t *pm = (uint32_t *)(void *)op2_phase_env_pool + part * P1_PE_WORDS;
+                if (!pm[P1_PE_SEEDED]) {
+                    pm[P1_PE_SEEDED] = 1u;
+                    pm[P1_PE_STAGE] = 0u;
+                    pm[P1_PE_LEVEL] = 0u;
+                    pm[P1_PE_LASTB] = 0xFFFFFFFFu;
+                    pm[P1_PE_HADGATE] = 0u;
+                }
+                if (pm[P1_PE_LASTB] != ctrl_serial) {
+                    pm[P1_PE_LASTB] = ctrl_serial;
+                    uint32_t trig = 0u;
+                    uint32_t gate = 0u;
+                    for (uint32_t vv = 0u; vv < NVOICE; vv++) {
+                        if ((uint32_t)voice_part[vv] != part) continue;
+                        if (voice_trig[vv]) trig = 1u;
+                        if (voice_gate[vv]) gate = 1u;
+                    }
+                    uint32_t stage = pm[P1_PE_STAGE];
+                    int32_t level = (int32_t)pm[P1_PE_LEVEL];
+                    uint32_t mode = 0u;
+        #ifdef vm_mode
+                    mode = (uint32_t)vm_mode[part];
+        #endif
+                    if (trig && (mode == 0u || !pm[P1_PE_HADGATE])) {
+                        stage = 0u;
+                        level = 0;
+                    }
+                    if (gate) {
+                        if (stage == 4u && op2_phase_env_mode[voice_part[v]] != 0) {
+                            stage = 0u;
+                            level = 0;
+                        }
+                    } else if (stage != 4u) {
+                        stage = 4u;
+                    }
+                    pm[P1_PE_HADGATE] = gate;
+                    int32_t l1 = (int32_t)op2_phase_env_l1[voice_part[v]];
+                    int32_t l2 = (int32_t)op2_phase_env_l2[voice_part[v]];
+                    int32_t l3 = (int32_t)op2_phase_env_l3[voice_part[v]];
+                    int32_t rl = (int32_t)op2_phase_env_rell[voice_part[v]];
+                    if (l1 < -100) l1 = -100;
+                    if (l1 > 100) l1 = 100;
+                    if (l2 < -100) l2 = -100;
+                    if (l2 > 100) l2 = 100;
+                    if (l3 < -100) l3 = -100;
+                    if (l3 > 100) l3 = 100;
+                    if (rl < -100) rl = -100;
+                    if (rl > 100) rl = 100;
+                    int32_t r1 = (int32_t)op2_phase_env_r1[voice_part[v]];
+                    int32_t r2 = (int32_t)op2_phase_env_r2[voice_part[v]];
+                    int32_t r3 = (int32_t)op2_phase_env_r3[voice_part[v]];
+                    int32_t r4 = (int32_t)op2_phase_env_relr[voice_part[v]];
+                    if (r1 < 0) r1 = 0;
+                    if (r1 > 99) r1 = 99;
+                    if (r2 < 0) r2 = 0;
+                    if (r2 > 99) r2 = 99;
+                    if (r3 < 0) r3 = 0;
+                    if (r3 > 99) r3 = 99;
+                    if (r4 < 0) r4 = 0;
+                    if (r4 > 99) r4 = 99;
+                    if (stage == 0u) {
+                        level = p1_onepole(level, l1, p1_rate_coeff[r1]);
+                        if (l1 >= level ? level >= l1 - 8 : level <= l1 + 8) {
+                            level = l1;
+                            stage = 1u;
+                        }
+                    }
+                    if (stage == 1u) {
+                        level = p1_onepole(level, l2, p1_rate_coeff[r2]);
+                        if (l2 >= level ? level >= l2 - 8 : level <= l2 + 8) {
+                            level = l2;
+                            stage = 2u;
+                        }
+                    }
+                    if (stage == 2u) {
+                        level = p1_onepole(level, l3, p1_rate_coeff[r3]);
+                        if (l3 >= level ? level >= l3 - 8 : level <= l3 + 8) {
+                            level = l3;
+                            if (op2_phase_env_mode[voice_part[v]] == 0u)
+                                stage = 4u;
+                            else if (op2_phase_env_mode[voice_part[v]] == 1u)
+                                stage = 3u;
+                            else
+                                stage = 5u;
+                        }
+                    }
+                    if (stage == 3u)
+                        level = l3;
+                    if (stage == 5u) {
+                        level = p1_onepole(level, l2,
+                            p1_rate_coeff[(op2_phase_env_mode[voice_part[v]] == 2u) ? r2 : r3]);
+                        if (l2 >= level ? level >= l2 - 8 : level <= l2 + 8) {
+                            level = l2;
+                            stage = 6u;
+                        }
+                    }
+                    if (stage == 6u) {
+                        level = p1_onepole(level, l3, p1_rate_coeff[r3]);
+                        if (l3 >= level ? level >= l3 - 8 : level <= l3 + 8) {
+                            level = l3;
+                            stage = 5u;
+                        }
+                    }
+                    if (stage == 4u) {
+                        level = p1_onepole(level, rl, p1_rate_coeff[r4]);
+                        if (rl >= level ? level >= rl - 8 : level <= rl + 8)
+                            level = rl;
+                    }
+                    pm[P1_PE_STAGE] = stage;
+                    pm[P1_PE_LEVEL] = (uint32_t)level;
+                }
+                op2_phase_env_cv_x[v] = op2_phase_env_on[voice_part[v]] ? (int32_t)pm[P1_PE_LEVEL] : 0;
+            }
+        }
+        /* Per-part phase LFO. The pool is one per operator, indexed by the part; the
+           first active voice on a part advances it once per control block and every
+           voice reads the held value. The LFO free-runs, so a note does not reset its
+           phase. The output is percent of the breakpoint field. */
+        #define P1_PL_WORDS 64u
+        #define P1_PL_PHASE 0u
+        #define P1_PL_BASE 1u
+        #define P1_PL_RATE_LEVEL 2u
+        #define P1_PL_DEPTH_LEVEL 3u
+        #define P1_PL_RATE_STEP 4u
+        #define P1_PL_DEPTH_STEP 5u
+        #define P1_PL_VALUE 6u
+        #define P1_PL_LASTB 7u
+        #define P1_PL_SEEDED 8u
+        #define P1_PL_RAND 9u
+        #define P1_PL_HOLD 10u
+        op2_phase_lfo_cv_x[v] = 0;
+        {
+            uint32_t part = (uint32_t)voice_part[v];
+            if (part < (uint32_t)N_PART) {
+                _Static_assert(P1_PL_WORDS * (uint32_t)N_PART <= 5440u,
+                    "phase_lfo pool layout exceeds the pool");
+                uint32_t *pm = (uint32_t *)(void *)op2_phase_lfo_pool + part * P1_PL_WORDS;
+                if (!pm[P1_PL_SEEDED]) {
+                    pm[P1_PL_SEEDED] = 1u;
+                    pm[P1_PL_PHASE] = 0u;
+                    pm[P1_PL_VALUE] = 0u;
+                    pm[P1_PL_LASTB] = 0xFFFFFFFFu;
+                    pm[P1_PL_RATE_LEVEL] = (op2_phase_lfo_rate_fade[voice_part[v]] || op2_phase_lfo_depth_fade[voice_part[v]])
+                        ? 0u : 0x80000000u;
+                    pm[P1_PL_DEPTH_LEVEL] = pm[P1_PL_RATE_LEVEL];
+                    pm[P1_PL_RAND] = 0x9E3779B9u + part * 4u;
+                    if (!pm[P1_PL_RAND]) pm[P1_PL_RAND] = 1u;
+                    uint32_t seed = pm[P1_PL_RAND];
+                    seed ^= seed << 13;
+                    seed ^= seed >> 17;
+                    seed ^= seed << 5;
+                    pm[P1_PL_RAND] = seed;
+                    pm[P1_PL_HOLD] = (uint32_t)((int32_t)(seed >> 16) - 32768);
+                }
+                if (pm[P1_PL_LASTB] != ctrl_serial) {
+                    pm[P1_PL_LASTB] = ctrl_serial;
+                    uint32_t wave = (uint32_t)op2_phase_lfo_wave[voice_part[v]];
+                    if (wave > 5u) wave = 0u;
+                    uint32_t base = 0u;
+                    if (wave == 1u) base = (uint32_t)p1_wave_base[1];
+                    else if (wave == 2u || wave == 3u) base = (uint32_t)p1_wave_base[12];
+                    else if (wave == 4u) base = (uint32_t)p1_wave_base[11];
+                    else base = (uint32_t)p1_wave_base[0];
+                    pm[P1_PL_BASE] = base << 10;
+                    pm[P1_PL_RATE_STEP] = p1_fade_step(op2_phase_lfo_rate_fade[voice_part[v]]);
+                    pm[P1_PL_DEPTH_STEP] = p1_fade_step(op2_phase_lfo_depth_fade[voice_part[v]]);
+                    if (pm[P1_PL_RATE_LEVEL] < 0x80000000u) {
+                        pm[P1_PL_RATE_LEVEL] += pm[P1_PL_RATE_STEP];
+                        if (pm[P1_PL_RATE_LEVEL] > 0x80000000u)
+                            pm[P1_PL_RATE_LEVEL] = 0x80000000u;
+                    }
+                    if (pm[P1_PL_DEPTH_LEVEL] < 0x80000000u) {
+                        pm[P1_PL_DEPTH_LEVEL] += pm[P1_PL_DEPTH_STEP];
+                        if (pm[P1_PL_DEPTH_LEVEL] > 0x80000000u)
+                            pm[P1_PL_DEPTH_LEVEL] = 0x80000000u;
+                    }
+                    uint32_t old_phase = pm[P1_PL_PHASE];
+                    pm[P1_PL_PHASE] += (uint32_t)((int32_t)(((int64_t)op2_phase_lfo_rate[voice_part[v]] *
+                        (int32_t)(pm[P1_PL_RATE_LEVEL] >> 15)) >> 16) * CONTROL_BLOCK);
+                    if (pm[P1_PL_PHASE] < old_phase) {
+                        uint32_t r = pm[P1_PL_RAND];
+                        r ^= r << 13;
+                        r ^= r >> 17;
+                        r ^= r << 5;
+                        pm[P1_PL_RAND] = r;
+                        pm[P1_PL_HOLD] = (uint32_t)((int32_t)(r >> 16) - 32768);
+                    }
+                    int32_t w;
+                    if (wave == 5u)
+                        w = (int32_t)pm[P1_PL_HOLD];
+                    else {
+                        w = p1_wave[pm[P1_PL_BASE] + (pm[P1_PL_PHASE] >> 22)];
+                        if (wave == 3u) w = -w;
+                    }
+                    int32_t depth = (int32_t)op2_phase_lfo_depth[voice_part[v]];
+                    if (depth < -100) depth = -100;
+                    if (depth > 100) depth = 100;
+                    depth = (int32_t)(((int64_t)depth *
+                        (int32_t)(pm[P1_PL_DEPTH_LEVEL] >> 15)) >> 16);
+                    pm[P1_PL_VALUE] = (uint32_t)(op2_phase_lfo_mode[voice_part[v]]
+                        ? p1_q15_mul(w, depth)
+                        : p1_q15_mul((w + 32768) >> 1, depth));
+                }
+                op2_phase_lfo_cv_x[v] = (int32_t)pm[P1_PL_VALUE];
+            }
+        }
+        /* control-rate summer: add the two control inputs. */
+        op2_phase_mod_cv_x[v] = op2_phase_lfo_cv_x[v] + op2_phase_env_cv_x[v];
         /* Low-frequency oscillator (control rate): phase advances by `rate` per sample
            (`rate * CONTROL_BLOCK` per control tick, where CONTROL_BLOCK is the emitted
            macro), and the output is a `p1_wave` waveform scaled by `depth` in the target
@@ -7958,6 +9377,230 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
         }
         op2_specenv_cv_x[v] = op2_specenv_on[voice_part[v]] ? op2_specenv_level[v] : op2_morphbase_out_x[v];
         op2_specenv_active_x[v] = op2_specenv_on[voice_part[v]] ? 1 : 0;
+        /* Per-part signed phase envelope. The pool is one per operator, indexed by the
+           part; the first active voice advances it once per control block. A trigger on
+           any voice of the part restarts the attack. The levels are absolute percent of
+           the breakpoint field. */
+        #define P1_PE_WORDS 64u
+        #define P1_PE_STAGE 0u
+        #define P1_PE_LEVEL 1u
+        #define P1_PE_LASTB 2u
+        #define P1_PE_SEEDED 3u
+        #define P1_PE_HADGATE 4u
+        op1_phase_env_cv_x[v] = 0;
+        {
+            uint32_t part = (uint32_t)voice_part[v];
+            if (part < (uint32_t)N_PART) {
+                _Static_assert(P1_PE_WORDS * (uint32_t)N_PART <= 5440u,
+                    "phase_env pool layout exceeds the pool");
+                uint32_t *pm = (uint32_t *)(void *)op1_phase_env_pool + part * P1_PE_WORDS;
+                if (!pm[P1_PE_SEEDED]) {
+                    pm[P1_PE_SEEDED] = 1u;
+                    pm[P1_PE_STAGE] = 0u;
+                    pm[P1_PE_LEVEL] = 0u;
+                    pm[P1_PE_LASTB] = 0xFFFFFFFFu;
+                    pm[P1_PE_HADGATE] = 0u;
+                }
+                if (pm[P1_PE_LASTB] != ctrl_serial) {
+                    pm[P1_PE_LASTB] = ctrl_serial;
+                    uint32_t trig = 0u;
+                    uint32_t gate = 0u;
+                    for (uint32_t vv = 0u; vv < NVOICE; vv++) {
+                        if ((uint32_t)voice_part[vv] != part) continue;
+                        if (voice_trig[vv]) trig = 1u;
+                        if (voice_gate[vv]) gate = 1u;
+                    }
+                    uint32_t stage = pm[P1_PE_STAGE];
+                    int32_t level = (int32_t)pm[P1_PE_LEVEL];
+                    uint32_t mode = 0u;
+        #ifdef vm_mode
+                    mode = (uint32_t)vm_mode[part];
+        #endif
+                    if (trig && (mode == 0u || !pm[P1_PE_HADGATE])) {
+                        stage = 0u;
+                        level = 0;
+                    }
+                    if (gate) {
+                        if (stage == 4u && op1_phase_env_mode[voice_part[v]] != 0) {
+                            stage = 0u;
+                            level = 0;
+                        }
+                    } else if (stage != 4u) {
+                        stage = 4u;
+                    }
+                    pm[P1_PE_HADGATE] = gate;
+                    int32_t l1 = (int32_t)op1_phase_env_l1[voice_part[v]];
+                    int32_t l2 = (int32_t)op1_phase_env_l2[voice_part[v]];
+                    int32_t l3 = (int32_t)op1_phase_env_l3[voice_part[v]];
+                    int32_t rl = (int32_t)op1_phase_env_rell[voice_part[v]];
+                    if (l1 < -100) l1 = -100;
+                    if (l1 > 100) l1 = 100;
+                    if (l2 < -100) l2 = -100;
+                    if (l2 > 100) l2 = 100;
+                    if (l3 < -100) l3 = -100;
+                    if (l3 > 100) l3 = 100;
+                    if (rl < -100) rl = -100;
+                    if (rl > 100) rl = 100;
+                    int32_t r1 = (int32_t)op1_phase_env_r1[voice_part[v]];
+                    int32_t r2 = (int32_t)op1_phase_env_r2[voice_part[v]];
+                    int32_t r3 = (int32_t)op1_phase_env_r3[voice_part[v]];
+                    int32_t r4 = (int32_t)op1_phase_env_relr[voice_part[v]];
+                    if (r1 < 0) r1 = 0;
+                    if (r1 > 99) r1 = 99;
+                    if (r2 < 0) r2 = 0;
+                    if (r2 > 99) r2 = 99;
+                    if (r3 < 0) r3 = 0;
+                    if (r3 > 99) r3 = 99;
+                    if (r4 < 0) r4 = 0;
+                    if (r4 > 99) r4 = 99;
+                    if (stage == 0u) {
+                        level = p1_onepole(level, l1, p1_rate_coeff[r1]);
+                        if (l1 >= level ? level >= l1 - 8 : level <= l1 + 8) {
+                            level = l1;
+                            stage = 1u;
+                        }
+                    }
+                    if (stage == 1u) {
+                        level = p1_onepole(level, l2, p1_rate_coeff[r2]);
+                        if (l2 >= level ? level >= l2 - 8 : level <= l2 + 8) {
+                            level = l2;
+                            stage = 2u;
+                        }
+                    }
+                    if (stage == 2u) {
+                        level = p1_onepole(level, l3, p1_rate_coeff[r3]);
+                        if (l3 >= level ? level >= l3 - 8 : level <= l3 + 8) {
+                            level = l3;
+                            if (op1_phase_env_mode[voice_part[v]] == 0u)
+                                stage = 4u;
+                            else if (op1_phase_env_mode[voice_part[v]] == 1u)
+                                stage = 3u;
+                            else
+                                stage = 5u;
+                        }
+                    }
+                    if (stage == 3u)
+                        level = l3;
+                    if (stage == 5u) {
+                        level = p1_onepole(level, l2,
+                            p1_rate_coeff[(op1_phase_env_mode[voice_part[v]] == 2u) ? r2 : r3]);
+                        if (l2 >= level ? level >= l2 - 8 : level <= l2 + 8) {
+                            level = l2;
+                            stage = 6u;
+                        }
+                    }
+                    if (stage == 6u) {
+                        level = p1_onepole(level, l3, p1_rate_coeff[r3]);
+                        if (l3 >= level ? level >= l3 - 8 : level <= l3 + 8) {
+                            level = l3;
+                            stage = 5u;
+                        }
+                    }
+                    if (stage == 4u) {
+                        level = p1_onepole(level, rl, p1_rate_coeff[r4]);
+                        if (rl >= level ? level >= rl - 8 : level <= rl + 8)
+                            level = rl;
+                    }
+                    pm[P1_PE_STAGE] = stage;
+                    pm[P1_PE_LEVEL] = (uint32_t)level;
+                }
+                op1_phase_env_cv_x[v] = op1_phase_env_on[voice_part[v]] ? (int32_t)pm[P1_PE_LEVEL] : 0;
+            }
+        }
+        /* Per-part phase LFO. The pool is one per operator, indexed by the part; the
+           first active voice on a part advances it once per control block and every
+           voice reads the held value. The LFO free-runs, so a note does not reset its
+           phase. The output is percent of the breakpoint field. */
+        #define P1_PL_WORDS 64u
+        #define P1_PL_PHASE 0u
+        #define P1_PL_BASE 1u
+        #define P1_PL_RATE_LEVEL 2u
+        #define P1_PL_DEPTH_LEVEL 3u
+        #define P1_PL_RATE_STEP 4u
+        #define P1_PL_DEPTH_STEP 5u
+        #define P1_PL_VALUE 6u
+        #define P1_PL_LASTB 7u
+        #define P1_PL_SEEDED 8u
+        #define P1_PL_RAND 9u
+        #define P1_PL_HOLD 10u
+        op1_phase_lfo_cv_x[v] = 0;
+        {
+            uint32_t part = (uint32_t)voice_part[v];
+            if (part < (uint32_t)N_PART) {
+                _Static_assert(P1_PL_WORDS * (uint32_t)N_PART <= 5440u,
+                    "phase_lfo pool layout exceeds the pool");
+                uint32_t *pm = (uint32_t *)(void *)op1_phase_lfo_pool + part * P1_PL_WORDS;
+                if (!pm[P1_PL_SEEDED]) {
+                    pm[P1_PL_SEEDED] = 1u;
+                    pm[P1_PL_PHASE] = 0u;
+                    pm[P1_PL_VALUE] = 0u;
+                    pm[P1_PL_LASTB] = 0xFFFFFFFFu;
+                    pm[P1_PL_RATE_LEVEL] = (op1_phase_lfo_rate_fade[voice_part[v]] || op1_phase_lfo_depth_fade[voice_part[v]])
+                        ? 0u : 0x80000000u;
+                    pm[P1_PL_DEPTH_LEVEL] = pm[P1_PL_RATE_LEVEL];
+                    pm[P1_PL_RAND] = 0x9E3779B9u + part * 4u;
+                    if (!pm[P1_PL_RAND]) pm[P1_PL_RAND] = 1u;
+                    uint32_t seed = pm[P1_PL_RAND];
+                    seed ^= seed << 13;
+                    seed ^= seed >> 17;
+                    seed ^= seed << 5;
+                    pm[P1_PL_RAND] = seed;
+                    pm[P1_PL_HOLD] = (uint32_t)((int32_t)(seed >> 16) - 32768);
+                }
+                if (pm[P1_PL_LASTB] != ctrl_serial) {
+                    pm[P1_PL_LASTB] = ctrl_serial;
+                    uint32_t wave = (uint32_t)op1_phase_lfo_wave[voice_part[v]];
+                    if (wave > 5u) wave = 0u;
+                    uint32_t base = 0u;
+                    if (wave == 1u) base = (uint32_t)p1_wave_base[1];
+                    else if (wave == 2u || wave == 3u) base = (uint32_t)p1_wave_base[12];
+                    else if (wave == 4u) base = (uint32_t)p1_wave_base[11];
+                    else base = (uint32_t)p1_wave_base[0];
+                    pm[P1_PL_BASE] = base << 10;
+                    pm[P1_PL_RATE_STEP] = p1_fade_step(op1_phase_lfo_rate_fade[voice_part[v]]);
+                    pm[P1_PL_DEPTH_STEP] = p1_fade_step(op1_phase_lfo_depth_fade[voice_part[v]]);
+                    if (pm[P1_PL_RATE_LEVEL] < 0x80000000u) {
+                        pm[P1_PL_RATE_LEVEL] += pm[P1_PL_RATE_STEP];
+                        if (pm[P1_PL_RATE_LEVEL] > 0x80000000u)
+                            pm[P1_PL_RATE_LEVEL] = 0x80000000u;
+                    }
+                    if (pm[P1_PL_DEPTH_LEVEL] < 0x80000000u) {
+                        pm[P1_PL_DEPTH_LEVEL] += pm[P1_PL_DEPTH_STEP];
+                        if (pm[P1_PL_DEPTH_LEVEL] > 0x80000000u)
+                            pm[P1_PL_DEPTH_LEVEL] = 0x80000000u;
+                    }
+                    uint32_t old_phase = pm[P1_PL_PHASE];
+                    pm[P1_PL_PHASE] += (uint32_t)((int32_t)(((int64_t)op1_phase_lfo_rate[voice_part[v]] *
+                        (int32_t)(pm[P1_PL_RATE_LEVEL] >> 15)) >> 16) * CONTROL_BLOCK);
+                    if (pm[P1_PL_PHASE] < old_phase) {
+                        uint32_t r = pm[P1_PL_RAND];
+                        r ^= r << 13;
+                        r ^= r >> 17;
+                        r ^= r << 5;
+                        pm[P1_PL_RAND] = r;
+                        pm[P1_PL_HOLD] = (uint32_t)((int32_t)(r >> 16) - 32768);
+                    }
+                    int32_t w;
+                    if (wave == 5u)
+                        w = (int32_t)pm[P1_PL_HOLD];
+                    else {
+                        w = p1_wave[pm[P1_PL_BASE] + (pm[P1_PL_PHASE] >> 22)];
+                        if (wave == 3u) w = -w;
+                    }
+                    int32_t depth = (int32_t)op1_phase_lfo_depth[voice_part[v]];
+                    if (depth < -100) depth = -100;
+                    if (depth > 100) depth = 100;
+                    depth = (int32_t)(((int64_t)depth *
+                        (int32_t)(pm[P1_PL_DEPTH_LEVEL] >> 15)) >> 16);
+                    pm[P1_PL_VALUE] = (uint32_t)(op1_phase_lfo_mode[voice_part[v]]
+                        ? p1_q15_mul(w, depth)
+                        : p1_q15_mul((w + 32768) >> 1, depth));
+                }
+                op1_phase_lfo_cv_x[v] = (int32_t)pm[P1_PL_VALUE];
+            }
+        }
+        /* control-rate summer: add the two control inputs. */
+        op1_phase_mod_cv_x[v] = op1_phase_lfo_cv_x[v] + op1_phase_env_cv_x[v];
         /* Low-frequency oscillator (control rate): phase advances by `rate` per sample
            (`rate * CONTROL_BLOCK` per control tick, where CONTROL_BLOCK is the emitted
            macro), and the output is a `p1_wave` waveform scaled by `depth` in the target
@@ -8415,11 +10058,11 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
         op4_speclfo_rate_step[v] = p1_fade_step(op4_speclfo_rate_fade[voice_part[v]]);
         op4_speclfo_depth_step[v] = p1_fade_step(op4_speclfo_depth_fade[voice_part[v]]);
         op4_eg_vs_k[v] = vel_on_on_x ? p1_vel_scale((int32_t)voice_velocity[v], op4_eg_vs_amount[voice_part[v]]) : 0;
-        op4_fb_vs_k[v] = 1 ? p1_vel_scale((int32_t)voice_velocity[v], op4_fb_vs_amount[voice_part[v]]) : 0;
-        op4_level_vs_k[v] = 1 ? p1_vel_scale((int32_t)voice_velocity[v], op4_level_vs_amount[voice_part[v]]) : 0;
+        op4_fb_vs_k[v] = vel_on_on_x ? p1_vel_scale((int32_t)voice_velocity[v], op4_fb_vs_amount[voice_part[v]]) : 0;
+        op4_level_vs_k[v] = vel_on_on_x ? p1_vel_scale((int32_t)voice_velocity[v], op4_level_vs_amount[voice_part[v]]) : 0;
         op4_eg_ks_k[v] = key_on_on_x ? p1_key_scale((uint32_t)voice_note[v], (uint32_t)key_bp_bp_x, op4_eg_ks_lo[voice_part[v]], op4_eg_ks_hi[voice_part[v]]) : 0;
-        op4_fb_ks_k[v] = 1 ? p1_key_scale((uint32_t)voice_note[v], (uint32_t)60, op4_fb_ks_lo[voice_part[v]], op4_fb_ks_hi[voice_part[v]]) : 0;
-        op4_level_ks_k[v] = 1 ? p1_key_scale((uint32_t)voice_note[v], (uint32_t)60, op4_level_ks_lo[voice_part[v]], op4_level_ks_hi[voice_part[v]]) : 0;
+        op4_fb_ks_k[v] = key_on_on_x ? p1_key_scale((uint32_t)voice_note[v], (uint32_t)key_bp_bp_x, op4_fb_ks_lo[voice_part[v]], op4_fb_ks_hi[voice_part[v]]) : 0;
+        op4_level_ks_k[v] = key_on_on_x ? p1_key_scale((uint32_t)voice_note[v], (uint32_t)key_bp_bp_x, op4_level_ks_lo[voice_part[v]], op4_level_ks_hi[voice_part[v]]) : 0;
         op4_eg_warm_eff[v] = ((uint32_t)op4_eg_warm[voice_part[v]] ? (uint32_t)p1_key_apply(op4_eg_warm[voice_part[v]], p1_key_add(op4_eg_ks_k_x[v], op4_eg_vs_k_x[v]), 0, 99) : 0u);
         op4_eg_surge_eff[v] = ((uint32_t)op4_eg_surge[voice_part[v]] ? (uint32_t)p1_key_apply(op4_eg_surge[voice_part[v]], p1_key_add(op4_eg_ks_k_x[v], op4_eg_vs_k_x[v]), 0, 99) : 0u);
         op4_eg_d1_eff[v] = (uint32_t)p1_key_apply(op4_eg_d1r[voice_part[v]], p1_key_add(op4_eg_ks_k_x[v], op4_eg_vs_k_x[v]), 0, 99);
@@ -8456,11 +10099,11 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
         op3_speclfo_rate_step[v] = p1_fade_step(op3_speclfo_rate_fade[voice_part[v]]);
         op3_speclfo_depth_step[v] = p1_fade_step(op3_speclfo_depth_fade[voice_part[v]]);
         op3_eg_vs_k[v] = vel_on_on_x ? p1_vel_scale((int32_t)voice_velocity[v], op3_eg_vs_amount[voice_part[v]]) : 0;
-        op3_fb_vs_k[v] = 1 ? p1_vel_scale((int32_t)voice_velocity[v], op3_fb_vs_amount[voice_part[v]]) : 0;
-        op3_level_vs_k[v] = 1 ? p1_vel_scale((int32_t)voice_velocity[v], op3_level_vs_amount[voice_part[v]]) : 0;
+        op3_fb_vs_k[v] = vel_on_on_x ? p1_vel_scale((int32_t)voice_velocity[v], op3_fb_vs_amount[voice_part[v]]) : 0;
+        op3_level_vs_k[v] = vel_on_on_x ? p1_vel_scale((int32_t)voice_velocity[v], op3_level_vs_amount[voice_part[v]]) : 0;
         op3_eg_ks_k[v] = key_on_on_x ? p1_key_scale((uint32_t)voice_note[v], (uint32_t)key_bp_bp_x, op3_eg_ks_lo[voice_part[v]], op3_eg_ks_hi[voice_part[v]]) : 0;
-        op3_fb_ks_k[v] = 1 ? p1_key_scale((uint32_t)voice_note[v], (uint32_t)60, op3_fb_ks_lo[voice_part[v]], op3_fb_ks_hi[voice_part[v]]) : 0;
-        op3_level_ks_k[v] = 1 ? p1_key_scale((uint32_t)voice_note[v], (uint32_t)60, op3_level_ks_lo[voice_part[v]], op3_level_ks_hi[voice_part[v]]) : 0;
+        op3_fb_ks_k[v] = key_on_on_x ? p1_key_scale((uint32_t)voice_note[v], (uint32_t)key_bp_bp_x, op3_fb_ks_lo[voice_part[v]], op3_fb_ks_hi[voice_part[v]]) : 0;
+        op3_level_ks_k[v] = key_on_on_x ? p1_key_scale((uint32_t)voice_note[v], (uint32_t)key_bp_bp_x, op3_level_ks_lo[voice_part[v]], op3_level_ks_hi[voice_part[v]]) : 0;
         op3_eg_warm_eff[v] = ((uint32_t)op3_eg_warm[voice_part[v]] ? (uint32_t)p1_key_apply(op3_eg_warm[voice_part[v]], p1_key_add(op3_eg_ks_k_x[v], op3_eg_vs_k_x[v]), 0, 99) : 0u);
         op3_eg_surge_eff[v] = ((uint32_t)op3_eg_surge[voice_part[v]] ? (uint32_t)p1_key_apply(op3_eg_surge[voice_part[v]], p1_key_add(op3_eg_ks_k_x[v], op3_eg_vs_k_x[v]), 0, 99) : 0u);
         op3_eg_d1_eff[v] = (uint32_t)p1_key_apply(op3_eg_d1r[voice_part[v]], p1_key_add(op3_eg_ks_k_x[v], op3_eg_vs_k_x[v]), 0, 99);
@@ -8497,11 +10140,11 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
         op2_speclfo_rate_step[v] = p1_fade_step(op2_speclfo_rate_fade[voice_part[v]]);
         op2_speclfo_depth_step[v] = p1_fade_step(op2_speclfo_depth_fade[voice_part[v]]);
         op2_eg_vs_k[v] = vel_on_on_x ? p1_vel_scale((int32_t)voice_velocity[v], op2_eg_vs_amount[voice_part[v]]) : 0;
-        op2_fb_vs_k[v] = 1 ? p1_vel_scale((int32_t)voice_velocity[v], op2_fb_vs_amount[voice_part[v]]) : 0;
-        op2_level_vs_k[v] = 1 ? p1_vel_scale((int32_t)voice_velocity[v], op2_level_vs_amount[voice_part[v]]) : 0;
+        op2_fb_vs_k[v] = vel_on_on_x ? p1_vel_scale((int32_t)voice_velocity[v], op2_fb_vs_amount[voice_part[v]]) : 0;
+        op2_level_vs_k[v] = vel_on_on_x ? p1_vel_scale((int32_t)voice_velocity[v], op2_level_vs_amount[voice_part[v]]) : 0;
         op2_eg_ks_k[v] = key_on_on_x ? p1_key_scale((uint32_t)voice_note[v], (uint32_t)key_bp_bp_x, op2_eg_ks_lo[voice_part[v]], op2_eg_ks_hi[voice_part[v]]) : 0;
-        op2_fb_ks_k[v] = 1 ? p1_key_scale((uint32_t)voice_note[v], (uint32_t)60, op2_fb_ks_lo[voice_part[v]], op2_fb_ks_hi[voice_part[v]]) : 0;
-        op2_level_ks_k[v] = 1 ? p1_key_scale((uint32_t)voice_note[v], (uint32_t)60, op2_level_ks_lo[voice_part[v]], op2_level_ks_hi[voice_part[v]]) : 0;
+        op2_fb_ks_k[v] = key_on_on_x ? p1_key_scale((uint32_t)voice_note[v], (uint32_t)key_bp_bp_x, op2_fb_ks_lo[voice_part[v]], op2_fb_ks_hi[voice_part[v]]) : 0;
+        op2_level_ks_k[v] = key_on_on_x ? p1_key_scale((uint32_t)voice_note[v], (uint32_t)key_bp_bp_x, op2_level_ks_lo[voice_part[v]], op2_level_ks_hi[voice_part[v]]) : 0;
         op2_eg_warm_eff[v] = ((uint32_t)op2_eg_warm[voice_part[v]] ? (uint32_t)p1_key_apply(op2_eg_warm[voice_part[v]], p1_key_add(op2_eg_ks_k_x[v], op2_eg_vs_k_x[v]), 0, 99) : 0u);
         op2_eg_surge_eff[v] = ((uint32_t)op2_eg_surge[voice_part[v]] ? (uint32_t)p1_key_apply(op2_eg_surge[voice_part[v]], p1_key_add(op2_eg_ks_k_x[v], op2_eg_vs_k_x[v]), 0, 99) : 0u);
         op2_eg_d1_eff[v] = (uint32_t)p1_key_apply(op2_eg_d1r[voice_part[v]], p1_key_add(op2_eg_ks_k_x[v], op2_eg_vs_k_x[v]), 0, 99);
@@ -8538,11 +10181,11 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
         op1_speclfo_rate_step[v] = p1_fade_step(op1_speclfo_rate_fade[voice_part[v]]);
         op1_speclfo_depth_step[v] = p1_fade_step(op1_speclfo_depth_fade[voice_part[v]]);
         op1_eg_vs_k[v] = vel_on_on_x ? p1_vel_scale((int32_t)voice_velocity[v], op1_eg_vs_amount[voice_part[v]]) : 0;
-        op1_fb_vs_k[v] = 1 ? p1_vel_scale((int32_t)voice_velocity[v], op1_fb_vs_amount[voice_part[v]]) : 0;
-        op1_level_vs_k[v] = 1 ? p1_vel_scale((int32_t)voice_velocity[v], op1_level_vs_amount[voice_part[v]]) : 0;
+        op1_fb_vs_k[v] = vel_on_on_x ? p1_vel_scale((int32_t)voice_velocity[v], op1_fb_vs_amount[voice_part[v]]) : 0;
+        op1_level_vs_k[v] = vel_on_on_x ? p1_vel_scale((int32_t)voice_velocity[v], op1_level_vs_amount[voice_part[v]]) : 0;
         op1_eg_ks_k[v] = key_on_on_x ? p1_key_scale((uint32_t)voice_note[v], (uint32_t)key_bp_bp_x, op1_eg_ks_lo[voice_part[v]], op1_eg_ks_hi[voice_part[v]]) : 0;
-        op1_fb_ks_k[v] = 1 ? p1_key_scale((uint32_t)voice_note[v], (uint32_t)60, op1_fb_ks_lo[voice_part[v]], op1_fb_ks_hi[voice_part[v]]) : 0;
-        op1_level_ks_k[v] = 1 ? p1_key_scale((uint32_t)voice_note[v], (uint32_t)60, op1_level_ks_lo[voice_part[v]], op1_level_ks_hi[voice_part[v]]) : 0;
+        op1_fb_ks_k[v] = key_on_on_x ? p1_key_scale((uint32_t)voice_note[v], (uint32_t)key_bp_bp_x, op1_fb_ks_lo[voice_part[v]], op1_fb_ks_hi[voice_part[v]]) : 0;
+        op1_level_ks_k[v] = key_on_on_x ? p1_key_scale((uint32_t)voice_note[v], (uint32_t)key_bp_bp_x, op1_level_ks_lo[voice_part[v]], op1_level_ks_hi[voice_part[v]]) : 0;
         op1_eg_warm_eff[v] = ((uint32_t)op1_eg_warm[voice_part[v]] ? (uint32_t)p1_key_apply(op1_eg_warm[voice_part[v]], p1_key_add(op1_eg_ks_k_x[v], op1_eg_vs_k_x[v]), 0, 99) : 0u);
         op1_eg_surge_eff[v] = ((uint32_t)op1_eg_surge[voice_part[v]] ? (uint32_t)p1_key_apply(op1_eg_surge[voice_part[v]], p1_key_add(op1_eg_ks_k_x[v], op1_eg_vs_k_x[v]), 0, 99) : 0u);
         op1_eg_d1_eff[v] = (uint32_t)p1_key_apply(op1_eg_d1r[voice_part[v]], p1_key_add(op1_eg_ks_k_x[v], op1_eg_vs_k_x[v]), 0, 99);
@@ -8773,9 +10416,501 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                `mip` (the band-limited table level) is block-constant too, so it is copied to
                its output here. The per-sample body stays the accumulator add, the FM offset
                add, and this copy. */
-            uint32_t op4_ph_phase_x = op4_ph_phase[v] + ((uint32_t)op4_sum_audio_x << 20) + (uint32_t)0;
+            uint32_t op4_ph_acc_x = op4_ph_phase[v] + (uint32_t)0;
+            uint32_t op4_ph_phase_x = op4_ph_acc_x + ((uint32_t)op4_sum_audio_x << 20);
             op4_ph_phase[v] += op4_ph_step[v];
             uint32_t op4_ph_mip_x = op4_ph_mip[v];
+            (void)op4_ph_phase_x;
+            /* Per-part stochastic phase map (1x). The map state is one pool per operator,
+               indexed by `voice_part[v]`, so the four voices on a part share the geometry,
+               the LUTs, the locks and the stochastic clocks. The map is applied to the
+               pre-FM `acc` phase; the FM offset is added by phase_add afterwards. Off is a
+               direct copy.
+               The y boundaries are snapped away from the waveform's protected points and a
+               segment whose span contains a protected point is locked: it never flips and
+               never takes part in a reorder. The fixed 13 waves use their mip-0 table; wave
+               13 builds an a and a b mask from the regenerated additive bank and combines
+               them with the base morph, exactly as the bank morph reads them. The map is
+               per part, so the morph used here is the base knob, not a voice's live morph.
+               The 2x map/table read, the half-band decimator and the 16-sample alignment
+               delay are outside the graph's one-rate model. They are carried by generated
+               DSP according to the contract, not by this node, and are recorded in the node
+               summary. */
+            /* The pool is `int16_t[10880]`; reinterpreted as 32-bit words it has 5,440
+               words. Two parts use 2 x 2,560 words, leaving room for the lock mask. */
+            #define P1_PM_WORDS 2560u
+            #define P1_PM_NX 0u          /* 33 x uint32: natural input boundaries 0..4096 */
+            #define P1_PM_NSLOPE 33u     /* 32 x uint32: natural slopes, Q16 */
+            #define P1_PM_NFLIP 65u      /* 32 x uint32: natural segment orientation */
+            #define P1_PM_ORDER 97u      /* 32 x uint32: one-based y-span order */
+            #define P1_PM_PY0 129u       /* 32 x uint32: composed y at the input boundary */
+            #define P1_PM_PSLOPE 161u    /* 32 x uint32: composed slope, Q16 */
+            #define P1_PM_SEG 193u       /* 1024 x uint32: 4 packed segment indices per word */
+            #define P1_PM_F 1217u        /* 1024 x uint32: F in 10-bit units (0..1024) */
+            #define P1_PM_LASTB 2241u
+            #define P1_PM_SEED 2242u
+            #define P1_PM_SEEDED 2243u
+            #define P1_PM_BP 2244u
+            #define P1_PM_LASTSEGS 2245u
+            #define P1_PM_DACC 2246u
+            #define P1_PM_FACC 2247u
+            #define P1_PM_RACC 2248u
+            #define P1_PM_NY 2249u       /* 33 x uint32: snapped y boundaries 0..4096 */
+            #define P1_PM_MASK 2282u     /* 128 x uint32: 4096 protected-point bits */
+            #define P1_PM_MASKID 2410u
+            #define P1_PM_LOCK 2411u     /* bit j = y span j is locked */
+            #define P1_PM_ACTIVE 2412u
+            #define P1_PM_LASTWAVE 2413u
+            #ifndef P1_PM_SAMPLE
+            #define P1_PM_SAMPLE(wave, bank, part, q, ab)                              \
+                (((wave) >= 13u)                                                       \
+                     ? (int32_t)((const int16_t *)(bank))[                             \
+                           ((ab) ? P1_SPEC_B(part) : P1_SPEC_A(part)) + ((q) >> 4)]    \
+                     : (int32_t)p1_wave[                                               \
+                           ((int32_t)p1_wave_base[((wave) > 12u) ? 0u : (wave)] << 10) \
+                           + ((q) >> 2)])
+            #endif
+            #ifndef P1_PM_SET
+            #define P1_PM_SET(m, i) ((m)[(i) >> 5] |= 1u << ((i) & 31u))
+            #define P1_PM_GET(m, i) (((m)[(i) >> 5] >> ((i) & 31u)) & 1u)
+            #endif
+            /* Build the protected mask for one waveform. A point is blocked when it sits
+               inside a zero crossing, a touch at zero, a silent run or a flat span. The
+               sloped shoulders of a zero run are blocked out to half the waveform's peak,
+               which is the lab's rule: a segment boundary may not sit on the steep side of
+               a crossing, and a segment that contains the crossing is locked. */
+            #ifndef P1_PM_MASK_BUILD
+            #define P1_PM_MASK_BUILD(dst, wave, bank, part, ab) do {                     \
+                for (uint32_t z = 0u; z < 128u; z++) (dst)[z] = 0u;                      \
+                int32_t peak = 0;                                                        \
+                for (uint32_t q = 0u; q < 4096u; q++) {                                  \
+                    int32_t s = P1_PM_SAMPLE(wave, bank, part, q, ab);                   \
+                    if (s < 0) s = -s;                                                   \
+                    if (s > peak) peak = s;                                              \
+                }                                                                        \
+                int32_t zeps = peak >> 13;                                               \
+                if (zeps < 2) zeps = 2;                                                  \
+                int32_t half = peak >> 1;                                                \
+                uint32_t q = 0u;                                                         \
+                while (q < 4096u) {                                                      \
+                    int32_t s = P1_PM_SAMPLE(wave, bank, part, q, ab);                   \
+                    if (s < 0) s = -s;                                                   \
+                    if (s > zeps) { q++; continue; }                                     \
+                    uint32_t start = q;                                                  \
+                    while (q + 1u < 4096u) {                                             \
+                        int32_t t = P1_PM_SAMPLE(wave, bank, part, q + 1u, ab);          \
+                        if (t < 0) t = -t;                                               \
+                        if (t > zeps) break;                                             \
+                        q++;                                                             \
+                    }                                                                    \
+                    uint32_t end = q;                                                    \
+                    if (end - start >= 2u) {                                             \
+                        for (uint32_t i = start + 1u; i < end; i++) P1_PM_SET(dst, i);   \
+                        uint32_t left = start;                                           \
+                        while (left > 0u) {                                              \
+                            int32_t t = P1_PM_SAMPLE(wave, bank, part, left, ab);        \
+                            if (t < 0) t = -t;                                           \
+                            if (t >= half) break;                                        \
+                            left--;                                                      \
+                        }                                                                \
+                        for (uint32_t i = left + 1u; i < start; i++) P1_PM_SET(dst, i);  \
+                        uint32_t right = end;                                            \
+                        while (right + 1u < 4096u) {                                     \
+                            int32_t t = P1_PM_SAMPLE(wave, bank, part, right + 1u, ab);  \
+                            if (t < 0) t = -t;                                           \
+                            if (t >= half) break;                                        \
+                            right++;                                                     \
+                        }                                                                \
+                        for (uint32_t i = end + 1u; i <= right; i++)                     \
+                            P1_PM_SET(dst, i);                                           \
+                    } else {                                                             \
+                        uint32_t left = start;                                           \
+                        while (left > 0u) {                                              \
+                            int32_t t = P1_PM_SAMPLE(wave, bank, part, left, ab);        \
+                            if (t < 0) t = -t;                                           \
+                            if (t >= half) break;                                        \
+                            left--;                                                      \
+                        }                                                                \
+                        uint32_t right = end;                                            \
+                        while (right + 1u < 4096u) {                                     \
+                            int32_t t = P1_PM_SAMPLE(wave, bank, part, right + 1u, ab);  \
+                            if (t < 0) t = -t;                                           \
+                            if (t >= half) break;                                        \
+                            right++;                                                     \
+                        }                                                                \
+                        for (uint32_t i = left + 1u; i < right; i++)                     \
+                            P1_PM_SET(dst, i);                                           \
+                    }                                                                    \
+                    q++;                                                                 \
+                }                                                                        \
+                for (uint32_t i = 0u; i + 1u < 4096u; i++) {                             \
+                    int32_t a = P1_PM_SAMPLE(wave, bank, part, i, ab);                   \
+                    int32_t b = P1_PM_SAMPLE(wave, bank, part, i + 1u, ab);              \
+                    if (a != 0 && b != 0 && ((a < 0) != (b < 0))) {                      \
+                        uint32_t left = i;                                               \
+                        while (left > 0u) {                                              \
+                            int32_t t = P1_PM_SAMPLE(wave, bank, part, left, ab);        \
+                            if (t < 0) t = -t;                                           \
+                            if (t >= half) break;                                        \
+                            left--;                                                      \
+                        }                                                                \
+                        uint32_t right = i + 1u;                                         \
+                        while (right + 1u < 4096u) {                                     \
+                            int32_t t = P1_PM_SAMPLE(wave, bank, part, right, ab);       \
+                            if (t < 0) t = -t;                                           \
+                            if (t >= half) break;                                        \
+                            right++;                                                     \
+                        }                                                                \
+                        for (uint32_t r = left + 1u; r <= right; r++)                    \
+                            P1_PM_SET(dst, r);                                           \
+                    }                                                                    \
+                }                                                                        \
+            } while (0)
+            #endif
+            #ifndef P1_PHASE_MAP_LAYOUT
+            #define P1_PHASE_MAP_LAYOUT(pm, m) do { \
+                uint32_t pos = 0u; \
+                for (uint32_t k = 0u; k < (m); k++) { \
+                    uint32_t j = (pm)[P1_PM_ORDER + k]; \
+                    if (j < 1u || j > (m)) j = 1u; \
+                    j -= 1u; \
+                    uint32_t y0 = (pm)[P1_PM_NY + j]; \
+                    uint32_t y1 = (pm)[P1_PM_NY + j + 1u]; \
+                    if ((pm)[P1_PM_NFLIP + j]) { uint32_t t = y0; y0 = y1; y1 = t; } \
+                    (pm)[P1_PM_PY0 + k] = y0; \
+                    uint32_t dx = (pm)[P1_PM_NX + k + 1u] - (pm)[P1_PM_NX + k]; \
+                    if (dx < 1u) dx = 1u; \
+                    (pm)[P1_PM_PSLOPE + k] = \
+                        (uint32_t)((((int32_t)y1 - (int32_t)y0) * 65536) / (int32_t)dx); \
+                    uint32_t e = (k == (m) - 1u) ? 4096u : (pm)[P1_PM_NX + k + 1u]; \
+                    if (e > 4096u) e = 4096u; \
+                    if (e < pos) e = pos; \
+                    for (; pos < e; pos++) { \
+                        uint32_t sh = (pos & 3u) * 8u; \
+                        uint32_t at = P1_PM_SEG + (pos >> 2); \
+                        (pm)[at] = ((pm)[at] & ~(0xFFu << sh)) | ((k & 0xFFu) << sh); \
+                    } \
+                } \
+                for (; pos < 4096u; pos++) { \
+                    uint32_t sh = (pos & 3u) * 8u; \
+                    uint32_t at = P1_PM_SEG + (pos >> 2); \
+                    (pm)[at] = ((pm)[at] & ~(0xFFu << sh)) | (((m) - 1u) << sh); \
+                } \
+            } while (0)
+            #endif
+            #ifndef P1_PHASE_MAP_F
+            #define P1_PHASE_MAP_F(pm, xb) do { \
+                uint32_t xb12 = (uint32_t)(((xb) * 4096u + 500u) / 1000u); \
+                if (xb12 < 1u) xb12 = 1u; \
+                if (xb12 > 4095u) xb12 = 4095u; \
+                for (uint32_t i = 0u; i < 1024u; i++) { \
+                    uint32_t x = i << 2; \
+                    uint32_t f; \
+                    if (x <= xb12) \
+                        f = (x * 512u) / xb12; \
+                    else \
+                        f = 512u + ((x - xb12) * 512u) / (4096u - xb12); \
+                    (pm)[P1_PM_F + i] = f; \
+                } \
+            } while (0)
+            #endif
+            #ifndef P1_PHASE_MAP_NEXT
+            #define P1_PHASE_MAP_NEXT(pm) \
+                ((pm)[P1_PM_SEED] ^= (pm)[P1_PM_SEED] << 13, \
+                 (pm)[P1_PM_SEED] ^= (pm)[P1_PM_SEED] >> 17, \
+                 (pm)[P1_PM_SEED] ^= (pm)[P1_PM_SEED] << 5, \
+                 (pm)[P1_PM_SEED])
+            #endif
+            uint32_t op4_phase_phase_x = op4_ph_acc_x;
+            if (op4_phase_on[voice_part[v]]) {
+                _Static_assert(P1_PM_WORDS * (uint32_t)N_PART <= 5440u,
+                    "phase_map pool layout exceeds the pool");
+                uint32_t *pm = (uint32_t *)(void *)op4_phase_map;
+                uint32_t part = (uint32_t)voice_part[v];
+                if (part >= (uint32_t)N_PART) part = (uint32_t)N_PART - 1u;
+                pm += part * P1_PM_WORDS;
+                uint32_t m = (uint32_t)op4_phase_segments[voice_part[v]];
+                if (m < 1u) m = 1u;
+                if (m > 32u) m = 32u;
+                uint32_t wave = (uint32_t)op4_osc_waveform[part];
+                if (wave > 13u) wave = 0u;
+                int32_t morph = (int32_t)op4_morphbase_out_x[v];
+                if (morph < 0) morph = 0;
+                if (morph > 99) morph = 99;
+                const int16_t *bank = op4_osc_bank;
+                uint32_t maskid = (wave << 16) ^ ((uint32_t)morph << 8);
+                if (wave >= 13u) {
+                    maskid ^= (uint32_t)(uint16_t)bank[P1_SPEC_HASH + (int)part * 2];
+                    maskid ^= (uint32_t)(uint16_t)bank[P1_SPEC_HASH + (int)part * 2 + 1]
+                              << 1;
+                }
+                uint32_t block = ctrl_serial;
+                if (!pm[P1_PM_SEEDED] || pm[P1_PM_LASTB] != block) {
+                    if (!pm[P1_PM_SEEDED]) {
+                        pm[P1_PM_SEED] = 0x9E3779B9u + part * 4u;
+                        if (!pm[P1_PM_SEED]) pm[P1_PM_SEED] = 1u;
+                        pm[P1_PM_SEEDED] = 1u;
+                        pm[P1_PM_LASTSEGS] = 0xFFFFFFFFu;
+                        pm[P1_PM_MASKID] = 0xFFFFFFFFu;
+                        pm[P1_PM_BP] = 0xFFFFFFFFu;
+                        pm[P1_PM_DACC] = 0u;
+                        pm[P1_PM_FACC] = 0u;
+                        pm[P1_PM_RACC] = 0u;
+                        pm[P1_PM_LASTWAVE] = 0xFFFFFFFFu;
+                    }
+                    uint32_t mask_changed = (pm[P1_PM_MASKID] != maskid);
+                    if (mask_changed) {
+                        if (wave >= 13u) {
+                            uint32_t amask[128];
+                            uint32_t bmask[128];
+                            P1_PM_MASK_BUILD(amask, wave, bank, part, 0);
+                            P1_PM_MASK_BUILD(bmask, wave, bank, part, 1);
+                            uint32_t m8 = ((uint32_t)morph * 255u) / 99u;
+                            for (uint32_t w = 0u; w < 128u; w++) {
+                                uint32_t combined = 0u;
+                                uint32_t aa = amask[w];
+                                uint32_t bb = bmask[w];
+                                for (uint32_t bit = 0u; bit < 32u; bit++) {
+                                    uint32_t av = (aa >> bit) & 1u;
+                                    uint32_t bv = (bb >> bit) & 1u;
+                                    uint32_t sum = av * (255u - m8) + bv * m8;
+                                    if (sum >= 128u)
+                                        combined |= 1u << bit;
+                                }
+                                pm[P1_PM_MASK + w] = combined;
+                            }
+                        } else {
+                            P1_PM_MASK_BUILD(pm + P1_PM_MASK, wave, bank, part, 0);
+                        }
+                        pm[P1_PM_MASKID] = maskid;
+                        pm[P1_PM_LASTWAVE] = wave;
+                    }
+                    if (pm[P1_PM_LASTSEGS] != m || mask_changed) {
+                        pm[P1_PM_LASTSEGS] = m;
+                        for (uint32_t k = 0u; k < m; k++) {
+                            pm[P1_PM_NSLOPE + k] = 65536u;
+                            pm[P1_PM_NFLIP + k] = 0u;
+                            pm[P1_PM_ORDER + k] = k + 1u;
+                        }
+                        for (uint32_t k = 0u; k <= m; k++)
+                            pm[P1_PM_NX + k] = (k * 4096u) / m;
+                        /* Snap the y boundaries to points at least two grid steps away
+                           from a protected point. A target that cannot be placed lowers
+                           the active count instead of cutting through a crossing. */
+                        uint32_t active = m;
+                        uint32_t prev = 0u;
+                        pm[P1_PM_NY] = 0u;
+                        for (uint32_t k = 1u; k < m; k++) {
+                            uint32_t target = (k * 4096u) / m;
+                            uint32_t low = prev + 2u;
+                            uint32_t room = m - k;
+                            uint32_t high = 4096u - room * 2u;
+                            int found = 0;
+                            uint32_t best = 0u;
+                            if (low <= high) {
+                                for (uint32_t d = 0u; d <= 512u; d++) {
+                                    uint32_t cand[2];
+                                    cand[0] = (target >= d) ? target - d : 0u;
+                                    cand[1] = (target + d <= 4095u) ? target + d : 4095u;
+                                    for (int side = 0; side < 2; side++) {
+                                        uint32_t c = cand[side];
+                                        if (c < low || c > high)
+                                            continue;
+                                        if (c < 2u || c > 4094u)
+                                            continue;
+                                        if (P1_PM_GET(pm + P1_PM_MASK, c - 2u) ||
+                                            P1_PM_GET(pm + P1_PM_MASK, c - 1u) ||
+                                            P1_PM_GET(pm + P1_PM_MASK, c) ||
+                                            P1_PM_GET(pm + P1_PM_MASK, c + 1u) ||
+                                            P1_PM_GET(pm + P1_PM_MASK, c + 2u))
+                                            continue;
+                                        int better = !found ||
+                                            (c > target ? c - target : target - c) <
+                                            (best > target ? best - target : target - best);
+                                        if (better) {
+                                            best = c;
+                                            found = 1;
+                                        }
+                                    }
+                                    if (found && d > (best > target ? best - target
+                                                                   : target - best) + 2u)
+                                        break;
+                                }
+                            }
+                            if (!found) {
+                                active = k;
+                                break;
+                            }
+                            pm[P1_PM_NY + k] = best;
+                            prev = best;
+                        }
+                        pm[P1_PM_NY + active] = 4096u;
+                        pm[P1_PM_ACTIVE] = active;
+                        /* Rebuild the natural slopes from the snapped spans. */
+                        uint32_t base = 0u;
+                        for (uint32_t k = 0u; k < active; k++) {
+                            uint32_t next = ((k + 1u) * 4096u) / active;
+                            uint32_t xs = next - base;
+                            if (xs < 1u) xs = 1u;
+                            uint32_t ys = pm[P1_PM_NY + k + 1u] - pm[P1_PM_NY + k];
+                            uint32_t s = (ys * 65536u) / xs;
+                            if (s < 32768u) s = 32768u;
+                            if (s > 174327u) s = 174327u;
+                            pm[P1_PM_NSLOPE + k] = s;
+                            pm[P1_PM_NX + k] = base;
+                            base = next;
+                        }
+                        for (uint32_t k = 0u; k <= active; k++)
+                            pm[P1_PM_NX + k] = (k * 4096u) / active;
+                        /* Lock every span that contains a protected point. */
+                        uint32_t locks = 0u;
+                        for (uint32_t k = 0u; k < active; k++) {
+                            uint32_t any = 0u;
+                            for (uint32_t q = pm[P1_PM_NY + k];
+                                 q < pm[P1_PM_NY + k + 1u]; q++) {
+                                if (P1_PM_GET(pm + P1_PM_MASK, q)) {
+                                    any = 1u;
+                                    break;
+                                }
+                            }
+                            if (any)
+                                locks |= 1u << k;
+                        }
+                        pm[P1_PM_LOCK] = locks;
+                        P1_PHASE_MAP_LAYOUT(pm, active);
+                        m = active;
+                    } else {
+                        m = pm[P1_PM_ACTIVE];
+                        if (m < 1u) m = 1u;
+                        if (m > 32u) m = 32u;
+                    }
+                    int32_t mod = (int32_t)op4_phase_mod_cv_x[v];
+                    if (mod < -200) mod = -200;
+                    if (mod > 200) mod = 200;
+                    int32_t follow = 0;
+                    if (key_on_on_x) {
+                        uint32_t key_bp = (uint32_t)key_bp_bp_x;
+                        if (key_bp > 127u) key_bp = 127u;
+                        follow += p1_key_scale(voice_note[v], key_bp,
+                            (int32_t)op4_phase_ks_lo[voice_part[v]], (int32_t)op4_phase_ks_hi[voice_part[v]]);
+                    }
+                    if (vel_on_on_x)
+                        follow += p1_vel_scale(voice_velocity[v], (int32_t)op4_phase_vs[voice_part[v]]);
+                    int32_t follow_milli =
+                        (int32_t)(((int64_t)follow * 1000) / 32768);
+                    int32_t bp = (int32_t)op4_phase_bp[voice_part[v]] + mod * 10 + follow_milli;
+                    int32_t span = 998;
+                    int32_t bv = bp - 1;
+                    bv %= 1996;
+                    if (bv < 0) bv += 1996;
+                    if (bv > span) bv = 1996 - bv;
+                    uint32_t xb = (uint32_t)(bv + 1);
+                    if (pm[P1_PM_BP] != xb) {
+                        pm[P1_PM_BP] = xb;
+                        P1_PHASE_MAP_F(pm, xb);
+                    }
+                    uint32_t old = pm[P1_PM_DACC];
+                    pm[P1_PM_DACC] = old + (uint32_t)op4_phase_drift_rate[voice_part[v]] * CONTROL_BLOCK;
+                    if (pm[P1_PM_DACC] < old) {
+                        uint32_t drift = (uint32_t)op4_phase_drift[voice_part[v]];
+                        if (drift > 100u) drift = 100u;
+                        int32_t sigma = (26214 * (int32_t)drift) / 100;
+                        for (uint32_t k = 0u; k < m; k++) {
+                            uint32_t j = pm[P1_PM_ORDER + k];
+                            if (j < 1u || j > m) j = 1u;
+                            j -= 1u;
+                            int32_t g = -6 * 65536;
+                            for (uint32_t r = 0u; r < 12u; r++)
+                                g += (int32_t)(P1_PHASE_MAP_NEXT(pm) >> 16);
+                            int32_t step = (int32_t)(((int64_t)g * sigma) >> 16);
+                            int32_t s = (int32_t)pm[P1_PM_NSLOPE + k] + step;
+                            if (s < 32768) s = 65536 - s;
+                            if (s > 174327) s = 348654 - s;
+                            if (s < 32768) s = 32768;
+                            if (s > 174327) s = 174327;
+                            pm[P1_PM_NSLOPE + k] = (uint32_t)s;
+                        }
+                        pm[P1_PM_NX] = 0u;
+                        for (uint32_t k = 0u; k < m; k++) {
+                            uint32_t j = pm[P1_PM_ORDER + k];
+                            if (j < 1u || j > m) j = 1u;
+                            j -= 1u;
+                            uint32_t ys = pm[P1_PM_NY + j + 1u] - pm[P1_PM_NY + j];
+                            uint32_t s = pm[P1_PM_NSLOPE + k];
+                            uint32_t nx = pm[P1_PM_NX + k] +
+                                (uint32_t)(((uint64_t)ys * 65536u) / s);
+                            if (nx <= pm[P1_PM_NX + k]) nx = pm[P1_PM_NX + k] + 1u;
+                            if (nx > 4096u) nx = 4096u;
+                            pm[P1_PM_NX + k + 1u] = nx;
+                        }
+                        pm[P1_PM_NX + m] = 4096u;
+                        P1_PHASE_MAP_LAYOUT(pm, m);
+                    }
+                    uint32_t flip = (uint32_t)op4_phase_flip[voice_part[v]];
+                    if (flip > 100u) flip = 100u;
+                    old = pm[P1_PM_FACC];
+                    pm[P1_PM_FACC] = old + (uint32_t)op4_phase_flip_rate[voice_part[v]] * CONTROL_BLOCK;
+                    if (pm[P1_PM_FACC] < old && P1_PHASE_MAP_NEXT(pm) % 100u < flip) {
+                        uint32_t locks = pm[P1_PM_LOCK];
+                        for (uint32_t k = 0u; k < m; k++) {
+                            if (locks & (1u << k))
+                                continue;
+                            if (P1_PHASE_MAP_NEXT(pm) % 100u < flip)
+                                pm[P1_PM_NFLIP + k] ^= 1u;
+                        }
+                        P1_PHASE_MAP_LAYOUT(pm, m);
+                    }
+                    uint32_t reorder = (uint32_t)op4_phase_reorder[voice_part[v]];
+                    if (reorder > 100u) reorder = 100u;
+                    old = pm[P1_PM_RACC];
+                    pm[P1_PM_RACC] = old + (uint32_t)op4_phase_reorder_rate[voice_part[v]] * CONTROL_BLOCK;
+                    if (m > 1u && pm[P1_PM_RACC] < old &&
+                            P1_PHASE_MAP_NEXT(pm) % 100u < reorder) {
+                        uint32_t maxd = (uint32_t)op4_phase_jump[voice_part[v]];
+                        if (maxd < 1u) maxd = 1u;
+                        if (maxd > 32u) maxd = 32u;
+                        if (maxd >= m) maxd = m - 1u;
+                        uint32_t locks = pm[P1_PM_LOCK];
+                        uint32_t i = 0u;
+                        uint32_t j = 0u;
+                        int placed = 0;
+                        for (uint32_t attempt = 0u; attempt < 3u; attempt++) {
+                            i = P1_PHASE_MAP_NEXT(pm) % m;
+                            uint32_t d = 1u + P1_PHASE_MAP_NEXT(pm) % maxd;
+                            j = (i + d) % m;
+                            uint32_t oi = pm[P1_PM_ORDER + i];
+                            uint32_t oj = pm[P1_PM_ORDER + j];
+                            if (oi < 1u || oi > m) oi = 1u;
+                            if (oj < 1u || oj > m) oj = 1u;
+                            if ((locks & (1u << (oi - 1u))) ||
+                                (locks & (1u << (oj - 1u))))
+                                continue;
+                            placed = 1;
+                            break;
+                        }
+                        if (placed) {
+                            uint32_t t = pm[P1_PM_ORDER + i];
+                            pm[P1_PM_ORDER + i] = pm[P1_PM_ORDER + j];
+                            pm[P1_PM_ORDER + j] = t;
+                            P1_PHASE_MAP_LAYOUT(pm, m);
+                        }
+                    }
+                    pm[P1_PM_LASTB] = block;
+                }
+                uint32_t x = (uint32_t)op4_ph_acc_x >> 20;
+                uint32_t q = pm[P1_PM_F + (x >> 2)] << 2;
+                if (q > 4095u) q = 4095u;
+                uint32_t sh = (q & 3u) * 8u;
+                uint32_t k = (pm[P1_PM_SEG + (q >> 2)] >> sh) & 0xFFu;
+                if (k >= m) k = m - 1u;
+                int32_t y = (int32_t)pm[P1_PM_PY0 + k] +
+                    (((int32_t)q - (int32_t)pm[P1_PM_NX + k]) *
+                     (int32_t)pm[P1_PM_PSLOPE + k] >> 16);
+                op4_phase_phase_x = (uint32_t)y << 20;
+            }
+            /* Add the FM/feedback sum after the map. The sum is the same `(fm << 20)` that
+               the phasor used, so the off map path is the old accumulator-add-read path. */
+            uint32_t op4_padd_phase_x = op4_phase_phase_x + ((uint32_t)op4_sum_audio_x << 20);
             /* Waveform reader. Values 0-12 read the precomputed 13-wave table (`p1_wave`):
                one load, with the band-limited mip added for waves 10/11/12. Value 13 reads
                the additive bank: the a and b spectra at the mip selected from the phasor,
@@ -8788,12 +10923,12 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                 op4_osc_live[v] = p1_spectral_morph(
                     op4_specenv_active_x[v] ? op4_specenv_cv_x[v] : op4_morphbase_out_x[v], op4_speclfo_cv_x[v]);
                 op4_osc_audio_x = p1_spectral_read(
-                    op4_osc_bank, (int)voice_part[v], op4_ph_phase_x, op4_ph_mip_x,
+                    op4_osc_bank, (int)voice_part[v], op4_padd_phase_x, op4_ph_mip_x,
                     op4_osc_live[v]);
             } else {
                 op4_osc_live[v] = -1;
                 op4_osc_audio_x = p1_wave[op4_osc_base[v]
-                    + ((op4_osc_bl[v] ? op4_ph_mip_x : 0u) << 10) + (op4_ph_phase_x >> 22)];
+                    + ((op4_osc_bl[v] ? op4_ph_mip_x : 0u) << 10) + (op4_padd_phase_x >> 22)];
             }
             /* Yamaha total-level gain: audio × cv × gain(level_eff). `level` is 0..99, the
                block-rate `lfo` input adds a signed level offset in the same units, and the
@@ -8859,9 +10994,501 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                `mip` (the band-limited table level) is block-constant too, so it is copied to
                its output here. The per-sample body stays the accumulator add, the FM offset
                add, and this copy. */
-            uint32_t op3_ph_phase_x = op3_ph_phase[v] + ((uint32_t)op3_sum_audio_x << 20) + (uint32_t)0;
+            uint32_t op3_ph_acc_x = op3_ph_phase[v] + (uint32_t)0;
+            uint32_t op3_ph_phase_x = op3_ph_acc_x + ((uint32_t)op3_sum_audio_x << 20);
             op3_ph_phase[v] += op3_ph_step[v];
             uint32_t op3_ph_mip_x = op3_ph_mip[v];
+            (void)op3_ph_phase_x;
+            /* Per-part stochastic phase map (1x). The map state is one pool per operator,
+               indexed by `voice_part[v]`, so the four voices on a part share the geometry,
+               the LUTs, the locks and the stochastic clocks. The map is applied to the
+               pre-FM `acc` phase; the FM offset is added by phase_add afterwards. Off is a
+               direct copy.
+               The y boundaries are snapped away from the waveform's protected points and a
+               segment whose span contains a protected point is locked: it never flips and
+               never takes part in a reorder. The fixed 13 waves use their mip-0 table; wave
+               13 builds an a and a b mask from the regenerated additive bank and combines
+               them with the base morph, exactly as the bank morph reads them. The map is
+               per part, so the morph used here is the base knob, not a voice's live morph.
+               The 2x map/table read, the half-band decimator and the 16-sample alignment
+               delay are outside the graph's one-rate model. They are carried by generated
+               DSP according to the contract, not by this node, and are recorded in the node
+               summary. */
+            /* The pool is `int16_t[10880]`; reinterpreted as 32-bit words it has 5,440
+               words. Two parts use 2 x 2,560 words, leaving room for the lock mask. */
+            #define P1_PM_WORDS 2560u
+            #define P1_PM_NX 0u          /* 33 x uint32: natural input boundaries 0..4096 */
+            #define P1_PM_NSLOPE 33u     /* 32 x uint32: natural slopes, Q16 */
+            #define P1_PM_NFLIP 65u      /* 32 x uint32: natural segment orientation */
+            #define P1_PM_ORDER 97u      /* 32 x uint32: one-based y-span order */
+            #define P1_PM_PY0 129u       /* 32 x uint32: composed y at the input boundary */
+            #define P1_PM_PSLOPE 161u    /* 32 x uint32: composed slope, Q16 */
+            #define P1_PM_SEG 193u       /* 1024 x uint32: 4 packed segment indices per word */
+            #define P1_PM_F 1217u        /* 1024 x uint32: F in 10-bit units (0..1024) */
+            #define P1_PM_LASTB 2241u
+            #define P1_PM_SEED 2242u
+            #define P1_PM_SEEDED 2243u
+            #define P1_PM_BP 2244u
+            #define P1_PM_LASTSEGS 2245u
+            #define P1_PM_DACC 2246u
+            #define P1_PM_FACC 2247u
+            #define P1_PM_RACC 2248u
+            #define P1_PM_NY 2249u       /* 33 x uint32: snapped y boundaries 0..4096 */
+            #define P1_PM_MASK 2282u     /* 128 x uint32: 4096 protected-point bits */
+            #define P1_PM_MASKID 2410u
+            #define P1_PM_LOCK 2411u     /* bit j = y span j is locked */
+            #define P1_PM_ACTIVE 2412u
+            #define P1_PM_LASTWAVE 2413u
+            #ifndef P1_PM_SAMPLE
+            #define P1_PM_SAMPLE(wave, bank, part, q, ab)                              \
+                (((wave) >= 13u)                                                       \
+                     ? (int32_t)((const int16_t *)(bank))[                             \
+                           ((ab) ? P1_SPEC_B(part) : P1_SPEC_A(part)) + ((q) >> 4)]    \
+                     : (int32_t)p1_wave[                                               \
+                           ((int32_t)p1_wave_base[((wave) > 12u) ? 0u : (wave)] << 10) \
+                           + ((q) >> 2)])
+            #endif
+            #ifndef P1_PM_SET
+            #define P1_PM_SET(m, i) ((m)[(i) >> 5] |= 1u << ((i) & 31u))
+            #define P1_PM_GET(m, i) (((m)[(i) >> 5] >> ((i) & 31u)) & 1u)
+            #endif
+            /* Build the protected mask for one waveform. A point is blocked when it sits
+               inside a zero crossing, a touch at zero, a silent run or a flat span. The
+               sloped shoulders of a zero run are blocked out to half the waveform's peak,
+               which is the lab's rule: a segment boundary may not sit on the steep side of
+               a crossing, and a segment that contains the crossing is locked. */
+            #ifndef P1_PM_MASK_BUILD
+            #define P1_PM_MASK_BUILD(dst, wave, bank, part, ab) do {                     \
+                for (uint32_t z = 0u; z < 128u; z++) (dst)[z] = 0u;                      \
+                int32_t peak = 0;                                                        \
+                for (uint32_t q = 0u; q < 4096u; q++) {                                  \
+                    int32_t s = P1_PM_SAMPLE(wave, bank, part, q, ab);                   \
+                    if (s < 0) s = -s;                                                   \
+                    if (s > peak) peak = s;                                              \
+                }                                                                        \
+                int32_t zeps = peak >> 13;                                               \
+                if (zeps < 2) zeps = 2;                                                  \
+                int32_t half = peak >> 1;                                                \
+                uint32_t q = 0u;                                                         \
+                while (q < 4096u) {                                                      \
+                    int32_t s = P1_PM_SAMPLE(wave, bank, part, q, ab);                   \
+                    if (s < 0) s = -s;                                                   \
+                    if (s > zeps) { q++; continue; }                                     \
+                    uint32_t start = q;                                                  \
+                    while (q + 1u < 4096u) {                                             \
+                        int32_t t = P1_PM_SAMPLE(wave, bank, part, q + 1u, ab);          \
+                        if (t < 0) t = -t;                                               \
+                        if (t > zeps) break;                                             \
+                        q++;                                                             \
+                    }                                                                    \
+                    uint32_t end = q;                                                    \
+                    if (end - start >= 2u) {                                             \
+                        for (uint32_t i = start + 1u; i < end; i++) P1_PM_SET(dst, i);   \
+                        uint32_t left = start;                                           \
+                        while (left > 0u) {                                              \
+                            int32_t t = P1_PM_SAMPLE(wave, bank, part, left, ab);        \
+                            if (t < 0) t = -t;                                           \
+                            if (t >= half) break;                                        \
+                            left--;                                                      \
+                        }                                                                \
+                        for (uint32_t i = left + 1u; i < start; i++) P1_PM_SET(dst, i);  \
+                        uint32_t right = end;                                            \
+                        while (right + 1u < 4096u) {                                     \
+                            int32_t t = P1_PM_SAMPLE(wave, bank, part, right + 1u, ab);  \
+                            if (t < 0) t = -t;                                           \
+                            if (t >= half) break;                                        \
+                            right++;                                                     \
+                        }                                                                \
+                        for (uint32_t i = end + 1u; i <= right; i++)                     \
+                            P1_PM_SET(dst, i);                                           \
+                    } else {                                                             \
+                        uint32_t left = start;                                           \
+                        while (left > 0u) {                                              \
+                            int32_t t = P1_PM_SAMPLE(wave, bank, part, left, ab);        \
+                            if (t < 0) t = -t;                                           \
+                            if (t >= half) break;                                        \
+                            left--;                                                      \
+                        }                                                                \
+                        uint32_t right = end;                                            \
+                        while (right + 1u < 4096u) {                                     \
+                            int32_t t = P1_PM_SAMPLE(wave, bank, part, right + 1u, ab);  \
+                            if (t < 0) t = -t;                                           \
+                            if (t >= half) break;                                        \
+                            right++;                                                     \
+                        }                                                                \
+                        for (uint32_t i = left + 1u; i < right; i++)                     \
+                            P1_PM_SET(dst, i);                                           \
+                    }                                                                    \
+                    q++;                                                                 \
+                }                                                                        \
+                for (uint32_t i = 0u; i + 1u < 4096u; i++) {                             \
+                    int32_t a = P1_PM_SAMPLE(wave, bank, part, i, ab);                   \
+                    int32_t b = P1_PM_SAMPLE(wave, bank, part, i + 1u, ab);              \
+                    if (a != 0 && b != 0 && ((a < 0) != (b < 0))) {                      \
+                        uint32_t left = i;                                               \
+                        while (left > 0u) {                                              \
+                            int32_t t = P1_PM_SAMPLE(wave, bank, part, left, ab);        \
+                            if (t < 0) t = -t;                                           \
+                            if (t >= half) break;                                        \
+                            left--;                                                      \
+                        }                                                                \
+                        uint32_t right = i + 1u;                                         \
+                        while (right + 1u < 4096u) {                                     \
+                            int32_t t = P1_PM_SAMPLE(wave, bank, part, right, ab);       \
+                            if (t < 0) t = -t;                                           \
+                            if (t >= half) break;                                        \
+                            right++;                                                     \
+                        }                                                                \
+                        for (uint32_t r = left + 1u; r <= right; r++)                    \
+                            P1_PM_SET(dst, r);                                           \
+                    }                                                                    \
+                }                                                                        \
+            } while (0)
+            #endif
+            #ifndef P1_PHASE_MAP_LAYOUT
+            #define P1_PHASE_MAP_LAYOUT(pm, m) do { \
+                uint32_t pos = 0u; \
+                for (uint32_t k = 0u; k < (m); k++) { \
+                    uint32_t j = (pm)[P1_PM_ORDER + k]; \
+                    if (j < 1u || j > (m)) j = 1u; \
+                    j -= 1u; \
+                    uint32_t y0 = (pm)[P1_PM_NY + j]; \
+                    uint32_t y1 = (pm)[P1_PM_NY + j + 1u]; \
+                    if ((pm)[P1_PM_NFLIP + j]) { uint32_t t = y0; y0 = y1; y1 = t; } \
+                    (pm)[P1_PM_PY0 + k] = y0; \
+                    uint32_t dx = (pm)[P1_PM_NX + k + 1u] - (pm)[P1_PM_NX + k]; \
+                    if (dx < 1u) dx = 1u; \
+                    (pm)[P1_PM_PSLOPE + k] = \
+                        (uint32_t)((((int32_t)y1 - (int32_t)y0) * 65536) / (int32_t)dx); \
+                    uint32_t e = (k == (m) - 1u) ? 4096u : (pm)[P1_PM_NX + k + 1u]; \
+                    if (e > 4096u) e = 4096u; \
+                    if (e < pos) e = pos; \
+                    for (; pos < e; pos++) { \
+                        uint32_t sh = (pos & 3u) * 8u; \
+                        uint32_t at = P1_PM_SEG + (pos >> 2); \
+                        (pm)[at] = ((pm)[at] & ~(0xFFu << sh)) | ((k & 0xFFu) << sh); \
+                    } \
+                } \
+                for (; pos < 4096u; pos++) { \
+                    uint32_t sh = (pos & 3u) * 8u; \
+                    uint32_t at = P1_PM_SEG + (pos >> 2); \
+                    (pm)[at] = ((pm)[at] & ~(0xFFu << sh)) | (((m) - 1u) << sh); \
+                } \
+            } while (0)
+            #endif
+            #ifndef P1_PHASE_MAP_F
+            #define P1_PHASE_MAP_F(pm, xb) do { \
+                uint32_t xb12 = (uint32_t)(((xb) * 4096u + 500u) / 1000u); \
+                if (xb12 < 1u) xb12 = 1u; \
+                if (xb12 > 4095u) xb12 = 4095u; \
+                for (uint32_t i = 0u; i < 1024u; i++) { \
+                    uint32_t x = i << 2; \
+                    uint32_t f; \
+                    if (x <= xb12) \
+                        f = (x * 512u) / xb12; \
+                    else \
+                        f = 512u + ((x - xb12) * 512u) / (4096u - xb12); \
+                    (pm)[P1_PM_F + i] = f; \
+                } \
+            } while (0)
+            #endif
+            #ifndef P1_PHASE_MAP_NEXT
+            #define P1_PHASE_MAP_NEXT(pm) \
+                ((pm)[P1_PM_SEED] ^= (pm)[P1_PM_SEED] << 13, \
+                 (pm)[P1_PM_SEED] ^= (pm)[P1_PM_SEED] >> 17, \
+                 (pm)[P1_PM_SEED] ^= (pm)[P1_PM_SEED] << 5, \
+                 (pm)[P1_PM_SEED])
+            #endif
+            uint32_t op3_phase_phase_x = op3_ph_acc_x;
+            if (op3_phase_on[voice_part[v]]) {
+                _Static_assert(P1_PM_WORDS * (uint32_t)N_PART <= 5440u,
+                    "phase_map pool layout exceeds the pool");
+                uint32_t *pm = (uint32_t *)(void *)op3_phase_map;
+                uint32_t part = (uint32_t)voice_part[v];
+                if (part >= (uint32_t)N_PART) part = (uint32_t)N_PART - 1u;
+                pm += part * P1_PM_WORDS;
+                uint32_t m = (uint32_t)op3_phase_segments[voice_part[v]];
+                if (m < 1u) m = 1u;
+                if (m > 32u) m = 32u;
+                uint32_t wave = (uint32_t)op3_osc_waveform[part];
+                if (wave > 13u) wave = 0u;
+                int32_t morph = (int32_t)op3_morphbase_out_x[v];
+                if (morph < 0) morph = 0;
+                if (morph > 99) morph = 99;
+                const int16_t *bank = op3_osc_bank;
+                uint32_t maskid = (wave << 16) ^ ((uint32_t)morph << 8);
+                if (wave >= 13u) {
+                    maskid ^= (uint32_t)(uint16_t)bank[P1_SPEC_HASH + (int)part * 2];
+                    maskid ^= (uint32_t)(uint16_t)bank[P1_SPEC_HASH + (int)part * 2 + 1]
+                              << 1;
+                }
+                uint32_t block = ctrl_serial;
+                if (!pm[P1_PM_SEEDED] || pm[P1_PM_LASTB] != block) {
+                    if (!pm[P1_PM_SEEDED]) {
+                        pm[P1_PM_SEED] = 0x9E3779B9u + part * 4u;
+                        if (!pm[P1_PM_SEED]) pm[P1_PM_SEED] = 1u;
+                        pm[P1_PM_SEEDED] = 1u;
+                        pm[P1_PM_LASTSEGS] = 0xFFFFFFFFu;
+                        pm[P1_PM_MASKID] = 0xFFFFFFFFu;
+                        pm[P1_PM_BP] = 0xFFFFFFFFu;
+                        pm[P1_PM_DACC] = 0u;
+                        pm[P1_PM_FACC] = 0u;
+                        pm[P1_PM_RACC] = 0u;
+                        pm[P1_PM_LASTWAVE] = 0xFFFFFFFFu;
+                    }
+                    uint32_t mask_changed = (pm[P1_PM_MASKID] != maskid);
+                    if (mask_changed) {
+                        if (wave >= 13u) {
+                            uint32_t amask[128];
+                            uint32_t bmask[128];
+                            P1_PM_MASK_BUILD(amask, wave, bank, part, 0);
+                            P1_PM_MASK_BUILD(bmask, wave, bank, part, 1);
+                            uint32_t m8 = ((uint32_t)morph * 255u) / 99u;
+                            for (uint32_t w = 0u; w < 128u; w++) {
+                                uint32_t combined = 0u;
+                                uint32_t aa = amask[w];
+                                uint32_t bb = bmask[w];
+                                for (uint32_t bit = 0u; bit < 32u; bit++) {
+                                    uint32_t av = (aa >> bit) & 1u;
+                                    uint32_t bv = (bb >> bit) & 1u;
+                                    uint32_t sum = av * (255u - m8) + bv * m8;
+                                    if (sum >= 128u)
+                                        combined |= 1u << bit;
+                                }
+                                pm[P1_PM_MASK + w] = combined;
+                            }
+                        } else {
+                            P1_PM_MASK_BUILD(pm + P1_PM_MASK, wave, bank, part, 0);
+                        }
+                        pm[P1_PM_MASKID] = maskid;
+                        pm[P1_PM_LASTWAVE] = wave;
+                    }
+                    if (pm[P1_PM_LASTSEGS] != m || mask_changed) {
+                        pm[P1_PM_LASTSEGS] = m;
+                        for (uint32_t k = 0u; k < m; k++) {
+                            pm[P1_PM_NSLOPE + k] = 65536u;
+                            pm[P1_PM_NFLIP + k] = 0u;
+                            pm[P1_PM_ORDER + k] = k + 1u;
+                        }
+                        for (uint32_t k = 0u; k <= m; k++)
+                            pm[P1_PM_NX + k] = (k * 4096u) / m;
+                        /* Snap the y boundaries to points at least two grid steps away
+                           from a protected point. A target that cannot be placed lowers
+                           the active count instead of cutting through a crossing. */
+                        uint32_t active = m;
+                        uint32_t prev = 0u;
+                        pm[P1_PM_NY] = 0u;
+                        for (uint32_t k = 1u; k < m; k++) {
+                            uint32_t target = (k * 4096u) / m;
+                            uint32_t low = prev + 2u;
+                            uint32_t room = m - k;
+                            uint32_t high = 4096u - room * 2u;
+                            int found = 0;
+                            uint32_t best = 0u;
+                            if (low <= high) {
+                                for (uint32_t d = 0u; d <= 512u; d++) {
+                                    uint32_t cand[2];
+                                    cand[0] = (target >= d) ? target - d : 0u;
+                                    cand[1] = (target + d <= 4095u) ? target + d : 4095u;
+                                    for (int side = 0; side < 2; side++) {
+                                        uint32_t c = cand[side];
+                                        if (c < low || c > high)
+                                            continue;
+                                        if (c < 2u || c > 4094u)
+                                            continue;
+                                        if (P1_PM_GET(pm + P1_PM_MASK, c - 2u) ||
+                                            P1_PM_GET(pm + P1_PM_MASK, c - 1u) ||
+                                            P1_PM_GET(pm + P1_PM_MASK, c) ||
+                                            P1_PM_GET(pm + P1_PM_MASK, c + 1u) ||
+                                            P1_PM_GET(pm + P1_PM_MASK, c + 2u))
+                                            continue;
+                                        int better = !found ||
+                                            (c > target ? c - target : target - c) <
+                                            (best > target ? best - target : target - best);
+                                        if (better) {
+                                            best = c;
+                                            found = 1;
+                                        }
+                                    }
+                                    if (found && d > (best > target ? best - target
+                                                                   : target - best) + 2u)
+                                        break;
+                                }
+                            }
+                            if (!found) {
+                                active = k;
+                                break;
+                            }
+                            pm[P1_PM_NY + k] = best;
+                            prev = best;
+                        }
+                        pm[P1_PM_NY + active] = 4096u;
+                        pm[P1_PM_ACTIVE] = active;
+                        /* Rebuild the natural slopes from the snapped spans. */
+                        uint32_t base = 0u;
+                        for (uint32_t k = 0u; k < active; k++) {
+                            uint32_t next = ((k + 1u) * 4096u) / active;
+                            uint32_t xs = next - base;
+                            if (xs < 1u) xs = 1u;
+                            uint32_t ys = pm[P1_PM_NY + k + 1u] - pm[P1_PM_NY + k];
+                            uint32_t s = (ys * 65536u) / xs;
+                            if (s < 32768u) s = 32768u;
+                            if (s > 174327u) s = 174327u;
+                            pm[P1_PM_NSLOPE + k] = s;
+                            pm[P1_PM_NX + k] = base;
+                            base = next;
+                        }
+                        for (uint32_t k = 0u; k <= active; k++)
+                            pm[P1_PM_NX + k] = (k * 4096u) / active;
+                        /* Lock every span that contains a protected point. */
+                        uint32_t locks = 0u;
+                        for (uint32_t k = 0u; k < active; k++) {
+                            uint32_t any = 0u;
+                            for (uint32_t q = pm[P1_PM_NY + k];
+                                 q < pm[P1_PM_NY + k + 1u]; q++) {
+                                if (P1_PM_GET(pm + P1_PM_MASK, q)) {
+                                    any = 1u;
+                                    break;
+                                }
+                            }
+                            if (any)
+                                locks |= 1u << k;
+                        }
+                        pm[P1_PM_LOCK] = locks;
+                        P1_PHASE_MAP_LAYOUT(pm, active);
+                        m = active;
+                    } else {
+                        m = pm[P1_PM_ACTIVE];
+                        if (m < 1u) m = 1u;
+                        if (m > 32u) m = 32u;
+                    }
+                    int32_t mod = (int32_t)op3_phase_mod_cv_x[v];
+                    if (mod < -200) mod = -200;
+                    if (mod > 200) mod = 200;
+                    int32_t follow = 0;
+                    if (key_on_on_x) {
+                        uint32_t key_bp = (uint32_t)key_bp_bp_x;
+                        if (key_bp > 127u) key_bp = 127u;
+                        follow += p1_key_scale(voice_note[v], key_bp,
+                            (int32_t)op3_phase_ks_lo[voice_part[v]], (int32_t)op3_phase_ks_hi[voice_part[v]]);
+                    }
+                    if (vel_on_on_x)
+                        follow += p1_vel_scale(voice_velocity[v], (int32_t)op3_phase_vs[voice_part[v]]);
+                    int32_t follow_milli =
+                        (int32_t)(((int64_t)follow * 1000) / 32768);
+                    int32_t bp = (int32_t)op3_phase_bp[voice_part[v]] + mod * 10 + follow_milli;
+                    int32_t span = 998;
+                    int32_t bv = bp - 1;
+                    bv %= 1996;
+                    if (bv < 0) bv += 1996;
+                    if (bv > span) bv = 1996 - bv;
+                    uint32_t xb = (uint32_t)(bv + 1);
+                    if (pm[P1_PM_BP] != xb) {
+                        pm[P1_PM_BP] = xb;
+                        P1_PHASE_MAP_F(pm, xb);
+                    }
+                    uint32_t old = pm[P1_PM_DACC];
+                    pm[P1_PM_DACC] = old + (uint32_t)op3_phase_drift_rate[voice_part[v]] * CONTROL_BLOCK;
+                    if (pm[P1_PM_DACC] < old) {
+                        uint32_t drift = (uint32_t)op3_phase_drift[voice_part[v]];
+                        if (drift > 100u) drift = 100u;
+                        int32_t sigma = (26214 * (int32_t)drift) / 100;
+                        for (uint32_t k = 0u; k < m; k++) {
+                            uint32_t j = pm[P1_PM_ORDER + k];
+                            if (j < 1u || j > m) j = 1u;
+                            j -= 1u;
+                            int32_t g = -6 * 65536;
+                            for (uint32_t r = 0u; r < 12u; r++)
+                                g += (int32_t)(P1_PHASE_MAP_NEXT(pm) >> 16);
+                            int32_t step = (int32_t)(((int64_t)g * sigma) >> 16);
+                            int32_t s = (int32_t)pm[P1_PM_NSLOPE + k] + step;
+                            if (s < 32768) s = 65536 - s;
+                            if (s > 174327) s = 348654 - s;
+                            if (s < 32768) s = 32768;
+                            if (s > 174327) s = 174327;
+                            pm[P1_PM_NSLOPE + k] = (uint32_t)s;
+                        }
+                        pm[P1_PM_NX] = 0u;
+                        for (uint32_t k = 0u; k < m; k++) {
+                            uint32_t j = pm[P1_PM_ORDER + k];
+                            if (j < 1u || j > m) j = 1u;
+                            j -= 1u;
+                            uint32_t ys = pm[P1_PM_NY + j + 1u] - pm[P1_PM_NY + j];
+                            uint32_t s = pm[P1_PM_NSLOPE + k];
+                            uint32_t nx = pm[P1_PM_NX + k] +
+                                (uint32_t)(((uint64_t)ys * 65536u) / s);
+                            if (nx <= pm[P1_PM_NX + k]) nx = pm[P1_PM_NX + k] + 1u;
+                            if (nx > 4096u) nx = 4096u;
+                            pm[P1_PM_NX + k + 1u] = nx;
+                        }
+                        pm[P1_PM_NX + m] = 4096u;
+                        P1_PHASE_MAP_LAYOUT(pm, m);
+                    }
+                    uint32_t flip = (uint32_t)op3_phase_flip[voice_part[v]];
+                    if (flip > 100u) flip = 100u;
+                    old = pm[P1_PM_FACC];
+                    pm[P1_PM_FACC] = old + (uint32_t)op3_phase_flip_rate[voice_part[v]] * CONTROL_BLOCK;
+                    if (pm[P1_PM_FACC] < old && P1_PHASE_MAP_NEXT(pm) % 100u < flip) {
+                        uint32_t locks = pm[P1_PM_LOCK];
+                        for (uint32_t k = 0u; k < m; k++) {
+                            if (locks & (1u << k))
+                                continue;
+                            if (P1_PHASE_MAP_NEXT(pm) % 100u < flip)
+                                pm[P1_PM_NFLIP + k] ^= 1u;
+                        }
+                        P1_PHASE_MAP_LAYOUT(pm, m);
+                    }
+                    uint32_t reorder = (uint32_t)op3_phase_reorder[voice_part[v]];
+                    if (reorder > 100u) reorder = 100u;
+                    old = pm[P1_PM_RACC];
+                    pm[P1_PM_RACC] = old + (uint32_t)op3_phase_reorder_rate[voice_part[v]] * CONTROL_BLOCK;
+                    if (m > 1u && pm[P1_PM_RACC] < old &&
+                            P1_PHASE_MAP_NEXT(pm) % 100u < reorder) {
+                        uint32_t maxd = (uint32_t)op3_phase_jump[voice_part[v]];
+                        if (maxd < 1u) maxd = 1u;
+                        if (maxd > 32u) maxd = 32u;
+                        if (maxd >= m) maxd = m - 1u;
+                        uint32_t locks = pm[P1_PM_LOCK];
+                        uint32_t i = 0u;
+                        uint32_t j = 0u;
+                        int placed = 0;
+                        for (uint32_t attempt = 0u; attempt < 3u; attempt++) {
+                            i = P1_PHASE_MAP_NEXT(pm) % m;
+                            uint32_t d = 1u + P1_PHASE_MAP_NEXT(pm) % maxd;
+                            j = (i + d) % m;
+                            uint32_t oi = pm[P1_PM_ORDER + i];
+                            uint32_t oj = pm[P1_PM_ORDER + j];
+                            if (oi < 1u || oi > m) oi = 1u;
+                            if (oj < 1u || oj > m) oj = 1u;
+                            if ((locks & (1u << (oi - 1u))) ||
+                                (locks & (1u << (oj - 1u))))
+                                continue;
+                            placed = 1;
+                            break;
+                        }
+                        if (placed) {
+                            uint32_t t = pm[P1_PM_ORDER + i];
+                            pm[P1_PM_ORDER + i] = pm[P1_PM_ORDER + j];
+                            pm[P1_PM_ORDER + j] = t;
+                            P1_PHASE_MAP_LAYOUT(pm, m);
+                        }
+                    }
+                    pm[P1_PM_LASTB] = block;
+                }
+                uint32_t x = (uint32_t)op3_ph_acc_x >> 20;
+                uint32_t q = pm[P1_PM_F + (x >> 2)] << 2;
+                if (q > 4095u) q = 4095u;
+                uint32_t sh = (q & 3u) * 8u;
+                uint32_t k = (pm[P1_PM_SEG + (q >> 2)] >> sh) & 0xFFu;
+                if (k >= m) k = m - 1u;
+                int32_t y = (int32_t)pm[P1_PM_PY0 + k] +
+                    (((int32_t)q - (int32_t)pm[P1_PM_NX + k]) *
+                     (int32_t)pm[P1_PM_PSLOPE + k] >> 16);
+                op3_phase_phase_x = (uint32_t)y << 20;
+            }
+            /* Add the FM/feedback sum after the map. The sum is the same `(fm << 20)` that
+               the phasor used, so the off map path is the old accumulator-add-read path. */
+            uint32_t op3_padd_phase_x = op3_phase_phase_x + ((uint32_t)op3_sum_audio_x << 20);
             /* Waveform reader. Values 0-12 read the precomputed 13-wave table (`p1_wave`):
                one load, with the band-limited mip added for waves 10/11/12. Value 13 reads
                the additive bank: the a and b spectra at the mip selected from the phasor,
@@ -8874,12 +11501,12 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                 op3_osc_live[v] = p1_spectral_morph(
                     op3_specenv_active_x[v] ? op3_specenv_cv_x[v] : op3_morphbase_out_x[v], op3_speclfo_cv_x[v]);
                 op3_osc_audio_x = p1_spectral_read(
-                    op3_osc_bank, (int)voice_part[v], op3_ph_phase_x, op3_ph_mip_x,
+                    op3_osc_bank, (int)voice_part[v], op3_padd_phase_x, op3_ph_mip_x,
                     op3_osc_live[v]);
             } else {
                 op3_osc_live[v] = -1;
                 op3_osc_audio_x = p1_wave[op3_osc_base[v]
-                    + ((op3_osc_bl[v] ? op3_ph_mip_x : 0u) << 10) + (op3_ph_phase_x >> 22)];
+                    + ((op3_osc_bl[v] ? op3_ph_mip_x : 0u) << 10) + (op3_padd_phase_x >> 22)];
             }
             /* Yamaha total-level gain: audio × cv × gain(level_eff). `level` is 0..99, the
                block-rate `lfo` input adds a signed level offset in the same units, and the
@@ -8945,9 +11572,501 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                `mip` (the band-limited table level) is block-constant too, so it is copied to
                its output here. The per-sample body stays the accumulator add, the FM offset
                add, and this copy. */
-            uint32_t op2_ph_phase_x = op2_ph_phase[v] + ((uint32_t)op2_sum_audio_x << 20) + (uint32_t)0;
+            uint32_t op2_ph_acc_x = op2_ph_phase[v] + (uint32_t)0;
+            uint32_t op2_ph_phase_x = op2_ph_acc_x + ((uint32_t)op2_sum_audio_x << 20);
             op2_ph_phase[v] += op2_ph_step[v];
             uint32_t op2_ph_mip_x = op2_ph_mip[v];
+            (void)op2_ph_phase_x;
+            /* Per-part stochastic phase map (1x). The map state is one pool per operator,
+               indexed by `voice_part[v]`, so the four voices on a part share the geometry,
+               the LUTs, the locks and the stochastic clocks. The map is applied to the
+               pre-FM `acc` phase; the FM offset is added by phase_add afterwards. Off is a
+               direct copy.
+               The y boundaries are snapped away from the waveform's protected points and a
+               segment whose span contains a protected point is locked: it never flips and
+               never takes part in a reorder. The fixed 13 waves use their mip-0 table; wave
+               13 builds an a and a b mask from the regenerated additive bank and combines
+               them with the base morph, exactly as the bank morph reads them. The map is
+               per part, so the morph used here is the base knob, not a voice's live morph.
+               The 2x map/table read, the half-band decimator and the 16-sample alignment
+               delay are outside the graph's one-rate model. They are carried by generated
+               DSP according to the contract, not by this node, and are recorded in the node
+               summary. */
+            /* The pool is `int16_t[10880]`; reinterpreted as 32-bit words it has 5,440
+               words. Two parts use 2 x 2,560 words, leaving room for the lock mask. */
+            #define P1_PM_WORDS 2560u
+            #define P1_PM_NX 0u          /* 33 x uint32: natural input boundaries 0..4096 */
+            #define P1_PM_NSLOPE 33u     /* 32 x uint32: natural slopes, Q16 */
+            #define P1_PM_NFLIP 65u      /* 32 x uint32: natural segment orientation */
+            #define P1_PM_ORDER 97u      /* 32 x uint32: one-based y-span order */
+            #define P1_PM_PY0 129u       /* 32 x uint32: composed y at the input boundary */
+            #define P1_PM_PSLOPE 161u    /* 32 x uint32: composed slope, Q16 */
+            #define P1_PM_SEG 193u       /* 1024 x uint32: 4 packed segment indices per word */
+            #define P1_PM_F 1217u        /* 1024 x uint32: F in 10-bit units (0..1024) */
+            #define P1_PM_LASTB 2241u
+            #define P1_PM_SEED 2242u
+            #define P1_PM_SEEDED 2243u
+            #define P1_PM_BP 2244u
+            #define P1_PM_LASTSEGS 2245u
+            #define P1_PM_DACC 2246u
+            #define P1_PM_FACC 2247u
+            #define P1_PM_RACC 2248u
+            #define P1_PM_NY 2249u       /* 33 x uint32: snapped y boundaries 0..4096 */
+            #define P1_PM_MASK 2282u     /* 128 x uint32: 4096 protected-point bits */
+            #define P1_PM_MASKID 2410u
+            #define P1_PM_LOCK 2411u     /* bit j = y span j is locked */
+            #define P1_PM_ACTIVE 2412u
+            #define P1_PM_LASTWAVE 2413u
+            #ifndef P1_PM_SAMPLE
+            #define P1_PM_SAMPLE(wave, bank, part, q, ab)                              \
+                (((wave) >= 13u)                                                       \
+                     ? (int32_t)((const int16_t *)(bank))[                             \
+                           ((ab) ? P1_SPEC_B(part) : P1_SPEC_A(part)) + ((q) >> 4)]    \
+                     : (int32_t)p1_wave[                                               \
+                           ((int32_t)p1_wave_base[((wave) > 12u) ? 0u : (wave)] << 10) \
+                           + ((q) >> 2)])
+            #endif
+            #ifndef P1_PM_SET
+            #define P1_PM_SET(m, i) ((m)[(i) >> 5] |= 1u << ((i) & 31u))
+            #define P1_PM_GET(m, i) (((m)[(i) >> 5] >> ((i) & 31u)) & 1u)
+            #endif
+            /* Build the protected mask for one waveform. A point is blocked when it sits
+               inside a zero crossing, a touch at zero, a silent run or a flat span. The
+               sloped shoulders of a zero run are blocked out to half the waveform's peak,
+               which is the lab's rule: a segment boundary may not sit on the steep side of
+               a crossing, and a segment that contains the crossing is locked. */
+            #ifndef P1_PM_MASK_BUILD
+            #define P1_PM_MASK_BUILD(dst, wave, bank, part, ab) do {                     \
+                for (uint32_t z = 0u; z < 128u; z++) (dst)[z] = 0u;                      \
+                int32_t peak = 0;                                                        \
+                for (uint32_t q = 0u; q < 4096u; q++) {                                  \
+                    int32_t s = P1_PM_SAMPLE(wave, bank, part, q, ab);                   \
+                    if (s < 0) s = -s;                                                   \
+                    if (s > peak) peak = s;                                              \
+                }                                                                        \
+                int32_t zeps = peak >> 13;                                               \
+                if (zeps < 2) zeps = 2;                                                  \
+                int32_t half = peak >> 1;                                                \
+                uint32_t q = 0u;                                                         \
+                while (q < 4096u) {                                                      \
+                    int32_t s = P1_PM_SAMPLE(wave, bank, part, q, ab);                   \
+                    if (s < 0) s = -s;                                                   \
+                    if (s > zeps) { q++; continue; }                                     \
+                    uint32_t start = q;                                                  \
+                    while (q + 1u < 4096u) {                                             \
+                        int32_t t = P1_PM_SAMPLE(wave, bank, part, q + 1u, ab);          \
+                        if (t < 0) t = -t;                                               \
+                        if (t > zeps) break;                                             \
+                        q++;                                                             \
+                    }                                                                    \
+                    uint32_t end = q;                                                    \
+                    if (end - start >= 2u) {                                             \
+                        for (uint32_t i = start + 1u; i < end; i++) P1_PM_SET(dst, i);   \
+                        uint32_t left = start;                                           \
+                        while (left > 0u) {                                              \
+                            int32_t t = P1_PM_SAMPLE(wave, bank, part, left, ab);        \
+                            if (t < 0) t = -t;                                           \
+                            if (t >= half) break;                                        \
+                            left--;                                                      \
+                        }                                                                \
+                        for (uint32_t i = left + 1u; i < start; i++) P1_PM_SET(dst, i);  \
+                        uint32_t right = end;                                            \
+                        while (right + 1u < 4096u) {                                     \
+                            int32_t t = P1_PM_SAMPLE(wave, bank, part, right + 1u, ab);  \
+                            if (t < 0) t = -t;                                           \
+                            if (t >= half) break;                                        \
+                            right++;                                                     \
+                        }                                                                \
+                        for (uint32_t i = end + 1u; i <= right; i++)                     \
+                            P1_PM_SET(dst, i);                                           \
+                    } else {                                                             \
+                        uint32_t left = start;                                           \
+                        while (left > 0u) {                                              \
+                            int32_t t = P1_PM_SAMPLE(wave, bank, part, left, ab);        \
+                            if (t < 0) t = -t;                                           \
+                            if (t >= half) break;                                        \
+                            left--;                                                      \
+                        }                                                                \
+                        uint32_t right = end;                                            \
+                        while (right + 1u < 4096u) {                                     \
+                            int32_t t = P1_PM_SAMPLE(wave, bank, part, right + 1u, ab);  \
+                            if (t < 0) t = -t;                                           \
+                            if (t >= half) break;                                        \
+                            right++;                                                     \
+                        }                                                                \
+                        for (uint32_t i = left + 1u; i < right; i++)                     \
+                            P1_PM_SET(dst, i);                                           \
+                    }                                                                    \
+                    q++;                                                                 \
+                }                                                                        \
+                for (uint32_t i = 0u; i + 1u < 4096u; i++) {                             \
+                    int32_t a = P1_PM_SAMPLE(wave, bank, part, i, ab);                   \
+                    int32_t b = P1_PM_SAMPLE(wave, bank, part, i + 1u, ab);              \
+                    if (a != 0 && b != 0 && ((a < 0) != (b < 0))) {                      \
+                        uint32_t left = i;                                               \
+                        while (left > 0u) {                                              \
+                            int32_t t = P1_PM_SAMPLE(wave, bank, part, left, ab);        \
+                            if (t < 0) t = -t;                                           \
+                            if (t >= half) break;                                        \
+                            left--;                                                      \
+                        }                                                                \
+                        uint32_t right = i + 1u;                                         \
+                        while (right + 1u < 4096u) {                                     \
+                            int32_t t = P1_PM_SAMPLE(wave, bank, part, right, ab);       \
+                            if (t < 0) t = -t;                                           \
+                            if (t >= half) break;                                        \
+                            right++;                                                     \
+                        }                                                                \
+                        for (uint32_t r = left + 1u; r <= right; r++)                    \
+                            P1_PM_SET(dst, r);                                           \
+                    }                                                                    \
+                }                                                                        \
+            } while (0)
+            #endif
+            #ifndef P1_PHASE_MAP_LAYOUT
+            #define P1_PHASE_MAP_LAYOUT(pm, m) do { \
+                uint32_t pos = 0u; \
+                for (uint32_t k = 0u; k < (m); k++) { \
+                    uint32_t j = (pm)[P1_PM_ORDER + k]; \
+                    if (j < 1u || j > (m)) j = 1u; \
+                    j -= 1u; \
+                    uint32_t y0 = (pm)[P1_PM_NY + j]; \
+                    uint32_t y1 = (pm)[P1_PM_NY + j + 1u]; \
+                    if ((pm)[P1_PM_NFLIP + j]) { uint32_t t = y0; y0 = y1; y1 = t; } \
+                    (pm)[P1_PM_PY0 + k] = y0; \
+                    uint32_t dx = (pm)[P1_PM_NX + k + 1u] - (pm)[P1_PM_NX + k]; \
+                    if (dx < 1u) dx = 1u; \
+                    (pm)[P1_PM_PSLOPE + k] = \
+                        (uint32_t)((((int32_t)y1 - (int32_t)y0) * 65536) / (int32_t)dx); \
+                    uint32_t e = (k == (m) - 1u) ? 4096u : (pm)[P1_PM_NX + k + 1u]; \
+                    if (e > 4096u) e = 4096u; \
+                    if (e < pos) e = pos; \
+                    for (; pos < e; pos++) { \
+                        uint32_t sh = (pos & 3u) * 8u; \
+                        uint32_t at = P1_PM_SEG + (pos >> 2); \
+                        (pm)[at] = ((pm)[at] & ~(0xFFu << sh)) | ((k & 0xFFu) << sh); \
+                    } \
+                } \
+                for (; pos < 4096u; pos++) { \
+                    uint32_t sh = (pos & 3u) * 8u; \
+                    uint32_t at = P1_PM_SEG + (pos >> 2); \
+                    (pm)[at] = ((pm)[at] & ~(0xFFu << sh)) | (((m) - 1u) << sh); \
+                } \
+            } while (0)
+            #endif
+            #ifndef P1_PHASE_MAP_F
+            #define P1_PHASE_MAP_F(pm, xb) do { \
+                uint32_t xb12 = (uint32_t)(((xb) * 4096u + 500u) / 1000u); \
+                if (xb12 < 1u) xb12 = 1u; \
+                if (xb12 > 4095u) xb12 = 4095u; \
+                for (uint32_t i = 0u; i < 1024u; i++) { \
+                    uint32_t x = i << 2; \
+                    uint32_t f; \
+                    if (x <= xb12) \
+                        f = (x * 512u) / xb12; \
+                    else \
+                        f = 512u + ((x - xb12) * 512u) / (4096u - xb12); \
+                    (pm)[P1_PM_F + i] = f; \
+                } \
+            } while (0)
+            #endif
+            #ifndef P1_PHASE_MAP_NEXT
+            #define P1_PHASE_MAP_NEXT(pm) \
+                ((pm)[P1_PM_SEED] ^= (pm)[P1_PM_SEED] << 13, \
+                 (pm)[P1_PM_SEED] ^= (pm)[P1_PM_SEED] >> 17, \
+                 (pm)[P1_PM_SEED] ^= (pm)[P1_PM_SEED] << 5, \
+                 (pm)[P1_PM_SEED])
+            #endif
+            uint32_t op2_phase_phase_x = op2_ph_acc_x;
+            if (op2_phase_on[voice_part[v]]) {
+                _Static_assert(P1_PM_WORDS * (uint32_t)N_PART <= 5440u,
+                    "phase_map pool layout exceeds the pool");
+                uint32_t *pm = (uint32_t *)(void *)op2_phase_map;
+                uint32_t part = (uint32_t)voice_part[v];
+                if (part >= (uint32_t)N_PART) part = (uint32_t)N_PART - 1u;
+                pm += part * P1_PM_WORDS;
+                uint32_t m = (uint32_t)op2_phase_segments[voice_part[v]];
+                if (m < 1u) m = 1u;
+                if (m > 32u) m = 32u;
+                uint32_t wave = (uint32_t)op2_osc_waveform[part];
+                if (wave > 13u) wave = 0u;
+                int32_t morph = (int32_t)op2_morphbase_out_x[v];
+                if (morph < 0) morph = 0;
+                if (morph > 99) morph = 99;
+                const int16_t *bank = op2_osc_bank;
+                uint32_t maskid = (wave << 16) ^ ((uint32_t)morph << 8);
+                if (wave >= 13u) {
+                    maskid ^= (uint32_t)(uint16_t)bank[P1_SPEC_HASH + (int)part * 2];
+                    maskid ^= (uint32_t)(uint16_t)bank[P1_SPEC_HASH + (int)part * 2 + 1]
+                              << 1;
+                }
+                uint32_t block = ctrl_serial;
+                if (!pm[P1_PM_SEEDED] || pm[P1_PM_LASTB] != block) {
+                    if (!pm[P1_PM_SEEDED]) {
+                        pm[P1_PM_SEED] = 0x9E3779B9u + part * 4u;
+                        if (!pm[P1_PM_SEED]) pm[P1_PM_SEED] = 1u;
+                        pm[P1_PM_SEEDED] = 1u;
+                        pm[P1_PM_LASTSEGS] = 0xFFFFFFFFu;
+                        pm[P1_PM_MASKID] = 0xFFFFFFFFu;
+                        pm[P1_PM_BP] = 0xFFFFFFFFu;
+                        pm[P1_PM_DACC] = 0u;
+                        pm[P1_PM_FACC] = 0u;
+                        pm[P1_PM_RACC] = 0u;
+                        pm[P1_PM_LASTWAVE] = 0xFFFFFFFFu;
+                    }
+                    uint32_t mask_changed = (pm[P1_PM_MASKID] != maskid);
+                    if (mask_changed) {
+                        if (wave >= 13u) {
+                            uint32_t amask[128];
+                            uint32_t bmask[128];
+                            P1_PM_MASK_BUILD(amask, wave, bank, part, 0);
+                            P1_PM_MASK_BUILD(bmask, wave, bank, part, 1);
+                            uint32_t m8 = ((uint32_t)morph * 255u) / 99u;
+                            for (uint32_t w = 0u; w < 128u; w++) {
+                                uint32_t combined = 0u;
+                                uint32_t aa = amask[w];
+                                uint32_t bb = bmask[w];
+                                for (uint32_t bit = 0u; bit < 32u; bit++) {
+                                    uint32_t av = (aa >> bit) & 1u;
+                                    uint32_t bv = (bb >> bit) & 1u;
+                                    uint32_t sum = av * (255u - m8) + bv * m8;
+                                    if (sum >= 128u)
+                                        combined |= 1u << bit;
+                                }
+                                pm[P1_PM_MASK + w] = combined;
+                            }
+                        } else {
+                            P1_PM_MASK_BUILD(pm + P1_PM_MASK, wave, bank, part, 0);
+                        }
+                        pm[P1_PM_MASKID] = maskid;
+                        pm[P1_PM_LASTWAVE] = wave;
+                    }
+                    if (pm[P1_PM_LASTSEGS] != m || mask_changed) {
+                        pm[P1_PM_LASTSEGS] = m;
+                        for (uint32_t k = 0u; k < m; k++) {
+                            pm[P1_PM_NSLOPE + k] = 65536u;
+                            pm[P1_PM_NFLIP + k] = 0u;
+                            pm[P1_PM_ORDER + k] = k + 1u;
+                        }
+                        for (uint32_t k = 0u; k <= m; k++)
+                            pm[P1_PM_NX + k] = (k * 4096u) / m;
+                        /* Snap the y boundaries to points at least two grid steps away
+                           from a protected point. A target that cannot be placed lowers
+                           the active count instead of cutting through a crossing. */
+                        uint32_t active = m;
+                        uint32_t prev = 0u;
+                        pm[P1_PM_NY] = 0u;
+                        for (uint32_t k = 1u; k < m; k++) {
+                            uint32_t target = (k * 4096u) / m;
+                            uint32_t low = prev + 2u;
+                            uint32_t room = m - k;
+                            uint32_t high = 4096u - room * 2u;
+                            int found = 0;
+                            uint32_t best = 0u;
+                            if (low <= high) {
+                                for (uint32_t d = 0u; d <= 512u; d++) {
+                                    uint32_t cand[2];
+                                    cand[0] = (target >= d) ? target - d : 0u;
+                                    cand[1] = (target + d <= 4095u) ? target + d : 4095u;
+                                    for (int side = 0; side < 2; side++) {
+                                        uint32_t c = cand[side];
+                                        if (c < low || c > high)
+                                            continue;
+                                        if (c < 2u || c > 4094u)
+                                            continue;
+                                        if (P1_PM_GET(pm + P1_PM_MASK, c - 2u) ||
+                                            P1_PM_GET(pm + P1_PM_MASK, c - 1u) ||
+                                            P1_PM_GET(pm + P1_PM_MASK, c) ||
+                                            P1_PM_GET(pm + P1_PM_MASK, c + 1u) ||
+                                            P1_PM_GET(pm + P1_PM_MASK, c + 2u))
+                                            continue;
+                                        int better = !found ||
+                                            (c > target ? c - target : target - c) <
+                                            (best > target ? best - target : target - best);
+                                        if (better) {
+                                            best = c;
+                                            found = 1;
+                                        }
+                                    }
+                                    if (found && d > (best > target ? best - target
+                                                                   : target - best) + 2u)
+                                        break;
+                                }
+                            }
+                            if (!found) {
+                                active = k;
+                                break;
+                            }
+                            pm[P1_PM_NY + k] = best;
+                            prev = best;
+                        }
+                        pm[P1_PM_NY + active] = 4096u;
+                        pm[P1_PM_ACTIVE] = active;
+                        /* Rebuild the natural slopes from the snapped spans. */
+                        uint32_t base = 0u;
+                        for (uint32_t k = 0u; k < active; k++) {
+                            uint32_t next = ((k + 1u) * 4096u) / active;
+                            uint32_t xs = next - base;
+                            if (xs < 1u) xs = 1u;
+                            uint32_t ys = pm[P1_PM_NY + k + 1u] - pm[P1_PM_NY + k];
+                            uint32_t s = (ys * 65536u) / xs;
+                            if (s < 32768u) s = 32768u;
+                            if (s > 174327u) s = 174327u;
+                            pm[P1_PM_NSLOPE + k] = s;
+                            pm[P1_PM_NX + k] = base;
+                            base = next;
+                        }
+                        for (uint32_t k = 0u; k <= active; k++)
+                            pm[P1_PM_NX + k] = (k * 4096u) / active;
+                        /* Lock every span that contains a protected point. */
+                        uint32_t locks = 0u;
+                        for (uint32_t k = 0u; k < active; k++) {
+                            uint32_t any = 0u;
+                            for (uint32_t q = pm[P1_PM_NY + k];
+                                 q < pm[P1_PM_NY + k + 1u]; q++) {
+                                if (P1_PM_GET(pm + P1_PM_MASK, q)) {
+                                    any = 1u;
+                                    break;
+                                }
+                            }
+                            if (any)
+                                locks |= 1u << k;
+                        }
+                        pm[P1_PM_LOCK] = locks;
+                        P1_PHASE_MAP_LAYOUT(pm, active);
+                        m = active;
+                    } else {
+                        m = pm[P1_PM_ACTIVE];
+                        if (m < 1u) m = 1u;
+                        if (m > 32u) m = 32u;
+                    }
+                    int32_t mod = (int32_t)op2_phase_mod_cv_x[v];
+                    if (mod < -200) mod = -200;
+                    if (mod > 200) mod = 200;
+                    int32_t follow = 0;
+                    if (key_on_on_x) {
+                        uint32_t key_bp = (uint32_t)key_bp_bp_x;
+                        if (key_bp > 127u) key_bp = 127u;
+                        follow += p1_key_scale(voice_note[v], key_bp,
+                            (int32_t)op2_phase_ks_lo[voice_part[v]], (int32_t)op2_phase_ks_hi[voice_part[v]]);
+                    }
+                    if (vel_on_on_x)
+                        follow += p1_vel_scale(voice_velocity[v], (int32_t)op2_phase_vs[voice_part[v]]);
+                    int32_t follow_milli =
+                        (int32_t)(((int64_t)follow * 1000) / 32768);
+                    int32_t bp = (int32_t)op2_phase_bp[voice_part[v]] + mod * 10 + follow_milli;
+                    int32_t span = 998;
+                    int32_t bv = bp - 1;
+                    bv %= 1996;
+                    if (bv < 0) bv += 1996;
+                    if (bv > span) bv = 1996 - bv;
+                    uint32_t xb = (uint32_t)(bv + 1);
+                    if (pm[P1_PM_BP] != xb) {
+                        pm[P1_PM_BP] = xb;
+                        P1_PHASE_MAP_F(pm, xb);
+                    }
+                    uint32_t old = pm[P1_PM_DACC];
+                    pm[P1_PM_DACC] = old + (uint32_t)op2_phase_drift_rate[voice_part[v]] * CONTROL_BLOCK;
+                    if (pm[P1_PM_DACC] < old) {
+                        uint32_t drift = (uint32_t)op2_phase_drift[voice_part[v]];
+                        if (drift > 100u) drift = 100u;
+                        int32_t sigma = (26214 * (int32_t)drift) / 100;
+                        for (uint32_t k = 0u; k < m; k++) {
+                            uint32_t j = pm[P1_PM_ORDER + k];
+                            if (j < 1u || j > m) j = 1u;
+                            j -= 1u;
+                            int32_t g = -6 * 65536;
+                            for (uint32_t r = 0u; r < 12u; r++)
+                                g += (int32_t)(P1_PHASE_MAP_NEXT(pm) >> 16);
+                            int32_t step = (int32_t)(((int64_t)g * sigma) >> 16);
+                            int32_t s = (int32_t)pm[P1_PM_NSLOPE + k] + step;
+                            if (s < 32768) s = 65536 - s;
+                            if (s > 174327) s = 348654 - s;
+                            if (s < 32768) s = 32768;
+                            if (s > 174327) s = 174327;
+                            pm[P1_PM_NSLOPE + k] = (uint32_t)s;
+                        }
+                        pm[P1_PM_NX] = 0u;
+                        for (uint32_t k = 0u; k < m; k++) {
+                            uint32_t j = pm[P1_PM_ORDER + k];
+                            if (j < 1u || j > m) j = 1u;
+                            j -= 1u;
+                            uint32_t ys = pm[P1_PM_NY + j + 1u] - pm[P1_PM_NY + j];
+                            uint32_t s = pm[P1_PM_NSLOPE + k];
+                            uint32_t nx = pm[P1_PM_NX + k] +
+                                (uint32_t)(((uint64_t)ys * 65536u) / s);
+                            if (nx <= pm[P1_PM_NX + k]) nx = pm[P1_PM_NX + k] + 1u;
+                            if (nx > 4096u) nx = 4096u;
+                            pm[P1_PM_NX + k + 1u] = nx;
+                        }
+                        pm[P1_PM_NX + m] = 4096u;
+                        P1_PHASE_MAP_LAYOUT(pm, m);
+                    }
+                    uint32_t flip = (uint32_t)op2_phase_flip[voice_part[v]];
+                    if (flip > 100u) flip = 100u;
+                    old = pm[P1_PM_FACC];
+                    pm[P1_PM_FACC] = old + (uint32_t)op2_phase_flip_rate[voice_part[v]] * CONTROL_BLOCK;
+                    if (pm[P1_PM_FACC] < old && P1_PHASE_MAP_NEXT(pm) % 100u < flip) {
+                        uint32_t locks = pm[P1_PM_LOCK];
+                        for (uint32_t k = 0u; k < m; k++) {
+                            if (locks & (1u << k))
+                                continue;
+                            if (P1_PHASE_MAP_NEXT(pm) % 100u < flip)
+                                pm[P1_PM_NFLIP + k] ^= 1u;
+                        }
+                        P1_PHASE_MAP_LAYOUT(pm, m);
+                    }
+                    uint32_t reorder = (uint32_t)op2_phase_reorder[voice_part[v]];
+                    if (reorder > 100u) reorder = 100u;
+                    old = pm[P1_PM_RACC];
+                    pm[P1_PM_RACC] = old + (uint32_t)op2_phase_reorder_rate[voice_part[v]] * CONTROL_BLOCK;
+                    if (m > 1u && pm[P1_PM_RACC] < old &&
+                            P1_PHASE_MAP_NEXT(pm) % 100u < reorder) {
+                        uint32_t maxd = (uint32_t)op2_phase_jump[voice_part[v]];
+                        if (maxd < 1u) maxd = 1u;
+                        if (maxd > 32u) maxd = 32u;
+                        if (maxd >= m) maxd = m - 1u;
+                        uint32_t locks = pm[P1_PM_LOCK];
+                        uint32_t i = 0u;
+                        uint32_t j = 0u;
+                        int placed = 0;
+                        for (uint32_t attempt = 0u; attempt < 3u; attempt++) {
+                            i = P1_PHASE_MAP_NEXT(pm) % m;
+                            uint32_t d = 1u + P1_PHASE_MAP_NEXT(pm) % maxd;
+                            j = (i + d) % m;
+                            uint32_t oi = pm[P1_PM_ORDER + i];
+                            uint32_t oj = pm[P1_PM_ORDER + j];
+                            if (oi < 1u || oi > m) oi = 1u;
+                            if (oj < 1u || oj > m) oj = 1u;
+                            if ((locks & (1u << (oi - 1u))) ||
+                                (locks & (1u << (oj - 1u))))
+                                continue;
+                            placed = 1;
+                            break;
+                        }
+                        if (placed) {
+                            uint32_t t = pm[P1_PM_ORDER + i];
+                            pm[P1_PM_ORDER + i] = pm[P1_PM_ORDER + j];
+                            pm[P1_PM_ORDER + j] = t;
+                            P1_PHASE_MAP_LAYOUT(pm, m);
+                        }
+                    }
+                    pm[P1_PM_LASTB] = block;
+                }
+                uint32_t x = (uint32_t)op2_ph_acc_x >> 20;
+                uint32_t q = pm[P1_PM_F + (x >> 2)] << 2;
+                if (q > 4095u) q = 4095u;
+                uint32_t sh = (q & 3u) * 8u;
+                uint32_t k = (pm[P1_PM_SEG + (q >> 2)] >> sh) & 0xFFu;
+                if (k >= m) k = m - 1u;
+                int32_t y = (int32_t)pm[P1_PM_PY0 + k] +
+                    (((int32_t)q - (int32_t)pm[P1_PM_NX + k]) *
+                     (int32_t)pm[P1_PM_PSLOPE + k] >> 16);
+                op2_phase_phase_x = (uint32_t)y << 20;
+            }
+            /* Add the FM/feedback sum after the map. The sum is the same `(fm << 20)` that
+               the phasor used, so the off map path is the old accumulator-add-read path. */
+            uint32_t op2_padd_phase_x = op2_phase_phase_x + ((uint32_t)op2_sum_audio_x << 20);
             /* Waveform reader. Values 0-12 read the precomputed 13-wave table (`p1_wave`):
                one load, with the band-limited mip added for waves 10/11/12. Value 13 reads
                the additive bank: the a and b spectra at the mip selected from the phasor,
@@ -8960,12 +12079,12 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                 op2_osc_live[v] = p1_spectral_morph(
                     op2_specenv_active_x[v] ? op2_specenv_cv_x[v] : op2_morphbase_out_x[v], op2_speclfo_cv_x[v]);
                 op2_osc_audio_x = p1_spectral_read(
-                    op2_osc_bank, (int)voice_part[v], op2_ph_phase_x, op2_ph_mip_x,
+                    op2_osc_bank, (int)voice_part[v], op2_padd_phase_x, op2_ph_mip_x,
                     op2_osc_live[v]);
             } else {
                 op2_osc_live[v] = -1;
                 op2_osc_audio_x = p1_wave[op2_osc_base[v]
-                    + ((op2_osc_bl[v] ? op2_ph_mip_x : 0u) << 10) + (op2_ph_phase_x >> 22)];
+                    + ((op2_osc_bl[v] ? op2_ph_mip_x : 0u) << 10) + (op2_padd_phase_x >> 22)];
             }
             /* Yamaha total-level gain: audio × cv × gain(level_eff). `level` is 0..99, the
                block-rate `lfo` input adds a signed level offset in the same units, and the
@@ -9031,9 +12150,501 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                `mip` (the band-limited table level) is block-constant too, so it is copied to
                its output here. The per-sample body stays the accumulator add, the FM offset
                add, and this copy. */
-            uint32_t op1_ph_phase_x = op1_ph_phase[v] + ((uint32_t)op1_sum_audio_x << 20) + (uint32_t)0;
+            uint32_t op1_ph_acc_x = op1_ph_phase[v] + (uint32_t)0;
+            uint32_t op1_ph_phase_x = op1_ph_acc_x + ((uint32_t)op1_sum_audio_x << 20);
             op1_ph_phase[v] += op1_ph_step[v];
             uint32_t op1_ph_mip_x = op1_ph_mip[v];
+            (void)op1_ph_phase_x;
+            /* Per-part stochastic phase map (1x). The map state is one pool per operator,
+               indexed by `voice_part[v]`, so the four voices on a part share the geometry,
+               the LUTs, the locks and the stochastic clocks. The map is applied to the
+               pre-FM `acc` phase; the FM offset is added by phase_add afterwards. Off is a
+               direct copy.
+               The y boundaries are snapped away from the waveform's protected points and a
+               segment whose span contains a protected point is locked: it never flips and
+               never takes part in a reorder. The fixed 13 waves use their mip-0 table; wave
+               13 builds an a and a b mask from the regenerated additive bank and combines
+               them with the base morph, exactly as the bank morph reads them. The map is
+               per part, so the morph used here is the base knob, not a voice's live morph.
+               The 2x map/table read, the half-band decimator and the 16-sample alignment
+               delay are outside the graph's one-rate model. They are carried by generated
+               DSP according to the contract, not by this node, and are recorded in the node
+               summary. */
+            /* The pool is `int16_t[10880]`; reinterpreted as 32-bit words it has 5,440
+               words. Two parts use 2 x 2,560 words, leaving room for the lock mask. */
+            #define P1_PM_WORDS 2560u
+            #define P1_PM_NX 0u          /* 33 x uint32: natural input boundaries 0..4096 */
+            #define P1_PM_NSLOPE 33u     /* 32 x uint32: natural slopes, Q16 */
+            #define P1_PM_NFLIP 65u      /* 32 x uint32: natural segment orientation */
+            #define P1_PM_ORDER 97u      /* 32 x uint32: one-based y-span order */
+            #define P1_PM_PY0 129u       /* 32 x uint32: composed y at the input boundary */
+            #define P1_PM_PSLOPE 161u    /* 32 x uint32: composed slope, Q16 */
+            #define P1_PM_SEG 193u       /* 1024 x uint32: 4 packed segment indices per word */
+            #define P1_PM_F 1217u        /* 1024 x uint32: F in 10-bit units (0..1024) */
+            #define P1_PM_LASTB 2241u
+            #define P1_PM_SEED 2242u
+            #define P1_PM_SEEDED 2243u
+            #define P1_PM_BP 2244u
+            #define P1_PM_LASTSEGS 2245u
+            #define P1_PM_DACC 2246u
+            #define P1_PM_FACC 2247u
+            #define P1_PM_RACC 2248u
+            #define P1_PM_NY 2249u       /* 33 x uint32: snapped y boundaries 0..4096 */
+            #define P1_PM_MASK 2282u     /* 128 x uint32: 4096 protected-point bits */
+            #define P1_PM_MASKID 2410u
+            #define P1_PM_LOCK 2411u     /* bit j = y span j is locked */
+            #define P1_PM_ACTIVE 2412u
+            #define P1_PM_LASTWAVE 2413u
+            #ifndef P1_PM_SAMPLE
+            #define P1_PM_SAMPLE(wave, bank, part, q, ab)                              \
+                (((wave) >= 13u)                                                       \
+                     ? (int32_t)((const int16_t *)(bank))[                             \
+                           ((ab) ? P1_SPEC_B(part) : P1_SPEC_A(part)) + ((q) >> 4)]    \
+                     : (int32_t)p1_wave[                                               \
+                           ((int32_t)p1_wave_base[((wave) > 12u) ? 0u : (wave)] << 10) \
+                           + ((q) >> 2)])
+            #endif
+            #ifndef P1_PM_SET
+            #define P1_PM_SET(m, i) ((m)[(i) >> 5] |= 1u << ((i) & 31u))
+            #define P1_PM_GET(m, i) (((m)[(i) >> 5] >> ((i) & 31u)) & 1u)
+            #endif
+            /* Build the protected mask for one waveform. A point is blocked when it sits
+               inside a zero crossing, a touch at zero, a silent run or a flat span. The
+               sloped shoulders of a zero run are blocked out to half the waveform's peak,
+               which is the lab's rule: a segment boundary may not sit on the steep side of
+               a crossing, and a segment that contains the crossing is locked. */
+            #ifndef P1_PM_MASK_BUILD
+            #define P1_PM_MASK_BUILD(dst, wave, bank, part, ab) do {                     \
+                for (uint32_t z = 0u; z < 128u; z++) (dst)[z] = 0u;                      \
+                int32_t peak = 0;                                                        \
+                for (uint32_t q = 0u; q < 4096u; q++) {                                  \
+                    int32_t s = P1_PM_SAMPLE(wave, bank, part, q, ab);                   \
+                    if (s < 0) s = -s;                                                   \
+                    if (s > peak) peak = s;                                              \
+                }                                                                        \
+                int32_t zeps = peak >> 13;                                               \
+                if (zeps < 2) zeps = 2;                                                  \
+                int32_t half = peak >> 1;                                                \
+                uint32_t q = 0u;                                                         \
+                while (q < 4096u) {                                                      \
+                    int32_t s = P1_PM_SAMPLE(wave, bank, part, q, ab);                   \
+                    if (s < 0) s = -s;                                                   \
+                    if (s > zeps) { q++; continue; }                                     \
+                    uint32_t start = q;                                                  \
+                    while (q + 1u < 4096u) {                                             \
+                        int32_t t = P1_PM_SAMPLE(wave, bank, part, q + 1u, ab);          \
+                        if (t < 0) t = -t;                                               \
+                        if (t > zeps) break;                                             \
+                        q++;                                                             \
+                    }                                                                    \
+                    uint32_t end = q;                                                    \
+                    if (end - start >= 2u) {                                             \
+                        for (uint32_t i = start + 1u; i < end; i++) P1_PM_SET(dst, i);   \
+                        uint32_t left = start;                                           \
+                        while (left > 0u) {                                              \
+                            int32_t t = P1_PM_SAMPLE(wave, bank, part, left, ab);        \
+                            if (t < 0) t = -t;                                           \
+                            if (t >= half) break;                                        \
+                            left--;                                                      \
+                        }                                                                \
+                        for (uint32_t i = left + 1u; i < start; i++) P1_PM_SET(dst, i);  \
+                        uint32_t right = end;                                            \
+                        while (right + 1u < 4096u) {                                     \
+                            int32_t t = P1_PM_SAMPLE(wave, bank, part, right + 1u, ab);  \
+                            if (t < 0) t = -t;                                           \
+                            if (t >= half) break;                                        \
+                            right++;                                                     \
+                        }                                                                \
+                        for (uint32_t i = end + 1u; i <= right; i++)                     \
+                            P1_PM_SET(dst, i);                                           \
+                    } else {                                                             \
+                        uint32_t left = start;                                           \
+                        while (left > 0u) {                                              \
+                            int32_t t = P1_PM_SAMPLE(wave, bank, part, left, ab);        \
+                            if (t < 0) t = -t;                                           \
+                            if (t >= half) break;                                        \
+                            left--;                                                      \
+                        }                                                                \
+                        uint32_t right = end;                                            \
+                        while (right + 1u < 4096u) {                                     \
+                            int32_t t = P1_PM_SAMPLE(wave, bank, part, right + 1u, ab);  \
+                            if (t < 0) t = -t;                                           \
+                            if (t >= half) break;                                        \
+                            right++;                                                     \
+                        }                                                                \
+                        for (uint32_t i = left + 1u; i < right; i++)                     \
+                            P1_PM_SET(dst, i);                                           \
+                    }                                                                    \
+                    q++;                                                                 \
+                }                                                                        \
+                for (uint32_t i = 0u; i + 1u < 4096u; i++) {                             \
+                    int32_t a = P1_PM_SAMPLE(wave, bank, part, i, ab);                   \
+                    int32_t b = P1_PM_SAMPLE(wave, bank, part, i + 1u, ab);              \
+                    if (a != 0 && b != 0 && ((a < 0) != (b < 0))) {                      \
+                        uint32_t left = i;                                               \
+                        while (left > 0u) {                                              \
+                            int32_t t = P1_PM_SAMPLE(wave, bank, part, left, ab);        \
+                            if (t < 0) t = -t;                                           \
+                            if (t >= half) break;                                        \
+                            left--;                                                      \
+                        }                                                                \
+                        uint32_t right = i + 1u;                                         \
+                        while (right + 1u < 4096u) {                                     \
+                            int32_t t = P1_PM_SAMPLE(wave, bank, part, right, ab);       \
+                            if (t < 0) t = -t;                                           \
+                            if (t >= half) break;                                        \
+                            right++;                                                     \
+                        }                                                                \
+                        for (uint32_t r = left + 1u; r <= right; r++)                    \
+                            P1_PM_SET(dst, r);                                           \
+                    }                                                                    \
+                }                                                                        \
+            } while (0)
+            #endif
+            #ifndef P1_PHASE_MAP_LAYOUT
+            #define P1_PHASE_MAP_LAYOUT(pm, m) do { \
+                uint32_t pos = 0u; \
+                for (uint32_t k = 0u; k < (m); k++) { \
+                    uint32_t j = (pm)[P1_PM_ORDER + k]; \
+                    if (j < 1u || j > (m)) j = 1u; \
+                    j -= 1u; \
+                    uint32_t y0 = (pm)[P1_PM_NY + j]; \
+                    uint32_t y1 = (pm)[P1_PM_NY + j + 1u]; \
+                    if ((pm)[P1_PM_NFLIP + j]) { uint32_t t = y0; y0 = y1; y1 = t; } \
+                    (pm)[P1_PM_PY0 + k] = y0; \
+                    uint32_t dx = (pm)[P1_PM_NX + k + 1u] - (pm)[P1_PM_NX + k]; \
+                    if (dx < 1u) dx = 1u; \
+                    (pm)[P1_PM_PSLOPE + k] = \
+                        (uint32_t)((((int32_t)y1 - (int32_t)y0) * 65536) / (int32_t)dx); \
+                    uint32_t e = (k == (m) - 1u) ? 4096u : (pm)[P1_PM_NX + k + 1u]; \
+                    if (e > 4096u) e = 4096u; \
+                    if (e < pos) e = pos; \
+                    for (; pos < e; pos++) { \
+                        uint32_t sh = (pos & 3u) * 8u; \
+                        uint32_t at = P1_PM_SEG + (pos >> 2); \
+                        (pm)[at] = ((pm)[at] & ~(0xFFu << sh)) | ((k & 0xFFu) << sh); \
+                    } \
+                } \
+                for (; pos < 4096u; pos++) { \
+                    uint32_t sh = (pos & 3u) * 8u; \
+                    uint32_t at = P1_PM_SEG + (pos >> 2); \
+                    (pm)[at] = ((pm)[at] & ~(0xFFu << sh)) | (((m) - 1u) << sh); \
+                } \
+            } while (0)
+            #endif
+            #ifndef P1_PHASE_MAP_F
+            #define P1_PHASE_MAP_F(pm, xb) do { \
+                uint32_t xb12 = (uint32_t)(((xb) * 4096u + 500u) / 1000u); \
+                if (xb12 < 1u) xb12 = 1u; \
+                if (xb12 > 4095u) xb12 = 4095u; \
+                for (uint32_t i = 0u; i < 1024u; i++) { \
+                    uint32_t x = i << 2; \
+                    uint32_t f; \
+                    if (x <= xb12) \
+                        f = (x * 512u) / xb12; \
+                    else \
+                        f = 512u + ((x - xb12) * 512u) / (4096u - xb12); \
+                    (pm)[P1_PM_F + i] = f; \
+                } \
+            } while (0)
+            #endif
+            #ifndef P1_PHASE_MAP_NEXT
+            #define P1_PHASE_MAP_NEXT(pm) \
+                ((pm)[P1_PM_SEED] ^= (pm)[P1_PM_SEED] << 13, \
+                 (pm)[P1_PM_SEED] ^= (pm)[P1_PM_SEED] >> 17, \
+                 (pm)[P1_PM_SEED] ^= (pm)[P1_PM_SEED] << 5, \
+                 (pm)[P1_PM_SEED])
+            #endif
+            uint32_t op1_phase_phase_x = op1_ph_acc_x;
+            if (op1_phase_on[voice_part[v]]) {
+                _Static_assert(P1_PM_WORDS * (uint32_t)N_PART <= 5440u,
+                    "phase_map pool layout exceeds the pool");
+                uint32_t *pm = (uint32_t *)(void *)op1_phase_map;
+                uint32_t part = (uint32_t)voice_part[v];
+                if (part >= (uint32_t)N_PART) part = (uint32_t)N_PART - 1u;
+                pm += part * P1_PM_WORDS;
+                uint32_t m = (uint32_t)op1_phase_segments[voice_part[v]];
+                if (m < 1u) m = 1u;
+                if (m > 32u) m = 32u;
+                uint32_t wave = (uint32_t)op1_osc_waveform[part];
+                if (wave > 13u) wave = 0u;
+                int32_t morph = (int32_t)op1_morphbase_out_x[v];
+                if (morph < 0) morph = 0;
+                if (morph > 99) morph = 99;
+                const int16_t *bank = op1_osc_bank;
+                uint32_t maskid = (wave << 16) ^ ((uint32_t)morph << 8);
+                if (wave >= 13u) {
+                    maskid ^= (uint32_t)(uint16_t)bank[P1_SPEC_HASH + (int)part * 2];
+                    maskid ^= (uint32_t)(uint16_t)bank[P1_SPEC_HASH + (int)part * 2 + 1]
+                              << 1;
+                }
+                uint32_t block = ctrl_serial;
+                if (!pm[P1_PM_SEEDED] || pm[P1_PM_LASTB] != block) {
+                    if (!pm[P1_PM_SEEDED]) {
+                        pm[P1_PM_SEED] = 0x9E3779B9u + part * 4u;
+                        if (!pm[P1_PM_SEED]) pm[P1_PM_SEED] = 1u;
+                        pm[P1_PM_SEEDED] = 1u;
+                        pm[P1_PM_LASTSEGS] = 0xFFFFFFFFu;
+                        pm[P1_PM_MASKID] = 0xFFFFFFFFu;
+                        pm[P1_PM_BP] = 0xFFFFFFFFu;
+                        pm[P1_PM_DACC] = 0u;
+                        pm[P1_PM_FACC] = 0u;
+                        pm[P1_PM_RACC] = 0u;
+                        pm[P1_PM_LASTWAVE] = 0xFFFFFFFFu;
+                    }
+                    uint32_t mask_changed = (pm[P1_PM_MASKID] != maskid);
+                    if (mask_changed) {
+                        if (wave >= 13u) {
+                            uint32_t amask[128];
+                            uint32_t bmask[128];
+                            P1_PM_MASK_BUILD(amask, wave, bank, part, 0);
+                            P1_PM_MASK_BUILD(bmask, wave, bank, part, 1);
+                            uint32_t m8 = ((uint32_t)morph * 255u) / 99u;
+                            for (uint32_t w = 0u; w < 128u; w++) {
+                                uint32_t combined = 0u;
+                                uint32_t aa = amask[w];
+                                uint32_t bb = bmask[w];
+                                for (uint32_t bit = 0u; bit < 32u; bit++) {
+                                    uint32_t av = (aa >> bit) & 1u;
+                                    uint32_t bv = (bb >> bit) & 1u;
+                                    uint32_t sum = av * (255u - m8) + bv * m8;
+                                    if (sum >= 128u)
+                                        combined |= 1u << bit;
+                                }
+                                pm[P1_PM_MASK + w] = combined;
+                            }
+                        } else {
+                            P1_PM_MASK_BUILD(pm + P1_PM_MASK, wave, bank, part, 0);
+                        }
+                        pm[P1_PM_MASKID] = maskid;
+                        pm[P1_PM_LASTWAVE] = wave;
+                    }
+                    if (pm[P1_PM_LASTSEGS] != m || mask_changed) {
+                        pm[P1_PM_LASTSEGS] = m;
+                        for (uint32_t k = 0u; k < m; k++) {
+                            pm[P1_PM_NSLOPE + k] = 65536u;
+                            pm[P1_PM_NFLIP + k] = 0u;
+                            pm[P1_PM_ORDER + k] = k + 1u;
+                        }
+                        for (uint32_t k = 0u; k <= m; k++)
+                            pm[P1_PM_NX + k] = (k * 4096u) / m;
+                        /* Snap the y boundaries to points at least two grid steps away
+                           from a protected point. A target that cannot be placed lowers
+                           the active count instead of cutting through a crossing. */
+                        uint32_t active = m;
+                        uint32_t prev = 0u;
+                        pm[P1_PM_NY] = 0u;
+                        for (uint32_t k = 1u; k < m; k++) {
+                            uint32_t target = (k * 4096u) / m;
+                            uint32_t low = prev + 2u;
+                            uint32_t room = m - k;
+                            uint32_t high = 4096u - room * 2u;
+                            int found = 0;
+                            uint32_t best = 0u;
+                            if (low <= high) {
+                                for (uint32_t d = 0u; d <= 512u; d++) {
+                                    uint32_t cand[2];
+                                    cand[0] = (target >= d) ? target - d : 0u;
+                                    cand[1] = (target + d <= 4095u) ? target + d : 4095u;
+                                    for (int side = 0; side < 2; side++) {
+                                        uint32_t c = cand[side];
+                                        if (c < low || c > high)
+                                            continue;
+                                        if (c < 2u || c > 4094u)
+                                            continue;
+                                        if (P1_PM_GET(pm + P1_PM_MASK, c - 2u) ||
+                                            P1_PM_GET(pm + P1_PM_MASK, c - 1u) ||
+                                            P1_PM_GET(pm + P1_PM_MASK, c) ||
+                                            P1_PM_GET(pm + P1_PM_MASK, c + 1u) ||
+                                            P1_PM_GET(pm + P1_PM_MASK, c + 2u))
+                                            continue;
+                                        int better = !found ||
+                                            (c > target ? c - target : target - c) <
+                                            (best > target ? best - target : target - best);
+                                        if (better) {
+                                            best = c;
+                                            found = 1;
+                                        }
+                                    }
+                                    if (found && d > (best > target ? best - target
+                                                                   : target - best) + 2u)
+                                        break;
+                                }
+                            }
+                            if (!found) {
+                                active = k;
+                                break;
+                            }
+                            pm[P1_PM_NY + k] = best;
+                            prev = best;
+                        }
+                        pm[P1_PM_NY + active] = 4096u;
+                        pm[P1_PM_ACTIVE] = active;
+                        /* Rebuild the natural slopes from the snapped spans. */
+                        uint32_t base = 0u;
+                        for (uint32_t k = 0u; k < active; k++) {
+                            uint32_t next = ((k + 1u) * 4096u) / active;
+                            uint32_t xs = next - base;
+                            if (xs < 1u) xs = 1u;
+                            uint32_t ys = pm[P1_PM_NY + k + 1u] - pm[P1_PM_NY + k];
+                            uint32_t s = (ys * 65536u) / xs;
+                            if (s < 32768u) s = 32768u;
+                            if (s > 174327u) s = 174327u;
+                            pm[P1_PM_NSLOPE + k] = s;
+                            pm[P1_PM_NX + k] = base;
+                            base = next;
+                        }
+                        for (uint32_t k = 0u; k <= active; k++)
+                            pm[P1_PM_NX + k] = (k * 4096u) / active;
+                        /* Lock every span that contains a protected point. */
+                        uint32_t locks = 0u;
+                        for (uint32_t k = 0u; k < active; k++) {
+                            uint32_t any = 0u;
+                            for (uint32_t q = pm[P1_PM_NY + k];
+                                 q < pm[P1_PM_NY + k + 1u]; q++) {
+                                if (P1_PM_GET(pm + P1_PM_MASK, q)) {
+                                    any = 1u;
+                                    break;
+                                }
+                            }
+                            if (any)
+                                locks |= 1u << k;
+                        }
+                        pm[P1_PM_LOCK] = locks;
+                        P1_PHASE_MAP_LAYOUT(pm, active);
+                        m = active;
+                    } else {
+                        m = pm[P1_PM_ACTIVE];
+                        if (m < 1u) m = 1u;
+                        if (m > 32u) m = 32u;
+                    }
+                    int32_t mod = (int32_t)op1_phase_mod_cv_x[v];
+                    if (mod < -200) mod = -200;
+                    if (mod > 200) mod = 200;
+                    int32_t follow = 0;
+                    if (key_on_on_x) {
+                        uint32_t key_bp = (uint32_t)key_bp_bp_x;
+                        if (key_bp > 127u) key_bp = 127u;
+                        follow += p1_key_scale(voice_note[v], key_bp,
+                            (int32_t)op1_phase_ks_lo[voice_part[v]], (int32_t)op1_phase_ks_hi[voice_part[v]]);
+                    }
+                    if (vel_on_on_x)
+                        follow += p1_vel_scale(voice_velocity[v], (int32_t)op1_phase_vs[voice_part[v]]);
+                    int32_t follow_milli =
+                        (int32_t)(((int64_t)follow * 1000) / 32768);
+                    int32_t bp = (int32_t)op1_phase_bp[voice_part[v]] + mod * 10 + follow_milli;
+                    int32_t span = 998;
+                    int32_t bv = bp - 1;
+                    bv %= 1996;
+                    if (bv < 0) bv += 1996;
+                    if (bv > span) bv = 1996 - bv;
+                    uint32_t xb = (uint32_t)(bv + 1);
+                    if (pm[P1_PM_BP] != xb) {
+                        pm[P1_PM_BP] = xb;
+                        P1_PHASE_MAP_F(pm, xb);
+                    }
+                    uint32_t old = pm[P1_PM_DACC];
+                    pm[P1_PM_DACC] = old + (uint32_t)op1_phase_drift_rate[voice_part[v]] * CONTROL_BLOCK;
+                    if (pm[P1_PM_DACC] < old) {
+                        uint32_t drift = (uint32_t)op1_phase_drift[voice_part[v]];
+                        if (drift > 100u) drift = 100u;
+                        int32_t sigma = (26214 * (int32_t)drift) / 100;
+                        for (uint32_t k = 0u; k < m; k++) {
+                            uint32_t j = pm[P1_PM_ORDER + k];
+                            if (j < 1u || j > m) j = 1u;
+                            j -= 1u;
+                            int32_t g = -6 * 65536;
+                            for (uint32_t r = 0u; r < 12u; r++)
+                                g += (int32_t)(P1_PHASE_MAP_NEXT(pm) >> 16);
+                            int32_t step = (int32_t)(((int64_t)g * sigma) >> 16);
+                            int32_t s = (int32_t)pm[P1_PM_NSLOPE + k] + step;
+                            if (s < 32768) s = 65536 - s;
+                            if (s > 174327) s = 348654 - s;
+                            if (s < 32768) s = 32768;
+                            if (s > 174327) s = 174327;
+                            pm[P1_PM_NSLOPE + k] = (uint32_t)s;
+                        }
+                        pm[P1_PM_NX] = 0u;
+                        for (uint32_t k = 0u; k < m; k++) {
+                            uint32_t j = pm[P1_PM_ORDER + k];
+                            if (j < 1u || j > m) j = 1u;
+                            j -= 1u;
+                            uint32_t ys = pm[P1_PM_NY + j + 1u] - pm[P1_PM_NY + j];
+                            uint32_t s = pm[P1_PM_NSLOPE + k];
+                            uint32_t nx = pm[P1_PM_NX + k] +
+                                (uint32_t)(((uint64_t)ys * 65536u) / s);
+                            if (nx <= pm[P1_PM_NX + k]) nx = pm[P1_PM_NX + k] + 1u;
+                            if (nx > 4096u) nx = 4096u;
+                            pm[P1_PM_NX + k + 1u] = nx;
+                        }
+                        pm[P1_PM_NX + m] = 4096u;
+                        P1_PHASE_MAP_LAYOUT(pm, m);
+                    }
+                    uint32_t flip = (uint32_t)op1_phase_flip[voice_part[v]];
+                    if (flip > 100u) flip = 100u;
+                    old = pm[P1_PM_FACC];
+                    pm[P1_PM_FACC] = old + (uint32_t)op1_phase_flip_rate[voice_part[v]] * CONTROL_BLOCK;
+                    if (pm[P1_PM_FACC] < old && P1_PHASE_MAP_NEXT(pm) % 100u < flip) {
+                        uint32_t locks = pm[P1_PM_LOCK];
+                        for (uint32_t k = 0u; k < m; k++) {
+                            if (locks & (1u << k))
+                                continue;
+                            if (P1_PHASE_MAP_NEXT(pm) % 100u < flip)
+                                pm[P1_PM_NFLIP + k] ^= 1u;
+                        }
+                        P1_PHASE_MAP_LAYOUT(pm, m);
+                    }
+                    uint32_t reorder = (uint32_t)op1_phase_reorder[voice_part[v]];
+                    if (reorder > 100u) reorder = 100u;
+                    old = pm[P1_PM_RACC];
+                    pm[P1_PM_RACC] = old + (uint32_t)op1_phase_reorder_rate[voice_part[v]] * CONTROL_BLOCK;
+                    if (m > 1u && pm[P1_PM_RACC] < old &&
+                            P1_PHASE_MAP_NEXT(pm) % 100u < reorder) {
+                        uint32_t maxd = (uint32_t)op1_phase_jump[voice_part[v]];
+                        if (maxd < 1u) maxd = 1u;
+                        if (maxd > 32u) maxd = 32u;
+                        if (maxd >= m) maxd = m - 1u;
+                        uint32_t locks = pm[P1_PM_LOCK];
+                        uint32_t i = 0u;
+                        uint32_t j = 0u;
+                        int placed = 0;
+                        for (uint32_t attempt = 0u; attempt < 3u; attempt++) {
+                            i = P1_PHASE_MAP_NEXT(pm) % m;
+                            uint32_t d = 1u + P1_PHASE_MAP_NEXT(pm) % maxd;
+                            j = (i + d) % m;
+                            uint32_t oi = pm[P1_PM_ORDER + i];
+                            uint32_t oj = pm[P1_PM_ORDER + j];
+                            if (oi < 1u || oi > m) oi = 1u;
+                            if (oj < 1u || oj > m) oj = 1u;
+                            if ((locks & (1u << (oi - 1u))) ||
+                                (locks & (1u << (oj - 1u))))
+                                continue;
+                            placed = 1;
+                            break;
+                        }
+                        if (placed) {
+                            uint32_t t = pm[P1_PM_ORDER + i];
+                            pm[P1_PM_ORDER + i] = pm[P1_PM_ORDER + j];
+                            pm[P1_PM_ORDER + j] = t;
+                            P1_PHASE_MAP_LAYOUT(pm, m);
+                        }
+                    }
+                    pm[P1_PM_LASTB] = block;
+                }
+                uint32_t x = (uint32_t)op1_ph_acc_x >> 20;
+                uint32_t q = pm[P1_PM_F + (x >> 2)] << 2;
+                if (q > 4095u) q = 4095u;
+                uint32_t sh = (q & 3u) * 8u;
+                uint32_t k = (pm[P1_PM_SEG + (q >> 2)] >> sh) & 0xFFu;
+                if (k >= m) k = m - 1u;
+                int32_t y = (int32_t)pm[P1_PM_PY0 + k] +
+                    (((int32_t)q - (int32_t)pm[P1_PM_NX + k]) *
+                     (int32_t)pm[P1_PM_PSLOPE + k] >> 16);
+                op1_phase_phase_x = (uint32_t)y << 20;
+            }
+            /* Add the FM/feedback sum after the map. The sum is the same `(fm << 20)` that
+               the phasor used, so the off map path is the old accumulator-add-read path. */
+            uint32_t op1_padd_phase_x = op1_phase_phase_x + ((uint32_t)op1_sum_audio_x << 20);
             /* Waveform reader. Values 0-12 read the precomputed 13-wave table (`p1_wave`):
                one load, with the band-limited mip added for waves 10/11/12. Value 13 reads
                the additive bank: the a and b spectra at the mip selected from the phasor,
@@ -9046,12 +12657,12 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                 op1_osc_live[v] = p1_spectral_morph(
                     op1_specenv_active_x[v] ? op1_specenv_cv_x[v] : op1_morphbase_out_x[v], op1_speclfo_cv_x[v]);
                 op1_osc_audio_x = p1_spectral_read(
-                    op1_osc_bank, (int)voice_part[v], op1_ph_phase_x, op1_ph_mip_x,
+                    op1_osc_bank, (int)voice_part[v], op1_padd_phase_x, op1_ph_mip_x,
                     op1_osc_live[v]);
             } else {
                 op1_osc_live[v] = -1;
                 op1_osc_audio_x = p1_wave[op1_osc_base[v]
-                    + ((op1_osc_bl[v] ? op1_ph_mip_x : 0u) << 10) + (op1_ph_phase_x >> 22)];
+                    + ((op1_osc_bl[v] ? op1_ph_mip_x : 0u) << 10) + (op1_padd_phase_x >> 22)];
             }
             /* Yamaha total-level gain: audio × cv × gain(level_eff). `level` is 0..99, the
                block-rate `lfo` input adds a signed level offset in the same units, and the

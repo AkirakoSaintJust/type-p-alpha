@@ -11,7 +11,8 @@ the current semantics, the measured evidence and a short research-progress note 
 the layers it replaced. The research pages in `../docs/research/` keep the
 measurements of the discarded experiments. The current engine is 24 voices at
 48 kHz, and the current contracts include the filter law, the spectral oscillator,
-operator feedback, the envelope family and the 48 kHz core.
+operator feedback, the envelope family, the 48 kHz core and the per-operator phase
+map.
 
 ## Build
 
@@ -42,6 +43,10 @@ you go digging.
 - `rate_bridge` checks the output-rate adaptation and the exact core-rate bypass.
 - `lfo_fades` checks the LFO rate and depth ramps, their shared time scale and
   the phase reset.
+- `phase_map` checks the per-operator map: the off path, `F`, the reflective fold,
+  the locks, flips, reorder, drift, the LFO and envelope, key and velocity follow,
+  the trigger rule, the two parts, wave 13's spectral mask and the CPU ratio. The
+  map runs at 1×; the 2× read is not built.
 - `preset_smoke` checks the preset records.
 - `plugin_smoke` checks the APVTS, the state and the automation.
 - `plugin_stability` checks repeated load and render.

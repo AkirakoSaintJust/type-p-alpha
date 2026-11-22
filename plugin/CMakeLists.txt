@@ -132,6 +132,12 @@ target_include_directories(lfo_fades PRIVATE "${P1_GENERATED_DIR}")
 add_dependencies(lfo_fades p1_params)
 add_test(NAME lfo_fades COMMAND lfo_fades)
 
+add_executable(phase_map tests/phase_map.cpp)
+target_link_libraries(phase_map PRIVATE p1_engine)
+target_include_directories(phase_map PRIVATE "${P1_GENERATED_DIR}")
+add_dependencies(phase_map p1_params)
+add_test(NAME phase_map COMMAND phase_map)
+
 add_executable(voice_alloc tests/voice_alloc.cpp)
 target_link_libraries(voice_alloc PRIVATE p1_engine)
 target_include_directories(voice_alloc PRIVATE "${P1_GENERATED_DIR}")

@@ -5377,6 +5377,818 @@
       "max": 1,
       "curve": "linear",
       "display": "range"
+    },
+    "op1_phase_on": {
+      "target": "op1.phase.on",
+      "min": 0,
+      "max": 1,
+      "curve": "linear",
+      "display": "onoff"
+    },
+    "op1_phase_bp": {
+      "target": "op1.phase.bp",
+      "min": 1,
+      "max": 999,
+      "curve": "linear",
+      "display": "frac3"
+    },
+    "op1_phase_segments": {
+      "target": "op1.phase.segments",
+      "min": 1,
+      "max": 32,
+      "curve": "linear",
+      "display": "raw"
+    },
+    "op1_phase_flip": {
+      "target": "op1.phase.flip",
+      "min": 0,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct"
+    },
+    "op1_phase_flip_rate": {
+      "target": "op1.phase.flip_rate",
+      "min": 0,
+      "max": 2684355,
+      "curve": "linear",
+      "display": "hz"
+    },
+    "op1_phase_reorder": {
+      "target": "op1.phase.reorder",
+      "min": 0,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct"
+    },
+    "op1_phase_reorder_rate": {
+      "target": "op1.phase.reorder_rate",
+      "min": 0,
+      "max": 2684355,
+      "curve": "linear",
+      "display": "hz"
+    },
+    "op1_phase_jump": {
+      "target": "op1.phase.jump",
+      "min": 1,
+      "max": 32,
+      "curve": "linear",
+      "display": "raw"
+    },
+    "op1_phase_drift": {
+      "target": "op1.phase.drift",
+      "min": 0,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct"
+    },
+    "op1_phase_drift_rate": {
+      "target": "op1.phase.drift_rate",
+      "min": 0,
+      "max": 2684355,
+      "curve": "linear",
+      "display": "hz"
+    },
+    "op1_phase_lfo_rate": {
+      "target": "op1.phase_lfo.rate",
+      "min": 0,
+      "max": 20000000,
+      "curve": "log",
+      "display": "hz"
+    },
+    "op1_phase_lfo_depth": {
+      "target": "op1.phase_lfo.depth",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip"
+    },
+    "op1_phase_lfo_wave": {
+      "target": "op1.phase_lfo.wave",
+      "min": 0,
+      "max": 5,
+      "curve": "linear",
+      "display": "lfo_wave"
+    },
+    "op1_phase_lfo_mode": {
+      "target": "op1.phase_lfo.mode",
+      "min": 0,
+      "max": 1,
+      "curve": "linear",
+      "display": "onoff"
+    },
+    "op1_phase_lfo_rate_fade": {
+      "target": "op1.phase_lfo.rate_fade",
+      "min": 0,
+      "max": 99,
+      "curve": "linear",
+      "display": "fade"
+    },
+    "op1_phase_lfo_depth_fade": {
+      "target": "op1.phase_lfo.depth_fade",
+      "min": 0,
+      "max": 99,
+      "curve": "linear",
+      "display": "fade"
+    },
+    "op1_phase_env_on": {
+      "target": "op1.phase_env.on",
+      "min": 0,
+      "max": 1,
+      "curve": "linear",
+      "display": "onoff"
+    },
+    "op1_phase_env_r1": {
+      "target": "op1.phase_env.r1",
+      "min": 0,
+      "max": 99,
+      "curve": "linear",
+      "display": "raw"
+    },
+    "op1_phase_env_r2": {
+      "target": "op1.phase_env.r2",
+      "min": 0,
+      "max": 99,
+      "curve": "linear",
+      "display": "raw"
+    },
+    "op1_phase_env_r3": {
+      "target": "op1.phase_env.r3",
+      "min": 0,
+      "max": 99,
+      "curve": "linear",
+      "display": "raw"
+    },
+    "op1_phase_env_l1": {
+      "target": "op1.phase_env.l1",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip"
+    },
+    "op1_phase_env_l2": {
+      "target": "op1.phase_env.l2",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip"
+    },
+    "op1_phase_env_l3": {
+      "target": "op1.phase_env.l3",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip"
+    },
+    "op1_phase_env_relr": {
+      "target": "op1.phase_env.relr",
+      "min": 0,
+      "max": 99,
+      "curve": "linear",
+      "display": "raw"
+    },
+    "op1_phase_env_rell": {
+      "target": "op1.phase_env.rell",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip"
+    },
+    "op1_phase_env_mode": {
+      "target": "op1.phase_env.mode",
+      "min": 0,
+      "max": 3,
+      "curve": "linear",
+      "display": "raw"
+    },
+    "op1_phase_ks_lo": {
+      "target": "op1.phase.ks_lo",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip"
+    },
+    "op1_phase_ks_hi": {
+      "target": "op1.phase.ks_hi",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip"
+    },
+    "op1_phase_vs": {
+      "target": "op1.phase.vs",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip"
+    },
+    "op2_phase_on": {
+      "target": "op2.phase.on",
+      "min": 0,
+      "max": 1,
+      "curve": "linear",
+      "display": "onoff"
+    },
+    "op2_phase_bp": {
+      "target": "op2.phase.bp",
+      "min": 1,
+      "max": 999,
+      "curve": "linear",
+      "display": "frac3"
+    },
+    "op2_phase_segments": {
+      "target": "op2.phase.segments",
+      "min": 1,
+      "max": 32,
+      "curve": "linear",
+      "display": "raw"
+    },
+    "op2_phase_flip": {
+      "target": "op2.phase.flip",
+      "min": 0,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct"
+    },
+    "op2_phase_flip_rate": {
+      "target": "op2.phase.flip_rate",
+      "min": 0,
+      "max": 2684355,
+      "curve": "linear",
+      "display": "hz"
+    },
+    "op2_phase_reorder": {
+      "target": "op2.phase.reorder",
+      "min": 0,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct"
+    },
+    "op2_phase_reorder_rate": {
+      "target": "op2.phase.reorder_rate",
+      "min": 0,
+      "max": 2684355,
+      "curve": "linear",
+      "display": "hz"
+    },
+    "op2_phase_jump": {
+      "target": "op2.phase.jump",
+      "min": 1,
+      "max": 32,
+      "curve": "linear",
+      "display": "raw"
+    },
+    "op2_phase_drift": {
+      "target": "op2.phase.drift",
+      "min": 0,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct"
+    },
+    "op2_phase_drift_rate": {
+      "target": "op2.phase.drift_rate",
+      "min": 0,
+      "max": 2684355,
+      "curve": "linear",
+      "display": "hz"
+    },
+    "op2_phase_lfo_rate": {
+      "target": "op2.phase_lfo.rate",
+      "min": 0,
+      "max": 20000000,
+      "curve": "log",
+      "display": "hz"
+    },
+    "op2_phase_lfo_depth": {
+      "target": "op2.phase_lfo.depth",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip"
+    },
+    "op2_phase_lfo_wave": {
+      "target": "op2.phase_lfo.wave",
+      "min": 0,
+      "max": 5,
+      "curve": "linear",
+      "display": "lfo_wave"
+    },
+    "op2_phase_lfo_mode": {
+      "target": "op2.phase_lfo.mode",
+      "min": 0,
+      "max": 1,
+      "curve": "linear",
+      "display": "onoff"
+    },
+    "op2_phase_lfo_rate_fade": {
+      "target": "op2.phase_lfo.rate_fade",
+      "min": 0,
+      "max": 99,
+      "curve": "linear",
+      "display": "fade"
+    },
+    "op2_phase_lfo_depth_fade": {
+      "target": "op2.phase_lfo.depth_fade",
+      "min": 0,
+      "max": 99,
+      "curve": "linear",
+      "display": "fade"
+    },
+    "op2_phase_env_on": {
+      "target": "op2.phase_env.on",
+      "min": 0,
+      "max": 1,
+      "curve": "linear",
+      "display": "onoff"
+    },
+    "op2_phase_env_r1": {
+      "target": "op2.phase_env.r1",
+      "min": 0,
+      "max": 99,
+      "curve": "linear",
+      "display": "raw"
+    },
+    "op2_phase_env_r2": {
+      "target": "op2.phase_env.r2",
+      "min": 0,
+      "max": 99,
+      "curve": "linear",
+      "display": "raw"
+    },
+    "op2_phase_env_r3": {
+      "target": "op2.phase_env.r3",
+      "min": 0,
+      "max": 99,
+      "curve": "linear",
+      "display": "raw"
+    },
+    "op2_phase_env_l1": {
+      "target": "op2.phase_env.l1",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip"
+    },
+    "op2_phase_env_l2": {
+      "target": "op2.phase_env.l2",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip"
+    },
+    "op2_phase_env_l3": {
+      "target": "op2.phase_env.l3",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip"
+    },
+    "op2_phase_env_relr": {
+      "target": "op2.phase_env.relr",
+      "min": 0,
+      "max": 99,
+      "curve": "linear",
+      "display": "raw"
+    },
+    "op2_phase_env_rell": {
+      "target": "op2.phase_env.rell",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip"
+    },
+    "op2_phase_env_mode": {
+      "target": "op2.phase_env.mode",
+      "min": 0,
+      "max": 3,
+      "curve": "linear",
+      "display": "raw"
+    },
+    "op2_phase_ks_lo": {
+      "target": "op2.phase.ks_lo",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip"
+    },
+    "op2_phase_ks_hi": {
+      "target": "op2.phase.ks_hi",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip"
+    },
+    "op2_phase_vs": {
+      "target": "op2.phase.vs",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip"
+    },
+    "op3_phase_on": {
+      "target": "op3.phase.on",
+      "min": 0,
+      "max": 1,
+      "curve": "linear",
+      "display": "onoff"
+    },
+    "op3_phase_bp": {
+      "target": "op3.phase.bp",
+      "min": 1,
+      "max": 999,
+      "curve": "linear",
+      "display": "frac3"
+    },
+    "op3_phase_segments": {
+      "target": "op3.phase.segments",
+      "min": 1,
+      "max": 32,
+      "curve": "linear",
+      "display": "raw"
+    },
+    "op3_phase_flip": {
+      "target": "op3.phase.flip",
+      "min": 0,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct"
+    },
+    "op3_phase_flip_rate": {
+      "target": "op3.phase.flip_rate",
+      "min": 0,
+      "max": 2684355,
+      "curve": "linear",
+      "display": "hz"
+    },
+    "op3_phase_reorder": {
+      "target": "op3.phase.reorder",
+      "min": 0,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct"
+    },
+    "op3_phase_reorder_rate": {
+      "target": "op3.phase.reorder_rate",
+      "min": 0,
+      "max": 2684355,
+      "curve": "linear",
+      "display": "hz"
+    },
+    "op3_phase_jump": {
+      "target": "op3.phase.jump",
+      "min": 1,
+      "max": 32,
+      "curve": "linear",
+      "display": "raw"
+    },
+    "op3_phase_drift": {
+      "target": "op3.phase.drift",
+      "min": 0,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct"
+    },
+    "op3_phase_drift_rate": {
+      "target": "op3.phase.drift_rate",
+      "min": 0,
+      "max": 2684355,
+      "curve": "linear",
+      "display": "hz"
+    },
+    "op3_phase_lfo_rate": {
+      "target": "op3.phase_lfo.rate",
+      "min": 0,
+      "max": 20000000,
+      "curve": "log",
+      "display": "hz"
+    },
+    "op3_phase_lfo_depth": {
+      "target": "op3.phase_lfo.depth",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip"
+    },
+    "op3_phase_lfo_wave": {
+      "target": "op3.phase_lfo.wave",
+      "min": 0,
+      "max": 5,
+      "curve": "linear",
+      "display": "lfo_wave"
+    },
+    "op3_phase_lfo_mode": {
+      "target": "op3.phase_lfo.mode",
+      "min": 0,
+      "max": 1,
+      "curve": "linear",
+      "display": "onoff"
+    },
+    "op3_phase_lfo_rate_fade": {
+      "target": "op3.phase_lfo.rate_fade",
+      "min": 0,
+      "max": 99,
+      "curve": "linear",
+      "display": "fade"
+    },
+    "op3_phase_lfo_depth_fade": {
+      "target": "op3.phase_lfo.depth_fade",
+      "min": 0,
+      "max": 99,
+      "curve": "linear",
+      "display": "fade"
+    },
+    "op3_phase_env_on": {
+      "target": "op3.phase_env.on",
+      "min": 0,
+      "max": 1,
+      "curve": "linear",
+      "display": "onoff"
+    },
+    "op3_phase_env_r1": {
+      "target": "op3.phase_env.r1",
+      "min": 0,
+      "max": 99,
+      "curve": "linear",
+      "display": "raw"
+    },
+    "op3_phase_env_r2": {
+      "target": "op3.phase_env.r2",
+      "min": 0,
+      "max": 99,
+      "curve": "linear",
+      "display": "raw"
+    },
+    "op3_phase_env_r3": {
+      "target": "op3.phase_env.r3",
+      "min": 0,
+      "max": 99,
+      "curve": "linear",
+      "display": "raw"
+    },
+    "op3_phase_env_l1": {
+      "target": "op3.phase_env.l1",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip"
+    },
+    "op3_phase_env_l2": {
+      "target": "op3.phase_env.l2",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip"
+    },
+    "op3_phase_env_l3": {
+      "target": "op3.phase_env.l3",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip"
+    },
+    "op3_phase_env_relr": {
+      "target": "op3.phase_env.relr",
+      "min": 0,
+      "max": 99,
+      "curve": "linear",
+      "display": "raw"
+    },
+    "op3_phase_env_rell": {
+      "target": "op3.phase_env.rell",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip"
+    },
+    "op3_phase_env_mode": {
+      "target": "op3.phase_env.mode",
+      "min": 0,
+      "max": 3,
+      "curve": "linear",
+      "display": "raw"
+    },
+    "op3_phase_ks_lo": {
+      "target": "op3.phase.ks_lo",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip"
+    },
+    "op3_phase_ks_hi": {
+      "target": "op3.phase.ks_hi",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip"
+    },
+    "op3_phase_vs": {
+      "target": "op3.phase.vs",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip"
+    },
+    "op4_phase_on": {
+      "target": "op4.phase.on",
+      "min": 0,
+      "max": 1,
+      "curve": "linear",
+      "display": "onoff"
+    },
+    "op4_phase_bp": {
+      "target": "op4.phase.bp",
+      "min": 1,
+      "max": 999,
+      "curve": "linear",
+      "display": "frac3"
+    },
+    "op4_phase_segments": {
+      "target": "op4.phase.segments",
+      "min": 1,
+      "max": 32,
+      "curve": "linear",
+      "display": "raw"
+    },
+    "op4_phase_flip": {
+      "target": "op4.phase.flip",
+      "min": 0,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct"
+    },
+    "op4_phase_flip_rate": {
+      "target": "op4.phase.flip_rate",
+      "min": 0,
+      "max": 2684355,
+      "curve": "linear",
+      "display": "hz"
+    },
+    "op4_phase_reorder": {
+      "target": "op4.phase.reorder",
+      "min": 0,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct"
+    },
+    "op4_phase_reorder_rate": {
+      "target": "op4.phase.reorder_rate",
+      "min": 0,
+      "max": 2684355,
+      "curve": "linear",
+      "display": "hz"
+    },
+    "op4_phase_jump": {
+      "target": "op4.phase.jump",
+      "min": 1,
+      "max": 32,
+      "curve": "linear",
+      "display": "raw"
+    },
+    "op4_phase_drift": {
+      "target": "op4.phase.drift",
+      "min": 0,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct"
+    },
+    "op4_phase_drift_rate": {
+      "target": "op4.phase.drift_rate",
+      "min": 0,
+      "max": 2684355,
+      "curve": "linear",
+      "display": "hz"
+    },
+    "op4_phase_lfo_rate": {
+      "target": "op4.phase_lfo.rate",
+      "min": 0,
+      "max": 20000000,
+      "curve": "log",
+      "display": "hz"
+    },
+    "op4_phase_lfo_depth": {
+      "target": "op4.phase_lfo.depth",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip"
+    },
+    "op4_phase_lfo_wave": {
+      "target": "op4.phase_lfo.wave",
+      "min": 0,
+      "max": 5,
+      "curve": "linear",
+      "display": "lfo_wave"
+    },
+    "op4_phase_lfo_mode": {
+      "target": "op4.phase_lfo.mode",
+      "min": 0,
+      "max": 1,
+      "curve": "linear",
+      "display": "onoff"
+    },
+    "op4_phase_lfo_rate_fade": {
+      "target": "op4.phase_lfo.rate_fade",
+      "min": 0,
+      "max": 99,
+      "curve": "linear",
+      "display": "fade"
+    },
+    "op4_phase_lfo_depth_fade": {
+      "target": "op4.phase_lfo.depth_fade",
+      "min": 0,
+      "max": 99,
+      "curve": "linear",
+      "display": "fade"
+    },
+    "op4_phase_env_on": {
+      "target": "op4.phase_env.on",
+      "min": 0,
+      "max": 1,
+      "curve": "linear",
+      "display": "onoff"
+    },
+    "op4_phase_env_r1": {
+      "target": "op4.phase_env.r1",
+      "min": 0,
+      "max": 99,
+      "curve": "linear",
+      "display": "raw"
+    },
+    "op4_phase_env_r2": {
+      "target": "op4.phase_env.r2",
+      "min": 0,
+      "max": 99,
+      "curve": "linear",
+      "display": "raw"
+    },
+    "op4_phase_env_r3": {
+      "target": "op4.phase_env.r3",
+      "min": 0,
+      "max": 99,
+      "curve": "linear",
+      "display": "raw"
+    },
+    "op4_phase_env_l1": {
+      "target": "op4.phase_env.l1",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip"
+    },
+    "op4_phase_env_l2": {
+      "target": "op4.phase_env.l2",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip"
+    },
+    "op4_phase_env_l3": {
+      "target": "op4.phase_env.l3",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip"
+    },
+    "op4_phase_env_relr": {
+      "target": "op4.phase_env.relr",
+      "min": 0,
+      "max": 99,
+      "curve": "linear",
+      "display": "raw"
+    },
+    "op4_phase_env_rell": {
+      "target": "op4.phase_env.rell",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip"
+    },
+    "op4_phase_env_mode": {
+      "target": "op4.phase_env.mode",
+      "min": 0,
+      "max": 3,
+      "curve": "linear",
+      "display": "raw"
+    },
+    "op4_phase_ks_lo": {
+      "target": "op4.phase.ks_lo",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip"
+    },
+    "op4_phase_ks_hi": {
+      "target": "op4.phase.ks_hi",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip"
+    },
+    "op4_phase_vs": {
+      "target": "op4.phase.vs",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip"
     }
   },
   "voice": {

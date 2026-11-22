@@ -15,11 +15,11 @@ namespace {
 
 constexpr double kCoreRate = 48000.0;
 constexpr int kControlBlock = 32;
-constexpr int kStateVersion = 13;
+constexpr int kStateVersion = 14;
 /* The state version whose cutoff values already use the current law. A later
  * version bump must not run the cutoff conversion again. */
 constexpr int kCutoffLawStateVersion = 5;
-constexpr int kUiPageLayout = 3;
+constexpr int kUiPageLayout = 4;
 constexpr float kIntToFloat = 1.0f / 32768.0f;
 
 bool isEngineMessage(const juce::MidiMessage& message)
@@ -190,7 +190,8 @@ TypePAlphaAudioProcessor::createLayout()
         const int def = juce::jlimit(low, high, spec.def);
         const auto display = juce::String(spec.display);
         auto attributes = juce::AudioParameterIntAttributes();
-        if (display == "cutoff" || display == "oct" || display == "pct") {
+        if (display == "cutoff" || display == "oct" || display == "pct" ||
+            display == "frac3" || display == "lfo_wave") {
             attributes = attributes
                 .withStringFromValueFunction([spec](int value, int) {
                     return p1::ui::formatParamValue(spec, value);
@@ -304,6 +305,20 @@ void TypePAlphaAudioProcessor::publishMorph(p1::Engine& engine)
                 engine.specMorph(op, part), std::memory_order_relaxed);
 }
 
+void TypePAlphaAudioProcessor::publishPhaseMaps(p1::Engine& engine)
+{
+    /* Three buffers so the audio thread never writes the buffer the UI is
+     * copying while it swaps the published index. */
+    const uint32_t next = (phaseMapWriteIndex_ + 1u) % 3u;
+    for (int part = 0; part < kP1PartCount; ++part)
+        for (int op = 0; op < 4; ++op)
+            engine.phaseMapSnapshot(
+                op, part,
+                phaseMapSnapshots_[next][static_cast<std::size_t>(part * 4 + op)]);
+    phaseMapWriteIndex_ = next;
+    phaseMapIndex_.store(next, std::memory_order_release);
+}
+
 void TypePAlphaAudioProcessor::feedScheduled(int64_t limit)
 {
     while (nextScheduled_ < scheduled_.size() &&
@@ -345,6 +360,7 @@ void TypePAlphaAudioProcessor::coreChunk(void* context, p1::Engine& engine,
     self->feedScheduled(static_cast<int64_t>(self->coreFrames_) + kControlBlock);
     self->pushTapScopes(engine, frames);
     self->publishMorph(engine);
+    self->publishPhaseMaps(engine);
 }
 
 void TypePAlphaAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
@@ -410,6 +426,7 @@ void TypePAlphaAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
             outputScope_.push(left + pos, length);
             pushTapScopes(engine_, length);
             publishMorph(engine_);
+            publishPhaseMaps(engine_);
             pos = end;
         }
 
@@ -449,9 +466,20 @@ void TypePAlphaAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
         rateBridge_.process(engine_, left, right, frames, &coreChunk, this);
         outputScope_.push(left, frames);
         publishMorph(engine_);
+        publishPhaseMaps(engine_);
     }
 
     midi.clear();
+}
+
+bool TypePAlphaAudioProcessor::phaseMap(int op, int part,
+                                        p1::PhaseMapSnapshot& out) const
+{
+    if (op < 0 || op > 3 || part < 0 || part >= kP1PartCount)
+        return false;
+    const uint32_t index = phaseMapIndex_.load(std::memory_order_acquire);
+    out = phaseMapSnapshots_[index][static_cast<std::size_t>(part * 4 + op)];
+    return out.valid;
 }
 
 double TypePAlphaAudioProcessor::specMorph(int op, int part) const
@@ -627,12 +655,18 @@ void TypePAlphaAudioProcessor::setStateInformation(const void* data, int sizeInB
         else if (page == 3)
             page = 1;
     }
-    if (pageLayout >= 2 && pageLayout < kUiPageLayout && page == 5) {
-        /* The six-tab layout had the mod page at 5. The split inserts
-         * op spectra b at 5, so the mod page moves to 6. */
+    if (pageLayout == 2 && page == 5) {
+        /* The first six-tab layout had the mod page at 5. The split inserts
+         * op spectra b at 5, so the mod page moves to 6 before the phase tab
+         * shifts the spectral pages again. */
         page = 6;
     }
-    uiPage_ = juce::jlimit(0, 6, page);
+    if (pageLayout < kUiPageLayout && page >= 4) {
+        /* Layout 3 inserted op phasemap at 4, so the three spectral pages
+         * move from 4/5/6 to 5/6/7. */
+        ++page;
+    }
+    uiPage_ = juce::jlimit(0, 7, page);
     presets_.setCurrentMulti(static_cast<int>(state.getProperty("currentMulti", -1)));
     for (int part = 0; part < kP1PartCount; ++part) {
         presets_.setPartSource(

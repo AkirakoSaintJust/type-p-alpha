@@ -15,6 +15,9 @@ namespace p1 {
 
 namespace {
 
+/* The version 16 phase block: 29 parameters for each of the four operators. */
+constexpr int kPhaseParamsPerPart = 116;
+
 /* The five envelope blocks that gained a slot in version 13: one pitch and one
  * feedback envelope for each operator. */
 constexpr int kOffsetEnvelopeBlocks = 5;
@@ -517,7 +520,11 @@ bool PresetStore::migratePartBank(const uint8_t* data, uint32_t oldCount,
     const auto newRecord = partRecordSize();
     out.assign(newRecord * kPartSlots, 0xFF);
     const auto target = static_cast<std::size_t>(partParamCount_);
-    const auto v14Count = target >= 34u ? target - 34u : target;
+    const auto v15Count =
+        target >= static_cast<std::size_t>(kPhaseParamsPerPart)
+            ? target - static_cast<std::size_t>(kPhaseParamsPerPart)
+            : target;
+    const auto v14Count = v15Count >= 34u ? v15Count - 34u : v15Count;
     const auto v13Count =
         v14Count >= static_cast<std::size_t>(kAbsEnvelopeBlocks * kAbsEnvelopeSlots)
             ? v14Count - static_cast<std::size_t>(kAbsEnvelopeBlocks *
@@ -633,6 +640,14 @@ bool PresetStore::migratePartBank(const uint8_t* data, uint32_t oldCount,
                 grown[i] = oldIndex < params.size() ? params[oldIndex]
                                                     : defaults_[i];
             }
+        } else if (oldCount == static_cast<uint32_t>(target)) {
+            grown.assign(target, 0);
+            for (std::size_t i = 0; i < target; ++i)
+                grown[i] = params[i];
+        } else if (oldCount == static_cast<uint32_t>(v15Count)) {
+            grown.assign(v15Count, 0);
+            for (std::size_t i = 0; i < v15Count; ++i)
+                grown[i] = params[i];
         } else if (oldCount == static_cast<uint32_t>(v14Count)) {
             grown.assign(v14Count, 0);
             for (std::size_t i = 0; i < v14Count; ++i)
@@ -736,10 +751,10 @@ bool PresetStore::migratePartBank(const uint8_t* data, uint32_t oldCount,
         }
 
         if (grown.size() == v14Count && raw[0] < 15u) {
-            expanded.assign(target, 0);
+            expanded.assign(v15Count, 0);
             int shift = 0;
             int next = 0;
-            for (int i = 0; i < static_cast<int>(target); ++i) {
+            for (int i = 0; i < static_cast<int>(v15Count); ++i) {
                 if (next < 34 && i == fadeBases_[static_cast<std::size_t>(next)]) {
                     ++next;
                     ++shift;
@@ -754,6 +769,16 @@ bool PresetStore::migratePartBank(const uint8_t* data, uint32_t oldCount,
                                ? defaults_[static_cast<std::size_t>(i)]
                                : 0);
             }
+            grown.swap(expanded);
+        }
+
+        /* Version 16 appends the phase block at the end of each part record. */
+        if (grown.size() == v15Count) {
+            expanded.assign(target, 0);
+            for (std::size_t i = 0; i < v15Count; ++i)
+                expanded[i] = grown[i];
+            for (std::size_t i = v15Count; i < target; ++i)
+                expanded[i] = i < defaults_.size() ? defaults_[i] : 0;
             grown.swap(expanded);
         }
 

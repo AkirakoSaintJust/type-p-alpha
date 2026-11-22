@@ -233,9 +233,10 @@ int main()
                     shift += 2;
             return target - shift;
         };
-        /* The version 10 record is 53 params shorter: the 34 fades, the four
-         * operator slots and the five offset and ten absolute envelope slots. */
-        const uint32_t oldCount = kP1PartParamCount - 19u - 34u;
+        /* The version 10 record is 169 params shorter: 116 phase values, the 34
+         * fades, the four operator slots and the five offset and ten absolute
+         * envelope slots. */
+        const uint32_t oldCount = kP1PartParamCount - 116u - 19u - 34u;
         const auto oldRecord = PP_RECORD(oldCount);
         std::vector<uint8_t> oldBank(static_cast<std::size_t>(oldRecord) * 128u,
                                      0xFF);
@@ -359,7 +360,7 @@ int main()
             return target - shift;
         };
 
-        const uint32_t oldCount = kP1PartParamCount - 15u - 34u;
+        const uint32_t oldCount = kP1PartParamCount - 116u - 15u - 34u;
         const auto oldRecord = PP_RECORD(oldCount);
         std::vector<uint8_t> oldBank(static_cast<std::size_t>(oldRecord) * 128u,
                                      0xFF);
@@ -466,7 +467,7 @@ int main()
             return target - shift;
         };
 
-        const uint32_t oldCount = kP1PartParamCount - 10u - 34u;
+        const uint32_t oldCount = kP1PartParamCount - 116u - 10u - 34u;
         const auto oldRecord = PP_RECORD(oldCount);
         std::vector<uint8_t> oldBank(static_cast<std::size_t>(oldRecord) * 128u,
                                      0xFF);

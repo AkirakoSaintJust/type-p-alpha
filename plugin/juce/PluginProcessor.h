@@ -90,6 +90,7 @@ public:
     /* The live morph for an operator and part, 0 to 1, or -1 when the operator
      * has not read the bank since the reset. */
     double specMorph(int op, int part) const;
+    bool phaseMap(int op, int part, p1::PhaseMapSnapshot& out) const;
 
     juce::String getPatchName() const { return patchName_; }
     void setPatchName(const juce::String& name) { patchName_ = name; }
@@ -100,7 +101,7 @@ public:
     int getUiPage() const { return uiPage_; }
     void setUiPage(int page)
     {
-        uiPage_ = juce::jlimit(0, 6, page);
+        uiPage_ = juce::jlimit(0, 7, page);
     }
 
 private:
@@ -110,6 +111,7 @@ private:
     void renderCore(int32_t* out, int frames);
     void pushTapScopes(p1::Engine& engine, int frames);
     void publishMorph(p1::Engine& engine);
+    void publishPhaseMaps(p1::Engine& engine);
     void feedScheduled(int64_t limit);
     void flushDeferred();
     static void coreChunk(void* context, p1::Engine& engine, int frames);
@@ -135,6 +137,9 @@ private:
     std::vector<juce::MidiMessage> deferredOffs_;
     uint64_t coreFrames_ = 0;
     std::array<std::atomic<int>, 8> liveMorph_{};
+    std::array<std::array<p1::PhaseMapSnapshot, 8>, 3> phaseMapSnapshots_{};
+    std::atomic<uint32_t> phaseMapIndex_{0};
+    uint32_t phaseMapWriteIndex_ = 0;
 
     ScopeRing outputScope_;
     std::array<ScopeRing, 10> tapScopes_;

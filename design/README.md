@@ -278,9 +278,10 @@ text. A long part name is truncated with an ellipsis.
 
 ### Tabs
 
-`patch settings`, `part fx/mod`, `operator envs`, `operator lfos`, `op spectra a`,
-`op spectra b`, `op spectra mod`, with no vertical dividers. The active tab is a pink
-cut polygon rather than a rectangle. Inactive tabs are dim text on black.
+`patch settings`, `part fx/mod`, `operator envs`, `operator lfos`, `op phasemap`,
+`op spectra a`, `op spectra b`, `op spectra mod`, with no vertical dividers. The
+active tab is a pink cut polygon rather than a rectangle. Inactive tabs are dim text
+on black.
 
 ### Patch settings
 
@@ -393,6 +394,28 @@ env` card holds the graph, the on switch, R1 to R3, L1 to L3, the release rate a
 level, and the mode. The `morph lfo`
 card holds rate, depth, the wave select, the `bipolar` switch, and the compact
 `rate fade` and `depth fade` pair with its shared graph.
+
+### Op phasemap
+
+Four borderless columns, each with the operator name, copy and paste, and the mute
+switch, then a 99 px composed map and three cards: `phase`, `phase lfo` and
+`phase env`. The map draws the composed transfer curve: green forward segments,
+purple flipped ones, locked segments at 35% opacity, a pink dashed vertical at
+each order jump, a faint `F` polyline, the pink breakpoint vertical and a white
+dot at the newest voice's phase. The caption reads `bp 0.500 · π`, the active and
+requested segment counts, and the locked count when it is above zero. The map
+does not take a drag.
+
+The `phase` card holds `on` in its header and nine knobs in three rows:
+`breakpoint`, `segments`, `flip`; `flip rate`, `reorder`, `reorder rate`; `jump`,
+`drift`, `drift rate`. The `phase lfo` card reuses the compact fade row. The
+`phase env` card is the signed envelope with a purple graph, `r1..r3`, `l1..l3`,
+`rel`, `rl`, the mode and `on`. All three cards carry `copy` and `paste` in their
+headers, and the operator header copies and pastes the whole operator.
+
+The map is per part and shared by the voices, so a new note can reshape a held one;
+the caption shows the actual active count when a lock lowers it. The read is 1×,
+so the joins' aliasing stays a recorded limit rather than a drawn quality.
 
 ### Dialogs
 

@@ -127,6 +127,7 @@ public:
     P1TabBar();
     void setLabels(const juce::StringArray& labels);
     void setActive(int index);
+    void setCompact(bool compact);
     void resized() override;
     void paint(juce::Graphics& g) override;
     std::function<void(int)> onTabChanged;
@@ -143,7 +144,9 @@ private:
     };
 
     std::vector<std::unique_ptr<Tab>> tabs_;
+    juce::StringArray labels_;
     int active_ = 0;
+    bool forcedCompact_ = false;
 };
 
 class P1Scope : public juce::Component {

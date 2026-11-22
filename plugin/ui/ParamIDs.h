@@ -158,6 +158,19 @@ inline juce::String opMute(int op, int part)
     return withPart(opBase(op, "_mute"), part);
 }
 
+inline juce::String opPhase(int op, const char* field, int part)
+{
+    return withPart(opBase(op, "_phase_") + juce::String(field), part);
+}
+inline juce::String opPhaseLfo(int op, const char* field, int part)
+{
+    return withPart(opBase(op, "_phase_lfo_") + juce::String(field), part);
+}
+inline juce::String opPhaseEnv(int op, const char* field, int part)
+{
+    return withPart(opBase(op, "_phase_env_") + juce::String(field), part);
+}
+
 inline juce::String opSpecA(int op, int harmonic, int part)
 {
     return withPart(opBase(op, "_spec_a") + juce::String(harmonic), part);
@@ -320,7 +333,7 @@ struct FollowTarget {
     juce::String velocity;
 };
 
-inline std::array<FollowTarget, 15> followTargets(int part)
+inline std::array<FollowTarget, 19> followTargets(int part)
 {
     return {{
         {"op1 level", withPart("op1_level_ks_lo", part),
@@ -353,6 +366,14 @@ inline std::array<FollowTarget, 15> followTargets(int part)
          withPart("f1_cutoff_ks_hi", part), withPart("f1_cutoff_vs", part)},
         {"filter env", withPart("fenv_ks_lo", part), withPart("fenv_ks_hi", part),
          withPart("fenv_vs", part)},
+        {"op1 phase", withPart("op1_phase_ks_lo", part),
+         withPart("op1_phase_ks_hi", part), withPart("op1_phase_vs", part)},
+        {"op2 phase", withPart("op2_phase_ks_lo", part),
+         withPart("op2_phase_ks_hi", part), withPart("op2_phase_vs", part)},
+        {"op3 phase", withPart("op3_phase_ks_lo", part),
+         withPart("op3_phase_ks_hi", part), withPart("op3_phase_vs", part)},
+        {"op4 phase", withPart("op4_phase_ks_lo", part),
+         withPart("op4_phase_ks_hi", part), withPart("op4_phase_vs", part)},
     }};
 }
 

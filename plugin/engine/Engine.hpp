@@ -1,12 +1,32 @@
 /* SPDX-License-Identifier: GPL-3.0-only */
 #pragma once
 
+#include <array>
 #include <cstdint>
 #include <memory>
 
 #include "P1Synth.h"
 
 namespace p1 {
+
+/* The display view of one per-part phase map. It is a copy of the map pool
+ * geometry plus the newest voice's mapped phase, so the UI never reads the
+ * engine state directly. */
+struct PhaseMapSnapshot {
+    bool valid = false;
+    int bp = 500;
+    int segments = 8;
+    int active = 8;
+    int voices = 0;
+    uint16_t phaseQ = 0;
+    uint16_t phaseY = 0;
+    std::array<uint16_t, 33> x{};
+    std::array<uint16_t, 32> y0{};
+    std::array<int32_t, 32> slope{};
+    std::array<uint8_t, 32> flip{};
+    std::array<uint8_t, 32> order{};
+    std::array<uint8_t, 32> locked{};
+};
 
 /* One generated engine state behind a small C++ seam. There is no JUCE and no
  * audio backend here, because the wrappers are the only place the host touches
@@ -33,6 +53,7 @@ public:
     /* The last morph the oscillator read for an operator and part, 0 to 99, or
      * -1 when the operator has not read the bank since the state reset. */
     int specMorph(int op, int part) const;
+    bool phaseMapSnapshot(int op, int part, PhaseMapSnapshot& out) const;
 
     P1_STATE* state();
 

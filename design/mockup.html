@@ -314,6 +314,38 @@
   .morphmeter .track i { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--green); }
   .speccol .osc .knobs { gap: 3px 0; }
 
+  /* ---------------- op phasemap ---------------- */
+  .phasemap-grid { align-items: start; }
+  .phasecol { padding: 8px; }
+  .phasecol .card { margin-top: 3px; padding: 4px 5px; line-height: 1.1; }
+  .phasecol .sec-head { margin-bottom: 2px; }
+  .phasecol .pmcard { padding: 3px 5px 2px; }
+  .pmcanvas { width: 100%; height: 92px; display: block; background: #000; }
+  .pmcaption { display: flex; justify-content: space-between; gap: 6px; margin-top: 2px;
+    font-size: 9px; color: var(--dim); white-space: nowrap; }
+  .pmcaption .bp { color: var(--pink2); }
+  .phase .knobs { justify-content: space-between; gap: 0 4px; }
+  .phase .knob { width: 62px; }
+  .phase .dial, .phase .dial svg { width: 16px; height: 16px; }
+  .phase .knob-name { font-size: 9px; line-height: 1.1; }
+  .phase .knob-val { font-size: 11px; line-height: 1.1; }
+  .phaselfo .knobs { gap: 0 4px; }
+  .phaselfo .knob { width: 64px; }
+  .phaselfo .dial, .phaselfo .dial svg { width: 16px; height: 16px; }
+  .phaselfo .knob-name { font-size: 9px; line-height: 1.1; }
+  .phaselfo .knob-val { font-size: 11px; line-height: 1.1; }
+  .phaselfo .inline { margin-top: 2px; }
+  .fadegraph svg { width: 100%; height: 16px; display: block; margin-top: 2px; }
+  .phaseenv .knobs { justify-content: space-between; gap: 0 4px; }
+  .phaseenv .knob { width: 60px; }
+  .phaseenv .dial, .phaseenv .dial svg { width: 14px; height: 14px; }
+  .phaseenv .knob-name { font-size: 9px; line-height: 1.1; }
+  .phaseenv .knob-val { font-size: 11px; line-height: 1.1; }
+  .phaseenv .envbox { height: 20px; margin-bottom: 2px; }
+  .phaseenv .envbox svg { width: 100%; height: 20px; display: block; }
+  .phaseenvfoot { gap: 4px; margin-top: 1px; }
+  .phaseenvfoot .sel { flex: 1; min-width: 0; }
+
   .patchpage { display: flex; flex-direction: column; gap: 10px; min-height: 100%; }
   .parts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; flex: 1; }
   .part .pvis { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; flex: 1; min-height: 120px; margin-top: 10px; }
@@ -665,7 +697,27 @@
     { name: "op3", role: "car", ratio: 1.0, detune: 0, level: 0, fb: 0, wave: "sine", r: [99, 40, 30, 60], l: [0, 0, 0], lfoRate: 5.0, lfoDepth: 0, lfoWave: "sine", lfoMode: true, fbOn: true, fbenvR: [80, 60, 50, 80], fbenvL: [0, 0, 0, 0], fbLfoRate: 4.0, fbLfoDepth: 0, fbLfoWave: "sine", fbLfoMode: true, detuneLfoRate: 4.0, detuneLfoDepth: 0, detuneLfoWave: "sine", detuneLfoMode: true, mute: false },
     { name: "op4", role: "mod", ratio: 3.0, detune: 0, level: 0, fb: 0, wave: "sine", r: [99, 40, 30, 60], l: [0, 0, 0], lfoRate: 5.0, lfoDepth: 0, lfoWave: "sine", lfoMode: true, fbOn: true, fbenvR: [80, 60, 50, 80], fbenvL: [0, 0, 0, 0], fbLfoRate: 4.0, fbLfoDepth: 0, fbLfoWave: "sine", fbLfoMode: true, detuneLfoRate: 4.0, detuneLfoDepth: 0, detuneLfoWave: "sine", detuneLfoMode: true, mute: false }
   ];
-  INIT_OPS.forEach(function (o) {
+  const PHASE_DEFAULTS = {
+    phaseOn: false, phaseBp: 500, phaseSegments: 8,
+    phaseFlip: 0, phaseFlipRate: 2.0,
+    phaseReorder: 0, phaseReorderRate: 0,
+    phaseJump: 1, phaseDrift: 0, phaseDriftRate: 1.2,
+    phaseLfoRate: 0.5, phaseLfoDepth: 0, phaseLfoWave: "sine", phaseLfoMode: true,
+    phaseLfoRateFade: 0, phaseLfoDepthFade: 0,
+    phaseEnvOn: true, phaseEnvR: [80, 60, 50, 80], phaseEnvL: [0, 0, 0],
+    phaseEnvRell: 0, phaseEnvMode: "hold"
+  };
+  function withPhaseDefaults(o) {
+    Object.keys(PHASE_DEFAULTS).forEach(function (k) {
+      if (o[k] === undefined) {
+        const v = PHASE_DEFAULTS[k];
+        o[k] = Array.isArray(v) ? v.slice() : v;
+      }
+    });
+    return o;
+  }
+
+  INIT_OPS.forEach(function (o, i) {
     o.specA = [99, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     o.specB = [99, 45, 30, 15, 55, 40, 25, 12, 8, 5, 3, 2, 1, 0, 0, 0];
     o.specMorph = 0;
@@ -677,6 +729,25 @@
     o.specLfoWave = "sine";
     o.specLfoMode = true;
     o.specFormant = 5;
+    Object.keys(PHASE_DEFAULTS).forEach(function (k) {
+      const v = PHASE_DEFAULTS[k];
+      o[k] = Array.isArray(v) ? v.slice() : v;
+    });
+    /* The tab opens with op1 mapped so the demo has a live plot; the product's
+       init state is all four off (spec §4). */
+    if (i === 0) {
+      o.phaseOn = true;
+      o.phaseBp = 620;
+      o.phaseDrift = 35;
+      o.phaseFlip = 25;
+      o.phaseReorder = 30;
+      o.phaseReorderRate = 1.5;
+      o.phaseJump = 2;
+      o.phaseLfoDepth = 22;
+      o.phaseLfoRateFade = 20;
+      o.phaseLfoDepthFade = 40;
+      o.phaseEnvL = [12, 28, 0];
+    }
   });
   const WAVES = ["sine", "triangle", "half sine", "half tri", "2x sine", "2x tri",
     "2x half sine", "2x half tri", "rect sine", "rect tri", "pulse", "square",
@@ -946,6 +1017,9 @@
     });
     document.querySelectorAll(".pspectro").forEach(function (cv, i) {
       drawSpectro(cv, 2.6 + i * 0.8, t, +cv.dataset.level / 99);
+    });
+    document.querySelectorAll(".pmcanvas").forEach(function (cv, i) {
+      if (cv.__phase) drawPhaseMap(cv, cv.__phase, t, i);
     });
     t += 0.05;
     requestAnimationFrame(tick);
@@ -1240,11 +1314,13 @@
       specLfoRate: o.specLfoRate, specLfoDepth: o.specLfoDepth,
       specLfoWave: o.specLfoWave, specLfoMode: o.specLfoMode
     } };
+    Object.assign(clipboard.data, phaseSnapshot(o));
     rerender();
   }
   function pasteOp(o) {
     if (!clipboard || clipboard.kind !== "op") return;
     const d = clipboard.data;
+    phaseApply(o, d);
     o.ratio = d.ratio; o.detune = d.detune; o.level = d.level; o.fb = d.fb; o.wave = d.wave;
     o.r = d.r.slice(); o.l = d.l.slice(); o.lfoRate = d.lfoRate; o.lfoDepth = d.lfoDepth;
     o.lfoWave = d.lfoWave; o.lfoMode = d.lfoMode;
@@ -1726,6 +1802,327 @@
       "specLfoDepth", "specLfoWave", "specLfoMode", -99, 99, bipFmt, 1);
   }
 
+  /* ---------------- phase map ---------------- */
+  function phaseSnapshot(o) {
+    return {
+      phaseOn: o.phaseOn, phaseBp: o.phaseBp, phaseSegments: o.phaseSegments,
+      phaseFlip: o.phaseFlip, phaseFlipRate: o.phaseFlipRate,
+      phaseReorder: o.phaseReorder, phaseReorderRate: o.phaseReorderRate,
+      phaseJump: o.phaseJump, phaseDrift: o.phaseDrift, phaseDriftRate: o.phaseDriftRate,
+      phaseLfoRate: o.phaseLfoRate, phaseLfoDepth: o.phaseLfoDepth,
+      phaseLfoWave: o.phaseLfoWave, phaseLfoMode: o.phaseLfoMode,
+      phaseLfoRateFade: o.phaseLfoRateFade, phaseLfoDepthFade: o.phaseLfoDepthFade,
+      phaseEnvOn: o.phaseEnvOn, phaseEnvR: o.phaseEnvR.slice(),
+      phaseEnvL: o.phaseEnvL.slice(), phaseEnvRell: o.phaseEnvRell,
+      phaseEnvMode: o.phaseEnvMode
+    };
+  }
+  function phaseApply(o, d) {
+    if (!d || d.phaseBp === undefined) return;
+    o.phaseOn = d.phaseOn;
+    o.phaseBp = d.phaseBp;
+    o.phaseSegments = d.phaseSegments;
+    o.phaseFlip = d.phaseFlip;
+    o.phaseFlipRate = d.phaseFlipRate;
+    o.phaseReorder = d.phaseReorder;
+    o.phaseReorderRate = d.phaseReorderRate;
+    o.phaseJump = d.phaseJump;
+    o.phaseDrift = d.phaseDrift;
+    o.phaseDriftRate = d.phaseDriftRate;
+    o.phaseLfoRate = d.phaseLfoRate;
+    o.phaseLfoDepth = d.phaseLfoDepth;
+    o.phaseLfoWave = d.phaseLfoWave;
+    o.phaseLfoMode = d.phaseLfoMode;
+    o.phaseLfoRateFade = d.phaseLfoRateFade;
+    o.phaseLfoDepthFade = d.phaseLfoDepthFade;
+    o.phaseEnvOn = d.phaseEnvOn;
+    o.phaseEnvR = d.phaseEnvR.slice();
+    o.phaseEnvL = d.phaseEnvL.slice();
+    o.phaseEnvRell = d.phaseEnvRell;
+    o.phaseEnvMode = d.phaseEnvMode;
+  }
+
+  function foldBp(v) {
+    const span = 0.998;
+    let x = v - 0.001;
+    x = ((x % (2 * span)) + 2 * span) % (2 * span);
+    if (x > span) x = 2 * span - x;
+    return x + 0.001;
+  }
+
+  function phaseBpAt(o, t) {
+    let bp = o.phaseBp / 1000;
+    if (o.phaseOn && o.phaseLfoDepth !== 0) {
+      const ph = t * 0.314 * o.phaseLfoRate;
+      const lfo = o.phaseLfoMode ? Math.sin(ph) : (Math.sin(ph) + 1) / 2;
+      bp += lfo * (o.phaseLfoDepth / 100) * 0.499;
+    }
+    return foldBp(bp);
+  }
+
+  function drawPhaseMap(cv, o, t, seed) {
+    const ctx = cv.getContext("2d");
+    const W = cv.width, H = cv.height;
+    ctx.clearRect(0, 0, W, H);
+
+    ctx.strokeStyle = "#1a1a1a";
+    ctx.lineWidth = 2;
+    for (let i = 1; i < 4; i++) {
+      const gx = Math.round(W * i / 4) + 0.5;
+      const gy = Math.round(H * i / 4) + 0.5;
+      ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, H); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(W, gy); ctx.stroke();
+    }
+
+    const on = o.phaseOn;
+    const bp = phaseBpAt(o, t);
+    const M = Math.max(1, Math.min(32, Math.round(o.phaseSegments)));
+    const yb = [];
+    for (let i = 0; i <= M; i++) yb.push(i / M);
+
+    /* F, the faint pre-map: (0,0) to (bp,0.5) to (1,1). */
+    ctx.strokeStyle = on ? "#2e2e2e" : "#1c1c1c";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(0, H);
+    ctx.lineTo(bp * W, H * 0.5);
+    ctx.lineTo(W, 0);
+    ctx.stroke();
+
+    const xb = [0];
+    const drift = on ? o.phaseDrift / 100 : 0;
+    for (let i = 0; i < M; i++) {
+      const slope = Math.max(0.5, Math.min(2.66,
+        1 + drift * 0.85 * Math.sin(t * 0.9 + i * 1.7 + (o.name.charCodeAt(2) || 1) + seed)));
+      xb.push(xb[i] + (yb[i + 1] - yb[i]) / slope);
+    }
+    const norm = xb[M] || 1;
+    for (let i = 0; i <= M; i++) xb[i] /= norm;
+
+    const locked = [];
+    const flip = [];
+    for (let i = 0; i < M; i++) {
+      locked.push(yb[i] <= 0.0001 || yb[i + 1] >= 0.9999 ||
+        (yb[i] < 0.5 && yb[i + 1] > 0.5));
+      let f = false;
+      if (on && o.phaseFlip > 0 && !locked[i]) {
+        const h = Math.sin((i + 1) * 12.9898 + t * o.phaseFlipRate) * 43758.5453;
+        f = (h - Math.floor(h)) < o.phaseFlip / 100;
+      }
+      flip.push(f);
+    }
+
+    const order = [];
+    for (let i = 0; i < M; i++) order.push(i);
+    if (on && o.phaseReorder > 0) {
+      const span = Math.max(1, Math.min(o.phaseJump, M - 1));
+      for (let s = 0; s < 4; s++) {
+        const h = Math.sin(s * 7.13 + t * o.phaseReorderRate) * 43758.5453;
+        const i = Math.abs(Math.floor(h)) % M;
+        const j = (i + 1 + (Math.abs(Math.floor(h * 3.7)) % span)) % M;
+        if (!locked[i] && !locked[j]) {
+          const tmp = order[i]; order[i] = order[j]; order[j] = tmp;
+        }
+      }
+    }
+
+    function segY(k, u) {
+      const oi = order[k];
+      const tt = flip[k] ? 1 - u : u;
+      return yb[oi] + tt * (yb[oi + 1] - yb[oi]);
+    }
+    function compY(px) {
+      const q = px <= bp ? (0.5 * px / bp) : (0.5 + 0.5 * (px - bp) / (1 - bp));
+      let k = 0;
+      while (k < M - 1 && q > xb[k + 1]) k++;
+      const u = Math.max(0, Math.min(1, (q - xb[k]) / Math.max(1e-6, xb[k + 1] - xb[k])));
+      return segY(k, u);
+    }
+
+    for (let k = 0; k < M; k++) {
+      ctx.globalAlpha = locked[k] ? 0.35 : (on ? 1 : 0.55);
+      ctx.strokeStyle = flip[k] ? "#c780ff" : (on ? "#3dff9e" : "#4a4a4a");
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(xb[k] * W, H - segY(k, 0) * H);
+      ctx.lineTo(xb[k + 1] * W, H - segY(k, 1) * H);
+      ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+
+    ctx.strokeStyle = "#151515";
+    ctx.lineWidth = 2;
+    for (let i = 1; i < M; i++) {
+      const gy = Math.round(H - yb[i] * H) + 0.5;
+      ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(W, gy); ctx.stroke();
+    }
+
+    ctx.save();
+    ctx.setLineDash([3, 3]);
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = "#ff2e7e";
+    ctx.globalAlpha = on ? 0.95 : 0.35;
+    for (let k = 0; k < M - 1; k++) {
+      if (order[k + 1] !== k + 1) {
+        const gx = xb[k + 1] * W;
+        ctx.beginPath();
+        ctx.moveTo(gx, H - segY(k, 1) * H);
+        ctx.lineTo(gx, H - segY(k + 1, 0) * H);
+        ctx.stroke();
+      }
+    }
+    ctx.restore();
+
+    ctx.save();
+    ctx.setLineDash([2, 3]);
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = "#ff2e7e";
+    ctx.globalAlpha = on ? 0.9 : 0.4;
+    ctx.beginPath();
+    ctx.moveTo(bp * W, 0);
+    ctx.lineTo(bp * W, H);
+    ctx.stroke();
+    ctx.restore();
+
+    if (on) {
+      const px = (t * 0.07) % 1;
+      const py = compY(px);
+      ctx.fillStyle = "#ffffff";
+      ctx.beginPath();
+      ctx.arc(px * W, H - py * H, 4, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    if (cv.__capBp) cv.__capBp.textContent = "bp " + bp.toFixed(3) + " · π";
+    if (cv.__capSeg) {
+      const nlock = locked.filter(Boolean).length;
+      cv.__capSeg.textContent = on ? (M + "/" + M + " seg · " + nlock + " locked") : "off";
+    }
+  }
+
+  function phaseMapCard(o) {
+    const card = document.createElement("div");
+    card.className = "card pmcard";
+    const cv = document.createElement("canvas");
+    cv.className = "pmcanvas";
+    cv.width = 556; cv.height = 164;
+    cv.__phase = o;
+    const cap = document.createElement("div");
+    cap.className = "pmcaption";
+    const bp = document.createElement("span");
+    bp.className = "bp";
+    const seg = document.createElement("span");
+    seg.className = "segs";
+    cap.append(bp, seg);
+    cv.__capBp = bp; cv.__capSeg = seg;
+    card.append(cv, cap);
+    return card;
+  }
+
+  function phaseSection(o) {
+    const on = makeToggle("on", o.phaseOn, function (v) { o.phaseOn = v; rerender(); });
+    const bindings = [
+      b(o, "phaseBp", "BREAKPOINT", 1, 999, function (v) { return (v / 1000).toFixed(3); }, 1),
+      b(o, "phaseSegments", "SEGMENTS", 1, 32, function (v) { return v; }, 1),
+      b(o, "phaseFlip", "FLIP", 0, 100, function (v) { return v + "%"; }, 1),
+      b(o, "phaseFlipRate", "FLIP RATE", 0, 30, function (v) { return v.toFixed(1) + "Hz"; }, 0.1),
+      b(o, "phaseReorder", "REORDER", 0, 100, function (v) { return v + "%"; }, 1),
+      b(o, "phaseReorderRate", "REORDER RATE", 0, 30, function (v) { return v.toFixed(1) + "Hz"; }, 0.1),
+      b(o, "phaseJump", "JUMP", 1, 32, function (v) { return v; }, 1),
+      b(o, "phaseDrift", "DRIFT", 0, 100, function (v) { return v + "%"; }, 1),
+      b(o, "phaseDriftRate", "DRIFT RATE", 0, 30, function (v) { return v.toFixed(1) + "Hz"; }, 0.1)
+    ];
+    return makeSection("PHASE", "phase", bindings, {
+      headExtra: on,
+      rows: [bindings.slice(0, 3), bindings.slice(3, 6), bindings.slice(6, 9)]
+    });
+  }
+
+  function fadeFmt(v) {
+    return v === 0 ? "off" : (v === 99 ? "instant" : v);
+  }
+
+  function fadeSvg(rateFade, depthFade) {
+    const W = 240, H = 30;
+    function ramp(v, color) {
+      if (!v) return "";
+      const len = 6 + (v / 99) * (W - 12);
+      let d = "M 4 " + (H - 4);
+      for (let i = 0; i <= 10; i++) {
+        const p = i / 10;
+        const y = H - 4 - (1 - Math.exp(-5 * p)) * (H - 10);
+        d += " L " + (4 + len * p).toFixed(1) + " " + y.toFixed(1);
+      }
+      return '<path d="' + d + '" fill="none" stroke="' + color + '" stroke-width="1.3"/>';
+    }
+    return '<svg viewBox="0 0 ' + W + " " + H + '">' +
+      '<line x1="4" y1="' + (H - 4) + '" x2="' + (W - 4) + '" y2="' + (H - 4) + '" stroke="#1c1c1c"/>' +
+      ramp(rateFade, "#3dff9e") + ramp(depthFade, "#c780ff") + "</svg>";
+  }
+
+  function phaseLfoSection(o) {
+    const graph = document.createElement("div");
+    graph.className = "fadegraph";
+    graph.innerHTML = fadeSvg(o.phaseLfoRateFade, o.phaseLfoDepthFade);
+    const fades = knobRow([
+      b(o, "phaseLfoRateFade", "RATE FADE", 0, 99, fadeFmt, 1),
+      b(o, "phaseLfoDepthFade", "DEPTH FADE", 0, 99, fadeFmt, 1)
+    ]);
+    return makeSection("PHASE LFO", "phaselfo", [
+      b(o, "phaseLfoRate", "RATE", 0, 20, function (v) { return v.toFixed(1) + "Hz"; }, 0.1),
+      b(o, "phaseLfoDepth", "DEPTH", -100, 100, bipFmt, 1)
+    ], { after: [lfoRow(o, "phaseLfoWave", "phaseLfoMode"), graph, fades] });
+  }
+
+  function phaseEnvSection(o) {
+    const graph = document.createElement("div");
+    graph.className = "envbox";
+    graph.innerHTML = penvSvg(o.phaseEnvR, o.phaseEnvL.concat([o.phaseEnvRell]), 100);
+    const on = makeToggle("on", o.phaseEnvOn, function (v) { o.phaseEnvOn = v; rerender(); });
+    const rates = [
+      ba(o, "phaseEnvR", 0, "R1", 0, 99, function (v) { return v; }, 1),
+      ba(o, "phaseEnvR", 1, "R2", 0, 99, function (v) { return v; }, 1),
+      ba(o, "phaseEnvR", 2, "R3", 0, 99, function (v) { return v; }, 1)
+    ];
+    const levels = [
+      ba(o, "phaseEnvL", 0, "L1", -100, 100, bipFmt, 1),
+      ba(o, "phaseEnvL", 1, "L2", -100, 100, bipFmt, 1),
+      ba(o, "phaseEnvL", 2, "L3", -100, 100, bipFmt, 1)
+    ];
+    const rel = ba(o, "phaseEnvR", 3, "REL", 0, 99, function (v) { return v; }, 1);
+    const rell = b(o, "phaseEnvRell", "REL LEVEL", -100, 100, bipFmt, 1);
+    const card = makeSection("PHASE ENV", "phaseenv", rates.concat(levels, [rel, rell]), {
+      before: graph, headExtra: on, rows: [rates, levels]
+    });
+    const foot = document.createElement("div");
+    foot.className = "inline phaseenvfoot";
+    const ml = document.createElement("span");
+    ml.className = "lbl"; ml.textContent = "MODE";
+    foot.append(
+      knobFor(rel),
+      knobFor(rell),
+      ml,
+      makeSelect(["release", "hold", "loop", "loop 2"], o.phaseEnvMode, function (v) { o.phaseEnvMode = v; })
+    );
+    card.appendChild(foot);
+    return card;
+  }
+
+  function viewOpPhaseMap() {
+    const wrap = document.createElement("div");
+    wrap.className = "ops-grid phasemap-grid";
+    OPS.forEach(function (o) {
+      const col = opShell(o, 0, false);
+      col.classList.add("phasecol");
+      col.appendChild(phaseMapCard(o));
+      col.appendChild(phaseSection(o));
+      col.appendChild(phaseLfoSection(o));
+      col.appendChild(phaseEnvSection(o));
+      wrap.appendChild(col);
+    });
+    return wrap;
+  }
+
   function viewOps() {
     const wrap = document.createElement("div");
     wrap.className = "ops-grid";
@@ -1936,6 +2333,7 @@
     { id: "partfx", label: "part fx/mod", view: viewFxMod },
     { id: "ops", label: "operators", view: viewOps },
     { id: "oplfo", label: "operator lfos", view: viewOperatorLfos },
+    { id: "phasemap", label: "op phasemap", view: viewOpPhaseMap },
     { id: "opspec", label: "operator spectra", view: viewOpSpectra },
     { id: "opspecmod", label: "op spectra mod", view: viewOpSpectraMod }
   ];
@@ -2555,7 +2953,7 @@
           detuneLfoWave: "sine",
           detuneLfoMode: true
         }, o);
-      }),
+      }).map(withPhaseDefaults),
       voice: s.voice,
       pitchLfo: Object.assign({ mode: true },
         s.pitchLfo && typeof s.pitchLfo === "object" ? s.pitchLfo : base.pitchLfo),

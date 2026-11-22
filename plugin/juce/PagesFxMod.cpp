@@ -437,7 +437,7 @@ private:
     PluginEditor& editor_;
     bool key_ = true;
     int part_ = 0;
-    std::array<params::FollowTarget, 15> targets_{};
+    std::array<params::FollowTarget, 19> targets_{};
     P1Choice target_;
     P1Toggle on_;
     P1Button wipe_{"wipe all key", true};

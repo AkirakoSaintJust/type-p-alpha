@@ -354,7 +354,8 @@ public:
             juce::String depthID, juce::String waveID, juce::String modeID,
             juce::String rateFadeID, juce::String depthFadeID, int op, int part,
             PluginEditor::OperatorSection section,
-            std::function<void()> onDepthEdit = {}, bool compact = false)
+            std::function<void()> onDepthEdit = {}, bool compact = false,
+            juce::String modeLabel = "bipolar")
         : P1Card(std::move(title),
                  [&ed = editor, op, part, section] {
                      ed.copyOperatorSection(op, part, section);
@@ -368,11 +369,11 @@ public:
                     compact ? 22.0f : 28.0f),
           depthFade_(editor.state(), depthFadeID, "depth fade",
                      compact ? 22.0f : 28.0f),
-          compact_(compact),
           wave_(editor.state(), std::move(waveID), params::lfoWaveNames()),
-          mode_(editor.state(), std::move(modeID), "bipolar"),
+          mode_(editor.state(), std::move(modeID), std::move(modeLabel)),
           fadeGraph_(editor.state(), std::move(rateFadeID),
-                     std::move(depthFadeID))
+                     std::move(depthFadeID)),
+          compact_(compact)
     {
         addAndMakeVisible(rate_);
         addAndMakeVisible(depth_);
@@ -420,6 +421,7 @@ std::unique_ptr<PageBase> makePatchPage(PluginEditor& editor);
 std::unique_ptr<PageBase> makeOperatorsPage(PluginEditor& editor);
 std::unique_ptr<PageBase> makeFxModPage(PluginEditor& editor);
 std::unique_ptr<PageBase> makeOperatorLfosPage(PluginEditor& editor);
+std::unique_ptr<PageBase> makePhaseMapPage(PluginEditor& editor);
 std::unique_ptr<PageBase> makeOperatorSpectraPage(PluginEditor& editor, bool a);
 std::unique_ptr<PageBase> makeOperatorSpectraModPage(PluginEditor& editor);
 

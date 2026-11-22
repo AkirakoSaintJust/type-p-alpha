@@ -109,6 +109,13 @@ juce::String formatParamValue(const P1ParamSpec& spec, double value)
             return waveNames[v];
         return juce::String(v);
     }
+    if (display == "lfo_wave") {
+        static const char* const names[6] = {"sine", "triangle", "saw",
+                                              "inverse saw", "square", "random"};
+        return v >= 0 && v < 6 ? names[v] : juce::String(v);
+    }
+    if (display == "frac3")
+        return juce::String(value / 1000.0, 3);
     if (display == "off_pct")
         return v <= 0 ? "off" : percentage(spec, value, false);
     if (display == "pct_inv")
@@ -279,6 +286,19 @@ double parseParamValue(const P1ParamSpec& spec, const juce::String& text)
         return juce::jlimit(static_cast<double>(spec.min),
                             static_cast<double>(spec.max),
                             spec.min + (v + 100.0) * range / 200.0);
+    }
+    if (display == "frac3")
+        return juce::jlimit(static_cast<double>(spec.min),
+                            static_cast<double>(spec.max), v * 1000.0);
+    if (display == "lfo_wave") {
+        static const char* const names[6] = {"sine", "triangle", "saw",
+                                              "inverse saw", "square", "random"};
+        const auto lower = text.trim().toLowerCase();
+        for (int i = 0; i < 6; ++i)
+            if (lower == names[i])
+                return i;
+        return juce::jlimit(static_cast<double>(spec.min),
+                            static_cast<double>(spec.max), v);
     }
     return juce::jlimit(static_cast<double>(spec.min),
                         static_cast<double>(spec.max), v);
@@ -616,6 +636,7 @@ P1TabBar::P1TabBar() = default;
 
 void P1TabBar::setLabels(const juce::StringArray& labels)
 {
+    labels_ = labels;
     tabs_.clear();
     for (int i = 0; i < labels.size(); ++i) {
         auto tab = std::make_unique<Tab>(labels[i], i, *this);
@@ -625,6 +646,15 @@ void P1TabBar::setLabels(const juce::StringArray& labels)
     }
     active_ = juce::jlimit(0, juce::jmax(0, static_cast<int>(tabs_.size()) - 1),
                            active_);
+    resized();
+    repaint();
+}
+
+void P1TabBar::setCompact(bool compact)
+{
+    if (forcedCompact_ == compact)
+        return;
+    forcedCompact_ = compact;
     resized();
     repaint();
 }
@@ -644,13 +674,45 @@ void P1TabBar::setActive(int index)
 
 void P1TabBar::resized()
 {
-    int x = 0;
+    const int count = static_cast<int>(tabs_.size());
+    if (count == 0)
+        return;
+
+    int naturalWidth = 0;
     for (auto& tab : tabs_) {
         if (tab == nullptr)
             continue;
-        const int width = static_cast<int>(
+        naturalWidth += static_cast<int>(
             std::ceil(textWidth(displayFont(tokens::textTab), tab->getButtonText()))) +
             32;
+    }
+
+    /* The eight-tab editor is wider than a half-size window. Keep the full
+     * labels when they fit, otherwise use the same tab order with compact
+     * labels and equal widths so no label runs into its neighbour. */
+    static constexpr const char* compactLabels[8] = {
+        "patch", "fx", "op env", "op lfo", "phase", "spec a", "spec b",
+        "spec mod"};
+    const auto* top = getTopLevelComponent();
+    const int visibleWidth =
+        top != nullptr && top != this ? top->getWidth() : getWidth();
+    const bool compact =
+        count == 8 && (forcedCompact_ || naturalWidth > visibleWidth);
+
+    int x = 0;
+    for (int i = 0; i < count; ++i) {
+        auto& tab = tabs_[static_cast<std::size_t>(i)];
+        if (tab == nullptr)
+            continue;
+        if (compact)
+            tab->setButtonText(compactLabels[i]);
+        else if (i < labels_.size())
+            tab->setButtonText(labels_[i]);
+
+        const int width = compact
+            ? (i == count - 1 ? getWidth() - x : getWidth() / count)
+            : static_cast<int>(std::ceil(textWidth(
+                  displayFont(tokens::textTab), tab->getButtonText()))) + 32;
         tab->setBounds(x, 0, width, getHeight());
         x += width;
     }

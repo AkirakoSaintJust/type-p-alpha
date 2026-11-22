@@ -114,7 +114,7 @@ def _patch(source: str) -> str:
     pattern = re.compile(
         r"(\n[ \t]*)op([1-4])_osc_audio_x = p1_wave\[op\2_osc_base\[v\]\s*\n"
         r"\s*\+ \(\(op\2_osc_bl\[v\] \? op\2_ph_mip_x : 0u\) << 10\) "
-        r"\+ \(op\2_ph_phase_x >> 22\)\];"
+        r"\+ \(op\2_padd_phase_x >> 22\)\];"
     )
 
     def replace(match: re.Match[str]) -> str:
@@ -122,7 +122,7 @@ def _patch(source: str) -> str:
         op = match.group(2)
         return (
             f"{indent}op{op}_osc_audio_x = p1_additive_wave("
-            f"op{op}_ph_phase_x, "
+            f"op{op}_padd_phase_x, "
             f"p1_additive_mip(op{op}_ph_step[v], {_HARMONICS}u, "
             f"{_LEVELS}u), p1_additive_morph_now);"
         )

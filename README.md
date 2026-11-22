@@ -41,11 +41,10 @@ Results so far seem to be fit for intent. I've been able to easily make rudiment
 
 ## Potential things I'm considering
 
-1. Stochastic phaseshaping, inspired by phase distortion/vector phaseshaping and Xenakis' stochastic and granular techniques.
-2. LFO fade-out and a possible sustain stage on the rate and depth fades? Maybe?
-3. Control macros. What kind of macro controls would make the synth friendlier, more performable, and more modulatable, without turning the panel into an overwhelming mod matrix?
-4. Documentation and graphic design. The panel is mostly ok, but I'd like to work on the wordmark, a nicely designed and human-written manual, and complementary materials such as posters, web graphics, etc. Also refine the panel.
-5. Ring mod/AM algorithms?
+1. A sustain stage on the LFO rate and depth fades?
+2. Control macros. What kind of macro controls would make the synth friendlier, more performable, and more modulatable, without turning the panel into an overwhelming mod matrix?
+3. Documentation and graphic design. The panel is mostly ok, but I'd like to work on the wordmark, a nicely designed and human-written manual, and complementary materials such as posters, web graphics, etc. Also refine the panel.
+4. Ring mod/AM algorithms?
 
 ## Done
 
@@ -57,6 +56,7 @@ Results so far seem to be fit for intent. I've been able to easily make rudiment
 6. Per-part stereo panning.
 7. Library synchronisation across running instances.
 8. Rate and depth fades on every LFO, with the envelope rate table's time scale and a two-line graph.
+9. Per-operator stochastic phaseshaping, with a live composed map, zero-crossing locks, drift, flips, a local reorder, and a dedicated LFO and signed envelope on the `op phasemap` tab (see [the phase map contract](plugin/feature-contract-phase-map.md)). The read is 1×. The 2× half-band was designed but not built, because the 1× path measured 1.76× the phase-off baseline and the aliasing would need a fresh CPU budget.
 
 ## Empyrical stuff I'd like to try
 

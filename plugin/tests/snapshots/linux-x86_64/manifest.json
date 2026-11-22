@@ -2,112 +2,122 @@
   "images": {
     "editor-algorithm.png": {
       "height": 985,
-      "sha256": "3eb573ee66f529dc1d1b6ddefb551822e71825d27ca0f7a0e3907f005bb15853",
+      "sha256": "d21d1058017fb4bc9fe102d78da5f42225b385b79c1dc2dccaf672677dd878ea",
       "width": 1240
     },
     "editor-confirm.png": {
       "height": 985,
-      "sha256": "f951793462b4286c37126e87878d2da939bfed79dd354684c8a718bf69cdc071",
+      "sha256": "97cb0ed7fa2bcdbe07696f4bf914aace15cd17857380aa8182616c57a857c795",
       "width": 1240
     },
     "editor-envelope-loops.png": {
       "height": 985,
-      "sha256": "af221b9be73cedb23e65010877ba1fa212802ae2d1b7d44ed9f1b1b8222e5830",
+      "sha256": "4a2dcef3963e666dc6abf80532be6aa1ac41e2196f5ffaa0f9e40b0ebaeae069",
       "width": 1240
     },
     "editor-fxmod-loops.png": {
       "height": 985,
-      "sha256": "84655cfcc6f0cbb6c4aad8e2136e98b1ce3a31669fcf4f4905fc8d5e5d0f6e30",
+      "sha256": "c4b64a39b34f215872a5d916c18b0987cfd9c1daf30bb023a4abce70e3ac7b0a",
       "width": 1240
     },
     "editor-fxmod.png": {
       "height": 985,
-      "sha256": "f5fac8100ca4bf89605e5922cf4d1fd4a6d75f5904f0c6bfec1768a6015e99cf",
+      "sha256": "6bd379588becc1b719452195af14631c66ef6233092a17e168fac4e3a95bf971",
       "width": 1240
     },
     "editor-half.png": {
       "height": 493,
-      "sha256": "63b9f067e15847a26f1e832e3b0fe37b2b173fea249e86d114b15cc3a1dbf52d",
+      "sha256": "1d09a38465664c5b34e2fe4cbccd955ed5260890f195420ed7b120ffd0fbf1a3",
       "width": 620
     },
     "editor-long-name.png": {
       "height": 985,
-      "sha256": "ab6ea434895711e238db976a2f90d489eb341d1eeeebdc24f1c3d4c9b395f9f7",
+      "sha256": "39ab00130e3eb1041ea8300a1a5eafdfa7c7819f1d85c09952ae80364cbd8b2f",
+      "width": 1240
+    },
+    "editor-op-phasemap-live.png": {
+      "height": 985,
+      "sha256": "64b5797c2fc9dbed737b54833abf6003f584e5b90c63ad7a3122c02484934d7b",
+      "width": 1240
+    },
+    "editor-op-phasemap.png": {
+      "height": 985,
+      "sha256": "1408b3c156dc0c9583c0b1d780dffe8b18bf40a78d8a5dd79994394920e43348",
       "width": 1240
     },
     "editor-op-spectra-mod-levels.png": {
       "height": 985,
-      "sha256": "a7352a8fa0b393db7a54400a465fad3e9955e4e5d2eba83887d7d14143a9be59",
+      "sha256": "98f0bdbbc38e7996de6c8411a19c2ee07601415b1cb1e19fa7cb5933e653ee3e",
       "width": 1240
     },
     "editor-op-spectra-mod-ranges.png": {
       "height": 985,
-      "sha256": "6c8008f86cd8e075962b242c34cf10ac8db802f784391d3be2e910c52b75a1c6",
+      "sha256": "774b97e53ba6d9727b30428d5deca26fb7e900ab6ab98850274850536d6679e7",
       "width": 1240
     },
     "editor-op-spectra-mod.png": {
       "height": 985,
-      "sha256": "17b63e49ec5a900f028db9bb5c8866d484c5713a87756ebfdfef29cb9b6dab09",
+      "sha256": "01eb29af90a39ec13566b5a43732c19519679428ae55dce09e6f0b5acdd867a7",
       "width": 1240
     },
     "editor-operator-envs.png": {
       "height": 985,
-      "sha256": "79ebf42ae1207192ec87e4c09703daec1fed25038207db347bc627cc2f3b6f2f",
+      "sha256": "514ad07042b18375661286db6913a23e80206b8418ae245618e6570a28e2a75c",
       "width": 1240
     },
     "editor-operator-lfos-fades.png": {
       "height": 985,
-      "sha256": "ead563f9d94776309ca6c626c1be5b571ba5cc8e8fabae36dc275af085b5a25b",
+      "sha256": "be4a425ed35fffb5531c8d5af4705085f9f25e1a3ee6cf438fb3c10619395148",
       "width": 1240
     },
     "editor-operator-lfos.png": {
       "height": 985,
-      "sha256": "0acf94249bb2fd6f8d330090dae80846c38479aa5c5fed10cc32e0d9e1d4b50b",
+      "sha256": "c9633c0772d4705cc1b8177d1b025d6f998956945849deff14c55c09141102ee",
       "width": 1240
     },
     "editor-operator-spectra-b.png": {
       "height": 985,
-      "sha256": "dae0c4cb577d8e215493e07876f45559b8d1129970de2499767d5f1d5f758410",
+      "sha256": "bcf0d3151f35106fb3410a59c49be9f6a7ad58428752998df68fbb58c9dd8702",
       "width": 1240
     },
     "editor-operator-spectra-levels.png": {
       "height": 985,
-      "sha256": "2e31c61bb15547c9003ebead370927e41681e5b40cae3b0e8e07647d8330b290",
+      "sha256": "e2cef542577c508c90b37a6b0ea4f4a92507bb6cdf7dc36f5cc948a1969bf6de",
       "width": 1240
     },
     "editor-operator-spectra.png": {
       "height": 985,
-      "sha256": "c139b9562d3c2eec5c317117a609cd89795178d1f1658f0e8f9eb098d815cc0c",
+      "sha256": "b929d65cfd996e0e43b90ed71b67e66609c1d661fbe3cb7843d70437a23c5d05",
       "width": 1240
     },
     "editor-part2.png": {
       "height": 985,
-      "sha256": "c46abf5ab2bbfde6a52806d5ad86a3b6e1a949637856eb775c969f9baa0f3818",
+      "sha256": "20c8949fe0c3ac282a0f4df3cd03bcdc1d32fd841e770cab7f1f778b772a6ba1",
       "width": 1240
     },
     "editor-patch.png": {
       "height": 985,
-      "sha256": "e1612e7ffee8392d3be102e7a541462ba072e6f551848e0750686974a892b51b",
+      "sha256": "b2b5fdc1fbbe7d8436b382c014d48ac26761221bdb6b0db802221b822bcd269b",
       "width": 1240
     },
     "editor-patches.png": {
       "height": 985,
-      "sha256": "85fd55e8e1b25c593604b877fad915d1eda7446dcb59b210cfdb5adecf190973",
+      "sha256": "4cdd3d36cccbd54d3c4f80e307c2f31d71cd23f6976b1824dfb8153ea33fc200",
       "width": 1240
     },
     "editor-rename.png": {
       "height": 985,
-      "sha256": "7b752e447f38ec88f1590203519a032decc87525a37c28a999215799c20d1209",
+      "sha256": "8a9194f5fd0699bf7e6cbcb6efeb2b9fb5f983599c5caf0efb5d257c4e361b36",
       "width": 1240
     },
     "editor-save-mode.png": {
       "height": 985,
-      "sha256": "f3628faeebb9186d48e713c1b27546e3363e1c7356e7b3dfe0579439b1d9caa6",
+      "sha256": "455588124fb884e5047d3306b0269f1673d81381c4f32966f3a01c396765b700",
       "width": 1240
     },
     "editor-single-parts.png": {
       "height": 985,
-      "sha256": "9a2d398419abedefd395f426b2e7480ebac9f6aff0592f9c415a59206db27ee9",
+      "sha256": "55c2777d221eb9cfafbbf168871624efe39e6be1901588b5df943d18d9490109",
       "width": 1240
     }
   },

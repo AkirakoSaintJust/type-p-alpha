@@ -226,11 +226,14 @@ P1_MATH_INLINE int32_t p1_key_apply(int32_t v, int32_t k, int32_t min, int32_t m
 }
 
 /* The velocity follow factor (Q15): 0 at velocity 0, ramping linearly to `amount`
- * at maximum velocity. `vel` is `voice_velocity[v]` (velocity × 258, so 127 →
- * ~32766, ≈ Q15 normalised), and `amount` is a signed percent (-100..+100). */
+ * percent of full Q15 at maximum velocity. `vel` is `voice_velocity[v]` (velocity
+ * × 258, so 127 → about 32766), which is already Q15-normalised, so dividing by
+ * 100 turns the signed percent `amount` into the same Q15 scale that
+ * `p1_key_scale` returns. The old divisor 3,276,700 made the factor 32767 times
+ * too small, so every velocity follow was inert. */
 P1_MATH_INLINE int32_t p1_vel_scale(int32_t vel, int32_t amount)
 {
-    return (int32_t)(((int64_t)amount * vel) / 3276700);
+    return (int32_t)(((int64_t)amount * vel) / 100);
 }
 
 /* Sum two bipolar Q15 push factors (key-follow + velocity-follow), clamped to the

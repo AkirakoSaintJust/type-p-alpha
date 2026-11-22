@@ -1,16 +1,43 @@
 # Stochastic phase shaping
 
-Status: written 2026-11-21. The Phase Transfer Lab was a browser instrument I
-built to answer the first line of research in the [README](../../README.md):
-where the breakpoint of a phase-distortion transfer function should sit, and
-whether phase distortion and phase modulation can share one phase map without
-extra machinery. It answered the first half in my own listening and left the
-second alone. It never became a measurement: no test, no CPU figure, no
-recording, and one listener, me.
+Status: written 2026-11-21; shipped note 2026-11-22. The Phase Transfer Lab was a
+browser instrument I built to answer the first line of research in the
+[README](../../README.md): where the breakpoint of a phase-distortion transfer
+function should sit, and whether phase distortion and phase modulation can share
+one phase map without extra machinery. It answered the first half in my own
+listening and left the second alone. It never became a measurement: no test, no
+CPU figure, no recording, and one listener, me.
 
-The lab is not in this repository, and nothing from it has shipped into Type
-P.α. Phase distortion is still an open line in the README, so read this as the
-record of an experiment rather than a description of the instrument.
+The lab page is `docs/research/phase-transfer-lab.html`, a static record of the
+browser instrument rather than a measurement. The instrument now has a
+per-operator phase map based on it, running at 1×. The shipped defaults, the
+1.76× CPU figure and the recorded aliasing limit are in the
+[phase map contract](../../plugin/feature-contract-phase-map.md). Read the first half
+as the lab record and "What shipped" as the current state.
+
+## What shipped
+
+The map sits per operator and per part, so four operators × two parts give eight
+instances shared by the voices on a part. It warps the operator's own accumulator
+before the FM and feedback offsets are added, which keeps the modulator outside
+the map.
+
+- 12-bit phase grid, a 1024-entry one-breakpoint `F`, and `G` with 1 to 32 linear
+  segments.
+- A protected mask on every wave; the 13 fixed waves use their mip-0 table and
+  wave 13 interpolates the a and b masks at the base morph. A span that touches a
+  protected point is locked, so it never flips and never moves in a reorder.
+- Drift, flips and local forward swaps at the 30 Hz stochastic tick. The local
+  swap replaced the lab's full permutation because it can respect the locks.
+- A per-part LFO and a signed envelope on the breakpoint, with the LFO rate and
+  depth fades from the rest of the instrument.
+- A 1× read at 48 kHz. The 2× map read and the half-band decimator were designed,
+  but the 1× path measures 1.76× the phase-off baseline, above the 1.6× budget for
+  the oversampled design, so the 2× path is not built. The join aliasing is
+  unmeasured and is recorded as a limit.
+- 40 checks in `plugin/tests/phase_map.cpp`, including a bit-exact off path, the
+  fold, locks, flips, reorder, drift, both modulation sources, key and velocity
+  follow, the trigger rule, the two parts, wave 13 and the CPU ratio.
 
 ## The lab
 
@@ -152,18 +179,20 @@ listener.
 ## Open questions
 
 - **The sharing question.** One map for phase distortion and phase modulation is
-  still open. The lab only did the distortion half.
+  still open. The lab only did the distortion half, and the product map sits
+  before the FM offset rather than inside it.
 - **Aliasing.** At 48 kHz the high-frequency content grew at very high drift
   rates. The joins are step discontinuities: the table is band-limited but the
   map is not, and I added no anti-alias filter. Kleimola and Radna both flag the
-  risk. The fix would be minBLEP or oversampling, and neither was built.
-- **Defaults.** The envelope amount started at 0, the LFO amount and the
-  envelope times were never fixed, and the bank defaulted to sine. A patch
-  therefore began from a static map, and I can't say what the intended defaults
-  were.
-- **Cost.** No CPU measurement, no voice count and no buffer size. The lab ran
-  in Chrome and Firefox through Web Audio.
-- **Evidence.** No test, no recording and no second listener.
+  risk. The product runs at 1×. The 2× half-band was designed and not built, so the
+  fold-back is unmeasured.
+- **Defaults.** The product answers this: breakpoint 0.500, 8 segments, flip,
+  reorder and drift at 0, LFO depth 0, and the envelope on with levels at 0. A
+  patch begins with the map off, so the first move is deliberate.
+- **Cost.** The 1× worst case is 1.76× the phase-off baseline at 24 voices, four
+  operators and 48 kHz. The 2× design does not fit the 1.6× budget.
+- **Evidence.** 40 checks in `plugin/tests/phase_map.cpp`, two goldens and the
+  full suite. Still one listener and no recording.
 - **Date.** The lab itself has no date in this repository: it was never
   committed, so the status line is when I wrote this up (2026-11-21), not when
   the experiment ran.
@@ -175,11 +204,12 @@ listener.
   musically.
 - **Flips:** a Markov switch so flips cluster into runs, or a group of segments
   flipped together.
-- **Order:** local skips instead of a full permutation, Lévy-distributed jumps
-  for rare large leaps, and a fixed non-sequential pattern as a control.
+- **Order:** local skips shipped as the forward swap with `jump`. Lévy-distributed
+  jumps for rare large leaps and a fixed non-sequential pattern are still
+  untried.
 - **The sharing question:** the one the lab was meant to answer and didn't.
-- **A band-limited version:** so the extreme settings can be judged without the
-  aliasing sitting on top of them.
+- **A band-limited version:** not built. The 1× join aliasing is the current
+  limit, so the extreme settings are judged with that limitation in place.
 
 ## Sources
 
