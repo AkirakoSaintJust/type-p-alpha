@@ -212,8 +212,10 @@ and the phase dot follows it, so the screen agrees with the sound.
 
 ### The segmented map `G`
 
-`G` divides the table phase into `M` equal y spans, `M` = 1..32, with y
-boundaries `i / M` fixed. The input boundaries `x_k` drift; a segment is linear:
+`G` divides the table phase into `M` spans with y targets `i / M`, `M` = 1..32.
+The y boundaries are then snapped away from protected points (see Locks), so the
+spans are near-equal rather than exactly equal. The input boundaries `x_k` drift;
+a segment is linear:
 
 ```text
 slope_k = (y_{k+1} - y_k) / (x_{k+1} - x_k)

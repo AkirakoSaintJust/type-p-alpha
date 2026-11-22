@@ -10850,7 +10850,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                     if (flip > 100u) flip = 100u;
                     old = pm[P1_PM_FACC];
                     pm[P1_PM_FACC] = old + (uint32_t)op4_phase_flip_rate[voice_part[v]] * CONTROL_BLOCK;
-                    if (pm[P1_PM_FACC] < old && P1_PHASE_MAP_NEXT(pm) % 100u < flip) {
+                    if (pm[P1_PM_FACC] < old) {
                         uint32_t locks = pm[P1_PM_LOCK];
                         for (uint32_t k = 0u; k < m; k++) {
                             if (locks & (1u << k))
@@ -11428,7 +11428,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                     if (flip > 100u) flip = 100u;
                     old = pm[P1_PM_FACC];
                     pm[P1_PM_FACC] = old + (uint32_t)op3_phase_flip_rate[voice_part[v]] * CONTROL_BLOCK;
-                    if (pm[P1_PM_FACC] < old && P1_PHASE_MAP_NEXT(pm) % 100u < flip) {
+                    if (pm[P1_PM_FACC] < old) {
                         uint32_t locks = pm[P1_PM_LOCK];
                         for (uint32_t k = 0u; k < m; k++) {
                             if (locks & (1u << k))
@@ -12006,7 +12006,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                     if (flip > 100u) flip = 100u;
                     old = pm[P1_PM_FACC];
                     pm[P1_PM_FACC] = old + (uint32_t)op2_phase_flip_rate[voice_part[v]] * CONTROL_BLOCK;
-                    if (pm[P1_PM_FACC] < old && P1_PHASE_MAP_NEXT(pm) % 100u < flip) {
+                    if (pm[P1_PM_FACC] < old) {
                         uint32_t locks = pm[P1_PM_LOCK];
                         for (uint32_t k = 0u; k < m; k++) {
                             if (locks & (1u << k))
@@ -12584,7 +12584,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                     if (flip > 100u) flip = 100u;
                     old = pm[P1_PM_FACC];
                     pm[P1_PM_FACC] = old + (uint32_t)op1_phase_flip_rate[voice_part[v]] * CONTROL_BLOCK;
-                    if (pm[P1_PM_FACC] < old && P1_PHASE_MAP_NEXT(pm) % 100u < flip) {
+                    if (pm[P1_PM_FACC] < old) {
                         uint32_t locks = pm[P1_PM_LOCK];
                         for (uint32_t k = 0u; k < m; k++) {
                             if (locks & (1u << k))
