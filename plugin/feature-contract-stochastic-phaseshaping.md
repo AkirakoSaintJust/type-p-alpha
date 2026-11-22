@@ -5,12 +5,12 @@ page, the preset migration and the engine tests are in the tree. The 2× read, t
 half-band decimator and the 16-sample alignment delay are not built. The measured
 1× cost is 1.76× the phase-off baseline, and the join aliasing is unmeasured; both
 are recorded in
-[`plugin/feature-contract-phase-map.md`](plugin/feature-contract-phase-map.md).
+[`feature-contract-phase-map.md`](feature-contract-phase-map.md).
 The rest of this file stays the design record, including the 2× section the build
 did not reach.
 
-Research: [`docs/research/stochastic-phaseshaping.md`](docs/research/stochastic-phaseshaping.md)
-and the browser lab [`docs/research/phase-transfer-lab.html`](docs/research/phase-transfer-lab.html).
+Research: [`docs/research/stochastic-phaseshaping.md`](../docs/research/stochastic-phaseshaping.md)
+and the browser lab [`docs/research/phase-transfer-lab.html`](../docs/research/phase-transfer-lab.html).
 The lab is a listening experiment, not a measurement. Its zero-crossing rule, its
 slope bounds and its segment map are the starting point; its five charts are the
 display reference; its clamp is the behaviour this spec replaces.

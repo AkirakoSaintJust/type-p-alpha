@@ -10,7 +10,7 @@
 - **Brief section:** [`../README.md`](../README.md) research line 1, the
   `op phasemap` tab in [`../design/mockup.html`](../design/mockup.html), and the
   resolved design in
-  [`../stochastic-phaseshaping-spec.md`](../stochastic-phaseshaping-spec.md).
+  [`feature-contract-stochastic-phaseshaping.md`](feature-contract-stochastic-phaseshaping.md).
 - **Owner / date:** P1Onken, 2026-11-21, with implementation evidence on 2026-11-22.
 - **Disposition:** implemented at 1×. The engine nodes, the 232 parameters, the
   editor page, the preset migration, the engine test and the live snapshot are in
@@ -697,6 +697,6 @@ the missing layer, and no row above calls it passed.
   `plugin/juce/CMakeLists.txt`.
 - **Tests:** `plugin/tests/phase_map.cpp` (new), `engine_parity.cpp`,
   `preset_smoke.cpp`, `editor_snapshot.cpp`, `plugin/tests/snapshots/linux-x86_64/`.
-- **Docs:** this contract, `stochastic-phaseshaping-spec.md`, `design/mockup.html`,
+- **Docs:** this contract, `feature-contract-stochastic-phaseshaping.md`, `design/mockup.html`,
   `design/README.md`, `design/juce.md`, `docs/research/stochastic-phaseshaping.md`,
   `docs/research/phase-transfer-lab.html`, `README.md`, `plugin/README.md`.
