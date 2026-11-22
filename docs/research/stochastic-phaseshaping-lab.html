@@ -112,7 +112,7 @@ canvas { display: block; width: 100%; height: auto; }
       <h1>stochastic phaseshaping lab</h1>
       <p class="subtitle">A browser study of the breakpoint map F, the segmented map G and the stochastic layers that move them. This is the lab behind the op phasemap tab, kept as a listening experiment rather than a measurement.</p>
     </div>
-    <div class="engine-pill">web audio / 30 Hz control</div>
+    <div class="engine-pill">web audio / 200 Hz control</div>
   </header>
 
   <main class="layout">
@@ -168,8 +168,8 @@ canvas { display: block; width: 100%; height: auto; }
       </div>
       <div class="field">
         <div class="field-head"><label for="lfoRate">lfo rate</label><output class="value" id="lfoRateValue">0.5 Hz</output></div>
-        <input id="lfoRate" type="range" min="0" max="30" step="0.1" value="0.5">
-        <div class="range-ends"><span>0 Hz</span><span>30 Hz</span></div>
+        <input id="lfoRate" type="range" min="0" max="200" step="0.1" value="0.5">
+        <div class="range-ends"><span>0 Hz</span><span>200 Hz</span></div>
       </div>
       <div class="field">
         <div class="field-head"><label for="envAmount">envelope depth</label><output class="value" id="envAmountValue">0%</output></div>
@@ -220,9 +220,9 @@ canvas { display: block; width: 100%; height: auto; }
       </div>
       <div class="field">
         <div class="field-head"><label for="flipInterval">flip rate</label><output class="value" id="flipIntervalValue">0.5 Hz</output></div>
-        <input id="flipInterval" type="range" min="0" max="30" step="0.1" value="0.5">
-        <div class="range-ends"><span>0 Hz / never</span><span>30 Hz / fast</span></div>
-        <p class="hint">Each eligible segment rerolls at this rate. A locked segment never flips. The lab clock is 30 Hz. The product uses the engine LFO range.</p>
+        <input id="flipInterval" type="range" min="0" max="200" step="0.1" value="0.5">
+        <div class="range-ends"><span>0 Hz / never</span><span>200 Hz / fast</span></div>
+        <p class="hint">Each eligible segment rerolls at this rate. A locked segment never flips. The lab clock is 200 Hz. The product uses the engine LFO range.</p>
       </div>
 
       <div class="divider"></div>
@@ -240,8 +240,8 @@ canvas { display: block; width: 100%; height: auto; }
       </div>
       <div class="field">
         <div class="field-head"><label for="reorderRate">reorder rate</label><output class="value" id="reorderRateValue">0 Hz</output></div>
-        <input id="reorderRate" type="range" min="0" max="30" step="0.1" value="0">
-        <div class="range-ends"><span>0 Hz / stopped</span><span>30 Hz / limit</span></div>
+        <input id="reorderRate" type="range" min="0" max="200" step="0.1" value="0">
+        <div class="range-ends"><span>0 Hz / stopped</span><span>200 Hz / limit</span></div>
         <p class="hint">One swap per event. Each segment is still visited once. At 0 Hz the order holds.</p>
       </div>
 
@@ -254,8 +254,8 @@ canvas { display: block; width: 100%; height: auto; }
       </div>
       <div class="field">
         <div class="field-head"><label for="driftRate">drift rate</label><output class="value" id="driftRateValue">1.2 Hz</output></div>
-        <input id="driftRate" type="range" min="0" max="30" step="0.1" value="1.2">
-        <div class="range-ends"><span>0 Hz / stopped</span><span>30 Hz / fast</span></div>
+        <input id="driftRate" type="range" min="0" max="200" step="0.1" value="1.2">
+        <div class="range-ends"><span>0 Hz / stopped</span><span>200 Hz / fast</span></div>
         <p class="hint">Each event nudges every slope and reflects it at 0.5 and 2.66. The walk has no pull toward 1. At 0 Hz the slopes hold.</p>
       </div>
 
@@ -267,7 +267,7 @@ canvas { display: block; width: 100%; height: auto; }
       </div>
       <p class="hint"><strong>Locks.</strong> A boundary cannot sit inside a zero crossing or a silent run. The boundary snaps away, and the active count can drop below the requested count.</p>
       <p class="hint"><strong>Flip locks.</strong> A segment that touches a zero crossing or a silent run stays forward. Locked segments are grey in the plot.</p>
-      <p class="hint">The lab runs its stochastic clocks at 30 Hz. The audio and the table read run at the browser rate. Reordering makes deliberate phase jumps, which can click at high rates.</p>
+      <p class="hint">The lab runs its stochastic clocks at 200 Hz. The audio and the table read run at the browser rate. Reordering makes deliberate phase jumps, which can click at high rates.</p>
     </section>
 
     <section class="panel visuals" aria-label="Synthesis visualizations">
@@ -299,7 +299,7 @@ canvas { display: block; width: 100%; height: auto; }
         <span class="legend-item"><span class="swatch dash"></span>half peak</span>
         <span class="legend-item"><span class="swatch jump"></span>jump</span>
       </div>
-      <p class="footnote">The composed map is T = G(F). F is applied first, then G. The phase marker follows one traversal. Slopes stay in 0.5..2.66, and the stochastic clocks run at 30 Hz.</p>
+      <p class="footnote">The composed map is T = G(F). F is applied first, then G. The phase marker follows one traversal. Slopes stay in 0.5..2.66, and the stochastic clocks run at 200 Hz.</p>
     </section>
   </main>
 </div>
@@ -309,7 +309,7 @@ canvas { display: block; width: 100%; height: auto; }
   'use strict';
   const N = 4096;
   const TAU = Math.PI * 2;
-  const CONTROL_RATE = 30;
+  const CONTROL_RATE = 200;
   const CONTROL_DT = 1 / CONTROL_RATE;
   const MIN_SLOPE = 0.5;
   const MAX_SLOPE = 2.66;
@@ -756,7 +756,7 @@ canvas { display: block; width: 100%; height: auto; }
       ? amount * 0.75 * Math.sqrt(driftRate * CONTROL_DT) * Math.sqrt(3)
       : 0;
 
-    // Generate new slope targets at 30 Hz. The audio loop interpolates from
+    // Generate new slope targets at 200 Hz. The audio loop interpolates from
     // the previous target to this one over the control interval, keeping drift smooth.
     for (const seg of segments) {
       const base = Number.isFinite(seg.slopeTarget) ? seg.slopeTarget : seg.slope;
@@ -1275,7 +1275,6 @@ canvas { display: block; width: 100%; height: auto; }
   drawAll();
   animate();
   window.addEventListener('pagehide', () => { if (audioContext) audioContext.close(); });
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawAll);
 })();
 </script>
 </body>
