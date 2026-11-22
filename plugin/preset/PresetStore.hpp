@@ -164,6 +164,10 @@ private:
      * envelope slots were inserted. */
     int toVersion13Index(int targetIndex) const;
 
+    /* The part-block index in the intermediate version 14 layout, after the
+     * spectral envelope blocks changed but before the filter block did. */
+    int toVersion13aIndex(int targetIndex) const;
+
     /* Expand a part bank saved with `oldCount` params per record to the current
      * count. The chain runs version 10 operator blocks, the version 11 pan
      * reorder, the version 12 offset envelope insert, and the version 13 filter

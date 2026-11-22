@@ -527,18 +527,29 @@ the total to 1,976.
   26 phase parameters and 3 follow amounts, then op2's 29, and so on. Nothing
   existing moves, so the v15→v16 migration is an append.
 - The migration chain runs in `PresetStore::migratePartBank`. `v15Count` is
-  `kPartParamCount - 116` and `v14Count` is `v15Count - 34`. The existing
-  v14→v15 fade insertion reaches `v15Count`, then 116 defaults are appended.
-  Older records (v13, v14, v15) still load. The new values default to phase off,
-  env on and the neutral geometry, so an old record renders the current render.
+  `kPartParamCount - 116`, `v14Count` is `v15Count - 34` (831), `v14aCount` is
+  `v14Count - 2` (829) and `v13Count` is `v14aCount - 8` (821). The version 14
+  shape has two forms because the filter envelope became absolute without a
+  version bump: the 829 record still carries the filter depth, and the 831
+  record does not.
+- The version 13 to 14a step handles the four spectral envelopes. Each depth
+  sat 46 slots before its rate block, and the block grew from seven rates and
+  levels to ten, so the step removes the depth, grows each block by three and
+  maps the old r4 to the release rate. The 14a to 14 step grows the filter block
+  from eight to ten in place. The 14 to 15 step inserts the 34 fades, then 116
+  phase defaults are appended for version 16. A record with the 829 count takes
+  only the filter, fade and phase steps. Older records (v10, v12, v13) still load.
+  The new phase values default to phase off, env on and the neutral geometry, so
+  an old record renders the current render.
+- `preset_smoke` pins `kP1PartParamCount` at 981, because the chain derives every
+  historical count from it. It loads version 10, 12, 13, 14a and 14 records and
+  checks the operator, pan, offset, filter, spectral, fade and phase blocks. The
+  version 10, 12 and 13 records are written at their real historical indices.
 - Every `PresetStore` that reads an old bank configures the same envelope,
-  offset, absolute and fade indices. The temporary disk store in `saveLibrary`
-  did not, so an old record was migrated with `-1` bases and written back
-  corrupted. The disk store now calls the same configuration function as the
-  in-memory store.
-- `preset_smoke` loads version 13, 14 and 15 records and checks the appended
-  counts, `phase_on = 0`, `phase_env_on = 1`, `phase_bp = 500` and the 981 part
-  block.
+  offset, absolute, fade and operator indices. The temporary disk store in
+  `saveLibrary` did not, so an old record was migrated with `-1` bases and
+  written back corrupted. The disk store now calls the same configuration
+  function as the in-memory store.
 - The plugin state migration sets the new parameters to their defaults. The
   `uiPage` remap is in the Editor section.
 - The CC map is regenerated. `param_to_cc` grows to 1,976 entries, every new

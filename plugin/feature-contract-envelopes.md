@@ -123,9 +123,11 @@ Old libraries are remapped, not rejected.
   move the signed feedback amount.
 - `pitch_envelope` covers the zero start, the slow first stage, sustain on and off,
   the release level, and the loop2 cycle between level2 and level3.
-- `preset_smoke` migrates a fabricated version 10 record, a version 12 record and a
-  version 13 record, covering the operator, pan, offset, filter and spectral envelope
-  blocks in one chain.
+- `preset_smoke` migrates a fabricated version 10 record, a version 12 record, a
+  version 13 record and the intermediate version 14 record, covering the operator,
+  pan, offset, filter and spectral envelope blocks in one chain. The version 13
+  record keeps the spectral depth 46 slots before its rate block, as the real
+  version 13 layout did.
 - `spectral` checks that the absolute morph envelope starts at the morph knob, reaches
   its levels, and stops moving the morph when the envelope is off.
 - `engine_parity` keeps the default note-on and release renders bit-exact with the
@@ -144,7 +146,9 @@ The filter envelope's levels are 0..99 on the panel. The engine scales them by
 256 internally and divides the output back before the cutoff, because the
 one-pole enforces a minimum step of one unit. Without the scale, every slow
 rate finished in about 66 ms. The parameter values and the preset block are
-unchanged; the scale is internal to `mod_env`. `filter_envelope` checks that the
+unchanged; the scale is an input on the `fenv` instance rather than a parameter,
+so the part record keeps its 981 parameters and the historical counts in
+`migratePartBank` still line up. `filter_envelope` checks that the
 slowest rate is still moving after 100 blocks, that it has not snapped to the
 target after 1,000, that a fast rate is well advanced, and that 99 is instant.
 

@@ -69,6 +69,12 @@ std::array<int, 34> lfoFadeIndices()
 
 int main()
 {
+    /* `migratePartBank` derives the v12 to v15 record counts by subtracting
+     * from the current count. A param that joins the part record without a
+     * migration step shifts every later index and misreads an old record as an
+     * even older one, so the count is pinned here. */
+    check(kP1PartParamCount == 981,
+          "the part record keeps the version 16 parameter count");
     const auto fades = lfoFadeIndices();
     check(fades[33] >= 0, "find the 34 LFO fade parameters");
     std::setvbuf(stdout, nullptr, _IONBF, 0);
@@ -241,7 +247,9 @@ int main()
         std::vector<uint8_t> oldBank(static_cast<std::size_t>(oldRecord) * 128u,
                                      0xFF);
         std::vector<int32_t> oldParams(oldCount, 3);
-        const int oldWarm = oldIndex(w0);
+        /* The version 10 operator block starts at 135: the version 13 layout
+         * put the spectral depth at 134 in front of it. */
+        const int oldWarm = 135;
         for (int k = 0; k < 7; ++k)
             oldParams[static_cast<std::size_t>(oldWarm) + static_cast<std::size_t>(k)] =
                 11 + k;
@@ -309,7 +317,7 @@ int main()
                   grown[static_cast<std::size_t>(w0) + 7u] == 1,
               "the operator envelope maps r1 to surge, l2 to d1l and l3 to d2l");
         check(grown[static_cast<std::size_t>(w0) + 8u] ==
-                  oldParams[static_cast<std::size_t>(w0) + 7u],
+                  oldParams[static_cast<std::size_t>(oldWarm) + 7u],
               "the params after an operator block stay aligned");
         check(grown[static_cast<std::size_t>(panBase)] == 1 &&
                   grown[static_cast<std::size_t>(panBase) + 4u] == 11 &&
@@ -346,19 +354,6 @@ int main()
             indexOf("op4_spec_env_on.p0")};
         check(bases[0] > 0 && bases[4] > bases[0] && panBase > bases[4],
               "find the offset and pan envelope blocks");
-        const auto oldIndex = [&fades, &bases, &absBases](int target) {
-            int shift = 0;
-            for (int base : fades)
-                if (base >= 0 && base < target)
-                    ++shift;
-            for (int base : bases)
-                if (base < target)
-                    ++shift;
-            for (int base : absBases)
-                if (base < target)
-                    shift += 2;
-            return target - shift;
-        };
 
         const uint32_t oldCount = kP1PartParamCount - 116u - 15u - 34u;
         const auto oldRecord = PP_RECORD(oldCount);
@@ -368,16 +363,17 @@ int main()
         const std::array<int, 9> feedback = {1, 21, 22, 23, 24, 25, 26, 27, 28};
         const std::array<int, 9> pitch = {0, 31, 32, 33, 34, 35, 36, 37, 38};
         const std::array<int, 10> pan = {1, 41, 42, 43, 44, 45, 46, 47, 48, 2};
-        const auto writeBlock = [&oldParams, &oldIndex](
-                                    int target, const auto& values) {
-            const int base = oldIndex(target);
+        /* The version 12 blocks sit one slot left of their version 14 target
+         * for the offset envelopes and at 806 for the pan. */
+        const auto writeBlock = [&oldParams](
+                                    int base, const auto& values) {
             for (std::size_t k = 0; k < values.size(); ++k)
                 oldParams[static_cast<std::size_t>(base) + k] =
                     values[k];
         };
-        writeBlock(bases[0], feedback);
-        writeBlock(bases[4], pitch);
-        writeBlock(panBase, pan);
+        writeBlock(147, feedback);
+        writeBlock(761, pitch);
+        writeBlock(806, pan);
 
         const auto slot = static_cast<std::size_t>(5) * oldRecord;
         preset_part_pack(oldBank.data() + slot, "offset", oldParams.data(),
@@ -456,32 +452,21 @@ int main()
         check(absBases[1] > 0 && absBases[4] > absBases[1] &&
                   absBases[0] > absBases[4],
               "find the absolute envelope blocks");
-        const auto oldIndex = [&fades, &absBases](int target) {
-            int shift = 0;
-            for (int base : fades)
-                if (base >= 0 && base < target)
-                    ++shift;
-            for (int base : absBases)
-                if (base < target)
-                    shift += 2;
-            return target - shift;
-        };
 
         const uint32_t oldCount = kP1PartParamCount - 116u - 10u - 34u;
         const auto oldRecord = PP_RECORD(oldCount);
         std::vector<uint8_t> oldBank(static_cast<std::size_t>(oldRecord) * 128u,
                                      0xFF);
         std::vector<int32_t> oldParams(oldCount, 3);
+        /* The version 13 filter block is depth, r1 to r4, l1 to l3 at 793.
+         * The spectral depth is separate at 134, with r1 to l3 at 180. */
         const std::array<int, 8> filter = {2, 51, 52, 53, 54, 55, 56, 57};
-        const std::array<int, 8> spectral = {61, 62, 63, 64, 65, 66, 67, 2};
-        const auto writeBlock = [&oldParams, &oldIndex](
-                                    int target, const auto& values) {
-            const int base = oldIndex(target);
-            for (std::size_t k = 0; k < values.size(); ++k)
-                oldParams[static_cast<std::size_t>(base) + k] = values[k];
-        };
-        writeBlock(absBases[0], filter);
-        writeBlock(absBases[1], spectral);
+        const std::array<int, 7> spectral = {61, 62, 63, 64, 65, 66, 67};
+        for (std::size_t k = 0; k < filter.size(); ++k)
+            oldParams[793u + k] = filter[k];
+        oldParams[134u] = 2;
+        for (std::size_t k = 0; k < spectral.size(); ++k)
+            oldParams[180u + k] = spectral[k];
 
         const auto slot = static_cast<std::size_t>(5) * oldRecord;
         preset_part_pack(oldBank.data() + slot, "absolute", oldParams.data(),
@@ -507,6 +492,9 @@ int main()
 
         p1::PresetStore loaded{kP1PartParamCount, kP1PartCount,
                                p1::partParamDefaults(), kP1PartCutoffIndex};
+        loaded.setOperatorEnvelopeIndices(
+            {indexOf("op1.eg.warm.p0"), indexOf("op2.eg.warm.p0"),
+             indexOf("op3.eg.warm.p0"), indexOf("op4.eg.warm.p0")});
         loaded.setAbsEnvelopeIndices(
             absBases[0],
             {absBases[1], absBases[2], absBases[3], absBases[4]});
@@ -532,6 +520,86 @@ int main()
                   grown[static_cast<std::size_t>(absBases[1]) + 8u] == 0 &&
                   grown[static_cast<std::size_t>(absBases[1]) + 9u] == 1,
               "the spectral envelope maps its depth to on and keeps the levels");
+    }
+
+    /* The intermediate version 14 record: the spectral envelopes are already
+     * absolute but the filter block still carries its depth. It keeps the
+     * version 14 byte but is two parameters shorter than the final layout. */
+    {
+        const auto indexOf = [](const char* name) {
+            for (int i = 0; i < kP1PartParamCount; ++i) {
+                if (std::string(name) ==
+                    kP1ParamSpecs[static_cast<std::size_t>(i)].id)
+                    return i;
+            }
+            return -1;
+        };
+        const int filterBase = indexOf("fenv_on.p0");
+        const int modeBase = indexOf("mode.p0");
+        const auto oldCount = static_cast<uint32_t>(kP1PartParamCount - 116u - 34u - 2u);
+        const auto oldRecord = PP_RECORD(oldCount);
+        std::vector<uint8_t> oldBank(static_cast<std::size_t>(oldRecord) * 128u,
+                                     0xFF);
+        std::vector<int32_t> oldParams(oldCount, 3);
+        const std::array<int, 8> filter = {2, 51, 52, 53, 54, 55, 56, 57};
+        for (std::size_t k = 0; k < filter.size(); ++k)
+            oldParams[801u + k] = filter[k];
+        oldParams[809u] = 42;
+        oldParams[796u] = 12345;
+        const auto slot = static_cast<std::size_t>(7) * oldRecord;
+        preset_part_pack(oldBank.data() + slot, "intermediate", oldParams.data(),
+                         oldCount);
+        setRecordVersion(oldBank.data() + slot, oldCount, 14u);
+
+        std::vector<uint8_t> oldLibrary;
+        const auto put32 = [&oldLibrary](uint32_t value) {
+            oldLibrary.push_back(static_cast<uint8_t>(value & 0xFFu));
+            oldLibrary.push_back(static_cast<uint8_t>((value >> 8) & 0xFFu));
+            oldLibrary.push_back(static_cast<uint8_t>((value >> 16) & 0xFFu));
+            oldLibrary.push_back(static_cast<uint8_t>((value >> 24) & 0xFFu));
+        };
+        static const uint8_t magic[7] = {'P', '1', 'L', 'I', 'B', '3', '\n'};
+        oldLibrary.insert(oldLibrary.end(), magic, magic + 7);
+        put32(12);
+        put32(static_cast<uint32_t>(oldBank.size()));
+        oldLibrary.insert(oldLibrary.end(), oldBank.begin(), oldBank.end());
+        const auto multiSize =
+            MP_RECORD(static_cast<uint32_t>(kP1PartCount)) * 64u;
+        put32(static_cast<uint32_t>(multiSize));
+        oldLibrary.insert(oldLibrary.end(), multiSize, 0xFF);
+
+        p1::PresetStore loaded{kP1PartParamCount, kP1PartCount,
+                               p1::partParamDefaults(), kP1PartCutoffIndex};
+        loaded.setOperatorEnvelopeIndices(
+            {indexOf("op1.eg.warm.p0"), indexOf("op2.eg.warm.p0"),
+             indexOf("op3.eg.warm.p0"), indexOf("op4.eg.warm.p0")});
+        loaded.setPanEnvelopeIndex(indexOf("pan_env_on.p0"));
+        loaded.setOffsetEnvelopeIndices(
+            {indexOf("op1_fbenv_on.p0"), indexOf("op2_fbenv_on.p0"),
+             indexOf("op3_fbenv_on.p0"), indexOf("op4_fbenv_on.p0")},
+            indexOf("penv_on.p0"));
+        loaded.setAbsEnvelopeIndices(
+            filterBase,
+            {indexOf("op1_spec_env_on.p0"), indexOf("op2_spec_env_on.p0"),
+             indexOf("op3_spec_env_on.p0"), indexOf("op4_spec_env_on.p0")});
+        loaded.setLfoFadeIndices(fades);
+        check(loaded.loadLibrary(oldLibrary.data(), oldLibrary.size()),
+              "load the intermediate version 14 library");
+        const auto& grown = loaded.partParams(7);
+        check(grown[static_cast<std::size_t>(filterBase)] == 1 &&
+                  grown[static_cast<std::size_t>(filterBase) + 1u] == 51 &&
+                  grown[static_cast<std::size_t>(filterBase) + 2u] == 52 &&
+                  grown[static_cast<std::size_t>(filterBase) + 3u] == 53 &&
+                  grown[static_cast<std::size_t>(filterBase) + 4u] == 55 &&
+                  grown[static_cast<std::size_t>(filterBase) + 5u] == 56 &&
+                  grown[static_cast<std::size_t>(filterBase) + 6u] == 57 &&
+                  grown[static_cast<std::size_t>(filterBase) + 7u] == 54 &&
+                  grown[static_cast<std::size_t>(filterBase) + 8u] == 0 &&
+                  grown[static_cast<std::size_t>(filterBase) + 9u] == 1,
+              "the intermediate filter block grows by two");
+        check(grown[static_cast<std::size_t>(modeBase)] == 42 &&
+                  grown[static_cast<std::size_t>(kP1PartCutoffIndex)] == 12345,
+              "the params around the intermediate filter block stay aligned");
     }
 
     /* Two instances over one file: independent slots merge, a slot both changed

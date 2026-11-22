@@ -22,10 +22,16 @@ constexpr int kPhaseParamsPerPart = 116;
  * feedback envelope for each operator. */
 constexpr int kOffsetEnvelopeBlocks = 5;
 
-/* The five absolute envelope blocks that gained two slots in version 14: the
- * filter envelope and one spectral envelope for each operator. */
-constexpr int kAbsEnvelopeBlocks = 5;
-constexpr int kAbsEnvelopeSlots = 2;
+/* The five absolute envelope blocks that changed for version 14: the filter
+ * envelope and one spectral envelope for each operator. The spectral blocks
+ * grew from seven rates and levels to ten, netting two slots after the separate
+ * depth was removed; the filter block grew from eight to ten in the following
+ * step and kept its version byte. */
+constexpr int kFilterEnvelopeGrow = 2;
+constexpr int kSpecEnvelopeGrow = 2;
+/* In the version 13 layout the spectral depth sits 46 slots before the r1 of
+ * its rate block. Version 14 moved the depth into the block as `on`. */
+constexpr int kVersion13SpecDepthToBlock = 46;
 
 /* The version 11 pan envelope block: on, r1, r2, r3, r4, l1, l2, l3, l4, depth.
  * The version 12 block: on, r1, r2, r3, l1, l2, l3, rel rate, rel level, mode.
@@ -77,11 +83,12 @@ void remapOffsetBlock(const std::vector<int32_t>& in, int oldBase,
     put(9, 1);
 }
 
-/* The version 13 spectral envelope block: r1, r2, r3, r4, l1, l2, l3, depth.
- * The version 14 block: on, r1, r2, r3, l1, l2, l3, rel rate, rel level, mode.
- * A non-zero depth meant a live envelope, so the mode is sustain on. */
+/* The version 13 spectral envelope block: r1, r2, r3, r4, l1, l2, l3 at the
+ * block, and `depth` far before it. The version 14 block: on, r1, r2, r3, l1,
+ * l2, l3, rel rate, rel level, mode. A non-zero depth meant a live envelope, so
+ * the mode is sustain on, r4 becomes the release rate and r4 is dropped. */
 void remapAbsSpecBlock(const std::vector<int32_t>& in, int oldBase,
-                       std::vector<int32_t>& out, int newBase)
+                       int depthIndex, std::vector<int32_t>& out, int newBase)
 {
     const auto at = [oldBase, &in](int k) -> int32_t {
         return in[static_cast<std::size_t>(oldBase + k)];
@@ -89,7 +96,7 @@ void remapAbsSpecBlock(const std::vector<int32_t>& in, int oldBase,
     const auto put = [newBase, &out](int k, int32_t value) {
         out[static_cast<std::size_t>(newBase + k)] = value;
     };
-    put(0, at(7) != 0 ? 1 : 0);
+    put(0, in[static_cast<std::size_t>(depthIndex)] != 0 ? 1 : 0);
     put(1, at(0));
     put(2, at(1));
     put(3, at(2));
@@ -480,17 +487,46 @@ int PresetStore::toVersion14Index(int targetIndex) const
 
 int PresetStore::toVersion13Index(int targetIndex) const
 {
+    /* Version 13 to 14 removed each spectral depth (134, 325, 516, 707), grew
+     * each spectral block by three slots at `on`, and then grew the filter
+     * block by two at its own base. A target index walks back over the depths
+     * it skipped, the spectral growth it passed and the filter growth it
+     * passed. */
     int shift = 0;
-    const int filter =
-        filterEnvBase_ >= 0 ? toVersion14Index(filterEnvBase_) : -1;
-    if (filter >= 0 && filter < targetIndex)
-        shift += kAbsEnvelopeSlots;
+    for (int warm : opEnvWarm_) {
+        const int mapped = warm >= 0 ? toVersion14Index(warm) : -1;
+        if (mapped >= 0 && mapped <= targetIndex)
+            ++shift;
+    }
     for (int base : specEnvBase_) {
         const int mapped = base >= 0 ? toVersion14Index(base) : -1;
         if (mapped >= 0 && mapped < targetIndex)
-            shift += kAbsEnvelopeSlots;
+            shift -= 3;
     }
-    return targetIndex - shift;
+    const int filter =
+        filterEnvBase_ >= 0 ? toVersion14Index(filterEnvBase_) : -1;
+    if (filter >= 0 && targetIndex > filter + 9)
+        shift -= kFilterEnvelopeGrow;
+    return targetIndex + shift;
+}
+
+int PresetStore::toVersion13aIndex(int targetIndex) const
+{
+    /* The version 14 layout before the filter block became absolute. The
+     * spectral blocks and their removed depths still sit behind the target,
+     * but the filter block still has its old eight slots. */
+    int shift = 0;
+    for (int warm : opEnvWarm_) {
+        const int mapped = warm >= 0 ? toVersion14Index(warm) : -1;
+        if (mapped >= 0 && mapped <= targetIndex)
+            ++shift;
+    }
+    for (int base : specEnvBase_) {
+        const int mapped = base >= 0 ? toVersion14Index(base) : -1;
+        if (mapped >= 0 && mapped < targetIndex)
+            shift -= 3;
+    }
+    return targetIndex + shift;
 }
 
 int PresetStore::toVersion12Index(int targetIndex) const
@@ -525,11 +561,14 @@ bool PresetStore::migratePartBank(const uint8_t* data, uint32_t oldCount,
             ? target - static_cast<std::size_t>(kPhaseParamsPerPart)
             : target;
     const auto v14Count = v15Count >= 34u ? v15Count - 34u : v15Count;
-    const auto v13Count =
-        v14Count >= static_cast<std::size_t>(kAbsEnvelopeBlocks * kAbsEnvelopeSlots)
-            ? v14Count - static_cast<std::size_t>(kAbsEnvelopeBlocks *
-                                                  kAbsEnvelopeSlots)
+    const auto v14aCount =
+        v14Count >= static_cast<std::size_t>(kFilterEnvelopeGrow)
+            ? v14Count - static_cast<std::size_t>(kFilterEnvelopeGrow)
             : v14Count;
+    const auto v13Count =
+        v14aCount >= static_cast<std::size_t>(4 * kSpecEnvelopeGrow)
+            ? v14aCount - static_cast<std::size_t>(4 * kSpecEnvelopeGrow)
+            : v14aCount;
     const auto v12Count =
         v13Count >= static_cast<std::size_t>(kOffsetEnvelopeBlocks)
             ? v13Count - static_cast<std::size_t>(kOffsetEnvelopeBlocks)
@@ -560,33 +599,33 @@ bool PresetStore::migratePartBank(const uint8_t* data, uint32_t oldCount,
     std::sort(offsetBases.begin(),
               offsetBases.begin() + static_cast<std::ptrdiff_t>(offsetCount));
 
-    /* The absolute blocks: target index and version 13 old index. */
-    struct AbsBlock {
+    /* The spectral blocks: version 14 target, version 13 rates base and the
+     * separate version 13 depth. */
+    struct SpecBlock {
         int targetBase = -1;
         int oldBase = -1;
-        bool filter = false;
+        int depthBase = -1;
     };
-    std::array<AbsBlock, kAbsEnvelopeBlocks> absBlocks{};
-    int absCount = 0;
-    if (filterEnvBase_ >= 0) {
-        const int targetBase = toVersion14Index(filterEnvBase_);
-        absBlocks[static_cast<std::size_t>(absCount)] = {
-            targetBase, toVersion13Index(targetBase), true};
-        ++absCount;
-    }
+    std::array<SpecBlock, 4> specBlocks{};
+    int specCount = 0;
     for (int base : specEnvBase_) {
-        if (base < 0 || absCount >= kAbsEnvelopeBlocks)
+        if (base < 0 || specCount >= 4)
             continue;
         const int targetBase = toVersion14Index(base);
-        absBlocks[static_cast<std::size_t>(absCount)] = {
-            targetBase, toVersion13Index(targetBase), false};
-        ++absCount;
+        const int oldBase = toVersion13Index(targetBase);
+        specBlocks[static_cast<std::size_t>(specCount)] = {
+            targetBase, oldBase, oldBase - kVersion13SpecDepthToBlock};
+        ++specCount;
     }
-    std::sort(absBlocks.begin(),
-              absBlocks.begin() + static_cast<std::ptrdiff_t>(absCount),
-              [](const AbsBlock& a, const AbsBlock& b) {
+    std::sort(specBlocks.begin(),
+              specBlocks.begin() + static_cast<std::ptrdiff_t>(specCount),
+              [](const SpecBlock& a, const SpecBlock& b) {
                   return a.targetBase < b.targetBase;
               });
+
+    /* The filter block grows in place in the intermediate version 14 layout. */
+    const int filterTarget =
+        filterEnvBase_ >= 0 ? toVersion14Index(filterEnvBase_) : -1;
 
     std::vector<int32_t> grown;
     std::vector<int32_t> expanded;
@@ -652,6 +691,10 @@ bool PresetStore::migratePartBank(const uint8_t* data, uint32_t oldCount,
             grown.assign(v14Count, 0);
             for (std::size_t i = 0; i < v14Count; ++i)
                 grown[i] = params[i];
+        } else if (oldCount == static_cast<uint32_t>(v14aCount)) {
+            grown.assign(v14aCount, 0);
+            for (std::size_t i = 0; i < v14aCount; ++i)
+                grown[i] = params[i];
         } else if (oldCount == static_cast<uint32_t>(v13Count)) {
             grown.assign(v13Count, 0);
             for (std::size_t i = 0; i < v13Count; ++i)
@@ -710,34 +753,34 @@ bool PresetStore::migratePartBank(const uint8_t* data, uint32_t oldCount,
             }
         }
 
-        if (grown.size() == v13Count && raw[0] < 14u) {
-            expanded.assign(v14Count, 0);
-            if (absCount != kAbsEnvelopeBlocks) {
-                const auto copy = std::min<std::size_t>(grown.size(), v14Count);
+        /* Version 13 to the intermediate version 14: each spectral block gains
+         * three slots and its separate depth becomes `on`. */
+        if (grown.size() == v13Count) {
+            expanded.assign(v14aCount, 0);
+            if (specCount != 4) {
+                const auto copy = std::min<std::size_t>(grown.size(), v14aCount);
                 for (std::size_t i = 0; i < copy; ++i)
                     expanded[i] = grown[i];
             } else {
-                int shift = 0;
                 int next = 0;
-                for (int i = 0; i < static_cast<int>(v14Count); ++i) {
-                    if (next < absCount &&
-                        i == absBlocks[static_cast<std::size_t>(next)].targetBase) {
-                        const AbsBlock& block =
-                            absBlocks[static_cast<std::size_t>(next)];
-                        if (block.oldBase < 0 ||
-                            static_cast<std::size_t>(block.oldBase) + 8u >
+                for (int i = 0; i < static_cast<int>(v14aCount);) {
+                    if (next < specCount &&
+                        i == specBlocks[static_cast<std::size_t>(next)].targetBase) {
+                        const SpecBlock& block =
+                            specBlocks[static_cast<std::size_t>(next)];
+                        if (block.oldBase < 0 || block.depthBase < 0 ||
+                            static_cast<std::size_t>(block.oldBase) + 7u >
+                                grown.size() ||
+                            static_cast<std::size_t>(block.depthBase) >=
                                 grown.size())
                             return false;
-                        if (block.filter)
-                            remapAbsFilterBlock(grown, block.oldBase, expanded, i);
-                        else
-                            remapAbsSpecBlock(grown, block.oldBase, expanded, i);
-                        i += 9;
-                        shift += kAbsEnvelopeSlots;
+                        remapAbsSpecBlock(grown, block.oldBase, block.depthBase,
+                                          expanded, i);
+                        i += 10;
                         ++next;
                         continue;
                     }
-                    const int oldIndex = i - shift;
+                    const int oldIndex = toVersion13aIndex(i);
                     expanded[static_cast<std::size_t>(i)] =
                         oldIndex >= 0 &&
                                 static_cast<std::size_t>(oldIndex) < grown.size()
@@ -745,6 +788,38 @@ bool PresetStore::migratePartBank(const uint8_t* data, uint32_t oldCount,
                             : (static_cast<std::size_t>(i) < defaults_.size()
                                    ? defaults_[static_cast<std::size_t>(i)]
                                    : 0);
+                    ++i;
+                }
+            }
+            grown.swap(expanded);
+        }
+
+        /* The intermediate version 14 to the final one: the filter block grows
+         * from eight slots at its depth to ten at `on`. */
+        if (grown.size() == v14aCount) {
+            expanded.assign(v14Count, 0);
+            if (filterTarget < 0 ||
+                static_cast<std::size_t>(filterTarget) + 8u > grown.size()) {
+                const auto copy = std::min<std::size_t>(grown.size(), v14Count);
+                for (std::size_t i = 0; i < copy; ++i)
+                    expanded[i] = grown[i];
+            } else {
+                int src = 0;
+                for (int i = 0; i < static_cast<int>(v14Count);) {
+                    if (i == filterTarget) {
+                        remapAbsFilterBlock(grown, filterTarget, expanded, i);
+                        src = filterTarget + 8;
+                        i += 10;
+                        continue;
+                    }
+                    expanded[static_cast<std::size_t>(i)] =
+                        src >= 0 && static_cast<std::size_t>(src) < grown.size()
+                            ? grown[static_cast<std::size_t>(src)]
+                            : (static_cast<std::size_t>(i) < defaults_.size()
+                                   ? defaults_[static_cast<std::size_t>(i)]
+                                   : 0);
+                    ++src;
+                    ++i;
                 }
             }
             grown.swap(expanded);
