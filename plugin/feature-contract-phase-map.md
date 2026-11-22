@@ -113,8 +113,9 @@ The `hz` display is the existing one (`raw * 48000 / 2^32`): 20,000,000 is 223 H
 `frac3` is new: `value / 1000` to three decimals, so the breakpoint knob reads
 `0.500` and the caption reads `bp 0.500 · π` (`bp * 2π`, shown as a multiple of
 π). `lfo_wave` is new: it names the six entries of `lfoWaveNames`, not the 14
-oscillator waves. `phase_env_mode` is stored as `raw` 0..3 and drawn with the
-four `mod_env` mode names; mode 1 is hold, the default.
+oscillator waves. `phase_env_mode` is stored as `raw` 0..3 and drawn as the
+four-value dropdown `sustain off`, `sustain on`, `loop 1` and `loop 2`; mode 1 is
+hold, the default.
 
 The 26 phase parameters are the nine knobs plus the `on` switch, the six LFO
 parameters and the ten envelope parameters. The three follow amounts are added
@@ -468,11 +469,11 @@ The page is one row of four 294 px columns, the same rhythm as `operator lfos`:
 | operator header | 26 | `opN`, copy, paste, mute |
 | composed map | 99 | the plot and the caption line |
 | `phase` card | 159 | `on`, nine knobs in three rows |
-| `phase lfo` card | 160 | the compact LFO row with fades |
-| `phase env` card | 176 | graph, three rate/level rows, mode, `on` |
+| `phase lfo` card | 147 | four knobs in one row, with fades and the graph |
+| `phase env` card | 210 | graph, three rate/level rows, mode, `on` |
 
 The cards are separated by 6 px (3 px column gap plus 3 px card margin), the
-column padding is 8 px, and the measured total is 660 px inside the 669 px page
+column padding is 8 px, and the measured total is 653 px inside the 669 px page
 budget. The heights come from the mockup's measured blocks; if JUCE finds a
 clip, the map loses pixels before the value text does.
 
@@ -484,11 +485,12 @@ The `phase` card's nine knobs are, row by row:
 2. `flip rate`, `reorder`, `reorder rate`;
 3. `jump`, `drift`, `drift rate`.
 
-The `on` switch is in the card header. The `phase lfo` card uses the existing
-compact fade row: 16 px dials, rate/depth/wave/bipolar, `rate fade` and
-`depth fade`, and the two-line graph. The `phase env` card uses a 20 px purple
-graph, `r1..r3`, `l1..l3`, `rel`/`rl`/`mode` in compact rows, and `on` in the
-header. The LFO graph is green; the envelope graph is purple.
+The `on` switch is in the card header. The `phase lfo` card puts rate, depth,
+`rate fade` and `depth fade` in one row of 28 px dials, with the wave select and
+`on` below and the two-line fade graph between them. The `phase env` card uses a
+48 px purple graph, `r1..r3`, `l1..l3`, `rel`/`rl`/`mode` in compact rows, and
+`on` in the header. The mode is a dropdown with `sustain off`, `sustain on`,
+`loop 1` and `loop 2`. The LFO graph is green; the envelope graph is purple.
 
 ### Map display
 

@@ -210,14 +210,19 @@ public:
                     params::opEnv(op, "d2l", part)},
                    colour(tokens::purple), 0.0, 99.0, false,
                    EnvelopeShape::operatorAmp,
-                   params::opEnv(op, "mode", part))
+                   params::opEnv(op, "mode", part)),
+          mode_(editor.state(), params::opEnv(op, "mode", part),
+                {"sustain off", "sustain on", "loop 1", "loop 2"})
     {
         addAndMakeVisible(envView_);
-        const std::array<const char*, 8> fields = {
-            "warm", "surge", "d1r", "d2r", "d1l", "d2l", "rel", "mode"};
+        addAndMakeVisible(mode_);
+        const std::array<const char*, 7> fields = {
+            "warm", "surge", "d1r", "d2r", "d1l", "d2l", "rel"};
+        const std::array<const char*, 7> labels = {
+            "warmup", "surge", "d1r", "d2r", "d1l", "d2l", "rel"};
         for (std::size_t i = 0; i < fields.size(); ++i) {
             knobs_[i] = std::make_unique<ParamKnob>(
-                editor.state(), params::opEnv(op, fields[i], part), fields[i],
+                editor.state(), params::opEnv(op, fields[i], part), labels[i],
                 28.0f);
             addAndMakeVisible(*knobs_[i]);
         }
@@ -227,25 +232,28 @@ public:
     {
         P1Card::resized();
         auto area = contentArea();
-        area.removeFromTop(8);
-        envView_.setBounds(area.removeFromTop(40));
+        area.removeFromTop(4);
+        envView_.setBounds(area.removeFromTop(32));
         auto rates = area.removeFromTop(64);
         const int rateCell = rates.getWidth() / 4;
         for (int i = 0; i < 4; ++i)
             knobs_[static_cast<std::size_t>(i)]->setBounds(
                 rates.removeFromLeft(rateCell));
         auto levels = area.removeFromTop(64);
-        const int levelCell = levels.getWidth() / 4;
-        for (int i = 4; i < 8; ++i)
+        const int levelCell = levels.getWidth() / 3;
+        for (int i = 4; i < 7; ++i)
             knobs_[static_cast<std::size_t>(i)]->setBounds(
                 levels.removeFromLeft(levelCell));
+        auto modeRow = area.removeFromTop(24);
+        mode_.setBounds(modeRow.removeFromLeft(levelCell * 2));
     }
 
     void tick() { envView_.repaint(); }
 
 private:
     P1Envelope envView_;
-    std::array<std::unique_ptr<ParamKnob>, 8> knobs_{};
+    ParamChoice mode_;
+    std::array<std::unique_ptr<ParamKnob>, 7> knobs_{};
 };
 
 class FeedbackEnvelopeCard : public P1Card {
@@ -276,7 +284,7 @@ public:
                    params::opFeedbackMode(op, part)),
           on_(editor.state(), params::opFeedbackOn(op, part), "on"),
           mode_(editor.state(), params::opFeedbackMode(op, part),
-                {"off", "sustain", "loop1", "loop2"})
+                {"sustain off", "sustain on", "loop 1", "loop 2"})
     {
         addAndMakeVisible(envView_);
         addAndMakeVisible(on_);
@@ -392,18 +400,17 @@ public:
         P1Card::resized();
         auto area = contentArea();
         area.removeFromTop(4);
-        auto row = area.removeFromTop(63);
-        rate_.setBounds(row.removeFromLeft(row.getWidth() / 2));
-        depth_.setBounds(row);
-        auto fadeRow = area.removeFromTop(compact_ ? 57 : 64);
-        rateFade_.setBounds(fadeRow.removeFromLeft(fadeRow.getWidth() / 2));
-        depthFade_.setBounds(fadeRow);
-        fadeGraph_.setBounds(
-            area.removeFromTop(compact_ ? 18 : 20).reduced(2, 2));
-        auto bottom = area.removeFromTop(compact_ ? 16 : 18).withTrimmedTop(2);
+        auto row = area.removeFromTop(compact_ ? 60 : 63);
+        const int cell = row.getWidth() / 4;
+        rate_.setBounds(row.removeFromLeft(cell));
+        depth_.setBounds(row.removeFromLeft(cell));
+        rateFade_.setBounds(row.removeFromLeft(cell));
+        depthFade_.setBounds(row);
+        auto bottom = area.removeFromBottom(compact_ ? 16 : 18).withTrimmedTop(2);
         wave_.setBounds(bottom.removeFromLeft(140));
         bottom.removeFromLeft(10);
         mode_.setBounds(bottom.removeFromLeft(110));
+        fadeGraph_.setBounds(area.reduced(2, 2));
     }
 
 private:

@@ -66,7 +66,8 @@ public:
                    EnvelopeShape::bipolar, params::filterEnvMode(part),
                    params::filterCutoff(part), 99.0 / 55296.0),
           on_(editor.state(), params::filterEnvOn(part), "on"),
-          mode_(editor.state(), params::filterEnvMode(part), "mode", 42.0f)
+          mode_(editor.state(), params::filterEnvMode(part),
+                {"sustain off", "sustain on", "loop 1", "loop 2"})
     {
         addAndMakeVisible(envView_);
         addAndMakeVisible(on_);
@@ -105,7 +106,8 @@ public:
         for (auto& knob : levels_)
             knob->setBounds(levelRow.removeFromLeft(levelCell));
         auto modeRow = area.removeFromTop(84);
-        mode_.setBounds(modeRow.removeFromLeft(levelCell));
+        mode_.setBounds(modeRow.removeFromLeft(levelCell * 2)
+                            .withSizeKeepingCentre(levelCell * 2 - 8, 24));
         on_.setBounds(getWidth() - 56, 0, 48, 18);
     }
 
@@ -115,7 +117,7 @@ private:
     int part_ = 0;
     P1Envelope envView_;
     P1Toggle on_;
-    ParamKnob mode_;
+    ParamChoice mode_;
     std::array<std::unique_ptr<ParamKnob>, 4> rates_{};
     std::array<std::unique_ptr<ParamKnob>, 4> levels_{};
 };
@@ -195,7 +197,8 @@ public:
                    colour(tokens::purple), -32768.0, 32767.0, true,
                    EnvelopeShape::bipolar, params::pitchEnvMode(part_)),
           on_(editor.state(), params::pitchEnvOn(part_), "on"),
-          mode_(editor.state(), params::pitchEnvMode(part_), "mode", 42.0f)
+          mode_(editor.state(), params::pitchEnvMode(part_),
+                {"sustain off", "sustain on", "loop 1", "loop 2"})
     {
         addAndMakeVisible(envView_);
         addAndMakeVisible(on_);
@@ -234,7 +237,8 @@ public:
         for (auto& knob : levels_)
             knob->setBounds(levelRow.removeFromLeft(levelCell));
         auto modeRow = area.removeFromTop(84);
-        mode_.setBounds(modeRow.removeFromLeft(levelCell));
+        mode_.setBounds(modeRow.removeFromLeft(levelCell * 2)
+                            .withSizeKeepingCentre(levelCell * 2 - 8, 24));
         on_.setBounds(getWidth() - 56, 0, 48, 18);
     }
 
@@ -244,7 +248,7 @@ private:
     int part_ = 0;
     P1Envelope envView_;
     P1Toggle on_;
-    ParamKnob mode_;
+    ParamChoice mode_;
     std::array<std::unique_ptr<ParamKnob>, 4> rates_{};
     std::array<std::unique_ptr<ParamKnob>, 4> levels_{};
 };
@@ -265,7 +269,8 @@ public:
                    EnvelopeShape::bipolar, params::panEnvMode(part_),
                    params::pan(part_)),
           on_(editor.state(), params::panEnvOn(part_), "on"),
-          mode_(editor.state(), params::panEnvMode(part_), "mode", 42.0f)
+          mode_(editor.state(), params::panEnvMode(part_),
+                {"sustain off", "sustain on", "loop 1", "loop 2"})
     {
         addAndMakeVisible(envView_);
         addAndMakeVisible(on_);
@@ -302,7 +307,8 @@ public:
         for (auto& knob : levels_)
             knob->setBounds(levelRow.removeFromLeft(levelCell));
         auto modeRow = area.removeFromTop(84);
-        mode_.setBounds(modeRow.removeFromLeft(cell));
+        mode_.setBounds(modeRow.removeFromLeft(cell * 2)
+                            .withSizeKeepingCentre(cell * 2 - 8, 24));
         on_.setBounds(getWidth() - 56, 0, 48, 18);
     }
 
@@ -312,7 +318,7 @@ private:
     int part_ = 0;
     P1Envelope envView_;
     P1Toggle on_;
-    ParamKnob mode_;
+    ParamChoice mode_;
     std::array<std::unique_ptr<ParamKnob>, 4> rates_{};
     std::array<std::unique_ptr<ParamKnob>, 4> levels_{};
 };

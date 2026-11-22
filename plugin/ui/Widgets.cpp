@@ -1323,14 +1323,13 @@ void P1Envelope::paint(juce::Graphics& g)
         const float t = static_cast<float>(99 - juce::jlimit(0, 99, rate));
         return t * t;
     };
-    const auto doubleBar = [this, &g](float bx, float by) {
-        g.setColour(colour(tokens::white));
-        g.drawLine(bx - 1.5f, by - 7.0f, bx - 1.5f, by + 7.0f, 1.0f);
-        g.drawLine(bx + 1.5f, by - 7.0f, bx + 1.5f, by + 7.0f, 1.0f);
+    const auto boundary = [this, &g, &area](float bx) {
+        g.setColour(colour(tokens::pink).withAlpha(0.9f));
+        g.drawVerticalLine(juce::roundToInt(bx), area.getY(), area.getBottom());
     };
     const auto loopArrow = [this, &g, area](float x0, float x1) {
         const float ay = area.getBottom() - 1.0f;
-        g.setColour(colour(tokens::white));
+        g.setColour(colour(tokens::pink).withAlpha(0.9f));
         g.drawLine(x0, ay, x1, ay, 1.0f);
         g.drawLine(x0, ay, x0 + 4.0f, ay - 3.0f, 1.0f);
         g.drawLine(x0, ay, x0 + 4.0f, ay + 3.0f, 1.0f);
@@ -1411,16 +1410,16 @@ void P1Envelope::paint(juce::Graphics& g)
         } else if (hold) {
             const float bx = x;
             lineTo(x + holdWidth, y);
-            doubleBar(bx, y);
-            doubleBar(x, y);
+            boundary(bx);
+            boundary(x);
             lineTo(x + weight[4] * scale, levelY(releaseTarget));
         } else if (loop) {
             const float bx = x;
             lineTo(x + loopWidth * 0.5f, levelY(stageLevels[0]));
-            doubleBar(bx, levelY(stageLevels[1]));
-            doubleBar(x, y);
+            boundary(bx);
+            boundary(x);
             lineTo(x + loopWidth * 0.5f, levelY(stageLevels[1]));
-            doubleBar(x, levelY(stageLevels[1]));
+            boundary(x);
             loopArrow(bx, x);
             lineTo(x + weight[4] * scale, levelY(releaseTarget));
         }
@@ -1433,16 +1432,16 @@ void P1Envelope::paint(juce::Graphics& g)
         } else if (hold) {
             const float bx = x;
             lineTo(x + holdWidth, y);
-            doubleBar(bx, y);
-            doubleBar(x, y);
+            boundary(bx);
+            boundary(x);
             lineTo(x + weight[3] * scale, levelY(stageLevels[3]));
         } else if (loop) {
             const float bx = x;
             lineTo(x + loopWidth * 0.5f, levelY(stageLevels[1]));
-            doubleBar(bx, levelY(stageLevels[2]));
-            doubleBar(x, y);
+            boundary(bx);
+            boundary(x);
             lineTo(x + loopWidth * 0.5f, levelY(stageLevels[2]));
-            doubleBar(x, levelY(stageLevels[2]));
+            boundary(x);
             loopArrow(bx, x);
             lineTo(x + weight[3] * scale, levelY(stageLevels[3]));
         }

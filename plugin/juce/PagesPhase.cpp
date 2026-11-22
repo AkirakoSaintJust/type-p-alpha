@@ -247,7 +247,7 @@ public:
                    params::opPhaseEnv(op, "mode", part)),
           on_(editor.state(), params::opPhaseEnv(op, "on", part), "on"),
           mode_(editor.state(), params::opPhaseEnv(op, "mode", part),
-                {"off", "sustain", "loop1", "loop2"})
+                {"sustain off", "sustain on", "loop 1", "loop 2"})
     {
         addAndMakeVisible(envView_);
         addAndMakeVisible(on_);
@@ -281,13 +281,13 @@ public:
     {
         P1Card::resized();
         auto area = contentArea();
-        envView_.setBounds(area.removeFromTop(24));
+        envView_.setBounds(area.removeFromTop(48));
         area.removeFromTop(2);
-        auto rates = area.removeFromTop(42);
+        auto rates = area.removeFromTop(54);
         const int rateCell = rates.getWidth() / 4;
         for (auto& knob : rates_)
             knob->setBounds(rates.removeFromLeft(rateCell));
-        auto levels = area.removeFromTop(42);
+        auto levels = area.removeFromTop(54);
         const int levelCell = levels.getWidth() / 4;
         for (auto& knob : levels_)
             knob->setBounds(levels.removeFromLeft(levelCell));
@@ -351,9 +351,9 @@ public:
         area.removeFromTop(3);
         phase_.setBounds(area.removeFromTop(159));
         area.removeFromTop(3);
-        lfo_.setBounds(area.removeFromTop(196));
+        lfo_.setBounds(area.removeFromTop(147));
         area.removeFromTop(3);
-        env_.setBounds(area.removeFromTop(174));
+        env_.setBounds(area.removeFromTop(210));
     }
 
     void paint(juce::Graphics& g) override

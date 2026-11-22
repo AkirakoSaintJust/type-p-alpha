@@ -28,7 +28,7 @@ Eight controls per operator:
 | decay2 rate | 0 to 99 | Moves to decay2 level. Falling is convex, rising is concave. 99 is instant. |
 | decay2 level | 0 to 99 | 99 is the operator level, 0 is silence. |
 | release rate | 0 to 99 | Falls to silence. Concave falling. 99 is instant, 0 is the slowest. |
-| mode | 0 to 3 | 0 sustain off, 1 sustain on, 2 loop1, 3 loop2. Default 0. |
+| mode | 0 to 3 | `sustain off`, `sustain on`, `loop 1`, `loop 2`. Default 0. |
 
 Both attack rates off means the attack is instant to full level.
 
@@ -56,7 +56,7 @@ Nine controls per envelope plus its on switch:
 | level3 | the current level range | Third target, and the sustain point. |
 | release rate | 0 to 99 | Falls to the release level. Concave falling. 99 is instant, 0 is the slowest. |
 | release level | the current level range | The level the release ends at. |
-| mode | 0 to 3 | Same four modes; sustain holds level3 and the loops cycle level2 and level3. |
+| mode | 0 to 3 | Same four modes; `sustain on` holds level3 and the loops cycle level2 and level3. |
 
 The envelope starts from the target parameter's value at note-on for an absolute
 envelope, and from a zero offset for the pitch and feedback envelopes. The filter,
@@ -131,9 +131,10 @@ Old libraries are remapped, not rejected.
 - `engine_parity` keeps the default note-on and release renders bit-exact with the
   filter envelope off.
 - The Linux snapshot set shows the operator, pitch, feedback, filter, spectral and
-  pan cards with the new controls. `editor-envelope-loops.png` and
-  `editor-fxmod-loops.png` show the double bars at the sustain and loop boundaries
-  and the left arrow under the loop.
+  pan cards with the new controls. Every envelope's mode is a dropdown with
+  `sustain off`, `sustain on`, `loop 1` and `loop 2`. `editor-envelope-loops.png`
+  and `editor-fxmod-loops.png` show the pink boundary lines at the sustain and
+  loop boundaries and the left arrow under the loop.
 - The operator graph draws the warm-up convex, the surge concave and the decays and
   release straight, with the sustain or loop boundaries marked.
 

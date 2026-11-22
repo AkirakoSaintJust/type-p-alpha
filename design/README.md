@@ -311,7 +311,7 @@ The pitch LFO card carries rate, depth, the wave select, the `bipolar` switch,
 and the `rate fade` and `depth fade` pair with its shared graph.
 
 The pan envelope card carries an on switch, three rates, three levels, a release
-rate and level, a mode and the envelope graph. Its levels are absolute percentage
+rate and level, a mode dropdown and the envelope graph. Its levels are absolute percentage
 points across the field, and the envelope starts at the part's pan. The envelope
 retriggers when a note starts on the part and releases when the part's last voice
 releases.
@@ -331,11 +331,14 @@ and spectro pair, and three cards: `oscillator`, `amp env`, `fb env`. The
 oscillator card holds ratio, detune, level, feedback and the wave select. The wave
 select lists sine, triangle, half sine, half tri, 2x sine, 2x tri, 2x half sine,
 2x half tri, rect sine, rect tri, pulse, square, saw and spectrum. The `amp
-env` card holds the warm-up, surge, decay1 and decay2 rates on the first row, then
-the two decay levels, the release rate and the mode on the second. The `fb env` card
-holds R1 to R3 and the release rate on the first row, then L1 to L3 and the release
-level on the second, with signed levels in feedback units, a mode select in the card
-and an `on` switch in the card header. The signed sum of the feedback knob,
+env` card holds the `warmup`, surge, decay1 and decay2 rates on the first row, then
+the two decay levels and the release rate on the second, with the mode dropdown
+below. The `fb env` card holds R1 to R3 and the release rate on the first row, then
+L1 to L3 and the release level on the second, with signed levels in feedback units,
+a mode dropdown in the card and an `on` switch in the card header. Every envelope's
+mode is a dropdown with `sustain off`, `sustain on`, `loop 1` and `loop 2`, and
+every envelope graph marks its sustain and loop boundaries with a pink vertical
+line, the same marker as the phase map breakpoint. The signed sum of the feedback knob,
 the envelope and the LFO chooses the feedback family, so a negative level can cross
 zero into the negative family. Every envelope and LFO card carries
 `copy` and `paste` in its header, so a shape or an LFO moves between operators
@@ -346,10 +349,10 @@ the card. The envelope rates and levels each get their own row.
 
 Four borderless columns, each with the operator name, copy and paste, the mute
 switch, a scope and spectro pair, then three cards: `amp lfo`, `fb lfo` and
-`detune lfo`. The oscillator stays on the operators page. Each LFO card holds rate,
-depth, the wave select and the `bipolar` switch, and carries `copy` and `paste` in
-its header. Below the pair, the `rate fade` and `depth fade` knobs share one time
-scale, and the two-line graph draws the green rate ramp and the purple depth ramp.
+`detune lfo`. The oscillator stays on the operators page. Each LFO card holds rate, depth,
+`rate fade` and `depth fade` in one row, with the wave select and the `bipolar`
+switch below, and carries `copy` and `paste` in its header. The two-line graph
+between them draws the green rate ramp and the purple depth ramp.
 The amplitude LFO depth is in level steps, the feedback LFO depth is a percentage
 of the feedback range, and the detune LFO depth is in semitones. A negative depth
 in bipolar mode inverts the LFO phase.
@@ -391,9 +394,9 @@ purple outline and spectrum b is a pink outline, with a marker under them that r
 from `a` to `b` at the current morph value. The marker and the faint waveform follow
 the live morph of the newest rendering voice. The display does not take a drag. The `morph
 env` card holds the graph, the on switch, R1 to R3, L1 to L3, the release rate and
-level, and the mode. The `morph lfo`
-card holds rate, depth, the wave select, the `bipolar` switch, and the compact
-`rate fade` and `depth fade` pair with its shared graph.
+level, and the mode dropdown. The `morph lfo`
+card holds rate, depth, `rate fade` and `depth fade` in one row, with the wave
+select and `bipolar` switch below, and the two-line graph between them.
 
 ### Op phasemap
 
@@ -408,9 +411,10 @@ does not take a drag.
 
 The `phase` card holds `on` in its header and nine knobs in three rows:
 `breakpoint`, `segments`, `flip`; `flip rate`, `reorder`, `reorder rate`; `jump`,
-`drift`, `drift rate`. The `phase lfo` card reuses the compact fade row. The
-`phase env` card is the signed envelope with a purple graph, `r1..r3`, `l1..l3`,
-`rel`, `rl`, the mode and `on`. All three cards carry `copy` and `paste` in their
+`drift`, `drift rate`. The `phase lfo` card puts rate, depth, `rate fade` and
+`depth fade` in one row, with the wave select and `on` below. The `phase env`
+card is the signed envelope with a 48 px purple graph, `r1..r3`, `l1..l3`, `rel`,
+`rl`, the mode dropdown and `on`. All three cards carry `copy` and `paste` in their
 headers, and the operator header copies and pastes the whole operator.
 
 The map is per part and shared by the voices, so a new note can reshape a held one;

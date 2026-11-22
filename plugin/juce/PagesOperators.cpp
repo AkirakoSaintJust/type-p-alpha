@@ -63,7 +63,7 @@ public:
         area.removeFromTop(4);
         osc_.setBounds(area.removeFromTop(140));
         area.removeFromTop(4);
-        amp_.setBounds(area.removeFromTop(200));
+        amp_.setBounds(area.removeFromTop(214));
         area.removeFromTop(4);
         fb_.setBounds(area.removeFromTop(222));
     }
@@ -155,17 +155,17 @@ public:
     {
         auto area = getLocalBounds().reduced(8);
         header_.setBounds(area.removeFromTop(24));
-        auto visual = area.removeFromTop(40);
+        auto visual = area.removeFromTop(180);
         const int half = (visual.getWidth() - 6) / 2;
         scope_.setBounds(visual.removeFromLeft(half));
         visual.removeFromLeft(6);
         spectro_.setBounds(visual);
         area.removeFromTop(4);
-        ampLfo_.setBounds(area.removeFromTop(192));
+        ampLfo_.setBounds(area.removeFromTop(145));
         area.removeFromTop(4);
-        feedbackLfo_.setBounds(area.removeFromTop(192));
+        feedbackLfo_.setBounds(area.removeFromTop(145));
         area.removeFromTop(4);
-        detuneLfo_.setBounds(area.removeFromTop(192));
+        detuneLfo_.setBounds(area.removeFromTop(145));
     }
 
     void paint(juce::Graphics& g) override

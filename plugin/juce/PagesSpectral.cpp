@@ -262,7 +262,7 @@ public:
                params::opSpecMorph(op, part)),
           on_(editor.state(), params::opSpecEnvOn(op, part), "on"),
           mode_(editor.state(), params::opSpecEnvMode(op, part),
-                {"off", "sustain", "loop1", "loop2"})
+                {"sustain off", "sustain on", "loop 1", "loop 2"})
     {
         addAndMakeVisible(env_);
         addAndMakeVisible(on_);
@@ -853,11 +853,11 @@ public:
         area.removeFromTop(2);
         osc_.setBounds(area.removeFromTop(120));
         area.removeFromTop(4);
-        display_.setBounds(area.removeFromTop(112));
+        display_.setBounds(area.removeFromTop(100));
         area.removeFromTop(4);
         env_.setBounds(area.removeFromTop(220));
         area.removeFromTop(4);
-        lfo_.setBounds(area.removeFromTop(180));
+        lfo_.setBounds(area.removeFromTop(175));
     }
 
     void paint(juce::Graphics& g) override

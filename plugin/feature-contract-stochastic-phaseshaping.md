@@ -116,8 +116,8 @@ for flips, 0 Hz for reorder, 1.2 Hz for drift and 0.5 Hz for the phase LFO.
 `frac3` is `value / 1000` to three decimals, so the breakpoint knob reads
 `0.500` and the caption reads `bp 0.500 · π`. `lfo_wave` names the six entries of
 `lfoWaveNames`, not the 14 oscillator waves. `phase_env_mode` is stored as `raw`
-0..3 and drawn with the four `mod_env` mode names. Mode 1 holds, and that is the
-default.
+0..3 and drawn as the four-value dropdown `sustain off`, `sustain on`, `loop 1`
+and `loop 2`. Mode 1 holds, and that is the default.
 
 The 26 phase parameters are the nine knobs plus the `on` switch, the six LFO
 parameters and the ten envelope parameters. The three follow amounts are added
@@ -430,11 +430,11 @@ The page is one row of four 294 px columns, the same rhythm as `operator lfos`:
 | operator header | 26 | `opN`, copy, paste, mute |
 | composed map | 99 | the plot and the caption line |
 | `phase` card | 159 | `on`, nine knobs in three rows |
-| `phase lfo` card | 160 | the compact LFO row with fades |
-| `phase env` card | 176 | graph, three rate/level rows, mode, `on` |
+| `phase lfo` card | 147 | four knobs in one row, with fades and the graph |
+| `phase env` card | 210 | graph, three rate/level rows, mode, `on` |
 
 The cards are separated by 6 px, the column padding is 8 px, and the measured
-total is 660 px inside the 669 px page budget. If JUCE finds a clip, the map
+total is 653 px inside the 669 px page budget. If JUCE finds a clip, the map
 loses pixels before the value text does.
 
 ### Controls
@@ -445,11 +445,12 @@ The `phase` card's nine knobs are, row by row:
 2. `flip rate`, `reorder`, `reorder rate`
 3. `jump`, `drift`, `drift rate`
 
-The `on` switch is in the card header. The `phase lfo` card uses the existing
-compact fade row: 16 px dials, rate/depth/wave/bipolar, `rate fade` and
-`depth fade`, and the two-line graph. The `phase env` card uses a 20 px purple
-graph, `r1..r3`, `l1..l3`, `rel`/`rl`/`mode` in compact rows, and `on` in the
-header.
+The `on` switch is in the card header. The `phase lfo` card puts rate, depth,
+`rate fade` and `depth fade` in one row of 28 px dials, with the wave select and
+`on` below and the two-line fade graph between them. The `phase env` card uses a
+48 px purple graph, `r1..r3`, `l1..l3`, `rel`/`rl`/`mode` in compact rows, and
+`on` in the header. The mode is a dropdown with `sustain off`, `sustain on`,
+`loop 1` and `loop 2`.
 
 ### Map display
 
