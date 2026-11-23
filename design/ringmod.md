@@ -56,12 +56,13 @@ Ten per part, twenty for the two parts. The names use the part suffix `.p0` and
 | `car4_out` | 0 to 1 | 1 | on/off | `route.car4_out` |
 
 The parameters sit at the end of the part block and before the macro block. The
-part record grows from 981 to 1001 values, so the preset version takes a new step
-and old part records gain the defaults at the end. A version 16 part record ends at
-the phase block, which means the loader can append the ten ringmod defaults after
-it without touching any existing value, whilst a record from before the phase block
-gains both blocks in order. The macro block, the multi record and the project state
-keep their sizes; a missing new parameter in a project state takes its default.
+part record grows from 981 to 991 values, ten more for one part, so the preset
+version takes a new step and old part records gain the defaults at the end. A
+version 16 part record ends at the phase block, which means the loader can append
+the ten ringmod defaults after it without touching any existing value, whilst a
+record from before the phase block gains both blocks in order. The macro block, the
+multi record and the project state keep their sizes; a missing new parameter in a
+project state takes its default.
 
 ## The card
 
