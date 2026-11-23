@@ -125,7 +125,9 @@ Every page fills the same height:
   the feedback knob, the envelope and the LFO picks the feedback family, so a
   negative level can cross zero from any knob setting. The two envelope cards
   carry copy and paste in their headers, and their graphs mark the sustain and loop
-  boundaries with a dotted pink vertical line, a 2 px dash and a 2 px gap.
+  boundaries with a dotted pink vertical line, a 2 px dash and a 2 px gap. The amp
+  env and fb env mode selects are 150 px wide and 18 px tall, the same width as the
+  wave select and the same height as the spectrum header selects.
 - op lfos: four operator columns, a 240 px scope and spectro pair, then the
   113 px `amp lfo`, `fb lfo` and `detune lfo` cards with 12 px gaps. The
   oscillator stays on the op envs page. Each LFO card carries copy and paste
@@ -161,9 +163,9 @@ Every page fills the same height:
   with the envelope and the LFO while a note sounds. The display takes no drag.
   When a and b use different ranges, the display zooms out to the union of the two
   spans. The envelope card carries the graph, the on switch, R1 to R3, L1 to L3,
-  the release rate and level, and the mode dropdown. The morph LFO card puts rate,
-  depth, `rate fade` and `depth fade` in one row of 22 px dials, with the wave
-  select and `bipolar` switch below.
+  the release rate and level, and the 96 by 18 mode dropdown. The morph LFO card
+  puts rate, depth, `rate fade` and `depth fade` in one row of 22 px dials, with the
+  wave select and `bipolar` switch below.
 
 The current layout has eight tabs: patch settings at 0, part params at 1, op
 envs at 2, op lfos at 3, op phasemap at 4, op spectra a at 5, op spectra b
@@ -190,6 +192,14 @@ is now 4.
   the multi-patch name in DotGothic16 below it, then the
   `multi-patch library...` control and the `rename` button. The library popup
   carries export, import and init.
+- The output section carries a `volume` slider under the scope. The caption
+  `volume` sits left and the value sits right in `pinkBright`, and the 330 by 38
+  control fills the same column as the plot. The track is purple from the left to
+  the fader position, with a `dim` unity mark at 75 percent. The fader position is
+  the parameter, so the fill is linear in position whilst the gain follows the law
+  in `VolumeLaw.h`: silent at 0, a logarithmic rise to 0 dB at 75 percent, then a
+  quadratic rise to +12 dB at the top. The value reads in dB, and `silent` at the
+  floor.
 
 ## Shape and borders
 
@@ -220,6 +230,10 @@ for a level or a rate.
 The knob and the toggle are the two controls I use everywhere, so they carry most of
 the interaction rules. If a new control needs a third behaviour, I'd rather make it
 a button than teach the knob another trick.
+
+Selects are 18 px tall wherever the row allows it, which is the spectrum card header
+height, and a select that shares a row with a switch keeps the switch on the same
+line. The wave select and the envelope mode selects are 150 px wide.
 
 Context sizes:
 

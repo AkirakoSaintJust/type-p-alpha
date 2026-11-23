@@ -107,6 +107,18 @@
   .seg button + button { border-left: 0; }
   .seg button.active { color: var(--purple); border-color: var(--purple); }
   .out canvas { width: 100%; height: 50px; display: block; background: #000; }
+  .out .vol { margin-top: 6px; }
+  .vol-head {
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 9px; letter-spacing: .04em; color: var(--dim);
+  }
+  .vol-head .val { color: var(--pink2); }
+  .vol-track {
+    position: relative; height: 14px; margin-top: 3px;
+    border: 1px solid var(--line2); background: #000;
+  }
+  .vol-fill { position: absolute; top: 1px; bottom: 1px; left: 1px; width: 74%; background: var(--purple); }
+  .vol-tick { position: absolute; top: 1px; bottom: 1px; left: 75%; width: 1px; background: var(--dim); }
 
   .actions { display: flex; flex-direction: column; gap: 4px; flex: 0 0 auto; align-items: stretch; }
   .patch-buttons { display: flex; gap: 8px; align-items: stretch; }
@@ -508,6 +520,10 @@
         </div>
       </div>
       <canvas id="scope" width="360" height="50"></canvas>
+      <div class="vol">
+        <div class="vol-head"><span>VOLUME</span><span class="val" id="volVal">0.0 dB</span></div>
+        <div class="vol-track"><div class="vol-fill" id="volFill"></div><div class="vol-tick"></div></div>
+      </div>
     </div>
 
     <div class="actions">

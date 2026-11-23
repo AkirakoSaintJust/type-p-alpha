@@ -9,6 +9,7 @@
 
 #include "CutoffLaw.h"
 #include "PluginEditor.h"
+#include "VolumeLaw.h"
 #include "Widgets.h"
 
 namespace {
@@ -187,6 +188,7 @@ TypePAlphaAudioProcessor::TypePAlphaAudioProcessor()
     for (int i = 0; i < kP1ParamCount; ++i)
         paramValues_[static_cast<std::size_t>(i)] =
             apvts_.getRawParameterValue(kP1ParamSpecs[static_cast<std::size_t>(i)].id);
+    outputVolume_ = apvts_.getRawParameterValue(p1::kVolumeParamID);
 }
 
 juce::AudioProcessorValueTreeState::ParameterLayout
@@ -214,6 +216,16 @@ TypePAlphaAudioProcessor::createLayout()
             juce::ParameterID{spec.id, 1}, spec.name, low, high, def,
             attributes));
     }
+    auto volumeAttributes = juce::AudioParameterIntAttributes()
+        .withStringFromValueFunction([](int value, int) {
+            return p1::ui::volumeText(value);
+        })
+        .withValueFromStringFunction([](const juce::String& text) {
+            return p1::ui::volumePositionFromText(text);
+        });
+    layout.add(std::make_unique<juce::AudioParameterInt>(
+        juce::ParameterID{p1::kVolumeParamID, 1}, "volume", 0,
+        p1::kVolumePositions, p1::kVolumeUnity, volumeAttributes));
     return layout;
 }
 
@@ -242,6 +254,10 @@ void TypePAlphaAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBl
     lastParams_.fill(std::numeric_limits<int32_t>::min());
     paramsDirty_.store(false, std::memory_order_relaxed);
     syncParams();
+    const int volumePosition = outputVolume_ != nullptr
+        ? static_cast<int>(std::lround(outputVolume_->load()))
+        : p1::kVolumeUnity;
+    volumeGain_ = p1::volumeGainFromPosition(volumePosition);
 }
 
 void TypePAlphaAudioProcessor::releaseResources()
@@ -476,6 +492,17 @@ void TypePAlphaAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
         outputScope_.push(left, frames);
         publishMorph(engine_);
         publishPhaseMaps(engine_);
+    }
+
+    const int volumePosition = outputVolume_ != nullptr
+        ? static_cast<int>(std::lround(outputVolume_->load()))
+        : p1::kVolumeUnity;
+    const float volumeTarget = p1::volumeGainFromPosition(volumePosition);
+    if (volumeTarget != volumeGain_) {
+        /* The ramp starts where the last block ended, so a drag steps in the
+           same 32 to 512 sample slices as the rest of the panel. */
+        buffer.applyGainRamp(0, frames, volumeGain_, volumeTarget);
+        volumeGain_ = volumeTarget;
     }
 
     midi.clear();

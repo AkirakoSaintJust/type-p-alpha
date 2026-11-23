@@ -209,6 +209,11 @@ Knob cells and dials:
 | pitch envelope | 52 | 38 |
 | key follow and velocity | 64 | 42 |
 
+Selects are 18px tall wherever the row allows it, which is the height the spectrum
+card header uses, and a select that shares a row with a switch keeps the switch on
+the same 18px line. The wave select is 150 wide, and the envelope mode selects are
+150 wide so they match it.
+
 The window is fixed because the pages are a grid, and a grid that reflows is a grid
 I have to test twice. The operator page sets the height, the other pages fit inside
 it, and the editor sizes to the display's user area less the measured window chrome.
@@ -257,7 +262,10 @@ output. Clicking the block opens the algorithm picker, whilst the mouse wheel ov
 the block cycles the eight algorithms without opening the picker.
 
 The output section is a label plus a `scope` and `spectro` segmented control, with
-the active segment in purple. The plot is 50px high, borderless, black.
+the active segment in purple. The plot is 50px high, borderless, black. A `volume`
+slider fills the same column under the plot: the caption at the left, the value at
+the right, and a purple track with a `dim` unity mark at 75 percent. The value
+reads in dB, and the far left reads `silent`.
 
 The multi-patch block sits above its buttons. `loaded multi-patch:` is drawn in
 Zen Dots, the current multi-patch name in DotGothic16 below it, then the
@@ -296,6 +304,9 @@ seven knobs are `midi channel`, `keyzone start`, `keyzone end`, `tune`,
 `bend` is the pitch-bend range in semitones. Then a voice mode block with `poly`,
 `mono`, `legato`, `unison` and the unison, detune and porta knobs. The three knobs
 sit next to the mode buttons with a 32px gap rather than at the card edge.
+
+The seven knobs sit 6px below the card header, so the dials clear the part name and
+the rename, copy and paste row.
 
 ### Part params
 

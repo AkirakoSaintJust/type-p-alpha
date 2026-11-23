@@ -307,7 +307,7 @@ public:
         for (auto& knob : levels_)
             knob->setBounds(levels.removeFromLeft(levelCell));
         area.removeFromTop(4);
-        auto modeRow = area.removeFromTop(28);
+        auto modeRow = area.removeFromTop(tokens::choiceHeight);
         mode_.setBounds(modeRow.removeFromLeft(96));
         on_.setBounds(headerTrailingBounds());
     }

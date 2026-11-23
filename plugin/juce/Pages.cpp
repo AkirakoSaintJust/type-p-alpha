@@ -93,7 +93,7 @@ public:
         auto knobRow = area.removeFromTop(92);
         const int cell = knobRow.getWidth() / static_cast<int>(knobs_.size());
         for (auto& knob : knobs_)
-            knob->setBounds(knobRow.removeFromLeft(cell));
+            knob->setBounds(knobRow.removeFromLeft(cell).withTrimmedTop(6));
         level_->setBounds(area.removeFromTop(38).reduced(4, 0));
         area.removeFromTop(2);
         pan_->setBounds(area.removeFromTop(30).reduced(4, 0));

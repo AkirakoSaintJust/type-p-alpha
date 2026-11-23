@@ -122,7 +122,8 @@ public:
             knob->setBounds(levelRow.removeFromLeft(levelCell));
         auto modeRow = area.removeFromTop(84);
         mode_.setBounds(modeRow.removeFromLeft(levelCell * 2)
-                            .withSizeKeepingCentre(levelCell * 2 - 8, 24));
+                            .withSizeKeepingCentre(levelCell * 2 - 8,
+                                                   tokens::choiceHeight));
         on_.setBounds(getWidth() - 56, 1, 48, 18);
         to_.setBounds(on_.getX() - 16 - 32, 1, 32, 18);
     }
@@ -181,7 +182,7 @@ public:
         rateFade_.setBounds(fadeRow.removeFromLeft(fadeRow.getWidth() / 2));
         depthFade_.setBounds(fadeRow);
         area.removeFromTop(10);
-        auto bottom = area.removeFromTop(18).withTrimmedTop(2);
+        auto bottom = area.removeFromTop(tokens::choiceHeight);
         wave_.setBounds(bottom.removeFromLeft(150));
         mode_.setBounds(bottom.removeFromLeft(110));
     }
@@ -262,7 +263,8 @@ public:
             knob->setBounds(levelRow.removeFromLeft(levelCell));
         auto modeRow = area.removeFromTop(84);
         mode_.setBounds(modeRow.removeFromLeft(levelCell * 2)
-                            .withSizeKeepingCentre(levelCell * 2 - 8, 24));
+                            .withSizeKeepingCentre(levelCell * 2 - 8,
+                                                   tokens::choiceHeight));
         on_.setBounds(getWidth() - 56, 1, 48, 18);
         to_.setBounds(on_.getX() - 16 - 32, 1, 32, 18);
     }
@@ -339,7 +341,8 @@ public:
             knob->setBounds(levelRow.removeFromLeft(levelCell));
         auto modeRow = area.removeFromTop(84);
         mode_.setBounds(modeRow.removeFromLeft(cell * 2)
-                            .withSizeKeepingCentre(cell * 2 - 8, 24));
+                            .withSizeKeepingCentre(cell * 2 - 8,
+                                                   tokens::choiceHeight));
         on_.setBounds(getWidth() - 56, 1, 48, 18);
         to_.setBounds(on_.getX() - 16 - 32, 1, 32, 18);
     }

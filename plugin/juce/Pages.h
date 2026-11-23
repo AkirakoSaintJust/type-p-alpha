@@ -182,7 +182,8 @@ public:
         feedback_.setBounds(row.removeFromLeft(cell));
         if (morph_ != nullptr)
             morph_->setBounds(row);
-        wave_.setBounds(area.removeFromTop(18).withTrimmedTop(2).withWidth(150));
+        wave_.setBounds(area.removeFromTop(tokens::choiceHeight)
+                            .withWidth(tokens::choiceWidth));
     }
 
 private:
@@ -256,8 +257,8 @@ public:
             knobs_[static_cast<std::size_t>(i)]->setBounds(
                 levels.removeFromLeft(levelCell));
         area.removeFromTop(4);
-        auto modeRow = area.removeFromTop(28);
-        mode_.setBounds(modeRow.removeFromLeft(levelCell * 2));
+        auto modeRow = area.removeFromTop(tokens::choiceHeight);
+        mode_.setBounds(modeRow.removeFromLeft(tokens::choiceWidth));
     }
 
     void tick() { envView_.repaint(); }
@@ -340,8 +341,8 @@ public:
         for (auto& knob : levels_)
             knob->setBounds(levels.removeFromLeft(levelCell));
         area.removeFromTop(4);
-        auto modeRow = area.removeFromTop(30);
-        mode_.setBounds(modeRow.removeFromLeft(levelCell * 2));
+        auto modeRow = area.removeFromTop(tokens::choiceHeight);
+        mode_.setBounds(modeRow.removeFromLeft(tokens::choiceWidth));
         on_.setBounds(headerTrailingBounds());
     }
 
@@ -399,7 +400,7 @@ public:
         depth_.setBounds(row.removeFromLeft(cell));
         rateFade_.setBounds(row.removeFromLeft(cell));
         depthFade_.setBounds(row);
-        auto bottom = area.removeFromBottom(compact_ ? 20 : 24).withTrimmedTop(2);
+        auto bottom = area.removeFromBottom(tokens::choiceHeight);
         wave_.setBounds(bottom.removeFromLeft(140));
         bottom.removeFromLeft(10);
         mode_.setBounds(bottom.removeFromLeft(110));

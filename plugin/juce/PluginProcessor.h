@@ -128,6 +128,8 @@ private:
     juce::AudioProcessorValueTreeState apvts_;
     std::array<int32_t, kP1ParamCount> lastParams_{};
     std::array<std::atomic<float>*, kP1ParamCount> paramValues_{};
+    std::atomic<float>* outputVolume_ = nullptr;
+    float volumeGain_ = 1.0f;
     std::vector<int32_t> directBuffer_;
     std::atomic<bool> paramsDirty_{false};
     double hostRate_ = 48000.0;

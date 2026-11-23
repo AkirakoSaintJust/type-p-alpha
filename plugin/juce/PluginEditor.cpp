@@ -7,6 +7,7 @@
 #include "Pages.h"
 #include "ParamIDs.h"
 #include "PluginProcessor.h"
+#include "VolumeLaw.h"
 
 namespace {
 
@@ -106,7 +107,8 @@ private:
 
 class Header : public juce::Component {
 public:
-    explicit Header(PluginEditor& editor) : editor_(editor)
+    explicit Header(PluginEditor& editor)
+        : editor_(editor), volume_(editor.state(), p1::kVolumeParamID)
     {
         alg_.onClick = [this] { editor_.showAlgorithmPicker(); };
         alg_.onWheel = [this](int direction) {
@@ -127,6 +129,7 @@ public:
         spectroSeg_.onClick = [this] { setSpectroMode(true); };
         addAndMakeVisible(scopeSeg_);
         addAndMakeVisible(spectroSeg_);
+        addAndMakeVisible(volume_);
         setPatchName(editor_.processor().getPatchName());
         setSpectroMode(false);
     }
@@ -140,6 +143,7 @@ public:
         spectroSeg_.setBounds(920, 22, 56, 18);
         scopeView_.setBounds(650, 44, 330, 50);
         spectroView_.setBounds(650, 44, 330, 50);
+        volume_.setBounds(650, 100, 330, 38);
     }
 
     void paint(juce::Graphics& g) override
@@ -232,6 +236,7 @@ private:
     p1::ui::P1Button rename_{"rename"};
     p1::ui::P1Scope scopeView_;
     p1::ui::P1Spectro spectroView_;
+    p1::ui::P1VolumeSlider volume_;
     SegmentButton scopeSeg_{"scope"};
     SegmentButton spectroSeg_{"spectro"};
     bool spectroMode_ = false;

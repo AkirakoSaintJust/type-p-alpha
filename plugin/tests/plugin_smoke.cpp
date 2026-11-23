@@ -17,6 +17,7 @@
 #include "ParamIDs.h"
 #include "Params.h"
 #include "PluginProcessor.h"
+#include "VolumeLaw.h"
 #include "Widgets.h"
 
 namespace {
@@ -83,8 +84,16 @@ int main()
     auto processorOwner = std::make_unique<TypePAlphaAudioProcessor>();
     auto& processor = *processorOwner;
 
-    check(processor.getParameters().size() == kP1ParamCount,
-          "the APVTS exposes every manifest parameter");
+    check(processor.getParameters().size() == kP1ParamCount + 1,
+          "the APVTS exposes every manifest parameter and the output volume");
+    check(p1::volumeGainFromPosition(p1::kVolumeUnity) == 1.0f &&
+              p1::volumeGainFromPosition(0) == 0.0f,
+          "the volume is silent at the floor and unity at 0 dB");
+    check(std::abs(p1::volumeDbFromPosition(1000) - 12.0) < 1.0e-9,
+          "the volume reaches +12 dB at the top");
+    check(p1::ui::volumeText(750) == "0.0 dB" &&
+              p1::ui::volumePositionFromText("+6.0 dB") == 927,
+          "the volume text agrees with the law");
     {
         int bad = 0;
         for (auto* parameter : processor.getParameters()) {

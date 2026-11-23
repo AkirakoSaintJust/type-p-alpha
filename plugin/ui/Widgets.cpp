@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "CutoffLaw.h"
+#include "VolumeLaw.h"
 #include "math_tables.h"
 #include "SpectrumAnalysis.h"
 
@@ -90,6 +91,30 @@ const P1ParamSpec* findSpec(const juce::String& id)
             return &spec;
     }
     return nullptr;
+}
+
+juce::String volumeText(int position)
+{
+    if (position <= 0)
+        return "silent";
+    const double db = p1::volumeDbFromPosition(position);
+    const juce::String sign = db > 0.05 ? "+" : "";
+    return sign + juce::String(db, 1) + " dB";
+}
+
+int volumePositionFromText(const juce::String& text)
+{
+    const auto lower = text.trim().toLowerCase();
+    if (lower == "silent" || lower.startsWith("-inf"))
+        return 0;
+    juce::String numeric;
+    for (auto c : text) {
+        if ((c >= '0' && c <= '9') || c == '-' || c == '+' || c == '.')
+            numeric += juce::String::charToString(c);
+    }
+    if (numeric.isEmpty() || numeric == "-" || numeric == "+")
+        return p1::kVolumeUnity;
+    return p1::volumePositionFromDb(numeric.getDoubleValue());
 }
 
 juce::String formatParamValue(const P1ParamSpec& spec, double value)
@@ -1569,6 +1594,80 @@ void P1LevelSlider::setFromMouse(const juce::MouseEvent& event)
     const float value = static_cast<float>(spec_->min) +
                         norm * static_cast<float>(spec_->max - spec_->min);
     attach_->setValueAsCompleteGesture(value);
+}
+
+P1VolumeSlider::P1VolumeSlider(APVTS& state, const juce::String& paramID)
+    : state_(state), paramID_(paramID)
+{
+    if (auto* param = state_.getParameter(paramID_)) {
+        attach_ = std::make_unique<juce::ParameterAttachment>(
+            *param, [this](float value) {
+                position_ = juce::jlimit(
+                    0, p1::kVolumePositions,
+                    static_cast<int>(std::lround(value)));
+                repaint();
+            });
+        attach_->sendInitialUpdate();
+    }
+    setMouseCursor(juce::MouseCursor::PointingHandCursor);
+}
+
+void P1VolumeSlider::resized()
+{
+    track_ = getLocalBounds().withTrimmedTop(20).reduced(0, 1);
+}
+
+void P1VolumeSlider::paint(juce::Graphics& g)
+{
+    g.setFont(uiFont(tokens::textInlineLabel));
+    g.setColour(colour(tokens::dim));
+    g.drawText("volume", getLocalBounds().removeFromTop(18),
+               juce::Justification::centredLeft, false);
+    g.setColour(colour(tokens::pinkBright));
+    g.drawText(volumeText(position_), getLocalBounds().removeFromTop(18),
+               juce::Justification::centredRight, false);
+    g.setColour(colour(tokens::lineStrong));
+    g.drawRect(track_, 1);
+    const auto inner = track_.reduced(1);
+    const float norm = static_cast<float>(position_) /
+                       static_cast<float>(p1::kVolumePositions);
+    const int edge = inner.getX() + static_cast<int>(
+                                         std::round(static_cast<float>(inner.getWidth()) *
+                                                    norm));
+    g.setColour(colour(tokens::purple));
+    g.fillRect(inner.withWidth(edge - inner.getX()));
+    /* The unity mark sits where the law reaches 0 dB, so the flat setting can be
+       found without reading the value. */
+    const int unity =
+        inner.getX() + static_cast<int>(std::round(
+                           static_cast<float>(inner.getWidth()) *
+                           static_cast<float>(p1::kVolumeUnity) /
+                           static_cast<float>(p1::kVolumePositions)));
+    g.setColour(colour(tokens::dim));
+    g.drawVerticalLine(unity, static_cast<float>(inner.getY()),
+                       static_cast<float>(inner.getBottom()));
+}
+
+void P1VolumeSlider::mouseDown(const juce::MouseEvent& event)
+{
+    setFromMouse(event);
+}
+
+void P1VolumeSlider::mouseDrag(const juce::MouseEvent& event)
+{
+    setFromMouse(event);
+}
+
+void P1VolumeSlider::setFromMouse(const juce::MouseEvent& event)
+{
+    if (attach_ == nullptr || track_.getWidth() <= 0)
+        return;
+    const float norm = juce::jlimit(
+        0.0f, 1.0f,
+        (static_cast<float>(event.x) - static_cast<float>(track_.getX())) /
+            static_cast<float>(track_.getWidth()));
+    attach_->setValueAsCompleteGesture(
+        norm * static_cast<float>(p1::kVolumePositions));
 }
 
 P1Card::P1Card(juce::String title, std::function<void()> onCopy,

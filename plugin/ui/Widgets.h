@@ -12,6 +12,7 @@
 
 #include "Params.h"
 #include "Theme.h"
+#include "VolumeLaw.h"
 
 namespace p1::ui {
 
@@ -20,6 +21,11 @@ using APVTS = juce::AudioProcessorValueTreeState;
 const P1ParamSpec* findSpec(const juce::String& id);
 juce::String formatParamValue(const P1ParamSpec& spec, double value);
 double parseParamValue(const P1ParamSpec& spec, const juce::String& text);
+
+/* The master volume fader position as dB text, and back. The law is in
+ * VolumeLaw.h, which the processor and the header slider share. */
+juce::String volumeText(int position);
+int volumePositionFromText(const juce::String& text);
 
 class ParamKnob : public juce::Component {
 public:
@@ -290,6 +296,27 @@ private:
     bool bipolar_ = false;
     const P1ParamSpec* spec_ = nullptr;
     float value_ = 0.0f;
+    juce::Rectangle<int> track_;
+    std::unique_ptr<juce::ParameterAttachment> attach_;
+};
+
+/* The master output fader. The parameter is the fader position, so the fill is
+ * linear in position whilst the gain follows the law in VolumeLaw.h, and the
+ * unity mark sits at 75 percent of the track. */
+class P1VolumeSlider : public juce::Component {
+public:
+    P1VolumeSlider(APVTS& state, const juce::String& paramID);
+    void resized() override;
+    void paint(juce::Graphics& g) override;
+    void mouseDown(const juce::MouseEvent& event) override;
+    void mouseDrag(const juce::MouseEvent& event) override;
+
+private:
+    void setFromMouse(const juce::MouseEvent& event);
+
+    APVTS& state_;
+    juce::String paramID_;
+    int position_ = p1::kVolumeUnity;
     juce::Rectangle<int> track_;
     std::unique_ptr<juce::ParameterAttachment> attach_;
 };
