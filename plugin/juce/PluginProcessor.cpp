@@ -845,6 +845,10 @@ void TypePAlphaAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
            same 32 to 512 sample slices as the rest of the panel. */
         buffer.applyGainRamp(0, frames, volumeGain_, volumeTarget);
         volumeGain_ = volumeTarget;
+    } else if (volumeGain_ != 1.0f) {
+        /* The engine renders at unity every block, so a constant trim has to be
+           applied every block. Only the unity setting can skip it. */
+        buffer.applyGain(0, frames, volumeGain_);
     }
 
     midi.clear();

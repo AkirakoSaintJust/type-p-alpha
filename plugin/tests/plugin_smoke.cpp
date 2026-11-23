@@ -242,6 +242,36 @@ int main()
               p1::ui::volumePositionFromText("+6.0 dB") == 927,
           "the volume text agrees with the law");
     {
+        /* The master fader trims every block, not only the block where the
+         * parameter moves. A fresh instance per position keeps the comparison
+         * free of a ramp from the previous value. */
+        const auto renderVolume = [](int position) {
+            auto instance = std::make_unique<TypePAlphaAudioProcessor>();
+            if (auto* volume =
+                    instance->parameters().getParameter("output_volume")) {
+                volume->setValueNotifyingHost(
+                    volume->convertTo0to1(static_cast<float>(position)));
+            }
+            instance->setRateAndBufferSizeDetails(48000.0, kFrames);
+            instance->prepareToPlay(48000.0, kFrames);
+            juce::AudioBuffer<float> out(2, kFrames);
+            juce::MidiBuffer events;
+            events.addEvent(
+                juce::MidiMessage::noteOn(1, 60, static_cast<juce::uint8>(100)),
+                0);
+            instance->processBlock(out, events);
+            double energy = 0.0;
+            for (int i = 0; i < kFrames; ++i)
+                energy += std::abs(out.getSample(0, i));
+            return energy;
+        };
+        const double silent = renderVolume(0);
+        const double unity = renderVolume(p1::kVolumeUnity);
+        const double loud = renderVolume(p1::kVolumePositions);
+        check(silent < 1.0e-9 && unity > 1.0e-6 && loud > unity * 3.5,
+              "the master volume scales every output block");
+    }
+    {
         int bad = 0;
         for (auto* parameter : processor.getParameters()) {
             for (int step = 0; step <= 20; ++step) {
