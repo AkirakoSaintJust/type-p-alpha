@@ -159,6 +159,12 @@ int main()
                   !p1::macros::isLfoRateMember(
                       parameterIndex("op1_phase_lfo_rate.p0")),
               "the engine lfo rate set takes the per-voice LFOs");
+        check(p1::macros::isLfoDepthMember(parameterIndex("op1_trem_depth.p0")) &&
+                  p1::macros::isLfoDepthMember(
+                      parameterIndex("op1_spec_lfo_depth.p0")) &&
+                  !p1::macros::isLfoDepthMember(
+                      parameterIndex("op1_phase_lfo_depth.p0")),
+              "the engine lfo depth set takes the per-voice LFOs");
     }
     {
         /* A targeted destination reports its stored value at rest and the
@@ -337,6 +343,10 @@ int main()
             renderFirst(0, P1_MACRO_TARGET_P1_OP_ENV_RATES);
         check(matches(ratesAtZero, reference, kFrames),
               "an env rate macro at 0 leaves the render bit-exact");
+        const auto depthsAtZero =
+            renderFirst(0, P1_MACRO_TARGET_P1_OP_LFO_DEPTHS);
+        check(matches(depthsAtZero, reference, kFrames),
+              "an lfo depth macro at 0 leaves the render bit-exact");
         const auto macroAtFifty = renderFirst(50);
         check(!matches(macroAtFifty, reference, kFrames),
               "a macro moves its destination");
@@ -383,6 +393,10 @@ int main()
                                         P1_MACRO_TARGET_P1_OP_ENV_RATES),
                        reference, kFrames),
               "the velocity source moves the env rate target");
+        check(!matches(renderWithSource(3, -1, 0, 100,
+                                        P1_MACRO_TARGET_P1_OP_LFO_DEPTHS),
+                       reference, kFrames),
+              "the velocity source moves the lfo depth target");
 
         /* The LFO rate is only audible through a depth, so this pair sets the
          * first operator's tremolo depth. */

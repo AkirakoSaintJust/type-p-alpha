@@ -442,6 +442,13 @@ int main(int argc, char** argv)
             p1_macro_velocity_lfo_rate_ratio(state.get(), 0, 1);
         check(lfoHard > lfoSoft && lfoSoft > 65536u,
               "the macro lfo rate ratio follows each voice");
+        state->macro_t1a = P1_MACRO_TARGET_P1_OP_LFO_DEPTHS;
+        const int32_t depthSoft =
+            p1_macro_velocity_lfo_depth(state.get(), 0, 0, 198);
+        const int32_t depthHard =
+            p1_macro_velocity_lfo_depth(state.get(), 0, 1, 198);
+        check(depthHard > depthSoft && depthSoft > 0,
+              "the macro lfo depth offset follows each voice");
     }
     test_engine_render();
     test_state_isolation();
