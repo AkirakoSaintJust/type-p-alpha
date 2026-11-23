@@ -37,6 +37,28 @@ bool isEngineMessage(const juce::MidiMessage& message)
            message.isPitchWheel();
 }
 
+/* The engine applies the velocity source itself for the operator level, feedback,
+ * morph, envelope rate, LFO rate and LFO depth groups, on the all-operator and the
+ * carrier and modulator rows. The phase envelope and phase LFO and the part-level
+ * pitch and filter envelopes stay in the plugin's part-level layer. */
+bool engineHandlesVelocityTarget(int target, int memberId)
+{
+    if (target <= 0 || target > p1::macros::kTargetCount)
+        return false;
+    const juce::String name(
+        p1::macros::kTargets[static_cast<std::size_t>(target - 1)].name);
+    if (name.contains(" levels") || name.contains(" feedbacks") ||
+        name.contains(" morphs"))
+        return true;
+    if (name.contains(" env rates"))
+        return p1::macros::isEnvRateMember(memberId);
+    if (name.contains(" lfo rates"))
+        return p1::macros::isLfoRateMember(memberId);
+    if (name.contains(" lfo depths"))
+        return p1::macros::isLfoDepthMember(memberId);
+    return false;
+}
+
 /* The part-block indices of the four operator warm-up rates. The migration
  * needs them because the operator envelope grew from seven to eight parameters
  * inside each operator block. */
@@ -515,17 +537,6 @@ void TypePAlphaAudioProcessor::syncMacros()
                 if (target <= 0 || target > p1::macros::kTargetCount ||
                     range == 0)
                     continue;
-                /* The engine adds the velocity source to the operator levels,
-                 * feedbacks and morphs per voice, so the part-level write would
-                 * double it. */
-                if (sources[m] == 3 &&
-                    (target == P1_MACRO_TARGET_P1_OP_LEVELS ||
-                     target == P1_MACRO_TARGET_P2_OP_LEVELS ||
-                     target == P1_MACRO_TARGET_P1_OP_FEEDBACKS ||
-                     target == P1_MACRO_TARGET_P2_OP_FEEDBACKS ||
-                     target == P1_MACRO_TARGET_P1_OP_MORPHS ||
-                     target == P1_MACRO_TARGET_P2_OP_MORPHS))
-                    continue;
                 const int row = target - 1;
                 const int part = p1::macros::kTargetPart[row];
                 const int algorithm =
@@ -553,28 +564,11 @@ void TypePAlphaAudioProcessor::syncMacros()
                         macroMemberIndex_[static_cast<std::size_t>(member.id)];
                     if (index < 0)
                         continue;
-                    /* The engine applies the velocity source to the operator
-                     * amplitude, feedback and spectral envelope rates per
-                     * voice. The phase envelope rates in the same row stay in
-                     * the part-level layer. */
+                    /* The engine applies the velocity source itself for the
+                     * per-voice groups. The phase envelope and phase LFO members
+                     * of a mixed row stay in the part-level layer. */
                     if (sources[m] == 3 &&
-                        (target == P1_MACRO_TARGET_P1_OP_ENV_RATES ||
-                         target == P1_MACRO_TARGET_P2_OP_ENV_RATES) &&
-                        p1::macros::isEnvRateMember(member.id))
-                        continue;
-                    /* The operator LFO rates are per voice in the engine, except
-                     * the phase LFO, which stays part-level. */
-                    if (sources[m] == 3 &&
-                        (target == P1_MACRO_TARGET_P1_OP_LFO_RATES ||
-                         target == P1_MACRO_TARGET_P2_OP_LFO_RATES) &&
-                        p1::macros::isLfoRateMember(member.id))
-                        continue;
-                    /* The operator LFO depths are per voice in the engine,
-                     * except the phase LFO depth, which stays part-level. */
-                    if (sources[m] == 3 &&
-                        (target == P1_MACRO_TARGET_P1_OP_LFO_DEPTHS ||
-                         target == P1_MACRO_TARGET_P2_OP_LFO_DEPTHS) &&
-                        p1::macros::isLfoDepthMember(member.id))
+                        engineHandlesVelocityTarget(target, member.id))
                         continue;
                     macroOffsets_[static_cast<std::size_t>(index)] += offset;
                 }

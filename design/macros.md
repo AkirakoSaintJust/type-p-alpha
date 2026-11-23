@@ -2,12 +2,11 @@
 
 Status: the parameter layer, the multi record, the target table, the linear and log
 destination offsets, the relative CC, wheel and velocity sources, the per-voice
-velocity source on the operator levels, the all-operator feedback and morph groups, the
-operator amplitude, feedback and spectral envelope rates, and the operator LFO rates
-and depths, the macros page and the target-parameter feedback are built. The rest of
-the per-voice layer is outstanding. The research is in
-[`../docs/research/macros.md`](../docs/research/macros.md), and the parameter list and
-the evidence the milestone needs are in
+velocity source on the operator levels, feedbacks, morphs, envelope rates, LFO rates and
+LFO depths, for the all-operator, carrier and modulator rows, the macros page and the
+target-parameter feedback are built. The rest of the per-voice layer is outstanding.
+The research is in [`../docs/research/macros.md`](../docs/research/macros.md), and the
+parameter list and the evidence the milestone needs are in
 [`../plugin/feature-contract-macros.md`](../plugin/feature-contract-macros.md).
 
 ## The idea
@@ -43,20 +42,16 @@ CC77, CC1 and the note-on velocity, so the sources are live values rather than p
 state.
 
 Velocity is per note, so the design follows each voice and the display follows the
-newest voice. The operator level, all-operator feedback and all-operator morph groups
-are already per voice: the engine helpers read each voice's velocity and add the
-offset at the operator's total level, feedback level or morph position. The operator
-amplitude, feedback and spectral envelope rates also follow each voice, because those
-envelopes are per voice; the node takes the offset once per control block and clamps
-the rate to 0..99. The operator LFO rates follow each voice as a frequency ratio in the
-panel's logarithmic domain, so an offset moves the rate musically and an offset of zero
-keeps the stored rate exactly. The operator LFO depths follow each voice with the span
-of their own parameter. A tremolo and a detune depth then move by the same fraction
-despite their different ranges. The phase envelope and the phase LFO hold one state per
-part, so their rates and depths stay in the part-level layer, as do the filter and
-pitch envelopes and the other targets until their per-voice paths land. The carrier and
-modulator groups also wait, because their role filter needs the algorithm and the
-operator index inside the node.
+newest voice. The operator level, feedback, morph, envelope rate, LFO rate and LFO
+depth groups are per voice on the all-operator row. The carrier and modulator rows use
+the part's algorithm: an operator is either a carrier or a modulator, so a carrier row
+reaches carriers and a modulator row reaches modulators, and the all row reaches every
+operator. The engine takes the offset at the node and clamps at the destination range.
+The operator envelope rates clamp to 0..99, the LFO rates move as a frequency ratio in
+the panel's logarithmic domain, and the LFO depths use each parameter's own span. The
+phase envelope and the phase LFO hold one state per part, so their rates and depths stay
+in the part-level layer, as do the filter and pitch envelopes, the phase map
+breakpoints and the pan. A macro at 0 leaves the stored values exactly.
 
 The menu is `off`, `cc 72`, `mod wheel`, `velocity`. The range slider is active for
 the three sources and greyed for `off`. The fixed CC is written on the option, so the

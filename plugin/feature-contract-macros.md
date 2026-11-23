@@ -10,11 +10,11 @@
 - **Owner / date:** P1Onken, 2026-11-23.
 - **Disposition:** the 54 parameters, the CC map, the automation flags, the multi
   record, the target table, the linear and log destination offsets, the relative CC,
-  wheel and velocity sources, the per-voice velocity source on the operator levels, the
-  all-operator feedback and morph groups, the operator amplitude, feedback and spectral
-  envelope rates and the operator LFO rates and depths, the macros page and the
-  target-parameter feedback are built. The rest of the per-voice layer is outstanding,
-  so the evidence below is partly run and partly a list.
+  wheel and velocity sources, the per-voice velocity source on the operator levels,
+  feedbacks, morphs, envelope rates, LFO rates and LFO depths for the all-operator,
+  carrier and modulator rows, the macros page and the target-parameter feedback are
+  built. The rest of the per-voice layer is outstanding, so the evidence below is
+  partly run and partly a list.
 
 ## Player outcome
 
@@ -125,14 +125,16 @@ Run on the parameter layer, the multi record, the target table and the offset la
   and each differs from the engine reference.
 - `engine_parity` checks the per-voice operator level helper with two velocities,
   `20` and `120`, and the hard note's level offset is larger than the soft note's. It
-  checks the all-operator feedback, morph, envelope rate, LFO rate and LFO depth
-  helpers the same way. The velocity source render therefore reaches every engine path.
+  checks the feedback, morph, envelope rate, LFO rate and LFO depth helpers the same
+  way. It also checks a carrier level row against algorithm 4: the carrier operator
+  moves and the modulator operator stays at 0. The velocity source render therefore
+  reaches every engine path and both roles.
 - `plugin_smoke` renders the first block with a feedback, envelope rate or LFO depth
   target and a macro at 0, and each matches the engine reference bit for bit. The same
   targets with the velocity source move the render, so their offsets reach the engine.
-  The LFO rate pair sets the tremolo depth; the at-rest render matches the no-macro
-  render bit for bit and a velocity of 100 moves it. A spectrum-mode morph pair checks
-  the morph path the same way.
+  A carrier level target also moves the render. The LFO rate pair sets the tremolo
+  depth; the at-rest render matches the no-macro render bit for bit and a velocity of
+  100 moves it. A spectrum-mode morph pair checks the morph path the same way.
 - `plugin_smoke` checks the generated engine rate sets: the envelope set takes the
   amplitude, feedback and spectral envelope rates and leaves the phase envelope rates
   out, the LFO rate set takes the per-voice LFO rates and leaves the phase LFO rate
@@ -159,10 +161,10 @@ Run on the parameter layer, the multi record, the target table and the offset la
 
 Still outstanding:
 
-- The rest of the per-voice layer: the breakpoints, the pan note policy, and the
-  carrier and modulator role groups. The all-operator env and LFO rate and depth groups
-  are per voice; the phase envelope and phase LFO stay part-level because they hold one
-  state per part, as do the phase map breakpoints and the pan.
+- The rest of the per-voice layer: the breakpoints and the pan note policy. The all,
+  carrier and modulator rows of the level, feedback, morph, envelope rate, LFO rate and
+  LFO depth groups are per voice. The phase envelope and phase LFO stay part-level
+  because they hold one state per part, as do the phase map breakpoints and the pan.
 - A snapshot of the target menu, because the component snapshot does not capture an
   open popup. The eight headings come from the generated table, which the table test
   pins.
@@ -171,10 +173,10 @@ Still outstanding:
 
 - **The parameter layer, the multi record, the target table, the offsets, the
   relative sources, the per-voice operator levels, feedbacks, morphs, envelope rates,
-  LFO rates and LFO depths, the macros page and the feedback are built.** The rest of
-  the per-voice layer is not.
-- **The velocity source is per voice on the groups above and newest-note on the
-  rest.** The other targets move the whole part with the last note's velocity until
+  LFO rates and LFO depths for the all-operator, carrier and modulator rows, the macros
+  page and the feedback are built.** The rest of the per-voice layer is not.
+- **The velocity source is per voice on the groups and rows above and newest-note on
+  the rest.** The other targets move the whole part with the last note's velocity until
   their per-voice paths land. The feedback beside a target reads the same newest-note
   velocity.
 - **The source values are live, not patch state.** The source select and range are

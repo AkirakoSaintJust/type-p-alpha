@@ -363,6 +363,21 @@ def main() -> int:
         f"{target_index[('op lfo depths', 1)]}",
         f"#define P1_MACRO_TARGET_P2_OP_LFO_DEPTHS "
         f"{target_index[('op lfo depths', 2)]}",
+        *[
+            f"#define P1_MACRO_TARGET_P{part}_{role.upper()}_"
+            f"{family.replace(' ', '_').upper()} "
+            f"{target_index[(f'{role} {family}', part)]}"
+            for family in (
+                "levels",
+                "feedbacks",
+                "morphs",
+                "env rates",
+                "lfo rates",
+                "lfo depths",
+            )
+            for role in ("carrier", "modulator")
+            for part in (1, 2)
+        ],
         "",
     ]
     ids = Path(sys.argv[5])

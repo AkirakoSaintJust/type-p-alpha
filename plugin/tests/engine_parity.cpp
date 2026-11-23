@@ -414,41 +414,66 @@ int main(int argc, char** argv)
         state->macro_r1a = 50;
         state->voice_velocity[0] = 20;
         state->voice_velocity[1] = 120;
-        const int32_t soft = p1_macro_velocity_level(state.get(), 0, 0);
-        const int32_t hard = p1_macro_velocity_level(state.get(), 0, 1);
+        const int32_t soft = p1_macro_velocity_level(state.get(), 0, 0, 1);
+        const int32_t hard = p1_macro_velocity_level(state.get(), 0, 1, 1);
         check(hard > soft && soft > 0,
               "the macro velocity offset follows each voice");
         state->macro_t1a = P1_MACRO_TARGET_P1_OP_FEEDBACKS;
         const int32_t feedbackSoft =
-            p1_macro_velocity_feedback(state.get(), 0, 0);
+            p1_macro_velocity_feedback(state.get(), 0, 0, 1);
         const int32_t feedbackHard =
-            p1_macro_velocity_feedback(state.get(), 0, 1);
+            p1_macro_velocity_feedback(state.get(), 0, 1, 1);
         check(feedbackHard > feedbackSoft && feedbackSoft > 0,
               "the macro feedback offset follows each voice");
         state->macro_t1a = P1_MACRO_TARGET_P1_OP_MORPHS;
-        const int32_t morphSoft = p1_macro_velocity_morph(state.get(), 0, 0);
-        const int32_t morphHard = p1_macro_velocity_morph(state.get(), 0, 1);
+        const int32_t morphSoft =
+            p1_macro_velocity_morph(state.get(), 0, 0, 1);
+        const int32_t morphHard =
+            p1_macro_velocity_morph(state.get(), 0, 1, 1);
         check(morphHard > morphSoft && morphSoft > 0,
               "the macro morph offset follows each voice");
         state->macro_t1a = P1_MACRO_TARGET_P1_OP_ENV_RATES;
-        const int32_t rateSoft = p1_macro_velocity_env_rate(state.get(), 0, 0);
-        const int32_t rateHard = p1_macro_velocity_env_rate(state.get(), 0, 1);
+        const int32_t rateSoft =
+            p1_macro_velocity_env_rate(state.get(), 0, 0, 1);
+        const int32_t rateHard =
+            p1_macro_velocity_env_rate(state.get(), 0, 1, 1);
         check(rateHard > rateSoft && rateSoft > 0,
               "the macro env rate offset follows each voice");
         state->macro_t1a = P1_MACRO_TARGET_P1_OP_LFO_RATES;
         const uint32_t lfoSoft =
-            p1_macro_velocity_lfo_rate_ratio(state.get(), 0, 0);
+            p1_macro_velocity_lfo_rate_ratio(state.get(), 0, 0, 1);
         const uint32_t lfoHard =
-            p1_macro_velocity_lfo_rate_ratio(state.get(), 0, 1);
+            p1_macro_velocity_lfo_rate_ratio(state.get(), 0, 1, 1);
         check(lfoHard > lfoSoft && lfoSoft > 65536u,
               "the macro lfo rate ratio follows each voice");
         state->macro_t1a = P1_MACRO_TARGET_P1_OP_LFO_DEPTHS;
         const int32_t depthSoft =
-            p1_macro_velocity_lfo_depth(state.get(), 0, 0, 198);
+            p1_macro_velocity_lfo_depth(state.get(), 0, 0, 1, 198);
         const int32_t depthHard =
-            p1_macro_velocity_lfo_depth(state.get(), 0, 1, 198);
+            p1_macro_velocity_lfo_depth(state.get(), 0, 1, 1, 198);
         check(depthHard > depthSoft && depthSoft > 0,
               "the macro lfo depth offset follows each voice");
+        /* Algorithm 4 splits its operators into carriers and modulators, so a
+         * carrier row must reach the carrier and leave the modulator alone. */
+        state->algo_algorithm[0] = 4;
+        int carrierOp = 0;
+        int modulatorOp = 0;
+        for (int op = 1; op <= 4; ++op) {
+            const bool carrier =
+                table_routing[4 * 20 + 16 + (op - 1)] != 0;
+            if (carrier && carrierOp == 0)
+                carrierOp = op;
+            else if (!carrier && modulatorOp == 0)
+                modulatorOp = op;
+        }
+        state->macro_t1a = P1_MACRO_TARGET_P1_CARRIER_LEVELS;
+        const int32_t carrierOffset =
+            p1_macro_velocity_level(state.get(), 0, 0, carrierOp);
+        const int32_t modulatorOffset =
+            p1_macro_velocity_level(state.get(), 0, 0, modulatorOp);
+        check(carrierOp != 0 && modulatorOp != 0 && carrierOffset > 0 &&
+                  modulatorOffset == 0,
+              "the carrier level row reaches carriers only");
     }
     test_engine_render();
     test_state_isolation();

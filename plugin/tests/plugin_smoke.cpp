@@ -397,6 +397,10 @@ int main()
                                         P1_MACRO_TARGET_P1_OP_LFO_DEPTHS),
                        reference, kFrames),
               "the velocity source moves the lfo depth target");
+        check(!matches(renderWithSource(3, -1, 0, 100,
+                                        P1_MACRO_TARGET_P1_CARRIER_LEVELS),
+                       reference, kFrames),
+              "the velocity source moves the carrier level target");
 
         /* The LFO rate is only audible through a depth, so this pair sets the
          * first operator's tremolo depth. */
