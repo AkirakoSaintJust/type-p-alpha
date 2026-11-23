@@ -138,3 +138,9 @@ The sanitizer build instruments the engine, the editor and the tests, and skips 
 VST3 and CLAP plugin formats. A sanitizer-instrumented shared module needs a runtime
 that the host doesn't load, so build the plugin binaries with the normal
 configuration.
+
+CI runs ThreadSanitizer over `engine_parity`, `preset_smoke` and `rate_bridge`,
+then AddressSanitizer and UndefinedBehaviorSanitizer over the full test set. The
+editor snapshot runs with LeakSanitizer off because JUCE keeps its global
+allocations until process exit; the memory and undefined-behaviour checks still
+run for it.

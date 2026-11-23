@@ -27,7 +27,7 @@ jobs:
             cmake --build build/linux-amd64-clang &&
             ctest --test-dir build/linux-amd64-clang --output-on-failure -E linux_daws'
 
-  tsan:
+  sanitizers:
     runs-on: ubuntu-22.04
     timeout-minutes: 60
     steps:
@@ -43,6 +43,24 @@ jobs:
             cmake --build build/linux-tsan --target engine_parity preset_smoke rate_bridge_test &&
             TSAN_OPTIONS=halt_on_error=1 ctest --test-dir build/linux-tsan \
               --output-on-failure -R "engine_parity|preset_smoke|rate_bridge"'
+      - name: Build and test under AddressSanitizer and UndefinedBehaviorSanitizer
+        run: |
+          docker run --rm --security-opt seccomp=unconfined -v "$PWD:/work" -w /work type-p-alpha-build:ci sh -c '
+            cmake -S . -B build/linux-asan -G Ninja -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+              -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ \
+              -DP1_SANITIZERS=address,undefined &&
+            cmake --build build/linux-asan -j 4 &&
+            ASAN_OPTIONS=detect_leaks=1:halt_on_error=1 \
+            UBSAN_OPTIONS=halt_on_error=1:print_stacktrace=1 \
+              ctest --test-dir build/linux-asan --output-on-failure \
+                -E "linux_daws|plugin_editor_snapshot|plugin_editor_snapshot_diff" &&
+            # JUCE keeps global allocations until process exit, so the
+            # snapshot LeakSanitizer report is not a product leak. The memory
+            # and undefined-behaviour checks stay on for it.
+            ASAN_OPTIONS=detect_leaks=0:halt_on_error=1 \
+            UBSAN_OPTIONS=halt_on_error=1:print_stacktrace=1 \
+              ctest --test-dir build/linux-asan --output-on-failure \
+                -R "^plugin_editor_snapshot$"'
 
   windows:
     runs-on: windows-2022
