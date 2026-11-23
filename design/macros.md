@@ -115,14 +115,15 @@ fixed in the same commit as this note.
 ## Panel
 
 A ninth tab, `macros`, sits after `patch settings`, because both pages are patch
-level. The page is six cards in a two by three grid, 616 by 225 each. The knob sits
-at the left and the routing at the right, which leaves room for a long target name.
+level. The page is six cards in a two by three grid, about 599 by 222 each. The knob
+sits at the left and the routing at the right, which leaves room for a long target
+name.
 
 The card header carries the name and a `rename` that opens the existing dialog. A
 macro name is empty until the player renames it, and an empty name draws `macro n`.
-The body has a 42 px dial, the default knob size, with the value below, then the
-`midi in` row, then three destination rows. A row with `none` keeps its slider,
-greyed, so the card keeps its shape with no targets.
+The left column holds a 62 px dial, the largest in the panel, with the value below,
+then the `midi in` row and three destination rows on the right. A row with `none`
+keeps its slider, greyed, so the card keeps its shape with no targets.
 
 Colours: purple for the destination range sliders, green for the MIDI-in range, and
 0.35 alpha for a disabled range. The MIDI-in and destination sliders are both

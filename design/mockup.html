@@ -409,6 +409,52 @@
   .penvcard .knob { width: 52px; }
   .penvcard .dial, .penvcard .dial svg { width: 38px; height: 38px; }
 
+  /* ---------------- macros page ---------------- */
+  .macrogrid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr); gap: 10px; min-height: 100%;
+  }
+  .macrocard {
+    background: var(--panel); padding: 9px; min-width: 0;
+    display: flex; flex-direction: column;
+  }
+  .mhead {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 8px; margin-bottom: 2px;
+  }
+  .mname {
+    font-family: var(--font-head); font-size: 12px; letter-spacing: .06em;
+    color: var(--pink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .mcbody { display: flex; gap: 12px; flex: 1; min-height: 0; }
+  .mcleft {
+    width: 86px; flex: 0 0 86px; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+  }
+  .mcleft .knob { width: 86px; }
+  .mcleft .dial, .mcleft .dial svg { width: 62px; height: 62px; }
+  .mcleft .knob-val { font-size: 16px; }
+  .mcright {
+    flex: 1; min-width: 0; display: flex; flex-direction: column;
+    justify-content: space-evenly; gap: 4px;
+  }
+  .mcrow { display: flex; align-items: center; gap: 7px; min-width: 0; }
+  .didx { width: 14px; flex: 0 0 14px; font-size: 10px; color: var(--faint); text-align: right; }
+  .mcrow .lbl { width: 42px; flex: 0 0 42px; font-size: 11px; letter-spacing: .04em; color: var(--dim); }
+  .mcrow .sel { flex: 1; min-width: 0; font-size: 11px; }
+  .mcrow .macro { flex: 0 0 150px; }
+  .mcrow .macro .mtrack { flex: 1; }
+  .mcrow .mval { width: 40px; }
+  .mcrow.off .mtrack { pointer-events: none; }
+  .mcrow.off .mtrack, .mcrow.off .mval, .mcrow.off .didx { opacity: .35; }
+  .macro.bare { flex: 1; }
+  .mtrack.green { border-color: #1f4a36; }
+  .mtrack.green i { background: var(--green); }
+  .knob-name:empty { display: none; }
+  .dial .srcarc { fill: none; stroke: var(--green); stroke-width: 2; stroke-dasharray: 2 3; }
+  .knob.mod-target .knob-val { color: var(--purple); }
+  .knob.mod-live .knob-val { color: var(--green); }
+
   /* ---------------- status strip ---------------- */
   .status { display: flex; align-items: center; justify-content: flex-start;
     padding: 7px 16px; background: #000; border-top: 1px solid var(--line2); }
@@ -564,7 +610,7 @@
     return "M " + p0[0].toFixed(2) + " " + p0[1].toFixed(2) +
       " A " + r + " " + r + " 0 " + large + " 1 " + p1[0].toFixed(2) + " " + p1[1].toFixed(2);
   }
-  function fmtVal(s) { return s.fmt ? s.fmt(s.val) : Math.round(s.val); }
+  function fmtVal(s) { return s.textFn ? s.textFn(s.val) : (s.fmt ? s.fmt(s.val) : Math.round(s.val)); }
 
   function makeKnob(spec) {
     const el = document.createElement("div");
@@ -575,6 +621,7 @@
       '<svg viewBox="0 0 42 42">' +
       '<path class="track" d="' + arc(21, 21, 16, 0, 1) + '"/>' +
       '<path class="arc" d="' + arc(21, 21, 16, 0, 0.0001) + '"/>' +
+      '<path class="srcarc" d=""/>' +
       '<line class="ptr" x1="21" y1="21" x2="21" y2="21"/>' +
       "</svg>";
     const name = document.createElement("div");
@@ -654,6 +701,13 @@
     const frac = (s.val - s.min) / (s.max - s.min);
     const svg = el.__dial.querySelector("svg");
     svg.querySelector(".arc").setAttribute("d", arc(21, 21, 16, 0, Math.max(frac, 0.0001)));
+    if (s.sourceFn) {
+      const src = s.sourceFn(s.val);
+      const sfrac = Math.max(0, Math.min(1, (src - s.min) / (s.max - s.min)));
+      const f0 = Math.min(frac, sfrac), f1 = Math.max(frac, sfrac);
+      svg.querySelector(".srcarc").setAttribute("d",
+        f1 - f0 > 0.002 ? arc(21, 21, 16, f0, f1) : "");
+    }
     const p = pt(21, 21, 15, angleFor(frac));
     const q = pt(21, 21, 6, angleFor(frac));
     const line = svg.querySelector(".ptr");
@@ -840,6 +894,88 @@
   }
 
   const PART_DATA = [initPartState(), initPartState()];
+
+  /* ---------------- macro demo state ---------------- */
+  const DEMO_WHEEL = 90;
+  const DEMO_VELOCITY = 104;
+  function roleTargets(n, what) {
+    return ["part " + n + " op " + what, "part " + n + " carrier " + what,
+      "part " + n + " modulator " + what];
+  }
+  function partTargets(fn) {
+    const out = [];
+    [1, 2].forEach(function (n) { out.push.apply(out, fn(n)); });
+    return out;
+  }
+  const MACRO_TARGETS = [
+    { section: "part params", items: partTargets(function (n) {
+      return ["part " + n + " filter cutoff", "part " + n + " resonance",
+        "part " + n + " pan", "part " + n + " detune",
+        "part " + n + " velocity depth", "part " + n + " pitch lfo rate",
+        "part " + n + " pitch lfo depth"];
+    }) },
+    { section: "env rates", items: partTargets(function (n) {
+      return ["part " + n + " filter and pitch env rates",
+        "part " + n + " op env rates", "part " + n + " carrier env rates",
+        "part " + n + " modulator env rates"];
+    }) },
+    { section: "op lfo rates", items: partTargets(function (n) {
+      return roleTargets(n, "lfo rates");
+    }) },
+    { section: "op lfo depths", items: partTargets(function (n) {
+      return roleTargets(n, "lfo depths");
+    }) },
+    { section: "op levels", items: partTargets(function (n) {
+      return roleTargets(n, "levels");
+    }) },
+    { section: "op feedbacks", items: partTargets(function (n) {
+      return roleTargets(n, "feedbacks");
+    }) },
+    { section: "op morphs", items: partTargets(function (n) {
+      return roleTargets(n, "morphs");
+    }) },
+    { section: "op breakpoint xs", items: partTargets(function (n) {
+      return roleTargets(n, "breakpoint xs");
+    }) }
+  ];
+  function blankTargets() {
+    return [{ name: "none", range: 0 }, { name: "none", range: 0 },
+      { name: "none", range: 0 }];
+  }
+  const MACROS = [
+    { name: "brightness", value: 20, midi: "mod wheel", range: 45, targets: [
+      { name: "part 1 filter cutoff", range: 50 },
+      { name: "part 1 resonance", range: -25 },
+      { name: "part 1 op levels", range: 15 }
+    ] },
+    { name: "motion", value: -15, midi: "velocity", range: 30, targets: [
+      { name: "part 1 op morphs", range: 40 },
+      { name: "part 2 filter cutoff", range: -20 },
+      { name: "none", range: 0 }
+    ] },
+    { name: "", value: 0, midi: "off", range: 0, targets: blankTargets() },
+    { name: "", value: 0, midi: "cc 75", range: 0, targets: blankTargets() },
+    { name: "", value: 0, midi: "cc 76", range: 0, targets: blankTargets() },
+    { name: "", value: 0, midi: "cc 77", range: 0, targets: blankTargets() }
+  ];
+  function macroEffective(m) {
+    let src = 0;
+    if (m.midi === "mod wheel") src = DEMO_WHEEL / 127;
+    else if (m.midi === "velocity") src = DEMO_VELOCITY / 127;
+    return Math.max(-100, Math.min(100, m.value + src * m.range));
+  }
+  function macroInfoFor(paramName) {
+    let targeted = false, delta = 0;
+    MACROS.forEach(function (m) {
+      m.targets.forEach(function (t) {
+        if (t.name === paramName && t.range !== 0) {
+          targeted = true;
+          delta += macroEffective(m) * t.range / 100;
+        }
+      });
+    });
+    return { targeted: targeted, delta: delta };
+  }
   let OPS = PART_DATA[0].ops;
   let VOICE = PART_DATA[0].voice;
   let PITCH_LFO = PART_DATA[0].pitchLfo;
@@ -867,8 +1003,14 @@
   }
 
   function knobFor(x) {
-    return makeKnob({ name: x.name, min: x.min, max: x.max, val: x.get(),
+    const el = makeKnob({ name: x.name, min: x.min, max: x.max, val: x.get(),
       fmt: x.fmt, step: x.step, onChange: x.set });
+    if (x.mod) {
+      const info = macroInfoFor(x.mod);
+      if (info.targeted)
+        el.classList.add(Math.abs(info.delta) > 0.01 ? "mod-live" : "mod-target");
+    }
+    return el;
   }
 
   function knobRow(bindings) {
@@ -882,17 +1024,18 @@
 
   function makeMacro(label, opts) {
     const row = document.createElement("div");
-    row.className = "macro";
+    row.className = "macro" + (opts.noLabel ? " bare" : "");
     const name = document.createElement("span");
     name.className = "mlabel"; name.textContent = label;
     const track = document.createElement("div");
     track.className = "mtrack";
     if (opts.min < 0) track.classList.add("bip");
+    if (opts.green) track.classList.add("green");
     const fill = document.createElement("i");
     track.appendChild(fill);
     const val = document.createElement("b");
     val.className = "mval";
-    row.append(name);
+    if (!opts.noLabel) row.appendChild(name);
     if (opts.extra) row.appendChild(opts.extra);
     row.append(track, val);
     function paint(v) {
@@ -2212,10 +2355,11 @@
   function viewFxMod() {
     const wrap = document.createElement("div");
     wrap.className = "fxmod-grid";
+    const cutB = b(FILTER1, "cutoff", "CUTOFF", 0, 100, function (x) { return x + "%"; }, 1);
+    cutB.mod = "part " + activePart + " filter cutoff";
     wrap.appendChild(fxCard("FILTER 1", [
-      b(FILTER1, "cutoff", "CUTOFF", 0, 100, function (x) { return x + "%"; }, 1),
-      b(FILTER1, "res", "RES", 0, 100, function (x) { return x + "%"; }, 1),
-      b(FILTER1, "env", "ENV AMT", 0, 100, function (x) { return x + "%"; }, 1)
+      cutB,
+      b(FILTER1, "res", "RES", 0, 100, function (x) { return x + "%"; }, 1)
     ], ["lpf", "bpf", "hpf"], FILTER1));
     const feBox = document.createElement("div");
     feBox.className = "envbox";
@@ -2321,9 +2465,110 @@
     return wrap;
   }
 
+  /* ---------------- macros page ---------------- */
+  function groupedTargetSelect(current, onchange) {
+    const sel = document.createElement("select");
+    sel.className = "sel";
+    const none = document.createElement("option");
+    none.value = "none"; none.textContent = "none";
+    if (current === "none") none.selected = true;
+    sel.appendChild(none);
+    MACRO_TARGETS.forEach(function (g) {
+      const og = document.createElement("optgroup");
+      og.label = g.section;
+      g.items.forEach(function (name) {
+        const o = document.createElement("option");
+        o.value = name; o.textContent = name;
+        if (name === current) o.selected = true;
+        og.appendChild(o);
+      });
+      sel.appendChild(og);
+    });
+    sel.addEventListener("change", function () { onchange(sel.value); });
+    return sel;
+  }
+
+  function macroCard(m, i) {
+    const card = document.createElement("div");
+    card.className = "macrocard";
+    const head = document.createElement("div");
+    head.className = "mhead";
+    const name = document.createElement("div");
+    name.className = "mname";
+    name.textContent = "// " + (m.name || ("macro " + (i + 1)));
+    const ren = document.createElement("button");
+    ren.className = "mini"; ren.textContent = "rename";
+    ren.addEventListener("click", function () {
+      openRename("rename macro", m.name || ("macro " + (i + 1)), function (v) {
+        m.name = v; rerender();
+      });
+    });
+    head.append(name, ren);
+    card.appendChild(head);
+
+    const body = document.createElement("div");
+    body.className = "mcbody";
+
+    const left = document.createElement("div");
+    left.className = "mcleft";
+    left.appendChild(makeKnob({
+      name: "",
+      min: -100, max: 100, val: m.value, step: 1,
+      sourceFn: function (v) { m.value = v; return macroEffective(m); },
+      textFn: function () { return bipFmt(Math.round(macroEffective(m))); }
+    }));
+    body.appendChild(left);
+
+    const right = document.createElement("div");
+    right.className = "mcright";
+
+    const midiOff = m.midi === "off";
+    const midiRow = document.createElement("div");
+    midiRow.className = "mcrow midi" + (midiOff ? " off" : "");
+    const lbl = document.createElement("span");
+    lbl.className = "lbl"; lbl.textContent = "midi in";
+    const midiSel = makeSelect(["off", "cc " + (72 + i), "mod wheel", "velocity"],
+      m.midi, function (v) { m.midi = v; rerender(); });
+    const midiRange = makeMacro("", {
+      min: -100, max: 100, value: m.range, format: bipFmt, noLabel: true,
+      green: true, onInput: function (v) { m.range = v; }, onEnd: rerender
+    });
+    midiRow.append(lbl, midiSel, midiRange);
+    right.appendChild(midiRow);
+
+    m.targets.forEach(function (t, d) {
+      const off = t.name === "none";
+      const row = document.createElement("div");
+      row.className = "mcrow dest" + (off ? " off" : "");
+      const idx = document.createElement("span");
+      idx.className = "didx"; idx.textContent = String(d + 1);
+      const sel = groupedTargetSelect(t.name, function (v) {
+        t.name = v; rerender();
+      });
+      const range = makeMacro("", {
+        min: -100, max: 100, value: t.range, format: bipFmt, noLabel: true,
+        onInput: function (v) { t.range = v; }
+      });
+      row.append(idx, sel, range);
+      right.appendChild(row);
+    });
+
+    body.appendChild(right);
+    card.appendChild(body);
+    return card;
+  }
+
+  function viewMacros() {
+    const wrap = document.createElement("div");
+    wrap.className = "macrogrid";
+    MACROS.forEach(function (m, i) { wrap.appendChild(macroCard(m, i)); });
+    return wrap;
+  }
+
   /* ---------------- tabs ---------------- */
   const TABS = [
     { id: "patch", label: "patch settings", view: viewPatch },
+    { id: "macros", label: "macros", view: viewMacros },
     { id: "partfx", label: "part params", view: viewFxMod },
     { id: "ops", label: "op envs", view: viewOps },
     { id: "oplfo", label: "op lfos", view: viewOperatorLfos },
