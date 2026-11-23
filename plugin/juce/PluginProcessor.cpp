@@ -515,13 +515,16 @@ void TypePAlphaAudioProcessor::syncMacros()
                 if (target <= 0 || target > p1::macros::kTargetCount ||
                     range == 0)
                     continue;
-                /* The engine adds the velocity source to the operator levels and
-                 * feedbacks per voice, so the part-level write would double it. */
+                /* The engine adds the velocity source to the operator levels,
+                 * feedbacks and morphs per voice, so the part-level write would
+                 * double it. */
                 if (sources[m] == 3 &&
                     (target == P1_MACRO_TARGET_P1_OP_LEVELS ||
                      target == P1_MACRO_TARGET_P2_OP_LEVELS ||
                      target == P1_MACRO_TARGET_P1_OP_FEEDBACKS ||
-                     target == P1_MACRO_TARGET_P2_OP_FEEDBACKS))
+                     target == P1_MACRO_TARGET_P2_OP_FEEDBACKS ||
+                     target == P1_MACRO_TARGET_P1_OP_MORPHS ||
+                     target == P1_MACRO_TARGET_P2_OP_MORPHS))
                     continue;
                 const int row = target - 1;
                 const int part = p1::macros::kTargetPart[row];

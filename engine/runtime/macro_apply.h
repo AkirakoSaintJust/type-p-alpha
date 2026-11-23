@@ -78,3 +78,12 @@ static inline int32_t p1_macro_velocity_feedback(const type_p_alpha_state *state
     return p1_macro_velocity_offset(state, wanted, state->voice_velocity[voice],
                                     65534);
 }
+
+static inline int32_t p1_macro_velocity_morph(const type_p_alpha_state *state,
+                                              uint32_t part, uint32_t voice)
+{
+    const int32_t wanted = part == 0u ? P1_MACRO_TARGET_P1_OP_MORPHS
+                                      : P1_MACRO_TARGET_P2_OP_MORPHS;
+    return p1_macro_velocity_offset(state, wanted, state->voice_velocity[voice],
+                                    99);
+}

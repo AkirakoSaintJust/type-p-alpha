@@ -266,6 +266,10 @@ def main() -> int:
         f"{target_index[('op feedbacks', 1)]}",
         f"#define P1_MACRO_TARGET_P2_OP_FEEDBACKS "
         f"{target_index[('op feedbacks', 2)]}",
+        f"#define P1_MACRO_TARGET_P1_OP_MORPHS "
+        f"{target_index[('op morphs', 1)]}",
+        f"#define P1_MACRO_TARGET_P2_OP_MORPHS "
+        f"{target_index[('op morphs', 2)]}",
         "",
     ]
     ids = Path(sys.argv[5])

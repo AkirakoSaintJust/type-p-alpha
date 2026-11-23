@@ -425,6 +425,11 @@ int main(int argc, char** argv)
             p1_macro_velocity_feedback(state.get(), 0, 1);
         check(feedbackHard > feedbackSoft && feedbackSoft > 0,
               "the macro feedback offset follows each voice");
+        state->macro_t1a = P1_MACRO_TARGET_P1_OP_MORPHS;
+        const int32_t morphSoft = p1_macro_velocity_morph(state.get(), 0, 0);
+        const int32_t morphHard = p1_macro_velocity_morph(state.get(), 0, 1);
+        check(morphHard > morphSoft && morphSoft > 0,
+              "the macro morph offset follows each voice");
     }
     test_engine_render();
     test_state_isolation();
