@@ -31,7 +31,14 @@
 #define SYNTH_PARAM_MAX 256u
 
 #define PP_RECORD(N) (1u + PRESET_NAME_LEN + (N) * 4u + 4u)
-#define MP_RECORD(P) (1u + PRESET_NAME_LEN + (P) + (P) * 5u * 4u + 4u)
+/* The six patch macros: 54 int32 values and six name fields, appended to the multi
+ * record. The old record size stays available so a library written before the macro
+ * block still loads. */
+#define PRESET_MACRO_COUNT 6u
+#define PRESET_MACRO_PARAMS 54u
+#define PRESET_MACRO_BYTES (PRESET_MACRO_PARAMS * 4u + PRESET_MACRO_COUNT * PRESET_NAME_LEN)
+#define MP_RECORD(P) (1u + PRESET_NAME_LEN + (P) + (P) * 5u * 4u + PRESET_MACRO_BYTES + 4u)
+#define MP_RECORD_OLD(P) (1u + PRESET_NAME_LEN + (P) + (P) * 5u * 4u + 4u)
 #define ST_RECORD (1u + 4u + 4u + 4u)
 #define PP_BANK(N) (PRESET_PART_SLOTS * PP_RECORD(N))
 #define MP_BANK(P) (PRESET_MULTI_SLOTS * MP_RECORD(P))
@@ -43,15 +50,17 @@ uint16_t preset_crc16(const uint8_t *p, uint32_t n); /* the SysEx envelope's CRC
 uint32_t preset_part_pack(uint8_t *out, const char *name, const int32_t *params, uint32_t n);
 uint32_t preset_multi_pack(uint8_t *out, const char *name, const uint8_t *part_slot,
                            const int32_t *level, const int32_t *delay, const int32_t *channel,
-                           const int32_t *low, const int32_t *high, uint32_t p);
+                           const int32_t *low, const int32_t *high, const int32_t *macro,
+                           const char *const *macro_name, uint32_t p);
 uint32_t preset_settings_pack(uint8_t *out, int32_t base_channel, int32_t master_tune);
 
 /* unpack -> 1 and fills the outputs, 0 when the slot is empty or the CRC fails
  * (the outputs are then left untouched). */
 int preset_part_unpack(const uint8_t *raw, uint32_t n, char *name, int32_t *params);
-int preset_multi_unpack(const uint8_t *raw, uint32_t p, char *name, uint8_t *part_slot,
-                        int32_t *level, int32_t *delay, int32_t *channel, int32_t *low,
-                        int32_t *high);
+int preset_multi_unpack(const uint8_t *raw, uint32_t p, int has_macro, char *name,
+                        uint8_t *part_slot, int32_t *level, int32_t *delay,
+                        int32_t *channel, int32_t *low, int32_t *high,
+                        int32_t *macro, char *macro_name);
 int preset_settings_unpack(const uint8_t *raw, int32_t *base_channel, int32_t *master_tune);
 
 /* banks, over the platform's `slot_save`/`slot_load` services. `n` = the part-patch

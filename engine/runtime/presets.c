@@ -70,9 +70,11 @@ uint32_t preset_part_pack(uint8_t *out, const char *name, const int32_t *params,
 
 uint32_t preset_multi_pack(uint8_t *out, const char *name, const uint8_t *part_slot,
                            const int32_t *level, const int32_t *delay, const int32_t *channel,
-                           const int32_t *low, const int32_t *high, uint32_t p)
+                           const int32_t *low, const int32_t *high, const int32_t *macro,
+                           const char *const *macro_name, uint32_t p)
 {
-    uint32_t body = 1u + PRESET_NAME_LEN + p + p * 5u * 4u, i, off = 1u + PRESET_NAME_LEN;
+    uint32_t body = 1u + PRESET_NAME_LEN + p + p * 5u * 4u + PRESET_MACRO_BYTES, i,
+             off = 1u + PRESET_NAME_LEN;
     out[0] = PRESET_VERSION;
     name_put(out + 1u, name);
     for (i = 0; i < p; i++)
@@ -97,6 +99,14 @@ uint32_t preset_multi_pack(uint8_t *out, const char *name, const uint8_t *part_s
     for (i = 0; i < p; i++) {
         wr32(out + off, (uint32_t)high[i]);
         off += 4u;
+    }
+    for (i = 0; i < PRESET_MACRO_PARAMS; i++) {
+        wr32(out + off, (uint32_t)macro[i]);
+        off += 4u;
+    }
+    for (i = 0; i < PRESET_MACRO_COUNT; i++) {
+        name_put(out + off, macro_name ? macro_name[i] : 0);
+        off += PRESET_NAME_LEN;
     }
     seal(out, body);
     return body + 4u;
@@ -127,11 +137,13 @@ int preset_part_unpack(const uint8_t *raw, uint32_t n, char *name, int32_t *para
     return 1;
 }
 
-int preset_multi_unpack(const uint8_t *raw, uint32_t p, char *name, uint8_t *part_slot,
-                        int32_t *level, int32_t *delay, int32_t *channel, int32_t *low,
-                        int32_t *high)
+int preset_multi_unpack(const uint8_t *raw, uint32_t p, int has_macro, char *name,
+                        uint8_t *part_slot, int32_t *level, int32_t *delay,
+                        int32_t *channel, int32_t *low, int32_t *high, int32_t *macro,
+                        char *macro_name)
 {
-    uint32_t body = 1u + PRESET_NAME_LEN + p + p * 5u * 4u, i, off = 1u + PRESET_NAME_LEN;
+    uint32_t body = 1u + PRESET_NAME_LEN + p + p * 5u * 4u +
+                    (has_macro ? PRESET_MACRO_BYTES : 0u), i, off = 1u + PRESET_NAME_LEN;
     if (raw[0] == PRESET_EMPTY)
         return 0;
     if (preset_crc32(raw, body) != rd32(raw + body))
@@ -162,6 +174,17 @@ int preset_multi_unpack(const uint8_t *raw, uint32_t p, char *name, uint8_t *par
     for (i = 0; i < p; i++) {
         high[i] = (int32_t)rd32(raw + off);
         off += 4u;
+    }
+    if (has_macro) {
+        for (i = 0; i < PRESET_MACRO_PARAMS; i++) {
+            macro[i] = (int32_t)rd32(raw + off);
+            off += 4u;
+        }
+        for (i = 0; i < PRESET_MACRO_COUNT; i++) {
+            memcpy(macro_name + i * PRESET_NAME_LEN, raw + off, PRESET_NAME_LEN - 1u);
+            macro_name[i * PRESET_NAME_LEN + PRESET_NAME_LEN - 1u] = 0;
+            off += PRESET_NAME_LEN;
+        }
     }
     return 1;
 }

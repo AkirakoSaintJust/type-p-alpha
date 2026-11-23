@@ -1438,6 +1438,36 @@ void PluginEditor::applyRouting(int field, int part, int value)
             parameter->convertTo0to1(static_cast<float>(value)));
 }
 
+std::vector<int32_t> PluginEditor::currentMacroParams()
+{
+    std::vector<int32_t> values(static_cast<std::size_t>(kP1MacroParamCount), 0);
+    for (int i = 0; i < kP1MacroParamCount; ++i) {
+        if (auto* value = state().getRawParameterValue(
+                kP1MacroParamIDs[static_cast<std::size_t>(i)]))
+            values[static_cast<std::size_t>(i)] =
+                static_cast<int32_t>(std::lround(value->load()));
+    }
+    return values;
+}
+
+void PluginEditor::applyMacroParams(const std::vector<int32_t>& params)
+{
+    const bool current =
+        params.size() == static_cast<std::size_t>(kP1MacroParamCount);
+    for (int i = 0; i < kP1MacroParamCount; ++i) {
+        const auto* spec =
+            p1::ui::findSpec(kP1MacroParamIDs[static_cast<std::size_t>(i)]);
+        if (spec == nullptr)
+            continue;
+        if (auto* parameter = state().getParameter(spec->id)) {
+            const int value = current ? params[static_cast<std::size_t>(i)]
+                                      : spec->def;
+            parameter->setValueNotifyingHost(
+                parameter->convertTo0to1(static_cast<float>(value)));
+        }
+    }
+}
+
 void PluginEditor::savePartToSlot(int part, int slot)
 {
     auto& store = processor_.presets();
@@ -1499,7 +1529,7 @@ void PluginEditor::savePatchToSlot(int slot, int mode)
         delay[static_cast<std::size_t>(part)] = currentRouting(4, part);
     }
     if (!store.saveMulti(slot, processor_.getPatchName().toStdString(), partSlots,
-                         level, delay, channel, low, high))
+                         level, delay, channel, low, high, currentMacroParams()))
         return;
     store.setCurrentMulti(slot);
     reportLibrarySave(processor_.saveLibrary());
@@ -1557,6 +1587,7 @@ void PluginEditor::loadPatchFromSlot(int slot)
         applyRouting(3, part, multi.level[static_cast<std::size_t>(part)]);
         applyRouting(4, part, multi.delay[static_cast<std::size_t>(part)]);
     }
+    applyMacroParams(multi.macro);
     store.setCurrentMulti(slot);
     refreshNames();
 }

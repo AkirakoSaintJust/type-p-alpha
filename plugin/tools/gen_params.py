@@ -144,6 +144,15 @@ def main() -> int:
         f"inline constexpr int kP1RoutingCount = {routing_count};",
         f"inline constexpr int kP1RoutingBase = {routing_base};",
         "",
+    ]
+    macro_ids = [p["name"] for p in params if str(p["name"]).startswith("macro")]
+    lines.append(f"inline constexpr int kP1MacroParamCount = {len(macro_ids)};")
+    lines.append("inline constexpr const char* kP1MacroParamIDs[] = {")
+    for name in macro_ids:
+        lines.append(f"    {c_string(name)},")
+    lines.append("};")
+    lines.append("")
+    lines += [
         f"inline constexpr std::array<int32_t, {len(ratio_detents_values)}> "
         "kP1RatioDetents = {",
     ]

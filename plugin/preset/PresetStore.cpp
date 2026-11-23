@@ -215,12 +215,15 @@ bool PresetStore::saveMulti(int slot, const std::string& name,
                             const std::vector<int32_t>& delay,
                             const std::vector<int32_t>& channel,
                             const std::vector<int32_t>& low,
-                            const std::vector<int32_t>& high)
+                            const std::vector<int32_t>& high,
+                            const std::vector<int32_t>& macro,
+                            const std::array<std::string, kMacroCount>& macroNames)
 {
     const auto count = static_cast<std::size_t>(partCount_);
     if (slot < 0 || slot >= kMultiSlots || partSlot.size() != count ||
         level.size() != count || delay.size() != count || channel.size() != count ||
-        low.size() != count || high.size() != count)
+        low.size() != count || high.size() != count ||
+        (!macro.empty() && macro.size() != static_cast<std::size_t>(kMacroParams)))
         return false;
     auto& multi = multis_[static_cast<std::size_t>(slot)];
     if (!dirtyMultis_[static_cast<std::size_t>(slot)]) {
@@ -235,6 +238,8 @@ bool PresetStore::saveMulti(int slot, const std::string& name,
     multi.channel = channel;
     multi.low = low;
     multi.high = high;
+    multi.macro = macro;
+    multi.macroNames = macroNames;
     return true;
 }
 
@@ -315,9 +320,17 @@ std::vector<uint8_t> PresetStore::packMultiBank() const
             continue;
         const auto& multi = multis_[static_cast<std::size_t>(slot)];
         const auto offset = static_cast<std::size_t>(slot) * recordSize;
+        std::array<int32_t, kMacroParams> macro{};
+        if (multi.macro.size() == static_cast<std::size_t>(kMacroParams))
+            std::copy(multi.macro.begin(), multi.macro.end(), macro.begin());
+        std::array<const char*, kMacroCount> names{};
+        for (int i = 0; i < kMacroCount; ++i)
+            names[static_cast<std::size_t>(i)] =
+                multi.macroNames[static_cast<std::size_t>(i)].c_str();
         preset_multi_pack(bank.data() + offset, multi.name.c_str(),
                           multi.partSlot.data(), multi.level.data(), multi.delay.data(),
                           multi.channel.data(), multi.low.data(), multi.high.data(),
+                          macro.data(), names.data(),
                           static_cast<uint32_t>(partCount_));
     }
     return bank;
@@ -325,9 +338,14 @@ std::vector<uint8_t> PresetStore::packMultiBank() const
 
 bool PresetStore::loadMultiBank(const uint8_t* data, std::size_t size)
 {
-    const auto recordSize = multiRecordSize();
-    if (data == nullptr || size != recordSize * kMultiSlots)
+    const auto newRecord = multiRecordSize();
+    const auto oldRecord = static_cast<std::size_t>(MP_RECORD_OLD(
+        static_cast<uint32_t>(partCount_)));
+    const bool hasMacro = size == newRecord * kMultiSlots;
+    if (data == nullptr ||
+        (size != newRecord * kMultiSlots && size != oldRecord * kMultiSlots))
         return false;
+    const auto recordSize = hasMacro ? newRecord : oldRecord;
     for (int slot = 0; slot < kMultiSlots; ++slot) {
         auto& multi = multis_[static_cast<std::size_t>(slot)];
         multi.used = false;
@@ -338,6 +356,8 @@ bool PresetStore::loadMultiBank(const uint8_t* data, std::size_t size)
         multi.channel.assign(static_cast<std::size_t>(partCount_), 0);
         multi.low.assign(static_cast<std::size_t>(partCount_), 0);
         multi.high.assign(static_cast<std::size_t>(partCount_), 127);
+        multi.macro.clear();
+        multi.macroNames = {};
         const auto* raw = data + static_cast<std::size_t>(slot) * recordSize;
         if (raw[0] == PRESET_EMPTY)
             continue;
@@ -348,9 +368,13 @@ bool PresetStore::loadMultiBank(const uint8_t* data, std::size_t size)
         std::vector<int32_t> channel(static_cast<std::size_t>(partCount_));
         std::vector<int32_t> low(static_cast<std::size_t>(partCount_));
         std::vector<int32_t> high(static_cast<std::size_t>(partCount_));
-        if (preset_multi_unpack(raw, static_cast<uint32_t>(partCount_), name,
-                                partSlot.data(), level.data(), delay.data(),
-                                channel.data(), low.data(), high.data())) {
+        std::array<int32_t, kMacroParams> macro{};
+        std::array<char, kMacroCount * PRESET_NAME_LEN> names{};
+        if (preset_multi_unpack(raw, static_cast<uint32_t>(partCount_),
+                                hasMacro ? 1 : 0, name, partSlot.data(),
+                                level.data(), delay.data(), channel.data(),
+                                low.data(), high.data(), macro.data(),
+                                names.data())) {
             multi.used = true;
             multi.name = shortName(name);
             multi.partSlot = std::move(partSlot);
@@ -359,6 +383,13 @@ bool PresetStore::loadMultiBank(const uint8_t* data, std::size_t size)
             multi.channel = std::move(channel);
             multi.low = std::move(low);
             multi.high = std::move(high);
+            if (hasMacro) {
+                multi.macro.assign(macro.begin(), macro.end());
+                for (int i = 0; i < kMacroCount; ++i)
+                    multi.macroNames[static_cast<std::size_t>(i)] = std::string(
+                        names.data() +
+                        static_cast<std::size_t>(i) * PRESET_NAME_LEN);
+            }
         }
     }
     dirtyMultis_.fill(false);

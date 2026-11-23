@@ -8,9 +8,9 @@
 - **Brief section:** [`../design/macros.md`](../design/macros.md), with the research
   in [`../docs/research/macros.md`](../docs/research/macros.md).
 - **Owner / date:** P1Onken, 2026-11-23.
-- **Disposition:** the 54 parameters, the CC map and the automation flags are built.
-  The offset layer, the multi record, the panel and the snapshots are outstanding, so
-  the evidence below is partly run and partly a list.
+- **Disposition:** the 54 parameters, the CC map, the automation flags and the multi
+  record are built. The offset layer and the panel are outstanding, so the evidence
+  below is partly run and partly a list.
 
 ## Player outcome
 
@@ -36,7 +36,7 @@
   engine's global zone, and the offsets are computed in the existing control block.
 - **Persistence/version impact:** the six values and the 48 config values are global
   manifest parameters, so the part record stays at 981. The multi record gains 54
-  ints and six 32-byte names, which is about 408 extra bytes per record, and the
+  ints and six 32-character names, which is about 414 extra bytes per record, and the
   loader accepts the old multi size because the library header carries the multi
   bank size. The six values are saved in the APVTS state as well, like the routing
   parameters.
@@ -83,31 +83,26 @@
 
 ## Evidence
 
-Run on the parameter layer:
+Run on the parameter layer and the multi record:
 
 - `plugin_smoke` passes `the APVTS exposes every manifest parameter and the output
   volume` and `only the six macro values are automatable`, and its text round-trip
   covers the 54 new parameters.
-- `engine_parity` and the other 17 tests pass, because the macro node carries
+- `preset_smoke` saves a multi with a 54-value macro block and six names and checks
+  that both round-trip, then loads a hand-built multi bank with the old record size
+  and checks that the macro vector arrives empty, which is how the editor detects a
+  record from before the block.
+- `engine_parity` and the other 16 tests pass, because the macro node carries
   parameters only and changes no audio.
 
 Still outstanding:
 
 - The parameter layer has no offset, so the macro-at-0 render sweep has not run yet.
   It is the first test for the offset slice.
-
-- `plugin_smoke` checks that the APVTS exposes 54 macro parameters, that exactly six
-  are automatable, that the effective macro law gives the knob at source 0 and the
-  clamped sum at source 1, and that the dB-style text round-trips.
-- `engine_parity` renders a patch with every macro at 0 and then at 0 with no MIDI
-  source, and the samples must match the current reference exactly.
 - A render test sweeps a cutoff macro from 0 to 100 and back and checks that the
   return is bit-identical to the start, and a second test drives a group of envelope
   rates from two voices at different velocities and checks that the rates differ per
   voice.
-- `preset_smoke` loads a multi record from before the macro block and checks that
-  the six macros arrive at 0, with `none` targets and default CC, and that a current
-  record round-trips.
 - The editor snapshots show the macros page with an empty card, a card with three
   targets, the disabled MIDI range, the target menu with its eight section headings,
   the purple stored value at rest and the smaller green effective value while a
@@ -115,8 +110,8 @@ Still outstanding:
 
 ## Limits
 
-- **The parameter layer is built.** The offsets, the multi record and the panel are
-  not.
+- **The parameter layer and the multi record are built.** The offsets and the panel
+  are not.
 - **The display follows the newest voice.** A velocity macro differs per voice, and
   the stored value, the effective value and the dotted green arc can only show one of
   them.

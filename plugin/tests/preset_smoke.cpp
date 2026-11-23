@@ -120,7 +120,13 @@ int main()
     const std::vector<int32_t> channel{0, 1};
     const std::vector<int32_t> low{0, 12};
     const std::vector<int32_t> high{127, 96};
-    check(store.saveMulti(7, "multi", partSlots, level, delay, channel, low, high),
+    std::vector<int32_t> macro(static_cast<std::size_t>(p1::PresetStore::kMacroParams));
+    for (std::size_t i = 0; i < macro.size(); ++i)
+        macro[i] = static_cast<int32_t>(i) - 10;
+    const std::array<std::string, p1::PresetStore::kMacroCount> macroNames{
+        "brightness", "motion", "", "", "", ""};
+    check(store.saveMulti(7, "multi", partSlots, level, delay, channel, low, high,
+                          macro, macroNames),
           "save a multi record");
 
     const auto multiBank = store.packMultiBank();
@@ -138,20 +144,65 @@ int main()
     check(multi.level == level && multi.delay == delay &&
               multi.channel == channel && multi.low == low && multi.high == high,
           "the routing values round-trip");
+    check(multi.macro == macro, "the macro block round-trips");
+    check(multi.macroNames == macroNames, "the macro names round-trip");
 
     char multiName[PRESET_NAME_LEN] = {};
     std::array<uint8_t, kP1PartCount> rawSlots{};
     std::array<int32_t, kP1PartCount> rawLevel{}, rawDelay{}, rawChannel{},
         rawLow{}, rawHigh{};
+    std::array<int32_t, p1::PresetStore::kMacroParams> rawMacro{};
+    std::array<char, p1::PresetStore::kMacroCount * PRESET_NAME_LEN> rawMacroNames{};
     check(preset_multi_unpack(multiBank.data() + 7 * multiRecordSize,
-                              static_cast<uint32_t>(kP1PartCount), multiName,
+                              static_cast<uint32_t>(kP1PartCount), 1, multiName,
                               rawSlots.data(), rawLevel.data(), rawDelay.data(),
-                              rawChannel.data(), rawLow.data(),
-                              rawHigh.data()) == 1,
+                              rawChannel.data(), rawLow.data(), rawHigh.data(),
+                              rawMacro.data(), rawMacroNames.data()) == 1,
           "the multi record is readable by the device unpack");
     check(std::strcmp(multiName, "multi") == 0, "the device multi name matches");
     check(rawSlots == std::array<uint8_t, kP1PartCount>{3, 4},
           "the device part references match");
+    std::array<int32_t, p1::PresetStore::kMacroParams> expectedMacro{};
+    for (int i = 0; i < p1::PresetStore::kMacroParams; ++i)
+        expectedMacro[static_cast<std::size_t>(i)] = i - 10;
+    check(rawMacro == expectedMacro, "the device macro block matches");
+    check(std::strcmp(rawMacroNames.data(), "brightness") == 0,
+          "the device macro name matches");
+
+    /* A multi bank from before the macro block uses the old record size and CRC.
+     * The loader has to accept it and leave the macro vector empty so the editor
+     * applies the macro defaults. */
+    {
+        const auto oldRecord = static_cast<std::size_t>(
+            MP_RECORD_OLD(static_cast<uint32_t>(kP1PartCount)));
+        std::vector<uint8_t> oldBank(oldRecord * 64, 0xFF);
+        auto* out = oldBank.data() + 9 * oldRecord;
+        const auto put32 = [](uint8_t* p, uint32_t v) {
+            p[0] = static_cast<uint8_t>(v);
+            p[1] = static_cast<uint8_t>(v >> 8);
+            p[2] = static_cast<uint8_t>(v >> 16);
+            p[3] = static_cast<uint8_t>(v >> 24);
+        };
+        out[0] = PRESET_VERSION;
+        std::memset(out + 1, 0, PRESET_NAME_LEN);
+        std::memcpy(out + 1, "old multi", 9);
+        std::size_t off = 1 + PRESET_NAME_LEN;
+        out[off++] = 3;
+        out[off++] = 4;
+        for (const auto* array : {&level, &delay, &channel, &low, &high})
+            for (int value : *array) {
+                put32(out + off, static_cast<uint32_t>(value));
+                off += 4;
+            }
+        put32(out + off, preset_crc32(out, static_cast<uint32_t>(off)));
+        p1::PresetStore oldLoaded{kP1PartParamCount, kP1PartCount};
+        check(oldLoaded.loadMultiBank(oldBank.data(), oldBank.size()),
+              "load a pre-macro multi bank");
+        p1::PresetStore::Multi oldMulti;
+        check(oldLoaded.loadMulti(9, oldMulti), "load the old multi slot");
+        check(oldMulti.name == "old multi", "the old multi name survives");
+        check(oldMulti.macro.empty(), "an old multi has no macro block");
+    }
 
     const std::string longName(40, 'a');
     check(store.savePart(5, longName, lead), "save a 40-character name");

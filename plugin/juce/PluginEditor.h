@@ -115,6 +115,8 @@ private:
     void applyPartParams(int part, const std::vector<int32_t>& params);
     int currentRouting(int field, int part);
     void applyRouting(int field, int part, int value);
+    std::vector<int32_t> currentMacroParams();
+    void applyMacroParams(const std::vector<int32_t>& params);
 
     TypePAlphaAudioProcessor& processor_;
     p1::ui::P1LookAndFeel lookAndFeel_;

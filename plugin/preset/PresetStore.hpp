@@ -17,6 +17,8 @@ public:
     static constexpr int kPartSlots = 128;
     static constexpr int kMultiSlots = 64;
     static constexpr int kNameLen = 32;
+    static constexpr int kMacroCount = 6;
+    static constexpr int kMacroParams = 54;
 
     struct Part {
         bool used = false;
@@ -33,6 +35,10 @@ public:
         std::vector<int32_t> channel;
         std::vector<int32_t> low;
         std::vector<int32_t> high;
+        /* The macro block, in manifest order. Empty means a record from before the
+         * block, so the caller applies the macro defaults. */
+        std::vector<int32_t> macro;
+        std::array<std::string, kMacroCount> macroNames;
     };
 
     PresetStore(int partParamCount, int partCount,
@@ -56,7 +62,9 @@ public:
                    const std::vector<int32_t>& delay,
                    const std::vector<int32_t>& channel,
                    const std::vector<int32_t>& low,
-                   const std::vector<int32_t>& high);
+                   const std::vector<int32_t>& high,
+                   const std::vector<int32_t>& macro = {},
+                   const std::array<std::string, kMacroCount>& macroNames = {});
     bool loadMulti(int slot, Multi& out) const;
     bool multiUsed(int slot) const;
     std::string multiName(int slot) const;
