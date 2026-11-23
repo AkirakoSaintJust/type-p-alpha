@@ -49,6 +49,46 @@ def display_name(name: str) -> str:
     return name + part
 
 
+def is_ring_param(name: str) -> bool:
+    return name.startswith("ring") or (
+        name.startswith("car") and "_out.p" in name
+    )
+
+
+def reorder_ring(params: list[ParamDoc]) -> list[ParamDoc]:
+    """Move the ringmod part rows to the end of each part group.
+
+    The engine keeps the ringmod parameters at the route node, but the part
+    record appends them after the version 16 block. The spec order is the record
+    order, so the ring rows move to the end of the part 1 and part 2 groups and
+    the engine id stays on the row.
+    """
+    p1_start = next(
+        (i for i, p in enumerate(params) if str(p["name"]).endswith(".p1")),
+        None,
+    )
+    if p1_start is None:
+        return params
+    p1_end = next(
+        (
+            i
+            for i in range(p1_start + 1, len(params))
+            if not str(params[i]["name"]).endswith(".p1")
+        ),
+        len(params),
+    )
+
+    def move(group: list[ParamDoc]) -> list[ParamDoc]:
+        ring = [p for p in group if is_ring_param(str(p["name"]))]
+        return [p for p in group if not is_ring_param(str(p["name"]))] + ring
+
+    return (
+        move(params[:p1_start])
+        + move(params[p1_start:p1_end])
+        + params[p1_end:]
+    )
+
+
 def c_string(value: str) -> str:
     return '"' + value.replace("\\", "\\\\").replace('"', '\\"') + '"'
 
@@ -61,7 +101,7 @@ def main() -> int:
     target = Path(sys.argv[2])
     raw = cast(object, json.loads(source.read_text(encoding="utf-8")))
     data = cast(ParamsDoc, raw)
-    params = data["params"]
+    params = reorder_ring(data["params"])
     from ratio import ratio_detents
 
     ratio_params = [p for p in params if p["display"] == "ratio"]

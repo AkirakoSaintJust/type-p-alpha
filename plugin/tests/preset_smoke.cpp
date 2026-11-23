@@ -73,8 +73,8 @@ int main()
      * from the current count. A param that joins the part record without a
      * migration step shifts every later index and misreads an old record as an
      * even older one, so the count is pinned here. */
-    check(kP1PartParamCount == 981,
-          "the part record keeps the version 16 parameter count");
+    check(kP1PartParamCount == 991,
+          "the part record has the ringmod block");
     const auto fades = lfoFadeIndices();
     check(fades[33] >= 0, "find the 34 LFO fade parameters");
     std::setvbuf(stdout, nullptr, _IONBF, 0);
@@ -290,10 +290,10 @@ int main()
                     shift += 2;
             return target - shift;
         };
-        /* The version 10 record is 169 params shorter: 116 phase values, the 34
-         * fades, the four operator slots and the five offset and ten absolute
-         * envelope slots. */
-        const uint32_t oldCount = kP1PartParamCount - 116u - 19u - 34u;
+        /* The version 10 record is 179 params shorter: 116 phase values, the 34
+         * fades, the four operator slots, the five offset and ten absolute
+         * envelope slots, and the ten ringmod values. */
+        const uint32_t oldCount = kP1PartParamCount - 10u - 116u - 19u - 34u;
         const auto oldRecord = PP_RECORD(oldCount);
         std::vector<uint8_t> oldBank(static_cast<std::size_t>(oldRecord) * 128u,
                                      0xFF);
@@ -406,7 +406,7 @@ int main()
         check(bases[0] > 0 && bases[4] > bases[0] && panBase > bases[4],
               "find the offset and pan envelope blocks");
 
-        const uint32_t oldCount = kP1PartParamCount - 116u - 15u - 34u;
+        const uint32_t oldCount = kP1PartParamCount - 10u - 116u - 15u - 34u;
         const auto oldRecord = PP_RECORD(oldCount);
         std::vector<uint8_t> oldBank(static_cast<std::size_t>(oldRecord) * 128u,
                                      0xFF);
@@ -504,7 +504,7 @@ int main()
                   absBases[0] > absBases[4],
               "find the absolute envelope blocks");
 
-        const uint32_t oldCount = kP1PartParamCount - 116u - 10u - 34u;
+        const uint32_t oldCount = kP1PartParamCount - 10u - 116u - 10u - 34u;
         const auto oldRecord = PP_RECORD(oldCount);
         std::vector<uint8_t> oldBank(static_cast<std::size_t>(oldRecord) * 128u,
                                      0xFF);
@@ -587,7 +587,7 @@ int main()
         };
         const int filterBase = indexOf("fenv_on.p0");
         const int modeBase = indexOf("mode.p0");
-        const auto oldCount = static_cast<uint32_t>(kP1PartParamCount - 116u - 34u - 2u);
+        const auto oldCount = static_cast<uint32_t>(kP1PartParamCount - 10u - 116u - 34u - 2u);
         const auto oldRecord = PP_RECORD(oldCount);
         std::vector<uint8_t> oldBank(static_cast<std::size_t>(oldRecord) * 128u,
                                      0xFF);

@@ -885,6 +885,36 @@ int main(int argc, char** argv)
         }
     }
 
+    /* The ringmod card follows the algorithm: three pairs and four direct gates
+     * at four carriers, and no controls at one carrier. */
+    {
+        p1editor->setActivePart(0);
+        p1editor->showTab(2);
+        auto setRing = [&](const char* id, float value) {
+            if (auto* parameter = p1editor->state().getParameter(id))
+                parameter->setValueNotifyingHost(
+                    parameter->convertTo0to1(value));
+        };
+        p1editor->applyAlgorithm(7);
+        setRing("ring1_on.p0", 1.0f);
+        setRing("ring1_level.p0", 60.0f);
+        fill();
+        ok = saveSnapshot(
+                 *editor,
+                 directory.getChildFile("editor-part-params-ringmod.png")) &&
+             ok;
+        p1editor->applyAlgorithm(0);
+        fill();
+        ok = saveSnapshot(
+                 *editor,
+                 directory.getChildFile("editor-part-params-ringmod-empty.png")) &&
+             ok;
+        setRing("ring1_on.p0", 0.0f);
+        setRing("ring1_level.p0", 99.0f);
+        p1editor->applyAlgorithm(4);
+        fill();
+    }
+
     library.deleteFile();
     std::printf("editor snapshot: %s -> %s\n", ok ? "ok" : "FAIL",
                 directory.getFullPathName().toRawUTF8());

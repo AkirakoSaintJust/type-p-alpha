@@ -216,10 +216,12 @@ int main()
               "the part 1 pitch LFO rate row is log");
     }
     if (const auto* cutoff = p1::ui::findSpec("cutoff.p0")) {
+        const int cutoffIndex =
+            static_cast<int>(cutoff - kP1ParamSpecs.data());
         check(p1::macros::kTargetMemberOffsets[1] -
                       p1::macros::kTargetMemberOffsets[0] ==
                   1 &&
-                  p1::macros::kTargetMemberPool[0].id == cutoff->engineId,
+                  p1::macros::kTargetMemberPool[0].id == cutoffIndex,
               "the first target resolves to the part 1 cutoff");
     } else {
         check(false, "the cutoff spec is present");
@@ -495,6 +497,44 @@ int main()
               "a morph macro at rest leaves the render bit-exact");
         check(!sameBuffer(renderMorph(100, true), morphReferenceHigh),
               "the velocity source moves the morph target");
+
+        /* Ring modulation is in the carrier sum, so the default pair state
+         * matches the reference and each stage is checked on its own. */
+        const auto renderRing = [&](int algorithm, int on, int level,
+                                    int car2) {
+            auto instance = std::make_unique<TypePAlphaAudioProcessor>();
+            instance->setRateAndBufferSizeDetails(48000.0, kFrames);
+            instance->prepareToPlay(48000.0, kFrames);
+            set(*instance, "algorithm.p0", algorithm);
+            set(*instance, "ring1_on.p0", on);
+            set(*instance, "ring1_level.p0", level);
+            set(*instance, "car2_out.p0", car2);
+            juce::AudioBuffer<float> out(2, kFrames);
+            juce::MidiBuffer events;
+            events.addEvent(
+                juce::MidiMessage::noteOn(1, 60, static_cast<juce::uint8>(100)),
+                0);
+            instance->processBlock(out, events);
+            return out;
+        };
+        std::array<int32_t, kFrames * 2> reference0{};
+        std::array<int32_t, kFrames * 2> reference7{};
+        renderReference(reference0.data(), kFrames, 0, 0);
+        renderReference(reference7.data(), kFrames, 0, 7);
+        check(matches(renderRing(4, 0, 99, 1), reference, kFrames),
+              "the ring off leaves the render bit-exact");
+        check(!matches(renderRing(4, 1, 99, 1), reference, kFrames),
+              "a ring pair changes the render");
+        check(matches(renderRing(4, 1, 0, 1), reference, kFrames),
+              "a ring level of 0 adds nothing");
+        check(!matches(renderRing(4, 0, 99, 0), reference, kFrames),
+              "a direct carrier gate removes the carrier");
+        check(matches(renderRing(0, 1, 99, 1), reference0.data(), kFrames),
+              "one carrier has no ring modulation");
+        check(matches(renderRing(7, 0, 99, 1), reference7.data(), kFrames),
+              "four carriers with the ring off match");
+        check(!matches(renderRing(7, 1, 99, 1), reference7.data(), kFrames),
+              "four carriers ring the first pair");
     }
 
     juce::MemoryBlock state;

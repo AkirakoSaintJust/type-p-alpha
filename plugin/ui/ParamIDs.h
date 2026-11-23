@@ -307,6 +307,21 @@ inline juce::String filterCutoff(int part) { return withPart("cutoff", part); }
 inline juce::String filterRes(int part) { return withPart("res", part); }
 inline juce::String filterType(int part) { return withPart("filter_type", part); }
 inline juce::String filterOn(int part) { return withPart("filter_on", part); }
+
+inline juce::String ringOn(int pair, int part)
+{
+    return withPart("ring" + juce::String(pair + 1) + "_on", part);
+}
+
+inline juce::String ringLevel(int pair, int part)
+{
+    return withPart("ring" + juce::String(pair + 1) + "_level", part);
+}
+
+inline juce::String carrierOut(int op, int part)
+{
+    return withPart("car" + juce::String(op + 1) + "_out", part);
+}
 inline juce::String filterEnvOn(int part) { return withPart("fenv_on", part); }
 inline juce::String filterEnvRelRate(int part)
 {

@@ -1489,6 +1489,73 @@
       "curve": "linear",
       "display": "note"
     },
+    "ring1_on": {
+      "target": "route.ring1_on",
+      "min": 0,
+      "max": 1,
+      "curve": "linear",
+      "display": "onoff"
+    },
+    "ring1_level": {
+      "target": "route.ring1_level",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "ring2_on": {
+      "target": "route.ring2_on",
+      "min": 0,
+      "max": 1,
+      "curve": "linear",
+      "display": "onoff"
+    },
+    "ring2_level": {
+      "target": "route.ring2_level",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "ring3_on": {
+      "target": "route.ring3_on",
+      "min": 0,
+      "max": 1,
+      "curve": "linear",
+      "display": "onoff"
+    },
+    "ring3_level": {
+      "target": "route.ring3_level",
+      "min": 0,
+      "max": 99,
+      "curve": "linear"
+    },
+    "car1_out": {
+      "target": "route.car1_out",
+      "min": 0,
+      "max": 1,
+      "curve": "linear",
+      "display": "onoff"
+    },
+    "car2_out": {
+      "target": "route.car2_out",
+      "min": 0,
+      "max": 1,
+      "curve": "linear",
+      "display": "onoff"
+    },
+    "car3_out": {
+      "target": "route.car3_out",
+      "min": 0,
+      "max": 1,
+      "curve": "linear",
+      "display": "onoff"
+    },
+    "car4_out": {
+      "target": "route.car4_out",
+      "min": 0,
+      "max": 1,
+      "curve": "linear",
+      "display": "onoff"
+    },
     "macro1": {
       "target": "macro.g1",
       "min": -100,
@@ -6952,7 +7019,17 @@
         "id": "route",
         "type": "route",
         "params": {
-          "which": "routing"
+          "which": "routing",
+          "ring1_on": 0,
+          "ring1_level": 99,
+          "ring2_on": 0,
+          "ring2_level": 99,
+          "ring3_on": 0,
+          "ring3_level": 99,
+          "car1_out": 1,
+          "car2_out": 1,
+          "car3_out": 1,
+          "car4_out": 1
         }
       },
       {

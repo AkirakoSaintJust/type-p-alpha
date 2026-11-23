@@ -97,17 +97,27 @@
     },
     "editor-part-params-loops.png": {
       "height": 985,
-      "sha256": "86e9e0a28c915569baafd2e40313201bca69edb5020c2ff619560e965b3195d5",
+      "sha256": "483d9fe0a38ef34ac36d376c69278c9436084d08849996b6fb477999af7e1042",
       "width": 1240
     },
     "editor-part-params-macros.png": {
       "height": 985,
-      "sha256": "c83b04eb8906bc9081b5142412faac5c8557f140d667c3e10b033749d2ff2ace",
+      "sha256": "86c2028ab2d65786ea0c94500673a6d27e7b8f64224c91dbc34d8eb478b796ce",
       "width": 1240
+    },
+    "editor-part-params-ringmod-empty.png": {
+      "height": 493,
+      "sha256": "db374a239a4ba8a9ff7177a6cd353dd403dfb3d18eaa0985fb74983485820f5a",
+      "width": 620
+    },
+    "editor-part-params-ringmod.png": {
+      "height": 493,
+      "sha256": "fa7ae93cbb2d8d2212ee088670d1e11b6901f7b123f5bc514e09003d30365e9d",
+      "width": 620
     },
     "editor-part-params.png": {
       "height": 985,
-      "sha256": "720cfbeefd6e1574aabbc6c7c38a97ef9a0bdbfcd0c1e058e9ec955e68894f01",
+      "sha256": "c88ca5b794feb4d256ecd5517c089b610285aed54e7f6882fe51b037958faa27",
       "width": 1240
     },
     "editor-part2.png": {

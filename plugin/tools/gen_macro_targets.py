@@ -93,6 +93,44 @@ def c_string(value: str) -> str:
     return '"' + value.replace("\\", "\\\\").replace('"', '\\"') + '"'
 
 
+def is_ring_param(name: str) -> bool:
+    return name.startswith("ring") or (
+        name.startswith("car") and "_out.p" in name
+    )
+
+
+def reorder_ring(params: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Move the ringmod part rows to the end of each part group.
+
+    The spec index is the part record order and the macro table's member id, so
+    this must match the plugin parameter generator exactly.
+    """
+    p1_start = next(
+        (i for i, p in enumerate(params) if str(p["name"]).endswith(".p1")),
+        None,
+    )
+    if p1_start is None:
+        return params
+    p1_end = next(
+        (
+            i
+            for i in range(p1_start + 1, len(params))
+            if not str(params[i]["name"]).endswith(".p1")
+        ),
+        len(params),
+    )
+
+    def move(group: list[dict[str, Any]]) -> list[dict[str, Any]]:
+        ring = [p for p in group if is_ring_param(str(p["name"]))]
+        return [p for p in group if not is_ring_param(str(p["name"]))] + ring
+
+    return (
+        move(params[:p1_start])
+        + move(params[p1_start:p1_end])
+        + params[p1_end:]
+    )
+
+
 def load_carriers(tables_path: Path) -> list[list[bool]]:
     """Read the 8 carrier masks from the generated routing table."""
     text = tables_path.read_text(encoding="utf-8")
@@ -140,8 +178,8 @@ def main() -> int:
         dict[str, Any], json.loads(Path(sys.argv[2]).read_text(encoding="utf-8"))
     )
     carriers = load_carriers(Path(sys.argv[3]))
-    params = cast(list[dict[str, Any]], manifest["params"])
-    known = {str(param["name"]): int(param["id"]) for param in params}
+    params = reorder_ring(cast(list[dict[str, Any]], manifest["params"]))
+    known = {str(param["name"]): i for i, param in enumerate(params)}
     curves = {str(param["name"]): str(param["curve"]) for param in params}
     target_max = next(
         (int(param["max"]) for param in params if param["name"] == "macro1_target1"),

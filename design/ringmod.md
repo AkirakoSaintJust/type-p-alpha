@@ -1,7 +1,8 @@
 # Ring modulation
 
-Status: design, not built. The decisions below are settled; the card and the
-engine change are not.
+Status: built. The parameters, the route math, the spec and part record, the card
+and the tests are in. The open work is a release build with the feature, and any
+later macro-target or pairing change.
 
 ## The idea
 
@@ -56,13 +57,15 @@ Ten per part, twenty for the two parts. The names use the part suffix `.p0` and
 | `car4_out` | 0 to 1 | 1 | on/off | `route.car4_out` |
 
 The parameters sit at the end of the part block and before the macro block. The
-part record grows from 981 to 991 values, ten more for one part, so the preset
-version takes a new step and old part records gain the defaults at the end. A
-version 16 part record ends at the phase block, which means the loader can append
-the ten ringmod defaults after it without touching any existing value, whilst a
-record from before the phase block gains both blocks in order. The macro block, the
-multi record and the project state keep their sizes; a missing new parameter in a
-project state takes its default.
+engine keeps the values at the route node, whilst the plugin spec moves those rows
+to the end of each part group, so the part record appends them without shifting the
+existing indices. The part record grows from 981 to 991 values, ten more for one
+part, so the preset version takes a new step and old part records gain the defaults
+at the end. A version 16 part record ends at the phase block, which means the loader
+can append the ten ringmod defaults after it without touching any existing value,
+whilst a record from before the phase block gains both blocks in order. The macro
+block, the multi record and the project state keep their sizes; a missing new
+parameter in a project state takes its default.
 
 ## The card
 
@@ -101,18 +104,20 @@ product; turning a carrier's direct output off removes only that direct term and
 leaves its ring products in place. A pair at level 0 is silent even while it is
 on.
 
-## Evidence the milestone needs
+## Evidence
 
 - The default patch renders bit-exactly against the engine reference, with the
-  ring pairs off and the direct gates on.
-- The pair counts follow the algorithm: none at one carrier, one at two, two at
-  three and three at four.
-- Each product is the two carriers multiplied; the level law is silent at 0 and
-  unity at 99.
-- A carrier in two pairs contributes its direct term once.
-- The direct gate removes a carrier from the direct sum and leaves its ring
-  products.
-- An old part record expands with the ring defaults; a new record round-trips.
-- The card snapshots cover one, two, three and four carriers, a pair off, and the
-  dimmed level.
-- pluginval and the snapshot diff stay green.
+  ring pairs off and the direct gates on. `plugin_smoke` also checks a ring pair
+  with its level at 0 and a one-carrier algorithm, and both match the reference.
+- The pair counts follow the algorithm: `plugin_smoke` shows a pair at four
+  carriers and no pair at one. The route cases carry one pair at two carriers, two
+  at three and three at four.
+- A pair with the ring on changes the render, and a direct carrier gate removes
+  the carrier from the direct sum.
+- An old version 16 part record expands with the ring defaults; `preset_smoke`
+  keeps the version 16 count check at 981 and the current count at 991.
+- The snapshots cover the card at four carriers with a pair on, the same card with
+  one carrier and no controls, and the default two-carrier card. The three existing
+  part params snapshots change because the card is in the grid.
+- The full Linux suite is 18 of 18. The next release build will run pluginval and
+  the snapshot diff on the packaged binary.

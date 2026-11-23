@@ -3,6 +3,7 @@
 
 #include <array>
 
+#include "MacroTargets.h"
 #include "ParamIDs.h"
 
 namespace p1::ui {
@@ -497,6 +498,202 @@ private:
     int selected_ = 0;
 };
 
+class RingGraph : public juce::Component {
+public:
+    void setPair(int a, int b)
+    {
+        a_ = a;
+        b_ = b;
+        repaint();
+    }
+
+    void paint(juce::Graphics& g) override
+    {
+        constexpr int boxW = 24;
+        constexpr int boxH = 16;
+        const int ax = 0, ay = 4;
+        const int bx = 0, by = 34;
+        const int rx = 46, ry = 16, rw = 22, rh = 22;
+        const auto drawBox = [&](int x, int y, int op) {
+            g.setColour(colour(tokens::pink));
+            g.fillRect(x, y, boxW, boxH);
+            g.setColour(juce::Colours::black);
+            g.setFont(uiFont(9.0f));
+            g.drawText("op" + juce::String(op + 1), x, y, boxW, boxH,
+                       juce::Justification::centred, false);
+        };
+        const auto arrow = [&](int x1, int y1, int x2, int y2) {
+            g.setColour(colour(tokens::dim));
+            g.drawLine(static_cast<float>(x1), static_cast<float>(y1),
+                       static_cast<float>(x2 - 5), static_cast<float>(y2), 1.2f);
+            juce::Path head;
+            head.addTriangle(static_cast<float>(x2), static_cast<float>(y2),
+                             static_cast<float>(x2 - 6), static_cast<float>(y2 - 3),
+                             static_cast<float>(x2 - 6), static_cast<float>(y2 + 3));
+            g.fillPath(head);
+        };
+        drawBox(ax, ay, a_);
+        drawBox(bx, by, b_);
+        arrow(ax + boxW, ay + boxH / 2, rx, ry + 5);
+        arrow(bx + boxW, by + boxH / 2, rx, ry + rh - 5);
+        g.setColour(colour(tokens::lineStrong));
+        g.drawRect(rx, ry, rw, rh, 1);
+        g.setColour(colour(tokens::pink));
+        g.setFont(displayFont(11.0f));
+        g.drawText("R", rx, ry, rw, rh, juce::Justification::centred, false);
+        const int outX = getWidth() - 2;
+        const int outY = ry + rh / 2;
+        g.setColour(colour(tokens::purple));
+        g.drawLine(static_cast<float>(rx + rw), static_cast<float>(outY),
+                   static_cast<float>(outX - 5), static_cast<float>(outY), 1.4f);
+        juce::Path head;
+        head.addTriangle(static_cast<float>(outX), static_cast<float>(outY),
+                         static_cast<float>(outX - 6), static_cast<float>(outY - 3),
+                         static_cast<float>(outX - 6), static_cast<float>(outY + 3));
+        g.fillPath(head);
+    }
+
+private:
+    int a_ = 0;
+    int b_ = 0;
+};
+
+class RingmodCard : public P1Card {
+public:
+    RingmodCard(PluginEditor& editor, int part)
+        : P1Card("ringmod"), editor_(editor), part_(part)
+    {
+        for (int i = 0; i < 3; ++i) {
+            addAndMakeVisible(graph_[static_cast<std::size_t>(i)]);
+            on_[static_cast<std::size_t>(i)] = std::make_unique<P1Toggle>(
+                editor.state(), params::ringOn(i, part_), "on");
+            addAndMakeVisible(*on_[static_cast<std::size_t>(i)]);
+            level_[static_cast<std::size_t>(i)] = std::make_unique<ParamKnob>(
+                editor.state(), params::ringLevel(i, part_), "level", 42.0f);
+            addAndMakeVisible(*level_[static_cast<std::size_t>(i)]);
+        }
+        for (int op = 0; op < 4; ++op) {
+            out_[static_cast<std::size_t>(op)] = std::make_unique<P1Toggle>(
+                editor.state(), params::carrierOut(op, part_),
+                "op" + juce::String(op + 1));
+            addAndMakeVisible(*out_[static_cast<std::size_t>(op)]);
+        }
+        noRing_.setText("no ringmod", juce::dontSendNotification);
+        noRing_.setFont(uiFont(tokens::textInlineLabel));
+        noRing_.setColour(juce::Label::textColourId, colour(tokens::faint));
+        noRing_.setJustificationType(juce::Justification::centred);
+        addAndMakeVisible(noRing_);
+        original_.setText("original", juce::dontSendNotification);
+        original_.setFont(uiFont(10.0f));
+        original_.setColour(juce::Label::textColourId, colour(tokens::dim));
+        original_.setJustificationType(juce::Justification::centredLeft);
+        addAndMakeVisible(original_);
+        updateCarriers();
+    }
+
+    void resized() override { layout(); }
+
+    void tick()
+    {
+        const int algorithm = static_cast<int>(
+            std::lround(getParam(editor_, params::algorithm(part_))));
+        const auto& mask = p1::macros::kCarrierMasks[static_cast<std::size_t>(
+            juce::jlimit(0, 7, algorithm))];
+        int next[4] = {0, 0, 0, 0};
+        int count = 0;
+        for (int op = 0; op < 4; ++op)
+            if (mask[static_cast<std::size_t>(op)] != 0)
+                next[count++] = op;
+        bool changed = count != carrierCount_;
+        for (int i = 0; i < count && !changed; ++i)
+            changed = next[i] != carriers_[static_cast<std::size_t>(i)];
+        if (changed) {
+            carrierCount_ = count;
+            for (int i = 0; i < 4; ++i)
+                carriers_[static_cast<std::size_t>(i)] = next[i];
+            updateCarriers();
+        }
+        for (int i = 0; i < 3; ++i) {
+            const bool on = std::lround(
+                                getParam(editor_, params::ringOn(i, part_))) != 0;
+            auto& level = *level_[static_cast<std::size_t>(i)];
+            level.setEnabled(on);
+            level.setAlpha(on ? 1.0f : 0.35f);
+        }
+    }
+
+private:
+    bool isCarrier(int op) const
+    {
+        for (int i = 0; i < carrierCount_; ++i)
+            if (carriers_[static_cast<std::size_t>(i)] == op)
+                return true;
+        return false;
+    }
+
+    void updateCarriers()
+    {
+        const int pairs = juce::jmax(0, carrierCount_ - 1);
+        for (int i = 0; i < 3; ++i) {
+            const auto row = static_cast<std::size_t>(i);
+            const bool show = i < pairs;
+            graph_[row].setVisible(show);
+            on_[row]->setVisible(show);
+            level_[row]->setVisible(show);
+            if (show)
+                graph_[row].setPair(carriers_[row],
+                                    carriers_[static_cast<std::size_t>(i + 1)]);
+        }
+        const bool controls = carrierCount_ > 1;
+        noRing_.setVisible(!controls);
+        original_.setVisible(controls);
+        for (int op = 0; op < 4; ++op)
+            out_[static_cast<std::size_t>(op)]->setVisible(controls &&
+                                                           isCarrier(op));
+        layout();
+    }
+
+    void layout()
+    {
+        auto area = contentArea();
+        if (carrierCount_ < 2) {
+            noRing_.setBounds(area);
+            return;
+        }
+        auto outRow = area.removeFromBottom(22);
+        original_.setBounds(outRow.removeFromLeft(44));
+        int x = outRow.getX();
+        for (int op = 0; op < 4; ++op) {
+            auto& toggle = *out_[static_cast<std::size_t>(op)];
+            if (!toggle.isVisible())
+                continue;
+            toggle.setBounds(x, outRow.getY() + 2, 52, 18);
+            x += 54;
+        }
+        const int pairs = carrierCount_ - 1;
+        for (int i = 0; i < pairs; ++i) {
+            auto row = area.removeFromTop(82);
+            graph_[static_cast<std::size_t>(i)].setBounds(
+                row.getX(), row.getY() + 13, 112, 56);
+            on_[static_cast<std::size_t>(i)]->setBounds(
+                row.getX() + 118, row.getY() + 32, 52, 18);
+            level_[static_cast<std::size_t>(i)]->setBounds(
+                row.getRight() - 56, row.getY(), 56, 82);
+        }
+    }
+
+    PluginEditor& editor_;
+    int part_ = 0;
+    std::array<RingGraph, 3> graph_{};
+    std::array<std::unique_ptr<P1Toggle>, 3> on_{};
+    std::array<std::unique_ptr<ParamKnob>, 3> level_{};
+    std::array<std::unique_ptr<P1Toggle>, 4> out_{};
+    juce::Label noRing_;
+    juce::Label original_;
+    std::array<int, 4> carriers_{};
+    int carrierCount_ = 0;
+};
+
 class FxModPage : public PageBase {
 public:
     explicit FxModPage(PluginEditor& editor)
@@ -526,6 +723,7 @@ public:
         velFollow_ = std::make_unique<FollowCard>(
             editor, false, "velocity",
             copy(PluginEditor::PartFxSection::velocityFollow), toLabel);
+        ringmod_ = std::make_unique<RingmodCard>(editor, part);
         addAndMakeVisible(*filter1_);
         addAndMakeVisible(*filterEnv_);
         addAndMakeVisible(*pitchLfo_);
@@ -533,6 +731,7 @@ public:
         addAndMakeVisible(*panEnv_);
         addAndMakeVisible(*keyFollow_);
         addAndMakeVisible(*velFollow_);
+        addAndMakeVisible(*ringmod_);
     }
 
     void resized() override
@@ -544,7 +743,7 @@ public:
         std::array<P1Card*, 8> cards = {
             filter1_.get(),  filterEnv_.get(), pitchLfo_.get(),
             pitchEnv_.get(), panEnv_.get(),   keyFollow_.get(),
-            velFollow_.get(), nullptr};
+            velFollow_.get(), ringmod_.get()};
         for (int i = 0; i < 8; ++i) {
             if (cards[static_cast<size_t>(i)] == nullptr)
                 continue;
@@ -563,6 +762,7 @@ public:
         panEnv_->tick();
         keyFollow_->refresh();
         velFollow_->refresh();
+        ringmod_->tick();
     }
 
 private:
@@ -573,6 +773,7 @@ private:
     std::unique_ptr<PanEnvelopeCard> panEnv_;
     std::unique_ptr<FollowCard> keyFollow_;
     std::unique_ptr<FollowCard> velFollow_;
+    std::unique_ptr<RingmodCard> ringmod_;
 };
 
 } // namespace
