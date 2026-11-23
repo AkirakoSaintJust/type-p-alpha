@@ -398,6 +398,50 @@ int main(int argc, char** argv)
         setRaw("op2_spec_range_a.p0", dstRange);
         setRaw("op1_waveform.p0", srcWave);
         setRaw("op2_waveform.p0", dstWave);
+
+        const float srcCut = readRaw("cutoff.p0");
+        const float dstCut = readRaw("cutoff.p1");
+        setRaw("cutoff.p0", 12345.0f);
+        p1editor->copyPartFxSection(PluginEditor::PartFxSection::filter);
+        if (std::lround(readRaw("cutoff.p1")) != 12345) {
+            std::printf("editor snapshot: fx filter copy failed\n");
+            ok = false;
+        }
+        setRaw("cutoff.p0", srcCut);
+        setRaw("cutoff.p1", dstCut);
+
+        const float srcFenv = readRaw("fenv_r1.p0");
+        const float dstFenv = readRaw("fenv_r1.p1");
+        setRaw("fenv_r1.p0", 42.0f);
+        p1editor->copyPartFxSection(PluginEditor::PartFxSection::filterEnvelope);
+        if (std::lround(readRaw("fenv_r1.p1")) != 42) {
+            std::printf("editor snapshot: fx filter envelope copy failed\n");
+            ok = false;
+        }
+        setRaw("fenv_r1.p0", srcFenv);
+        setRaw("fenv_r1.p1", dstFenv);
+
+        const float srcPitch = readRaw("pitch_rate.p0");
+        const float dstPitch = readRaw("pitch_rate.p1");
+        setRaw("pitch_rate.p0", 44739.0f);
+        p1editor->copyPartFxSection(PluginEditor::PartFxSection::pitchLfo);
+        if (std::lround(readRaw("pitch_rate.p1")) != 44739) {
+            std::printf("editor snapshot: fx pitch lfo copy failed\n");
+            ok = false;
+        }
+        setRaw("pitch_rate.p0", srcPitch);
+        setRaw("pitch_rate.p1", dstPitch);
+
+        const float srcKs = readRaw("op1_level_ks_lo.p0");
+        const float dstKs = readRaw("op1_level_ks_lo.p1");
+        setRaw("op1_level_ks_lo.p0", 37.0f);
+        p1editor->copyPartFxSection(PluginEditor::PartFxSection::keyFollow);
+        if (std::lround(readRaw("op1_level_ks_lo.p1")) != 37) {
+            std::printf("editor snapshot: fx key follow copy failed\n");
+            ok = false;
+        }
+        setRaw("op1_level_ks_lo.p0", srcKs);
+        setRaw("op1_level_ks_lo.p1", dstKs);
     }
 
     p1editor->showSinglePartsBrowser();

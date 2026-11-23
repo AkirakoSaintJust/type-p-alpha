@@ -113,8 +113,9 @@ Every page fills the same height:
   followed by the voice mode block.
 - part fx/mod: a three by two grid. `filter`, the filter envelope and the pitch LFO
   fill the first row. Pitch envelope, key follow and velocity follow fill the second
-  row. The two follow cards are separate, and each has its own on switch and wipe
-  button. The pitch LFO carries its `bipolar` switch beside the wave select.
+  row. Every card header carries a `to 1` or `to 2` action that copies that card to
+  the other part. The two follow cards are separate, and each has its own on switch,
+  `wipe all` button and copy action. The pitch LFO carries its `bipolar` switch beside the wave select.
 - op envs: four columns with oscillator, a 214 px `amp env` and a 222 px
   `fb env`, separated by 6 px gaps. The envelope cards put 2 px between their
   graph, rate and level rows. The amplitude envelope puts `atk warmup`, `atk surge`, decay1 and decay2 on the

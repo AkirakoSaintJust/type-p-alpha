@@ -1031,6 +1031,70 @@ void PluginEditor::importLibrary()
         });
 }
 
+static std::vector<juce::String> fxSectionParamIDs(
+    int part, PluginEditor::PartFxSection section)
+{
+    std::vector<juce::String> ids;
+    const auto add = [&ids](const juce::String& id) { ids.push_back(id); };
+    switch (section) {
+    case PluginEditor::PartFxSection::filter:
+        add(p1::params::filterCutoff(part));
+        add(p1::params::filterRes(part));
+        add(p1::params::filterType(part));
+        add(p1::params::filterOn(part));
+        break;
+    case PluginEditor::PartFxSection::filterEnvelope:
+        add(p1::params::filterEnvOn(part));
+        for (int i = 0; i < 3; ++i)
+            add(p1::params::filterRate(i, part));
+        add(p1::params::filterEnvRelRate(part));
+        for (int i = 0; i < 3; ++i)
+            add(p1::params::filterLevel(i, part));
+        add(p1::params::filterEnvRelLevel(part));
+        add(p1::params::filterEnvMode(part));
+        break;
+    case PluginEditor::PartFxSection::pitchLfo:
+        add(p1::params::pitchWave(part));
+        add(p1::params::pitchRate(part));
+        add(p1::params::pitchDepth(part));
+        add(p1::params::pitchRateFade(part));
+        add(p1::params::pitchDepthFade(part));
+        add(p1::params::pitchMode(part));
+        break;
+    case PluginEditor::PartFxSection::pitchEnvelope:
+        add(p1::params::pitchEnvOn(part));
+        for (int i = 0; i < 3; ++i)
+            add(p1::params::pitchEnvRate(i, part));
+        add(p1::params::pitchEnvRelRate(part));
+        for (int i = 0; i < 3; ++i)
+            add(p1::params::pitchEnvLevel(i, part));
+        add(p1::params::pitchEnvRelLevel(part));
+        add(p1::params::pitchEnvMode(part));
+        break;
+    case PluginEditor::PartFxSection::panEnvelope:
+        add(p1::params::panEnvOn(part));
+        for (int i = 0; i < 3; ++i)
+            add(p1::params::panEnvRate(i, part));
+        add(p1::params::panEnvRelRate(part));
+        for (int i = 0; i < 3; ++i)
+            add(p1::params::panEnvLevel(i, part));
+        add(p1::params::panEnvRelLevel(part));
+        add(p1::params::panEnvMode(part));
+        break;
+    case PluginEditor::PartFxSection::keyFollow:
+        for (const auto& target : p1::params::followTargets(part)) {
+            add(target.keyLo);
+            add(target.keyHi);
+        }
+        break;
+    case PluginEditor::PartFxSection::velocityFollow:
+        for (const auto& target : p1::params::followTargets(part))
+            add(target.velocity);
+        break;
+    }
+    return ids;
+}
+
 void PluginEditor::copyPart(int part)
 {
     partClipboard_.clear();
@@ -1053,6 +1117,22 @@ void PluginEditor::pastePart(int part)
                 parameter->convertTo0to1(static_cast<float>(value)));
     }
     buildPage();
+}
+
+void PluginEditor::copyPartFxSection(PartFxSection section)
+{
+    const int from = activePart();
+    const int to = 1 - from;
+    const juce::String fromSuffix = ".p" + juce::String(from);
+    const juce::String toSuffix = ".p" + juce::String(to);
+    for (const auto& source : fxSectionParamIDs(from, section)) {
+        if (!source.endsWith(fromSuffix))
+            continue;
+        const auto dest = source.dropLastCharacters(3) + toSuffix;
+        if (auto* src = state().getRawParameterValue(source))
+            if (auto* dst = state().getParameter(dest))
+                dst->setValueNotifyingHost(dst->convertTo0to1(src->load()));
+    }
 }
 
 void PluginEditor::copyOperator(int op)

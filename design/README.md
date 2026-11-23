@@ -308,13 +308,19 @@ its two follow targets address the active part, because each part has its own
 filter and its own envelope.
 
 The pitch LFO card carries rate, depth, the wave select, the `bipolar` switch,
-and the `rate fade` and `depth fade` pair with its shared graph.
+and the `rate fade` and `depth fade` pair.
 
 The pan envelope card carries an on switch, three rates, three levels, a release
 rate and level, a mode dropdown and the envelope graph. Its levels are absolute percentage
 points across the field, and the envelope starts at the part's pan. The envelope
 retriggers when a note starts on the part and releases when the part's last voice
 releases.
+
+Every card in the grid carries a `to 1` or `to 2` action in its header, which
+copies that card to the other part. The label names the destination, so it flips
+with the active part. The filter, its envelope, the pitch LFO and the pitch
+envelope carry only the copy action and their on state. The follow cards put the
+copy action immediately before `wipe all`.
 
 Key follow and velocity follow are separate cards. Each has an on switch, a
 `wipe all` button and its own target selector. Key follow has a breakpoint and below

@@ -11,17 +11,22 @@ namespace {
 class FilterCard : public P1Card {
 public:
     FilterCard(PluginEditor& editor, juce::String title, juce::String cutoffID,
-               juce::String resID, juce::String typeID, juce::String onID)
+               juce::String resID, juce::String typeID, juce::String onID,
+               std::function<void()> onToPart = {},
+               juce::String toLabel = "to 2")
         : P1Card(std::move(title)),
           cutoff_(editor.state(), std::move(cutoffID), "cutoff", 42.0f),
           res_(editor.state(), std::move(resID), "res", 42.0f),
           type_(editor.state(), std::move(typeID), {"lpf", "bpf", "hpf"}),
-          on_(editor.state(), std::move(onID), "on")
+          on_(editor.state(), std::move(onID), "on"),
+          to_(std::move(toLabel), true)
     {
         addAndMakeVisible(cutoff_);
         addAndMakeVisible(res_);
         addAndMakeVisible(type_);
         addAndMakeVisible(on_);
+        to_.onClick = std::move(onToPart);
+        addAndMakeVisible(to_);
         setHeaderTrailingWidth(48);
     }
 
@@ -33,7 +38,9 @@ public:
         cutoff_.setBounds(row.removeFromLeft(cell));
         res_.setBounds(row.removeFromLeft(cell));
         type_.setBounds(44, 118, 150, 18);
-        on_.setBounds(headerTrailingBounds());
+        const auto onBounds = headerTrailingBounds();
+        on_.setBounds(onBounds);
+        to_.setBounds(onBounds.getX() - 16 - 32, onBounds.getY(), 32, 18);
     }
 
     void paint(juce::Graphics& g) override
@@ -49,11 +56,14 @@ private:
     ParamKnob res_;
     ParamChoice type_;
     P1Toggle on_;
+    P1Button to_;
 };
 
 class FilterEnvelopeCard : public P1Card {
 public:
-    FilterEnvelopeCard(PluginEditor& editor, int part)
+    FilterEnvelopeCard(PluginEditor& editor, int part,
+                       std::function<void()> onToPart = {},
+                       juce::String toLabel = "to 2")
         : P1Card("filter envelope"),
           part_(part),
           envView_(editor.state(),
@@ -68,11 +78,14 @@ public:
                    params::filterCutoff(part), 99.0 / 55296.0),
           on_(editor.state(), params::filterEnvOn(part), "on"),
           mode_(editor.state(), params::filterEnvMode(part),
-                {"sustain off", "sustain on", "loop 1", "loop 2"})
+                {"sustain off", "sustain on", "loop 1", "loop 2"}),
+          to_(std::move(toLabel), true)
     {
         addAndMakeVisible(envView_);
         addAndMakeVisible(on_);
         addAndMakeVisible(mode_);
+        to_.onClick = std::move(onToPart);
+        addAndMakeVisible(to_);
         for (int i = 0; i < 3; ++i) {
             rates_[static_cast<size_t>(i)] = std::make_unique<ParamKnob>(
                 editor.state(), params::filterRate(i, part),
@@ -111,6 +124,7 @@ public:
         mode_.setBounds(modeRow.removeFromLeft(levelCell * 2)
                             .withSizeKeepingCentre(levelCell * 2 - 8, 24));
         on_.setBounds(getWidth() - 56, 1, 48, 18);
+        to_.setBounds(on_.getX() - 16 - 32, 1, 32, 18);
     }
 
     void tick() { envView_.repaint(); }
@@ -120,13 +134,16 @@ private:
     P1Envelope envView_;
     P1Toggle on_;
     ParamChoice mode_;
+    P1Button to_;
     std::array<std::unique_ptr<ParamKnob>, 4> rates_{};
     std::array<std::unique_ptr<ParamKnob>, 4> levels_{};
 };
 
 class PitchLfoCard : public P1Card {
 public:
-    explicit PitchLfoCard(PluginEditor& editor)
+    explicit PitchLfoCard(PluginEditor& editor,
+                          std::function<void()> onToPart = {},
+                          juce::String toLabel = "to 2")
         : P1Card("pitch lfo"),
           part_(editor.activePart()),
           waveView_(editor.state(), params::pitchWave(part_), colour(tokens::green)),
@@ -137,7 +154,8 @@ public:
           depthFade_(editor.state(), params::pitchDepthFade(part_), "depth fade",
                      36.0f),
           wave_(editor.state(), params::pitchWave(part_), params::lfoWaveNames()),
-          mode_(editor.state(), params::pitchMode(part_), "bipolar")
+          mode_(editor.state(), params::pitchMode(part_), "bipolar"),
+          to_(std::move(toLabel), true)
     {
         addAndMakeVisible(waveView_);
         addAndMakeVisible(rate_);
@@ -146,11 +164,14 @@ public:
         addAndMakeVisible(depthFade_);
         addAndMakeVisible(wave_);
         addAndMakeVisible(mode_);
+        to_.onClick = std::move(onToPart);
+        addAndMakeVisible(to_);
     }
 
     void resized() override
     {
         auto area = contentArea();
+        to_.setBounds(getWidth() - 8 - 32, 1, 32, 18);
         waveView_.setBounds(area.removeFromTop(88));
         area.removeFromTop(10);
         auto row = area.removeFromTop(84);
@@ -176,11 +197,14 @@ private:
     ParamKnob depthFade_;
     ParamChoice wave_;
     P1Toggle mode_;
+    P1Button to_;
 };
 
 class PitchEnvelopeCard : public P1Card {
 public:
-    explicit PitchEnvelopeCard(PluginEditor& editor)
+    explicit PitchEnvelopeCard(PluginEditor& editor,
+                          std::function<void()> onToPart = {},
+                          juce::String toLabel = "to 2")
         : P1Card("pitch envelope"),
           part_(editor.activePart()),
           envView_(editor.state(),
@@ -194,11 +218,14 @@ public:
                    EnvelopeShape::bipolar, params::pitchEnvMode(part_)),
           on_(editor.state(), params::pitchEnvOn(part_), "on"),
           mode_(editor.state(), params::pitchEnvMode(part_),
-                {"sustain off", "sustain on", "loop 1", "loop 2"})
+                {"sustain off", "sustain on", "loop 1", "loop 2"}),
+          to_(std::move(toLabel), true)
     {
         addAndMakeVisible(envView_);
         addAndMakeVisible(on_);
         addAndMakeVisible(mode_);
+        to_.onClick = std::move(onToPart);
+        addAndMakeVisible(to_);
         for (int i = 0; i < 3; ++i) {
             rates_[static_cast<size_t>(i)] = std::make_unique<ParamKnob>(
                 editor.state(), params::pitchEnvRate(i, part_),
@@ -237,6 +264,7 @@ public:
         mode_.setBounds(modeRow.removeFromLeft(levelCell * 2)
                             .withSizeKeepingCentre(levelCell * 2 - 8, 24));
         on_.setBounds(getWidth() - 56, 1, 48, 18);
+        to_.setBounds(on_.getX() - 16 - 32, 1, 32, 18);
     }
 
     void tick() { envView_.repaint(); }
@@ -246,13 +274,16 @@ private:
     P1Envelope envView_;
     P1Toggle on_;
     ParamChoice mode_;
+    P1Button to_;
     std::array<std::unique_ptr<ParamKnob>, 4> rates_{};
     std::array<std::unique_ptr<ParamKnob>, 4> levels_{};
 };
 
 class PanEnvelopeCard : public P1Card {
 public:
-    explicit PanEnvelopeCard(PluginEditor& editor)
+    explicit PanEnvelopeCard(PluginEditor& editor,
+                          std::function<void()> onToPart = {},
+                          juce::String toLabel = "to 2")
         : P1Card("pan envelope"),
           part_(editor.activePart()),
           envView_(editor.state(),
@@ -267,11 +298,14 @@ public:
                    params::pan(part_)),
           on_(editor.state(), params::panEnvOn(part_), "on"),
           mode_(editor.state(), params::panEnvMode(part_),
-                {"sustain off", "sustain on", "loop 1", "loop 2"})
+                {"sustain off", "sustain on", "loop 1", "loop 2"}),
+          to_(std::move(toLabel), true)
     {
         addAndMakeVisible(envView_);
         addAndMakeVisible(on_);
         addAndMakeVisible(mode_);
+        to_.onClick = std::move(onToPart);
+        addAndMakeVisible(to_);
         for (int i = 0; i < 4; ++i) {
             const juce::String id = i < 3 ? params::panEnvRate(i, part_)
                                           : params::panEnvRelRate(part_);
@@ -307,6 +341,7 @@ public:
         mode_.setBounds(modeRow.removeFromLeft(cell * 2)
                             .withSizeKeepingCentre(cell * 2 - 8, 24));
         on_.setBounds(getWidth() - 56, 1, 48, 18);
+        to_.setBounds(on_.getX() - 16 - 32, 1, 32, 18);
     }
 
     void tick() { envView_.repaint(); }
@@ -316,21 +351,25 @@ private:
     P1Envelope envView_;
     P1Toggle on_;
     ParamChoice mode_;
+    P1Button to_;
     std::array<std::unique_ptr<ParamKnob>, 4> rates_{};
     std::array<std::unique_ptr<ParamKnob>, 4> levels_{};
 };
 
 class FollowCard : public P1Card {
 public:
-    FollowCard(PluginEditor& editor, bool key, juce::String title)
+    FollowCard(PluginEditor& editor, bool key, juce::String title,
+               std::function<void()> onToPart = {},
+               juce::String toLabel = "to 2")
         : P1Card(std::move(title)),
           editor_(editor),
           key_(key),
           part_(editor.activePart()),
           targets_(params::followTargets(part_)),
-          on_(editor.state(), key ? "key_sens_on" : "vel_sens_on", "on")
+          on_(editor.state(), key ? "key_sens_on" : "vel_sens_on", "on"),
+          to_(std::move(toLabel), true)
     {
-        wipe_.setButtonText(key ? "wipe all key" : "wipe all vel");
+        wipe_.setButtonText("wipe all");
         target_.addItemList(targetItems(), 1);
         target_.setSelectedItemIndex(0, juce::dontSendNotification);
         target_.onChange = [this] {
@@ -341,6 +380,8 @@ public:
         addAndMakeVisible(on_);
         wipe_.onClick = [this] { wipe(); };
         addAndMakeVisible(wipe_);
+        to_.onClick = std::move(onToPart);
+        addAndMakeVisible(to_);
         if (key_) {
             breakpoint_ = std::make_unique<ParamKnob>(
                 editor.state(), "breakpoint", "breakpoint", 42.0f);
@@ -367,8 +408,9 @@ public:
     void resized() override
     {
         const int width = getWidth();
-        wipe_.setBounds(width - 150, 1, 88, 18);
         on_.setBounds(width - 56, 1, 48, 18);
+        wipe_.setBounds(width - 120, 1, 56, 18);
+        to_.setBounds(wipe_.getX() - 4 - 30, 1, 30, 18);
         if (key_) {
             breakpoint_->setBounds(8, 26, 80, 82);
             target_.setBounds(96, 50, 180, 18);
@@ -443,7 +485,8 @@ private:
     std::array<params::FollowTarget, 19> targets_{};
     P1Choice target_;
     P1Toggle on_;
-    P1Button wipe_{"wipe all key", true};
+    P1Button wipe_{"wipe all", true};
+    P1Button to_;
     std::unique_ptr<ParamKnob> breakpoint_;
     std::unique_ptr<ParamKnob> below_;
     std::unique_ptr<ParamKnob> above_;
@@ -456,15 +499,30 @@ public:
     explicit FxModPage(PluginEditor& editor)
     {
         const int part = editor.activePart();
+        PluginEditor* ed = &editor;
+        const juce::String toLabel = part == 0 ? "to 2" : "to 1";
+        const auto copy = [ed](PluginEditor::PartFxSection section) {
+            return [ed, section] { ed->copyPartFxSection(section); };
+        };
         filter1_ = std::make_unique<FilterCard>(
             editor, "filter", params::filterCutoff(part), params::filterRes(part),
-            params::filterType(part), params::filterOn(part));
-        filterEnv_ = std::make_unique<FilterEnvelopeCard>(editor, part);
-        pitchLfo_ = std::make_unique<PitchLfoCard>(editor);
-        pitchEnv_ = std::make_unique<PitchEnvelopeCard>(editor);
-        panEnv_ = std::make_unique<PanEnvelopeCard>(editor);
-        keyFollow_ = std::make_unique<FollowCard>(editor, true, "key follow");
-        velFollow_ = std::make_unique<FollowCard>(editor, false, "velocity follow");
+            params::filterType(part), params::filterOn(part),
+            copy(PluginEditor::PartFxSection::filter), toLabel);
+        filterEnv_ = std::make_unique<FilterEnvelopeCard>(
+            editor, part, copy(PluginEditor::PartFxSection::filterEnvelope),
+            toLabel);
+        pitchLfo_ = std::make_unique<PitchLfoCard>(
+            editor, copy(PluginEditor::PartFxSection::pitchLfo), toLabel);
+        pitchEnv_ = std::make_unique<PitchEnvelopeCard>(
+            editor, copy(PluginEditor::PartFxSection::pitchEnvelope), toLabel);
+        panEnv_ = std::make_unique<PanEnvelopeCard>(
+            editor, copy(PluginEditor::PartFxSection::panEnvelope), toLabel);
+        keyFollow_ = std::make_unique<FollowCard>(
+            editor, true, "key follow",
+            copy(PluginEditor::PartFxSection::keyFollow), toLabel);
+        velFollow_ = std::make_unique<FollowCard>(
+            editor, false, "velocity follow",
+            copy(PluginEditor::PartFxSection::velocityFollow), toLabel);
         addAndMakeVisible(*filter1_);
         addAndMakeVisible(*filterEnv_);
         addAndMakeVisible(*pitchLfo_);

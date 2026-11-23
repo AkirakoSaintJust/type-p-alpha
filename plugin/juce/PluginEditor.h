@@ -33,6 +33,16 @@ public:
 
 class PluginEditor : public juce::AudioProcessorEditor, private juce::Timer {
 public:
+    enum class PartFxSection {
+        filter,
+        filterEnvelope,
+        pitchLfo,
+        pitchEnvelope,
+        panEnvelope,
+        keyFollow,
+        velocityFollow,
+    };
+
     enum class OperatorSection {
         oscillator,
         amplitudeEnvelope,
@@ -79,6 +89,8 @@ public:
     void pasteOperator(int op);
     void copyOperatorSection(int op, int part, OperatorSection section);
     void pasteOperatorSection(int op, int part, OperatorSection section);
+    /* Copy one part fx/mod card from the active part to the other part. */
+    void copyPartFxSection(PartFxSection section);
     void initPart(int part);
     void initMultiPatch();
     void togglePartMute(int part, bool muted);
