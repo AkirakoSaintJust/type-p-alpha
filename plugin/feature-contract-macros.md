@@ -9,7 +9,8 @@
   in [`../docs/research/macros.md`](../docs/research/macros.md).
 - **Owner / date:** P1Onken, 2026-11-23.
 - **Disposition:** the 54 parameters, the CC map, the automation flags, the multi
-  record and the target table are built. The offset layer and the panel are
+  record, the target table and the offset layer for the linear targets are built. The
+  relative source, the log rate targets, the per-voice layer and the panel are
   outstanding, so the evidence below is partly run and partly a list.
 
 ## Player outcome
@@ -60,12 +61,16 @@
 - The effective macro is `clamp(knob + source * midi_range, -100, 100)`, where the
   source is 0 to 1. The CC and the wheel are clamped to 0 to 1, and the velocity is
   the note's velocity over 127.
+- The source law is the design. The build reads the macro parameter as the value, and
+  the generated CC map writes that value absolutely; the relative source, the wheel
+  capture and the velocity path are outstanding.
 - A destination with a linear parameter is
   `clamp(base + (effective / 100) * (range / 100) * span)`. The base is the stored
   parameter value, never the last effective one.
 - A destination with a log parameter, which is every LFO rate, applies the same
   fraction to the normalised knob value and converts back. The raw 0 to 20,000,000
-  LFO rate span makes a raw percentage useless.
+  LFO rate span makes a raw percentage useless. The build skips the log rows until
+  the LFO rate control has a normalised law, so those targets are inert.
 - A group target applies the same range fraction to every member against that
   member's own span, and every member clamps on its own. The carrier and modulator
   roles come from the algorithm's routing table at runtime, and an empty role group
@@ -83,7 +88,7 @@
 
 ## Evidence
 
-Run on the parameter layer, the multi record and the target table:
+Run on the parameter layer, the multi record, the target table and the offset layer:
 
 - `plugin_smoke` passes `the APVTS exposes every manifest parameter and the output
   volume`, `only the six macro values are automatable`, `the macro target table has
@@ -96,26 +101,30 @@ Run on the parameter layer, the multi record and the target table:
   that both round-trip, then loads a hand-built multi bank with the old record size
   and checks that the macro vector arrives empty, which is how the editor detects a
   record from before the block.
-- `engine_parity` and the other 16 tests pass, because the macro node carries
-  parameters only and changes no audio.
+- `plugin_smoke` renders the first block on a fresh processor with a macro at 0, a
+  target and a 50 percent range, and matches the engine reference bit for bit. The
+  same setup at 50 changes the render, so the offset reaches the destination.
+- `plugin_smoke` also pins the offset law (`50` and a `50` range give `0.25`, and the
+  target clamps at 0 and 1) and checks that the first target resolves to the part 1
+  cutoff and the last to the four modulator breakpoint members.
+- `engine_parity` and the other 16 tests pass.
 
 Still outstanding:
 
-- The parameter layer has no offset, so the macro-at-0 render sweep has not run yet.
-  It is the first test for the offset slice.
-- A render test sweeps a cutoff macro from 0 to 100 and back and checks that the
-  return is bit-identical to the start, and a second test drives a group of envelope
-  rates from two voices at different velocities and checks that the rates differ per
-  voice.
-- The editor snapshots show the macros page with an empty card, a card with three
-  targets, the disabled MIDI range, the target menu with its eight section headings,
-  the purple stored value at rest and the smaller green effective value while a
-  macro deviates.
+- The relative CC, wheel and velocity sources. The build uses the macro parameter as
+  the value, and the CC map writes it absolutely for now.
+- The log LFO rate rows, which stay inert until the LFO rate control has a
+  normalised law.
+- The per-voice rate and velocity layer, with its two-voice render test.
+- The macros page and its snapshots: an empty card, a card with three targets, the
+  disabled MIDI range, the target menu with its eight section headings, the purple
+  stored value at rest and the smaller green effective value while a macro deviates.
 
 ## Limits
 
-- **The parameter layer, the multi record and the target table are built.** The
-  offsets and the panel are not.
+- **The parameter layer, the multi record, the target table and the linear offsets
+  are built.** The relative source, the log rates, the per-voice layer and the panel
+  are not.
 - **The display follows the newest voice.** A velocity macro differs per voice, and
   the stored value, the effective value and the dotted green arc can only show one of
   them.

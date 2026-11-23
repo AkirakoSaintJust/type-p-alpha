@@ -8,6 +8,8 @@
 #include <juce_audio_utils/juce_audio_utils.h>
 
 #include "CutoffLaw.h"
+#include "MacroLaw.h"
+#include "MacroTargets.h"
 #include "PluginEditor.h"
 #include "VolumeLaw.h"
 #include "Widgets.h"
@@ -189,6 +191,37 @@ TypePAlphaAudioProcessor::TypePAlphaAudioProcessor()
         paramValues_[static_cast<std::size_t>(i)] =
             apvts_.getRawParameterValue(kP1ParamSpecs[static_cast<std::size_t>(i)].id);
     outputVolume_ = apvts_.getRawParameterValue(p1::kVolumeParamID);
+
+    /* The macro block order is six values, six source selects, six source ranges,
+     * eighteen targets and eighteen destination ranges. */
+    static_assert(kP1MacroParamCount == 54, "the macro block is 54 parameters");
+    for (int i = 0; i < 6; ++i) {
+        macroValueValues_[static_cast<std::size_t>(i)] =
+            apvts_.getRawParameterValue(kP1MacroParamIDs[i]);
+        macroTargetValues_[static_cast<std::size_t>(i)] =
+            apvts_.getRawParameterValue(kP1MacroParamIDs[18 + i]);
+        macroRangeValues_[static_cast<std::size_t>(i)] =
+            apvts_.getRawParameterValue(kP1MacroParamIDs[36 + i]);
+    }
+    for (int i = 6; i < 18; ++i) {
+        macroTargetValues_[static_cast<std::size_t>(i)] =
+            apvts_.getRawParameterValue(kP1MacroParamIDs[18 + i]);
+        macroRangeValues_[static_cast<std::size_t>(i)] =
+            apvts_.getRawParameterValue(kP1MacroParamIDs[36 + i]);
+    }
+    algorithmValues_[0] = apvts_.getRawParameterValue("algorithm.p0");
+    algorithmValues_[1] = apvts_.getRawParameterValue("algorithm.p1");
+    macroMemberIndex_.assign(static_cast<std::size_t>(kP1ParamCount), -1);
+    for (const auto& member : p1::macros::kTargetMemberPool) {
+        const int id = member.id;
+        if (id < 0 || id >= kP1ParamCount ||
+            macroMemberIndex_[static_cast<std::size_t>(id)] >= 0)
+            continue;
+        macroMemberIndex_[static_cast<std::size_t>(id)] =
+            static_cast<int>(macroMemberIds_.size());
+        macroMemberIds_.push_back(id);
+    }
+    macroOffsets_.assign(macroMemberIds_.size(), 0.0);
 }
 
 juce::AudioProcessorValueTreeState::ParameterLayout
@@ -254,6 +287,7 @@ void TypePAlphaAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBl
     }
     lastParams_.fill(std::numeric_limits<int32_t>::min());
     paramsDirty_.store(false, std::memory_order_relaxed);
+    macroApplied_ = false;
     syncParams();
     const int volumePosition = outputVolume_ != nullptr
         ? static_cast<int>(std::lround(outputVolume_->load()))
@@ -294,6 +328,97 @@ void TypePAlphaAudioProcessor::syncParams()
             lastParams_[static_cast<std::size_t>(i)] = clamped;
         }
     }
+}
+
+void TypePAlphaAudioProcessor::syncMacros()
+{
+    int values[6] = {};
+    bool anyValue = false;
+    for (int i = 0; i < 6; ++i) {
+        if (macroValueValues_[static_cast<std::size_t>(i)] != nullptr) {
+            values[i] = static_cast<int>(
+                std::lround(macroValueValues_[static_cast<std::size_t>(i)]->load()));
+            anyValue = anyValue || values[i] != 0;
+        }
+    }
+    if (!anyValue && !macroApplied_)
+        return;
+    std::fill(macroOffsets_.begin(), macroOffsets_.end(), 0.0);
+    if (anyValue) {
+        for (int m = 0; m < 6; ++m) {
+            if (values[m] == 0)
+                continue;
+            for (int d = 0; d < 3; ++d) {
+                const int slot = m * 3 + d;
+                const int target =
+                    macroTargetValues_[static_cast<std::size_t>(slot)] != nullptr
+                        ? static_cast<int>(std::lround(
+                              macroTargetValues_[static_cast<std::size_t>(slot)]
+                                  ->load()))
+                        : 0;
+                const int range =
+                    macroRangeValues_[static_cast<std::size_t>(slot)] != nullptr
+                        ? static_cast<int>(std::lround(
+                              macroRangeValues_[static_cast<std::size_t>(slot)]
+                                  ->load()))
+                        : 0;
+                if (target <= 0 || target > p1::macros::kTargetCount ||
+                    range == 0)
+                    continue;
+                const int row = target - 1;
+                /* The log mapping is outstanding, so the LFO rate rows stay inert
+                 * rather than jumping in raw units. */
+                if (p1::macros::kTargetLog[row])
+                    continue;
+                const int part = p1::macros::kTargetPart[row];
+                const int algorithm =
+                    algorithmValues_[static_cast<std::size_t>(part)] != nullptr
+                        ? static_cast<int>(std::lround(
+                              algorithmValues_[static_cast<std::size_t>(part)]
+                                  ->load()))
+                        : 0;
+                const auto& mask = p1::macros::kCarrierMasks[static_cast<std::size_t>(
+                    juce::jlimit(0, 7, algorithm))];
+                const int role = p1::macros::kTargetRole[row];
+                const int start = p1::macros::kTargetMemberOffsets[row];
+                const int end = p1::macros::kTargetMemberOffsets[row + 1];
+                const double offset = p1::macroOffset(values[m], range);
+                for (int i = start; i < end; ++i) {
+                    const auto& member =
+                        p1::macros::kTargetMemberPool[static_cast<std::size_t>(i)];
+                    if (role == 1 &&
+                        (member.op == 0 || !mask[member.op - 1]))
+                        continue;
+                    if (role == 2 &&
+                        (member.op == 0 || mask[member.op - 1]))
+                        continue;
+                    const int index =
+                        macroMemberIndex_[static_cast<std::size_t>(member.id)];
+                    if (index >= 0)
+                        macroOffsets_[static_cast<std::size_t>(index)] += offset;
+                }
+            }
+        }
+    }
+    for (std::size_t k = 0; k < macroMemberIds_.size(); ++k) {
+        const int id = macroMemberIds_[k];
+        const auto& spec = kP1ParamSpecs[static_cast<std::size_t>(id)];
+        const int base = paramValues_[static_cast<std::size_t>(id)] != nullptr
+            ? static_cast<int>(
+                  std::lround(paramValues_[static_cast<std::size_t>(id)]->load()))
+            : 0;
+        int effective = base;
+        const double offset = macroOffsets_[k];
+        if (offset != 0.0) {
+            const double span = static_cast<double>(spec.max - spec.min);
+            const double shifted = static_cast<double>(base) + offset * span;
+            effective = static_cast<int>(std::lround(std::clamp(
+                shifted, static_cast<double>(spec.min),
+                static_cast<double>(spec.max))));
+        }
+        engine_.setParam(static_cast<uint32_t>(spec.engineId), effective);
+    }
+    macroApplied_ = anyValue;
 }
 
 void TypePAlphaAudioProcessor::feedMessage(p1::MidiBridge& midi,
@@ -440,6 +565,7 @@ void TypePAlphaAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
             }
 
             syncParams();
+            syncMacros();
             renderCore(directBuffer_.data(), length);
             for (int i = 0; i < length; ++i) {
                 const auto index = static_cast<std::size_t>(i) * 2u;
@@ -485,6 +611,7 @@ void TypePAlphaAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
             scheduled_.push_back({message, coreFrame});
         }
         syncParams();
+        syncMacros();
         float* left = buffer.getWritePointer(0);
         float* right = channels > 1 ? buffer.getWritePointer(1) : left;
         if (rateBridge_.hasCore(frames))

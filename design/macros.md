@@ -1,9 +1,9 @@
 # Macros
 
-Status: the parameter layer, the multi record and the target table are built: the 54
-global parameters, the CC72 to CC77 map, the automation flags, the macro block with
-its migration, and the 58 target rows resolved against the manifest. The offset layer
-and the panel are outstanding. The research is in
+Status: the parameter layer, the multi record, the target table and the offset layer
+for the linear targets are built. The relative CC, wheel and velocity sources, the
+log LFO rate targets, the per-voice layer and the panel are outstanding. The research
+is in
 [`../docs/research/macros.md`](../docs/research/macros.md), and the parameter list and
 the evidence the milestone needs are in
 [`../plugin/feature-contract-macros.md`](../plugin/feature-contract-macros.md).

@@ -109,6 +109,7 @@ private:
     static juce::AudioProcessorValueTreeState::ParameterLayout createLayout();
     static void feedMessage(p1::MidiBridge& midi, const juce::MidiMessage& message);
     void syncParams();
+    void syncMacros();
     void renderCore(int32_t* out, int frames);
     void pushTapScopes(p1::Engine& engine, int frames);
     void publishMorph(p1::Engine& engine);
@@ -128,6 +129,14 @@ private:
     juce::AudioProcessorValueTreeState apvts_;
     std::array<int32_t, kP1ParamCount> lastParams_{};
     std::array<std::atomic<float>*, kP1ParamCount> paramValues_{};
+    std::array<std::atomic<float>*, 6> macroValueValues_{};
+    std::array<std::atomic<float>*, 18> macroTargetValues_{};
+    std::array<std::atomic<float>*, 18> macroRangeValues_{};
+    std::array<std::atomic<float>*, 2> algorithmValues_{};
+    std::vector<int32_t> macroMemberIds_;
+    std::vector<int> macroMemberIndex_;
+    std::vector<double> macroOffsets_;
+    bool macroApplied_ = false;
     std::atomic<float>* outputVolume_ = nullptr;
     float volumeGain_ = 1.0f;
     std::vector<int32_t> directBuffer_;

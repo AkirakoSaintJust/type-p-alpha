@@ -14,6 +14,7 @@
 #include <juce_audio_processors/juce_audio_processors.h>
 
 #include "Engine.hpp"
+#include "MacroLaw.h"
 #include "MacroTargets.h"
 #include "ParamIDs.h"
 #include "Params.h"
@@ -125,6 +126,31 @@ int main()
     } else {
         check(false, "the macro target spec is present");
     }
+    check(std::abs(p1::macroOffset(50, 50) - 0.25) < 1.0e-12 &&
+              std::abs(p1::macroOffset(-50, 50) + 0.25) < 1.0e-12,
+          "the macro offset is the value times the range");
+    check(std::abs(p1::macroTargetNormalised(0.5, 0.25) - 0.75) < 1.0e-12 &&
+              p1::macroTargetNormalised(0.9, 0.5) == 1.0 &&
+              p1::macroTargetNormalised(0.1, -0.5) == 0.0,
+          "the macro target clamps in the normalised domain");
+    if (const auto* cutoff = p1::ui::findSpec("cutoff.p0")) {
+        check(p1::macros::kTargetMemberOffsets[1] -
+                      p1::macros::kTargetMemberOffsets[0] ==
+                  1 &&
+                  p1::macros::kTargetMemberPool[0].id == cutoff->engineId,
+              "the first target resolves to the part 1 cutoff");
+    } else {
+        check(false, "the cutoff spec is present");
+    }
+    {
+        const int last = p1::macros::kTargetCount - 1;
+        check(p1::macros::kTargetMemberOffsets[static_cast<std::size_t>(last) + 1] -
+                      p1::macros::kTargetMemberOffsets[static_cast<std::size_t>(last)] ==
+                  4 &&
+                  p1::macros::kTargetRole[static_cast<std::size_t>(last)] == 2 &&
+                  !p1::macros::kTargetLog[static_cast<std::size_t>(last)],
+              "the last target is the modulator breakpoint group");
+    }
     check(p1::volumeGainFromPosition(p1::kVolumeUnity) == 1.0f &&
               p1::volumeGainFromPosition(0) == 0.0f,
           "the volume is silent at the floor and unity at 0 dB");
@@ -184,6 +210,46 @@ int main()
     int32_t reference[kFrames * 2] = {};
     renderReference(reference, kFrames, 0, 4);
     check(matches(block, reference, kFrames), "48 kHz output is bit-exact with the engine");
+
+    {
+        const auto set = [](TypePAlphaAudioProcessor& target, const char* id,
+                            int value) {
+            if (auto* parameter = target.parameters().getParameter(id)) {
+                parameter->setValueNotifyingHost(
+                    parameter->convertTo0to1(static_cast<float>(value)));
+            }
+        };
+        const auto renderFirst = [&](int macro) {
+            auto instance = std::make_unique<TypePAlphaAudioProcessor>();
+            instance->setRateAndBufferSizeDetails(48000.0, kFrames);
+            instance->prepareToPlay(48000.0, kFrames);
+            set(*instance, "macro1", macro);
+            set(*instance, "macro1_target1", 35);
+            set(*instance, "macro1_range1", 50);
+            check(std::lround(instance->parameters()
+                                  .getRawParameterValue("macro1")
+                                  ->load()) == macro &&
+                      std::lround(instance->parameters()
+                                      .getRawParameterValue("macro1_target1")
+                                      ->load()) == 35 &&
+                      std::lround(instance->parameters()
+                                      .getRawParameterValue("macro1_range1")
+                                      ->load()) == 50,
+                  "the macro destination is set");
+            juce::AudioBuffer<float> out(2, kFrames);
+            juce::MidiBuffer events;
+            events.addEvent(
+                juce::MidiMessage::noteOn(1, 60, static_cast<juce::uint8>(100)), 0);
+            instance->processBlock(out, events);
+            return out;
+        };
+        const auto macroAtZero = renderFirst(0);
+        check(matches(macroAtZero, reference, kFrames),
+              "a macro at 0 leaves the render bit-exact");
+        const auto macroAtFifty = renderFirst(50);
+        check(!matches(macroAtFifty, reference, kFrames),
+              "a macro moves its destination");
+    }
 
     juce::MemoryBlock state;
     processor.getStateInformation(state);
