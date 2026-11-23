@@ -56,20 +56,22 @@ add_custom_command(
 add_custom_target(p1_params DEPENDS "${P1_PARAMS_HEADER}")
 
 set(P1_MACRO_TARGETS_HEADER "${P1_GENERATED_DIR}/MacroTargets.h")
+set(P1_MACRO_TARGET_IDS "${P1_GENERATED_DIR}/macro_target_ids.h")
 add_custom_command(
-    OUTPUT "${P1_MACRO_TARGETS_HEADER}"
+    OUTPUT "${P1_MACRO_TARGETS_HEADER}" "${P1_MACRO_TARGET_IDS}"
     COMMAND "${CMAKE_COMMAND}" -E make_directory "${P1_GENERATED_DIR}"
     COMMAND "${Python3_EXECUTABLE}"
             "${CMAKE_CURRENT_SOURCE_DIR}/tools/gen_macro_targets.py"
             "${CMAKE_CURRENT_SOURCE_DIR}/../synth/macros.json"
             "${P1_PLUGIN_PARAMS}" "${P1_SYNTH_GEN}/tables.c"
-            "${P1_MACRO_TARGETS_HEADER}"
+            "${P1_MACRO_TARGETS_HEADER}" "${P1_MACRO_TARGET_IDS}"
     DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/../synth/macros.json"
             "${P1_PLUGIN_PARAMS}" "${P1_SYNTH_GEN}/tables.c"
             "${CMAKE_CURRENT_SOURCE_DIR}/tools/gen_macro_targets.py"
     VERBATIM
 )
-add_custom_target(p1_macro_targets DEPENDS "${P1_MACRO_TARGETS_HEADER}")
+add_custom_target(p1_macro_targets DEPENDS "${P1_MACRO_TARGETS_HEADER}"
+                  "${P1_MACRO_TARGET_IDS}")
 
 if(MSVC OR (WIN32 AND CMAKE_CXX_COMPILER_ID MATCHES "Clang"))
     set(P1_MSVC_ABI ON)
@@ -111,11 +113,12 @@ target_compile_definitions(p1_engine PRIVATE
     P1_MIDI_EXTERNAL
     "P1_STATE_PTR=${P1_STATE_PTR}"
 )
+add_dependencies(p1_engine p1_macro_targets)
 
 add_executable(engine_parity tests/engine_parity.cpp)
 target_link_libraries(engine_parity PRIVATE p1_engine)
 target_include_directories(engine_parity PRIVATE "${P1_GENERATED_DIR}")
-add_dependencies(engine_parity p1_params)
+add_dependencies(engine_parity p1_params p1_macro_targets)
 add_test(NAME engine_parity COMMAND engine_parity)
 
 add_executable(feedback_envelope tests/feedback_envelope.cpp)
@@ -215,9 +218,10 @@ target_include_directories(p1_engine_additive PUBLIC
     "${P1_SYNTH_GEN}"
     "${P1_GENERATED_DIR}"
     "${P1_ENGINE}/hal"
+    "${P1_ENGINE}/runtime"
     PRIVATE "${P1_ADDITIVE_DIR}"
 )
-add_dependencies(p1_engine_additive p1_params)
+add_dependencies(p1_engine_additive p1_params p1_macro_targets)
 
 add_executable(additive_engine_bench tests/additive_engine_bench.cpp)
 target_link_libraries(additive_engine_bench PRIVATE p1_engine_additive)

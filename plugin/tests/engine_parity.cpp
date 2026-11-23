@@ -6,11 +6,14 @@
 #include <cstdint>
 #include <cstdio>
 #include <cstring>
+#include <memory>
 
 #include "Engine.hpp"
 #include "MidiBridge.hpp"
 #include "Params.h"
+#include "dsp.h"
 #include "engine_render_reference.h"
+#include "macro_apply.h"
 
 extern "C" int midi_get(uint8_t*, uint8_t*, uint8_t*)
 {
@@ -402,6 +405,20 @@ int main(int argc, char** argv)
         return 0;
     }
     std::printf("engine render and isolation\n");
+    {
+        auto state = std::make_unique<type_p_alpha_state>();
+        std::memset(state.get(), 0, sizeof(type_p_alpha_state));
+        state->macro_s1 = 3;
+        state->macro_sr1 = 50;
+        state->macro_t1a = P1_MACRO_TARGET_P1_OP_LEVELS;
+        state->macro_r1a = 50;
+        state->voice_velocity[0] = 20;
+        state->voice_velocity[1] = 120;
+        const int32_t soft = p1_macro_velocity_level(state.get(), 0, 0);
+        const int32_t hard = p1_macro_velocity_level(state.get(), 0, 1);
+        check(hard > soft && soft > 0,
+              "the macro velocity offset follows each voice");
+    }
     test_engine_render();
     test_state_isolation();
     test_filter_is_per_part();

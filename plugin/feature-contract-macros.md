@@ -9,9 +9,10 @@
   in [`../docs/research/macros.md`](../docs/research/macros.md).
 - **Owner / date:** P1Onken, 2026-11-23.
 - **Disposition:** the 54 parameters, the CC map, the automation flags, the multi
-  record, the target table, the linear and log destination offsets and the relative
-  CC, wheel and velocity sources are built. The per-voice layer and the panel are
-  outstanding, so the evidence below is partly run and partly a list.
+  record, the target table, the linear and log destination offsets, the relative CC,
+  wheel and velocity sources and the per-voice velocity source on the operator levels
+  are built. The rest of the per-voice layer and the panel are outstanding, so the
+  evidence below is partly run and partly a list.
 
 ## Player outcome
 
@@ -120,22 +121,27 @@ Run on the parameter layer, the multi record, the target table and the offset la
   source moves the macro` and `the velocity source moves the macro`. The last three
   render a fresh first block with the macro knob at 0 and the source at 127 or 100,
   and each differs from the engine reference.
-- `engine_parity` and the other 16 tests pass.
+- `engine_parity` checks the per-voice operator level helper with two velocities,
+  `20` and `120`, and the hard note's level offset is larger than the soft note's.
+  The velocity source render therefore reaches the engine's per-voice path.
+- `engine_parity` and the other 17 tests pass.
 
 Still outstanding:
 
-- The per-voice rate and velocity layer, with its two-voice render test.
+- The rest of the per-voice layer: the envelope rates, the LFO rates and depths, the
+  morphs, the breakpoints, the carrier and modulator groups, and the pan note policy.
 - The macros page and its snapshots: an empty card, a card with three targets, the
   disabled MIDI range, the target menu with its eight section headings, the purple
   stored value at rest and the smaller green effective value while a macro deviates.
 
 ## Limits
 
-- **The parameter layer, the multi record, the target table, the offsets and the
-  relative sources are built.** The per-voice layer and the panel are not.
-- **The velocity source uses the newest note.** The part-level offsets cannot follow
-  each voice yet, so a chord at different velocities moves the whole part with the
-  last note's velocity.
+- **The parameter layer, the multi record, the target table, the offsets, the
+  relative sources and the per-voice operator levels are built.** The rest of the
+  per-voice layer and the panel are not.
+- **The velocity source is per voice on the operator levels and newest-note on the
+  rest.** The other targets move the whole part with the last note's velocity until
+  their per-voice paths land.
 - **The source values are live, not patch state.** The source select and range are
   saved with the patch, whilst the CC, wheel and note velocity arrive at runtime and
   start at rest.

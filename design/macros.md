@@ -1,8 +1,9 @@
 # Macros
 
 Status: the parameter layer, the multi record, the target table, the linear and log
-destination offsets and the relative CC, wheel and velocity sources are built. The
-per-voice layer and the panel are outstanding. The research is in
+destination offsets, the relative CC, wheel and velocity sources and the per-voice
+velocity source on the operator levels are built. The rest of the per-voice layer and
+the panel are outstanding. The research is in
 [`../docs/research/macros.md`](../docs/research/macros.md), and the parameter list and
 the evidence the milestone needs are in
 [`../plugin/feature-contract-macros.md`](../plugin/feature-contract-macros.md).
@@ -40,8 +41,10 @@ CC77, CC1 and the note-on velocity, so the sources are live values rather than p
 state.
 
 Velocity is per note, so the design follows each voice and the display follows the
-newest voice. Until the per-voice layer lands, the part-level offset layer uses the
-newest note's velocity for every voice.
+newest voice. The operator level group is already per voice: the engine helper reads
+each voice's velocity and adds the offset at the operator's total level. The other
+targets still use the newest note's velocity in the part-level layer until their
+per-voice paths land.
 
 The menu is `off`, `cc 72`, `mod wheel`, `velocity`. The range slider is active for
 the three sources and greyed for `off`. The fixed CC is written on the option, so the

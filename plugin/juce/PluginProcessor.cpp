@@ -13,6 +13,7 @@
 #include "PluginEditor.h"
 #include "VolumeLaw.h"
 #include "Widgets.h"
+#include "macro_target_ids.h"
 
 namespace {
 
@@ -378,6 +379,7 @@ void TypePAlphaAudioProcessor::syncParams()
 void TypePAlphaAudioProcessor::syncMacros()
 {
     double values[6] = {};
+    int sources[6] = {};
     bool anyValue = false;
     for (int i = 0; i < 6; ++i) {
         const std::size_t index = static_cast<std::size_t>(i);
@@ -387,6 +389,7 @@ void TypePAlphaAudioProcessor::syncMacros()
         const int source = macroMidiValues_[index] != nullptr
             ? static_cast<int>(std::lround(macroMidiValues_[index]->load()))
             : 1;
+        sources[i] = source;
         const int range = macroMidiRangeValues_[index] != nullptr
             ? static_cast<int>(
                   std::lround(macroMidiRangeValues_[index]->load()))
@@ -424,6 +427,12 @@ void TypePAlphaAudioProcessor::syncMacros()
                         : 0;
                 if (target <= 0 || target > p1::macros::kTargetCount ||
                     range == 0)
+                    continue;
+                /* The engine adds the velocity source to the operator levels per
+                 * voice, so the part-level write would double it. */
+                if (sources[m] == 3 &&
+                    (target == P1_MACRO_TARGET_P1_OP_LEVELS ||
+                     target == P1_MACRO_TARGET_P2_OP_LEVELS))
                     continue;
                 const int row = target - 1;
                 const int part = p1::macros::kTargetPart[row];
