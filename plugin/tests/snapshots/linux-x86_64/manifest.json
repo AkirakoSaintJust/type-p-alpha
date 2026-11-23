@@ -27,27 +27,27 @@
     },
     "editor-op-phasemap-live.png": {
       "height": 985,
-      "sha256": "3f2a891f90869eed9edd9dffd8e157b61cde2325b4cdb9f4d8f2d356156a22b1",
+      "sha256": "41cd247c1167d1aef5ac456de433b8526427b352088271817b7c4192ac7e27aa",
       "width": 1240
     },
     "editor-op-phasemap.png": {
       "height": 985,
-      "sha256": "abb63ac4257bb15286af25ffd94f22fc1adcb134b8492e3688ccb6286e0433f9",
+      "sha256": "f386e09611ecd7337dc053afea126de3adceb692a6b552d77a3ed1c2235fc2f0",
       "width": 1240
     },
     "editor-op-spectra-mod-levels.png": {
       "height": 985,
-      "sha256": "23132cf6a076a86a10870f2c6dfa0428dcd854fb9bbd4999b73b8bb4c1abf489",
+      "sha256": "beea7d8fe7e1bab032b18f253c6dfe239d98a288969d4446a67769a7b890c7b1",
       "width": 1240
     },
     "editor-op-spectra-mod-ranges.png": {
       "height": 985,
-      "sha256": "5eee1fe0e7434122e65a238d14a3b3ea37f57a0611413ba3dab0c78d7ff7b600",
+      "sha256": "a4b77cf1515ae2ce84722cfe426514dfaa8af192aff2bf2f20a78d9250695f07",
       "width": 1240
     },
     "editor-op-spectra-mod.png": {
       "height": 985,
-      "sha256": "9a6bfbbbc701b81d1412c26133349e117215d00a399358c27eef63095836b991",
+      "sha256": "5c48cbfc3b55579aaceaa86d9a964998bd6de4f0981c6f74b283f4de2cbdb4f2",
       "width": 1240
     },
     "editor-operator-envs.png": {
@@ -57,12 +57,12 @@
     },
     "editor-operator-lfos-fades.png": {
       "height": 985,
-      "sha256": "b9b27fbbcca0477d3e429432fee29198bda50272303223c28aaca8fd8083b129",
+      "sha256": "e70235a0a02f0da4534e2d3a2211903c8dc928b1b4dc3f021dee2bf850500143",
       "width": 1240
     },
     "editor-operator-lfos.png": {
       "height": 985,
-      "sha256": "2b9d51edb0d682018781be482ddc2567e3b2f448a08e2f0e736317478596ea94",
+      "sha256": "30d61ba462ae9b5c005c641f7d2887eb387f8b64a36a8358abc527b0886a928f",
       "width": 1240
     },
     "editor-operator-spectra-b.png": {
@@ -82,12 +82,12 @@
     },
     "editor-part-params-loops.png": {
       "height": 985,
-      "sha256": "3217db92ca9937ffe2f63dbe40b879e7ec72095f82dad6e589ba3cedfd357485",
+      "sha256": "13109f6b79c1dc4265cf1693b110d9c2b6d201a5ae45c35a5474d41c8449da93",
       "width": 1240
     },
     "editor-part-params.png": {
       "height": 985,
-      "sha256": "56c853c7b62716747be6925c48bfd4af8528cc4a98fb500f949b1fc84b10284a",
+      "sha256": "4f6459d26694613619e4758e867b0f874ed2a7373a3ff6720c5fa5513f208507",
       "width": 1240
     },
     "editor-part2.png": {

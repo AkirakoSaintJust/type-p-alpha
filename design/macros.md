@@ -1,9 +1,8 @@
 # Macros
 
-Status: the parameter layer, the multi record, the target table and the offset layer
-for the linear targets are built. The relative CC, wheel and velocity sources, the
-log LFO rate targets, the per-voice layer and the panel are outstanding. The research
-is in
+Status: the parameter layer, the multi record, the target table, the linear and log
+destination offsets are built. The relative CC, wheel and velocity sources, the
+per-voice layer and the panel are outstanding. The research is in
 [`../docs/research/macros.md`](../docs/research/macros.md), and the parameter list and
 the evidence the milestone needs are in
 [`../plugin/feature-contract-macros.md`](../plugin/feature-contract-macros.md).
@@ -63,7 +62,9 @@ algorithm change.
 A parameter with a log curve, such as an LFO rate, takes the offset in the knob's
 normalised domain rather than its raw value, because the raw LFO rate spans 0 to
 20,000,000, where 4 Hz is 357,914, so a raw 10 percent offset would be about 22 Hz
-instead of 4.4 Hz.
+instead of 4.4 Hz. The LFO rate parameters carry a skewed normalised range now:
+0 stays the off stop, 0.01 Hz to 223 Hz is logarithmic above it, and the knob, the
+host display and the macro offset all read that range.
 
 The `velocity depth` group skips a member whose stored amount is 0, so a macro does
 not give a follow target a velocity sensitivity the player never set. A member that

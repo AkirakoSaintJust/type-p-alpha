@@ -133,6 +133,18 @@ int main()
               p1::macroTargetNormalised(0.9, 0.5) == 1.0 &&
               p1::macroTargetNormalised(0.1, -0.5) == 0.0,
           "the macro target clamps in the normalised domain");
+    {
+        auto* rate = processor.parameters().getParameter("pitch_rate.p0");
+        const float norm = rate != nullptr
+            ? rate->convertTo0to1(447392.0f)
+            : -1.0f;
+        check(rate != nullptr && norm > 0.55f && norm < 0.70f,
+              "the LFO rate is logarithmic on the knob");
+        check(rate != nullptr && rate->convertTo0to1(0.0f) == 0.0f,
+              "the LFO rate keeps zero as the off stop");
+        check(p1::macros::kTargetLog[10],
+              "the part 1 pitch LFO rate row is log");
+    }
     if (const auto* cutoff = p1::ui::findSpec("cutoff.p0")) {
         check(p1::macros::kTargetMemberOffsets[1] -
                       p1::macros::kTargetMemberOffsets[0] ==
@@ -622,8 +634,15 @@ int main()
             auto* actual =
                 restored.parameters().getRawParameterValue(spec.id);
             const int middle = spec.min + (spec.max - spec.min) * 2 / 3;
-            allRestored = allRestored && actual != nullptr &&
-                          std::lround(actual->load()) == middle;
+            bool here = false;
+            if (actual != nullptr) {
+                const int raw = static_cast<int>(std::lround(actual->load()));
+                const int difference = raw > middle ? raw - middle : middle - raw;
+                /* The log rate parameters are floats over a 20,000,000 raw span,
+                 * so the normalised state keeps them within a step or two. */
+                here = difference <= (spec.logarithmic ? 4 : 0);
+            }
+            allRestored = allRestored && here;
         }
         check(allRestored, "the state restores every manifest parameter");
     }

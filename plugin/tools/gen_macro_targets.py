@@ -152,7 +152,7 @@ def main() -> int:
     role_ids = {"all": 0, "carrier": 1, "modulator": 2}
 
     rows: list[tuple[str, str]] = []
-    pool: list[tuple[int, int]] = []
+    pool: list[tuple[int, int, bool]] = []
     offsets = [0]
     roles: list[int] = []
     parts: list[int] = []
@@ -167,7 +167,7 @@ def main() -> int:
                 )
             rows.append((f"part {part} {entry['name']}", str(entry["section"])))
             for name, op in names:
-                pool.append((known[name], op))
+                pool.append((known[name], op, curves[name] == "log"))
             offsets.append(len(pool))
             roles.append(role_ids.get(str(entry.get("role", "all")), 0))
             parts.append(part - 1)
@@ -212,12 +212,13 @@ def main() -> int:
         "struct TargetMember {",
         "    int32_t id;",
         "    uint8_t op;",
+        "    uint8_t log;",
         "};",
         "",
         f"inline constexpr std::array<TargetMember, {len(pool)}> kTargetMemberPool = {{{{",
     ]
-    for member_id, op in pool:
-        lines.append(f"    {{{member_id}, {op}}},")
+    for member_id, op, log in pool:
+        lines.append(f"    {{{member_id}, {op}, {1 if log else 0}}},")
     lines += [
         "}};",
         "",

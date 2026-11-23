@@ -220,6 +220,9 @@ TypePAlphaAudioProcessor::TypePAlphaAudioProcessor()
         macroMemberIndex_[static_cast<std::size_t>(id)] =
             static_cast<int>(macroMemberIds_.size());
         macroMemberIds_.push_back(id);
+        macroMemberParams_.push_back(
+            apvts_.getParameter(kP1ParamSpecs[static_cast<std::size_t>(id)].id));
+        macroMemberLog_.push_back(member.log);
     }
     macroOffsets_.assign(macroMemberIds_.size(), 0.0);
 }
@@ -233,6 +236,41 @@ TypePAlphaAudioProcessor::createLayout()
         const int high = spec.max > spec.min ? spec.max : spec.min + 1;
         const int def = juce::jlimit(low, high, spec.def);
         const auto display = juce::String(spec.display);
+        /* The LFO rates are log parameters. The raw value is a Q32 phase
+         * increment, so a linear range puts 4 Hz in the bottom two percent of the
+         * knob. The custom range keeps 0 as the off stop and maps 0.01 Hz to
+         * 223 Hz logarithmically above it, which the macro offset also uses. */
+        if (spec.logarithmic && display == "hz") {
+            constexpr float floorHz = 894.0f;  // 0.01 Hz in Q32 phase increments
+            auto range = juce::NormalisableRange<float>(
+                static_cast<float>(low), static_cast<float>(high),
+                [](float start, float end, float value) {
+                    if (value <= 0.0f)
+                        return start;
+                    return juce::jmin(end,
+                                      floorHz * std::pow(end / floorHz, value));
+                },
+                [](float start, float end, float value) {
+                    juce::ignoreUnused(start);
+                    if (value <= 0.0f)
+                        return 0.0f;
+                    return std::log(value / floorHz) /
+                           std::log(end / floorHz);
+                });
+            auto attributes = juce::AudioParameterFloatAttributes()
+                                  .withAutomatable(spec.automatable)
+                                  .withStringFromValueFunction([spec](float value, int) {
+                                      return p1::ui::formatParamValue(spec, value);
+                                  })
+                                  .withValueFromStringFunction([spec](const juce::String& text) {
+                                      return static_cast<float>(
+                                          p1::ui::parseParamValue(spec, text));
+                                  });
+            layout.add(std::make_unique<juce::AudioParameterFloat>(
+                juce::ParameterID{spec.id, 1}, spec.name, range,
+                static_cast<float>(def), attributes));
+            continue;
+        }
         auto attributes = juce::AudioParameterIntAttributes()
                               .withAutomatable(spec.automatable);
         if (display == "cutoff" || display == "oct" || display == "pct" ||
@@ -366,10 +404,6 @@ void TypePAlphaAudioProcessor::syncMacros()
                     range == 0)
                     continue;
                 const int row = target - 1;
-                /* The log mapping is outstanding, so the LFO rate rows stay inert
-                 * rather than jumping in raw units. */
-                if (p1::macros::kTargetLog[row])
-                    continue;
                 const int part = p1::macros::kTargetPart[row];
                 const int algorithm =
                     algorithmValues_[static_cast<std::size_t>(part)] != nullptr
@@ -410,11 +444,21 @@ void TypePAlphaAudioProcessor::syncMacros()
         int effective = base;
         const double offset = macroOffsets_[k];
         if (offset != 0.0) {
-            const double span = static_cast<double>(spec.max - spec.min);
-            const double shifted = static_cast<double>(base) + offset * span;
-            effective = static_cast<int>(std::lround(std::clamp(
-                shifted, static_cast<double>(spec.min),
-                static_cast<double>(spec.max))));
+            if (macroMemberLog_[k] != 0 && macroMemberParams_[k] != nullptr) {
+                const double baseNorm =
+                    macroMemberParams_[k]->convertTo0to1(static_cast<float>(base));
+                const double effectiveNorm =
+                    p1::macroTargetNormalised(baseNorm, offset);
+                effective = static_cast<int>(std::lround(
+                    macroMemberParams_[k]->convertFrom0to1(
+                        static_cast<float>(effectiveNorm))));
+            } else {
+                const double span = static_cast<double>(spec.max - spec.min);
+                const double shifted = static_cast<double>(base) + offset * span;
+                effective = static_cast<int>(std::lround(std::clamp(
+                    shifted, static_cast<double>(spec.min),
+                    static_cast<double>(spec.max))));
+            }
         }
         engine_.setParam(static_cast<uint32_t>(spec.engineId), effective);
     }

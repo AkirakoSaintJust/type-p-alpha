@@ -134,6 +134,8 @@ private:
     std::array<std::atomic<float>*, 18> macroRangeValues_{};
     std::array<std::atomic<float>*, 2> algorithmValues_{};
     std::vector<int32_t> macroMemberIds_;
+    std::vector<juce::RangedAudioParameter*> macroMemberParams_;
+    std::vector<uint8_t> macroMemberLog_;
     std::vector<int> macroMemberIndex_;
     std::vector<double> macroOffsets_;
     bool macroApplied_ = false;

@@ -9,9 +9,9 @@
   in [`../docs/research/macros.md`](../docs/research/macros.md).
 - **Owner / date:** P1Onken, 2026-11-23.
 - **Disposition:** the 54 parameters, the CC map, the automation flags, the multi
-  record, the target table and the offset layer for the linear targets are built. The
-  relative source, the log rate targets, the per-voice layer and the panel are
-  outstanding, so the evidence below is partly run and partly a list.
+  record, the target table and the linear and log destination offsets are built. The
+  relative source, the per-voice layer and the panel are outstanding, so the evidence
+  below is partly run and partly a list.
 
 ## Player outcome
 
@@ -68,9 +68,10 @@
   `clamp(base + (effective / 100) * (range / 100) * span)`. The base is the stored
   parameter value, never the last effective one.
 - A destination with a log parameter, which is every LFO rate, applies the same
-  fraction to the normalised knob value and converts back. The raw 0 to 20,000,000
-  LFO rate span makes a raw percentage useless. The build skips the log rows until
-  the LFO rate control has a normalised law, so those targets are inert.
+  fraction to the parameter's normalised range. The hz parameters carry a custom range
+  where 0 stays the off stop and 0.01 Hz to 223 Hz is logarithmic, so a 4 Hz rate
+  sits near the middle of the knob and the macro offset is musical. The portamento
+  keeps its linear range because it is not a macro target.
 - A group target applies the same range fraction to every member against that
   member's own span, and every member clamps on its own. The carrier and modulator
   roles come from the algorithm's routing table at runtime, and an empty role group
@@ -107,14 +108,18 @@ Run on the parameter layer, the multi record, the target table and the offset la
 - `plugin_smoke` also pins the offset law (`50` and a `50` range give `0.25`, and the
   target clamps at 0 and 1) and checks that the first target resolves to the part 1
   cutoff and the last to the four modulator breakpoint members.
+- `plugin_smoke` passes `the LFO rate is logarithmic on the knob`, `the LFO rate
+  keeps zero as the off stop` and `the part 1 pitch LFO rate row is log`. The state
+  restore check allows a four-step raw tolerance for the log rate floats, because the
+  normalised state cannot hold every raw step of a 20,000,000 span.
+- The nine editor snapshots with an LFO rate knob are regenerated. At 4 to 5 Hz the
+  rate knobs now sit near the middle instead of the bottom two percent.
 - `engine_parity` and the other 16 tests pass.
 
 Still outstanding:
 
 - The relative CC, wheel and velocity sources. The build uses the macro parameter as
   the value, and the CC map writes it absolutely for now.
-- The log LFO rate rows, which stay inert until the LFO rate control has a
-  normalised law.
 - The per-voice rate and velocity layer, with its two-voice render test.
 - The macros page and its snapshots: an empty card, a card with three targets, the
   disabled MIDI range, the target menu with its eight section headings, the purple
@@ -122,9 +127,9 @@ Still outstanding:
 
 ## Limits
 
-- **The parameter layer, the multi record, the target table and the linear offsets
-  are built.** The relative source, the log rates, the per-voice layer and the panel
-  are not.
+- **The parameter layer, the multi record, the target table, the linear offsets and
+  the log LFO rates are built.** The relative source, the per-voice layer and the
+  panel are not.
 - **The display follows the newest voice.** A velocity macro differs per voice, and
   the stored value, the effective value and the dotted green arc can only show one of
   them.
