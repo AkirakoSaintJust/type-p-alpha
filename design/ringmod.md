@@ -76,13 +76,15 @@ current carriers, so the graph changes with the algorithm. The toggle is green
 when the pair is on. The level knob is a 42 px dial with the raw 0 to 99 value,
 dimmed to 0.35 while the pair is off.
 
-The original-output row is a `original` caption and one toggle for each current
-carrier, labelled with its operator number. It is a single control per carrier,
-never one per pair, so a carrier that feeds two pairs still has one direct gate. A
-middle carrier appears in two graphs because the chain is consecutive, but its
-direct toggle appears once in the original row, which is the rule that keeps the dry
-signal from being counted twice. The direct toggles stay active while a pair is off,
-because they decide whether the direct signal is heard. The dry term is added once.
+The original-output row is an `original` caption and one toggle for each current
+carrier, labelled `op1` to `op4`. The toggle shows the label and a track, and the
+track carries the on or off state, so four toggles fit the card width. It is a
+single control per carrier, never one per pair, so a carrier that feeds two pairs
+still has one direct gate. A middle carrier appears in two graphs because the chain
+is consecutive, but its direct toggle appears once in the original row, which is the
+rule that keeps the dry signal from being counted twice. The direct toggles stay
+active while a pair is off, because they decide whether the direct signal is heard.
+The dry term is added once.
 
 The algorithm decides the rows and the carrier toggles. A one-carrier algorithm
 draws the title and `no ringmod` and no controls. Two carriers draw one pair and

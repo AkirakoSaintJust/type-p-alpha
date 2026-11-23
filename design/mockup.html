@@ -401,15 +401,16 @@
   .fxmod-grid .span2 { grid-column: span 2; }
   .ringcard { grid-column: 4; }
   .ringbody { flex: 1 1 auto; display: flex; flex-direction: column; gap: 6px; padding-top: 6px; min-height: 0; }
-  .ringrow { display: flex; align-items: center; gap: 6px; height: 66px; }
+  .ringrow { display: flex; align-items: center; gap: 6px; height: 82px; }
   .ringgraph { flex: 0 0 112px; width: 112px; height: 56px; }
   .ringgraph svg { display: block; width: 100%; height: 100%; }
-  .ringrow .knob { width: 48px; flex: 0 0 48px; }
-  .ringrow .knob .dial, .ringrow .knob .dial svg { width: 36px; height: 36px; }
-  .ringrow .knob .knob-val { font-size: 13px; }
+  .ringrow .knob { width: 56px; flex: 0 0 56px; }
+  .ringrow .knob .dial, .ringrow .knob .dial svg { width: 42px; height: 42px; }
+  .ringrow .knob .knob-val { font-size: 14px; }
   .ringrow.off .knob { opacity: .35; pointer-events: none; }
-  .ringout { display: flex; align-items: center; gap: 3px; margin-top: auto; min-width: 0; }
-  .ringout .lbl { flex: 0 0 44px; font-size: 10px; letter-spacing: .04em; color: var(--dim); }
+  .ringout { display: flex; align-items: center; gap: 2px; margin-top: auto; min-width: 0; }
+  .ringout .lbl { flex: 0 0 42px; font-size: 10px; letter-spacing: .04em; color: var(--dim); }
+  .ringout .toggle { gap: 5px; }
   .ringout .toggle .tname { font-size: 10px; }
   .ringempty { color: var(--faint); font-size: 11px; letter-spacing: .06em; padding: 8px 0; }
   .followcard { display: flex; flex-direction: column; }
@@ -2554,6 +2555,19 @@
     return '<svg viewBox="0 0 ' + W + " " + H + '">' + g + "</svg>";
   }
 
+  function ringOutToggle(label, on, onchange) {
+    const el = document.createElement("div");
+    el.className = "toggle" + (on ? " on" : "");
+    el.innerHTML = '<div class="trk"><div class="thb"></div></div><div class="tname"></div>';
+    el.querySelector(".tname").textContent = label;
+    el.addEventListener("click", function () {
+      const nowOn = !el.classList.contains("on");
+      el.classList.toggle("on", nowOn);
+      if (onchange) onchange(nowOn);
+    });
+    return el;
+  }
+
   function ringmodCard() {
     const ring = PART_DATA[activePart - 1].ring;
     const carriers = (ALG_LAYOUT[ALG] || ALG_LAYOUT[0]).car;
@@ -2598,7 +2612,7 @@
       lbl.textContent = "original";
       out.appendChild(lbl);
       carriers.forEach(function (op) {
-        out.appendChild(makeToggle(String(op + 1), ring.out[op], function (v) {
+        out.appendChild(ringOutToggle("op" + (op + 1), ring.out[op], function (v) {
           ring.out[op] = v;
           rerender();
         }));
