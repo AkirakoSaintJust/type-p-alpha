@@ -1,9 +1,9 @@
 # Macros
 
 Status: the parameter layer, the multi record, the target table, the linear and log
-destination offsets, the relative CC, wheel and velocity sources and the per-voice
-velocity source on the operator levels are built. The rest of the per-voice layer and
-the panel are outstanding. The research is in
+destination offsets, the relative CC, wheel and velocity sources, the per-voice
+velocity source on the operator levels and the macros page are built. The rest of the
+per-voice layer and the target-parameter feedback are outstanding. The research is in
 [`../docs/research/macros.md`](../docs/research/macros.md), and the parameter list and
 the evidence the milestone needs are in
 [`../plugin/feature-contract-macros.md`](../plugin/feature-contract-macros.md).
@@ -140,6 +140,12 @@ targets.
 Colours: purple for the destination range sliders, green for the MIDI-in range, and
 0.35 alpha for a disabled range. The MIDI-in and destination sliders are both
 bipolar, with the centre fill the pan slider already uses.
+
+The page is built. Three snapshots cover an empty card, a card with three targets and
+a live mod wheel contribution. The whole page sits behind the new tab. The target
+menu is built from the generated table, so its eight headings follow the same list as
+the engine. A component snapshot cannot capture an open popup. The table test checks
+the menu rather than an image.
 
 ## Feedback on the destination
 

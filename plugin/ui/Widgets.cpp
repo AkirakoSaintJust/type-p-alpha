@@ -354,6 +354,8 @@ ParamKnob::ParamKnob(APVTS& state, juce::String paramID, juce::String label,
     addAndMakeVisible(slider_);
 
     name_.setText(label, juce::dontSendNotification);
+    hasName_ = label.isNotEmpty();
+    name_.setVisible(hasName_);
     name_.setFont(uiFont(labelSize_ > 0.0f ? labelSize_ : tokens::textKnobName));
     name_.setColour(juce::Label::textColourId, colour(tokens::dim));
     name_.setJustificationType(juce::Justification::centred);
@@ -422,6 +424,17 @@ void ParamKnob::setParamID(const juce::String& paramID)
     repaint();
 }
 
+void ParamKnob::setModArc(double fraction)
+{
+    fraction = juce::jlimit(0.0, 1.0, fraction);
+    const double current = static_cast<double>(
+        slider_.getProperties().getWithDefault("modArc", -1.0));
+    if (current >= 0.0 && std::abs(current - fraction) < 0.0005)
+        return;
+    slider_.getProperties().set("modArc", fraction);
+    slider_.repaint();
+}
+
 void ParamKnob::resized()
 {
     auto area = getLocalBounds();
@@ -429,8 +442,10 @@ void ParamKnob::resized()
     auto dialArea = area.removeFromTop(dial).withSizeKeepingCentre(
         juce::jmin(dial, getWidth()), dial);
     slider_.setBounds(dialArea);
-    name_.setBounds(0, dialArea.getBottom() + 1, getWidth(), 16);
-    value_.setBounds(0, dialArea.getBottom() + 15, getWidth(), 20);
+    name_.setBounds(0, dialArea.getBottom() + 1, getWidth(),
+                    hasName_ ? 16 : 0);
+    value_.setBounds(0, dialArea.getBottom() + (hasName_ ? 15 : 1), getWidth(),
+                     20);
 }
 
 void ParamKnob::paint(juce::Graphics&) {}

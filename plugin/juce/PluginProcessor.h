@@ -97,12 +97,15 @@ public:
     void setPatchName(const juce::String& name) { patchName_ = name; }
     juce::String getPartName(int part) const;
     void setPartName(int part, const juce::String& name);
+    juce::String getMacroName(int index) const;
+    void setMacroName(int index, const juce::String& name);
+    double macroEffectiveValue(int index) const;
     int getUiActivePart() const { return uiActivePart_; }
     void setUiActivePart(int part) { uiActivePart_ = juce::jlimit(0, 1, part); }
     int getUiPage() const { return uiPage_; }
     void setUiPage(int page)
     {
-        uiPage_ = juce::jlimit(0, 7, page);
+        uiPage_ = juce::jlimit(0, 8, page);
     }
 
 private:
@@ -164,6 +167,7 @@ private:
     std::array<ScopeRing, 10> tapScopes_;
     juce::String patchName_{"init patch"};
     std::array<juce::String, 2> partNames_{{"init", "init"}};
+    std::array<juce::String, 6> macroNames_{};
     int uiActivePart_ = 0;
     int uiPage_ = 0;
     bool libraryLoaded_ = false;

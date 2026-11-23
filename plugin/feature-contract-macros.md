@@ -10,9 +10,9 @@
 - **Owner / date:** P1Onken, 2026-11-23.
 - **Disposition:** the 54 parameters, the CC map, the automation flags, the multi
   record, the target table, the linear and log destination offsets, the relative CC,
-  wheel and velocity sources and the per-voice velocity source on the operator levels
-  are built. The rest of the per-voice layer and the panel are outstanding, so the
-  evidence below is partly run and partly a list.
+  wheel and velocity sources, the per-voice velocity source on the operator levels and
+  the macros page are built. The rest of the per-voice layer and the target-parameter
+  feedback are outstanding, so the evidence below is partly run and partly a list.
 
 ## Player outcome
 
@@ -124,21 +124,32 @@ Run on the parameter layer, the multi record, the target table and the offset la
 - `engine_parity` checks the per-voice operator level helper with two velocities,
   `20` and `120`, and the hard note's level offset is larger than the soft note's.
   The velocity source render therefore reaches the engine's per-voice path.
+- The editor snapshots gain `editor-macros.png` for the empty cards,
+  `editor-macros-targets.png` for the renamed cards with three destinations and a
+  green or purple range in each row, and `editor-macros-live.png` for a mod wheel at
+  100, where the dotted green arc leaves the knob value on the first card. The other
+  24 goldens are regenerated because the ninth tab changes the tab bar on every page.
+- `plugin_smoke` passes the tab restore checks for the new layout: the six-tab mod
+  page moves to 8, the layout-3 spectra b page to 7, the layout-4 one to 6 and the
+  four-tab fx page to 2, so an old project opens on the page it was saved on.
 - `engine_parity` and the other 17 tests pass.
 
 Still outstanding:
 
 - The rest of the per-voice layer: the envelope rates, the LFO rates and depths, the
   morphs, the breakpoints, the carrier and modulator groups, and the pan note policy.
-- The macros page and its snapshots: an empty card, a card with three targets, the
-  disabled MIDI range, the target menu with its eight section headings, the purple
-  stored value at rest and the smaller green effective value while a macro deviates.
+- The target-parameter feedback: the stored value in purple while a macro has a range
+  but sits at 0, and the smaller green effective value beside the pink stored value
+  while it deviates. The macro card's own arc and text are drawn.
+- A snapshot of the target menu, because the component snapshot does not capture an
+  open popup. The eight headings come from the generated table, which the table test
+  pins.
 
 ## Limits
 
 - **The parameter layer, the multi record, the target table, the offsets, the
-  relative sources and the per-voice operator levels are built.** The rest of the
-  per-voice layer and the panel are not.
+  relative sources, the per-voice operator levels and the macros page are built.** The
+  rest of the per-voice layer and the target-parameter feedback are not.
 - **The velocity source is per voice on the operator levels and newest-note on the
   rest.** The other targets move the whole part with the last note's velocity until
   their per-voice paths land.

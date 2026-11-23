@@ -23,7 +23,10 @@ constexpr int kStateVersion = 14;
 /* The state version whose cutoff values already use the current law. A later
  * version bump must not run the cutoff conversion again. */
 constexpr int kCutoffLawStateVersion = 5;
-constexpr int kUiPageLayout = 4;
+/* Layout 5 inserts the macros page at 1, so every later page moves up one. */
+constexpr int kUiPageLayout = 5;
+/* Layout 4 inserted op phasemap at 4, which moved the three spectral pages. */
+constexpr int kPhaseMapPageLayout = 4;
 constexpr float kIntToFloat = 1.0f / 32768.0f;
 
 bool isEngineMessage(const juce::MidiMessage& message)
@@ -164,6 +167,41 @@ juce::String TypePAlphaAudioProcessor::getPartName(int part) const
 void TypePAlphaAudioProcessor::setPartName(int part, const juce::String& name)
 {
     partNames_[static_cast<size_t>(juce::jlimit(0, 1, part))] = name;
+}
+
+juce::String TypePAlphaAudioProcessor::getMacroName(int index) const
+{
+    return macroNames_[static_cast<size_t>(juce::jlimit(0, 5, index))];
+}
+
+void TypePAlphaAudioProcessor::setMacroName(int index, const juce::String& name)
+{
+    macroNames_[static_cast<size_t>(juce::jlimit(0, 5, index))] =
+        name.substring(0, 32);
+}
+
+double TypePAlphaAudioProcessor::macroEffectiveValue(int index) const
+{
+    if (index < 0 || index >= 6)
+        return 0.0;
+    const std::size_t i = static_cast<std::size_t>(index);
+    const int knob = macroValueValues_[i] != nullptr
+        ? static_cast<int>(std::lround(macroValueValues_[i]->load()))
+        : 0;
+    const int source = macroMidiValues_[i] != nullptr
+        ? static_cast<int>(std::lround(macroMidiValues_[i]->load()))
+        : 1;
+    const int range = macroMidiRangeValues_[i] != nullptr
+        ? static_cast<int>(std::lround(macroMidiRangeValues_[i]->load()))
+        : 0;
+    int sourceValue = 0;
+    if (source == 1)
+        sourceValue = macroCc_[i].load();
+    else if (source == 2)
+        sourceValue = modWheel_.load();
+    else if (source == 3)
+        sourceValue = noteVelocity_.load();
+    return p1::macroEffective(knob, sourceValue, range);
 }
 
 void TypePAlphaAudioProcessor::readOutputScope(float* destination, int count)
@@ -383,25 +421,10 @@ void TypePAlphaAudioProcessor::syncMacros()
     bool anyValue = false;
     for (int i = 0; i < 6; ++i) {
         const std::size_t index = static_cast<std::size_t>(i);
-        const int knob = macroValueValues_[index] != nullptr
-            ? static_cast<int>(std::lround(macroValueValues_[index]->load()))
-            : 0;
-        const int source = macroMidiValues_[index] != nullptr
+        values[i] = macroEffectiveValue(i);
+        sources[i] = macroMidiValues_[index] != nullptr
             ? static_cast<int>(std::lround(macroMidiValues_[index]->load()))
             : 1;
-        sources[i] = source;
-        const int range = macroMidiRangeValues_[index] != nullptr
-            ? static_cast<int>(
-                  std::lround(macroMidiRangeValues_[index]->load()))
-            : 0;
-        int sourceValue = 0;
-        if (source == 1)
-            sourceValue = macroCc_[index].load();
-        else if (source == 2)
-            sourceValue = modWheel_.load();
-        else if (source == 3)
-            sourceValue = noteVelocity_.load();
-        values[i] = p1::macroEffective(knob, sourceValue, range);
         anyValue = anyValue || std::abs(values[i]) > 1.0e-9;
     }
     if (!anyValue && !macroApplied_)
@@ -869,6 +892,10 @@ void TypePAlphaAudioProcessor::getStateInformation(juce::MemoryBlock& destData)
     state.setProperty("patchName", patchName_, nullptr);
     state.setProperty("part1Name", partNames_[0], nullptr);
     state.setProperty("part2Name", partNames_[1], nullptr);
+    for (int i = 0; i < 6; ++i) {
+        state.setProperty("macroName" + juce::String(i), macroNames_[i],
+                          nullptr);
+    }
     state.setProperty("uiActivePart", uiActivePart_, nullptr);
     state.setProperty("uiPage", uiPage_, nullptr);
     state.setProperty("uiPageLayout", kUiPageLayout, nullptr);
@@ -915,6 +942,10 @@ void TypePAlphaAudioProcessor::setStateInformation(const void* data, int sizeInB
     patchName_ = state.getProperty("patchName", "init patch").toString();
     partNames_[0] = state.getProperty("part1Name", "init").toString();
     partNames_[1] = state.getProperty("part2Name", "init").toString();
+    for (int i = 0; i < 6; ++i) {
+        macroNames_[static_cast<std::size_t>(i)] =
+            state.getProperty("macroName" + juce::String(i), "").toString();
+    }
     uiActivePart_ = juce::jlimit(0, 1, static_cast<int>(state.getProperty("uiActivePart", 0)));
     int page = static_cast<int>(state.getProperty("uiPage", 0));
     const int pageLayout =
@@ -935,12 +966,17 @@ void TypePAlphaAudioProcessor::setStateInformation(const void* data, int sizeInB
          * shifts the spectral pages again. */
         page = 6;
     }
-    if (pageLayout < kUiPageLayout && page >= 4) {
+    if (pageLayout < kPhaseMapPageLayout && page >= 4) {
         /* Layout 3 inserted op phasemap at 4, so the three spectral pages
          * move from 4/5/6 to 5/6/7. */
         ++page;
     }
-    uiPage_ = juce::jlimit(0, 7, page);
+    if (pageLayout < kUiPageLayout && page >= 1) {
+        /* Layout 5 inserted the macros page at 1, so every page from part
+         * params onward moves up one. */
+        ++page;
+    }
+    uiPage_ = juce::jlimit(0, 8, page);
     presets_.setCurrentMulti(static_cast<int>(state.getProperty("currentMulti", -1)));
     for (int part = 0; part < kP1PartCount; ++part) {
         presets_.setPartSource(

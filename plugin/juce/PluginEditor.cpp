@@ -771,9 +771,10 @@ void PluginEditor::buildUi()
     canvas_.addAndMakeVisible(*toolbar_);
     toolbar_->setBounds(1, 160, 1238, 44);
     tabs_.setBounds(1, 204, 1238, 37);
-    activeTab_ = juce::jlimit(0, 7, activeTab_);
+    activeTab_ = juce::jlimit(0, 8, activeTab_);
     juce::StringArray labels;
     labels.add("patch settings");
+    labels.add("macros");
     labels.add("part params");
     labels.add("op envs");
     labels.add("op lfos");
@@ -800,25 +801,31 @@ void PluginEditor::buildPage()
         page_.reset();
     }
     switch (activeTab_) {
+    case 0:
+        page_ = p1::ui::makePatchPage(*this);
+        break;
     case 1:
-        page_ = p1::ui::makeFxModPage(*this);
+        page_ = p1::ui::makeMacrosPage(*this);
         break;
     case 2:
-        page_ = p1::ui::makeOperatorsPage(*this);
+        page_ = p1::ui::makeFxModPage(*this);
         break;
     case 3:
-        page_ = p1::ui::makeOperatorLfosPage(*this);
+        page_ = p1::ui::makeOperatorsPage(*this);
         break;
     case 4:
-        page_ = p1::ui::makePhaseMapPage(*this);
+        page_ = p1::ui::makeOperatorLfosPage(*this);
         break;
     case 5:
-        page_ = p1::ui::makeOperatorSpectraPage(*this, true);
+        page_ = p1::ui::makePhaseMapPage(*this);
         break;
     case 6:
-        page_ = p1::ui::makeOperatorSpectraPage(*this, false);
+        page_ = p1::ui::makeOperatorSpectraPage(*this, true);
         break;
     case 7:
+        page_ = p1::ui::makeOperatorSpectraPage(*this, false);
+        break;
+    case 8:
         page_ = p1::ui::makeOperatorSpectraModPage(*this);
         break;
     default:
@@ -841,7 +848,7 @@ void PluginEditor::setActivePart(int part)
 
 void PluginEditor::showTab(int tab)
 {
-    tab = juce::jlimit(0, 7, tab);
+    tab = juce::jlimit(0, 8, tab);
     if (tab == activeTab_)
         return;
     activeTab_ = tab;
@@ -904,6 +911,29 @@ void PluginEditor::showRenameDialog(bool part, int index)
                 else
                     processor_.setPatchName(text);
                 refreshNames();
+            }
+            closeDialog();
+        },
+        [this] { closeDialog(); });
+    canvas_.addAndMakeVisible(*dialog_);
+    dialog_->setBounds(0, 0, kWidth, kHeight);
+    dialog_->toFront(true);
+    bodyPtr->focus();
+}
+
+void PluginEditor::showRenameMacro(int index)
+{
+    index = juce::jlimit(0, 5, index);
+    auto body = std::make_unique<RenameBody>(processor_.getMacroName(index));
+    auto* bodyPtr = body.get();
+    dialog_ = std::make_unique<p1::ui::P1Dialog>(
+        "rename macro " + juce::String(index + 1), std::move(body), 420, 190,
+        juce::StringArray{"save", "cancel"},
+        [this, bodyPtr, index](int button) {
+            if (button == 0) {
+                processor_.setMacroName(index, bodyPtr->text());
+                if (page_ != nullptr)
+                    page_->tick();
             }
             closeDialog();
         },
@@ -1528,8 +1558,13 @@ void PluginEditor::savePatchToSlot(int slot, int mode)
         level[static_cast<std::size_t>(part)] = currentRouting(3, part);
         delay[static_cast<std::size_t>(part)] = currentRouting(4, part);
     }
+    std::array<std::string, p1::PresetStore::kMacroCount> macroNames;
+    for (int i = 0; i < p1::PresetStore::kMacroCount; ++i)
+        macroNames[static_cast<std::size_t>(i)] =
+            processor_.getMacroName(i).toStdString();
     if (!store.saveMulti(slot, processor_.getPatchName().toStdString(), partSlots,
-                         level, delay, channel, low, high, currentMacroParams()))
+                         level, delay, channel, low, high, currentMacroParams(),
+                         macroNames))
         return;
     store.setCurrentMulti(slot);
     reportLibrarySave(processor_.saveLibrary());
@@ -1588,6 +1623,8 @@ void PluginEditor::loadPatchFromSlot(int slot)
         applyRouting(4, part, multi.delay[static_cast<std::size_t>(part)]);
     }
     applyMacroParams(multi.macro);
+    for (int i = 0; i < p1::PresetStore::kMacroCount; ++i)
+        processor_.setMacroName(i, juce::String(multi.macroNames[i]));
     store.setCurrentMulti(slot);
     refreshNames();
 }

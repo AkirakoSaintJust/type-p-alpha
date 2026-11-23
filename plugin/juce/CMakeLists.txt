@@ -49,6 +49,7 @@ set(P1_JUCE_DEFINITIONS
 set(P1_UI_SOURCES
     PluginEditor.cpp
     Pages.cpp
+    PagesMacros.cpp
     PagesOperators.cpp
     PagesFxMod.cpp
     PagesPhase.cpp

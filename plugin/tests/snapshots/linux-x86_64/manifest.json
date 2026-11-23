@@ -2,122 +2,137 @@
   "images": {
     "editor-algorithm.png": {
       "height": 985,
-      "sha256": "6792a7f222b6b0ccd36a28e6bef8179da92858fedbc117964af2ccabb57810be",
+      "sha256": "44df6f818e408f70eb4cdca1b27e90fff8d8e6c42a88f8368a64b0d4bf9ab4f2",
       "width": 1240
     },
     "editor-confirm.png": {
       "height": 985,
-      "sha256": "3861352e7ee5711f35e88d5bb8c52147308168843904f0dae3c30a75dda83bf0",
+      "sha256": "f7f21fd16d172a7d49a6284391d9a6fa5a3e9cc36c2510b2341ffc85e6092b37",
       "width": 1240
     },
     "editor-envelope-loops.png": {
       "height": 985,
-      "sha256": "f351e504887fdf109a6a3c7504a71f9461b63e7c8046fe7a508fee643e425aa1",
+      "sha256": "9049eeaca9703c740c2c6bcd03fafdc35645df46dbe678605fd7fc2dad5a5755",
       "width": 1240
     },
     "editor-half.png": {
       "height": 493,
-      "sha256": "56742da65cdab5793e9e5403e3595d118c508893e3a535289c039fc90fc32905",
+      "sha256": "690962fe6f35e542939ea0d860326a1f8ec6a14c3aa54acd4c1d6793978a5e07",
       "width": 620
     },
     "editor-long-name.png": {
       "height": 985,
-      "sha256": "8568d4659de25296f2953948ee0ef10544d9b74b942d50b63204a4353585e4b8",
+      "sha256": "c9b83f87f4542b372c903eed40ca54f9627932f5c02237db48b24dd3bbebfa0f",
+      "width": 1240
+    },
+    "editor-macros-live.png": {
+      "height": 985,
+      "sha256": "e0cea25ef5ee2592f526b0952dae5ee3d20265379f845ccc7e07edd543edbeb8",
+      "width": 1240
+    },
+    "editor-macros-targets.png": {
+      "height": 985,
+      "sha256": "dfa8c4f8859327bf9378b2679a7d4c6aa4eb86487eb17e16227e37883969e703",
+      "width": 1240
+    },
+    "editor-macros.png": {
+      "height": 985,
+      "sha256": "ab6faba9e808da307cc75496b3b263ee444c9a05f6b9dd7df3fec3fe8923b938",
       "width": 1240
     },
     "editor-op-phasemap-live.png": {
       "height": 985,
-      "sha256": "41cd247c1167d1aef5ac456de433b8526427b352088271817b7c4192ac7e27aa",
+      "sha256": "1fffe683003356592ae1a9eabcb52d1eacbc9c588768c46fcb00318c0400397e",
       "width": 1240
     },
     "editor-op-phasemap.png": {
       "height": 985,
-      "sha256": "f386e09611ecd7337dc053afea126de3adceb692a6b552d77a3ed1c2235fc2f0",
+      "sha256": "8466f3d86d6dc0f21de9e15b92eec453e32a6911c4c54d20f36a870f79164675",
       "width": 1240
     },
     "editor-op-spectra-mod-levels.png": {
       "height": 985,
-      "sha256": "beea7d8fe7e1bab032b18f253c6dfe239d98a288969d4446a67769a7b890c7b1",
+      "sha256": "a3359bf22c381b2087af71959f9e90762640cc9c1aabb87ae07ad7d3a7756feb",
       "width": 1240
     },
     "editor-op-spectra-mod-ranges.png": {
       "height": 985,
-      "sha256": "a4b77cf1515ae2ce84722cfe426514dfaa8af192aff2bf2f20a78d9250695f07",
+      "sha256": "beefb612d4ed04fe399c9d4dc52acda5ccd7b2153c2db1472e493c020eed9165",
       "width": 1240
     },
     "editor-op-spectra-mod.png": {
       "height": 985,
-      "sha256": "5c48cbfc3b55579aaceaa86d9a964998bd6de4f0981c6f74b283f4de2cbdb4f2",
+      "sha256": "5cb83ec728787f965dd3d136942fc945f6f8ed0c59c89b61c71089c6448907ef",
       "width": 1240
     },
     "editor-operator-envs.png": {
       "height": 985,
-      "sha256": "533071a01f0efb5b36b2068346084c99c4f999f04a2dbca10eeb462892bdf02f",
+      "sha256": "855dda2eda8ac927a3ac373c87b344dd97d666380d1d4777997ce5953efd9732",
       "width": 1240
     },
     "editor-operator-lfos-fades.png": {
       "height": 985,
-      "sha256": "e70235a0a02f0da4534e2d3a2211903c8dc928b1b4dc3f021dee2bf850500143",
+      "sha256": "05a8daa57a83f764c0863546ed8c3057f7400291ed69ce376c1577811c27cb0f",
       "width": 1240
     },
     "editor-operator-lfos.png": {
       "height": 985,
-      "sha256": "30d61ba462ae9b5c005c641f7d2887eb387f8b64a36a8358abc527b0886a928f",
+      "sha256": "3665af85475f6a40d95faf4ccd58d2c1d87c26cb55557b58abeee45ed9721701",
       "width": 1240
     },
     "editor-operator-spectra-b.png": {
       "height": 985,
-      "sha256": "8eccd01dcb1f9faf9808ab4290e8aceac5a3965ca7b291db921f8ded565d247e",
+      "sha256": "c50fc91974cda29fb7d7cf86011e0ed9ecb07526416a8b3c50e15b73f82f5fb3",
       "width": 1240
     },
     "editor-operator-spectra-levels.png": {
       "height": 985,
-      "sha256": "a008255971c4244949ce69da72a42c6834d89e3f5a07b46526f601e6df4bedd0",
+      "sha256": "2ebcf8b6871ccb38d530cfe62af37c34a863aca11dc0f95327c42c25ae13ebb1",
       "width": 1240
     },
     "editor-operator-spectra.png": {
       "height": 985,
-      "sha256": "dd75da617945bd5afe90fc83079995b61fbab6c93e41fcabdf5aa47645acfb20",
+      "sha256": "e35a4007afc98e476c99e7ce9823c4c228d8bc6ac257742f17cd668d0addca1e",
       "width": 1240
     },
     "editor-part-params-loops.png": {
       "height": 985,
-      "sha256": "13109f6b79c1dc4265cf1693b110d9c2b6d201a5ae45c35a5474d41c8449da93",
+      "sha256": "d9f7fb27d0ede67801d45281db9b440c21fe1fb331db0afe561afef1c936af97",
       "width": 1240
     },
     "editor-part-params.png": {
       "height": 985,
-      "sha256": "4f6459d26694613619e4758e867b0f874ed2a7373a3ff6720c5fa5513f208507",
+      "sha256": "d4e913c954bd78d27578751a38eefe4c335b69c3ba1c5ee3c0ec74b7c99a0ec9",
       "width": 1240
     },
     "editor-part2.png": {
       "height": 985,
-      "sha256": "b0bde7efaebd89c8385375dc587c431b2d615f9fe5744b9c9a72455878d779a0",
+      "sha256": "17928e48a563b31dd130345d34d2dda0e2f4df8ef3c5c7c994507a8ef8fec4bc",
       "width": 1240
     },
     "editor-patch.png": {
       "height": 985,
-      "sha256": "2a22842625dadef5b7c074c2b8747024d27219c0bd6e272e548dbb1d6b6199be",
+      "sha256": "792144fdfed6b359a143978a83b8448f31dd83f29553ba3ee0d7950a91d587aa",
       "width": 1240
     },
     "editor-patches.png": {
       "height": 985,
-      "sha256": "f0d98fcb0365316aee1ad17d1e72982f7613d4313d5f6a8a17c0e7b342ba4c9d",
+      "sha256": "ad8aa195dea8b9343b3fc9dc02c13467a2affa1f88bc21c74ae99c50fe92f1d4",
       "width": 1240
     },
     "editor-rename.png": {
       "height": 985,
-      "sha256": "7944f8f03c9aaa692a66a7f4467d8dab4c8a48f85455a3e7baa8fec7b94dd29e",
+      "sha256": "d3febb04d8234275289a0be96f7edeec3dd1b11b379c67136c0871b780e34b17",
       "width": 1240
     },
     "editor-save-mode.png": {
       "height": 985,
-      "sha256": "06c6cae9db2b37ff28ddd7aca413c8cbad5f591b91154697636bf82b4fc1e7fb",
+      "sha256": "bb51b26163749dda882008f728aa0a1f537f2aca0427f03a14865ce3e8ba6fde",
       "width": 1240
     },
     "editor-single-parts.png": {
       "height": 985,
-      "sha256": "8e66bb1e3b5e9c6134a83f9767d7792cecba57aaf9fba6f8556f15d70def206f",
+      "sha256": "e0e09d95d6ddf555ec5d38def585203cfdbafbd5b8fe767241ba2437c02d9d6e",
       "width": 1240
     }
   },

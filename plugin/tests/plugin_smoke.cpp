@@ -335,8 +335,8 @@ int main()
             processor.copyXmlToBinary(*tree.createXml(), older);
             processor.setStateInformation(older.getData(),
                                           static_cast<int>(older.getSize()));
-            check(processor.getUiPage() == 7,
-                  "the six-tab mod page moves to 7 on restore");
+            check(processor.getUiPage() == 8,
+                  "the six-tab mod page moves to 8 on restore");
 
             tree.setProperty("uiPage", 5, nullptr);
             tree.setProperty("uiPageLayout", 3, nullptr);
@@ -344,8 +344,17 @@ int main()
             processor.copyXmlToBinary(*tree.createXml(), previous);
             processor.setStateInformation(previous.getData(),
                                           static_cast<int>(previous.getSize()));
+            check(processor.getUiPage() == 7,
+                  "the layout-3 spectra b page moves to 7 on restore");
+
+            tree.setProperty("uiPage", 5, nullptr);
+            tree.setProperty("uiPageLayout", 4, nullptr);
+            juce::MemoryBlock phaseLayout;
+            processor.copyXmlToBinary(*tree.createXml(), phaseLayout);
+            processor.setStateInformation(
+                phaseLayout.getData(), static_cast<int>(phaseLayout.getSize()));
             check(processor.getUiPage() == 6,
-                  "the layout-3 spectra b page moves to 6 on restore");
+                  "the layout-4 spectra b page moves to 6 on restore");
 
             tree.setProperty("uiPage", 3, nullptr);
             tree.removeProperty("uiPageLayout", nullptr);
@@ -353,8 +362,8 @@ int main()
             processor.copyXmlToBinary(*tree.createXml(), oldest);
             processor.setStateInformation(oldest.getData(),
                                           static_cast<int>(oldest.getSize()));
-            check(processor.getUiPage() == 1,
-                  "the four-tab fx page moves to 1 on restore");
+            check(processor.getUiPage() == 2,
+                  "the four-tab fx page moves to 2 on restore");
         }
         processor.setStateInformation(state.getData(),
                                       static_cast<int>(state.getSize()));
@@ -665,9 +674,12 @@ int main()
                 sourceParameter->convertTo0to1(static_cast<float>(middle)));
         }
         juce::MemoryBlock fullState;
+        source.setMacroName(0, "macro test");
         source.getStateInformation(fullState);
         restored.setStateInformation(fullState.getData(),
                                      static_cast<int>(fullState.getSize()));
+        check(restored.getMacroName(0) == "macro test",
+              "the state restores a macro name");
         bool allRestored = true;
         for (const auto& spec : kP1ParamSpecs) {
             auto* actual =

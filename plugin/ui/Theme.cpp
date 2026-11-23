@@ -191,6 +191,30 @@ void KnobLookAndFeel::drawRotarySlider(juce::Graphics& g, int x, int y, int widt
         g.strokePath(valueArc, juce::PathStrokeType(3.0f));
     }
 
+    /* The macro source arc: a dotted green arc from the knob value to the effective
+     * value, so the pointer and the text stay on the knob and the source shows beside
+     * them. */
+    const auto modArc = static_cast<double>(
+        slider.getProperties().getWithDefault("modArc", -1.0));
+    if (modArc >= 0.0 && modArc <= 1.0) {
+        const auto modAngle =
+            rotaryStartAngle +
+            static_cast<float>(modArc) * (rotaryEndAngle - rotaryStartAngle);
+        const auto arcFrom = juce::jmin(endAngle, modAngle);
+        const auto arcTo = juce::jmax(endAngle, modAngle);
+        if (arcTo - arcFrom > 0.02f) {
+            juce::Path modPath;
+            modPath.addCentredArc(centre.x, centre.y, radius, radius, 0.0f,
+                                  arcFrom, arcTo, true);
+            juce::Path dashed;
+            const float dashes[] = {2.0f, 3.0f};
+            juce::PathStrokeType(2.0f).createDashedStroke(dashed, modPath,
+                                                          dashes, 2);
+            g.setColour(colour(tokens::green));
+            g.fillPath(dashed);
+        }
+    }
+
     const auto pointerLength = radius - 4.0f;
     const auto pointerX = centre.x + pointerLength * std::sin(endAngle);
     const auto pointerY = centre.y - pointerLength * std::cos(endAngle);

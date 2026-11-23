@@ -34,6 +34,7 @@ public:
     ~ParamKnob() override;
 
     void setParamID(const juce::String& paramID);
+    void setModArc(double fraction);
     void resized() override;
     void paint(juce::Graphics& g) override;
 
@@ -79,6 +80,7 @@ private:
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> attach_;
     float dialSize_ = 42.0f;
     float labelSize_ = 0.0f;
+    bool hasName_ = true;
     bool snapping_ = false;
 };
 

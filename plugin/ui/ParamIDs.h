@@ -377,6 +377,31 @@ inline std::array<FollowTarget, 19> followTargets(int part)
     }};
 }
 
+inline juce::String macroValue(int index)
+{
+    return "macro" + juce::String(index + 1);
+}
+
+inline juce::String macroMidi(int index)
+{
+    return macroValue(index) + "_midi";
+}
+
+inline juce::String macroMidiRange(int index)
+{
+    return macroValue(index) + "_midi_range";
+}
+
+inline juce::String macroTarget(int index, int destination)
+{
+    return macroValue(index) + "_target" + juce::String(destination + 1);
+}
+
+inline juce::String macroRange(int index, int destination)
+{
+    return macroValue(index) + "_range" + juce::String(destination + 1);
+}
+
 inline juce::StringArray waveNames()
 {
     return {"sine", "triangle", "half sine", "half tri", "2x sine", "2x tri",

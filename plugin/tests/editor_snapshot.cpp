@@ -84,6 +84,50 @@ int main(int argc, char** argv)
     bool ok = saveSnapshot(*editor, directory.getChildFile("editor-patch.png"));
     p1editor->showTab(1);
     fill();
+    ok = saveSnapshot(*editor, directory.getChildFile("editor-macros.png")) && ok;
+    /* A mod wheel and two destination ranges put the dotted source arc on the
+     * first card, and leave the empty cards beside it. */
+    {
+        auto setMacro = [&](const char* id, float value) {
+            if (auto* parameter = p1editor->state().getParameter(id))
+                parameter->setValueNotifyingHost(
+                    parameter->convertTo0to1(value));
+        };
+        processor.setMacroName(0, "brightness");
+        processor.setMacroName(1, "motion");
+        setMacro("macro1", 20.0f);
+        setMacro("macro1_midi", 2.0f);
+        setMacro("macro1_midi_range", 45.0f);
+        setMacro("macro1_target1", 1.0f);
+        setMacro("macro1_range1", 50.0f);
+        setMacro("macro1_target2", 3.0f);
+        setMacro("macro1_range2", -25.0f);
+        setMacro("macro1_target3", 35.0f);
+        setMacro("macro1_range3", 15.0f);
+        setMacro("macro2", -15.0f);
+        setMacro("macro2_midi", 3.0f);
+        setMacro("macro2_midi_range", 30.0f);
+        setMacro("macro2_target1", 47.0f);
+        setMacro("macro2_range1", 40.0f);
+        setMacro("macro2_target2", 2.0f);
+        setMacro("macro2_range2", -20.0f);
+        setMacro("macro2_target3", 15.0f);
+        setMacro("macro2_range3", -30.0f);
+        setMacro("macro4_midi", 1.0f);
+        setMacro("macro5_midi", 1.0f);
+        setMacro("macro6_midi", 1.0f);
+        fill();
+        ok = saveSnapshot(*editor, directory.getChildFile("editor-macros-targets.png")) &&
+             ok;
+        midi.addEvent(juce::MidiMessage::controllerEvent(1, 1, 100), 0);
+        fill();
+        ok = saveSnapshot(*editor, directory.getChildFile("editor-macros-live.png")) &&
+             ok;
+        midi.clear();
+        fill();
+    }
+    p1editor->showTab(2);
+    fill();
     ok = saveSnapshot(*editor, directory.getChildFile("editor-part-params.png")) && ok;
     /* Bipolar loop1 on the pitch and pan cards draws the turn boundaries and
      * the left arrow against a non-zero level. */
@@ -116,7 +160,7 @@ int main(int argc, char** argv)
                     parameter->convertTo0to1(value));
         fill();
     }
-    p1editor->showTab(2);
+    p1editor->showTab(3);
     fill();
     ok = saveSnapshot(*editor,
                       directory.getChildFile("editor-operator-envs.png")) && ok;
@@ -144,7 +188,7 @@ int main(int argc, char** argv)
                     parameter->convertTo0to1(value));
         fill();
     }
-    p1editor->showTab(3);
+    p1editor->showTab(4);
     fill();
     ok = saveSnapshot(*editor,
                       directory.getChildFile("editor-operator-lfos.png")) && ok;
@@ -171,7 +215,7 @@ int main(int argc, char** argv)
                     parameter->convertTo0to1(0.0f));
         fill();
     }
-    p1editor->showTab(4);
+    p1editor->showTab(5);
     fill();
     ok = saveSnapshot(*editor,
                       directory.getChildFile("editor-op-phasemap.png")) && ok;
@@ -246,7 +290,7 @@ int main(int argc, char** argv)
             set(id, value);
         fill();
     }
-    p1editor->showTab(5);
+    p1editor->showTab(6);
     fill();
     ok = saveSnapshot(*editor,
                       directory.getChildFile("editor-operator-spectra.png")) && ok;
@@ -266,19 +310,19 @@ int main(int argc, char** argv)
                  *editor,
                  directory.getChildFile("editor-operator-spectra-levels.png")) &&
              ok;
-        p1editor->showTab(6);
+        p1editor->showTab(7);
         p1editor->updateVisualizers();
         ok = saveSnapshot(
                  *editor,
                  directory.getChildFile("editor-operator-spectra-b.png")) &&
              ok;
-        p1editor->showTab(7);
+        p1editor->showTab(8);
         p1editor->updateVisualizers();
         ok = saveSnapshot(
                  *editor,
                  directory.getChildFile("editor-op-spectra-mod-levels.png")) &&
              ok;
-        p1editor->showTab(5);
+        p1editor->showTab(6);
         if (auto* parameter =
                 p1editor->state().getParameter("op1_spec_a1.p0")) {
             parameter->setValueNotifyingHost(parameter->convertTo0to1(99.0f));
@@ -292,7 +336,7 @@ int main(int argc, char** argv)
         }
         p1editor->updateVisualizers();
     }
-    p1editor->showTab(7);
+    p1editor->showTab(8);
     fill();
     ok = saveSnapshot(*editor,
                       directory.getChildFile("editor-op-spectra-mod.png")) && ok;

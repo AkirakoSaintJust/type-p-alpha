@@ -78,6 +78,7 @@ public:
     void showAlgorithmPicker();
     void applyAlgorithm(int algorithm);
     void showRenameDialog(bool part, int index);
+    void showRenameMacro(int index);
     void showSinglePartsBrowser();
     void exportLibrary();
     void importLibrary();
