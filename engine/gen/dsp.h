@@ -43,6 +43,7 @@ typedef struct type_p_alpha_state {
     uint32_t op1_lfo_depth_level[NVOICE];
     uint32_t op1_lfo_rate_step[NVOICE];
     uint32_t op1_lfo_depth_step[NVOICE];
+    uint32_t op1_lfo_rate_ratio[NVOICE];
     uint32_t op1_fbenv_stage[NVOICE];
     int32_t op1_fbenv_level[NVOICE];
     uint32_t op1_fbenv_r1_eff[NVOICE];
@@ -61,6 +62,7 @@ typedef struct type_p_alpha_state {
     uint32_t op1_fblfo_depth_level[NVOICE];
     uint32_t op1_fblfo_rate_step[NVOICE];
     uint32_t op1_fblfo_depth_step[NVOICE];
+    uint32_t op1_fblfo_rate_ratio[NVOICE];
     uint32_t op1_dlfo_phase[NVOICE];
     uint32_t op1_dlfo_base[NVOICE];
     int32_t op1_dlfo_w[NVOICE];
@@ -68,6 +70,7 @@ typedef struct type_p_alpha_state {
     uint32_t op1_dlfo_depth_level[NVOICE];
     uint32_t op1_dlfo_rate_step[NVOICE];
     uint32_t op1_dlfo_depth_step[NVOICE];
+    uint32_t op1_dlfo_rate_ratio[NVOICE];
     uint32_t op1_tl_level_eff[NVOICE];
     int32_t op1_fb_signed[NVOICE];
     int32_t op1_fb_level_eff[NVOICE];
@@ -101,6 +104,7 @@ typedef struct type_p_alpha_state {
     uint32_t op1_speclfo_depth_level[NVOICE];
     uint32_t op1_speclfo_rate_step[NVOICE];
     uint32_t op1_speclfo_depth_step[NVOICE];
+    uint32_t op1_speclfo_rate_ratio[NVOICE];
     uint32_t op2_ph_inc[NVOICE];
     uint32_t op2_ph_phase[NVOICE];
     uint32_t op2_ph_step[NVOICE];
@@ -133,6 +137,7 @@ typedef struct type_p_alpha_state {
     uint32_t op2_lfo_depth_level[NVOICE];
     uint32_t op2_lfo_rate_step[NVOICE];
     uint32_t op2_lfo_depth_step[NVOICE];
+    uint32_t op2_lfo_rate_ratio[NVOICE];
     uint32_t op2_fbenv_stage[NVOICE];
     int32_t op2_fbenv_level[NVOICE];
     uint32_t op2_fbenv_r1_eff[NVOICE];
@@ -151,6 +156,7 @@ typedef struct type_p_alpha_state {
     uint32_t op2_fblfo_depth_level[NVOICE];
     uint32_t op2_fblfo_rate_step[NVOICE];
     uint32_t op2_fblfo_depth_step[NVOICE];
+    uint32_t op2_fblfo_rate_ratio[NVOICE];
     uint32_t op2_dlfo_phase[NVOICE];
     uint32_t op2_dlfo_base[NVOICE];
     int32_t op2_dlfo_w[NVOICE];
@@ -158,6 +164,7 @@ typedef struct type_p_alpha_state {
     uint32_t op2_dlfo_depth_level[NVOICE];
     uint32_t op2_dlfo_rate_step[NVOICE];
     uint32_t op2_dlfo_depth_step[NVOICE];
+    uint32_t op2_dlfo_rate_ratio[NVOICE];
     uint32_t op2_tl_level_eff[NVOICE];
     int32_t op2_fb_signed[NVOICE];
     int32_t op2_fb_level_eff[NVOICE];
@@ -191,6 +198,7 @@ typedef struct type_p_alpha_state {
     uint32_t op2_speclfo_depth_level[NVOICE];
     uint32_t op2_speclfo_rate_step[NVOICE];
     uint32_t op2_speclfo_depth_step[NVOICE];
+    uint32_t op2_speclfo_rate_ratio[NVOICE];
     uint32_t op3_ph_inc[NVOICE];
     uint32_t op3_ph_phase[NVOICE];
     uint32_t op3_ph_step[NVOICE];
@@ -223,6 +231,7 @@ typedef struct type_p_alpha_state {
     uint32_t op3_lfo_depth_level[NVOICE];
     uint32_t op3_lfo_rate_step[NVOICE];
     uint32_t op3_lfo_depth_step[NVOICE];
+    uint32_t op3_lfo_rate_ratio[NVOICE];
     uint32_t op3_fbenv_stage[NVOICE];
     int32_t op3_fbenv_level[NVOICE];
     uint32_t op3_fbenv_r1_eff[NVOICE];
@@ -241,6 +250,7 @@ typedef struct type_p_alpha_state {
     uint32_t op3_fblfo_depth_level[NVOICE];
     uint32_t op3_fblfo_rate_step[NVOICE];
     uint32_t op3_fblfo_depth_step[NVOICE];
+    uint32_t op3_fblfo_rate_ratio[NVOICE];
     uint32_t op3_dlfo_phase[NVOICE];
     uint32_t op3_dlfo_base[NVOICE];
     int32_t op3_dlfo_w[NVOICE];
@@ -248,6 +258,7 @@ typedef struct type_p_alpha_state {
     uint32_t op3_dlfo_depth_level[NVOICE];
     uint32_t op3_dlfo_rate_step[NVOICE];
     uint32_t op3_dlfo_depth_step[NVOICE];
+    uint32_t op3_dlfo_rate_ratio[NVOICE];
     uint32_t op3_tl_level_eff[NVOICE];
     int32_t op3_fb_signed[NVOICE];
     int32_t op3_fb_level_eff[NVOICE];
@@ -281,6 +292,7 @@ typedef struct type_p_alpha_state {
     uint32_t op3_speclfo_depth_level[NVOICE];
     uint32_t op3_speclfo_rate_step[NVOICE];
     uint32_t op3_speclfo_depth_step[NVOICE];
+    uint32_t op3_speclfo_rate_ratio[NVOICE];
     uint32_t op4_ph_inc[NVOICE];
     uint32_t op4_ph_phase[NVOICE];
     uint32_t op4_ph_step[NVOICE];
@@ -313,6 +325,7 @@ typedef struct type_p_alpha_state {
     uint32_t op4_lfo_depth_level[NVOICE];
     uint32_t op4_lfo_rate_step[NVOICE];
     uint32_t op4_lfo_depth_step[NVOICE];
+    uint32_t op4_lfo_rate_ratio[NVOICE];
     uint32_t op4_fbenv_stage[NVOICE];
     int32_t op4_fbenv_level[NVOICE];
     uint32_t op4_fbenv_r1_eff[NVOICE];
@@ -331,6 +344,7 @@ typedef struct type_p_alpha_state {
     uint32_t op4_fblfo_depth_level[NVOICE];
     uint32_t op4_fblfo_rate_step[NVOICE];
     uint32_t op4_fblfo_depth_step[NVOICE];
+    uint32_t op4_fblfo_rate_ratio[NVOICE];
     uint32_t op4_dlfo_phase[NVOICE];
     uint32_t op4_dlfo_base[NVOICE];
     int32_t op4_dlfo_w[NVOICE];
@@ -338,6 +352,7 @@ typedef struct type_p_alpha_state {
     uint32_t op4_dlfo_depth_level[NVOICE];
     uint32_t op4_dlfo_rate_step[NVOICE];
     uint32_t op4_dlfo_depth_step[NVOICE];
+    uint32_t op4_dlfo_rate_ratio[NVOICE];
     uint32_t op4_tl_level_eff[NVOICE];
     int32_t op4_fb_signed[NVOICE];
     int32_t op4_fb_level_eff[NVOICE];
@@ -371,6 +386,7 @@ typedef struct type_p_alpha_state {
     uint32_t op4_speclfo_depth_level[NVOICE];
     uint32_t op4_speclfo_rate_step[NVOICE];
     uint32_t op4_speclfo_depth_step[NVOICE];
+    uint32_t op4_speclfo_rate_ratio[NVOICE];
     int32_t d1_prev[NVOICE];
     int32_t d2_prev[NVOICE];
     int32_t d3_prev[NVOICE];
@@ -395,6 +411,7 @@ typedef struct type_p_alpha_state {
     uint32_t plfo_depth_level[NVOICE];
     uint32_t plfo_rate_step[NVOICE];
     uint32_t plfo_depth_step[NVOICE];
+    uint32_t plfo_rate_ratio[NVOICE];
     int32_t f1_ks_k[NVOICE];
     int32_t fenv_ks_k[NVOICE];
     int32_t f1_vs_k[NVOICE];

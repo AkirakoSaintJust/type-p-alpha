@@ -2,11 +2,12 @@
 
 Status: the parameter layer, the multi record, the target table, the linear and log
 destination offsets, the relative CC, wheel and velocity sources, the per-voice
-velocity source on the operator levels, the all-operator feedback and morph groups and
-the operator amplitude, feedback and spectral envelope rates, the macros page and the
-target-parameter feedback are built. The rest of the per-voice layer is outstanding.
-The research is in [`../docs/research/macros.md`](../docs/research/macros.md), and the
-parameter list and the evidence the milestone needs are in
+velocity source on the operator levels, the all-operator feedback and morph groups, the
+operator amplitude, feedback and spectral envelope rates and the operator LFO rates,
+the macros page and the target-parameter feedback are built. The rest of the per-voice
+layer is outstanding. The research is in
+[`../docs/research/macros.md`](../docs/research/macros.md), and the parameter list and
+the evidence the milestone needs are in
 [`../plugin/feature-contract-macros.md`](../plugin/feature-contract-macros.md).
 
 ## The idea
@@ -47,10 +48,13 @@ are already per voice: the engine helpers read each voice's velocity and add the
 offset at the operator's total level, feedback level or morph position. The operator
 amplitude, feedback and spectral envelope rates also follow each voice, because those
 envelopes are per voice; the node takes the offset once per control block and clamps
-the rate to 0..99. The phase envelope holds one state per part, so its rates stay in
-the part-level layer, as do the filter and pitch envelopes and the other targets until
-their per-voice paths land. The carrier and modulator groups also wait, because their
-role filter needs the algorithm and the operator index inside the node.
+the rate to 0..99. The operator LFO rates follow each voice as a frequency ratio in the
+panel's logarithmic domain, so an offset moves the rate musically and an offset of zero
+keeps the stored rate exactly. The phase envelope and the phase LFO hold one state per
+part, so their rates stay in the part-level layer, as do the filter and pitch envelopes
+and the other targets until their per-voice paths land. The carrier and modulator
+groups also wait, because their role filter needs the algorithm and the operator index
+inside the node.
 
 The menu is `off`, `cc 72`, `mod wheel`, `velocity`. The range slider is active for
 the three sources and greyed for `off`. The fixed CC is written on the option, so the

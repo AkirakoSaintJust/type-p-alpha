@@ -435,6 +435,13 @@ int main(int argc, char** argv)
         const int32_t rateHard = p1_macro_velocity_env_rate(state.get(), 0, 1);
         check(rateHard > rateSoft && rateSoft > 0,
               "the macro env rate offset follows each voice");
+        state->macro_t1a = P1_MACRO_TARGET_P1_OP_LFO_RATES;
+        const uint32_t lfoSoft =
+            p1_macro_velocity_lfo_rate_ratio(state.get(), 0, 0);
+        const uint32_t lfoHard =
+            p1_macro_velocity_lfo_rate_ratio(state.get(), 0, 1);
+        check(lfoHard > lfoSoft && lfoSoft > 65536u,
+              "the macro lfo rate ratio follows each voice");
     }
     test_engine_render();
     test_state_isolation();

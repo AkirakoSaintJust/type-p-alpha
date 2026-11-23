@@ -1,17 +1,18 @@
 /* SPDX-License-Identifier: GPL-3.0-only */
 #pragma once
+#include <math.h>
 #include <stdint.h>
 
 #include "macro_target_ids.h"
 
 /* The per-voice part of the macro layer: the velocity source on the all-operator
- * level, feedback, morph and envelope rate groups. The plugin writes the knob, CC,
- * wheel and the non-velocity source offsets at part level, whilst the velocity
- * source needs each voice's own velocity, which only the engine has. The helpers
- * return offsets in the destination's units: a level in 0..99 steps, a raw
- * feedback offset, a morph position in 0..99, and an envelope rate in 0..99. The
- * nodes add the offset before their own key and velocity follow, and each node
- * clamps at its destination range. */
+ * level, feedback, morph, envelope rate and LFO rate groups. The plugin writes the
+ * knob, CC, wheel and the non-velocity source offsets at part level, whilst the
+ * velocity source needs each voice's own velocity, which only the engine has. The
+ * helpers return offsets in the destination's units: a level in 0..99 steps, a raw
+ * feedback offset, a morph position in 0..99, an envelope rate in 0..99 and an LFO
+ * rate ratio in Q16. The nodes add the offset before their own key and velocity
+ * follow, and each node clamps at its destination range. */
 static inline int32_t p1_macro_velocity_offset(const type_p_alpha_state *state,
                                                int32_t wanted,
                                                int32_t velocity,
@@ -95,4 +96,27 @@ static inline int32_t p1_macro_velocity_env_rate(const type_p_alpha_state *state
                                       : P1_MACRO_TARGET_P2_OP_ENV_RATES;
     return p1_macro_velocity_offset(state, wanted, state->voice_velocity[voice],
                                     99);
+}
+
+/* The LFO rate is a Q32 phase increment, and the panel range is logarithmic
+ * above the off stop, so the macro offset is a frequency ratio rather than a raw
+ * delta. The base of the exponent is the panel's 223 Hz top over its 0.01 Hz
+ * floor, the same ratio the parameter range uses. A zero offset returns unity
+ * exactly, which keeps a macro at 0 bit-exact. */
+static inline uint32_t p1_macro_velocity_lfo_rate_ratio(
+    const type_p_alpha_state *state, uint32_t part, uint32_t voice)
+{
+    const int32_t wanted = part == 0u ? P1_MACRO_TARGET_P1_OP_LFO_RATES
+                                      : P1_MACRO_TARGET_P2_OP_LFO_RATES;
+    const int32_t offset =
+        p1_macro_velocity_offset(state, wanted, state->voice_velocity[voice],
+                                 10000);
+    if (offset == 0)
+        return 65536u;
+    const double ratio =
+        pow(20000000.0 / 894.0, (double)offset / 10000.0);
+    const double scaled = ratio * 65536.0;
+    if (scaled >= 4294967295.0)
+        return 4294967295u;
+    return (uint32_t)(scaled + 0.5);
 }

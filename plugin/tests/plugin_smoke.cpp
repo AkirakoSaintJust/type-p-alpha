@@ -153,6 +153,12 @@ int main()
                   !p1::macros::isEnvRateMember(
                       parameterIndex("op1_phase_env_r1.p0")),
               "the engine env rate set takes the per-voice envelopes");
+        check(p1::macros::isLfoRateMember(parameterIndex("op1_trem_rate.p0")) &&
+                  p1::macros::isLfoRateMember(
+                      parameterIndex("op1_spec_lfo_rate.p0")) &&
+                  !p1::macros::isLfoRateMember(
+                      parameterIndex("op1_phase_lfo_rate.p0")),
+              "the engine lfo rate set takes the per-voice LFOs");
     }
     {
         /* A targeted destination reports its stored value at rest and the
@@ -377,6 +383,38 @@ int main()
                                         P1_MACRO_TARGET_P1_OP_ENV_RATES),
                        reference, kFrames),
               "the velocity source moves the env rate target");
+
+        /* The LFO rate is only audible through a depth, so this pair sets the
+         * first operator's tremolo depth. */
+        const auto renderLfo = [&](int velocity, bool targeted,
+                                   int sourceRange = 50) {
+            auto instance = std::make_unique<TypePAlphaAudioProcessor>();
+            instance->setRateAndBufferSizeDetails(48000.0, kFrames);
+            instance->prepareToPlay(48000.0, kFrames);
+            set(*instance, "op1_trem_depth.p0", 50);
+            if (targeted) {
+                set(*instance, "macro1", 0);
+                set(*instance, "macro1_target1",
+                    P1_MACRO_TARGET_P1_OP_LFO_RATES);
+                set(*instance, "macro1_range1", 50);
+                set(*instance, "macro1_midi", 3);
+                set(*instance, "macro1_midi_range", sourceRange);
+            }
+            juce::AudioBuffer<float> out(2, kFrames);
+            juce::MidiBuffer events;
+            events.addEvent(
+                juce::MidiMessage::noteOn(1, 60,
+                                          static_cast<juce::uint8>(velocity)),
+                0);
+            instance->processBlock(out, events);
+            return out;
+        };
+        const auto lfoReferenceHigh = renderLfo(100, false);
+        const auto lfoReferenceLow = renderLfo(1, false);
+        check(sameBuffer(renderLfo(1, true, 0), lfoReferenceLow),
+              "an lfo rate macro at rest leaves the render bit-exact");
+        check(!sameBuffer(renderLfo(100, true), lfoReferenceHigh),
+              "the velocity source moves the lfo rate target");
 
         /* The morph only changes the sound in spectrum mode, so this pair sets
          * the waveform and compares two fresh instances. */

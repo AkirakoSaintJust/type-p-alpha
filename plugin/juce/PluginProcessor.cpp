@@ -562,6 +562,13 @@ void TypePAlphaAudioProcessor::syncMacros()
                          target == P1_MACRO_TARGET_P2_OP_ENV_RATES) &&
                         p1::macros::isEnvRateMember(member.id))
                         continue;
+                    /* The operator LFO rates are per voice in the engine, except
+                     * the phase LFO, which stays part-level. */
+                    if (sources[m] == 3 &&
+                        (target == P1_MACRO_TARGET_P1_OP_LFO_RATES ||
+                         target == P1_MACRO_TARGET_P2_OP_LFO_RATES) &&
+                        p1::macros::isLfoRateMember(member.id))
+                        continue;
                     macroOffsets_[static_cast<std::size_t>(index)] += offset;
                 }
             }
