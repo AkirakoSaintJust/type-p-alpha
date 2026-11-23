@@ -138,6 +138,43 @@ int main()
               p1::macroTargetNormalised(0.1, -0.5) == 0.0,
           "the macro target clamps in the normalised domain");
     {
+        /* A targeted destination reports its stored value at rest and the
+         * effective value while the macro deviates. A parameter outside the
+         * table reports neither. */
+        auto specIndex = [](const char* id) {
+            for (int i = 0; i < kP1ParamCount; ++i)
+                if (std::strcmp(kP1ParamSpecs[static_cast<std::size_t>(i)].id,
+                                id) == 0)
+                    return i;
+            return -1;
+        };
+        auto setParamValue = [&processor](const char* id, float value) {
+            if (auto* parameter = processor.parameters().getParameter(id))
+                parameter->setValueNotifyingHost(
+                    parameter->convertTo0to1(value));
+        };
+        const int cutoff = specIndex("cutoff.p0");
+        const int ratio = specIndex("op1_ratio.p0");
+        const double stored =
+            processor.parameters().getRawParameterValue("cutoff.p0")->load();
+        setParamValue("macro1", 20.0f);
+        setParamValue("macro1_target1", 1.0f);
+        setParamValue("macro1_range1", 50.0f);
+        auto feedback = processor.macroFeedback(cutoff);
+        check(feedback.targeted && feedback.hasEffective &&
+                  feedback.effective > stored,
+              "a targeted parameter reports its effective value");
+        setParamValue("macro1", 0.0f);
+        feedback = processor.macroFeedback(cutoff);
+        check(feedback.targeted && !feedback.hasEffective &&
+                  feedback.effective == stored,
+              "a targeted parameter at rest reports no effective value");
+        check(!processor.macroFeedback(ratio).targeted,
+              "a parameter outside the table is not targeted");
+        setParamValue("macro1_target1", 0.0f);
+        setParamValue("macro1_range1", 0.0f);
+    }
+    {
         auto* rate = processor.parameters().getParameter("pitch_rate.p0");
         const float norm = rate != nullptr
             ? rate->convertTo0to1(447392.0f)

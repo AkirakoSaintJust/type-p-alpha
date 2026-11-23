@@ -2,10 +2,10 @@
 
 Status: the parameter layer, the multi record, the target table, the linear and log
 destination offsets, the relative CC, wheel and velocity sources, the per-voice
-velocity source on the operator levels and the macros page are built. The rest of the
-per-voice layer and the target-parameter feedback are outstanding. The research is in
-[`../docs/research/macros.md`](../docs/research/macros.md), and the parameter list and
-the evidence the milestone needs are in
+velocity source on the operator levels, the macros page and the target-parameter
+feedback are built. The rest of the per-voice layer is outstanding. The research is
+in [`../docs/research/macros.md`](../docs/research/macros.md), and the parameter list
+and the evidence the milestone needs are in
 [`../plugin/feature-contract-macros.md`](../plugin/feature-contract-macros.md).
 
 ## The idea
@@ -150,10 +150,12 @@ the menu rather than an image.
 ## Feedback on the destination
 
 There are no rings. A targeted parameter shows its stored value in the usual pink,
-and the effective value beside it in smaller green type. While a macro has a
-non-zero range on the parameter but sits at 0, the stored value is purple and the
-second value is hidden. The pan slider's value text follows the same rule, and a
-group target marks every member.
+and the effective value beside it in smaller green type. The effective value drops
+the unit and keeps the multiplier prefix, so `900Hz 2.0k` reads as a move from 900 Hz
+to 2.0 kHz and the pair fits the value line. While a macro has a non-zero range on
+the parameter but sits at 0, the stored value is purple and the second value is
+hidden. The pan slider's value text follows the same rule, and a group target marks
+every member.
 
 The macro knob keeps the minimum-origin pink arc, and its value text reads the knob
 value. A dotted green arc runs from the knob value to the effective value, which

@@ -204,6 +204,70 @@ double TypePAlphaAudioProcessor::macroEffectiveValue(int index) const
     return p1::macroEffective(knob, sourceValue, range);
 }
 
+TypePAlphaAudioProcessor::MacroFeedback
+TypePAlphaAudioProcessor::macroFeedback(int index) const
+{
+    MacroFeedback result;
+    if (index < 0 || index >= kP1ParamCount ||
+        index >= static_cast<int>(macroMemberIndex_.size()) ||
+        macroMemberIndex_[static_cast<std::size_t>(index)] < 0)
+        return result;
+    const auto& spec = kP1ParamSpecs[static_cast<std::size_t>(index)];
+    auto* parameter = apvts_.getParameter(spec.id);
+    const auto* stored = apvts_.getRawParameterValue(spec.id);
+    if (parameter == nullptr || stored == nullptr)
+        return result;
+    const int base = static_cast<int>(std::lround(stored->load()));
+    double offset = 0.0;
+    for (int m = 0; m < 6; ++m) {
+        const auto macro = macroEffectiveValue(m);
+        for (int d = 0; d < 3; ++d) {
+            const std::size_t slot = static_cast<std::size_t>(m * 3 + d);
+            const int target = macroTargetValues_[slot] != nullptr
+                ? static_cast<int>(
+                      std::lround(macroTargetValues_[slot]->load()))
+                : 0;
+            const int range = macroRangeValues_[slot] != nullptr
+                ? static_cast<int>(
+                      std::lround(macroRangeValues_[slot]->load()))
+                : 0;
+            if (target <= 0 || target > p1::macros::kTargetCount || range == 0)
+                continue;
+            const int row = target - 1;
+            const int part = p1::macros::kTargetPart[row];
+            const int algorithm =
+                algorithmValues_[static_cast<std::size_t>(part)] != nullptr
+                    ? static_cast<int>(std::lround(
+                          algorithmValues_[static_cast<std::size_t>(part)]
+                              ->load()))
+                    : 0;
+            if (!p1::macroRowIncludes(row, index, algorithm))
+                continue;
+            result.targeted = true;
+            offset += p1::macroOffset(macro, range);
+        }
+    }
+    result.effective = static_cast<double>(base);
+    if (offset != 0.0) {
+        if (spec.logarithmic) {
+            const double baseNorm =
+                parameter->convertTo0to1(static_cast<float>(base));
+            const double effectiveNorm =
+                p1::macroTargetNormalised(baseNorm, offset);
+            result.effective =
+                static_cast<double>(std::lround(parameter->convertFrom0to1(
+                    static_cast<float>(effectiveNorm))));
+        } else {
+            const double span = static_cast<double>(spec.max - spec.min);
+            result.effective = std::round(std::clamp(
+                static_cast<double>(base) + offset * span,
+                static_cast<double>(spec.min), static_cast<double>(spec.max)));
+        }
+    }
+    result.hasEffective = result.effective != static_cast<double>(base);
+    return result;
+}
+
 void TypePAlphaAudioProcessor::readOutputScope(float* destination, int count)
 {
     outputScope_.read(destination, count);

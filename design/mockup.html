@@ -1040,7 +1040,10 @@
         let eff = Math.max(x.min, Math.min(x.max,
           v + info.delta / 100 * span));
         eff = +((Math.round(eff / step) * step).toFixed(6));
-        return { text: String(x.fmt ? x.fmt(eff) : Math.round(eff)) };
+        const shown = String(x.fmt ? x.fmt(eff) : Math.round(eff));
+        /* The stored value carries the unit; the effective value keeps the
+         * multiplier prefix and drops the unit, so the pair fits the value line. */
+        return { text: shown.replace(/(Hz|\sms|ms|\sst|st|\soct|\sc|c|%)$/, "") };
       };
     }
     const el = makeKnob(spec);

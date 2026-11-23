@@ -88,10 +88,22 @@ int main(int argc, char** argv)
     /* A mod wheel and two destination ranges put the dotted source arc on the
      * first card, and leave the empty cards beside it. */
     {
-        auto setMacro = [&](const char* id, float value) {
+        auto setMacro = [&](const juce::String& id, float value) {
             if (auto* parameter = p1editor->state().getParameter(id))
                 parameter->setValueNotifyingHost(
                     parameter->convertTo0to1(value));
+        };
+        auto resetMacros = [&] {
+            for (int i = 0; i < 6; ++i) {
+                const auto n = juce::String(i + 1);
+                setMacro("macro" + n, 0.0f);
+                setMacro("macro" + n + "_midi", 0.0f);
+                setMacro("macro" + n + "_midi_range", 0.0f);
+                for (int d = 1; d <= 3; ++d) {
+                    setMacro("macro" + n + "_target" + juce::String(d), 0.0f);
+                    setMacro("macro" + n + "_range" + juce::String(d), 0.0f);
+                }
+            }
         };
         processor.setMacroName(0, "brightness");
         processor.setMacroName(1, "motion");
@@ -123,12 +135,48 @@ int main(int argc, char** argv)
         fill();
         ok = saveSnapshot(*editor, directory.getChildFile("editor-macros-live.png")) &&
              ok;
+        midi.addEvent(juce::MidiMessage::controllerEvent(1, 1, 0), 0);
+        fill();
         midi.clear();
+        resetMacros();
         fill();
     }
     p1editor->showTab(2);
     fill();
     ok = saveSnapshot(*editor, directory.getChildFile("editor-part-params.png")) && ok;
+    /* Two targeted destinations draw the stored value with the effective value
+     * beside it, and the pan target at rest keeps the stored value purple. */
+    {
+        auto setMacro = [&](const juce::String& id, float value) {
+            if (auto* parameter = p1editor->state().getParameter(id))
+                parameter->setValueNotifyingHost(
+                    parameter->convertTo0to1(value));
+        };
+        setMacro("macro1", 20.0f);
+        setMacro("macro1_target1", 1.0f);
+        setMacro("macro1_range1", 50.0f);
+        setMacro("macro1_target2", 3.0f);
+        setMacro("macro1_range2", -25.0f);
+        setMacro("macro3", 0.0f);
+        setMacro("macro3_target1", 13.0f);
+        setMacro("macro3_range1", 20.0f);
+        setMacro("macro3_target2", 5.0f);
+        setMacro("macro3_range2", 20.0f);
+        fill();
+        ok = saveSnapshot(
+                 *editor,
+                 directory.getChildFile("editor-part-params-macros.png")) &&
+             ok;
+        for (int i = 0; i < 6; ++i) {
+            const auto n = juce::String(i + 1);
+            setMacro("macro" + n, 0.0f);
+            for (int d = 1; d <= 3; ++d) {
+                setMacro("macro" + n + "_target" + juce::String(d), 0.0f);
+                setMacro("macro" + n + "_range" + juce::String(d), 0.0f);
+            }
+        }
+        fill();
+    }
     /* Bipolar loop1 on the pitch and pan cards draws the turn boundaries and
      * the left arrow against a non-zero level. */
     {

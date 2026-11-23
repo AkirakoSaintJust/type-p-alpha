@@ -218,6 +218,21 @@ juce::String formatParamValue(const P1ParamSpec& spec, double value)
     return juce::String(v) + (spec.unit[0] != '\0' ? juce::String(spec.unit) : "");
 }
 
+juce::String formatParamValuePlain(const P1ParamSpec& spec, double value)
+{
+    auto text = formatParamValue(spec, value);
+    /* The prefix stays, so a jump from 900 Hz to 2.0 kHz reads as 2.0k rather
+     * than a bare 2.0. Longest suffix first, and the unit words only follow a
+     * number. */
+    static const char* const units[] = {"Hz", "ms", " oct", "st", "c", "%"};
+    for (const char* unit : units) {
+        const juce::String suffix(unit);
+        if (text.endsWith(suffix) && text.length() > suffix.length())
+            return text.dropLastCharacters(suffix.length()).trimEnd();
+    }
+    return text;
+}
+
 double parseParamValue(const P1ParamSpec& spec, const juce::String& text)
 {
     const auto display = juce::String(spec.display);
@@ -319,12 +334,81 @@ double parseParamValue(const P1ParamSpec& spec, const juce::String& text)
                         static_cast<double>(spec.max), v);
 }
 
+ParamValueLabel::ParamValueLabel()
+    : storedColour_(juce::Colours::white), effectiveColour_(juce::Colours::white)
+{
+}
+
+void ParamValueLabel::setStoredColour(juce::Colour colour)
+{
+    if (storedColour_ == colour)
+        return;
+    storedColour_ = colour;
+    setColour(juce::Label::textColourId, colour);
+    repaint();
+}
+
+void ParamValueLabel::setEffectiveText(const juce::String& text,
+                                       juce::Colour colour)
+{
+    if (effective_ == text && effectiveColour_ == colour)
+        return;
+    effective_ = text;
+    effectiveColour_ = colour;
+    repaint();
+}
+
+void ParamValueLabel::paint(juce::Graphics& g)
+{
+    const auto area = getLocalBounds();
+    const auto font = getFont();
+    const auto stored = getText();
+    if (effective_.isEmpty()) {
+        juce::Label::paint(g);
+        return;
+    }
+    const float storedWidth = textWidth(font, stored);
+    float smallHeight = font.getHeight() * 0.62f;
+    auto small = font.withHeight(smallHeight);
+    float effectiveWidth = textWidth(small, effective_);
+    constexpr float gap = 6.0f;
+    const float available = static_cast<float>(area.getWidth()) - 2.0f;
+    while (storedWidth + gap + effectiveWidth > available && smallHeight > 8.0f) {
+        smallHeight -= 0.5f;
+        small = font.withHeight(smallHeight);
+        effectiveWidth = textWidth(small, effective_);
+    }
+    const float total = storedWidth + gap + effectiveWidth;
+    const float x = static_cast<float>(area.getX()) +
+                    (static_cast<float>(area.getWidth()) - total) * 0.5f;
+    g.setFont(font);
+    g.setColour(storedColour_);
+    g.drawText(stored,
+               juce::Rectangle<float>(x, static_cast<float>(area.getY()),
+                                      storedWidth, static_cast<float>(area.getHeight()))
+                   .toNearestInt(),
+               juce::Justification::centredLeft, false);
+    g.setFont(small);
+    g.setColour(effectiveColour_);
+    g.drawText(effective_,
+               juce::Rectangle<float>(
+                   x + storedWidth + gap, static_cast<float>(area.getY()),
+                   effectiveWidth, static_cast<float>(area.getHeight()))
+                   .toNearestInt(),
+               juce::Justification::centredLeft, false);
+}
+
 ParamKnob::ParamKnob(APVTS& state, juce::String paramID, juce::String label,
                      float dialSize, float labelSize)
     : state_(state), paramID_(std::move(paramID)), dialSize_(dialSize),
       labelSize_(labelSize)
 {
     spec_ = findSpec(paramID_);
+    specIndex_ = spec_ != nullptr
+                     ? static_cast<int>(spec_ - kP1ParamSpecs.data())
+                     : -1;
+    value_.setStoredColour(colour(tokens::pinkBright));
+    value_.setEffectiveText({}, colour(tokens::green));
     slider_.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
     slider_.setTextBoxStyle(juce::Slider::NoTextBox, false, 0, 0);
     slider_.setRotaryParameters(juce::MathConstants<float>::pi * 1.25f,
@@ -417,11 +501,30 @@ void ParamKnob::setParamID(const juce::String& paramID)
 {
     paramID_ = paramID;
     spec_ = findSpec(paramID_);
+    specIndex_ = spec_ != nullptr
+                     ? static_cast<int>(spec_ - kP1ParamSpecs.data())
+                     : -1;
+    macroTargeted_ = false;
+    macroHasEffective_ = false;
+    value_.setStoredColour(colour(tokens::pinkBright));
+    value_.setEffectiveText({}, colour(tokens::green));
     attach_.reset();
     attach_ = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
         state_, paramID_, slider_);
     updateValueText();
     repaint();
+}
+
+void ParamKnob::setMacroFeedback(bool targeted, bool hasEffective,
+                                 double effective)
+{
+    if (macroTargeted_ == targeted && macroHasEffective_ == hasEffective &&
+        (!hasEffective || std::abs(macroEffective_ - effective) < 0.5))
+        return;
+    macroTargeted_ = targeted;
+    macroHasEffective_ = hasEffective;
+    macroEffective_ = effective;
+    refreshValueDisplay();
 }
 
 void ParamKnob::setModArc(double fraction)
@@ -455,6 +558,20 @@ void ParamKnob::updateValueText()
     if (spec_ != nullptr)
         value_.setText(formatParamValue(*spec_, slider_.getValue()),
                        juce::dontSendNotification);
+    refreshValueDisplay();
+}
+
+void ParamKnob::refreshValueDisplay()
+{
+    if (spec_ == nullptr)
+        return;
+    const bool atRest = macroTargeted_ && !macroHasEffective_;
+    value_.setStoredColour(colour(atRest ? tokens::purple : tokens::pinkBright));
+    if (macroHasEffective_)
+        value_.setEffectiveText(formatParamValuePlain(*spec_, macroEffective_),
+                                colour(tokens::green));
+    else
+        value_.setEffectiveText({}, colour(tokens::green));
 }
 
 bool ParamKnob::isRatio() const
@@ -1533,6 +1650,9 @@ P1LevelSlider::P1LevelSlider(APVTS& state, const juce::String& paramID,
       bipolar_(bipolar)
 {
     spec_ = findSpec(paramID_);
+    specIndex_ = spec_ != nullptr
+                     ? static_cast<int>(spec_ - kP1ParamSpecs.data())
+                     : -1;
     if (auto* param = state_.getParameter(paramID_)) {
         attach_ = std::make_unique<juce::ParameterAttachment>(
             *param, [this](float value) {
@@ -1544,6 +1664,18 @@ P1LevelSlider::P1LevelSlider(APVTS& state, const juce::String& paramID,
         attach_->sendInitialUpdate();
     }
     setMouseCursor(juce::MouseCursor::PointingHandCursor);
+}
+
+void P1LevelSlider::setMacroFeedback(bool targeted, bool hasEffective,
+                                     double effective)
+{
+    if (macroTargeted_ == targeted && macroHasEffective_ == hasEffective &&
+        (!hasEffective || std::abs(macroEffective_ - effective) < 0.5))
+        return;
+    macroTargeted_ = targeted;
+    macroHasEffective_ = hasEffective;
+    macroEffective_ = effective;
+    repaint();
 }
 
 void P1LevelSlider::resized()
@@ -1558,10 +1690,40 @@ void P1LevelSlider::paint(juce::Graphics& g)
     g.drawText(caption_, getLocalBounds().removeFromTop(18),
                juce::Justification::centredLeft, false);
     if (spec_ != nullptr) {
-        g.setColour(colour(tokens::pinkBright));
-        g.drawText(formatParamValue(*spec_, value_),
-                   getLocalBounds().removeFromTop(18),
-                   juce::Justification::centredRight, false);
+        const auto area = getLocalBounds().removeFromTop(18);
+        const auto font = uiFont(tokens::textInlineLabel);
+        const bool atRest = macroTargeted_ && !macroHasEffective_;
+        g.setColour(colour(atRest ? tokens::purple : tokens::pinkBright));
+        const auto stored = formatParamValue(*spec_, value_);
+        if (!macroHasEffective_) {
+            g.setFont(font);
+            g.drawText(stored, area, juce::Justification::centredRight, false);
+        } else {
+            const auto small = font.withHeight(font.getHeight() * 0.62f);
+            const auto effective =
+                formatParamValuePlain(*spec_, macroEffective_);
+            const float storedWidth = textWidth(font, stored);
+            const float effectiveWidth = textWidth(small, effective);
+            constexpr float gap = 6.0f;
+            const float x = static_cast<float>(area.getRight()) - storedWidth -
+                            gap - effectiveWidth;
+            g.setFont(font);
+            g.drawText(stored,
+                       juce::Rectangle<float>(
+                           x, static_cast<float>(area.getY()), storedWidth,
+                           static_cast<float>(area.getHeight()))
+                           .toNearestInt(),
+                       juce::Justification::centredLeft, false);
+            g.setFont(small);
+            g.setColour(colour(tokens::green));
+            g.drawText(effective,
+                       juce::Rectangle<float>(
+                           x + storedWidth + gap,
+                           static_cast<float>(area.getY()), effectiveWidth,
+                           static_cast<float>(area.getHeight()))
+                           .toNearestInt(),
+                       juce::Justification::centredLeft, false);
+        }
     }
     g.setColour(colour(tokens::lineStrong));
     g.drawRect(track_, 1);

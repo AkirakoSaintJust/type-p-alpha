@@ -104,12 +104,12 @@ public:
                      const juce::String& confirm = "save");
     void closeDialog();
     void updateVisualizers();
-
 private:
     void buildUi();
     void buildHeader();
     void buildToolbar();
     void buildPage();
+    void refreshMacroFeedback(juce::Component& root);
     void setSpectroMode(bool spectro);
     void fitToHostWindow();
     std::vector<int32_t> currentPartParams(int part);

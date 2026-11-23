@@ -100,6 +100,15 @@ public:
     juce::String getMacroName(int index) const;
     void setMacroName(int index, const juce::String& name);
     double macroEffectiveValue(int index) const;
+    /* What a macro destination does to one parameter right now. The stored value
+     * stays in the parameter; `effective` is the raw value the engine receives,
+     * which differs whenever a macro with a range deviates from its knob. */
+    struct MacroFeedback {
+        bool targeted = false;
+        bool hasEffective = false;
+        double effective = 0.0;
+    };
+    MacroFeedback macroFeedback(int index) const;
     int getUiActivePart() const { return uiActivePart_; }
     void setUiActivePart(int part) { uiActivePart_ = juce::jlimit(0, 1, part); }
     int getUiPage() const { return uiPage_; }

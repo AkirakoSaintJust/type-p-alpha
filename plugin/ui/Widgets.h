@@ -20,6 +20,8 @@ using APVTS = juce::AudioProcessorValueTreeState;
 
 const P1ParamSpec* findSpec(const juce::String& id);
 juce::String formatParamValue(const P1ParamSpec& spec, double value);
+/* The same value without its unit, for the effective value beside a stored one. */
+juce::String formatParamValuePlain(const P1ParamSpec& spec, double value);
 double parseParamValue(const P1ParamSpec& spec, const juce::String& text);
 
 /* The master volume fader position as dB text, and back. The law is in
@@ -27,7 +29,34 @@ double parseParamValue(const P1ParamSpec& spec, const juce::String& text);
 juce::String volumeText(int position);
 int volumePositionFromText(const juce::String& text);
 
-class ParamKnob : public juce::Component {
+/* A control whose parameter can be a macro destination. The editor asks the
+ * processor once per refresh and the control draws the stored value with the
+ * effective value beside it while a macro deviates. */
+class MacroFeedbackTarget {
+public:
+    virtual ~MacroFeedbackTarget() = default;
+    virtual int macroParamIndex() const = 0;
+    virtual void setMacroFeedback(bool targeted, bool hasEffective,
+                                  double effective) = 0;
+};
+
+/* The value line of a knob. A plain value draws in its stored colour. When a
+ * targeted parameter has an effective value, the stored value keeps its unit and
+ * the effective value follows in smaller green type without a unit. */
+class ParamValueLabel : public juce::Label {
+public:
+    ParamValueLabel();
+    void setStoredColour(juce::Colour colour);
+    void setEffectiveText(const juce::String& text, juce::Colour colour);
+    void paint(juce::Graphics& g) override;
+
+private:
+    juce::String effective_;
+    juce::Colour storedColour_;
+    juce::Colour effectiveColour_;
+};
+
+class ParamKnob : public juce::Component, public MacroFeedbackTarget {
 public:
     ParamKnob(APVTS& state, juce::String paramID, juce::String label,
               float dialSize = 42.0f, float labelSize = 0.0f);
@@ -35,6 +64,9 @@ public:
 
     void setParamID(const juce::String& paramID);
     void setModArc(double fraction);
+    int macroParamIndex() const override { return specIndex_; }
+    void setMacroFeedback(bool targeted, bool hasEffective,
+                          double effective) override;
     void resized() override;
     void paint(juce::Graphics& g) override;
 
@@ -66,6 +98,7 @@ private:
     };
 
     void updateValueText();
+    void refreshValueDisplay();
     void commitValue();
     void snapValue();
     bool stepRatio(const juce::KeyPress& key);
@@ -74,14 +107,18 @@ private:
     APVTS& state_;
     juce::String paramID_;
     const P1ParamSpec* spec_ = nullptr;
+    int specIndex_ = -1;
     KnobSlider slider_;
     juce::Label name_;
-    juce::Label value_;
+    ParamValueLabel value_;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> attach_;
     float dialSize_ = 42.0f;
     float labelSize_ = 0.0f;
     bool hasName_ = true;
     bool snapping_ = false;
+    bool macroTargeted_ = false;
+    bool macroHasEffective_ = false;
+    double macroEffective_ = 0.0;
 };
 
 class P1Button : public juce::Button {
@@ -280,7 +317,7 @@ private:
     juce::Colour colour_;
 };
 
-class P1LevelSlider : public juce::Component {
+class P1LevelSlider : public juce::Component, public MacroFeedbackTarget {
 public:
     P1LevelSlider(APVTS& state, const juce::String& paramID,
                   juce::String caption = "level", bool bipolar = false);
@@ -288,6 +325,9 @@ public:
     void paint(juce::Graphics& g) override;
     void mouseDown(const juce::MouseEvent& event) override;
     void mouseDrag(const juce::MouseEvent& event) override;
+    int macroParamIndex() const override { return specIndex_; }
+    void setMacroFeedback(bool targeted, bool hasEffective,
+                          double effective) override;
 
 private:
     void setFromMouse(const juce::MouseEvent& event);
@@ -297,9 +337,13 @@ private:
     juce::String caption_;
     bool bipolar_ = false;
     const P1ParamSpec* spec_ = nullptr;
+    int specIndex_ = -1;
     float value_ = 0.0f;
     juce::Rectangle<int> track_;
     std::unique_ptr<juce::ParameterAttachment> attach_;
+    bool macroTargeted_ = false;
+    bool macroHasEffective_ = false;
+    double macroEffective_ = 0.0;
 };
 
 /* The master output fader. The parameter is the fader position, so the fill is

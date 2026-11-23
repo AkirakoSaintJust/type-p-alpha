@@ -756,8 +756,23 @@ void PluginEditor::updateVisualizers()
         header_->tick();
     if (toolbar_ != nullptr)
         toolbar_->tick();
-    if (page_ != nullptr)
+    if (page_ != nullptr) {
         page_->tick();
+        refreshMacroFeedback(*page_);
+    }
+}
+
+void PluginEditor::refreshMacroFeedback(juce::Component& root)
+{
+    for (auto* child : root.getChildren()) {
+        if (auto* target = dynamic_cast<p1::ui::MacroFeedbackTarget*>(child)) {
+            const auto feedback =
+                processor_.macroFeedback(target->macroParamIndex());
+            target->setMacroFeedback(feedback.targeted, feedback.hasEffective,
+                                     feedback.effective);
+        }
+        refreshMacroFeedback(*child);
+    }
 }
 
 void PluginEditor::buildUi()
