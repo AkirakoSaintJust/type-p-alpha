@@ -76,9 +76,10 @@
   contributes 0, so the patch's stored values are the reference.
 - The six names live in the multi record as fixed 32-byte fields. An empty name
   draws `macro n`, so a patch only stores a name when the player renames it.
-- The panel draws the destination state as the value text colour: pink normally,
-  purple while a macro has a non-zero range on the parameter, green while the newest
-  voice deviates it. The macro knob carries a dotted green arc for the source.
+- The panel draws a targeted parameter as its stored value in pink with the effective
+  value beside it in smaller green type, and as purple while a macro has a non-zero
+  range but sits at 0. The macro knob carries the knob value in its text and a
+  dotted green arc to the effective value.
 
 ## Evidence
 
@@ -100,13 +101,15 @@ The milestone needs:
   record round-trips.
 - The editor snapshots show the macros page with an empty card, a card with three
   targets, the disabled MIDI range, the target menu with its eight section headings,
-  the purple target text and the green deviation text.
+  the purple stored value at rest and the smaller green effective value while a
+  macro deviates.
 
 ## Limits
 
 - **Not built.** Every claim above is the design.
 - **The display follows the newest voice.** A velocity macro differs per voice, and
-  the value text and the dotted green arc can only show one of them.
+  the stored value, the effective value and the dotted green arc can only show one of
+  them.
 - **Pan is patch-level for velocity.** There is one pan per part, so a velocity
   macro on pan would need a note policy. Pan stays out of the follow cards.
 - **The per-voice rate and LFO layer is the largest item**, because the envelope

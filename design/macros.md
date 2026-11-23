@@ -15,7 +15,8 @@ A macro at 0 therefore leaves the patch exactly as stored.
 
 The offset is recomputed from the base every block. A destination that hits an end
 stays there until the macro returns past the point where it hit, and nothing
-accumulates. Two macros on one parameter sum their offsets and clamp once.
+accumulates. The stored value never moves. Two macros on one parameter sum their
+offsets and clamp once.
 
 The six macros belong to the patch rather than to a part. A multi-patch carries its
 macros, and a part saved to the library does not.
@@ -50,7 +51,7 @@ target's own span, so 100 percent at macro 100 moves the whole range, and 50 per
 moves half. The sign sets the direction, and the result is clamped.
 
 A group target moves every member by the same percentage of each member's own span,
-and each member clamps on its own. A group can be empty when the algorithm has no
+and each member clamps on its own, so a group can be empty when the algorithm has no
 carrier or no modulator, and an empty group does nothing.
 
 The carrier and modulator roles come from the algorithm's routing table at runtime,
@@ -58,8 +59,9 @@ so a stored target is a role rather than a frozen operator list, and it follows 
 algorithm change.
 
 A parameter with a log curve, such as an LFO rate, takes the offset in the knob's
-normalised domain, not its raw value. The raw LFO rate spans 0 to 20,000,000, where
-4 Hz is 357,914, so a raw 10 percent offset would be about 22 Hz instead of 4.4 Hz.
+normalised domain rather than its raw value, because the raw LFO rate spans 0 to
+20,000,000, where 4 Hz is 357,914, so a raw 10 percent offset would be about 22 Hz
+instead of 4.4 Hz.
 
 The `velocity depth` group skips a member whose stored amount is 0, so a macro does
 not give a follow target a velocity sensitivity the player never set. A member that
@@ -121,9 +123,10 @@ name.
 
 The card header carries the name and a `rename` that opens the existing dialog. A
 macro name is empty until the player renames it, and an empty name draws `macro n`.
-The left column holds a 62 px dial, the largest in the panel, with the value below,
-then the `midi in` row and three destination rows on the right. A row with `none`
-keeps its slider, greyed, so the card keeps its shape with no targets.
+The left column holds a 92 px dial, the largest in the panel and a new token, with
+the value below, then the `midi in` row and three destination rows on the right. A
+row with `none` keeps its slider, greyed, so the card keeps its shape with no
+targets.
 
 Colours: purple for the destination range sliders, green for the MIDI-in range, and
 0.35 alpha for a disabled range. The MIDI-in and destination sliders are both
@@ -131,14 +134,15 @@ bipolar, with the centre fill the pan slider already uses.
 
 ## Feedback on the destination
 
-There are no rings. A targeted parameter's value text carries the state: pink
-normally, purple while a macro has a non-zero range on it, and green while the
-newest voice deviates it. The pan slider's value text follows the same rule. A
-group target colours every member.
+There are no rings. A targeted parameter shows its stored value in the usual pink,
+and the effective value beside it in smaller green type. While a macro has a
+non-zero range on the parameter but sits at 0, the stored value is purple and the
+second value is hidden. The pan slider's value text follows the same rule, and a
+group target marks every member.
 
-The macro knob keeps the minimum-origin pink arc. It gains a dotted green arc from
-the knob value to the effective value, which shows the source contribution, and the
-value text reads the effective percentage.
+The macro knob keeps the minimum-origin pink arc, and its value text reads the knob
+value. A dotted green arc runs from the knob value to the effective value, which
+shows the source contribution.
 
 ## Follow cards
 

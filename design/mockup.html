@@ -428,12 +428,16 @@
   }
   .mcbody { display: flex; gap: 12px; flex: 1; min-height: 0; }
   .mcleft {
-    width: 86px; flex: 0 0 86px; display: flex; flex-direction: column;
+    width: 120px; flex: 0 0 120px; display: flex; flex-direction: column;
     align-items: center; justify-content: center;
   }
-  .mcleft .knob { width: 86px; }
-  .mcleft .dial, .mcleft .dial svg { width: 62px; height: 62px; }
-  .mcleft .knob-val { font-size: 16px; }
+  .mcleft .knob { width: 120px; }
+  .mcleft .dial, .mcleft .dial svg { width: 92px; height: 92px; }
+  .mcleft .dial .track { stroke-width: 1.4; }
+  .mcleft .dial .arc { stroke-width: 1.4; }
+  .mcleft .dial .ptr { stroke-width: 0.9; }
+  .mcleft .dial .srcarc { stroke-width: 0.9; stroke-dasharray: 1.2 1.8; }
+  .mcleft .knob-val { font-size: 18px; }
   .mcright {
     flex: 1; min-width: 0; display: flex; flex-direction: column;
     justify-content: space-evenly; gap: 4px;
@@ -452,8 +456,9 @@
   .mtrack.green i { background: var(--green); }
   .knob-name:empty { display: none; }
   .dial .srcarc { fill: none; stroke: var(--green); stroke-width: 2; stroke-dasharray: 2 3; }
-  .knob.mod-target .knob-val { color: var(--purple); }
-  .knob.mod-live .knob-val { color: var(--green); }
+  .kv-macro { font-size: .62em; color: var(--green); margin-left: 4px; }
+  .knob.mod-target .kv-main { color: var(--purple); }
+  .knob.mod-live .kv-main { color: var(--pink2); }
 
   /* ---------------- status strip ---------------- */
   .status { display: flex; align-items: center; justify-content: flex-start;
@@ -628,6 +633,12 @@
     name.className = "knob-name"; name.textContent = spec.name;
     const val = document.createElement("div");
     val.className = "knob-val";
+    const main = document.createElement("span");
+    main.className = "kv-main";
+    const macro = document.createElement("span");
+    macro.className = "kv-macro";
+    macro.style.display = "none";
+    val.append(main, macro);
     el.append(dial, name, val);
     el.__spec = spec; el.__dial = dial;
     refreshKnob(el);
@@ -645,7 +656,8 @@
       input.className = "knob-input";
       input.type = "text";
       input.value = String(spec.val);
-      val.textContent = "";
+      el.querySelector(".kv-main").textContent = "";
+      el.querySelector(".kv-macro").style.display = "none";
       val.appendChild(input);
       input.focus();
       input.select();
@@ -663,6 +675,7 @@
             if (spec.onChange) spec.onChange(spec.val);
           }
         }
+        input.remove();
         refreshKnob(el);
       }
       input.addEventListener("keydown", function (ev) {
@@ -713,7 +726,20 @@
     const line = svg.querySelector(".ptr");
     line.setAttribute("x1", q[0].toFixed(2)); line.setAttribute("y1", q[1].toFixed(2));
     line.setAttribute("x2", p[0].toFixed(2)); line.setAttribute("y2", p[1].toFixed(2));
-    el.querySelector(".knob-val").textContent = fmtVal(s);
+    el.querySelector(".kv-main").textContent = fmtVal(s);
+    const macroVal = el.querySelector(".kv-macro");
+    if (s.macroFn) {
+      const info = s.macroFn(s.val);
+      if (info && info.text) {
+        macroVal.textContent = info.text;
+        macroVal.style.display = "inline";
+      } else {
+        macroVal.textContent = "";
+        macroVal.style.display = "none";
+      }
+    } else {
+      macroVal.style.display = "none";
+    }
   }
 
   function makeSelect(options, current, onchange) {
@@ -951,7 +977,7 @@
     { name: "motion", value: -15, midi: "velocity", range: 30, targets: [
       { name: "part 1 op morphs", range: 40 },
       { name: "part 2 filter cutoff", range: -20 },
-      { name: "none", range: 0 }
+      { name: "part 1 filter and pitch env rates", range: -30 }
     ] },
     { name: "", value: 0, midi: "off", range: 0, targets: blankTargets() },
     { name: "", value: 0, midi: "cc 75", range: 0, targets: blankTargets() },
@@ -1003,13 +1029,23 @@
   }
 
   function knobFor(x) {
-    const el = makeKnob({ name: x.name, min: x.min, max: x.max, val: x.get(),
-      fmt: x.fmt, step: x.step, onChange: x.set });
-    if (x.mod) {
-      const info = macroInfoFor(x.mod);
-      if (info.targeted)
-        el.classList.add(Math.abs(info.delta) > 0.01 ? "mod-live" : "mod-target");
+    const info = x.mod ? macroInfoFor(x.mod) : null;
+    const spec = { name: x.name, min: x.min, max: x.max, val: x.get(),
+      fmt: x.fmt, step: x.step, onChange: x.set };
+    if (info && info.targeted) {
+      spec.macroFn = function (v) {
+        if (Math.abs(info.delta) < 0.01) return null;
+        const span = x.max - x.min;
+        const step = x.step != null ? x.step : (span > 30 ? 1 : 0.01);
+        let eff = Math.max(x.min, Math.min(x.max,
+          v + info.delta / 100 * span));
+        eff = +((Math.round(eff / step) * step).toFixed(6));
+        return { text: String(x.fmt ? x.fmt(eff) : Math.round(eff)) };
+      };
     }
+    const el = makeKnob(spec);
+    if (info && info.targeted)
+      el.classList.add(Math.abs(info.delta) > 0.01 ? "mod-live" : "mod-target");
     return el;
   }
 
@@ -2364,8 +2400,10 @@
     const feBox = document.createElement("div");
     feBox.className = "envbox";
     feBox.innerHTML = envSvg(FILTER_ENV.r, FILTER_ENV.l, "ecurve2");
+    const feR1 = ba(FILTER_ENV, "r", 0, "R1", 0, 99, function (v) { return v; }, 1);
+    feR1.mod = "part " + activePart + " filter and pitch env rates";
     wrap.appendChild(makeSection("FILTER ENVELOPE", "fenv", [
-      ba(FILTER_ENV, "r", 0, "R1", 0, 99, function (v) { return v; }, 1),
+      feR1,
       ba(FILTER_ENV, "r", 1, "R2", 0, 99, function (v) { return v; }, 1),
       ba(FILTER_ENV, "r", 2, "R3", 0, 99, function (v) { return v; }, 1),
       ba(FILTER_ENV, "r", 3, "R4", 0, 99, function (v) { return v; }, 1),
@@ -2514,8 +2552,8 @@
     left.appendChild(makeKnob({
       name: "",
       min: -100, max: 100, val: m.value, step: 1,
-      sourceFn: function (v) { m.value = v; return macroEffective(m); },
-      textFn: function () { return bipFmt(Math.round(macroEffective(m))); }
+      fmt: bipFmt,
+      sourceFn: function (v) { m.value = v; return macroEffective(m); }
     }));
     body.appendChild(left);
 
