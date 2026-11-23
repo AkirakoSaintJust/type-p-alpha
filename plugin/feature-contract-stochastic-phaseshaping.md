@@ -430,14 +430,16 @@ The page is one row of four 294 px columns, the same rhythm as `op lfos`:
 | Block | Height | Contents |
 | --- | --- | --- |
 | operator header | 26 | `opN`, copy, paste, mute |
-| composed map | 111 | the plot and the caption line |
-| `phase` card | 159 | `on`, nine knobs in two rows with 4 px between them |
-| `phase lfo` card | 107 | four knobs in one row, with fades |
-| `phase env` card | 210 | graph, three rate/level rows with 2 px between them, mode, `on` |
+| oscillator strip | 60 | `ratio`, `detune`, `level`, `feedback` and the wave select |
+| composed map | 88 | the plot and the caption line |
+| `phase` card | 155 | `on`, nine knobs in two rows with 4 px between them |
+| `phase lfo` card | 102 | four compact knobs in one row, with fades |
+| `phase env` card | 206 | graph, three rate/level rows with 2 px between them, mode, `on` |
 
-The cards are separated by 10 px, the column padding is 8 px, and the measured
-total is 653 px inside the 669 px page budget. If JUCE finds a clip, the map
-loses pixels before the value text does.
+The rows are separated by 8 px, the column padding is 8 px, and the measured
+total is 669 px. The oscillator strip uses the operator copy and paste in the
+header; it has no separate oscillator copy and paste. If JUCE finds a clip, the
+map loses pixels before the value text does.
 
 ### Controls
 

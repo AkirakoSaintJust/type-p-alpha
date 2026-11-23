@@ -402,8 +402,12 @@ select and `bipolar` switch below.
 ### Op phasemap
 
 Four borderless columns, each with the operator name, copy and paste, and the mute
-switch, then a 111 px composed map and three cards with 10 px gaps: `phase`,
-`phase lfo` and `phase env`. The phase LFO card is 107 px. The map draws the composed transfer curve: green forward segments,
+switch, then a 60 px oscillator strip, an 88 px composed map and three cards with
+8 px gaps: `phase`, `phase lfo` and `phase env`. The phase LFO card is 102 px and
+the phase envelope is 206 px. The oscillator strip carries `ratio`, `detune`,
+`level` and `feedback` as 22 px dials with the wave select beside them, and uses
+the operator copy and paste. The map draws the composed transfer curve: green
+forward segments,
 purple flipped ones, locked segments at 35% opacity, a pink dashed vertical at
 each order jump, a faint `F` polyline, the pink breakpoint vertical and a white
 dot at the newest voice's phase. The caption reads `bp 0.500 · π`, the active and
@@ -414,8 +418,8 @@ The `phase` card holds `on` in its header and nine knobs in two rows:
 `breakpoint x`, `segmts`, `flip`, `flip rate` and `reorder` on the first, then
 `reorder rate`, `jump`, `drift` and `drift rate` on the second, with 4 px
 between the rows. The breakpoint knob gets the widest cell. The `phase lfo`
-card puts rate, depth, `rate fade` and `depth fade` in one row, with the wave
-select and `bipolar` below. The `phase env` card is the signed envelope with a 48 px
+card puts rate, depth, `rate fade` and `depth fade` in one compact row of 22 px
+dials, with the wave select and `bipolar` below. The `phase env` card is the signed envelope with a 48 px
 purple graph, `r1..r3`, `l1..l3`, `rel`, `rl`, the mode dropdown and `on`, with
 2 px between the rows. All three cards carry `copy` and `paste` in their
 headers, and the operator header copies and pastes the whole operator.

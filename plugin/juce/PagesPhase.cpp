@@ -324,6 +324,56 @@ private:
     std::array<std::unique_ptr<ParamKnob>, 4> levels_{};
 };
 
+class CompactOscillator : public juce::Component {
+public:
+    CompactOscillator(PluginEditor& editor, int op, int part)
+        : ratio_(editor.state(), params::opRatio(op, part), "ratio", 22.0f),
+          detune_(editor.state(), params::opDetune(op, part), "detune", 22.0f),
+          level_(editor.state(), params::opLevel(op, part), "level", 22.0f),
+          feedback_(editor.state(), params::opFeedback(op, part), "feedback",
+                    22.0f),
+          wave_(editor.state(), params::opWaveform(op, part),
+                params::waveNames())
+    {
+        addAndMakeVisible(ratio_);
+        addAndMakeVisible(detune_);
+        addAndMakeVisible(level_);
+        addAndMakeVisible(feedback_);
+        addAndMakeVisible(wave_);
+    }
+
+    void resized() override
+    {
+        auto area = getLocalBounds().reduced(8, 0);
+        area.removeFromTop(2);
+        auto waveArea = area.removeFromRight(70);
+        area.removeFromRight(6);
+        const int cell = area.getWidth() / 4;
+        ratio_.setBounds(area.removeFromLeft(cell));
+        detune_.setBounds(area.removeFromLeft(cell));
+        level_.setBounds(area.removeFromLeft(cell));
+        feedback_.setBounds(area.removeFromLeft(cell));
+        waveArea.removeFromTop(26);
+        wave_.setBounds(waveArea.removeFromTop(18));
+    }
+
+    void paint(juce::Graphics& g) override
+    {
+        g.fillAll(colour(tokens::panel));
+        g.setColour(colour(tokens::dim));
+        g.setFont(uiFont(tokens::textLegend));
+        g.drawText("wave", getWidth() - 78, 6, 70, 12,
+                   juce::Justification::centred, false);
+    }
+
+private:
+    ParamKnob ratio_;
+    ParamKnob detune_;
+    ParamKnob level_;
+    ParamKnob feedback_;
+    ParamChoice wave_;
+};
+
 class PhaseColumn : public juce::Component {
 public:
     PhaseColumn(PluginEditor& editor, int op, std::function<void(int)> onCopy,
@@ -341,6 +391,7 @@ public:
                       setParam(editor_, params::opMute(op_, part_),
                                muted ? 1 : 0);
                   }),
+          osc_(editor, op, part_),
           map_(editor, op, part_),
           phase_(editor, op, part_),
           lfo_(editor, "phase lfo",
@@ -350,10 +401,11 @@ public:
                params::opPhaseLfo(op, "mode", part_),
                params::opPhaseLfo(op, "rate_fade", part_),
                params::opPhaseLfo(op, "depth_fade", part_), op, part_,
-               PluginEditor::OperatorSection::phaseLfo, {}, false, "bipolar"),
+               PluginEditor::OperatorSection::phaseLfo, {}, true, "bipolar"),
           env_(editor, op, part_)
     {
         addAndMakeVisible(header_);
+        addAndMakeVisible(osc_);
         addAndMakeVisible(map_);
         addAndMakeVisible(phase_);
         addAndMakeVisible(lfo_);
@@ -364,14 +416,15 @@ public:
     {
         auto area = getLocalBounds().reduced(8);
         header_.setBounds(area.removeFromTop(26));
-        area.removeFromTop(10);
-        map_.setBounds(area.removeFromTop(111));
-        area.removeFromTop(10);
-        phase_.setBounds(area.removeFromTop(159));
-        area.removeFromTop(10);
-        lfo_.setBounds(area.removeFromTop(107));
-        area.removeFromTop(10);
-        env_.setBounds(area.removeFromTop(210));
+        osc_.setBounds(area.removeFromTop(60));
+        area.removeFromTop(8);
+        map_.setBounds(area.removeFromTop(88));
+        area.removeFromTop(8);
+        phase_.setBounds(area.removeFromTop(155));
+        area.removeFromTop(8);
+        lfo_.setBounds(area.removeFromTop(102));
+        area.removeFromTop(8);
+        env_.setBounds(area.removeFromTop(206));
     }
 
     void paint(juce::Graphics& g) override
@@ -398,6 +451,7 @@ private:
     int op_ = 0;
     int part_ = 0;
     CardHeader header_;
+    CompactOscillator osc_;
     PhaseMapView map_;
     PhaseCard phase_;
     LfoCard lfo_;

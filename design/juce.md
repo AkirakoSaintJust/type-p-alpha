@@ -130,13 +130,16 @@ Every page fills the same height:
   oscillator stays on the op envs page. Each LFO card carries copy and paste
   in its header, puts rate, depth, `rate fade` and `depth fade` in one row, and
   keeps the wave select and `bipolar` switch below.
-- op phasemap: four 294 px operator columns, each with the header, a 111 px live
-  map, a 159 px `phase` card, a 107 px `phase lfo` card and a 210 px `phase env`
-  card, separated by 10 px gaps. The page total is 653 px inside the 669 px
-  budget. The phase card puts 4 px between its two knob rows and the phase
-  envelope puts 2 px between its rows. The map is a read-only
+- op phasemap: four 294 px operator columns, each with the header, a 60 px
+  oscillator strip, an 88 px live map, a 155 px `phase` card, a 102 px `phase lfo`
+  card and a 206 px `phase env` card, separated by 8 px gaps. The page total is
+  669 px. The oscillator strip carries `ratio`, `detune`, `level` and `feedback`
+  as 22 px dials with the wave select beside them, and uses the operator copy,
+  paste and mute in the header. The phase LFO uses the compact 22 px row. The
+  phase card puts 4 px between its two knob rows and the phase envelope puts
+  2 px between its rows. The map is a read-only
   `P1PhaseMap` fed by the 30 Hz `PhaseMapSnapshot`; it draws the composed segments,
-  the locks, the order jumps, the faint `F`, the breakpoint and the phase dot. The
+  the locks, the order jumps, the faint `F`, the breakpoint and the phase dot.
   When `on` is off, the map draws the neutral parameter geometry and the live
   dot disappears.
   `phase` card has nine knobs in two rows: `breakpoint x`, `segmts`, `flip`, `flip rate` and `reorder`, then `reorder rate`, `jump`, `drift` and `drift rate`. The breakpoint knob gets the widest cell. The LFO card puts rate, depth, `rate
