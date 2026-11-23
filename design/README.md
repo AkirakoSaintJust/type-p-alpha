@@ -348,11 +348,11 @@ the card. The envelope rates and levels each get their own row.
 ### Operator LFOs
 
 Four borderless columns, each with the operator name, copy and paste, the mute
-switch, a scope and spectro pair, then three cards: `amp lfo`, `fb lfo` and
-`detune lfo`. The oscillator stays on the operators page. Each LFO card holds rate, depth,
-`rate fade` and `depth fade` in one row, with the wave select and the `bipolar`
-switch below, and carries `copy` and `paste` in its header. The two-line graph
-between them draws the green rate ramp and the purple depth ramp.
+switch, a 240 px scope and spectro pair, then three 107 px cards with 12 px gaps:
+`amp lfo`, `fb lfo` and `detune lfo`. The oscillator stays on the operators page.
+Each LFO card holds rate, depth, `rate fade` and `depth fade` in one row, with the
+wave select and the `bipolar` switch below, and carries `copy` and `paste` in its
+header.
 The amplitude LFO depth is in level steps, the feedback LFO depth is a percentage
 of the feedback range, and the detune LFO depth is in semitones. A negative depth
 in bipolar mode inverts the LFO phase.
@@ -387,22 +387,22 @@ same operator.
 
 ### Op spectra mod
 
-Four columns, each with the operator name, copy and paste, the mute switch, a 6 px
-gap, the `oscillator` card, a `spectra` display, then the `morph env` and
-`morph lfo` cards. The display draws the stored spectra. Spectrum a is a filled
+Four columns, each with the operator name, copy and paste, the mute switch, 10 px
+gaps, the `oscillator` card, a 130 px `spectra` display, then the `morph env` and
+102 px `morph lfo` cards. The display draws the stored spectra. Spectrum a is a filled
 purple outline and spectrum b is a pink outline, with a marker under them that runs
 from `a` to `b` at the current morph value. The marker and the faint waveform follow
 the live morph of the newest rendering voice. The display does not take a drag. The `morph
 env` card holds the graph, the on switch, R1 to R3, L1 to L3, the release rate and
 level, and the mode dropdown. The `morph lfo`
 card holds rate, depth, `rate fade` and `depth fade` in one row, with the wave
-select and `bipolar` switch below, and the two-line graph between them.
+select and `bipolar` switch below.
 
 ### Op phasemap
 
 Four borderless columns, each with the operator name, copy and paste, and the mute
-switch, then a 99 px composed map and three cards: `phase`, `phase lfo` and
-`phase env`. The map draws the composed transfer curve: green forward segments,
+switch, then a 111 px composed map and three cards with 10 px gaps: `phase`,
+`phase lfo` and `phase env`. The phase LFO card is 107 px. The map draws the composed transfer curve: green forward segments,
 purple flipped ones, locked segments at 35% opacity, a pink dashed vertical at
 each order jump, a faint `F` polyline, the pink breakpoint vertical and a white
 dot at the newest voice's phase. The caption reads `bp 0.500 · π`, the active and
@@ -411,10 +411,11 @@ does not take a drag.
 
 The `phase` card holds `on` in its header and nine knobs in two rows: `distort`,
 `segmts`, `flip`, `fl rate` and `reorder` on the first, then `ro rate`, `jump`,
-`drift` and `dr rate` on the second. The `phase lfo` card puts rate, depth, `rate fade` and
-`depth fade` in one row, with the wave select and `on` below. The `phase env`
-card is the signed envelope with a 48 px purple graph, `r1..r3`, `l1..l3`, `rel`,
-`rl`, the mode dropdown and `on`. All three cards carry `copy` and `paste` in their
+`drift` and `dr rate` on the second, with 4 px between the rows. The `phase lfo`
+card puts rate, depth, `rate fade` and `depth fade` in one row, with the wave
+select and `on` below. The `phase env` card is the signed envelope with a 48 px
+purple graph, `r1..r3`, `l1..l3`, `rel`, `rl`, the mode dropdown and `on`, with
+2 px between the rows. All three cards carry `copy` and `paste` in their
 headers, and the operator header copies and pastes the whole operator.
 
 When `on` is off, the plot shows the neutral parameter geometry rather than the

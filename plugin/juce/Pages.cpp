@@ -7,64 +7,8 @@
 #include <map>
 
 #include "ParamIDs.h"
-#include "math_tables.h"
 
 namespace p1::ui {
-
-void FadeGraph::paint(juce::Graphics& g)
-{
-    auto area = getLocalBounds().toFloat().reduced(1.0f, 2.0f);
-    g.setColour(colour(tokens::lineStrong));
-    g.drawHorizontalLine(static_cast<int>(area.getBottom()), area.getX(),
-                         area.getRight());
-
-    const auto read = [this](const juce::String& id) {
-        if (auto* value = state_.getRawParameterValue(id))
-            return static_cast<int>(std::lround(value->load()));
-        return 0;
-    };
-    const int rate = read(rateID_);
-    const int depth = read(depthID_);
-    const auto ticks = [](int value) {
-        if (value <= 0)
-            return 0;
-        if (value >= 99)
-            return 1;
-        const int32_t coeff = p1_rate_coeff[value];
-        return coeff > 0
-                   ? static_cast<int>((4605.0 * 65536.0) /
-                                      (1000.0 * static_cast<double>(coeff)))
-                   : 1;
-    };
-    const int rateTicks = ticks(rate);
-    const int depthTicks = ticks(depth);
-    if (rateTicks == 0 && depthTicks == 0) {
-        g.setColour(colour(tokens::dim));
-        g.setFont(10.0f);
-        g.drawText("off", getLocalBounds(), juce::Justification::centred, false);
-        return;
-    }
-
-    const int maxTicks = std::max(rateTicks, std::max(depthTicks, 1));
-    const auto draw = [&](int valueTicks, juce::Colour line) {
-        const float x0 = area.getX();
-        const float y0 = area.getBottom();
-        const float y1 = area.getY();
-        const float x1 = valueTicks <= 0
-                             ? area.getRight()
-                             : x0 + area.getWidth() *
-                                        static_cast<float>(valueTicks) /
-                                        static_cast<float>(maxTicks);
-        g.setColour(line);
-        if (valueTicks <= 0)
-            g.drawLine(x0, y1, x1, y1, 1.5f);
-        else
-            g.drawLine(x0, y0, x1, y1, 1.5f);
-        g.fillEllipse(x1 - 2.0f, y1 - 2.0f, 4.0f, 4.0f);
-    };
-    draw(rateTicks, colour(tokens::green));
-    draw(depthTicks, colour(tokens::purple));
-}
 
 namespace {
 

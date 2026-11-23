@@ -116,7 +116,8 @@ Every page fills the same height:
   row. The two follow cards are separate, and each has its own on switch and wipe
   button. The pitch LFO carries its `bipolar` switch beside the wave select.
 - operator envs: four columns with oscillator, a 214 px `amp env` and a 222 px
-  `fb env`. The amplitude envelope puts `warmup`, surge, decay1 and decay2 on the
+  `fb env`, separated by 6 px gaps. The envelope cards put 2 px between their
+  graph, rate and level rows. The amplitude envelope puts `warmup`, surge, decay1 and decay2 on the
   first row, the two decay levels and the release rate on the second, and the mode
   dropdown below. The feedback envelope uses R1 to R4 and L1 to L4, with signed
   levels, a mode dropdown and an on switch in the card header. The signed sum of
@@ -124,14 +125,16 @@ Every page fills the same height:
   negative level can cross zero from any knob setting. The two envelope cards
   carry copy and paste in their headers, and their graphs mark the sustain and loop
   boundaries with a pink vertical line.
-- operator lfos: four operator columns, a 180 px scope and spectro pair, then the
-  145 px `amp lfo`, `fb lfo` and `detune lfo` cards. The oscillator stays on the
-  operator envs page. Each LFO card carries copy and paste in its header, puts
-  rate, depth, `rate fade` and `depth fade` in one row, and keeps the wave select
-  and `bipolar` switch below the shared two-line graph.
-- op phasemap: four 294 px operator columns, each with the header, a 99 px live
-  map, a 159 px `phase` card, a 147 px `phase lfo` card and a 210 px `phase env`
-  card. The page total is 653 px inside the 669 px budget. The map is a read-only
+- operator lfos: four operator columns, a 240 px scope and spectro pair, then the
+  107 px `amp lfo`, `fb lfo` and `detune lfo` cards with 12 px gaps. The
+  oscillator stays on the operator envs page. Each LFO card carries copy and paste
+  in its header, puts rate, depth, `rate fade` and `depth fade` in one row, and
+  keeps the wave select and `bipolar` switch below.
+- op phasemap: four 294 px operator columns, each with the header, a 111 px live
+  map, a 159 px `phase` card, a 107 px `phase lfo` card and a 210 px `phase env`
+  card, separated by 10 px gaps. The page total is 653 px inside the 669 px
+  budget. The phase card puts 4 px between its two knob rows and the phase
+  envelope puts 2 px between its rows. The map is a read-only
   `P1PhaseMap` fed by the 30 Hz `PhaseMapSnapshot`; it draws the composed segments,
   the locks, the order jumps, the faint `F`, the breakpoint and the phase dot. The
   When `on` is off, the map draws the neutral parameter geometry and the live
@@ -147,16 +150,16 @@ Every page fills the same height:
   beside the formant lever. The four cards fit under the strip without a scroll.
 - op spectra b: the same page for spectrum b, with `to a` in place of `to b`. Each
   card carries its own range, its own 64 levels and its own template button.
-- op spectra mod: four operator columns with a 6 px gap under the operator header,
-  the oscillator card, a `spectra` display, the `morph env` card and the
-  `morph lfo` card. The display draws the stored a and b. The marker and the faint
+- op spectra mod: four operator columns with 10 px gaps under the operator header,
+  the oscillator card, a 130 px `spectra` display, the `morph env` card and the
+  102 px `morph lfo` card. The display draws the stored a and b. The marker and the faint
   waveform follow the live morph of the newest rendering voice, so they advance
   with the envelope and the LFO while a note sounds. The display takes no drag.
   When a and b use different ranges, the display zooms out to the union of the two
   spans. The envelope card carries the graph, the on switch, R1 to R3, L1 to L3,
   the release rate and level, and the mode dropdown. The morph LFO card puts rate,
   depth, `rate fade` and `depth fade` in one row of 22 px dials, with the wave
-  select and `bipolar` switch below and the graph between them.
+  select and `bipolar` switch below.
 
 The current layout has eight tabs: patch settings at 0, part fx/mod at 1, operator
 envs at 2, operator lfos at 3, op phasemap at 4, op spectra a at 5, op spectra b

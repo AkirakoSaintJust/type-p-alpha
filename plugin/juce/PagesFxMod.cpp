@@ -135,9 +135,7 @@ public:
           depthFade_(editor.state(), params::pitchDepthFade(part_), "depth fade",
                      36.0f),
           wave_(editor.state(), params::pitchWave(part_), params::lfoWaveNames()),
-          mode_(editor.state(), params::pitchMode(part_), "bipolar"),
-          fadeGraph_(editor.state(), params::pitchRateFade(part_),
-                     params::pitchDepthFade(part_))
+          mode_(editor.state(), params::pitchMode(part_), "bipolar")
     {
         addAndMakeVisible(waveView_);
         addAndMakeVisible(rate_);
@@ -146,23 +144,20 @@ public:
         addAndMakeVisible(depthFade_);
         addAndMakeVisible(wave_);
         addAndMakeVisible(mode_);
-        addAndMakeVisible(fadeGraph_);
-        rateFade_.onUserEdit = [this] { fadeGraph_.repaint(); };
-        depthFade_.onUserEdit = [this] { fadeGraph_.repaint(); };
     }
 
     void resized() override
     {
         auto area = contentArea();
-        waveView_.setBounds(area.removeFromTop(54));
-        area.removeFromTop(4);
-        auto row = area.removeFromTop(74);
+        waveView_.setBounds(area.removeFromTop(88));
+        area.removeFromTop(10);
+        auto row = area.removeFromTop(84);
         rate_.setBounds(row.removeFromLeft(row.getWidth() / 2));
         depth_.setBounds(row);
-        auto fadeRow = area.removeFromTop(71);
+        auto fadeRow = area.removeFromTop(80);
         rateFade_.setBounds(fadeRow.removeFromLeft(fadeRow.getWidth() / 2));
         depthFade_.setBounds(fadeRow);
-        fadeGraph_.setBounds(area.removeFromTop(20).reduced(2, 2));
+        area.removeFromTop(10);
         auto bottom = area.removeFromTop(18).withTrimmedTop(2);
         wave_.setBounds(bottom.removeFromLeft(150));
         mode_.setBounds(bottom.removeFromLeft(110));
@@ -179,7 +174,6 @@ private:
     ParamKnob depthFade_;
     ParamChoice wave_;
     P1Toggle mode_;
-    FadeGraph fadeGraph_;
 };
 
 class PitchEnvelopeCard : public P1Card {

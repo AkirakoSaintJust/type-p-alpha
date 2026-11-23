@@ -850,14 +850,14 @@ public:
     {
         auto area = getLocalBounds().reduced(8);
         header_.setBounds(area.removeFromTop(24));
-        area.removeFromTop(2);
+        area.removeFromTop(10);
         osc_.setBounds(area.removeFromTop(120));
-        area.removeFromTop(4);
-        display_.setBounds(area.removeFromTop(100));
-        area.removeFromTop(4);
+        area.removeFromTop(10);
+        display_.setBounds(area.removeFromTop(130));
+        area.removeFromTop(10);
         env_.setBounds(area.removeFromTop(220));
-        area.removeFromTop(4);
-        lfo_.setBounds(area.removeFromTop(175));
+        area.removeFromTop(10);
+        lfo_.setBounds(area.removeFromTop(102));
     }
 
     void paint(juce::Graphics& g) override

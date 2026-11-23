@@ -208,6 +208,8 @@ public:
         auto area = contentArea();
         area.removeFromTop(3);
         for (int row = 0; row < 2; ++row) {
+            if (row == 1)
+                area.removeFromTop(4);
             auto line = area.removeFromTop(63);
             const int count = row == 0 ? 5 : 4;
             const int cell = line.getWidth() / count;
@@ -293,10 +295,12 @@ public:
         const int rateCell = rates.getWidth() / 4;
         for (auto& knob : rates_)
             knob->setBounds(rates.removeFromLeft(rateCell));
+        area.removeFromTop(2);
         auto levels = area.removeFromTop(54);
         const int levelCell = levels.getWidth() / 4;
         for (auto& knob : levels_)
             knob->setBounds(levels.removeFromLeft(levelCell));
+        area.removeFromTop(2);
         auto modeRow = area.removeFromTop(22);
         mode_.setBounds(modeRow.removeFromLeft(levelCell * 2));
         on_.setBounds(headerTrailingBounds());
@@ -352,13 +356,13 @@ public:
     {
         auto area = getLocalBounds().reduced(8);
         header_.setBounds(area.removeFromTop(26));
-        area.removeFromTop(3);
-        map_.setBounds(area.removeFromTop(99));
-        area.removeFromTop(3);
+        area.removeFromTop(10);
+        map_.setBounds(area.removeFromTop(111));
+        area.removeFromTop(10);
         phase_.setBounds(area.removeFromTop(159));
-        area.removeFromTop(3);
-        lfo_.setBounds(area.removeFromTop(147));
-        area.removeFromTop(3);
+        area.removeFromTop(10);
+        lfo_.setBounds(area.removeFromTop(107));
+        area.removeFromTop(10);
         env_.setBounds(area.removeFromTop(210));
     }
 

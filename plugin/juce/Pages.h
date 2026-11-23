@@ -234,11 +234,13 @@ public:
         auto area = contentArea();
         area.removeFromTop(4);
         envView_.setBounds(area.removeFromTop(32));
+        area.removeFromTop(2);
         auto rates = area.removeFromTop(64);
         const int rateCell = rates.getWidth() / 4;
         for (int i = 0; i < 4; ++i)
             knobs_[static_cast<std::size_t>(i)]->setBounds(
                 rates.removeFromLeft(rateCell));
+        area.removeFromTop(2);
         auto levels = area.removeFromTop(64);
         const int levelCell = levels.getWidth() / 3;
         for (int i = 4; i < 7; ++i)
@@ -316,10 +318,12 @@ public:
         auto area = contentArea();
         area.removeFromTop(8);
         envView_.setBounds(area.removeFromTop(32));
+        area.removeFromTop(2);
         auto rates = area.removeFromTop(56);
         const int rateCell = rates.getWidth() / 4;
         for (auto& knob : rates_)
             knob->setBounds(rates.removeFromLeft(rateCell));
+        area.removeFromTop(2);
         auto levels = area.removeFromTop(56);
         const int levelCell = levels.getWidth() / 4;
         for (auto& knob : levels_)
@@ -337,23 +341,6 @@ private:
     ParamChoice mode_;
     std::array<std::unique_ptr<ParamKnob>, 4> rates_{};
     std::array<std::unique_ptr<ParamKnob>, 4> levels_{};
-};
-
-class FadeGraph : public juce::Component {
-public:
-    FadeGraph(APVTS& state, juce::String rateID, juce::String depthID)
-        : state_(state),
-          rateID_(std::move(rateID)),
-          depthID_(std::move(depthID))
-    {
-    }
-
-    void paint(juce::Graphics& g) override;
-
-private:
-    APVTS& state_;
-    juce::String rateID_;
-    juce::String depthID_;
 };
 
 class LfoCard : public P1Card {
@@ -378,10 +365,7 @@ public:
           depthFade_(editor.state(), depthFadeID, "depth fade",
                      compact ? 22.0f : 28.0f),
           wave_(editor.state(), std::move(waveID), params::lfoWaveNames()),
-          mode_(editor.state(), std::move(modeID), std::move(modeLabel)),
-          fadeGraph_(editor.state(), std::move(rateFadeID),
-                     std::move(depthFadeID)),
-          compact_(compact)
+          mode_(editor.state(), std::move(modeID), std::move(modeLabel))
     {
         addAndMakeVisible(rate_);
         addAndMakeVisible(depth_);
@@ -389,10 +373,7 @@ public:
         addAndMakeVisible(depthFade_);
         addAndMakeVisible(wave_);
         addAndMakeVisible(mode_);
-        addAndMakeVisible(fadeGraph_);
         depth_.onUserEditEnd = std::move(onDepthEdit);
-        rateFade_.onUserEdit = [this] { fadeGraph_.repaint(); };
-        depthFade_.onUserEdit = [this] { fadeGraph_.repaint(); };
     }
 
     void resized() override
@@ -410,7 +391,6 @@ public:
         wave_.setBounds(bottom.removeFromLeft(140));
         bottom.removeFromLeft(10);
         mode_.setBounds(bottom.removeFromLeft(110));
-        fadeGraph_.setBounds(area.reduced(2, 2));
     }
 
 private:
@@ -420,7 +400,6 @@ private:
     ParamKnob depthFade_;
     ParamChoice wave_;
     P1Toggle mode_;
-    FadeGraph fadeGraph_;
     bool compact_ = false;
 };
 

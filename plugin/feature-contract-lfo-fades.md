@@ -56,10 +56,9 @@ Two parameters per instance is 68 new parameters.
 | `pitch_depth_fade` | `plfo.depth_fade` | 0..99 | 0 | `fade` |
 
 The `fade` display shows `off` at 0 and the rate value at 1 to 99. The number
-rises with the dial, so 1 is the slowest and 99 is instant. The graph carries
-the time; the rate table's 99 percent times are about 33.5 s at 1, 2.1 s at 50,
-53 ms at 90 and 8 ms at 98. The value sits under each knob, so the two fades
-read together.
+rises with the dial, so 1 is the slowest and 99 is instant. The rate table's 99
+percent times are about 33.5 s at 1, 2.1 s at 50, 53 ms at 90 and 8 ms at 98.
+The value sits under each knob, so the two fades read together.
 
 ## Fade law
 
@@ -96,15 +95,13 @@ are off, the phase keeps its free run and the render stays bit-exact.
 
 Both knobs use the same time table. Setting them to the same value ends both
 fades on the same tick; setting different values puts the shorter fade first and
-leaves the separation in the difference. The LFO card carries a two-line fade
-graph on the shared scale, green for the rate and purple for the depth, with a
-dot at each end point. The time readout sits under each knob, so the two times
-and the graph show where the attacks line up and where they separate.
+leaves the separation in the difference. The two values sit under their knobs,
+so the player reads the two times directly.
 
-The operator cards use the full 20 px graph. The spectral morph card keeps its
-175 px height because its column is full. It uses the compact row: rate, depth,
-`rate fade` and `depth fade` as four 22 px dials, the wave select and `bipolar`
-below, and the two-line graph between them. The values and graph read in full.
+The operator cards keep the four knobs in one row with the wave select and
+`bipolar` below. The spectral morph card uses the compact row: rate, depth,
+`rate fade` and `depth fade` as four 22 px dials, with the wave select and
+`bipolar` below.
 
 ## Persistence
 
@@ -141,12 +138,12 @@ below, and the two-line graph between them. The values and graph read in full.
 ## Editor
 
 - `LfoCard` and `PitchLfoCard` gain a row with the two knobs, labelled `rate
-  fade` and `depth fade`, and a two-line fade graph under them.
-- The operator LFO cards are 145 px, with rate, depth, `rate fade` and
-  `depth fade` as four knobs in one row, the wave select and `bipolar` below,
-  and the two-line graph between them. The pitch LFO card keeps its own 36 px
-  layout.
-- The spectral morph LFO card uses the compact 175 px row described above.
+  fade` and `depth fade`.
+- The operator LFO cards are 107 px, with rate, depth, `rate fade` and
+  `depth fade` as four knobs in one row, and the wave select and `bipolar`
+  below. The 12 px gaps and the 240 px scope and spectro carry the breathing
+  space. The pitch LFO card keeps its own 36 px layout and its wave view.
+- The spectral morph LFO card uses the compact 102 px row described above.
 - The knobs show `off` at 0 and the rate at 1 to 99; 99 is instant.
 - The section copy and paste lists include both fade parameters for the
   amplitude, feedback, detune and spectral LFOs.
@@ -173,9 +170,9 @@ below, and the two-line graph between them. The values and graph read in full.
 - **Copy and paste:** `editor_snapshot` writes a value into each source LFO
   section and checks every destination parameter, including both fades.
 - **UI:** `editor-operator-lfos.png` shows the three cards and their fade rows,
-  `editor-operator-lfos-fades.png` shows two different fade times and the
-  two-line graph, and `editor-op-spectra-mod.png` shows the compact row. The
-  snapshot diff is exact.
+  `editor-operator-lfos-fades.png` shows two different fade times in the value
+  text, and `editor-op-spectra-mod.png` shows the compact row. The snapshot diff
+  is exact.
 
 ## Evidence
 
@@ -215,8 +212,8 @@ off.
   table does.
 - The fade is per note. A held legato note that retriggers the trigger restarts
   the fade; a note without a new trigger does not.
-- The graph draws the shared shape and the end points. The numeric times are
-  under the knobs rather than on a graph axis.
+- The time is carried by the value under each knob. The shared table decides the
+  order; the numbers carry the separation.
 
 ## Risks and fallback
 
@@ -225,8 +222,8 @@ off.
   the UI.
 - **Parameter map:** the inserted pairs shift an existing index. Fix the map
   before the golden pass, not the test. `preset_smoke` covers the old records.
-- **Card density:** the operator cards are 192 px and the spectral card uses the
-  compact row. If a card still clips, take the height from the empty tail of the
-  neighbour card rather than shrinking the value text.
+- **Card density:** the operator cards are 107 px and the spectral card uses the
+  compact 102 px row. If a card still clips, take the height from the empty tail
+  of the neighbour card rather than shrinking the value text.
 - **Rollback:** remove the two parameters and the trigger input, and restore the
   current `lfo` node; the presets load with the fades off either way.

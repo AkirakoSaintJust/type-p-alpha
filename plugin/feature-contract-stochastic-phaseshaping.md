@@ -430,12 +430,12 @@ The page is one row of four 294 px columns, the same rhythm as `operator lfos`:
 | Block | Height | Contents |
 | --- | --- | --- |
 | operator header | 26 | `opN`, copy, paste, mute |
-| composed map | 99 | the plot and the caption line |
-| `phase` card | 159 | `on`, nine knobs in two rows |
-| `phase lfo` card | 147 | four knobs in one row, with fades and the graph |
-| `phase env` card | 210 | graph, three rate/level rows, mode, `on` |
+| composed map | 111 | the plot and the caption line |
+| `phase` card | 159 | `on`, nine knobs in two rows with 4 px between them |
+| `phase lfo` card | 107 | four knobs in one row, with fades |
+| `phase env` card | 210 | graph, three rate/level rows with 2 px between them, mode, `on` |
 
-The cards are separated by 6 px, the column padding is 8 px, and the measured
+The cards are separated by 10 px, the column padding is 8 px, and the measured
 total is 653 px inside the 669 px page budget. If JUCE finds a clip, the map
 loses pixels before the value text does.
 
@@ -452,9 +452,8 @@ old presets continue to resolve.
 
 The `on` switch is in the card header. The `phase lfo` card puts rate, depth,
 `rate fade` and `depth fade` in one row of 28 px dials, with the wave select and
-`on` below and the two-line fade graph between them. The `phase env` card uses a
-48 px purple graph, `r1..r3`, `l1..l3`, `rel`/`rl`/`mode` in compact rows, and
-`on` in the header. The mode is a dropdown with `sustain off`, `sustain on`,
+`on` below. The `phase env` card uses a 48 px purple graph, `r1..r3`, `l1..l3`,
+`rel`/`rl`/`mode` in compact rows, and `on` in the header. The mode is a dropdown with `sustain off`, `sustain on`,
 `loop 1` and `loop 2`.
 
 ### Map display
