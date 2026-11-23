@@ -190,12 +190,12 @@ public:
             "bp", "segments", "flip", "flip_rate", "reorder",
             "reorder_rate", "jump", "drift", "drift_rate"};
         static constexpr const char* labels[9] = {
-            "breakpoint x", "segmts", "flip", "flip rate", "reorder",
-            "reorder rate", "jump", "drift", "drift rate"};
+            "breakpoint x", "segments", "flip", "flip rate", "reorder",
+            "reorder rate", "reorder jump", "drift", "drift rate"};
         for (std::size_t i = 0; i < knobs_.size(); ++i) {
             knobs_[i] = std::make_unique<ParamKnob>(
                 editor.state(), params::opPhase(op, fields[i], part), labels[i],
-                28.0f);
+                28.0f, 10.0f);
             addAndMakeVisible(*knobs_[i]);
         }
         addAndMakeVisible(on_);
@@ -211,20 +211,12 @@ public:
             if (row == 1)
                 area.removeFromTop(4);
             auto line = area.removeFromTop(63);
-            if (row == 0) {
-                /* The breakpoint label needs the widest cell; the other four
-                 * first-row labels are short. */
-                const int wide = 70;
-                const int cell = (line.getWidth() - wide) / 4;
-                knobs_[0]->setBounds(line.removeFromLeft(wide));
-                for (int col = 1; col < 5; ++col)
-                    knobs_[static_cast<std::size_t>(col)]->setBounds(
-                        line.removeFromLeft(cell));
-            } else {
-                const int cell = line.getWidth() / 4;
-                for (int col = 0; col < 4; ++col)
-                    knobs_[static_cast<std::size_t>(5 + col)]->setBounds(
-                        line.removeFromLeft(cell));
+            const int count = row == 0 ? 4 : 5;
+            const int cell = line.getWidth() / count;
+            for (int col = 0; col < count; ++col) {
+                const int index = row == 0 ? col : 4 + col;
+                knobs_[static_cast<std::size_t>(index)]->setBounds(
+                    line.removeFromLeft(cell));
             }
         }
         on_.setBounds(headerTrailingBounds());
@@ -277,7 +269,8 @@ public:
             addAndMakeVisible(*rates_[static_cast<std::size_t>(i)]);
         }
         rates_[3] = std::make_unique<ParamKnob>(
-            editor.state(), params::opPhaseEnv(op, "relr", part), "rel", 18.0f);
+            editor.state(), params::opPhaseEnv(op, "relr", part), "rel rate",
+            18.0f);
         addAndMakeVisible(*rates_[3]);
         for (int i = 0; i < 3; ++i) {
             levels_[static_cast<std::size_t>(i)] = std::make_unique<ParamKnob>(
@@ -415,6 +408,7 @@ public:
     void resized() override
     {
         auto area = getLocalBounds().reduced(8);
+        area.setBottom(area.getBottom() + 4);
         header_.setBounds(area.removeFromTop(26));
         osc_.setBounds(area.removeFromTop(60));
         area.removeFromTop(8);
@@ -422,7 +416,7 @@ public:
         area.removeFromTop(8);
         phase_.setBounds(area.removeFromTop(155));
         area.removeFromTop(8);
-        lfo_.setBounds(area.removeFromTop(102));
+        lfo_.setBounds(area.removeFromTop(106));
         area.removeFromTop(8);
         env_.setBounds(area.removeFromTop(206));
     }
@@ -435,7 +429,7 @@ public:
         g.setFont(displayFont(tokens::textOperatorName));
         g.setColour(colour(isCarrier(algorithm, op_) ? tokens::pink
                                                       : tokens::white));
-        g.drawText("op" + juce::String(op_ + 1), 8, 8, 64, 20,
+        g.drawText("op" + juce::String(op_ + 1), 8, 11, 64, 20,
                    juce::Justification::centredLeft, false);
     }
 

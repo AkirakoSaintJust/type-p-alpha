@@ -63,7 +63,7 @@ public:
         area.removeFromTop(6);
         osc_.setBounds(area.removeFromTop(140));
         area.removeFromTop(6);
-        amp_.setBounds(area.removeFromTop(214));
+        amp_.setBounds(area.removeFromTop(222));
         area.removeFromTop(6);
         fb_.setBounds(area.removeFromTop(222));
     }
@@ -75,7 +75,7 @@ public:
             std::lround(getParam(editor_, params::algorithm(part_))));
         g.setFont(displayFont(tokens::textOperatorName));
         g.setColour(colour(isCarrier(algorithm, op_) ? tokens::pink : tokens::white));
-        g.drawText("op" + juce::String(op_ + 1), 8, 8, 64, 20,
+        g.drawText("op" + juce::String(op_ + 1), 8, 10, 64, 20,
                    juce::Justification::centredLeft, false);
     }
 
@@ -161,11 +161,11 @@ public:
         visual.removeFromLeft(6);
         spectro_.setBounds(visual);
         area.removeFromTop(12);
-        ampLfo_.setBounds(area.removeFromTop(107));
+        ampLfo_.setBounds(area.removeFromTop(113));
         area.removeFromTop(12);
-        feedbackLfo_.setBounds(area.removeFromTop(107));
+        feedbackLfo_.setBounds(area.removeFromTop(113));
         area.removeFromTop(12);
-        detuneLfo_.setBounds(area.removeFromTop(107));
+        detuneLfo_.setBounds(area.removeFromTop(113));
     }
 
     void paint(juce::Graphics& g) override
@@ -175,7 +175,7 @@ public:
             std::lround(getParam(editor_, params::algorithm(part_))));
         g.setFont(displayFont(tokens::textOperatorName));
         g.setColour(colour(isCarrier(algorithm, op_) ? tokens::pink : tokens::white));
-        g.drawText("op" + juce::String(op_ + 1), 8, 8, 64, 20,
+        g.drawText("op" + juce::String(op_ + 1), 8, 10, 64, 20,
                    juce::Justification::centredLeft, false);
     }
 

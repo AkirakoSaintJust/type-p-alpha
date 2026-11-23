@@ -295,8 +295,9 @@ double parseParamValue(const P1ParamSpec& spec, const juce::String& text)
 }
 
 ParamKnob::ParamKnob(APVTS& state, juce::String paramID, juce::String label,
-                     float dialSize)
-    : state_(state), paramID_(std::move(paramID)), dialSize_(dialSize)
+                     float dialSize, float labelSize)
+    : state_(state), paramID_(std::move(paramID)), dialSize_(dialSize),
+      labelSize_(labelSize)
 {
     spec_ = findSpec(paramID_);
     slider_.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
@@ -328,7 +329,7 @@ ParamKnob::ParamKnob(APVTS& state, juce::String paramID, juce::String label,
     addAndMakeVisible(slider_);
 
     name_.setText(label, juce::dontSendNotification);
-    name_.setFont(uiFont(tokens::textKnobName));
+    name_.setFont(uiFont(labelSize_ > 0.0f ? labelSize_ : tokens::textKnobName));
     name_.setColour(juce::Label::textColourId, colour(tokens::dim));
     name_.setJustificationType(juce::Justification::centred);
     name_.setInterceptsMouseClicks(false, false);

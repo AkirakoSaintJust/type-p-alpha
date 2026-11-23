@@ -299,7 +299,7 @@ sit next to the mode buttons with a 32px gap rather than at the card edge.
 
 ### Part fx/mod
 
-One page, a four by two grid that fills the window. Filter 1, the filter envelope,
+One page, a four by two grid that fills the window. `filter`, the filter envelope,
 the pitch LFO and the pitch envelope fill the first row. Pan envelope, key follow
 and velocity follow fill the second row, and the last cell stays empty. The filter
 card has cutoff, resonance and env amount, whilst key and velocity tracking sit in
@@ -331,7 +331,7 @@ and spectro pair, and three cards: `oscillator`, `amp env`, `fb env`. The
 oscillator card holds ratio, detune, level, feedback and the wave select. The wave
 select lists sine, triangle, half sine, half tri, 2x sine, 2x tri, 2x half sine,
 2x half tri, rect sine, rect tri, pulse, square, saw and spectrum. The `amp
-env` card holds the `warmup`, surge, decay1 and decay2 rates on the first row, then
+env` card holds the `atk warmup`, `atk surge`, decay1 and decay2 rates on the first row, then
 the two decay levels and the release rate on the second, with the mode dropdown
 below. The `fb env` card holds R1 to R3 and the release rate on the first row, then
 L1 to L3 and the release level on the second, with signed levels in feedback units,
@@ -349,7 +349,7 @@ the card. The envelope rates and levels each get their own row.
 ### Operator LFOs
 
 Four borderless columns, each with the operator name, copy and paste, the mute
-switch, a 240 px scope and spectro pair, then three 107 px cards with 12 px gaps:
+switch, a 240 px scope and spectro pair, then three 113 px cards with 12 px gaps:
 `amp lfo`, `fb lfo` and `detune lfo`. The oscillator stays on the operators page.
 Each LFO card holds rate, depth, `rate fade` and `depth fade` in one row, with the
 wave select and the `bipolar` switch below, and carries `copy` and `paste` in its
@@ -390,7 +390,7 @@ same operator.
 
 Four columns, each with the operator name, copy and paste, the mute switch, 10 px
 gaps, the `oscillator` card, a 130 px `spectra` display, then the `morph env` and
-102 px `morph lfo` cards. The display draws the stored spectra. Spectrum a is a filled
+106 px `morph lfo` cards. The display draws the stored spectra. Spectrum a is a filled
 purple outline and spectrum b is a pink outline, with a marker under them that runs
 from `a` to `b` at the current morph value. The marker and the faint waveform follow
 the live morph of the newest rendering voice. The display does not take a drag. The `morph
@@ -403,7 +403,7 @@ select and `bipolar` switch below.
 
 Four borderless columns, each with the operator name, copy and paste, and the mute
 switch, then a 60 px oscillator strip, an 88 px composed map and three cards with
-8 px gaps: `phase`, `phase lfo` and `phase env`. The phase LFO card is 102 px and
+8 px gaps: `phase`, `phase lfo` and `phase env`. The phase LFO card is 106 px and
 the phase envelope is 206 px. The oscillator strip carries `ratio`, `detune`,
 `level` and `feedback` as 22 px dials with the wave select beside them, and uses
 the operator copy and paste. The map draws the composed transfer curve: green
@@ -415,12 +415,12 @@ requested segment counts, and the locked count when it is above zero. The map
 does not take a drag.
 
 The `phase` card holds `on` in its header and nine knobs in two rows:
-`breakpoint x`, `segmts`, `flip`, `flip rate` and `reorder` on the first, then
-`reorder rate`, `jump`, `drift` and `drift rate` on the second, with 4 px
-between the rows. The breakpoint knob gets the widest cell. The `phase lfo`
+`breakpoint x`, `segments`, `flip` and `flip rate` on the first, then `reorder`,
+`reorder rate`, `reorder jump`, `drift` and `drift rate` on the second, with 4 px
+between the rows. The second row uses the compact 10 px label. The `phase lfo`
 card puts rate, depth, `rate fade` and `depth fade` in one compact row of 22 px
 dials, with the wave select and `bipolar` below. The `phase env` card is the signed envelope with a 48 px
-purple graph, `r1..r3`, `l1..l3`, `rel`, `rl`, the mode dropdown and `on`, with
+purple graph, `r1..r3`, `l1..l3`, `rel rate`, `rl`, the mode dropdown and `on`, with
 2 px between the rows. All three cards carry `copy` and `paste` in their
 headers, and the operator header copies and pastes the whole operator.
 

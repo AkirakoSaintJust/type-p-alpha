@@ -139,11 +139,11 @@ The operator cards keep the four knobs in one row with the wave select and
 
 - `LfoCard` and `PitchLfoCard` gain a row with the two knobs, labelled `rate
   fade` and `depth fade`.
-- The operator LFO cards are 107 px, with rate, depth, `rate fade` and
+- The operator LFO cards are 113 px, with rate, depth, `rate fade` and
   `depth fade` as four knobs in one row, and the wave select and `bipolar`
   below. The 12 px gaps and the 240 px scope and spectro carry the breathing
   space. The pitch LFO card keeps its own 36 px layout and its wave view.
-- The spectral morph LFO card uses the compact 102 px row described above.
+- The spectral morph LFO card uses the compact 106 px row described above.
 - The knobs show `off` at 0 and the rate at 1 to 99; 99 is instant.
 - The section copy and paste lists include both fade parameters for the
   amplitude, feedback, detune and spectral LFOs.
@@ -222,8 +222,8 @@ off.
   the UI.
 - **Parameter map:** the inserted pairs shift an existing index. Fix the map
   before the golden pass, not the test. `preset_smoke` covers the old records.
-- **Card density:** the operator cards are 107 px and the spectral card uses the
-  compact 102 px row. If a card still clips, take the height from the empty tail
+- **Card density:** the operator cards are 113 px and the spectral card uses the
+  compact 106 px row. If a card still clips, take the height from the empty tail
   of the neighbour card rather than shrinking the value text.
 - **Rollback:** remove the two parameters and the trigger input, and restore the
   current `lfo` node; the presets load with the fades off either way.

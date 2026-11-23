@@ -22,6 +22,7 @@ public:
         addAndMakeVisible(res_);
         addAndMakeVisible(type_);
         addAndMakeVisible(on_);
+        setHeaderTrailingWidth(48);
     }
 
     void resized() override
@@ -32,7 +33,7 @@ public:
         cutoff_.setBounds(row.removeFromLeft(cell));
         res_.setBounds(row.removeFromLeft(cell));
         type_.setBounds(44, 118, 150, 18);
-        on_.setBounds(10, 148, 52, 18);
+        on_.setBounds(headerTrailingBounds());
     }
 
     void paint(juce::Graphics& g) override
@@ -79,7 +80,8 @@ public:
             addAndMakeVisible(*rates_[static_cast<size_t>(i)]);
         }
         rates_[3] = std::make_unique<ParamKnob>(
-            editor.state(), params::filterEnvRelRate(part), "rel", 42.0f);
+            editor.state(), params::filterEnvRelRate(part), "rel rate",
+            42.0f);
         addAndMakeVisible(*rates_[3]);
         for (int i = 0; i < 3; ++i) {
             levels_[static_cast<size_t>(i)] = std::make_unique<ParamKnob>(
@@ -108,7 +110,7 @@ public:
         auto modeRow = area.removeFromTop(84);
         mode_.setBounds(modeRow.removeFromLeft(levelCell * 2)
                             .withSizeKeepingCentre(levelCell * 2 - 8, 24));
-        on_.setBounds(getWidth() - 56, 0, 48, 18);
+        on_.setBounds(getWidth() - 56, 1, 48, 18);
     }
 
     void tick() { envView_.repaint(); }
@@ -204,7 +206,8 @@ public:
             addAndMakeVisible(*rates_[static_cast<size_t>(i)]);
         }
         rates_[3] = std::make_unique<ParamKnob>(
-            editor.state(), params::pitchEnvRelRate(part_), "rel", 42.0f);
+            editor.state(), params::pitchEnvRelRate(part_), "rel rate",
+            42.0f);
         addAndMakeVisible(*rates_[3]);
         for (int i = 0; i < 3; ++i) {
             levels_[static_cast<size_t>(i)] = std::make_unique<ParamKnob>(
@@ -233,7 +236,7 @@ public:
         auto modeRow = area.removeFromTop(84);
         mode_.setBounds(modeRow.removeFromLeft(levelCell * 2)
                             .withSizeKeepingCentre(levelCell * 2 - 8, 24));
-        on_.setBounds(getWidth() - 56, 0, 48, 18);
+        on_.setBounds(getWidth() - 56, 1, 48, 18);
     }
 
     void tick() { envView_.repaint(); }
@@ -273,8 +276,8 @@ public:
             const juce::String id = i < 3 ? params::panEnvRate(i, part_)
                                           : params::panEnvRelRate(part_);
             rates_[static_cast<size_t>(i)] = std::make_unique<ParamKnob>(
-                editor.state(), id, i < 3 ? "r" + juce::String(i + 1) : "rel",
-                42.0f);
+                editor.state(), id,
+                i < 3 ? "r" + juce::String(i + 1) : "rel rate", 42.0f);
             addAndMakeVisible(*rates_[static_cast<size_t>(i)]);
         }
         for (int i = 0; i < 4; ++i) {
@@ -303,7 +306,7 @@ public:
         auto modeRow = area.removeFromTop(84);
         mode_.setBounds(modeRow.removeFromLeft(cell * 2)
                             .withSizeKeepingCentre(cell * 2 - 8, 24));
-        on_.setBounds(getWidth() - 56, 0, 48, 18);
+        on_.setBounds(getWidth() - 56, 1, 48, 18);
     }
 
     void tick() { envView_.repaint(); }
@@ -364,8 +367,8 @@ public:
     void resized() override
     {
         const int width = getWidth();
-        wipe_.setBounds(width - 150, 0, 88, 18);
-        on_.setBounds(width - 56, 0, 48, 18);
+        wipe_.setBounds(width - 150, 1, 88, 18);
+        on_.setBounds(width - 56, 1, 48, 18);
         if (key_) {
             breakpoint_->setBounds(8, 26, 80, 82);
             target_.setBounds(96, 50, 180, 18);
@@ -454,7 +457,7 @@ public:
     {
         const int part = editor.activePart();
         filter1_ = std::make_unique<FilterCard>(
-            editor, "filter 1", params::filterCutoff(part), params::filterRes(part),
+            editor, "filter", params::filterCutoff(part), params::filterRes(part),
             params::filterType(part), params::filterOn(part));
         filterEnv_ = std::make_unique<FilterEnvelopeCard>(editor, part);
         pitchLfo_ = std::make_unique<PitchLfoCard>(editor);

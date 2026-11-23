@@ -433,7 +433,7 @@ The page is one row of four 294 px columns, the same rhythm as `op lfos`:
 | oscillator strip | 60 | `ratio`, `detune`, `level`, `feedback` and the wave select |
 | composed map | 88 | the plot and the caption line |
 | `phase` card | 155 | `on`, nine knobs in two rows with 4 px between them |
-| `phase lfo` card | 102 | four compact knobs in one row, with fades |
+| `phase lfo` card | 106 | four compact knobs in one row, with fades |
 | `phase env` card | 206 | graph, three rate/level rows with 2 px between them, mode, `on` |
 
 The rows are separated by 8 px, the column padding is 8 px, and the measured
@@ -445,8 +445,8 @@ map loses pixels before the value text does.
 
 The `phase` card's nine knobs are, row by row:
 
-1. `breakpoint x`, `segmts`, `flip`, `flip rate`, `reorder`
-2. `reorder rate`, `jump`, `drift`, `drift rate`
+1. `breakpoint x`, `segments`, `flip`, `flip rate`
+2. `reorder`, `reorder rate`, `reorder jump`, `drift`, `drift rate`
 
 The panel labels are shorter than the parameter names. The targets keep
 `bp`, `segments`, `flip_rate`, `reorder_rate` and `drift_rate`, so automation and
@@ -455,7 +455,7 @@ old presets continue to resolve.
 The `on` switch is in the card header. The `phase lfo` card puts rate, depth,
 `rate fade` and `depth fade` in one row of 28 px dials, with the wave select and
 `bipolar` below. The `phase env` card uses a 48 px purple graph, `r1..r3`, `l1..l3`,
-`rel`/`rl`/`mode` in compact rows, and `on` in the header. The mode is a dropdown with `sustain off`, `sustain on`,
+`rel rate`/`rl`/`mode` in compact rows, and `on` in the header. The mode is a dropdown with `sustain off`, `sustain on`,
 `loop 1` and `loop 2`.
 
 ### Map display

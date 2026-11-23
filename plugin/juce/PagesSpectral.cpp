@@ -277,7 +277,8 @@ public:
             addAndMakeVisible(*rates_[static_cast<std::size_t>(i)]);
         }
         rates_[3] = std::make_unique<ParamKnob>(
-            editor.state(), params::opSpecEnvRelRate(op, part), "rel", 28.0f);
+            editor.state(), params::opSpecEnvRelRate(op, part), "rel rate",
+            28.0f);
         addAndMakeVisible(*rates_[3]);
         for (int i = 0; i < 3; ++i) {
             levels_[static_cast<std::size_t>(i)] = std::make_unique<ParamKnob>(
@@ -305,8 +306,9 @@ public:
         const int levelCell = levels.getWidth() / 4;
         for (auto& knob : levels_)
             knob->setBounds(levels.removeFromLeft(levelCell));
-        auto modeRow = area.removeFromTop(24);
-        mode_.setBounds(modeRow.removeFromLeft(96).withSizeKeepingCentre(96, 22));
+        area.removeFromTop(4);
+        auto modeRow = area.removeFromTop(28);
+        mode_.setBounds(modeRow.removeFromLeft(96));
         on_.setBounds(headerTrailingBounds());
     }
 
@@ -744,7 +746,8 @@ public:
               [&ed = editor, op](bool muted) {
                   setParam(ed, params::opMute(op, ed.activePart()),
                            muted ? 1 : 0);
-              }),
+              },
+              true),
           osc_(editor, op, editor.activePart(), true)
     {
         addAndMakeVisible(header_);
@@ -857,7 +860,7 @@ public:
         area.removeFromTop(10);
         env_.setBounds(area.removeFromTop(220));
         area.removeFromTop(10);
-        lfo_.setBounds(area.removeFromTop(102));
+        lfo_.setBounds(area.removeFromTop(106));
     }
 
     void paint(juce::Graphics& g) override
@@ -868,7 +871,7 @@ public:
         g.setFont(displayFont(tokens::textOperatorName));
         g.setColour(colour(isCarrier(algorithm, op_) ? tokens::pink
                                                       : tokens::white));
-        g.drawText("op" + juce::String(op_ + 1), 8, 8, 64, 20,
+        g.drawText("op" + juce::String(op_ + 1), 8, 10, 64, 20,
                    juce::Justification::centredLeft, false);
     }
 

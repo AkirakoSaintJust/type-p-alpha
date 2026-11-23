@@ -12,17 +12,17 @@
     },
     "editor-envelope-loops.png": {
       "height": 985,
-      "sha256": "5faabd3630aa3faa1551f2703752a3ed4f2c5c00d74bc5a5c0b5cf533a54c2c8",
+      "sha256": "df6e2e41654bb5a564a3ddeb10fb2014f67a7563a6a403305df9122b9e4c7695",
       "width": 1240
     },
     "editor-fxmod-loops.png": {
       "height": 985,
-      "sha256": "e844135196683ad6dd5755150509a6f3642004b3ca8a9005062409289189b83b",
+      "sha256": "09c520ff823a26195fdf0f26ad370225ee9742391b8ce3c1f76e8ce55967a47b",
       "width": 1240
     },
     "editor-fxmod.png": {
       "height": 985,
-      "sha256": "49f745bc86e95f1005a0d54248d4dbcdb8b133e36cd7a6d1c0e82478d48b6043",
+      "sha256": "2380c1c4110429a3be7cc946510bbdc6d436865fa280c0279d7e43a99c7c0ad8",
       "width": 1240
     },
     "editor-half.png": {
@@ -37,42 +37,42 @@
     },
     "editor-op-phasemap-live.png": {
       "height": 985,
-      "sha256": "59c3e4e49566f3623fc817cfef2c32d4bbf8241054b9d5e722d98ab6a386b449",
+      "sha256": "213607a225dcb4aa45dd1cb51e297c20b7d936e9a40acecbe16a7716467b755e",
       "width": 1240
     },
     "editor-op-phasemap.png": {
       "height": 985,
-      "sha256": "8563eb96cdba5b4f29e921dbb35efc93f80f2e8e39bd9b579ad76442d46c3d90",
+      "sha256": "dc80df185064956e3011c156fcc3562cfd9fadcec3c394b3c47a378a38d5e825",
       "width": 1240
     },
     "editor-op-spectra-mod-levels.png": {
       "height": 985,
-      "sha256": "c11338882f1d61b10404df9844f8c19567ea72a1d4e61209f48ecc123d7b92e7",
+      "sha256": "5739db746a04ea45677991b7e92bed98bf2b7dbedea3c185f906766463c6de1c",
       "width": 1240
     },
     "editor-op-spectra-mod-ranges.png": {
       "height": 985,
-      "sha256": "b49f3c348d19daa8c79be8a2bcac491ee2fdd6772d16febaeb21b3935e7c8552",
+      "sha256": "4bbba5c7a442fceded57103c57ac82cdb547ca79a40016fac99560656fea2f00",
       "width": 1240
     },
     "editor-op-spectra-mod.png": {
       "height": 985,
-      "sha256": "9bf7983752d3c15b39f851eba9aaaa73a97f2d09706b3b5ad5e27f760da97363",
+      "sha256": "c232798045d760fbb339b29fd459ccdc0e29f79297edb3a68f4f7f4379a6888c",
       "width": 1240
     },
     "editor-operator-envs.png": {
       "height": 985,
-      "sha256": "73f4238c0e057fb97336fd2006a9d3401cac72747147c5908282e06b3ee33f35",
+      "sha256": "15ee1aaacc12bd99dd3532ad314dc3a908ec57a567ac5eb9fc8b025acb105b70",
       "width": 1240
     },
     "editor-operator-lfos-fades.png": {
       "height": 985,
-      "sha256": "fcb31d3bb832f33eafa70236dc45b96331637c33030d3dfa064ba2977d1c1253",
+      "sha256": "0c3ace3cc21ae1ad3a08c8acfee0acc16c9b164ae2bfdbadda912e0ad5c87cfc",
       "width": 1240
     },
     "editor-operator-lfos.png": {
       "height": 985,
-      "sha256": "8cc5fc79ab3b6454a785c8a54f465e7a8ed4dfb436f45e478d61d753215b99e9",
+      "sha256": "71fbf3041902b3fd906ae52b2475b0219db5502b8395ef2186721aecd0670f19",
       "width": 1240
     },
     "editor-operator-spectra-b.png": {

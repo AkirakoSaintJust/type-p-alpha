@@ -83,8 +83,9 @@ public:
                std::function<void()> onRename, std::function<void()> onCopy,
                std::function<void()> onPaste,
                std::function<bool()> getMuted,
-               std::function<void(bool)> setMuted)
-        : partLayout_(partLayout), withRename_(withRename)
+               std::function<void(bool)> setMuted, bool wideHeader = false)
+        : partLayout_(partLayout), withRename_(withRename),
+          wideHeader_(wideHeader)
     {
         rename_.onClick = std::move(onRename);
         copy_.onClick = std::move(onCopy);
@@ -108,11 +109,17 @@ public:
             rename_.setBounds(actions.removeFromLeft(52).reduced(2, 3));
             copy_.setBounds(actions.removeFromLeft(52).reduced(2, 3));
             paste_.setBounds(actions.removeFromLeft(52).reduced(2, 3));
-        } else {
+        } else if (wideHeader_) {
             bar.removeFromLeft(56);
             copy_.setBounds(bar.removeFromLeft(52).reduced(2, 3));
             paste_.setBounds(bar.removeFromLeft(52).reduced(2, 3));
             mute_->setBounds(bar.removeFromRight(104).reduced(0, 3));
+        } else {
+            mute_->setBounds(bar.removeFromRight(104).reduced(0, 3));
+            bar.removeFromRight(16);
+            paste_.setBounds(bar.removeFromRight(52).reduced(2, 3));
+            bar.removeFromRight(2);
+            copy_.setBounds(bar.removeFromRight(52).reduced(2, 3));
         }
     }
 
@@ -121,6 +128,7 @@ public:
 private:
     bool partLayout_ = true;
     bool withRename_ = true;
+    bool wideHeader_ = false;
     P1Button rename_{"rename", true};
     P1Button copy_{"copy", true};
     P1Button paste_{"paste", true};
@@ -219,7 +227,8 @@ public:
         const std::array<const char*, 7> fields = {
             "warm", "surge", "d1r", "d2r", "d1l", "d2l", "rel"};
         const std::array<const char*, 7> labels = {
-            "warmup", "surge", "d1r", "d2r", "d1l", "d2l", "rel"};
+            "atk warmup", "atk surge", "d1r", "d2r", "d1l", "d2l",
+            "rel rate"};
         for (std::size_t i = 0; i < fields.size(); ++i) {
             knobs_[i] = std::make_unique<ParamKnob>(
                 editor.state(), params::opEnv(op, fields[i], part), labels[i],
@@ -246,7 +255,8 @@ public:
         for (int i = 4; i < 7; ++i)
             knobs_[static_cast<std::size_t>(i)]->setBounds(
                 levels.removeFromLeft(levelCell));
-        auto modeRow = area.removeFromTop(24);
+        area.removeFromTop(4);
+        auto modeRow = area.removeFromTop(28);
         mode_.setBounds(modeRow.removeFromLeft(levelCell * 2));
     }
 
@@ -298,7 +308,8 @@ public:
             addAndMakeVisible(*rates_[static_cast<std::size_t>(i)]);
         }
         rates_[3] = std::make_unique<ParamKnob>(
-            editor.state(), params::opFeedbackRelRate(op, part), "rel", 20.0f);
+            editor.state(), params::opFeedbackRelRate(op, part), "rel rate",
+            20.0f);
         addAndMakeVisible(*rates_[3]);
         for (int i = 0; i < 3; ++i) {
             levels_[static_cast<std::size_t>(i)] = std::make_unique<ParamKnob>(
@@ -328,7 +339,8 @@ public:
         const int levelCell = levels.getWidth() / 4;
         for (auto& knob : levels_)
             knob->setBounds(levels.removeFromLeft(levelCell));
-        auto modeRow = area.removeFromTop(24);
+        area.removeFromTop(4);
+        auto modeRow = area.removeFromTop(30);
         mode_.setBounds(modeRow.removeFromLeft(levelCell * 2));
         on_.setBounds(headerTrailingBounds());
     }
@@ -387,7 +399,7 @@ public:
         depth_.setBounds(row.removeFromLeft(cell));
         rateFade_.setBounds(row.removeFromLeft(cell));
         depthFade_.setBounds(row);
-        auto bottom = area.removeFromBottom(compact_ ? 16 : 18).withTrimmedTop(2);
+        auto bottom = area.removeFromBottom(compact_ ? 20 : 24).withTrimmedTop(2);
         wave_.setBounds(bottom.removeFromLeft(140));
         bottom.removeFromLeft(10);
         mode_.setBounds(bottom.removeFromLeft(110));

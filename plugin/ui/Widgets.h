@@ -24,7 +24,7 @@ double parseParamValue(const P1ParamSpec& spec, const juce::String& text);
 class ParamKnob : public juce::Component {
 public:
     ParamKnob(APVTS& state, juce::String paramID, juce::String label,
-              float dialSize = 42.0f);
+              float dialSize = 42.0f, float labelSize = 0.0f);
     ~ParamKnob() override;
 
     void setParamID(const juce::String& paramID);
@@ -72,6 +72,7 @@ private:
     juce::Label value_;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> attach_;
     float dialSize_ = 42.0f;
+    float labelSize_ = 0.0f;
     bool snapping_ = false;
 };
 

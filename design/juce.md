@@ -111,13 +111,13 @@ Every page fills the same height:
 - patch settings: two part cards, each with seven knobs, a level slider, a pan
   slider and a scope and spectro, which grow to fill the remaining card height,
   followed by the voice mode block.
-- part fx/mod: a three by two grid. Filter 1, the filter envelope and the pitch LFO
+- part fx/mod: a three by two grid. `filter`, the filter envelope and the pitch LFO
   fill the first row. Pitch envelope, key follow and velocity follow fill the second
   row. The two follow cards are separate, and each has its own on switch and wipe
   button. The pitch LFO carries its `bipolar` switch beside the wave select.
 - op envs: four columns with oscillator, a 214 px `amp env` and a 222 px
   `fb env`, separated by 6 px gaps. The envelope cards put 2 px between their
-  graph, rate and level rows. The amplitude envelope puts `warmup`, surge, decay1 and decay2 on the
+  graph, rate and level rows. The amplitude envelope puts `atk warmup`, `atk surge`, decay1 and decay2 on the
   first row, the two decay levels and the release rate on the second, and the mode
   dropdown below. The feedback envelope uses R1 to R4 and L1 to L4, with signed
   levels, a mode dropdown and an on switch in the card header. The signed sum of
@@ -126,12 +126,12 @@ Every page fills the same height:
   carry copy and paste in their headers, and their graphs mark the sustain and loop
   boundaries with a dotted pink vertical line, a 2 px dash and a 2 px gap.
 - op lfos: four operator columns, a 240 px scope and spectro pair, then the
-  107 px `amp lfo`, `fb lfo` and `detune lfo` cards with 12 px gaps. The
+  113 px `amp lfo`, `fb lfo` and `detune lfo` cards with 12 px gaps. The
   oscillator stays on the op envs page. Each LFO card carries copy and paste
   in its header, puts rate, depth, `rate fade` and `depth fade` in one row, and
   keeps the wave select and `bipolar` switch below.
 - op phasemap: four 294 px operator columns, each with the header, a 60 px
-  oscillator strip, an 88 px live map, a 155 px `phase` card, a 102 px `phase lfo`
+  oscillator strip, an 88 px live map, a 155 px `phase` card, a 106 px `phase lfo`
   card and a 206 px `phase env` card, separated by 8 px gaps. The page total is
   669 px. The oscillator strip carries `ratio`, `detune`, `level` and `feedback`
   as 22 px dials with the wave select beside them, and uses the operator copy,
@@ -142,7 +142,7 @@ Every page fills the same height:
   the locks, the order jumps, the faint `F`, the breakpoint and the phase dot.
   When `on` is off, the map draws the neutral parameter geometry and the live
   dot disappears.
-  `phase` card has nine knobs in two rows: `breakpoint x`, `segmts`, `flip`, `flip rate` and `reorder`, then `reorder rate`, `jump`, `drift` and `drift rate`. The breakpoint knob gets the widest cell. The LFO card puts rate, depth, `rate
+  `phase` card has nine knobs in two rows: `breakpoint x`, `segments`, `flip` and `flip rate`, then `reorder`, `reorder rate`, `reorder jump`, `drift` and `drift rate`. The second row uses the compact 10 px label. The LFO card puts rate, depth, `rate
   fade` and `depth fade` in one row, and the envelope card is the signed purple
   graph with its rates, levels and mode dropdown.
 - op spectra a: four operator and oscillator cards across the top, a 6 px empty
@@ -155,7 +155,7 @@ Every page fills the same height:
   card carries its own range, its own 64 levels and its own template button.
 - op spectra mod: four operator columns with 10 px gaps under the operator header,
   the oscillator card, a 130 px `spectra` display, the `morph env` card and the
-  102 px `morph lfo` card. The display draws the stored a and b. The marker and the faint
+  106 px `morph lfo` card. The display draws the stored a and b. The marker and the faint
   waveform follow the live morph of the newest rendering voice, so they advance
   with the envelope and the LFO while a note sounds. The display takes no drag.
   When a and b use different ranges, the display zooms out to the union of the two
