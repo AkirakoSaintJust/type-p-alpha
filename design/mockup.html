@@ -2021,7 +2021,7 @@
   function phaseSection(o) {
     const on = makeToggle("on", o.phaseOn, function (v) { o.phaseOn = v; rerender(); });
     const bindings = [
-      b(o, "phaseBp", "BREAKPOINT", 1, 999, function (v) { return (v / 1000).toFixed(3); }, 1),
+      b(o, "phaseBp", "BREAKPOINT X", 1, 999, function (v) { return (v / 1000).toFixed(3); }, 1),
       b(o, "phaseSegments", "SEGMENTS", 1, 32, function (v) { return v; }, 1),
       b(o, "phaseFlip", "FLIP", 0, 100, function (v) { return v + "%"; }, 1),
       b(o, "phaseFlipRate", "FLIP RATE", 0, 30, function (v) { return v.toFixed(1) + "Hz"; }, 0.1),
@@ -2309,8 +2309,8 @@
   const TABS = [
     { id: "patch", label: "patch settings", view: viewPatch },
     { id: "partfx", label: "part fx/mod", view: viewFxMod },
-    { id: "ops", label: "operators", view: viewOps },
-    { id: "oplfo", label: "operator lfos", view: viewOperatorLfos },
+    { id: "ops", label: "op envs", view: viewOps },
+    { id: "oplfo", label: "op lfos", view: viewOperatorLfos },
     { id: "phasemap", label: "op phasemap", view: viewOpPhaseMap },
     { id: "opspec", label: "operator spectra", view: viewOpSpectra },
     { id: "opspecmod", label: "op spectra mod", view: viewOpSpectraMod }

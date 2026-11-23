@@ -5,7 +5,7 @@
 - **Feature:** Per-LFO rate fade-in and depth fade-in. Each fades its target
   from zero over a linear attack, so an LFO can speed up or open up after the
   note starts.
-- **Brief section:** the operator lfos, spectral mod and part fx/mod cards, and
+- **Brief section:** the op lfos, spectral mod and part fx/mod cards, and
   the LFO entries in the README.
 - **Owner / date:** P1Onken, 2026-11-20.
 - **Disposition:** complete. The engine, the five card families, the `lfo_fades`
@@ -147,8 +147,8 @@ The operator cards keep the four knobs in one row with the wave select and
 - The knobs show `off` at 0 and the rate at 1 to 99; 99 is instant.
 - The section copy and paste lists include both fade parameters for the
   amplitude, feedback, detune and spectral LFOs.
-- The operator lfos page no longer repeats the oscillator. The oscillator is on
-  the operator envs page; the operator lfos page carries the three LFO cards.
+- The op lfos page no longer repeats the oscillator. The oscillator is on
+  the op envs page; the op lfos page carries the three LFO cards.
 - The card heights and the page grids are re-measured, and the snapshot goldens
   are regenerated deliberately.
 

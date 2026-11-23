@@ -190,8 +190,8 @@ public:
             "bp", "segments", "flip", "flip_rate", "reorder",
             "reorder_rate", "jump", "drift", "drift_rate"};
         static constexpr const char* labels[9] = {
-            "distort", "segmts", "flip", "fl rate", "reorder",
-            "ro rate", "jump", "drift", "dr rate"};
+            "breakpoint x", "segmts", "flip", "flip rate", "reorder",
+            "reorder rate", "jump", "drift", "drift rate"};
         for (std::size_t i = 0; i < knobs_.size(); ++i) {
             knobs_[i] = std::make_unique<ParamKnob>(
                 editor.state(), params::opPhase(op, fields[i], part), labels[i],
@@ -211,12 +211,20 @@ public:
             if (row == 1)
                 area.removeFromTop(4);
             auto line = area.removeFromTop(63);
-            const int count = row == 0 ? 5 : 4;
-            const int cell = line.getWidth() / count;
-            for (int col = 0; col < count; ++col) {
-                const int index = row == 0 ? col : 5 + col;
-                knobs_[static_cast<std::size_t>(index)]->setBounds(
-                    line.removeFromLeft(cell));
+            if (row == 0) {
+                /* The breakpoint label needs the widest cell; the other four
+                 * first-row labels are short. */
+                const int wide = 70;
+                const int cell = (line.getWidth() - wide) / 4;
+                knobs_[0]->setBounds(line.removeFromLeft(wide));
+                for (int col = 1; col < 5; ++col)
+                    knobs_[static_cast<std::size_t>(col)]->setBounds(
+                        line.removeFromLeft(cell));
+            } else {
+                const int cell = line.getWidth() / 4;
+                for (int col = 0; col < 4; ++col)
+                    knobs_[static_cast<std::size_t>(5 + col)]->setBounds(
+                        line.removeFromLeft(cell));
             }
         }
         on_.setBounds(headerTrailingBounds());
@@ -342,7 +350,7 @@ public:
                params::opPhaseLfo(op, "mode", part_),
                params::opPhaseLfo(op, "rate_fade", part_),
                params::opPhaseLfo(op, "depth_fade", part_), op, part_,
-               PluginEditor::OperatorSection::phaseLfo, {}, false, "on"),
+               PluginEditor::OperatorSection::phaseLfo, {}, false, "bipolar"),
           env_(editor, op, part_)
     {
         addAndMakeVisible(header_);

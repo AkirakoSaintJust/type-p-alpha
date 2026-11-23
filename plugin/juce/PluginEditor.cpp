@@ -770,8 +770,8 @@ void PluginEditor::buildUi()
     juce::StringArray labels;
     labels.add("patch settings");
     labels.add("part fx/mod");
-    labels.add("operator envs");
-    labels.add("operator lfos");
+    labels.add("op envs");
+    labels.add("op lfos");
     labels.add("op phasemap");
     labels.add("op spectra a");
     labels.add("op spectra b");

@@ -661,7 +661,7 @@ void TypePAlphaAudioProcessor::setStateInformation(const void* data, int sizeInB
     const int pageLayout =
         static_cast<int>(state.getProperty("uiPageLayout", 0));
     if (pageLayout < 2) {
-        /* The four-tab layout had operators at 1, operator lfos at 2 and
+        /* The four-tab layout had operators at 1, op lfos at 2 and
          * fx/mod at 3. The six-tab layout moves fx/mod to 1. */
         if (page == 1)
             page = 2;

@@ -88,7 +88,7 @@ flip when the sum crosses zero.
 ## Dependencies and interactions
 
 - **Other features:** `fb_tap`, `fm_op`, the per-operator `fbenv` and `fblfo`
-  nodes, the operator card, the operator envs page, the operator lfos page and the
+  nodes, the operator card, the op envs page, the op lfos page and the
   preset migration.
 - **Platform/API/HAL changes:** none. The engine stays integer C and the change
   sits inside the tap.
@@ -136,10 +136,10 @@ and no malloc, float, file access or display enters the audio path.
 ## Editor control map
 
 - The operator card carries the bipolar feedback knob with the `pct_bip` display.
-- The operator envs page carries the feedback envelope card: the on switch in the
+- The op envs page carries the feedback envelope card: the on switch in the
   header, the graph, three rates and signed levels, the release rate and level,
   and the mode.
-- The operator lfos page carries the feedback LFO card: rate, depth, wave, mode,
+- The op lfos page carries the feedback LFO card: rate, depth, wave, mode,
   the rate and depth fades and their shared graph.
 
 ## Verification

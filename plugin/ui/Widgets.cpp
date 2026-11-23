@@ -681,7 +681,7 @@ void P1TabBar::resized()
      * labels when they fit, otherwise use the same tab order with compact
      * labels and equal widths so no label runs into its neighbour. */
     static constexpr const char* compactLabels[8] = {
-        "patch", "fx", "op env", "op lfo", "phase", "spec a", "spec b",
+        "patch", "fx", "op envs", "op lfos", "phase", "spec a", "spec b",
         "spec mod"};
     const auto* top = getTopLevelComponent();
     const int visibleWidth =

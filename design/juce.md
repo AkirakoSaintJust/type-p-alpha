@@ -115,7 +115,7 @@ Every page fills the same height:
   fill the first row. Pitch envelope, key follow and velocity follow fill the second
   row. The two follow cards are separate, and each has its own on switch and wipe
   button. The pitch LFO carries its `bipolar` switch beside the wave select.
-- operator envs: four columns with oscillator, a 214 px `amp env` and a 222 px
+- op envs: four columns with oscillator, a 214 px `amp env` and a 222 px
   `fb env`, separated by 6 px gaps. The envelope cards put 2 px between their
   graph, rate and level rows. The amplitude envelope puts `warmup`, surge, decay1 and decay2 on the
   first row, the two decay levels and the release rate on the second, and the mode
@@ -125,9 +125,9 @@ Every page fills the same height:
   negative level can cross zero from any knob setting. The two envelope cards
   carry copy and paste in their headers, and their graphs mark the sustain and loop
   boundaries with a pink vertical line.
-- operator lfos: four operator columns, a 240 px scope and spectro pair, then the
+- op lfos: four operator columns, a 240 px scope and spectro pair, then the
   107 px `amp lfo`, `fb lfo` and `detune lfo` cards with 12 px gaps. The
-  oscillator stays on the operator envs page. Each LFO card carries copy and paste
+  oscillator stays on the op envs page. Each LFO card carries copy and paste
   in its header, puts rate, depth, `rate fade` and `depth fade` in one row, and
   keeps the wave select and `bipolar` switch below.
 - op phasemap: four 294 px operator columns, each with the header, a 111 px live
@@ -139,7 +139,7 @@ Every page fills the same height:
   the locks, the order jumps, the faint `F`, the breakpoint and the phase dot. The
   When `on` is off, the map draws the neutral parameter geometry and the live
   dot disappears.
-  `phase` card has nine knobs in two rows: `distort`, `segmts`, `flip`, `fl rate` and `reorder`, then `ro rate`, `jump`, `drift` and `dr rate`. The LFO card puts rate, depth, `rate
+  `phase` card has nine knobs in two rows: `breakpoint x`, `segmts`, `flip`, `flip rate` and `reorder`, then `reorder rate`, `jump`, `drift` and `drift rate`. The breakpoint knob gets the widest cell. The LFO card puts rate, depth, `rate
   fade` and `depth fade` in one row, and the envelope card is the signed purple
   graph with its rates, levels and mode dropdown.
 - op spectra a: four operator and oscillator cards across the top, a 6 px empty
@@ -161,8 +161,8 @@ Every page fills the same height:
   depth, `rate fade` and `depth fade` in one row of 22 px dials, with the wave
   select and `bipolar` switch below.
 
-The current layout has eight tabs: patch settings at 0, part fx/mod at 1, operator
-envs at 2, operator lfos at 3, op phasemap at 4, op spectra a at 5, op spectra b
+The current layout has eight tabs: patch settings at 0, part fx/mod at 1, op
+envs at 2, op lfos at 3, op phasemap at 4, op spectra a at 5, op spectra b
 at 6 and op spectra mod at 7. The page order changes with each layout addition,
 so the processor remaps the stored `uiPage` when an old state restores. A four-tab
 state maps 1 to 2, 2 to 3 and 3 to 1. A six-tab state maps the mod page from 5 to
@@ -300,7 +300,7 @@ order.
 - patch settings: parts, keyzones, levels, delays, voice mode.
 - part fx/mod: filter, filter envelope, pitch LFO, pitch envelope, pan envelope,
   key and velocity follow, in a four by two grid.
-- operator envs: four sets of oscillator, amplitude envelope, feedback envelope and
+- op envs: four sets of oscillator, amplitude envelope, feedback envelope and
   the three LFO parameters.
 - op phasemap: per operator, the phase map's nine knobs and `on`, the phase LFO's
   six values and the signed envelope's ten values. The page is the fourth tab, and

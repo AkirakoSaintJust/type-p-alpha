@@ -22,7 +22,7 @@
 
 ## Player outcome
 
-- **New player action:** open `op phasemap`, the fifth tab after `operator lfos`.
+- **New player action:** open `op phasemap`, the fifth tab after `op lfos`.
   The active part's four operators sit in four columns. Each column has a live
   composed transfer plot, a `phase` card with nine knobs and an `on` switch, a
   `phase lfo` card with the shared rate and depth fades, and a signed `phase env`
@@ -412,8 +412,8 @@ The strip has eight labels:
 
 0. `patch settings`
 1. `part fx/mod`
-2. `operator envs`
-3. `operator lfos`
+2. `op envs`
+3. `op lfos`
 4. `op phasemap` (new)
 5. `op spectra a`
 6. `op spectra b`
@@ -425,7 +425,7 @@ page, and cases 5, 6 and 7 call the three spectra pages. The stored `uiPage`
 migration for layout 3 and older keeps pages 0..3, maps 4→5, 5→6 and 6→7. The
 existing six-tab remap runs first.
 
-The page is one row of four 294 px columns, the same rhythm as `operator lfos`:
+The page is one row of four 294 px columns, the same rhythm as `op lfos`:
 
 | Block | Height | Contents |
 | --- | --- | --- |
@@ -443,8 +443,8 @@ loses pixels before the value text does.
 
 The `phase` card's nine knobs are, row by row:
 
-1. `distort`, `segmts`, `flip`, `fl rate`, `reorder`
-2. `ro rate`, `jump`, `drift`, `dr rate`
+1. `breakpoint x`, `segmts`, `flip`, `flip rate`, `reorder`
+2. `reorder rate`, `jump`, `drift`, `drift rate`
 
 The panel labels are shorter than the parameter names. The targets keep
 `bp`, `segments`, `flip_rate`, `reorder_rate` and `drift_rate`, so automation and
@@ -452,7 +452,7 @@ old presets continue to resolve.
 
 The `on` switch is in the card header. The `phase lfo` card puts rate, depth,
 `rate fade` and `depth fade` in one row of 28 px dials, with the wave select and
-`on` below. The `phase env` card uses a 48 px purple graph, `r1..r3`, `l1..l3`,
+`bipolar` below. The `phase env` card uses a 48 px purple graph, `r1..r3`, `l1..l3`,
 `rel`/`rl`/`mode` in compact rows, and `on` in the header. The mode is a dropdown with `sustain off`, `sustain on`,
 `loop 1` and `loop 2`.
 

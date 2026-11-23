@@ -23,14 +23,14 @@ The tab bar keeps seven tabs, with `part fx/mod` next to `patch settings`:
 | --- | --- |
 | 0 | patch settings |
 | 1 | part fx/mod |
-| 2 | operator envs |
-| 3 | operator lfos |
+| 2 | op envs |
+| 3 | op lfos |
 | 4 | op spectra a |
 | 5 | op spectra b |
 | 6 | op spectra mod |
 
 The page order moves with each layout change, so restore remaps the stored page. A
-four-tab session had operators at 1, operator lfos at 2 and fx/mod at 3. A six-tab
+four-tab session had operators at 1, op lfos at 2 and fx/mod at 3. A six-tab
 session had fx/mod at 1 and `op spectra mod` at 5. The split inserts `op spectra b`
 at 5, so the mod page moves to 6. The remap keys on `uiPageLayout`, now 3, and the
 patch and multi data are unaffected.
@@ -44,7 +44,7 @@ restore clamp to 6. `buildPage` gains the two spectrum factories and the mod fac
 at 6.
 
 The editor window and page area do not move. The page is 1206 by 685 at (17, 255),
-the same as the operators and operator lfos pages.
+the same as the op envs and op lfos pages.
 
 ## Page geometry
 
@@ -64,7 +64,7 @@ legend on the left, about 918 px, and the three spring controls on the right,
 280 px, with the formant picker beside the formant lever. At 918 px each bar is
 about 14 px.
 
-The operator strip is the operator column from the operator envs page, reduced to a
+The operator strip is the operator column from the op envs page, reduced to a
 30 px scope and spectro pair and the oscillator card. The operator name sits in a
 24 px header, so the scope starts below it and nothing clips.
 
@@ -94,7 +94,7 @@ the page needs the height for the envelope and the LFO.
 The mode is per operator. The wave select carries the mode, so there is no separate
 switch. It lists fourteen entries: the thirteen waves and `spectrum` at the end.
 The two spectral pages add a `morph` knob to the oscillator row. The operators
-and operator lfos pages keep the current card and show the same wave select, so
+and op lfos pages keep the current card and show the same wave select, so
 `spectrum` is visible and selectable there too.
 
 | Control | Meaning |

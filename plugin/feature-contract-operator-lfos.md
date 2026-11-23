@@ -7,18 +7,18 @@ the per-operator split, the three LFO families and their evidence.
 ## Identity
 
 - **Feature:** Per-operator amplitude and signed feedback envelopes, plus the
-  amplitude, feedback and detune LFOs on the new `operator lfos` tab.
+  amplitude, feedback and detune LFOs on the new `op lfos` tab.
 - **Brief section:** `README.md` line of research 1 and 9, and
   [`../design/README.md`](../design/README.md) Operators and Operator LFOs.
 - **Owner / date:** P1Onken, 2026-11-12.
 - **Disposition:** complete, with the engine, the two pages, the tests and the Linux
-  goldens in. The oscillator is on the operator envs page, and the operator lfos
+  goldens in. The oscillator is on the op envs page, and the op lfos
   page carries the three LFO cards.
 
 ## Player outcome
 
 - **New player action:** open `operators` for the oscillator, amplitude envelope and
-  feedback envelope, or open `operator lfos` for the three per-operator LFOs.
+  feedback envelope, or open `op lfos` for the three per-operator LFOs.
   Each envelope and LFO card carries `copy` and `paste` in its header, so a shape or
   an LFO moves between operators on its own.
 - **Sound and behaviour:** each operator owns its feedback envelope, and the feedback

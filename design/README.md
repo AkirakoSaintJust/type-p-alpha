@@ -278,7 +278,7 @@ text. A long part name is truncated with an ellipsis.
 
 ### Tabs
 
-`patch settings`, `part fx/mod`, `operator envs`, `operator lfos`, `op phasemap`,
+`patch settings`, `part fx/mod`, `op envs`, `op lfos`, `op phasemap`,
 `op spectra a`, `op spectra b`, `op spectra mod`, with no vertical dividers. The
 active tab is a pink cut polygon rather than a rectangle. Inactive tabs are dim text
 on black.
@@ -409,11 +409,12 @@ dot at the newest voice's phase. The caption reads `bp 0.500 · π`, the active 
 requested segment counts, and the locked count when it is above zero. The map
 does not take a drag.
 
-The `phase` card holds `on` in its header and nine knobs in two rows: `distort`,
-`segmts`, `flip`, `fl rate` and `reorder` on the first, then `ro rate`, `jump`,
-`drift` and `dr rate` on the second, with 4 px between the rows. The `phase lfo`
+The `phase` card holds `on` in its header and nine knobs in two rows:
+`breakpoint x`, `segmts`, `flip`, `flip rate` and `reorder` on the first, then
+`reorder rate`, `jump`, `drift` and `drift rate` on the second, with 4 px
+between the rows. The breakpoint knob gets the widest cell. The `phase lfo`
 card puts rate, depth, `rate fade` and `depth fade` in one row, with the wave
-select and `on` below. The `phase env` card is the signed envelope with a 48 px
+select and `bipolar` below. The `phase env` card is the signed envelope with a 48 px
 purple graph, `r1..r3`, `l1..l3`, `rel`, `rl`, the mode dropdown and `on`, with
 2 px between the rows. All three cards carry `copy` and `paste` in their
 headers, and the operator header copies and pastes the whole operator.
