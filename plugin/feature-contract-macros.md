@@ -10,10 +10,10 @@
 - **Owner / date:** P1Onken, 2026-11-23.
 - **Disposition:** the 54 parameters, the CC map, the automation flags, the multi
   record, the target table, the linear and log destination offsets, the relative CC,
-  wheel and velocity sources, the per-voice velocity source on the operator levels,
-  the macros page and the target-parameter feedback are built. The rest of the
-  per-voice layer is outstanding, so the evidence below is partly run and partly a
-  list.
+  wheel and velocity sources, the per-voice velocity source on the operator levels and
+  all-operator feedbacks, the macros page and the target-parameter feedback are built.
+  The rest of the per-voice layer is outstanding, so the evidence below is partly run
+  and partly a list.
 
 ## Player outcome
 
@@ -124,7 +124,12 @@ Run on the parameter layer, the multi record, the target table and the offset la
   and each differs from the engine reference.
 - `engine_parity` checks the per-voice operator level helper with two velocities,
   `20` and `120`, and the hard note's level offset is larger than the soft note's.
-  The velocity source render therefore reaches the engine's per-voice path.
+  It checks the all-operator feedback helper the same way, and the hard note's
+  feedback offset is larger. The velocity source render therefore reaches both
+  engine paths.
+- `plugin_smoke` renders the first block with a feedback target and a macro at 0,
+  and it matches the engine reference bit for bit. The same target with the velocity
+  source moves the render, so the feedback offset reaches the engine.
 - The editor snapshots gain `editor-macros.png` for the empty cards,
   `editor-macros-targets.png` for the renamed cards with three destinations and a
   green or purple range in each row, and `editor-macros-live.png` for a mod wheel at
@@ -147,7 +152,9 @@ Run on the parameter layer, the multi record, the target table and the offset la
 Still outstanding:
 
 - The rest of the per-voice layer: the envelope rates, the LFO rates and depths, the
-  morphs, the breakpoints, the carrier and modulator groups, and the pan note policy.
+  morphs, the breakpoints, the pan note policy, and the carrier and modulator role
+  groups. The all-operator feedbacks row is per voice; the carrier and modulator
+  feedback rows still take the newest note.
 - A snapshot of the target menu, because the component snapshot does not capture an
   open popup. The eight headings come from the generated table, which the table test
   pins.
@@ -155,12 +162,12 @@ Still outstanding:
 ## Limits
 
 - **The parameter layer, the multi record, the target table, the offsets, the
-  relative sources, the per-voice operator levels, the macros page and the feedback
-  are built.** The rest of the per-voice layer is not.
-- **The velocity source is per voice on the operator levels and newest-note on the
-  rest.** The other targets move the whole part with the last note's velocity until
-  their per-voice paths land. The feedback beside a target reads the same newest-note
-  velocity.
+  relative sources, the per-voice operator levels and all-operator feedbacks, the
+  macros page and the feedback are built.** The rest of the per-voice layer is not.
+- **The velocity source is per voice on the operator levels and the all-operator
+  feedbacks, and newest-note on the rest.** The other targets move the whole part with
+  the last note's velocity until their per-voice paths land. The feedback beside a
+  target reads the same newest-note velocity.
 - **The source values are live, not patch state.** The source select and range are
   saved with the patch, whilst the CC, wheel and note velocity arrive at runtime and
   start at rest.

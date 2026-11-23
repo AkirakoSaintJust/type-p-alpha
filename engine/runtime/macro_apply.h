@@ -5,17 +5,18 @@
 #include "macro_target_ids.h"
 
 /* The per-voice part of the macro layer: the velocity source on the all-operator
- * level group. The plugin writes the knob, CC, wheel and the non-velocity source
- * offsets at part level, whilst the velocity source needs each voice's own velocity,
- * which only the engine has. The helper returns a level offset in 0..99 units for the
- * operator's total level, and the `tl` node adds it before the key and velocity
- * follow. */
-static inline int32_t p1_macro_velocity_level(const type_p_alpha_state *state,
-                                              uint32_t part, uint32_t voice)
+ * level group and the all-operator feedback group. The plugin writes the knob, CC,
+ * wheel and the non-velocity source offsets at part level, whilst the velocity
+ * source needs each voice's own velocity, which only the engine has. The level
+ * helper returns a level offset in 0..99 units for the operator's total level, and
+ * the `tl` node adds it before the key and velocity follow. The feedback helper
+ * returns a raw offset over the feedback span, and the `fb_tap` node adds it to the
+ * stored level before the key and velocity scaling. */
+static inline int32_t p1_macro_velocity_offset(const type_p_alpha_state *state,
+                                               int32_t wanted,
+                                               int32_t velocity,
+                                               int32_t span)
 {
-    const int32_t wanted = part == 0u ? P1_MACRO_TARGET_P1_OP_LEVELS
-                                      : P1_MACRO_TARGET_P2_OP_LEVELS;
-    const int32_t velocity = state->voice_velocity[voice];
     const int32_t gain[6] = {state->macro_g1, state->macro_g2, state->macro_g3,
                              state->macro_g4, state->macro_g5, state->macro_g6};
     const int32_t source[6] = {state->macro_s1, state->macro_s2,
@@ -38,7 +39,7 @@ static inline int32_t p1_macro_velocity_level(const type_p_alpha_state *state,
         state->macro_r4a, state->macro_r4b, state->macro_r4c,
         state->macro_r5a, state->macro_r5b, state->macro_r5c,
         state->macro_r6a, state->macro_r6b, state->macro_r6c};
-    int32_t sum = 0;
+    int64_t sum = 0;
     for (int m = 0; m < 6; m++) {
         if (source[m] != 3)
             continue;
@@ -50,8 +51,30 @@ static inline int32_t p1_macro_velocity_level(const type_p_alpha_state *state,
                 macro = 100;
             else if (macro < -100)
                 macro = -100;
-            sum += (macro * range[m * 3 + d] * 99) / 10000;
+            sum += ((int64_t)macro * range[m * 3 + d] * span) / 10000;
         }
     }
-    return sum;
+    if (sum > span)
+        sum = span;
+    else if (sum < -span)
+        sum = -span;
+    return (int32_t)sum;
+}
+
+static inline int32_t p1_macro_velocity_level(const type_p_alpha_state *state,
+                                              uint32_t part, uint32_t voice)
+{
+    const int32_t wanted = part == 0u ? P1_MACRO_TARGET_P1_OP_LEVELS
+                                      : P1_MACRO_TARGET_P2_OP_LEVELS;
+    return p1_macro_velocity_offset(state, wanted, state->voice_velocity[voice],
+                                    99);
+}
+
+static inline int32_t p1_macro_velocity_feedback(const type_p_alpha_state *state,
+                                                 uint32_t part, uint32_t voice)
+{
+    const int32_t wanted = part == 0u ? P1_MACRO_TARGET_P1_OP_FEEDBACKS
+                                      : P1_MACRO_TARGET_P2_OP_FEEDBACKS;
+    return p1_macro_velocity_offset(state, wanted, state->voice_velocity[voice],
+                                    65534);
 }

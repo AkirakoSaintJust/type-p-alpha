@@ -418,6 +418,13 @@ int main(int argc, char** argv)
         const int32_t hard = p1_macro_velocity_level(state.get(), 0, 1);
         check(hard > soft && soft > 0,
               "the macro velocity offset follows each voice");
+        state->macro_t1a = P1_MACRO_TARGET_P1_OP_FEEDBACKS;
+        const int32_t feedbackSoft =
+            p1_macro_velocity_feedback(state.get(), 0, 0);
+        const int32_t feedbackHard =
+            p1_macro_velocity_feedback(state.get(), 0, 1);
+        check(feedbackHard > feedbackSoft && feedbackSoft > 0,
+              "the macro feedback offset follows each voice");
     }
     test_engine_render();
     test_state_isolation();

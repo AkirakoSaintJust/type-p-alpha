@@ -62,6 +62,8 @@ typedef struct type_p_alpha_state {
     uint32_t op1_fb_negative[NVOICE];
     int32_t op1_fb_prev[NVOICE];
     int32_t op1_fb_shaped[NVOICE];
+    int32_t op1_fb_macro[NVOICE];
+    int32_t op1_fb_level_macro[NVOICE];
     int32_t op1_level_ks_k[NVOICE];
     int32_t op1_fb_ks_k[NVOICE];
     int32_t op1_eg_ks_k[NVOICE];
@@ -133,6 +135,8 @@ typedef struct type_p_alpha_state {
     uint32_t op2_fb_negative[NVOICE];
     int32_t op2_fb_prev[NVOICE];
     int32_t op2_fb_shaped[NVOICE];
+    int32_t op2_fb_macro[NVOICE];
+    int32_t op2_fb_level_macro[NVOICE];
     int32_t op2_level_ks_k[NVOICE];
     int32_t op2_fb_ks_k[NVOICE];
     int32_t op2_eg_ks_k[NVOICE];
@@ -204,6 +208,8 @@ typedef struct type_p_alpha_state {
     uint32_t op3_fb_negative[NVOICE];
     int32_t op3_fb_prev[NVOICE];
     int32_t op3_fb_shaped[NVOICE];
+    int32_t op3_fb_macro[NVOICE];
+    int32_t op3_fb_level_macro[NVOICE];
     int32_t op3_level_ks_k[NVOICE];
     int32_t op3_fb_ks_k[NVOICE];
     int32_t op3_eg_ks_k[NVOICE];
@@ -275,6 +281,8 @@ typedef struct type_p_alpha_state {
     uint32_t op4_fb_negative[NVOICE];
     int32_t op4_fb_prev[NVOICE];
     int32_t op4_fb_shaped[NVOICE];
+    int32_t op4_fb_macro[NVOICE];
+    int32_t op4_fb_level_macro[NVOICE];
     int32_t op4_level_ks_k[NVOICE];
     int32_t op4_fb_ks_k[NVOICE];
     int32_t op4_eg_ks_k[NVOICE];
@@ -5754,6 +5762,8 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op1_fb_negative (S->op1_fb_negative)
 #define op1_fb_prev (S->op1_fb_prev)
 #define op1_fb_shaped (S->op1_fb_shaped)
+#define op1_fb_macro (S->op1_fb_macro)
+#define op1_fb_level_macro (S->op1_fb_level_macro)
 #define op1_level_ks_k (S->op1_level_ks_k)
 #define op1_fb_ks_k (S->op1_fb_ks_k)
 #define op1_eg_ks_k (S->op1_eg_ks_k)
@@ -5825,6 +5835,8 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op2_fb_negative (S->op2_fb_negative)
 #define op2_fb_prev (S->op2_fb_prev)
 #define op2_fb_shaped (S->op2_fb_shaped)
+#define op2_fb_macro (S->op2_fb_macro)
+#define op2_fb_level_macro (S->op2_fb_level_macro)
 #define op2_level_ks_k (S->op2_level_ks_k)
 #define op2_fb_ks_k (S->op2_fb_ks_k)
 #define op2_eg_ks_k (S->op2_eg_ks_k)
@@ -5896,6 +5908,8 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op3_fb_negative (S->op3_fb_negative)
 #define op3_fb_prev (S->op3_fb_prev)
 #define op3_fb_shaped (S->op3_fb_shaped)
+#define op3_fb_macro (S->op3_fb_macro)
+#define op3_fb_level_macro (S->op3_fb_level_macro)
 #define op3_level_ks_k (S->op3_level_ks_k)
 #define op3_fb_ks_k (S->op3_fb_ks_k)
 #define op3_eg_ks_k (S->op3_eg_ks_k)
@@ -5967,6 +5981,8 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op4_fb_negative (S->op4_fb_negative)
 #define op4_fb_prev (S->op4_fb_prev)
 #define op4_fb_shaped (S->op4_fb_shaped)
+#define op4_fb_macro (S->op4_fb_macro)
+#define op4_fb_level_macro (S->op4_fb_level_macro)
 #define op4_level_ks_k (S->op4_level_ks_k)
 #define op4_fb_ks_k (S->op4_fb_ks_k)
 #define op4_eg_ks_k (S->op4_eg_ks_k)
@@ -10311,7 +10327,9 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
         op4_osc_bl[v] = ((op4_osc_wave[v] >= 10u && op4_osc_wave[v] <= 12u) ? 1u : 0u);
         op4_osc_tick[v] = ((v == 0) ? (p1_spectral_tick(op4_osc_bank, op4_osc_waveform, op4_osc_spec_range_a, op4_osc_spec_range_b, op4_osc_spec_a1, op4_osc_spec_a2, op4_osc_spec_a3, op4_osc_spec_a4, op4_osc_spec_a5, op4_osc_spec_a6, op4_osc_spec_a7, op4_osc_spec_a8, op4_osc_spec_a9, op4_osc_spec_a10, op4_osc_spec_a11, op4_osc_spec_a12, op4_osc_spec_a13, op4_osc_spec_a14, op4_osc_spec_a15, op4_osc_spec_a16, op4_osc_spec_a17, op4_osc_spec_a18, op4_osc_spec_a19, op4_osc_spec_a20, op4_osc_spec_a21, op4_osc_spec_a22, op4_osc_spec_a23, op4_osc_spec_a24, op4_osc_spec_a25, op4_osc_spec_a26, op4_osc_spec_a27, op4_osc_spec_a28, op4_osc_spec_a29, op4_osc_spec_a30, op4_osc_spec_a31, op4_osc_spec_a32, op4_osc_spec_a33, op4_osc_spec_a34, op4_osc_spec_a35, op4_osc_spec_a36, op4_osc_spec_a37, op4_osc_spec_a38, op4_osc_spec_a39, op4_osc_spec_a40, op4_osc_spec_a41, op4_osc_spec_a42, op4_osc_spec_a43, op4_osc_spec_a44, op4_osc_spec_a45, op4_osc_spec_a46, op4_osc_spec_a47, op4_osc_spec_a48, op4_osc_spec_a49, op4_osc_spec_a50, op4_osc_spec_a51, op4_osc_spec_a52, op4_osc_spec_a53, op4_osc_spec_a54, op4_osc_spec_a55, op4_osc_spec_a56, op4_osc_spec_a57, op4_osc_spec_a58, op4_osc_spec_a59, op4_osc_spec_a60, op4_osc_spec_a61, op4_osc_spec_a62, op4_osc_spec_a63, op4_osc_spec_a64, op4_osc_spec_b1, op4_osc_spec_b2, op4_osc_spec_b3, op4_osc_spec_b4, op4_osc_spec_b5, op4_osc_spec_b6, op4_osc_spec_b7, op4_osc_spec_b8, op4_osc_spec_b9, op4_osc_spec_b10, op4_osc_spec_b11, op4_osc_spec_b12, op4_osc_spec_b13, op4_osc_spec_b14, op4_osc_spec_b15, op4_osc_spec_b16, op4_osc_spec_b17, op4_osc_spec_b18, op4_osc_spec_b19, op4_osc_spec_b20, op4_osc_spec_b21, op4_osc_spec_b22, op4_osc_spec_b23, op4_osc_spec_b24, op4_osc_spec_b25, op4_osc_spec_b26, op4_osc_spec_b27, op4_osc_spec_b28, op4_osc_spec_b29, op4_osc_spec_b30, op4_osc_spec_b31, op4_osc_spec_b32, op4_osc_spec_b33, op4_osc_spec_b34, op4_osc_spec_b35, op4_osc_spec_b36, op4_osc_spec_b37, op4_osc_spec_b38, op4_osc_spec_b39, op4_osc_spec_b40, op4_osc_spec_b41, op4_osc_spec_b42, op4_osc_spec_b43, op4_osc_spec_b44, op4_osc_spec_b45, op4_osc_spec_b46, op4_osc_spec_b47, op4_osc_spec_b48, op4_osc_spec_b49, op4_osc_spec_b50, op4_osc_spec_b51, op4_osc_spec_b52, op4_osc_spec_b53, op4_osc_spec_b54, op4_osc_spec_b55, op4_osc_spec_b56, op4_osc_spec_b57, op4_osc_spec_b58, op4_osc_spec_b59, op4_osc_spec_b60, op4_osc_spec_b61, op4_osc_spec_b62, op4_osc_spec_b63, op4_osc_spec_b64), 0u) : 0u);
         op4_tl_level_eff[v] = (uint32_t)p1_key_apply(p1_clamp((int32_t)op4_tl_level[voice_part[v]] + op4_lfo_cv_x[v] + p1_macro_velocity_level(S, voice_part[v], v), 0, 99), p1_key_add(op4_level_ks_k_x[v], op4_level_vs_k_x[v]), 0, 99);
-        op4_fb_signed[v] = ((op4_fb_level[voice_part[v]] < 0 ? -1 : 1) * p1_key_apply(op4_fb_level[voice_part[v]] < 0 ? -op4_fb_level[voice_part[v]] : op4_fb_level[voice_part[v]], p1_key_add(op4_fb_ks_k_x[v], op4_fb_vs_k_x[v]), 0, 32767)) + op4_fbenv_cv_x[v] + op4_fblfo_cv_x[v];
+        op4_fb_macro[v] = p1_macro_velocity_feedback(S, voice_part[v], v);
+        op4_fb_level_macro[v] = p1_clamp(op4_fb_level[voice_part[v]] + op4_fb_macro[v], -32767, 32767);
+        op4_fb_signed[v] = ((op4_fb_level_macro[v] < 0 ? -1 : 1) * p1_key_apply(op4_fb_level_macro[v] < 0 ? -op4_fb_level_macro[v] : op4_fb_level_macro[v], p1_key_add(op4_fb_ks_k_x[v], op4_fb_vs_k_x[v]), 0, 32767)) + op4_fbenv_cv_x[v] + op4_fblfo_cv_x[v];
         op4_fb_level_eff[v] = p1_clamp(op4_fb_signed[v] < 0 ? -op4_fb_signed[v] : op4_fb_signed[v], 0, 32767);
         op4_fb_negative[v] = (op4_fb_signed[v] < 0) ? 1u : 0u;
         op3_speclfo_base[v] = ((uint32_t)p1_wave_base[((op3_speclfo_wave[voice_part[v]] > 11u) ? 0u : op3_speclfo_wave[voice_part[v]])] << 10);
@@ -10352,7 +10370,9 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
         op3_osc_bl[v] = ((op3_osc_wave[v] >= 10u && op3_osc_wave[v] <= 12u) ? 1u : 0u);
         op3_osc_tick[v] = ((v == 0) ? (p1_spectral_tick(op3_osc_bank, op3_osc_waveform, op3_osc_spec_range_a, op3_osc_spec_range_b, op3_osc_spec_a1, op3_osc_spec_a2, op3_osc_spec_a3, op3_osc_spec_a4, op3_osc_spec_a5, op3_osc_spec_a6, op3_osc_spec_a7, op3_osc_spec_a8, op3_osc_spec_a9, op3_osc_spec_a10, op3_osc_spec_a11, op3_osc_spec_a12, op3_osc_spec_a13, op3_osc_spec_a14, op3_osc_spec_a15, op3_osc_spec_a16, op3_osc_spec_a17, op3_osc_spec_a18, op3_osc_spec_a19, op3_osc_spec_a20, op3_osc_spec_a21, op3_osc_spec_a22, op3_osc_spec_a23, op3_osc_spec_a24, op3_osc_spec_a25, op3_osc_spec_a26, op3_osc_spec_a27, op3_osc_spec_a28, op3_osc_spec_a29, op3_osc_spec_a30, op3_osc_spec_a31, op3_osc_spec_a32, op3_osc_spec_a33, op3_osc_spec_a34, op3_osc_spec_a35, op3_osc_spec_a36, op3_osc_spec_a37, op3_osc_spec_a38, op3_osc_spec_a39, op3_osc_spec_a40, op3_osc_spec_a41, op3_osc_spec_a42, op3_osc_spec_a43, op3_osc_spec_a44, op3_osc_spec_a45, op3_osc_spec_a46, op3_osc_spec_a47, op3_osc_spec_a48, op3_osc_spec_a49, op3_osc_spec_a50, op3_osc_spec_a51, op3_osc_spec_a52, op3_osc_spec_a53, op3_osc_spec_a54, op3_osc_spec_a55, op3_osc_spec_a56, op3_osc_spec_a57, op3_osc_spec_a58, op3_osc_spec_a59, op3_osc_spec_a60, op3_osc_spec_a61, op3_osc_spec_a62, op3_osc_spec_a63, op3_osc_spec_a64, op3_osc_spec_b1, op3_osc_spec_b2, op3_osc_spec_b3, op3_osc_spec_b4, op3_osc_spec_b5, op3_osc_spec_b6, op3_osc_spec_b7, op3_osc_spec_b8, op3_osc_spec_b9, op3_osc_spec_b10, op3_osc_spec_b11, op3_osc_spec_b12, op3_osc_spec_b13, op3_osc_spec_b14, op3_osc_spec_b15, op3_osc_spec_b16, op3_osc_spec_b17, op3_osc_spec_b18, op3_osc_spec_b19, op3_osc_spec_b20, op3_osc_spec_b21, op3_osc_spec_b22, op3_osc_spec_b23, op3_osc_spec_b24, op3_osc_spec_b25, op3_osc_spec_b26, op3_osc_spec_b27, op3_osc_spec_b28, op3_osc_spec_b29, op3_osc_spec_b30, op3_osc_spec_b31, op3_osc_spec_b32, op3_osc_spec_b33, op3_osc_spec_b34, op3_osc_spec_b35, op3_osc_spec_b36, op3_osc_spec_b37, op3_osc_spec_b38, op3_osc_spec_b39, op3_osc_spec_b40, op3_osc_spec_b41, op3_osc_spec_b42, op3_osc_spec_b43, op3_osc_spec_b44, op3_osc_spec_b45, op3_osc_spec_b46, op3_osc_spec_b47, op3_osc_spec_b48, op3_osc_spec_b49, op3_osc_spec_b50, op3_osc_spec_b51, op3_osc_spec_b52, op3_osc_spec_b53, op3_osc_spec_b54, op3_osc_spec_b55, op3_osc_spec_b56, op3_osc_spec_b57, op3_osc_spec_b58, op3_osc_spec_b59, op3_osc_spec_b60, op3_osc_spec_b61, op3_osc_spec_b62, op3_osc_spec_b63, op3_osc_spec_b64), 0u) : 0u);
         op3_tl_level_eff[v] = (uint32_t)p1_key_apply(p1_clamp((int32_t)op3_tl_level[voice_part[v]] + op3_lfo_cv_x[v] + p1_macro_velocity_level(S, voice_part[v], v), 0, 99), p1_key_add(op3_level_ks_k_x[v], op3_level_vs_k_x[v]), 0, 99);
-        op3_fb_signed[v] = ((op3_fb_level[voice_part[v]] < 0 ? -1 : 1) * p1_key_apply(op3_fb_level[voice_part[v]] < 0 ? -op3_fb_level[voice_part[v]] : op3_fb_level[voice_part[v]], p1_key_add(op3_fb_ks_k_x[v], op3_fb_vs_k_x[v]), 0, 32767)) + op3_fbenv_cv_x[v] + op3_fblfo_cv_x[v];
+        op3_fb_macro[v] = p1_macro_velocity_feedback(S, voice_part[v], v);
+        op3_fb_level_macro[v] = p1_clamp(op3_fb_level[voice_part[v]] + op3_fb_macro[v], -32767, 32767);
+        op3_fb_signed[v] = ((op3_fb_level_macro[v] < 0 ? -1 : 1) * p1_key_apply(op3_fb_level_macro[v] < 0 ? -op3_fb_level_macro[v] : op3_fb_level_macro[v], p1_key_add(op3_fb_ks_k_x[v], op3_fb_vs_k_x[v]), 0, 32767)) + op3_fbenv_cv_x[v] + op3_fblfo_cv_x[v];
         op3_fb_level_eff[v] = p1_clamp(op3_fb_signed[v] < 0 ? -op3_fb_signed[v] : op3_fb_signed[v], 0, 32767);
         op3_fb_negative[v] = (op3_fb_signed[v] < 0) ? 1u : 0u;
         op2_speclfo_base[v] = ((uint32_t)p1_wave_base[((op2_speclfo_wave[voice_part[v]] > 11u) ? 0u : op2_speclfo_wave[voice_part[v]])] << 10);
@@ -10393,7 +10413,9 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
         op2_osc_bl[v] = ((op2_osc_wave[v] >= 10u && op2_osc_wave[v] <= 12u) ? 1u : 0u);
         op2_osc_tick[v] = ((v == 0) ? (p1_spectral_tick(op2_osc_bank, op2_osc_waveform, op2_osc_spec_range_a, op2_osc_spec_range_b, op2_osc_spec_a1, op2_osc_spec_a2, op2_osc_spec_a3, op2_osc_spec_a4, op2_osc_spec_a5, op2_osc_spec_a6, op2_osc_spec_a7, op2_osc_spec_a8, op2_osc_spec_a9, op2_osc_spec_a10, op2_osc_spec_a11, op2_osc_spec_a12, op2_osc_spec_a13, op2_osc_spec_a14, op2_osc_spec_a15, op2_osc_spec_a16, op2_osc_spec_a17, op2_osc_spec_a18, op2_osc_spec_a19, op2_osc_spec_a20, op2_osc_spec_a21, op2_osc_spec_a22, op2_osc_spec_a23, op2_osc_spec_a24, op2_osc_spec_a25, op2_osc_spec_a26, op2_osc_spec_a27, op2_osc_spec_a28, op2_osc_spec_a29, op2_osc_spec_a30, op2_osc_spec_a31, op2_osc_spec_a32, op2_osc_spec_a33, op2_osc_spec_a34, op2_osc_spec_a35, op2_osc_spec_a36, op2_osc_spec_a37, op2_osc_spec_a38, op2_osc_spec_a39, op2_osc_spec_a40, op2_osc_spec_a41, op2_osc_spec_a42, op2_osc_spec_a43, op2_osc_spec_a44, op2_osc_spec_a45, op2_osc_spec_a46, op2_osc_spec_a47, op2_osc_spec_a48, op2_osc_spec_a49, op2_osc_spec_a50, op2_osc_spec_a51, op2_osc_spec_a52, op2_osc_spec_a53, op2_osc_spec_a54, op2_osc_spec_a55, op2_osc_spec_a56, op2_osc_spec_a57, op2_osc_spec_a58, op2_osc_spec_a59, op2_osc_spec_a60, op2_osc_spec_a61, op2_osc_spec_a62, op2_osc_spec_a63, op2_osc_spec_a64, op2_osc_spec_b1, op2_osc_spec_b2, op2_osc_spec_b3, op2_osc_spec_b4, op2_osc_spec_b5, op2_osc_spec_b6, op2_osc_spec_b7, op2_osc_spec_b8, op2_osc_spec_b9, op2_osc_spec_b10, op2_osc_spec_b11, op2_osc_spec_b12, op2_osc_spec_b13, op2_osc_spec_b14, op2_osc_spec_b15, op2_osc_spec_b16, op2_osc_spec_b17, op2_osc_spec_b18, op2_osc_spec_b19, op2_osc_spec_b20, op2_osc_spec_b21, op2_osc_spec_b22, op2_osc_spec_b23, op2_osc_spec_b24, op2_osc_spec_b25, op2_osc_spec_b26, op2_osc_spec_b27, op2_osc_spec_b28, op2_osc_spec_b29, op2_osc_spec_b30, op2_osc_spec_b31, op2_osc_spec_b32, op2_osc_spec_b33, op2_osc_spec_b34, op2_osc_spec_b35, op2_osc_spec_b36, op2_osc_spec_b37, op2_osc_spec_b38, op2_osc_spec_b39, op2_osc_spec_b40, op2_osc_spec_b41, op2_osc_spec_b42, op2_osc_spec_b43, op2_osc_spec_b44, op2_osc_spec_b45, op2_osc_spec_b46, op2_osc_spec_b47, op2_osc_spec_b48, op2_osc_spec_b49, op2_osc_spec_b50, op2_osc_spec_b51, op2_osc_spec_b52, op2_osc_spec_b53, op2_osc_spec_b54, op2_osc_spec_b55, op2_osc_spec_b56, op2_osc_spec_b57, op2_osc_spec_b58, op2_osc_spec_b59, op2_osc_spec_b60, op2_osc_spec_b61, op2_osc_spec_b62, op2_osc_spec_b63, op2_osc_spec_b64), 0u) : 0u);
         op2_tl_level_eff[v] = (uint32_t)p1_key_apply(p1_clamp((int32_t)op2_tl_level[voice_part[v]] + op2_lfo_cv_x[v] + p1_macro_velocity_level(S, voice_part[v], v), 0, 99), p1_key_add(op2_level_ks_k_x[v], op2_level_vs_k_x[v]), 0, 99);
-        op2_fb_signed[v] = ((op2_fb_level[voice_part[v]] < 0 ? -1 : 1) * p1_key_apply(op2_fb_level[voice_part[v]] < 0 ? -op2_fb_level[voice_part[v]] : op2_fb_level[voice_part[v]], p1_key_add(op2_fb_ks_k_x[v], op2_fb_vs_k_x[v]), 0, 32767)) + op2_fbenv_cv_x[v] + op2_fblfo_cv_x[v];
+        op2_fb_macro[v] = p1_macro_velocity_feedback(S, voice_part[v], v);
+        op2_fb_level_macro[v] = p1_clamp(op2_fb_level[voice_part[v]] + op2_fb_macro[v], -32767, 32767);
+        op2_fb_signed[v] = ((op2_fb_level_macro[v] < 0 ? -1 : 1) * p1_key_apply(op2_fb_level_macro[v] < 0 ? -op2_fb_level_macro[v] : op2_fb_level_macro[v], p1_key_add(op2_fb_ks_k_x[v], op2_fb_vs_k_x[v]), 0, 32767)) + op2_fbenv_cv_x[v] + op2_fblfo_cv_x[v];
         op2_fb_level_eff[v] = p1_clamp(op2_fb_signed[v] < 0 ? -op2_fb_signed[v] : op2_fb_signed[v], 0, 32767);
         op2_fb_negative[v] = (op2_fb_signed[v] < 0) ? 1u : 0u;
         op1_speclfo_base[v] = ((uint32_t)p1_wave_base[((op1_speclfo_wave[voice_part[v]] > 11u) ? 0u : op1_speclfo_wave[voice_part[v]])] << 10);
@@ -10434,7 +10456,9 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
         op1_osc_bl[v] = ((op1_osc_wave[v] >= 10u && op1_osc_wave[v] <= 12u) ? 1u : 0u);
         op1_osc_tick[v] = ((v == 0) ? (p1_spectral_tick(op1_osc_bank, op1_osc_waveform, op1_osc_spec_range_a, op1_osc_spec_range_b, op1_osc_spec_a1, op1_osc_spec_a2, op1_osc_spec_a3, op1_osc_spec_a4, op1_osc_spec_a5, op1_osc_spec_a6, op1_osc_spec_a7, op1_osc_spec_a8, op1_osc_spec_a9, op1_osc_spec_a10, op1_osc_spec_a11, op1_osc_spec_a12, op1_osc_spec_a13, op1_osc_spec_a14, op1_osc_spec_a15, op1_osc_spec_a16, op1_osc_spec_a17, op1_osc_spec_a18, op1_osc_spec_a19, op1_osc_spec_a20, op1_osc_spec_a21, op1_osc_spec_a22, op1_osc_spec_a23, op1_osc_spec_a24, op1_osc_spec_a25, op1_osc_spec_a26, op1_osc_spec_a27, op1_osc_spec_a28, op1_osc_spec_a29, op1_osc_spec_a30, op1_osc_spec_a31, op1_osc_spec_a32, op1_osc_spec_a33, op1_osc_spec_a34, op1_osc_spec_a35, op1_osc_spec_a36, op1_osc_spec_a37, op1_osc_spec_a38, op1_osc_spec_a39, op1_osc_spec_a40, op1_osc_spec_a41, op1_osc_spec_a42, op1_osc_spec_a43, op1_osc_spec_a44, op1_osc_spec_a45, op1_osc_spec_a46, op1_osc_spec_a47, op1_osc_spec_a48, op1_osc_spec_a49, op1_osc_spec_a50, op1_osc_spec_a51, op1_osc_spec_a52, op1_osc_spec_a53, op1_osc_spec_a54, op1_osc_spec_a55, op1_osc_spec_a56, op1_osc_spec_a57, op1_osc_spec_a58, op1_osc_spec_a59, op1_osc_spec_a60, op1_osc_spec_a61, op1_osc_spec_a62, op1_osc_spec_a63, op1_osc_spec_a64, op1_osc_spec_b1, op1_osc_spec_b2, op1_osc_spec_b3, op1_osc_spec_b4, op1_osc_spec_b5, op1_osc_spec_b6, op1_osc_spec_b7, op1_osc_spec_b8, op1_osc_spec_b9, op1_osc_spec_b10, op1_osc_spec_b11, op1_osc_spec_b12, op1_osc_spec_b13, op1_osc_spec_b14, op1_osc_spec_b15, op1_osc_spec_b16, op1_osc_spec_b17, op1_osc_spec_b18, op1_osc_spec_b19, op1_osc_spec_b20, op1_osc_spec_b21, op1_osc_spec_b22, op1_osc_spec_b23, op1_osc_spec_b24, op1_osc_spec_b25, op1_osc_spec_b26, op1_osc_spec_b27, op1_osc_spec_b28, op1_osc_spec_b29, op1_osc_spec_b30, op1_osc_spec_b31, op1_osc_spec_b32, op1_osc_spec_b33, op1_osc_spec_b34, op1_osc_spec_b35, op1_osc_spec_b36, op1_osc_spec_b37, op1_osc_spec_b38, op1_osc_spec_b39, op1_osc_spec_b40, op1_osc_spec_b41, op1_osc_spec_b42, op1_osc_spec_b43, op1_osc_spec_b44, op1_osc_spec_b45, op1_osc_spec_b46, op1_osc_spec_b47, op1_osc_spec_b48, op1_osc_spec_b49, op1_osc_spec_b50, op1_osc_spec_b51, op1_osc_spec_b52, op1_osc_spec_b53, op1_osc_spec_b54, op1_osc_spec_b55, op1_osc_spec_b56, op1_osc_spec_b57, op1_osc_spec_b58, op1_osc_spec_b59, op1_osc_spec_b60, op1_osc_spec_b61, op1_osc_spec_b62, op1_osc_spec_b63, op1_osc_spec_b64), 0u) : 0u);
         op1_tl_level_eff[v] = (uint32_t)p1_key_apply(p1_clamp((int32_t)op1_tl_level[voice_part[v]] + op1_lfo_cv_x[v] + p1_macro_velocity_level(S, voice_part[v], v), 0, 99), p1_key_add(op1_level_ks_k_x[v], op1_level_vs_k_x[v]), 0, 99);
-        op1_fb_signed[v] = ((op1_fb_level[voice_part[v]] < 0 ? -1 : 1) * p1_key_apply(op1_fb_level[voice_part[v]] < 0 ? -op1_fb_level[voice_part[v]] : op1_fb_level[voice_part[v]], p1_key_add(op1_fb_ks_k_x[v], op1_fb_vs_k_x[v]), 0, 32767)) + op1_fbenv_cv_x[v] + op1_fblfo_cv_x[v];
+        op1_fb_macro[v] = p1_macro_velocity_feedback(S, voice_part[v], v);
+        op1_fb_level_macro[v] = p1_clamp(op1_fb_level[voice_part[v]] + op1_fb_macro[v], -32767, 32767);
+        op1_fb_signed[v] = ((op1_fb_level_macro[v] < 0 ? -1 : 1) * p1_key_apply(op1_fb_level_macro[v] < 0 ? -op1_fb_level_macro[v] : op1_fb_level_macro[v], p1_key_add(op1_fb_ks_k_x[v], op1_fb_vs_k_x[v]), 0, 32767)) + op1_fbenv_cv_x[v] + op1_fblfo_cv_x[v];
         op1_fb_level_eff[v] = p1_clamp(op1_fb_signed[v] < 0 ? -op1_fb_signed[v] : op1_fb_signed[v], 0, 32767);
         op1_fb_negative[v] = (op1_fb_signed[v] < 0) ? 1u : 0u;
     }

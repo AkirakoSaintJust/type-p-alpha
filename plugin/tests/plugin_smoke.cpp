@@ -21,6 +21,7 @@
 #include "PluginProcessor.h"
 #include "VolumeLaw.h"
 #include "Widgets.h"
+#include "macro_target_ids.h"
 
 namespace {
 
@@ -272,19 +273,19 @@ int main()
                     parameter->convertTo0to1(static_cast<float>(value)));
             }
         };
-        const auto renderFirst = [&](int macro) {
+        const auto renderFirst = [&](int macro, int target = 35) {
             auto instance = std::make_unique<TypePAlphaAudioProcessor>();
             instance->setRateAndBufferSizeDetails(48000.0, kFrames);
             instance->prepareToPlay(48000.0, kFrames);
             set(*instance, "macro1", macro);
-            set(*instance, "macro1_target1", 35);
+            set(*instance, "macro1_target1", target);
             set(*instance, "macro1_range1", 50);
             check(std::lround(instance->parameters()
                                   .getRawParameterValue("macro1")
                                   ->load()) == macro &&
                       std::lround(instance->parameters()
                                       .getRawParameterValue("macro1_target1")
-                                      ->load()) == 35 &&
+                                      ->load()) == target &&
                       std::lround(instance->parameters()
                                       .getRawParameterValue("macro1_range1")
                                       ->load()) == 50,
@@ -299,18 +300,22 @@ int main()
         const auto macroAtZero = renderFirst(0);
         check(matches(macroAtZero, reference, kFrames),
               "a macro at 0 leaves the render bit-exact");
+        const auto feedbackAtZero =
+            renderFirst(0, P1_MACRO_TARGET_P1_OP_FEEDBACKS);
+        check(matches(feedbackAtZero, reference, kFrames),
+              "a feedback macro at 0 leaves the render bit-exact");
         const auto macroAtFifty = renderFirst(50);
         check(!matches(macroAtFifty, reference, kFrames),
               "a macro moves its destination");
 
         const auto renderWithSource = [&](int source, int controller,
-                                          int controllerValue,
-                                          int velocity) {
+                                          int controllerValue, int velocity,
+                                          int target = 35) {
             auto instance = std::make_unique<TypePAlphaAudioProcessor>();
             instance->setRateAndBufferSizeDetails(48000.0, kFrames);
             instance->prepareToPlay(48000.0, kFrames);
             set(*instance, "macro1", 0);
-            set(*instance, "macro1_target1", 35);
+            set(*instance, "macro1_target1", target);
             set(*instance, "macro1_range1", 50);
             set(*instance, "macro1_midi", source);
             set(*instance, "macro1_midi_range", 50);
@@ -337,6 +342,10 @@ int main()
               "the wheel source moves the macro");
         check(!matches(renderWithSource(3, -1, 0, 100), reference, kFrames),
               "the velocity source moves the macro");
+        check(!matches(renderWithSource(3, -1, 0, 100,
+                                        P1_MACRO_TARGET_P1_OP_FEEDBACKS),
+                       reference, kFrames),
+              "the velocity source moves the feedback target");
     }
 
     juce::MemoryBlock state;

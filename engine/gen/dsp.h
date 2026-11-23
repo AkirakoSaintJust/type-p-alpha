@@ -62,6 +62,8 @@ typedef struct type_p_alpha_state {
     uint32_t op1_fb_negative[NVOICE];
     int32_t op1_fb_prev[NVOICE];
     int32_t op1_fb_shaped[NVOICE];
+    int32_t op1_fb_macro[NVOICE];
+    int32_t op1_fb_level_macro[NVOICE];
     int32_t op1_level_ks_k[NVOICE];
     int32_t op1_fb_ks_k[NVOICE];
     int32_t op1_eg_ks_k[NVOICE];
@@ -133,6 +135,8 @@ typedef struct type_p_alpha_state {
     uint32_t op2_fb_negative[NVOICE];
     int32_t op2_fb_prev[NVOICE];
     int32_t op2_fb_shaped[NVOICE];
+    int32_t op2_fb_macro[NVOICE];
+    int32_t op2_fb_level_macro[NVOICE];
     int32_t op2_level_ks_k[NVOICE];
     int32_t op2_fb_ks_k[NVOICE];
     int32_t op2_eg_ks_k[NVOICE];
@@ -204,6 +208,8 @@ typedef struct type_p_alpha_state {
     uint32_t op3_fb_negative[NVOICE];
     int32_t op3_fb_prev[NVOICE];
     int32_t op3_fb_shaped[NVOICE];
+    int32_t op3_fb_macro[NVOICE];
+    int32_t op3_fb_level_macro[NVOICE];
     int32_t op3_level_ks_k[NVOICE];
     int32_t op3_fb_ks_k[NVOICE];
     int32_t op3_eg_ks_k[NVOICE];
@@ -275,6 +281,8 @@ typedef struct type_p_alpha_state {
     uint32_t op4_fb_negative[NVOICE];
     int32_t op4_fb_prev[NVOICE];
     int32_t op4_fb_shaped[NVOICE];
+    int32_t op4_fb_macro[NVOICE];
+    int32_t op4_fb_level_macro[NVOICE];
     int32_t op4_level_ks_k[NVOICE];
     int32_t op4_fb_ks_k[NVOICE];
     int32_t op4_eg_ks_k[NVOICE];
