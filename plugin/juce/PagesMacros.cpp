@@ -67,8 +67,21 @@ public:
                    juce::Justification::centredRight, false);
     }
 
-    void mouseDown(const juce::MouseEvent& event) override { setFromMouse(event); }
+    void mouseDown(const juce::MouseEvent& event) override
+    {
+        if (attach_ == nullptr)
+            return;
+        attach_->beginGesture();
+        setFromMouse(event);
+    }
+
     void mouseDrag(const juce::MouseEvent& event) override { setFromMouse(event); }
+
+    void mouseUp(const juce::MouseEvent&) override
+    {
+        if (attach_ != nullptr)
+            attach_->endGesture();
+    }
 
 private:
     void setFromMouse(const juce::MouseEvent& event)
@@ -79,7 +92,7 @@ private:
             0.0f, 1.0f,
             (static_cast<float>(event.x) - static_cast<float>(track_.getX())) /
                 static_cast<float>(track_.getWidth()));
-        attach_->setValueAsCompleteGesture(
+        attach_->setValueAsPartOfGesture(
             static_cast<float>(spec_->min) +
             norm * static_cast<float>(spec_->max - spec_->min));
     }
