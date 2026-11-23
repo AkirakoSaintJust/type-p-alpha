@@ -551,8 +551,18 @@ void TypePAlphaAudioProcessor::syncMacros()
                         continue;
                     const int index =
                         macroMemberIndex_[static_cast<std::size_t>(member.id)];
-                    if (index >= 0)
-                        macroOffsets_[static_cast<std::size_t>(index)] += offset;
+                    if (index < 0)
+                        continue;
+                    /* The engine applies the velocity source to the operator
+                     * amplitude, feedback and spectral envelope rates per
+                     * voice. The phase envelope rates in the same row stay in
+                     * the part-level layer. */
+                    if (sources[m] == 3 &&
+                        (target == P1_MACRO_TARGET_P1_OP_ENV_RATES ||
+                         target == P1_MACRO_TARGET_P2_OP_ENV_RATES) &&
+                        p1::macros::isEnvRateMember(member.id))
+                        continue;
+                    macroOffsets_[static_cast<std::size_t>(index)] += offset;
                 }
             }
         }

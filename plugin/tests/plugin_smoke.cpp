@@ -139,6 +139,22 @@ int main()
               p1::macroTargetNormalised(0.1, -0.5) == 0.0,
           "the macro target clamps in the normalised domain");
     {
+        auto parameterIndex = [](const char* id) {
+            const auto* spec = p1::ui::findSpec(id);
+            return spec != nullptr
+                       ? static_cast<int>(spec - kP1ParamSpecs.data())
+                       : -1;
+        };
+        check(p1::macros::isEnvRateMember(parameterIndex("attack.p0")) &&
+                  p1::macros::isEnvRateMember(
+                      parameterIndex("op1_fbenv_r1.p0")) &&
+                  p1::macros::isEnvRateMember(
+                      parameterIndex("op1_spec_env_r1.p0")) &&
+                  !p1::macros::isEnvRateMember(
+                      parameterIndex("op1_phase_env_r1.p0")),
+              "the engine env rate set takes the per-voice envelopes");
+    }
+    {
         /* A targeted destination reports its stored value at rest and the
          * effective value while the macro deviates. A parameter outside the
          * table reports neither. */
@@ -273,6 +289,13 @@ int main()
                     parameter->convertTo0to1(static_cast<float>(value)));
             }
         };
+        const auto sameBuffer = [](const juce::AudioBuffer<float>& a,
+                                   const juce::AudioBuffer<float>& b) {
+            for (int i = 0; i < a.getNumSamples(); ++i)
+                if (!bitEqual(a.getSample(0, i), b.getSample(0, i)))
+                    return false;
+            return true;
+        };
         const auto renderFirst = [&](int macro, int target = 35) {
             auto instance = std::make_unique<TypePAlphaAudioProcessor>();
             instance->setRateAndBufferSizeDetails(48000.0, kFrames);
@@ -304,6 +327,10 @@ int main()
             renderFirst(0, P1_MACRO_TARGET_P1_OP_FEEDBACKS);
         check(matches(feedbackAtZero, reference, kFrames),
               "a feedback macro at 0 leaves the render bit-exact");
+        const auto ratesAtZero =
+            renderFirst(0, P1_MACRO_TARGET_P1_OP_ENV_RATES);
+        check(matches(ratesAtZero, reference, kFrames),
+              "an env rate macro at 0 leaves the render bit-exact");
         const auto macroAtFifty = renderFirst(50);
         check(!matches(macroAtFifty, reference, kFrames),
               "a macro moves its destination");
@@ -346,6 +373,10 @@ int main()
                                         P1_MACRO_TARGET_P1_OP_FEEDBACKS),
                        reference, kFrames),
               "the velocity source moves the feedback target");
+        check(!matches(renderWithSource(3, -1, 0, 100,
+                                        P1_MACRO_TARGET_P1_OP_ENV_RATES),
+                       reference, kFrames),
+              "the velocity source moves the env rate target");
 
         /* The morph only changes the sound in spectrum mode, so this pair sets
          * the waveform and compares two fresh instances. */
@@ -374,13 +405,6 @@ int main()
         };
         const auto morphReferenceHigh = renderMorph(100, false);
         const auto morphReferenceLow = renderMorph(1, false);
-        const auto sameBuffer = [](const juce::AudioBuffer<float>& a,
-                                   const juce::AudioBuffer<float>& b) {
-            for (int i = 0; i < a.getNumSamples(); ++i)
-                if (!bitEqual(a.getSample(0, i), b.getSample(0, i)))
-                    return false;
-            return true;
-        };
         check(sameBuffer(renderMorph(1, true, 0), morphReferenceLow),
               "a morph macro at rest leaves the render bit-exact");
         check(!sameBuffer(renderMorph(100, true), morphReferenceHigh),

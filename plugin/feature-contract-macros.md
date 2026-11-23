@@ -10,10 +10,11 @@
 - **Owner / date:** P1Onken, 2026-11-23.
 - **Disposition:** the 54 parameters, the CC map, the automation flags, the multi
   record, the target table, the linear and log destination offsets, the relative CC,
-  wheel and velocity sources, the per-voice velocity source on the operator levels and
-  the all-operator feedback and morph groups, the macros page and the
-  target-parameter feedback are built. The rest of the per-voice layer is outstanding,
-  so the evidence below is partly run and partly a list.
+  wheel and velocity sources, the per-voice velocity source on the operator levels, the
+  all-operator feedback and morph groups and the operator amplitude, feedback and
+  spectral envelope rates, the macros page and the target-parameter feedback are built.
+  The rest of the per-voice layer is outstanding, so the evidence below is partly run
+  and partly a list.
 
 ## Player outcome
 
@@ -123,14 +124,14 @@ Run on the parameter layer, the multi record, the target table and the offset la
   render a fresh first block with the macro knob at 0 and the source at 127 or 100,
   and each differs from the engine reference.
 - `engine_parity` checks the per-voice operator level helper with two velocities,
-  `20` and `120`, and the hard note's level offset is larger than the soft note's.
-  It checks the all-operator feedback and morph helpers the same way. The velocity
-  source render therefore reaches all three engine paths.
-- `plugin_smoke` renders the first block with a feedback target and a macro at 0,
-  and it matches the engine reference bit for bit. The same target with the velocity
-  source moves the render, so the feedback offset reaches the engine. A spectrum-mode
-  morph pair checks the morph path: a morph macro with its source range at 0 matches
-  the no-macro render bit for bit, and a velocity of 100 moves it.
+  `20` and `120`, and the hard note's level offset is larger than the soft note's. It
+  checks the all-operator feedback, morph and envelope rate helpers the same way. The
+  velocity source render therefore reaches every engine path.
+- `plugin_smoke` renders the first block with a feedback or envelope rate target and a
+  macro at 0, and each matches the engine reference bit for bit. The same targets with
+  the velocity source move the render, so their offsets reach the engine. A
+  spectrum-mode morph pair checks the morph path: a morph macro with its source range
+  at 0 matches the no-macro render bit for bit, and a velocity of 100 moves it.
 - The editor snapshots gain `editor-macros.png` for the empty cards,
   `editor-macros-targets.png` for the renamed cards with three destinations and a
   green or purple range in each row, and `editor-macros-live.png` for a mod wheel at
@@ -152,10 +153,11 @@ Run on the parameter layer, the multi record, the target table and the offset la
 
 Still outstanding:
 
-- The rest of the per-voice layer: the envelope rates, the LFO rates and depths, the
-  breakpoints, the pan note policy, and the carrier and modulator role groups. The
-  all-operator feedback and morph groups are per voice; the carrier and modulator
-  groups still take the newest note.
+- The rest of the per-voice layer: the LFO rates and depths, the breakpoints, the pan
+  note policy, and the carrier and modulator role groups. The all-operator env rate
+  group is per voice for the amplitude, feedback and spectral envelopes; the phase
+  envelope stays part-level because it holds one state per part, as do the phase map
+  breakpoints and the pan.
 - A snapshot of the target menu, because the component snapshot does not capture an
   open popup. The eight headings come from the generated table, which the table test
   pins.
@@ -163,13 +165,13 @@ Still outstanding:
 ## Limits
 
 - **The parameter layer, the multi record, the target table, the offsets, the
-  relative sources, the per-voice operator levels and the all-operator feedback and
-  morph groups, the macros page and the feedback are built.** The rest of the
+  relative sources, the per-voice operator levels, feedbacks, morphs and operator
+  envelope rates, the macros page and the feedback are built.** The rest of the
   per-voice layer is not.
-- **The velocity source is per voice on the operator levels and the all-operator
-  feedback and morph groups, and newest-note on the rest.** The other targets move the
-  whole part with the last note's velocity until their per-voice paths land. The
-  feedback beside a target reads the same newest-note velocity.
+- **The velocity source is per voice on the groups above and newest-note on the
+  rest.** The other targets move the whole part with the last note's velocity until
+  their per-voice paths land. The feedback beside a target reads the same newest-note
+  velocity.
 - **The source values are live, not patch state.** The source select and range are
   saved with the patch, whilst the CC, wheel and note velocity arrive at runtime and
   start at rest.

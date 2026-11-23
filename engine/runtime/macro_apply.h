@@ -5,13 +5,13 @@
 #include "macro_target_ids.h"
 
 /* The per-voice part of the macro layer: the velocity source on the all-operator
- * level group and the all-operator feedback group. The plugin writes the knob, CC,
+ * level, feedback, morph and envelope rate groups. The plugin writes the knob, CC,
  * wheel and the non-velocity source offsets at part level, whilst the velocity
- * source needs each voice's own velocity, which only the engine has. The level
- * helper returns a level offset in 0..99 units for the operator's total level, and
- * the `tl` node adds it before the key and velocity follow. The feedback helper
- * returns a raw offset over the feedback span, and the `fb_tap` node adds it to the
- * stored level before the key and velocity scaling. */
+ * source needs each voice's own velocity, which only the engine has. The helpers
+ * return offsets in the destination's units: a level in 0..99 steps, a raw
+ * feedback offset, a morph position in 0..99, and an envelope rate in 0..99. The
+ * nodes add the offset before their own key and velocity follow, and each node
+ * clamps at its destination range. */
 static inline int32_t p1_macro_velocity_offset(const type_p_alpha_state *state,
                                                int32_t wanted,
                                                int32_t velocity,
@@ -84,6 +84,15 @@ static inline int32_t p1_macro_velocity_morph(const type_p_alpha_state *state,
 {
     const int32_t wanted = part == 0u ? P1_MACRO_TARGET_P1_OP_MORPHS
                                       : P1_MACRO_TARGET_P2_OP_MORPHS;
+    return p1_macro_velocity_offset(state, wanted, state->voice_velocity[voice],
+                                    99);
+}
+
+static inline int32_t p1_macro_velocity_env_rate(const type_p_alpha_state *state,
+                                                 uint32_t part, uint32_t voice)
+{
+    const int32_t wanted = part == 0u ? P1_MACRO_TARGET_P1_OP_ENV_RATES
+                                      : P1_MACRO_TARGET_P2_OP_ENV_RATES;
     return p1_macro_velocity_offset(state, wanted, state->voice_velocity[voice],
                                     99);
 }

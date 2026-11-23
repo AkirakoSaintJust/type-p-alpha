@@ -30,6 +30,12 @@ typedef struct type_p_alpha_state {
     uint32_t op1_eg_d1_eff[NVOICE];
     uint32_t op1_eg_d2_eff[NVOICE];
     uint32_t op1_eg_rel_eff[NVOICE];
+    int32_t op1_eg_rate_macro[NVOICE];
+    int32_t op1_eg_warm_base[NVOICE];
+    int32_t op1_eg_surge_base[NVOICE];
+    int32_t op1_eg_d1_base[NVOICE];
+    int32_t op1_eg_d2_base[NVOICE];
+    int32_t op1_eg_rel_base[NVOICE];
     uint32_t op1_lfo_phase[NVOICE];
     uint32_t op1_lfo_base[NVOICE];
     int32_t op1_lfo_w[NVOICE];
@@ -43,6 +49,11 @@ typedef struct type_p_alpha_state {
     uint32_t op1_fbenv_r2_eff[NVOICE];
     uint32_t op1_fbenv_r3_eff[NVOICE];
     uint32_t op1_fbenv_r4_eff[NVOICE];
+    int32_t op1_fbenv_rate_macro[NVOICE];
+    int32_t op1_fbenv_r1_base[NVOICE];
+    int32_t op1_fbenv_r2_base[NVOICE];
+    int32_t op1_fbenv_r3_base[NVOICE];
+    int32_t op1_fbenv_relr_base[NVOICE];
     uint32_t op1_fblfo_phase[NVOICE];
     uint32_t op1_fblfo_base[NVOICE];
     int32_t op1_fblfo_w[NVOICE];
@@ -78,6 +89,11 @@ typedef struct type_p_alpha_state {
     uint32_t op1_specenv_r2_eff[NVOICE];
     uint32_t op1_specenv_r3_eff[NVOICE];
     uint32_t op1_specenv_r4_eff[NVOICE];
+    int32_t op1_specenv_rate_macro[NVOICE];
+    int32_t op1_specenv_r1_base[NVOICE];
+    int32_t op1_specenv_r2_base[NVOICE];
+    int32_t op1_specenv_r3_base[NVOICE];
+    int32_t op1_specenv_relr_base[NVOICE];
     uint32_t op1_speclfo_phase[NVOICE];
     uint32_t op1_speclfo_base[NVOICE];
     int32_t op1_speclfo_w[NVOICE];
@@ -104,6 +120,12 @@ typedef struct type_p_alpha_state {
     uint32_t op2_eg_d1_eff[NVOICE];
     uint32_t op2_eg_d2_eff[NVOICE];
     uint32_t op2_eg_rel_eff[NVOICE];
+    int32_t op2_eg_rate_macro[NVOICE];
+    int32_t op2_eg_warm_base[NVOICE];
+    int32_t op2_eg_surge_base[NVOICE];
+    int32_t op2_eg_d1_base[NVOICE];
+    int32_t op2_eg_d2_base[NVOICE];
+    int32_t op2_eg_rel_base[NVOICE];
     uint32_t op2_lfo_phase[NVOICE];
     uint32_t op2_lfo_base[NVOICE];
     int32_t op2_lfo_w[NVOICE];
@@ -117,6 +139,11 @@ typedef struct type_p_alpha_state {
     uint32_t op2_fbenv_r2_eff[NVOICE];
     uint32_t op2_fbenv_r3_eff[NVOICE];
     uint32_t op2_fbenv_r4_eff[NVOICE];
+    int32_t op2_fbenv_rate_macro[NVOICE];
+    int32_t op2_fbenv_r1_base[NVOICE];
+    int32_t op2_fbenv_r2_base[NVOICE];
+    int32_t op2_fbenv_r3_base[NVOICE];
+    int32_t op2_fbenv_relr_base[NVOICE];
     uint32_t op2_fblfo_phase[NVOICE];
     uint32_t op2_fblfo_base[NVOICE];
     int32_t op2_fblfo_w[NVOICE];
@@ -152,6 +179,11 @@ typedef struct type_p_alpha_state {
     uint32_t op2_specenv_r2_eff[NVOICE];
     uint32_t op2_specenv_r3_eff[NVOICE];
     uint32_t op2_specenv_r4_eff[NVOICE];
+    int32_t op2_specenv_rate_macro[NVOICE];
+    int32_t op2_specenv_r1_base[NVOICE];
+    int32_t op2_specenv_r2_base[NVOICE];
+    int32_t op2_specenv_r3_base[NVOICE];
+    int32_t op2_specenv_relr_base[NVOICE];
     uint32_t op2_speclfo_phase[NVOICE];
     uint32_t op2_speclfo_base[NVOICE];
     int32_t op2_speclfo_w[NVOICE];
@@ -178,6 +210,12 @@ typedef struct type_p_alpha_state {
     uint32_t op3_eg_d1_eff[NVOICE];
     uint32_t op3_eg_d2_eff[NVOICE];
     uint32_t op3_eg_rel_eff[NVOICE];
+    int32_t op3_eg_rate_macro[NVOICE];
+    int32_t op3_eg_warm_base[NVOICE];
+    int32_t op3_eg_surge_base[NVOICE];
+    int32_t op3_eg_d1_base[NVOICE];
+    int32_t op3_eg_d2_base[NVOICE];
+    int32_t op3_eg_rel_base[NVOICE];
     uint32_t op3_lfo_phase[NVOICE];
     uint32_t op3_lfo_base[NVOICE];
     int32_t op3_lfo_w[NVOICE];
@@ -191,6 +229,11 @@ typedef struct type_p_alpha_state {
     uint32_t op3_fbenv_r2_eff[NVOICE];
     uint32_t op3_fbenv_r3_eff[NVOICE];
     uint32_t op3_fbenv_r4_eff[NVOICE];
+    int32_t op3_fbenv_rate_macro[NVOICE];
+    int32_t op3_fbenv_r1_base[NVOICE];
+    int32_t op3_fbenv_r2_base[NVOICE];
+    int32_t op3_fbenv_r3_base[NVOICE];
+    int32_t op3_fbenv_relr_base[NVOICE];
     uint32_t op3_fblfo_phase[NVOICE];
     uint32_t op3_fblfo_base[NVOICE];
     int32_t op3_fblfo_w[NVOICE];
@@ -226,6 +269,11 @@ typedef struct type_p_alpha_state {
     uint32_t op3_specenv_r2_eff[NVOICE];
     uint32_t op3_specenv_r3_eff[NVOICE];
     uint32_t op3_specenv_r4_eff[NVOICE];
+    int32_t op3_specenv_rate_macro[NVOICE];
+    int32_t op3_specenv_r1_base[NVOICE];
+    int32_t op3_specenv_r2_base[NVOICE];
+    int32_t op3_specenv_r3_base[NVOICE];
+    int32_t op3_specenv_relr_base[NVOICE];
     uint32_t op3_speclfo_phase[NVOICE];
     uint32_t op3_speclfo_base[NVOICE];
     int32_t op3_speclfo_w[NVOICE];
@@ -252,6 +300,12 @@ typedef struct type_p_alpha_state {
     uint32_t op4_eg_d1_eff[NVOICE];
     uint32_t op4_eg_d2_eff[NVOICE];
     uint32_t op4_eg_rel_eff[NVOICE];
+    int32_t op4_eg_rate_macro[NVOICE];
+    int32_t op4_eg_warm_base[NVOICE];
+    int32_t op4_eg_surge_base[NVOICE];
+    int32_t op4_eg_d1_base[NVOICE];
+    int32_t op4_eg_d2_base[NVOICE];
+    int32_t op4_eg_rel_base[NVOICE];
     uint32_t op4_lfo_phase[NVOICE];
     uint32_t op4_lfo_base[NVOICE];
     int32_t op4_lfo_w[NVOICE];
@@ -265,6 +319,11 @@ typedef struct type_p_alpha_state {
     uint32_t op4_fbenv_r2_eff[NVOICE];
     uint32_t op4_fbenv_r3_eff[NVOICE];
     uint32_t op4_fbenv_r4_eff[NVOICE];
+    int32_t op4_fbenv_rate_macro[NVOICE];
+    int32_t op4_fbenv_r1_base[NVOICE];
+    int32_t op4_fbenv_r2_base[NVOICE];
+    int32_t op4_fbenv_r3_base[NVOICE];
+    int32_t op4_fbenv_relr_base[NVOICE];
     uint32_t op4_fblfo_phase[NVOICE];
     uint32_t op4_fblfo_base[NVOICE];
     int32_t op4_fblfo_w[NVOICE];
@@ -300,6 +359,11 @@ typedef struct type_p_alpha_state {
     uint32_t op4_specenv_r2_eff[NVOICE];
     uint32_t op4_specenv_r3_eff[NVOICE];
     uint32_t op4_specenv_r4_eff[NVOICE];
+    int32_t op4_specenv_rate_macro[NVOICE];
+    int32_t op4_specenv_r1_base[NVOICE];
+    int32_t op4_specenv_r2_base[NVOICE];
+    int32_t op4_specenv_r3_base[NVOICE];
+    int32_t op4_specenv_relr_base[NVOICE];
     uint32_t op4_speclfo_phase[NVOICE];
     uint32_t op4_speclfo_base[NVOICE];
     int32_t op4_speclfo_w[NVOICE];
@@ -317,6 +381,11 @@ typedef struct type_p_alpha_state {
     uint32_t penv_r2_eff[NVOICE];
     uint32_t penv_r3_eff[NVOICE];
     uint32_t penv_r4_eff[NVOICE];
+    int32_t penv_rate_macro[NVOICE];
+    int32_t penv_r1_base[NVOICE];
+    int32_t penv_r2_base[NVOICE];
+    int32_t penv_r3_base[NVOICE];
+    int32_t penv_relr_base[NVOICE];
     int32_t penv_ks_k[NVOICE];
     int32_t penv_vs_k[NVOICE];
     uint32_t plfo_phase[NVOICE];
@@ -344,6 +413,11 @@ typedef struct type_p_alpha_state {
     uint32_t fenv_r2_eff[NVOICE];
     uint32_t fenv_r3_eff[NVOICE];
     uint32_t fenv_r4_eff[NVOICE];
+    int32_t fenv_rate_macro[NVOICE];
+    int32_t fenv_r1_base[NVOICE];
+    int32_t fenv_r2_base[NVOICE];
+    int32_t fenv_r3_base[NVOICE];
+    int32_t fenv_relr_base[NVOICE];
     int32_t dc_x1;
     int32_t dc_y1;
     uint32_t voice_age[NVOICE];
@@ -5734,6 +5808,12 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op1_eg_d1_eff (S->op1_eg_d1_eff)
 #define op1_eg_d2_eff (S->op1_eg_d2_eff)
 #define op1_eg_rel_eff (S->op1_eg_rel_eff)
+#define op1_eg_rate_macro (S->op1_eg_rate_macro)
+#define op1_eg_warm_base (S->op1_eg_warm_base)
+#define op1_eg_surge_base (S->op1_eg_surge_base)
+#define op1_eg_d1_base (S->op1_eg_d1_base)
+#define op1_eg_d2_base (S->op1_eg_d2_base)
+#define op1_eg_rel_base (S->op1_eg_rel_base)
 #define op1_lfo_phase (S->op1_lfo_phase)
 #define op1_lfo_base (S->op1_lfo_base)
 #define op1_lfo_w (S->op1_lfo_w)
@@ -5747,6 +5827,11 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op1_fbenv_r2_eff (S->op1_fbenv_r2_eff)
 #define op1_fbenv_r3_eff (S->op1_fbenv_r3_eff)
 #define op1_fbenv_r4_eff (S->op1_fbenv_r4_eff)
+#define op1_fbenv_rate_macro (S->op1_fbenv_rate_macro)
+#define op1_fbenv_r1_base (S->op1_fbenv_r1_base)
+#define op1_fbenv_r2_base (S->op1_fbenv_r2_base)
+#define op1_fbenv_r3_base (S->op1_fbenv_r3_base)
+#define op1_fbenv_relr_base (S->op1_fbenv_relr_base)
 #define op1_fblfo_phase (S->op1_fblfo_phase)
 #define op1_fblfo_base (S->op1_fblfo_base)
 #define op1_fblfo_w (S->op1_fblfo_w)
@@ -5782,6 +5867,11 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op1_specenv_r2_eff (S->op1_specenv_r2_eff)
 #define op1_specenv_r3_eff (S->op1_specenv_r3_eff)
 #define op1_specenv_r4_eff (S->op1_specenv_r4_eff)
+#define op1_specenv_rate_macro (S->op1_specenv_rate_macro)
+#define op1_specenv_r1_base (S->op1_specenv_r1_base)
+#define op1_specenv_r2_base (S->op1_specenv_r2_base)
+#define op1_specenv_r3_base (S->op1_specenv_r3_base)
+#define op1_specenv_relr_base (S->op1_specenv_relr_base)
 #define op1_speclfo_phase (S->op1_speclfo_phase)
 #define op1_speclfo_base (S->op1_speclfo_base)
 #define op1_speclfo_w (S->op1_speclfo_w)
@@ -5808,6 +5898,12 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op2_eg_d1_eff (S->op2_eg_d1_eff)
 #define op2_eg_d2_eff (S->op2_eg_d2_eff)
 #define op2_eg_rel_eff (S->op2_eg_rel_eff)
+#define op2_eg_rate_macro (S->op2_eg_rate_macro)
+#define op2_eg_warm_base (S->op2_eg_warm_base)
+#define op2_eg_surge_base (S->op2_eg_surge_base)
+#define op2_eg_d1_base (S->op2_eg_d1_base)
+#define op2_eg_d2_base (S->op2_eg_d2_base)
+#define op2_eg_rel_base (S->op2_eg_rel_base)
 #define op2_lfo_phase (S->op2_lfo_phase)
 #define op2_lfo_base (S->op2_lfo_base)
 #define op2_lfo_w (S->op2_lfo_w)
@@ -5821,6 +5917,11 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op2_fbenv_r2_eff (S->op2_fbenv_r2_eff)
 #define op2_fbenv_r3_eff (S->op2_fbenv_r3_eff)
 #define op2_fbenv_r4_eff (S->op2_fbenv_r4_eff)
+#define op2_fbenv_rate_macro (S->op2_fbenv_rate_macro)
+#define op2_fbenv_r1_base (S->op2_fbenv_r1_base)
+#define op2_fbenv_r2_base (S->op2_fbenv_r2_base)
+#define op2_fbenv_r3_base (S->op2_fbenv_r3_base)
+#define op2_fbenv_relr_base (S->op2_fbenv_relr_base)
 #define op2_fblfo_phase (S->op2_fblfo_phase)
 #define op2_fblfo_base (S->op2_fblfo_base)
 #define op2_fblfo_w (S->op2_fblfo_w)
@@ -5856,6 +5957,11 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op2_specenv_r2_eff (S->op2_specenv_r2_eff)
 #define op2_specenv_r3_eff (S->op2_specenv_r3_eff)
 #define op2_specenv_r4_eff (S->op2_specenv_r4_eff)
+#define op2_specenv_rate_macro (S->op2_specenv_rate_macro)
+#define op2_specenv_r1_base (S->op2_specenv_r1_base)
+#define op2_specenv_r2_base (S->op2_specenv_r2_base)
+#define op2_specenv_r3_base (S->op2_specenv_r3_base)
+#define op2_specenv_relr_base (S->op2_specenv_relr_base)
 #define op2_speclfo_phase (S->op2_speclfo_phase)
 #define op2_speclfo_base (S->op2_speclfo_base)
 #define op2_speclfo_w (S->op2_speclfo_w)
@@ -5882,6 +5988,12 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op3_eg_d1_eff (S->op3_eg_d1_eff)
 #define op3_eg_d2_eff (S->op3_eg_d2_eff)
 #define op3_eg_rel_eff (S->op3_eg_rel_eff)
+#define op3_eg_rate_macro (S->op3_eg_rate_macro)
+#define op3_eg_warm_base (S->op3_eg_warm_base)
+#define op3_eg_surge_base (S->op3_eg_surge_base)
+#define op3_eg_d1_base (S->op3_eg_d1_base)
+#define op3_eg_d2_base (S->op3_eg_d2_base)
+#define op3_eg_rel_base (S->op3_eg_rel_base)
 #define op3_lfo_phase (S->op3_lfo_phase)
 #define op3_lfo_base (S->op3_lfo_base)
 #define op3_lfo_w (S->op3_lfo_w)
@@ -5895,6 +6007,11 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op3_fbenv_r2_eff (S->op3_fbenv_r2_eff)
 #define op3_fbenv_r3_eff (S->op3_fbenv_r3_eff)
 #define op3_fbenv_r4_eff (S->op3_fbenv_r4_eff)
+#define op3_fbenv_rate_macro (S->op3_fbenv_rate_macro)
+#define op3_fbenv_r1_base (S->op3_fbenv_r1_base)
+#define op3_fbenv_r2_base (S->op3_fbenv_r2_base)
+#define op3_fbenv_r3_base (S->op3_fbenv_r3_base)
+#define op3_fbenv_relr_base (S->op3_fbenv_relr_base)
 #define op3_fblfo_phase (S->op3_fblfo_phase)
 #define op3_fblfo_base (S->op3_fblfo_base)
 #define op3_fblfo_w (S->op3_fblfo_w)
@@ -5930,6 +6047,11 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op3_specenv_r2_eff (S->op3_specenv_r2_eff)
 #define op3_specenv_r3_eff (S->op3_specenv_r3_eff)
 #define op3_specenv_r4_eff (S->op3_specenv_r4_eff)
+#define op3_specenv_rate_macro (S->op3_specenv_rate_macro)
+#define op3_specenv_r1_base (S->op3_specenv_r1_base)
+#define op3_specenv_r2_base (S->op3_specenv_r2_base)
+#define op3_specenv_r3_base (S->op3_specenv_r3_base)
+#define op3_specenv_relr_base (S->op3_specenv_relr_base)
 #define op3_speclfo_phase (S->op3_speclfo_phase)
 #define op3_speclfo_base (S->op3_speclfo_base)
 #define op3_speclfo_w (S->op3_speclfo_w)
@@ -5956,6 +6078,12 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op4_eg_d1_eff (S->op4_eg_d1_eff)
 #define op4_eg_d2_eff (S->op4_eg_d2_eff)
 #define op4_eg_rel_eff (S->op4_eg_rel_eff)
+#define op4_eg_rate_macro (S->op4_eg_rate_macro)
+#define op4_eg_warm_base (S->op4_eg_warm_base)
+#define op4_eg_surge_base (S->op4_eg_surge_base)
+#define op4_eg_d1_base (S->op4_eg_d1_base)
+#define op4_eg_d2_base (S->op4_eg_d2_base)
+#define op4_eg_rel_base (S->op4_eg_rel_base)
 #define op4_lfo_phase (S->op4_lfo_phase)
 #define op4_lfo_base (S->op4_lfo_base)
 #define op4_lfo_w (S->op4_lfo_w)
@@ -5969,6 +6097,11 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op4_fbenv_r2_eff (S->op4_fbenv_r2_eff)
 #define op4_fbenv_r3_eff (S->op4_fbenv_r3_eff)
 #define op4_fbenv_r4_eff (S->op4_fbenv_r4_eff)
+#define op4_fbenv_rate_macro (S->op4_fbenv_rate_macro)
+#define op4_fbenv_r1_base (S->op4_fbenv_r1_base)
+#define op4_fbenv_r2_base (S->op4_fbenv_r2_base)
+#define op4_fbenv_r3_base (S->op4_fbenv_r3_base)
+#define op4_fbenv_relr_base (S->op4_fbenv_relr_base)
 #define op4_fblfo_phase (S->op4_fblfo_phase)
 #define op4_fblfo_base (S->op4_fblfo_base)
 #define op4_fblfo_w (S->op4_fblfo_w)
@@ -6004,6 +6137,11 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define op4_specenv_r2_eff (S->op4_specenv_r2_eff)
 #define op4_specenv_r3_eff (S->op4_specenv_r3_eff)
 #define op4_specenv_r4_eff (S->op4_specenv_r4_eff)
+#define op4_specenv_rate_macro (S->op4_specenv_rate_macro)
+#define op4_specenv_r1_base (S->op4_specenv_r1_base)
+#define op4_specenv_r2_base (S->op4_specenv_r2_base)
+#define op4_specenv_r3_base (S->op4_specenv_r3_base)
+#define op4_specenv_relr_base (S->op4_specenv_relr_base)
 #define op4_speclfo_phase (S->op4_speclfo_phase)
 #define op4_speclfo_base (S->op4_speclfo_base)
 #define op4_speclfo_w (S->op4_speclfo_w)
@@ -6021,6 +6159,11 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define penv_r2_eff (S->penv_r2_eff)
 #define penv_r3_eff (S->penv_r3_eff)
 #define penv_r4_eff (S->penv_r4_eff)
+#define penv_rate_macro (S->penv_rate_macro)
+#define penv_r1_base (S->penv_r1_base)
+#define penv_r2_base (S->penv_r2_base)
+#define penv_r3_base (S->penv_r3_base)
+#define penv_relr_base (S->penv_relr_base)
 #define penv_ks_k (S->penv_ks_k)
 #define penv_vs_k (S->penv_vs_k)
 #define plfo_phase (S->plfo_phase)
@@ -6048,6 +6191,11 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define fenv_r2_eff (S->fenv_r2_eff)
 #define fenv_r3_eff (S->fenv_r3_eff)
 #define fenv_r4_eff (S->fenv_r4_eff)
+#define fenv_rate_macro (S->fenv_rate_macro)
+#define fenv_r1_base (S->fenv_r1_base)
+#define fenv_r2_base (S->fenv_r2_base)
+#define fenv_r3_base (S->fenv_r3_base)
+#define fenv_relr_base (S->fenv_relr_base)
 #define dc_x1 (S->dc_x1)
 #define dc_y1 (S->dc_y1)
 #define voice_age (S->voice_age)
@@ -10282,19 +10430,29 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
         f1_vs_k[v] = vel_on_on_x ? p1_vel_scale((int32_t)voice_velocity[v], f1_vs_amount[voice_part[v]]) : 0;
         fenv_ks_k[v] = key_on_on_x ? p1_key_scale((uint32_t)voice_note[v], (uint32_t)key_bp_bp_x, fenv_ks_lo[voice_part[v]], fenv_ks_hi[voice_part[v]]) : 0;
         f1_ks_k[v] = key_on_on_x ? p1_key_scale((uint32_t)voice_note[v], (uint32_t)key_bp_bp_x, f1_ks_lo[voice_part[v]], f1_ks_hi[voice_part[v]]) : 0;
-        fenv_r1_eff[v] = (uint32_t)p1_key_apply(fenv_r1[voice_part[v]], p1_key_add(fenv_ks_k_x[v], fenv_vs_k_x[v]), 0, 99);
-        fenv_r2_eff[v] = (uint32_t)p1_key_apply(fenv_r2[voice_part[v]], p1_key_add(fenv_ks_k_x[v], fenv_vs_k_x[v]), 0, 99);
-        fenv_r3_eff[v] = (uint32_t)p1_key_apply(fenv_r3[voice_part[v]], p1_key_add(fenv_ks_k_x[v], fenv_vs_k_x[v]), 0, 99);
-        fenv_r4_eff[v] = (uint32_t)p1_key_apply(fenv_relr[voice_part[v]], p1_key_add(fenv_ks_k_x[v], fenv_vs_k_x[v]), 0, 99);
+        fenv_rate_macro[v] = (0 ? p1_macro_velocity_env_rate(S, voice_part[v], v) : 0);
+        fenv_r1_base[v] = p1_clamp(fenv_r1[voice_part[v]] + fenv_rate_macro[v], 0, 99);
+        fenv_r2_base[v] = p1_clamp(fenv_r2[voice_part[v]] + fenv_rate_macro[v], 0, 99);
+        fenv_r3_base[v] = p1_clamp(fenv_r3[voice_part[v]] + fenv_rate_macro[v], 0, 99);
+        fenv_relr_base[v] = p1_clamp(fenv_relr[voice_part[v]] + fenv_rate_macro[v], 0, 99);
+        fenv_r1_eff[v] = (uint32_t)p1_key_apply(fenv_r1_base[v], p1_key_add(fenv_ks_k_x[v], fenv_vs_k_x[v]), 0, 99);
+        fenv_r2_eff[v] = (uint32_t)p1_key_apply(fenv_r2_base[v], p1_key_add(fenv_ks_k_x[v], fenv_vs_k_x[v]), 0, 99);
+        fenv_r3_eff[v] = (uint32_t)p1_key_apply(fenv_r3_base[v], p1_key_add(fenv_ks_k_x[v], fenv_vs_k_x[v]), 0, 99);
+        fenv_r4_eff[v] = (uint32_t)p1_key_apply(fenv_relr_base[v], p1_key_add(fenv_ks_k_x[v], fenv_vs_k_x[v]), 0, 99);
         plfo_base[v] = ((uint32_t)p1_wave_base[((plfo_wave[voice_part[v]] > 11u) ? 0u : plfo_wave[voice_part[v]])] << 10);
         plfo_rate_step[v] = p1_fade_step(plfo_rate_fade[voice_part[v]]);
         plfo_depth_step[v] = p1_fade_step(plfo_depth_fade[voice_part[v]]);
         penv_vs_k[v] = vel_on_on_x ? p1_vel_scale((int32_t)voice_velocity[v], penv_vs_amount[voice_part[v]]) : 0;
         penv_ks_k[v] = key_on_on_x ? p1_key_scale((uint32_t)voice_note[v], (uint32_t)key_bp_bp_x, penv_ks_lo[voice_part[v]], penv_ks_hi[voice_part[v]]) : 0;
-        penv_r1_eff[v] = (uint32_t)p1_key_apply(penv_r1[voice_part[v]], p1_key_add(penv_ks_k_x[v], penv_vs_k_x[v]), 0, 99);
-        penv_r2_eff[v] = (uint32_t)p1_key_apply(penv_r2[voice_part[v]], p1_key_add(penv_ks_k_x[v], penv_vs_k_x[v]), 0, 99);
-        penv_r3_eff[v] = (uint32_t)p1_key_apply(penv_r3[voice_part[v]], p1_key_add(penv_ks_k_x[v], penv_vs_k_x[v]), 0, 99);
-        penv_r4_eff[v] = (uint32_t)p1_key_apply(penv_relr[voice_part[v]], p1_key_add(penv_ks_k_x[v], penv_vs_k_x[v]), 0, 99);
+        penv_rate_macro[v] = (0 ? p1_macro_velocity_env_rate(S, voice_part[v], v) : 0);
+        penv_r1_base[v] = p1_clamp(penv_r1[voice_part[v]] + penv_rate_macro[v], 0, 99);
+        penv_r2_base[v] = p1_clamp(penv_r2[voice_part[v]] + penv_rate_macro[v], 0, 99);
+        penv_r3_base[v] = p1_clamp(penv_r3[voice_part[v]] + penv_rate_macro[v], 0, 99);
+        penv_relr_base[v] = p1_clamp(penv_relr[voice_part[v]] + penv_rate_macro[v], 0, 99);
+        penv_r1_eff[v] = (uint32_t)p1_key_apply(penv_r1_base[v], p1_key_add(penv_ks_k_x[v], penv_vs_k_x[v]), 0, 99);
+        penv_r2_eff[v] = (uint32_t)p1_key_apply(penv_r2_base[v], p1_key_add(penv_ks_k_x[v], penv_vs_k_x[v]), 0, 99);
+        penv_r3_eff[v] = (uint32_t)p1_key_apply(penv_r3_base[v], p1_key_add(penv_ks_k_x[v], penv_vs_k_x[v]), 0, 99);
+        penv_r4_eff[v] = (uint32_t)p1_key_apply(penv_relr_base[v], p1_key_add(penv_ks_k_x[v], penv_vs_k_x[v]), 0, 99);
         lp_res_k[v] = ((int64_t)lp_res[voice_part[v]] * 65536 / 41942) * 25 / 4;
         lp_fc[v] = p1_filter_coeff_q16(fenv_active_x[v] ? p1_clamp16_max((int32_t)(((int64_t)fenv_cv_x[v] * 55296 + 49) / 99), 55296) : cutoff_pos_f_x[v]);
         op4_speclfo_base[v] = ((uint32_t)p1_wave_base[((op4_speclfo_wave[voice_part[v]] > 11u) ? 0u : op4_speclfo_wave[voice_part[v]])] << 10);
@@ -10306,11 +10464,17 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
         op4_eg_ks_k[v] = key_on_on_x ? p1_key_scale((uint32_t)voice_note[v], (uint32_t)key_bp_bp_x, op4_eg_ks_lo[voice_part[v]], op4_eg_ks_hi[voice_part[v]]) : 0;
         op4_fb_ks_k[v] = key_on_on_x ? p1_key_scale((uint32_t)voice_note[v], (uint32_t)key_bp_bp_x, op4_fb_ks_lo[voice_part[v]], op4_fb_ks_hi[voice_part[v]]) : 0;
         op4_level_ks_k[v] = key_on_on_x ? p1_key_scale((uint32_t)voice_note[v], (uint32_t)key_bp_bp_x, op4_level_ks_lo[voice_part[v]], op4_level_ks_hi[voice_part[v]]) : 0;
-        op4_eg_warm_eff[v] = ((uint32_t)op4_eg_warm[voice_part[v]] ? (uint32_t)p1_key_apply(op4_eg_warm[voice_part[v]], p1_key_add(op4_eg_ks_k_x[v], op4_eg_vs_k_x[v]), 0, 99) : 0u);
-        op4_eg_surge_eff[v] = ((uint32_t)op4_eg_surge[voice_part[v]] ? (uint32_t)p1_key_apply(op4_eg_surge[voice_part[v]], p1_key_add(op4_eg_ks_k_x[v], op4_eg_vs_k_x[v]), 0, 99) : 0u);
-        op4_eg_d1_eff[v] = (uint32_t)p1_key_apply(op4_eg_d1r[voice_part[v]], p1_key_add(op4_eg_ks_k_x[v], op4_eg_vs_k_x[v]), 0, 99);
-        op4_eg_d2_eff[v] = (uint32_t)p1_key_apply(op4_eg_d2r[voice_part[v]], p1_key_add(op4_eg_ks_k_x[v], op4_eg_vs_k_x[v]), 0, 99);
-        op4_eg_rel_eff[v] = (uint32_t)p1_key_apply(op4_eg_rel[voice_part[v]], p1_key_add(op4_eg_ks_k_x[v], op4_eg_vs_k_x[v]), 0, 99);
+        op4_eg_rate_macro[v] = (1 ? p1_macro_velocity_env_rate(S, voice_part[v], v) : 0);
+        op4_eg_warm_base[v] = p1_clamp(op4_eg_warm[voice_part[v]] + op4_eg_rate_macro[v], 0, 99);
+        op4_eg_surge_base[v] = p1_clamp(op4_eg_surge[voice_part[v]] + op4_eg_rate_macro[v], 0, 99);
+        op4_eg_d1_base[v] = p1_clamp(op4_eg_d1r[voice_part[v]] + op4_eg_rate_macro[v], 0, 99);
+        op4_eg_d2_base[v] = p1_clamp(op4_eg_d2r[voice_part[v]] + op4_eg_rate_macro[v], 0, 99);
+        op4_eg_rel_base[v] = p1_clamp(op4_eg_rel[voice_part[v]] + op4_eg_rate_macro[v], 0, 99);
+        op4_eg_warm_eff[v] = ((uint32_t)op4_eg_warm_base[v] ? (uint32_t)p1_key_apply(op4_eg_warm_base[v], p1_key_add(op4_eg_ks_k_x[v], op4_eg_vs_k_x[v]), 0, 99) : 0u);
+        op4_eg_surge_eff[v] = ((uint32_t)op4_eg_surge_base[v] ? (uint32_t)p1_key_apply(op4_eg_surge_base[v], p1_key_add(op4_eg_ks_k_x[v], op4_eg_vs_k_x[v]), 0, 99) : 0u);
+        op4_eg_d1_eff[v] = (uint32_t)p1_key_apply(op4_eg_d1_base[v], p1_key_add(op4_eg_ks_k_x[v], op4_eg_vs_k_x[v]), 0, 99);
+        op4_eg_d2_eff[v] = (uint32_t)p1_key_apply(op4_eg_d2_base[v], p1_key_add(op4_eg_ks_k_x[v], op4_eg_vs_k_x[v]), 0, 99);
+        op4_eg_rel_eff[v] = (uint32_t)p1_key_apply(op4_eg_rel_base[v], p1_key_add(op4_eg_ks_k_x[v], op4_eg_vs_k_x[v]), 0, 99);
         op4_dlfo_base[v] = ((uint32_t)p1_wave_base[((op4_dlfo_wave[voice_part[v]] > 11u) ? 0u : op4_dlfo_wave[voice_part[v]])] << 10);
         op4_dlfo_rate_step[v] = p1_fade_step(op4_dlfo_rate_fade[voice_part[v]]);
         op4_dlfo_depth_step[v] = p1_fade_step(op4_dlfo_depth_fade[voice_part[v]]);
@@ -10319,17 +10483,27 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
         op4_fblfo_base[v] = ((uint32_t)p1_wave_base[((op4_fblfo_wave[voice_part[v]] > 11u) ? 0u : op4_fblfo_wave[voice_part[v]])] << 10);
         op4_fblfo_rate_step[v] = p1_fade_step(op4_fblfo_rate_fade[voice_part[v]]);
         op4_fblfo_depth_step[v] = p1_fade_step(op4_fblfo_depth_fade[voice_part[v]]);
-        op4_fbenv_r1_eff[v] = (uint32_t)p1_key_apply(op4_fbenv_r1[voice_part[v]], p1_key_add(0, 0), 0, 99);
-        op4_fbenv_r2_eff[v] = (uint32_t)p1_key_apply(op4_fbenv_r2[voice_part[v]], p1_key_add(0, 0), 0, 99);
-        op4_fbenv_r3_eff[v] = (uint32_t)p1_key_apply(op4_fbenv_r3[voice_part[v]], p1_key_add(0, 0), 0, 99);
-        op4_fbenv_r4_eff[v] = (uint32_t)p1_key_apply(op4_fbenv_relr[voice_part[v]], p1_key_add(0, 0), 0, 99);
+        op4_fbenv_rate_macro[v] = (1 ? p1_macro_velocity_env_rate(S, voice_part[v], v) : 0);
+        op4_fbenv_r1_base[v] = p1_clamp(op4_fbenv_r1[voice_part[v]] + op4_fbenv_rate_macro[v], 0, 99);
+        op4_fbenv_r2_base[v] = p1_clamp(op4_fbenv_r2[voice_part[v]] + op4_fbenv_rate_macro[v], 0, 99);
+        op4_fbenv_r3_base[v] = p1_clamp(op4_fbenv_r3[voice_part[v]] + op4_fbenv_rate_macro[v], 0, 99);
+        op4_fbenv_relr_base[v] = p1_clamp(op4_fbenv_relr[voice_part[v]] + op4_fbenv_rate_macro[v], 0, 99);
+        op4_fbenv_r1_eff[v] = (uint32_t)p1_key_apply(op4_fbenv_r1_base[v], p1_key_add(0, 0), 0, 99);
+        op4_fbenv_r2_eff[v] = (uint32_t)p1_key_apply(op4_fbenv_r2_base[v], p1_key_add(0, 0), 0, 99);
+        op4_fbenv_r3_eff[v] = (uint32_t)p1_key_apply(op4_fbenv_r3_base[v], p1_key_add(0, 0), 0, 99);
+        op4_fbenv_r4_eff[v] = (uint32_t)p1_key_apply(op4_fbenv_relr_base[v], p1_key_add(0, 0), 0, 99);
         op4_lfo_base[v] = ((uint32_t)p1_wave_base[((op4_lfo_wave[voice_part[v]] > 11u) ? 0u : op4_lfo_wave[voice_part[v]])] << 10);
         op4_lfo_rate_step[v] = p1_fade_step(op4_lfo_rate_fade[voice_part[v]]);
         op4_lfo_depth_step[v] = p1_fade_step(op4_lfo_depth_fade[voice_part[v]]);
-        op4_specenv_r1_eff[v] = (uint32_t)p1_key_apply(op4_specenv_r1[voice_part[v]], p1_key_add(0, 0), 0, 99);
-        op4_specenv_r2_eff[v] = (uint32_t)p1_key_apply(op4_specenv_r2[voice_part[v]], p1_key_add(0, 0), 0, 99);
-        op4_specenv_r3_eff[v] = (uint32_t)p1_key_apply(op4_specenv_r3[voice_part[v]], p1_key_add(0, 0), 0, 99);
-        op4_specenv_r4_eff[v] = (uint32_t)p1_key_apply(op4_specenv_relr[voice_part[v]], p1_key_add(0, 0), 0, 99);
+        op4_specenv_rate_macro[v] = (1 ? p1_macro_velocity_env_rate(S, voice_part[v], v) : 0);
+        op4_specenv_r1_base[v] = p1_clamp(op4_specenv_r1[voice_part[v]] + op4_specenv_rate_macro[v], 0, 99);
+        op4_specenv_r2_base[v] = p1_clamp(op4_specenv_r2[voice_part[v]] + op4_specenv_rate_macro[v], 0, 99);
+        op4_specenv_r3_base[v] = p1_clamp(op4_specenv_r3[voice_part[v]] + op4_specenv_rate_macro[v], 0, 99);
+        op4_specenv_relr_base[v] = p1_clamp(op4_specenv_relr[voice_part[v]] + op4_specenv_rate_macro[v], 0, 99);
+        op4_specenv_r1_eff[v] = (uint32_t)p1_key_apply(op4_specenv_r1_base[v], p1_key_add(0, 0), 0, 99);
+        op4_specenv_r2_eff[v] = (uint32_t)p1_key_apply(op4_specenv_r2_base[v], p1_key_add(0, 0), 0, 99);
+        op4_specenv_r3_eff[v] = (uint32_t)p1_key_apply(op4_specenv_r3_base[v], p1_key_add(0, 0), 0, 99);
+        op4_specenv_r4_eff[v] = (uint32_t)p1_key_apply(op4_specenv_relr_base[v], p1_key_add(0, 0), 0, 99);
         op4_osc_wave[v] = ((op4_osc_waveform[voice_part[v]] > 13u) ? 0u : op4_osc_waveform[voice_part[v]]);
         op4_osc_base[v] = ((uint32_t)p1_wave_base[(op4_osc_wave[v] > 12u) ? 0u : op4_osc_wave[v]] << 10);
         op4_osc_bl[v] = ((op4_osc_wave[v] >= 10u && op4_osc_wave[v] <= 12u) ? 1u : 0u);
@@ -10350,11 +10524,17 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
         op3_eg_ks_k[v] = key_on_on_x ? p1_key_scale((uint32_t)voice_note[v], (uint32_t)key_bp_bp_x, op3_eg_ks_lo[voice_part[v]], op3_eg_ks_hi[voice_part[v]]) : 0;
         op3_fb_ks_k[v] = key_on_on_x ? p1_key_scale((uint32_t)voice_note[v], (uint32_t)key_bp_bp_x, op3_fb_ks_lo[voice_part[v]], op3_fb_ks_hi[voice_part[v]]) : 0;
         op3_level_ks_k[v] = key_on_on_x ? p1_key_scale((uint32_t)voice_note[v], (uint32_t)key_bp_bp_x, op3_level_ks_lo[voice_part[v]], op3_level_ks_hi[voice_part[v]]) : 0;
-        op3_eg_warm_eff[v] = ((uint32_t)op3_eg_warm[voice_part[v]] ? (uint32_t)p1_key_apply(op3_eg_warm[voice_part[v]], p1_key_add(op3_eg_ks_k_x[v], op3_eg_vs_k_x[v]), 0, 99) : 0u);
-        op3_eg_surge_eff[v] = ((uint32_t)op3_eg_surge[voice_part[v]] ? (uint32_t)p1_key_apply(op3_eg_surge[voice_part[v]], p1_key_add(op3_eg_ks_k_x[v], op3_eg_vs_k_x[v]), 0, 99) : 0u);
-        op3_eg_d1_eff[v] = (uint32_t)p1_key_apply(op3_eg_d1r[voice_part[v]], p1_key_add(op3_eg_ks_k_x[v], op3_eg_vs_k_x[v]), 0, 99);
-        op3_eg_d2_eff[v] = (uint32_t)p1_key_apply(op3_eg_d2r[voice_part[v]], p1_key_add(op3_eg_ks_k_x[v], op3_eg_vs_k_x[v]), 0, 99);
-        op3_eg_rel_eff[v] = (uint32_t)p1_key_apply(op3_eg_rel[voice_part[v]], p1_key_add(op3_eg_ks_k_x[v], op3_eg_vs_k_x[v]), 0, 99);
+        op3_eg_rate_macro[v] = (1 ? p1_macro_velocity_env_rate(S, voice_part[v], v) : 0);
+        op3_eg_warm_base[v] = p1_clamp(op3_eg_warm[voice_part[v]] + op3_eg_rate_macro[v], 0, 99);
+        op3_eg_surge_base[v] = p1_clamp(op3_eg_surge[voice_part[v]] + op3_eg_rate_macro[v], 0, 99);
+        op3_eg_d1_base[v] = p1_clamp(op3_eg_d1r[voice_part[v]] + op3_eg_rate_macro[v], 0, 99);
+        op3_eg_d2_base[v] = p1_clamp(op3_eg_d2r[voice_part[v]] + op3_eg_rate_macro[v], 0, 99);
+        op3_eg_rel_base[v] = p1_clamp(op3_eg_rel[voice_part[v]] + op3_eg_rate_macro[v], 0, 99);
+        op3_eg_warm_eff[v] = ((uint32_t)op3_eg_warm_base[v] ? (uint32_t)p1_key_apply(op3_eg_warm_base[v], p1_key_add(op3_eg_ks_k_x[v], op3_eg_vs_k_x[v]), 0, 99) : 0u);
+        op3_eg_surge_eff[v] = ((uint32_t)op3_eg_surge_base[v] ? (uint32_t)p1_key_apply(op3_eg_surge_base[v], p1_key_add(op3_eg_ks_k_x[v], op3_eg_vs_k_x[v]), 0, 99) : 0u);
+        op3_eg_d1_eff[v] = (uint32_t)p1_key_apply(op3_eg_d1_base[v], p1_key_add(op3_eg_ks_k_x[v], op3_eg_vs_k_x[v]), 0, 99);
+        op3_eg_d2_eff[v] = (uint32_t)p1_key_apply(op3_eg_d2_base[v], p1_key_add(op3_eg_ks_k_x[v], op3_eg_vs_k_x[v]), 0, 99);
+        op3_eg_rel_eff[v] = (uint32_t)p1_key_apply(op3_eg_rel_base[v], p1_key_add(op3_eg_ks_k_x[v], op3_eg_vs_k_x[v]), 0, 99);
         op3_dlfo_base[v] = ((uint32_t)p1_wave_base[((op3_dlfo_wave[voice_part[v]] > 11u) ? 0u : op3_dlfo_wave[voice_part[v]])] << 10);
         op3_dlfo_rate_step[v] = p1_fade_step(op3_dlfo_rate_fade[voice_part[v]]);
         op3_dlfo_depth_step[v] = p1_fade_step(op3_dlfo_depth_fade[voice_part[v]]);
@@ -10363,17 +10543,27 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
         op3_fblfo_base[v] = ((uint32_t)p1_wave_base[((op3_fblfo_wave[voice_part[v]] > 11u) ? 0u : op3_fblfo_wave[voice_part[v]])] << 10);
         op3_fblfo_rate_step[v] = p1_fade_step(op3_fblfo_rate_fade[voice_part[v]]);
         op3_fblfo_depth_step[v] = p1_fade_step(op3_fblfo_depth_fade[voice_part[v]]);
-        op3_fbenv_r1_eff[v] = (uint32_t)p1_key_apply(op3_fbenv_r1[voice_part[v]], p1_key_add(0, 0), 0, 99);
-        op3_fbenv_r2_eff[v] = (uint32_t)p1_key_apply(op3_fbenv_r2[voice_part[v]], p1_key_add(0, 0), 0, 99);
-        op3_fbenv_r3_eff[v] = (uint32_t)p1_key_apply(op3_fbenv_r3[voice_part[v]], p1_key_add(0, 0), 0, 99);
-        op3_fbenv_r4_eff[v] = (uint32_t)p1_key_apply(op3_fbenv_relr[voice_part[v]], p1_key_add(0, 0), 0, 99);
+        op3_fbenv_rate_macro[v] = (1 ? p1_macro_velocity_env_rate(S, voice_part[v], v) : 0);
+        op3_fbenv_r1_base[v] = p1_clamp(op3_fbenv_r1[voice_part[v]] + op3_fbenv_rate_macro[v], 0, 99);
+        op3_fbenv_r2_base[v] = p1_clamp(op3_fbenv_r2[voice_part[v]] + op3_fbenv_rate_macro[v], 0, 99);
+        op3_fbenv_r3_base[v] = p1_clamp(op3_fbenv_r3[voice_part[v]] + op3_fbenv_rate_macro[v], 0, 99);
+        op3_fbenv_relr_base[v] = p1_clamp(op3_fbenv_relr[voice_part[v]] + op3_fbenv_rate_macro[v], 0, 99);
+        op3_fbenv_r1_eff[v] = (uint32_t)p1_key_apply(op3_fbenv_r1_base[v], p1_key_add(0, 0), 0, 99);
+        op3_fbenv_r2_eff[v] = (uint32_t)p1_key_apply(op3_fbenv_r2_base[v], p1_key_add(0, 0), 0, 99);
+        op3_fbenv_r3_eff[v] = (uint32_t)p1_key_apply(op3_fbenv_r3_base[v], p1_key_add(0, 0), 0, 99);
+        op3_fbenv_r4_eff[v] = (uint32_t)p1_key_apply(op3_fbenv_relr_base[v], p1_key_add(0, 0), 0, 99);
         op3_lfo_base[v] = ((uint32_t)p1_wave_base[((op3_lfo_wave[voice_part[v]] > 11u) ? 0u : op3_lfo_wave[voice_part[v]])] << 10);
         op3_lfo_rate_step[v] = p1_fade_step(op3_lfo_rate_fade[voice_part[v]]);
         op3_lfo_depth_step[v] = p1_fade_step(op3_lfo_depth_fade[voice_part[v]]);
-        op3_specenv_r1_eff[v] = (uint32_t)p1_key_apply(op3_specenv_r1[voice_part[v]], p1_key_add(0, 0), 0, 99);
-        op3_specenv_r2_eff[v] = (uint32_t)p1_key_apply(op3_specenv_r2[voice_part[v]], p1_key_add(0, 0), 0, 99);
-        op3_specenv_r3_eff[v] = (uint32_t)p1_key_apply(op3_specenv_r3[voice_part[v]], p1_key_add(0, 0), 0, 99);
-        op3_specenv_r4_eff[v] = (uint32_t)p1_key_apply(op3_specenv_relr[voice_part[v]], p1_key_add(0, 0), 0, 99);
+        op3_specenv_rate_macro[v] = (1 ? p1_macro_velocity_env_rate(S, voice_part[v], v) : 0);
+        op3_specenv_r1_base[v] = p1_clamp(op3_specenv_r1[voice_part[v]] + op3_specenv_rate_macro[v], 0, 99);
+        op3_specenv_r2_base[v] = p1_clamp(op3_specenv_r2[voice_part[v]] + op3_specenv_rate_macro[v], 0, 99);
+        op3_specenv_r3_base[v] = p1_clamp(op3_specenv_r3[voice_part[v]] + op3_specenv_rate_macro[v], 0, 99);
+        op3_specenv_relr_base[v] = p1_clamp(op3_specenv_relr[voice_part[v]] + op3_specenv_rate_macro[v], 0, 99);
+        op3_specenv_r1_eff[v] = (uint32_t)p1_key_apply(op3_specenv_r1_base[v], p1_key_add(0, 0), 0, 99);
+        op3_specenv_r2_eff[v] = (uint32_t)p1_key_apply(op3_specenv_r2_base[v], p1_key_add(0, 0), 0, 99);
+        op3_specenv_r3_eff[v] = (uint32_t)p1_key_apply(op3_specenv_r3_base[v], p1_key_add(0, 0), 0, 99);
+        op3_specenv_r4_eff[v] = (uint32_t)p1_key_apply(op3_specenv_relr_base[v], p1_key_add(0, 0), 0, 99);
         op3_osc_wave[v] = ((op3_osc_waveform[voice_part[v]] > 13u) ? 0u : op3_osc_waveform[voice_part[v]]);
         op3_osc_base[v] = ((uint32_t)p1_wave_base[(op3_osc_wave[v] > 12u) ? 0u : op3_osc_wave[v]] << 10);
         op3_osc_bl[v] = ((op3_osc_wave[v] >= 10u && op3_osc_wave[v] <= 12u) ? 1u : 0u);
@@ -10394,11 +10584,17 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
         op2_eg_ks_k[v] = key_on_on_x ? p1_key_scale((uint32_t)voice_note[v], (uint32_t)key_bp_bp_x, op2_eg_ks_lo[voice_part[v]], op2_eg_ks_hi[voice_part[v]]) : 0;
         op2_fb_ks_k[v] = key_on_on_x ? p1_key_scale((uint32_t)voice_note[v], (uint32_t)key_bp_bp_x, op2_fb_ks_lo[voice_part[v]], op2_fb_ks_hi[voice_part[v]]) : 0;
         op2_level_ks_k[v] = key_on_on_x ? p1_key_scale((uint32_t)voice_note[v], (uint32_t)key_bp_bp_x, op2_level_ks_lo[voice_part[v]], op2_level_ks_hi[voice_part[v]]) : 0;
-        op2_eg_warm_eff[v] = ((uint32_t)op2_eg_warm[voice_part[v]] ? (uint32_t)p1_key_apply(op2_eg_warm[voice_part[v]], p1_key_add(op2_eg_ks_k_x[v], op2_eg_vs_k_x[v]), 0, 99) : 0u);
-        op2_eg_surge_eff[v] = ((uint32_t)op2_eg_surge[voice_part[v]] ? (uint32_t)p1_key_apply(op2_eg_surge[voice_part[v]], p1_key_add(op2_eg_ks_k_x[v], op2_eg_vs_k_x[v]), 0, 99) : 0u);
-        op2_eg_d1_eff[v] = (uint32_t)p1_key_apply(op2_eg_d1r[voice_part[v]], p1_key_add(op2_eg_ks_k_x[v], op2_eg_vs_k_x[v]), 0, 99);
-        op2_eg_d2_eff[v] = (uint32_t)p1_key_apply(op2_eg_d2r[voice_part[v]], p1_key_add(op2_eg_ks_k_x[v], op2_eg_vs_k_x[v]), 0, 99);
-        op2_eg_rel_eff[v] = (uint32_t)p1_key_apply(op2_eg_rel[voice_part[v]], p1_key_add(op2_eg_ks_k_x[v], op2_eg_vs_k_x[v]), 0, 99);
+        op2_eg_rate_macro[v] = (1 ? p1_macro_velocity_env_rate(S, voice_part[v], v) : 0);
+        op2_eg_warm_base[v] = p1_clamp(op2_eg_warm[voice_part[v]] + op2_eg_rate_macro[v], 0, 99);
+        op2_eg_surge_base[v] = p1_clamp(op2_eg_surge[voice_part[v]] + op2_eg_rate_macro[v], 0, 99);
+        op2_eg_d1_base[v] = p1_clamp(op2_eg_d1r[voice_part[v]] + op2_eg_rate_macro[v], 0, 99);
+        op2_eg_d2_base[v] = p1_clamp(op2_eg_d2r[voice_part[v]] + op2_eg_rate_macro[v], 0, 99);
+        op2_eg_rel_base[v] = p1_clamp(op2_eg_rel[voice_part[v]] + op2_eg_rate_macro[v], 0, 99);
+        op2_eg_warm_eff[v] = ((uint32_t)op2_eg_warm_base[v] ? (uint32_t)p1_key_apply(op2_eg_warm_base[v], p1_key_add(op2_eg_ks_k_x[v], op2_eg_vs_k_x[v]), 0, 99) : 0u);
+        op2_eg_surge_eff[v] = ((uint32_t)op2_eg_surge_base[v] ? (uint32_t)p1_key_apply(op2_eg_surge_base[v], p1_key_add(op2_eg_ks_k_x[v], op2_eg_vs_k_x[v]), 0, 99) : 0u);
+        op2_eg_d1_eff[v] = (uint32_t)p1_key_apply(op2_eg_d1_base[v], p1_key_add(op2_eg_ks_k_x[v], op2_eg_vs_k_x[v]), 0, 99);
+        op2_eg_d2_eff[v] = (uint32_t)p1_key_apply(op2_eg_d2_base[v], p1_key_add(op2_eg_ks_k_x[v], op2_eg_vs_k_x[v]), 0, 99);
+        op2_eg_rel_eff[v] = (uint32_t)p1_key_apply(op2_eg_rel_base[v], p1_key_add(op2_eg_ks_k_x[v], op2_eg_vs_k_x[v]), 0, 99);
         op2_dlfo_base[v] = ((uint32_t)p1_wave_base[((op2_dlfo_wave[voice_part[v]] > 11u) ? 0u : op2_dlfo_wave[voice_part[v]])] << 10);
         op2_dlfo_rate_step[v] = p1_fade_step(op2_dlfo_rate_fade[voice_part[v]]);
         op2_dlfo_depth_step[v] = p1_fade_step(op2_dlfo_depth_fade[voice_part[v]]);
@@ -10407,17 +10603,27 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
         op2_fblfo_base[v] = ((uint32_t)p1_wave_base[((op2_fblfo_wave[voice_part[v]] > 11u) ? 0u : op2_fblfo_wave[voice_part[v]])] << 10);
         op2_fblfo_rate_step[v] = p1_fade_step(op2_fblfo_rate_fade[voice_part[v]]);
         op2_fblfo_depth_step[v] = p1_fade_step(op2_fblfo_depth_fade[voice_part[v]]);
-        op2_fbenv_r1_eff[v] = (uint32_t)p1_key_apply(op2_fbenv_r1[voice_part[v]], p1_key_add(0, 0), 0, 99);
-        op2_fbenv_r2_eff[v] = (uint32_t)p1_key_apply(op2_fbenv_r2[voice_part[v]], p1_key_add(0, 0), 0, 99);
-        op2_fbenv_r3_eff[v] = (uint32_t)p1_key_apply(op2_fbenv_r3[voice_part[v]], p1_key_add(0, 0), 0, 99);
-        op2_fbenv_r4_eff[v] = (uint32_t)p1_key_apply(op2_fbenv_relr[voice_part[v]], p1_key_add(0, 0), 0, 99);
+        op2_fbenv_rate_macro[v] = (1 ? p1_macro_velocity_env_rate(S, voice_part[v], v) : 0);
+        op2_fbenv_r1_base[v] = p1_clamp(op2_fbenv_r1[voice_part[v]] + op2_fbenv_rate_macro[v], 0, 99);
+        op2_fbenv_r2_base[v] = p1_clamp(op2_fbenv_r2[voice_part[v]] + op2_fbenv_rate_macro[v], 0, 99);
+        op2_fbenv_r3_base[v] = p1_clamp(op2_fbenv_r3[voice_part[v]] + op2_fbenv_rate_macro[v], 0, 99);
+        op2_fbenv_relr_base[v] = p1_clamp(op2_fbenv_relr[voice_part[v]] + op2_fbenv_rate_macro[v], 0, 99);
+        op2_fbenv_r1_eff[v] = (uint32_t)p1_key_apply(op2_fbenv_r1_base[v], p1_key_add(0, 0), 0, 99);
+        op2_fbenv_r2_eff[v] = (uint32_t)p1_key_apply(op2_fbenv_r2_base[v], p1_key_add(0, 0), 0, 99);
+        op2_fbenv_r3_eff[v] = (uint32_t)p1_key_apply(op2_fbenv_r3_base[v], p1_key_add(0, 0), 0, 99);
+        op2_fbenv_r4_eff[v] = (uint32_t)p1_key_apply(op2_fbenv_relr_base[v], p1_key_add(0, 0), 0, 99);
         op2_lfo_base[v] = ((uint32_t)p1_wave_base[((op2_lfo_wave[voice_part[v]] > 11u) ? 0u : op2_lfo_wave[voice_part[v]])] << 10);
         op2_lfo_rate_step[v] = p1_fade_step(op2_lfo_rate_fade[voice_part[v]]);
         op2_lfo_depth_step[v] = p1_fade_step(op2_lfo_depth_fade[voice_part[v]]);
-        op2_specenv_r1_eff[v] = (uint32_t)p1_key_apply(op2_specenv_r1[voice_part[v]], p1_key_add(0, 0), 0, 99);
-        op2_specenv_r2_eff[v] = (uint32_t)p1_key_apply(op2_specenv_r2[voice_part[v]], p1_key_add(0, 0), 0, 99);
-        op2_specenv_r3_eff[v] = (uint32_t)p1_key_apply(op2_specenv_r3[voice_part[v]], p1_key_add(0, 0), 0, 99);
-        op2_specenv_r4_eff[v] = (uint32_t)p1_key_apply(op2_specenv_relr[voice_part[v]], p1_key_add(0, 0), 0, 99);
+        op2_specenv_rate_macro[v] = (1 ? p1_macro_velocity_env_rate(S, voice_part[v], v) : 0);
+        op2_specenv_r1_base[v] = p1_clamp(op2_specenv_r1[voice_part[v]] + op2_specenv_rate_macro[v], 0, 99);
+        op2_specenv_r2_base[v] = p1_clamp(op2_specenv_r2[voice_part[v]] + op2_specenv_rate_macro[v], 0, 99);
+        op2_specenv_r3_base[v] = p1_clamp(op2_specenv_r3[voice_part[v]] + op2_specenv_rate_macro[v], 0, 99);
+        op2_specenv_relr_base[v] = p1_clamp(op2_specenv_relr[voice_part[v]] + op2_specenv_rate_macro[v], 0, 99);
+        op2_specenv_r1_eff[v] = (uint32_t)p1_key_apply(op2_specenv_r1_base[v], p1_key_add(0, 0), 0, 99);
+        op2_specenv_r2_eff[v] = (uint32_t)p1_key_apply(op2_specenv_r2_base[v], p1_key_add(0, 0), 0, 99);
+        op2_specenv_r3_eff[v] = (uint32_t)p1_key_apply(op2_specenv_r3_base[v], p1_key_add(0, 0), 0, 99);
+        op2_specenv_r4_eff[v] = (uint32_t)p1_key_apply(op2_specenv_relr_base[v], p1_key_add(0, 0), 0, 99);
         op2_osc_wave[v] = ((op2_osc_waveform[voice_part[v]] > 13u) ? 0u : op2_osc_waveform[voice_part[v]]);
         op2_osc_base[v] = ((uint32_t)p1_wave_base[(op2_osc_wave[v] > 12u) ? 0u : op2_osc_wave[v]] << 10);
         op2_osc_bl[v] = ((op2_osc_wave[v] >= 10u && op2_osc_wave[v] <= 12u) ? 1u : 0u);
@@ -10438,11 +10644,17 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
         op1_eg_ks_k[v] = key_on_on_x ? p1_key_scale((uint32_t)voice_note[v], (uint32_t)key_bp_bp_x, op1_eg_ks_lo[voice_part[v]], op1_eg_ks_hi[voice_part[v]]) : 0;
         op1_fb_ks_k[v] = key_on_on_x ? p1_key_scale((uint32_t)voice_note[v], (uint32_t)key_bp_bp_x, op1_fb_ks_lo[voice_part[v]], op1_fb_ks_hi[voice_part[v]]) : 0;
         op1_level_ks_k[v] = key_on_on_x ? p1_key_scale((uint32_t)voice_note[v], (uint32_t)key_bp_bp_x, op1_level_ks_lo[voice_part[v]], op1_level_ks_hi[voice_part[v]]) : 0;
-        op1_eg_warm_eff[v] = ((uint32_t)op1_eg_warm[voice_part[v]] ? (uint32_t)p1_key_apply(op1_eg_warm[voice_part[v]], p1_key_add(op1_eg_ks_k_x[v], op1_eg_vs_k_x[v]), 0, 99) : 0u);
-        op1_eg_surge_eff[v] = ((uint32_t)op1_eg_surge[voice_part[v]] ? (uint32_t)p1_key_apply(op1_eg_surge[voice_part[v]], p1_key_add(op1_eg_ks_k_x[v], op1_eg_vs_k_x[v]), 0, 99) : 0u);
-        op1_eg_d1_eff[v] = (uint32_t)p1_key_apply(op1_eg_d1r[voice_part[v]], p1_key_add(op1_eg_ks_k_x[v], op1_eg_vs_k_x[v]), 0, 99);
-        op1_eg_d2_eff[v] = (uint32_t)p1_key_apply(op1_eg_d2r[voice_part[v]], p1_key_add(op1_eg_ks_k_x[v], op1_eg_vs_k_x[v]), 0, 99);
-        op1_eg_rel_eff[v] = (uint32_t)p1_key_apply(op1_eg_rel[voice_part[v]], p1_key_add(op1_eg_ks_k_x[v], op1_eg_vs_k_x[v]), 0, 99);
+        op1_eg_rate_macro[v] = (1 ? p1_macro_velocity_env_rate(S, voice_part[v], v) : 0);
+        op1_eg_warm_base[v] = p1_clamp(op1_eg_warm[voice_part[v]] + op1_eg_rate_macro[v], 0, 99);
+        op1_eg_surge_base[v] = p1_clamp(op1_eg_surge[voice_part[v]] + op1_eg_rate_macro[v], 0, 99);
+        op1_eg_d1_base[v] = p1_clamp(op1_eg_d1r[voice_part[v]] + op1_eg_rate_macro[v], 0, 99);
+        op1_eg_d2_base[v] = p1_clamp(op1_eg_d2r[voice_part[v]] + op1_eg_rate_macro[v], 0, 99);
+        op1_eg_rel_base[v] = p1_clamp(op1_eg_rel[voice_part[v]] + op1_eg_rate_macro[v], 0, 99);
+        op1_eg_warm_eff[v] = ((uint32_t)op1_eg_warm_base[v] ? (uint32_t)p1_key_apply(op1_eg_warm_base[v], p1_key_add(op1_eg_ks_k_x[v], op1_eg_vs_k_x[v]), 0, 99) : 0u);
+        op1_eg_surge_eff[v] = ((uint32_t)op1_eg_surge_base[v] ? (uint32_t)p1_key_apply(op1_eg_surge_base[v], p1_key_add(op1_eg_ks_k_x[v], op1_eg_vs_k_x[v]), 0, 99) : 0u);
+        op1_eg_d1_eff[v] = (uint32_t)p1_key_apply(op1_eg_d1_base[v], p1_key_add(op1_eg_ks_k_x[v], op1_eg_vs_k_x[v]), 0, 99);
+        op1_eg_d2_eff[v] = (uint32_t)p1_key_apply(op1_eg_d2_base[v], p1_key_add(op1_eg_ks_k_x[v], op1_eg_vs_k_x[v]), 0, 99);
+        op1_eg_rel_eff[v] = (uint32_t)p1_key_apply(op1_eg_rel_base[v], p1_key_add(op1_eg_ks_k_x[v], op1_eg_vs_k_x[v]), 0, 99);
         op1_dlfo_base[v] = ((uint32_t)p1_wave_base[((op1_dlfo_wave[voice_part[v]] > 11u) ? 0u : op1_dlfo_wave[voice_part[v]])] << 10);
         op1_dlfo_rate_step[v] = p1_fade_step(op1_dlfo_rate_fade[voice_part[v]]);
         op1_dlfo_depth_step[v] = p1_fade_step(op1_dlfo_depth_fade[voice_part[v]]);
@@ -10451,17 +10663,27 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
         op1_fblfo_base[v] = ((uint32_t)p1_wave_base[((op1_fblfo_wave[voice_part[v]] > 11u) ? 0u : op1_fblfo_wave[voice_part[v]])] << 10);
         op1_fblfo_rate_step[v] = p1_fade_step(op1_fblfo_rate_fade[voice_part[v]]);
         op1_fblfo_depth_step[v] = p1_fade_step(op1_fblfo_depth_fade[voice_part[v]]);
-        op1_fbenv_r1_eff[v] = (uint32_t)p1_key_apply(op1_fbenv_r1[voice_part[v]], p1_key_add(0, 0), 0, 99);
-        op1_fbenv_r2_eff[v] = (uint32_t)p1_key_apply(op1_fbenv_r2[voice_part[v]], p1_key_add(0, 0), 0, 99);
-        op1_fbenv_r3_eff[v] = (uint32_t)p1_key_apply(op1_fbenv_r3[voice_part[v]], p1_key_add(0, 0), 0, 99);
-        op1_fbenv_r4_eff[v] = (uint32_t)p1_key_apply(op1_fbenv_relr[voice_part[v]], p1_key_add(0, 0), 0, 99);
+        op1_fbenv_rate_macro[v] = (1 ? p1_macro_velocity_env_rate(S, voice_part[v], v) : 0);
+        op1_fbenv_r1_base[v] = p1_clamp(op1_fbenv_r1[voice_part[v]] + op1_fbenv_rate_macro[v], 0, 99);
+        op1_fbenv_r2_base[v] = p1_clamp(op1_fbenv_r2[voice_part[v]] + op1_fbenv_rate_macro[v], 0, 99);
+        op1_fbenv_r3_base[v] = p1_clamp(op1_fbenv_r3[voice_part[v]] + op1_fbenv_rate_macro[v], 0, 99);
+        op1_fbenv_relr_base[v] = p1_clamp(op1_fbenv_relr[voice_part[v]] + op1_fbenv_rate_macro[v], 0, 99);
+        op1_fbenv_r1_eff[v] = (uint32_t)p1_key_apply(op1_fbenv_r1_base[v], p1_key_add(0, 0), 0, 99);
+        op1_fbenv_r2_eff[v] = (uint32_t)p1_key_apply(op1_fbenv_r2_base[v], p1_key_add(0, 0), 0, 99);
+        op1_fbenv_r3_eff[v] = (uint32_t)p1_key_apply(op1_fbenv_r3_base[v], p1_key_add(0, 0), 0, 99);
+        op1_fbenv_r4_eff[v] = (uint32_t)p1_key_apply(op1_fbenv_relr_base[v], p1_key_add(0, 0), 0, 99);
         op1_lfo_base[v] = ((uint32_t)p1_wave_base[((op1_lfo_wave[voice_part[v]] > 11u) ? 0u : op1_lfo_wave[voice_part[v]])] << 10);
         op1_lfo_rate_step[v] = p1_fade_step(op1_lfo_rate_fade[voice_part[v]]);
         op1_lfo_depth_step[v] = p1_fade_step(op1_lfo_depth_fade[voice_part[v]]);
-        op1_specenv_r1_eff[v] = (uint32_t)p1_key_apply(op1_specenv_r1[voice_part[v]], p1_key_add(0, 0), 0, 99);
-        op1_specenv_r2_eff[v] = (uint32_t)p1_key_apply(op1_specenv_r2[voice_part[v]], p1_key_add(0, 0), 0, 99);
-        op1_specenv_r3_eff[v] = (uint32_t)p1_key_apply(op1_specenv_r3[voice_part[v]], p1_key_add(0, 0), 0, 99);
-        op1_specenv_r4_eff[v] = (uint32_t)p1_key_apply(op1_specenv_relr[voice_part[v]], p1_key_add(0, 0), 0, 99);
+        op1_specenv_rate_macro[v] = (1 ? p1_macro_velocity_env_rate(S, voice_part[v], v) : 0);
+        op1_specenv_r1_base[v] = p1_clamp(op1_specenv_r1[voice_part[v]] + op1_specenv_rate_macro[v], 0, 99);
+        op1_specenv_r2_base[v] = p1_clamp(op1_specenv_r2[voice_part[v]] + op1_specenv_rate_macro[v], 0, 99);
+        op1_specenv_r3_base[v] = p1_clamp(op1_specenv_r3[voice_part[v]] + op1_specenv_rate_macro[v], 0, 99);
+        op1_specenv_relr_base[v] = p1_clamp(op1_specenv_relr[voice_part[v]] + op1_specenv_rate_macro[v], 0, 99);
+        op1_specenv_r1_eff[v] = (uint32_t)p1_key_apply(op1_specenv_r1_base[v], p1_key_add(0, 0), 0, 99);
+        op1_specenv_r2_eff[v] = (uint32_t)p1_key_apply(op1_specenv_r2_base[v], p1_key_add(0, 0), 0, 99);
+        op1_specenv_r3_eff[v] = (uint32_t)p1_key_apply(op1_specenv_r3_base[v], p1_key_add(0, 0), 0, 99);
+        op1_specenv_r4_eff[v] = (uint32_t)p1_key_apply(op1_specenv_relr_base[v], p1_key_add(0, 0), 0, 99);
         op1_osc_wave[v] = ((op1_osc_waveform[voice_part[v]] > 13u) ? 0u : op1_osc_waveform[voice_part[v]]);
         op1_osc_base[v] = ((uint32_t)p1_wave_base[(op1_osc_wave[v] > 12u) ? 0u : op1_osc_wave[v]] << 10);
         op1_osc_bl[v] = ((op1_osc_wave[v] >= 10u && op1_osc_wave[v] <= 12u) ? 1u : 0u);
