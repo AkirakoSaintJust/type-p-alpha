@@ -394,11 +394,24 @@
 
   /* ---------------- fx / mod ---------------- */
   .fxmod-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr);
+    display: grid; grid-template-columns: repeat(4, 1fr);
     grid-template-rows: 1fr 1fr; gap: 10px; min-height: 100%;
   }
   .fxmod-grid .card { display: flex; flex-direction: column; }
   .fxmod-grid .span2 { grid-column: span 2; }
+  .ringcard { grid-column: 4; }
+  .ringbody { flex: 1 1 auto; display: flex; flex-direction: column; gap: 6px; padding-top: 6px; min-height: 0; }
+  .ringrow { display: flex; align-items: center; gap: 6px; height: 66px; }
+  .ringgraph { flex: 0 0 112px; width: 112px; height: 56px; }
+  .ringgraph svg { display: block; width: 100%; height: 100%; }
+  .ringrow .knob { width: 48px; flex: 0 0 48px; }
+  .ringrow .knob .dial, .ringrow .knob .dial svg { width: 36px; height: 36px; }
+  .ringrow .knob .knob-val { font-size: 13px; }
+  .ringrow.off .knob { opacity: .35; pointer-events: none; }
+  .ringout { display: flex; align-items: center; gap: 3px; margin-top: auto; min-width: 0; }
+  .ringout .lbl { flex: 0 0 44px; font-size: 10px; letter-spacing: .04em; color: var(--dim); }
+  .ringout .toggle .tname { font-size: 10px; }
+  .ringempty { color: var(--faint); font-size: 11px; letter-spacing: .06em; padding: 8px 0; }
   .followcard { display: flex; flex-direction: column; }
   .followcard.off { opacity: .45; }
   .follow-actions { display: flex; align-items: center; gap: 6px; }
@@ -915,7 +928,12 @@
       filterEnv: JSON.parse(JSON.stringify(INIT_FILTER_ENV)),
       filter1: JSON.parse(JSON.stringify(INIT_FILTER1)),
       keyFollow: JSON.parse(JSON.stringify(INIT_KEY_FOLLOW)),
-      velFollow: JSON.parse(JSON.stringify(INIT_VEL_FOLLOW))
+      velFollow: JSON.parse(JSON.stringify(INIT_VEL_FOLLOW)),
+      ring: {
+        on: [false, false, false],
+        level: [99, 99, 99],
+        out: [true, true, true, true]
+      }
     };
   }
 
@@ -2503,7 +2521,92 @@
     velCard.classList.add("followcard");
     if (!VEL_FOLLOW.on) velCard.classList.add("off");
     wrap.appendChild(velCard);
+    wrap.appendChild(ringmodCard());
     return wrap;
+  }
+
+  /* ---------------- ringmod card ---------------- */
+  function ringGraph(a, b) {
+    const W = 112, H = 54;
+    const bw = 24, bh = 16, ax = 0, bx = 0, ay = 4, by = 34;
+    const rx = 46, ry = 16, rw = 22, rh = 22;
+    const aMid = ay + bh / 2, bMid = by + bh / 2, rMid = ry + rh / 2;
+    let g = "";
+    function box(x, y, op) {
+      return '<rect x="' + x + '" y="' + y + '" width="' + bw + '" height="' + bh +
+        '" fill="#ff2e7e"/><text x="' + (x + bw / 2) + '" y="' + (y + 11) +
+        '" fill="#000" font-size="8" font-weight="700" text-anchor="middle" ' +
+        'font-family="DotGothic16, monospace">op' + (op + 1) + "</text>";
+    }
+    g += box(ax, ay, a) + box(bx, by, b);
+    g += wire(ax + bw, aMid, rx, ry + 5);
+    g += wire(bx + bw, bMid, rx, ry + rh - 5);
+    g += '<rect x="' + rx + '" y="' + ry + '" width="' + rw + '" height="' + rh +
+      '" fill="none" stroke="#2e2e2e" stroke-width="1.2"/>';
+    g += '<text x="' + (rx + rw / 2) + '" y="' + (ry + 15) +
+      '" fill="#ff2e7e" font-size="11" font-weight="700" text-anchor="middle" ' +
+      'font-family="DotGothic16, monospace">R</text>';
+    const outX = W - 2;
+    g += '<line x1="' + (rx + rw) + '" y1="' + rMid + '" x2="' + (outX - 5) +
+      '" y2="' + rMid + '" stroke="#c780ff" stroke-width="1.4"/>' +
+      '<polygon points="' + outX + "," + rMid + " " + (outX - 6) + "," + (rMid - 3) +
+      " " + (outX - 6) + "," + (rMid + 3) + '" fill="#c780ff"/>';
+    return '<svg viewBox="0 0 ' + W + " " + H + '">' + g + "</svg>";
+  }
+
+  function ringmodCard() {
+    const ring = PART_DATA[activePart - 1].ring;
+    const carriers = (ALG_LAYOUT[ALG] || ALG_LAYOUT[0]).car;
+    const card = document.createElement("div");
+    card.className = "card ringcard";
+    const head = document.createElement("div");
+    head.className = "sec-head";
+    const h = document.createElement("h3");
+    h.textContent = "RINGMOD";
+    head.appendChild(h);
+    card.appendChild(head);
+    const body = document.createElement("div");
+    body.className = "ringbody";
+    if (carriers.length < 2) {
+      const empty = document.createElement("div");
+      empty.className = "ringempty";
+      empty.textContent = "no ringmod";
+      body.appendChild(empty);
+    } else {
+      for (let i = 0; i < carriers.length - 1; i++) {
+        const row = document.createElement("div");
+        row.className = "ringrow" + (ring.on[i] ? "" : " off");
+        const graph = document.createElement("div");
+        graph.className = "ringgraph";
+        graph.innerHTML = ringGraph(carriers[i], carriers[i + 1]);
+        row.appendChild(graph);
+        row.appendChild(makeToggle("on", ring.on[i], function (v) {
+          ring.on[i] = v;
+          rerender();
+        }));
+        row.appendChild(makeKnob({
+          name: "level", min: 0, max: 99, val: ring.level[i], step: 1,
+          fmt: function (v) { return v; },
+          onChange: function (v) { ring.level[i] = v; }
+        }));
+        body.appendChild(row);
+      }
+      const out = document.createElement("div");
+      out.className = "ringout";
+      const lbl = document.createElement("span");
+      lbl.className = "lbl";
+      lbl.textContent = "original";
+      out.appendChild(lbl);
+      carriers.forEach(function (op) {
+        out.appendChild(makeToggle(String(op + 1), ring.out[op], function (v) {
+          ring.out[op] = v;
+          rerender();
+        }));
+      });
+      body.appendChild(out);
+    }
+    card.appendChild(body);
+    return card;
   }
 
   /* ---------------- macros page ---------------- */
