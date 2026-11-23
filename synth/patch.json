@@ -57,13 +57,7 @@
     "unison_detune.p1",
     "legato.p1",
     "portamento.p1",
-    "note_priority.p1",
-    "macro1",
-    "macro2",
-    "macro3",
-    "macro4",
-    "macro5",
-    "macro6"
+    "note_priority.p1"
   ],
   "taps": [
     "op1.audio",

@@ -129,6 +129,10 @@ int main()
     check(std::abs(p1::macroOffset(50, 50) - 0.25) < 1.0e-12 &&
               std::abs(p1::macroOffset(-50, 50) + 0.25) < 1.0e-12,
           "the macro offset is the value times the range");
+    check(std::abs(p1::macroEffective(20, 127, 45) - 65.0) < 1.0e-12 &&
+              std::abs(p1::macroEffective(20, 0, 45) - 20.0) < 1.0e-12 &&
+              p1::macroEffective(20, 127, -100) == -80.0,
+          "the source adds its range around the knob");
     check(std::abs(p1::macroTargetNormalised(0.5, 0.25) - 0.75) < 1.0e-12 &&
               p1::macroTargetNormalised(0.9, 0.5) == 1.0 &&
               p1::macroTargetNormalised(0.1, -0.5) == 0.0,
@@ -261,6 +265,41 @@ int main()
         const auto macroAtFifty = renderFirst(50);
         check(!matches(macroAtFifty, reference, kFrames),
               "a macro moves its destination");
+
+        const auto renderWithSource = [&](int source, int controller,
+                                          int controllerValue,
+                                          int velocity) {
+            auto instance = std::make_unique<TypePAlphaAudioProcessor>();
+            instance->setRateAndBufferSizeDetails(48000.0, kFrames);
+            instance->prepareToPlay(48000.0, kFrames);
+            set(*instance, "macro1", 0);
+            set(*instance, "macro1_target1", 35);
+            set(*instance, "macro1_range1", 50);
+            set(*instance, "macro1_midi", source);
+            set(*instance, "macro1_midi_range", 50);
+            juce::AudioBuffer<float> out(2, kFrames);
+            juce::MidiBuffer events;
+            events.addEvent(
+                juce::MidiMessage::noteOn(1, 60,
+                                          static_cast<juce::uint8>(velocity)),
+                0);
+            if (controller >= 0) {
+                events.addEvent(
+                    juce::MidiMessage::controllerEvent(1, controller,
+                                                       controllerValue),
+                    0);
+            }
+            instance->processBlock(out, events);
+            return out;
+        };
+        check(matches(renderWithSource(1, -1, 0, 100), reference, kFrames),
+              "a cc source at rest leaves the macro at the knob");
+        check(!matches(renderWithSource(1, 72, 127, 100), reference, kFrames),
+              "the cc source moves the macro");
+        check(!matches(renderWithSource(2, 1, 127, 100), reference, kFrames),
+              "the wheel source moves the macro");
+        check(!matches(renderWithSource(3, -1, 0, 100), reference, kFrames),
+              "the velocity source moves the macro");
     }
 
     juce::MemoryBlock state;

@@ -198,11 +198,18 @@ TypePAlphaAudioProcessor::TypePAlphaAudioProcessor()
     for (int i = 0; i < 6; ++i) {
         macroValueValues_[static_cast<std::size_t>(i)] =
             apvts_.getRawParameterValue(kP1MacroParamIDs[i]);
+        macroMidiValues_[static_cast<std::size_t>(i)] =
+            apvts_.getRawParameterValue(kP1MacroParamIDs[6 + i]);
+        macroMidiRangeValues_[static_cast<std::size_t>(i)] =
+            apvts_.getRawParameterValue(kP1MacroParamIDs[12 + i]);
         macroTargetValues_[static_cast<std::size_t>(i)] =
             apvts_.getRawParameterValue(kP1MacroParamIDs[18 + i]);
         macroRangeValues_[static_cast<std::size_t>(i)] =
             apvts_.getRawParameterValue(kP1MacroParamIDs[36 + i]);
+        macroCc_[static_cast<std::size_t>(i)].store(0);
     }
+    modWheel_.store(0);
+    noteVelocity_.store(0);
     for (int i = 6; i < 18; ++i) {
         macroTargetValues_[static_cast<std::size_t>(i)] =
             apvts_.getRawParameterValue(kP1MacroParamIDs[18 + i]);
@@ -370,21 +377,36 @@ void TypePAlphaAudioProcessor::syncParams()
 
 void TypePAlphaAudioProcessor::syncMacros()
 {
-    int values[6] = {};
+    double values[6] = {};
     bool anyValue = false;
     for (int i = 0; i < 6; ++i) {
-        if (macroValueValues_[static_cast<std::size_t>(i)] != nullptr) {
-            values[i] = static_cast<int>(
-                std::lround(macroValueValues_[static_cast<std::size_t>(i)]->load()));
-            anyValue = anyValue || values[i] != 0;
-        }
+        const std::size_t index = static_cast<std::size_t>(i);
+        const int knob = macroValueValues_[index] != nullptr
+            ? static_cast<int>(std::lround(macroValueValues_[index]->load()))
+            : 0;
+        const int source = macroMidiValues_[index] != nullptr
+            ? static_cast<int>(std::lround(macroMidiValues_[index]->load()))
+            : 1;
+        const int range = macroMidiRangeValues_[index] != nullptr
+            ? static_cast<int>(
+                  std::lround(macroMidiRangeValues_[index]->load()))
+            : 0;
+        int sourceValue = 0;
+        if (source == 1)
+            sourceValue = macroCc_[index].load();
+        else if (source == 2)
+            sourceValue = modWheel_.load();
+        else if (source == 3)
+            sourceValue = noteVelocity_.load();
+        values[i] = p1::macroEffective(knob, sourceValue, range);
+        anyValue = anyValue || std::abs(values[i]) > 1.0e-9;
     }
     if (!anyValue && !macroApplied_)
         return;
     std::fill(macroOffsets_.begin(), macroOffsets_.end(), 0.0);
     if (anyValue) {
         for (int m = 0; m < 6; ++m) {
-            if (values[m] == 0)
+            if (std::abs(values[m]) < 1.0e-9)
                 continue;
             for (int d = 0; d < 3; ++d) {
                 const int slot = m * 3 + d;
@@ -589,6 +611,21 @@ void TypePAlphaAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
             deferredOffs_.clear();
             while (event != midi.end() && (*event).samplePosition < end) {
                 const auto message = (*event).getMessage();
+                if (message.isController()) {
+                    const int controller = message.getControllerNumber();
+                    const int controllerValue = message.getControllerValue();
+                    if (controller == 1) {
+                        modWheel_.store(controllerValue,
+                                        std::memory_order_relaxed);
+                    } else if (controller >= 72 && controller <= 77) {
+                        macroCc_[static_cast<std::size_t>(controller - 72)]
+                            .store(controllerValue, std::memory_order_relaxed);
+                    }
+                } else if (message.isNoteOn() &&
+                           message.getVelocity() > 0) {
+                    noteVelocity_.store(message.getVelocity(),
+                                        std::memory_order_relaxed);
+                }
                 if (!isEngineMessage(message)) {
                     ++event;
                     continue;
@@ -647,6 +684,20 @@ void TypePAlphaAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
         const double ratio = rateBridge_.ratio();
         for (const auto metadata : midi) {
             const auto message = metadata.getMessage();
+            if (message.isController()) {
+                const int controller = message.getControllerNumber();
+                const int controllerValue = message.getControllerValue();
+                if (controller == 1) {
+                    modWheel_.store(controllerValue,
+                                    std::memory_order_relaxed);
+                } else if (controller >= 72 && controller <= 77) {
+                    macroCc_[static_cast<std::size_t>(controller - 72)]
+                        .store(controllerValue, std::memory_order_relaxed);
+                }
+            } else if (message.isNoteOn() && message.getVelocity() > 0) {
+                noteVelocity_.store(message.getVelocity(),
+                                    std::memory_order_relaxed);
+            }
             if (!isEngineMessage(message))
                 continue;
             const int64_t coreFrame = static_cast<int64_t>(std::floor(

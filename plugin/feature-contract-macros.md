@@ -9,9 +9,9 @@
   in [`../docs/research/macros.md`](../docs/research/macros.md).
 - **Owner / date:** P1Onken, 2026-11-23.
 - **Disposition:** the 54 parameters, the CC map, the automation flags, the multi
-  record, the target table and the linear and log destination offsets are built. The
-  relative source, the per-voice layer and the panel are outstanding, so the evidence
-  below is partly run and partly a list.
+  record, the target table, the linear and log destination offsets and the relative
+  CC, wheel and velocity sources are built. The per-voice layer and the panel are
+  outstanding, so the evidence below is partly run and partly a list.
 
 ## Player outcome
 
@@ -61,9 +61,10 @@
 - The effective macro is `clamp(knob + source * midi_range, -100, 100)`, where the
   source is 0 to 1. The CC and the wheel are clamped to 0 to 1, and the velocity is
   the note's velocity over 127.
-- The source law is the design. The build reads the macro parameter as the value, and
-  the generated CC map writes that value absolutely; the relative source, the wheel
-  capture and the velocity path are outstanding.
+- The source law is built. The six values are no longer in the generated CC map, and
+  the processor captures CC72 to CC77, CC1 and the note-on velocity as live values.
+  The source select and range are per macro, and a source at rest leaves the macro at
+  the knob. The velocity source uses the newest note until the per-voice layer lands.
 - A destination with a linear parameter is
   `clamp(base + (effective / 100) * (range / 100) * span)`. The base is the stored
   parameter value, never the last effective one.
@@ -114,12 +115,15 @@ Run on the parameter layer, the multi record, the target table and the offset la
   normalised state cannot hold every raw step of a 20,000,000 span.
 - The nine editor snapshots with an LFO rate knob are regenerated. At 4 to 5 Hz the
   rate knobs now sit near the middle instead of the bottom two percent.
+- `plugin_smoke` passes `the source adds its range around the knob`, `a cc source at
+  rest leaves the macro at the knob`, `the cc source moves the macro`, `the wheel
+  source moves the macro` and `the velocity source moves the macro`. The last three
+  render a fresh first block with the macro knob at 0 and the source at 127 or 100,
+  and each differs from the engine reference.
 - `engine_parity` and the other 16 tests pass.
 
 Still outstanding:
 
-- The relative CC, wheel and velocity sources. The build uses the macro parameter as
-  the value, and the CC map writes it absolutely for now.
 - The per-voice rate and velocity layer, with its two-voice render test.
 - The macros page and its snapshots: an empty card, a card with three targets, the
   disabled MIDI range, the target menu with its eight section headings, the purple
@@ -127,9 +131,14 @@ Still outstanding:
 
 ## Limits
 
-- **The parameter layer, the multi record, the target table, the linear offsets and
-  the log LFO rates are built.** The relative source, the per-voice layer and the
-  panel are not.
+- **The parameter layer, the multi record, the target table, the offsets and the
+  relative sources are built.** The per-voice layer and the panel are not.
+- **The velocity source uses the newest note.** The part-level offsets cannot follow
+  each voice yet, so a chord at different velocities moves the whole part with the
+  last note's velocity.
+- **The source values are live, not patch state.** The source select and range are
+  saved with the patch, whilst the CC, wheel and note velocity arrive at runtime and
+  start at rest.
 - **The display follows the newest voice.** A velocity macro differs per voice, and
   the stored value, the effective value and the dotted green arc can only show one of
   them.

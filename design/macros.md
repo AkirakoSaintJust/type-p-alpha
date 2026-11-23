@@ -1,7 +1,7 @@
 # Macros
 
 Status: the parameter layer, the multi record, the target table, the linear and log
-destination offsets are built. The relative CC, wheel and velocity sources, the
+destination offsets and the relative CC, wheel and velocity sources are built. The
 per-voice layer and the panel are outstanding. The research is in
 [`../docs/research/macros.md`](../docs/research/macros.md), and the parameter list and
 the evidence the milestone needs are in
@@ -35,10 +35,13 @@ controller at rest leaves the macro at the knob and a rising source adds.
 The range is bipolar, from -100 to +100, and the sign sets the direction. The
 effective macro is clamped to -100 and +100 after the source is added. The source is
 relative rather than absolute, so the CC adds to the automation value instead of
-fighting it.
+fighting it. The six values left the generated CC map: the processor captures CC72 to
+CC77, CC1 and the note-on velocity, so the sources are live values rather than patch
+state.
 
-Velocity is per note, so the sound follows each voice and the display follows the
-newest voice.
+Velocity is per note, so the design follows each voice and the display follows the
+newest voice. Until the per-voice layer lands, the part-level offset layer uses the
+newest note's velocity for every voice.
 
 The menu is `off`, `cc 72`, `mod wheel`, `velocity`. The range slider is active for
 the three sources and greyed for `off`. The fixed CC is written on the option, so the

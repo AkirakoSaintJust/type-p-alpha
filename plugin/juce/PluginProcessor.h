@@ -130,8 +130,13 @@ private:
     std::array<int32_t, kP1ParamCount> lastParams_{};
     std::array<std::atomic<float>*, kP1ParamCount> paramValues_{};
     std::array<std::atomic<float>*, 6> macroValueValues_{};
+    std::array<std::atomic<float>*, 6> macroMidiValues_{};
+    std::array<std::atomic<float>*, 6> macroMidiRangeValues_{};
     std::array<std::atomic<float>*, 18> macroTargetValues_{};
     std::array<std::atomic<float>*, 18> macroRangeValues_{};
+    std::array<std::atomic<int>, 6> macroCc_{};
+    std::atomic<int> modWheel_{0};
+    std::atomic<int> noteVelocity_{0};
     std::array<std::atomic<float>*, 2> algorithmValues_{};
     std::vector<int32_t> macroMemberIds_;
     std::vector<juce::RangedAudioParameter*> macroMemberParams_;
