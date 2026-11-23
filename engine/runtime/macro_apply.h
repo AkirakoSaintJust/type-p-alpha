@@ -5,8 +5,15 @@
 
 #include "macro_target_ids.h"
 
-/* The carrier masks live in the generated routing table. */
+/* The carrier masks live in the generated routing table. The engine compiles it as
+ * C, so the C++ tests need the C linkage. */
+#ifdef __cplusplus
+extern "C" {
+#endif
 extern const int16_t table_routing[160];
+#ifdef __cplusplus
+}
+#endif
 
 /* The per-voice part of the macro layer: the velocity source on the all-operator
  * and role groups. The plugin writes the knob, CC, wheel and the non-velocity

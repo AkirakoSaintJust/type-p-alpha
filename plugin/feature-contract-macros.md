@@ -158,6 +158,15 @@ Run on the parameter layer, the multi record, the target table and the offset la
   page moves to 8, the layout-3 spectra b page to 7, the layout-4 one to 6 and the
   four-tab fx page to 2, so an old project opens on the page it was saved on.
 - `engine_parity` and the other 17 tests pass.
+- The Windows build from the final head passes its 17 tests. `pluginval` 1.0.4 at
+  strictness level 5 with the GUI tests skipped reports `SUCCESS` on the VST3. The
+  release package `Type-P.alpha-windows-x86_64.zip` (20,199,264 bytes, SHA-256
+  `7B6BC9AB819B29FB97C0855186F93818CF414191C6131E5EF7A85114B0B518AF`) carries the
+  VST3 (15,797,760 bytes, `8790F5B2B93BAED438F88ABB6936D905F105A4BF1F7C51261868EF7ABB390B6D`),
+  the CLAP (15,776,768 bytes,
+  `6AB57D5AEE8B350E1AD45F24C7F194212F63F907C39A00428DE2D9B948F4A9D4`), the standalone
+  (16,147,456 bytes, `9ED3610514E8E4504B18FE565CD4282BE4EBDA2D947651BF5828719B3DD74AB8`)
+  and the licences. The CLAP validator runs in the macOS CI.
 
 Still outstanding:
 
