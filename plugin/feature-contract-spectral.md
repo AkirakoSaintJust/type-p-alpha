@@ -63,7 +63,7 @@
   the plugin state version moves to 4. The project has no release, so no migration
   path is provided and the values are stable. The part block grew from 416 to 800
   parameters at this slice, the manifest from 846 to 1,614, and each part record by
-  1,536 bytes, and the plugin's `uiPage` needs the `part fx/mod` remap and the split
+  1,536 bytes, and the plugin's `uiPage` needs the `part params` remap and the split
   remap for the mod page, keyed on `uiPageLayout` 3. The later envelope family moved
   the totals to 1,676 manifest parameters and an 831 part block, and the LFO fade
   family to 1,744 and 865.

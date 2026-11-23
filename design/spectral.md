@@ -17,12 +17,12 @@ point where the editing finally felt like the K5 rather than a form.
 
 ## Tabs and page indices
 
-The tab bar keeps seven tabs, with `part fx/mod` next to `patch settings`:
+The tab bar keeps seven tabs, with `part params` next to `patch settings`:
 
 | Index | Tab |
 | --- | --- |
 | 0 | patch settings |
-| 1 | part fx/mod |
+| 1 | part params |
 | 2 | op envs |
 | 3 | op lfos |
 | 4 | op spectra a |
@@ -30,8 +30,8 @@ The tab bar keeps seven tabs, with `part fx/mod` next to `patch settings`:
 | 6 | op spectra mod |
 
 The page order moves with each layout change, so restore remaps the stored page. A
-four-tab session had operators at 1, op lfos at 2 and fx/mod at 3. A six-tab
-session had fx/mod at 1 and `op spectra mod` at 5. The split inserts `op spectra b`
+four-tab session had operators at 1, op lfos at 2 and part params at 3. A six-tab
+session had part params at 1 and `op spectra mod` at 5. The split inserts `op spectra b`
 at 5, so the mod page moves to 6. The remap keys on `uiPageLayout`, now 3, and the
 patch and multi data are unaffected.
 

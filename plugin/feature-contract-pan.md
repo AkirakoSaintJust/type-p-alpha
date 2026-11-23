@@ -5,7 +5,7 @@
 - **Feature:** Place each part in the stereo field with a constant-power pan and a
   three-stage absolute pan envelope, both per part.
 - **Brief section:** the part card in [`../design/README.md`](../design/README.md)
-  and the part fx/mod page.
+  and the part params page.
 - **Owner / date:** P1Onken, 2026-11-20.
 - **Disposition:** complete. The Linux suite passes 15 of 15 with the slider, the
   card and the version 12 pan remap, and the full CI matrix is green.
@@ -13,7 +13,7 @@
 ## Player outcome
 
 - **New player action:** each part card gains a `pan` slider under the level
-  slider, from -100 to 100 with centre at 0. The part fx/mod page gains a pan
+  slider, from -100 to 100 with centre at 0. The part params page gains a pan
   envelope card with an on switch, three rates, three levels, a release rate and
   level, a mode and the envelope graph.
 - **Sound and behaviour:** the parts are summed into left and right buses rather
@@ -72,7 +72,7 @@
 - `preset_smoke` loads a version 10 record and a version 12 record. The version 10
   record maps the old r4 and l4 to the release rate and level and the depth to the
   mode; the version 12 record keeps the pan block through the later inserts.
-- The editor snapshots `editor-fxmod.png` and `editor-fxmod-loops.png` show the pan
+- The editor snapshots `editor-part-params.png` and `editor-part-params-loops.png` show the pan
   card and its loop boundaries.
 
 ## Limits

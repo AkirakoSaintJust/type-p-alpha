@@ -84,7 +84,7 @@ int main(int argc, char** argv)
     bool ok = saveSnapshot(*editor, directory.getChildFile("editor-patch.png"));
     p1editor->showTab(1);
     fill();
-    ok = saveSnapshot(*editor, directory.getChildFile("editor-fxmod.png")) && ok;
+    ok = saveSnapshot(*editor, directory.getChildFile("editor-part-params.png")) && ok;
     /* Bipolar loop1 on the pitch and pan cards draws the turn boundaries and
      * the left arrow against a non-zero level. */
     {
@@ -101,7 +101,7 @@ int main(int argc, char** argv)
                     parameter->convertTo0to1(value));
         fill();
         ok = saveSnapshot(*editor,
-                          directory.getChildFile("editor-fxmod-loops.png")) &&
+                          directory.getChildFile("editor-part-params-loops.png")) &&
              ok;
         const std::array<std::pair<const char*, float>, 10> restore{{
             {"penv_l1.p0", 5461.0f}, {"penv_l2.p0", 2731.0f},

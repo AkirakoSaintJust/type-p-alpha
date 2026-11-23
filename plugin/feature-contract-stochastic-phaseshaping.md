@@ -411,7 +411,7 @@ stays a future option if a listening test asks for it.
 The strip has eight labels:
 
 0. `patch settings`
-1. `part fx/mod`
+1. `part params`
 2. `op envs`
 3. `op lfos`
 4. `op phasemap` (new)

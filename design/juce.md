@@ -111,8 +111,8 @@ Every page fills the same height:
 - patch settings: two part cards, each with seven knobs, a level slider, a pan
   slider and a scope and spectro, which grow to fill the remaining card height,
   followed by the voice mode block.
-- part fx/mod: a three by two grid. `filter`, the filter envelope and the pitch LFO
-  fill the first row. Pitch envelope, key follow and velocity follow fill the second
+- part params: a three by two grid. `filter`, the filter envelope and the pitch LFO
+  fill the first row. Pitch envelope, key follow and velocity fill the second
   row. Every card header carries a `to 1` or `to 2` action that copies that card to
   the other part. The two follow cards are separate, and each has its own on switch,
   `wipe all` button and copy action. The pitch LFO carries its `bipolar` switch beside the wave select.
@@ -165,7 +165,7 @@ Every page fills the same height:
   depth, `rate fade` and `depth fade` in one row of 22 px dials, with the wave
   select and `bipolar` switch below.
 
-The current layout has eight tabs: patch settings at 0, part fx/mod at 1, op
+The current layout has eight tabs: patch settings at 0, part params at 1, op
 envs at 2, op lfos at 3, op phasemap at 4, op spectra a at 5, op spectra b
 at 6 and op spectra mod at 7. The page order changes with each layout addition,
 so the processor remaps the stored `uiPage` when an old state restores. A four-tab
@@ -229,7 +229,7 @@ Context sizes:
 - operator feedback envelope 34 cell, 28 dial
 - part settings 62 cell, 38 dial
 - pitch envelope 52 cell, 38 dial
-- key follow and velocity follow 64 cell, 42 dial
+- key follow and velocity 64 cell, 42 dial
 
 Mute controls are tiles, so active is a solid pink tile with a black label such as
 `op1` or `p1`, and muted is a black tile with a pink outline and a pink label, whilst
@@ -302,8 +302,8 @@ parameter set and the same ranges, grouped to match the pages rather than the JS
 order.
 
 - patch settings: parts, keyzones, levels, delays, voice mode.
-- part fx/mod: filter, filter envelope, pitch LFO, pitch envelope, pan envelope,
-  key and velocity follow, in a four by two grid.
+- part params: filter, filter envelope, pitch LFO, pitch envelope, pan envelope,
+  key and velocity, in a four by two grid.
 - op envs: four sets of oscillator, amplitude envelope, feedback envelope and
   the three LFO parameters.
 - op phasemap: per operator, the phase map's nine knobs and `on`, the phase LFO's

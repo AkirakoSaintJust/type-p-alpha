@@ -5,7 +5,7 @@
 - **Feature:** Per-LFO rate fade-in and depth fade-in. Each fades its target
   from zero over a linear attack, so an LFO can speed up or open up after the
   note starts.
-- **Brief section:** the op lfos, spectral mod and part fx/mod cards, and
+- **Brief section:** the op lfos, spectral mod and part params cards, and
   the LFO entries in the README.
 - **Owner / date:** P1Onken, 2026-11-20.
 - **Disposition:** complete. The engine, the five card families, the `lfo_fades`

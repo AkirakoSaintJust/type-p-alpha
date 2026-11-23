@@ -2296,7 +2296,7 @@
       VEL_FOLLOW.sel = VEL_FOLLOW.targets.findIndex(function (t) { return t.name === v; });
       rerender();
     }));
-    const velCard = makeSection("VELOCITY FOLLOW", "velfollow",
+    const velCard = makeSection("VELOCITY", "velfollow",
       [b(vt, "amount", "AMOUNT", -100, 100, bipFmt, 1)],
       { before: velTargetRow, headExtra: velActions, copy: false });
     velCard.classList.add("followcard");
@@ -2308,7 +2308,7 @@
   /* ---------------- tabs ---------------- */
   const TABS = [
     { id: "patch", label: "patch settings", view: viewPatch },
-    { id: "partfx", label: "part fx/mod", view: viewFxMod },
+    { id: "partfx", label: "part params", view: viewFxMod },
     { id: "ops", label: "op envs", view: viewOps },
     { id: "oplfo", label: "op lfos", view: viewOperatorLfos },
     { id: "phasemap", label: "op phasemap", view: viewOpPhaseMap },

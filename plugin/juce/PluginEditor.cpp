@@ -769,7 +769,7 @@ void PluginEditor::buildUi()
     activeTab_ = juce::jlimit(0, 7, activeTab_);
     juce::StringArray labels;
     labels.add("patch settings");
-    labels.add("part fx/mod");
+    labels.add("part params");
     labels.add("op envs");
     labels.add("op lfos");
     labels.add("op phasemap");

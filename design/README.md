@@ -207,7 +207,7 @@ Knob cells and dials:
 | spectral LFO fade pair | 140 | 22 |
 | part settings | 62 | 38 |
 | pitch envelope | 52 | 38 |
-| key follow and velocity follow | 64 | 42 |
+| key follow and velocity | 64 | 42 |
 
 The window is fixed because the pages are a grid, and a grid that reflows is a grid
 I have to test twice. The operator page sets the height, the other pages fit inside
@@ -278,7 +278,7 @@ text. A long part name is truncated with an ellipsis.
 
 ### Tabs
 
-`patch settings`, `part fx/mod`, `op envs`, `op lfos`, `op phasemap`,
+`patch settings`, `part params`, `op envs`, `op lfos`, `op phasemap`,
 `op spectra a`, `op spectra b`, `op spectra mod`, with no vertical dividers. The
 active tab is a pink cut polygon rather than a rectangle. Inactive tabs are dim text
 on black.
@@ -297,11 +297,11 @@ seven knobs are `midi channel`, `keyzone start`, `keyzone end`, `tune`,
 `mono`, `legato`, `unison` and the unison, detune and porta knobs. The three knobs
 sit next to the mode buttons with a 32px gap rather than at the card edge.
 
-### Part fx/mod
+### Part params
 
 One page, a four by two grid that fills the window. `filter`, the filter envelope,
 the pitch LFO and the pitch envelope fill the first row. Pan envelope, key follow
-and velocity follow fill the second row, and the last cell stays empty. The filter
+and velocity fill the second row, and the last cell stays empty. The filter
 card has cutoff, resonance and env amount, whilst key and velocity tracking sit in
 the two follow cards rather than on the filter card. The filter, its envelope and
 its two follow targets address the active part, because each part has its own
@@ -322,9 +322,9 @@ with the active part. The filter, its envelope, the pitch LFO and the pitch
 envelope carry only the copy action and their on state. The follow cards put the
 copy action immediately before `wipe all`.
 
-Key follow and velocity follow are separate cards. Each has an on switch, a
+Key follow and velocity are separate cards. Each has an on switch, a
 `wipe all` button and its own target selector. Key follow has a breakpoint and below
-and above amounts, whilst velocity follow has one amount. The wipe button sets every
+and above amounts, whilst velocity has one amount. The wipe button sets every
 target amount to 0%, so the card can be cleared without visiting each target. The
 same target set is used for both cards: operator level, feedback and amp envelope,
 pitch envelope, filter cutoff, and filter envelope.

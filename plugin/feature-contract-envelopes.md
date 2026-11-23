@@ -5,7 +5,7 @@
 - **Feature:** Replace the four-rate/four-level envelope with two explicit
   families: an operator amplitude envelope with a composite attack, and a bipolar
   modulation envelope with three stages, a release, and four modes.
-- **Brief section:** the operator envelope page, the part fx/mod cards and the
+- **Brief section:** the operator envelope page, the part params cards and the
   research note on envelopes.
 - **Owner / date:** P1Onken, 2026-11-20.
 - **Disposition:** implemented. The operator amplitude envelope and the pitch,
@@ -135,7 +135,7 @@ Old libraries are remapped, not rejected.
 - The Linux snapshot set shows the operator, pitch, feedback, filter, spectral and
   pan cards with the new controls. Every envelope's mode is a dropdown with
   `sustain off`, `sustain on`, `loop 1` and `loop 2`. `editor-envelope-loops.png`
-  and `editor-fxmod-loops.png` show the dotted pink boundary lines at the sustain and
+  and `editor-part-params-loops.png` show the dotted pink boundary lines at the sustain and
   loop boundaries and the left arrow under the loop.
 - The operator graph draws the warm-up convex, the surge concave and the decays and
   release straight, with the sustain or loop boundaries marked by the dotted pink

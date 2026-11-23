@@ -521,7 +521,7 @@ public:
             editor, true, "key follow",
             copy(PluginEditor::PartFxSection::keyFollow), toLabel);
         velFollow_ = std::make_unique<FollowCard>(
-            editor, false, "velocity follow",
+            editor, false, "velocity",
             copy(PluginEditor::PartFxSection::velocityFollow), toLabel);
         addAndMakeVisible(*filter1_);
         addAndMakeVisible(*filterEnv_);

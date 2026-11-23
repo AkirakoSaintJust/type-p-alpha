@@ -109,7 +109,7 @@ only at the sub-audio bottom.
   8000 default, loads it through `PresetStore`, and checks that the cutoff lands on
   position 36958, the 909 Hz point, whilst a version 7 record keeps its raw value.
 - **UI:** the native filter card reads `909Hz` and `38%` and keeps the `comp` trim
-  off the panel, and the Linux `editor-fxmod.png` golden is regenerated. The filter
+  off the panel, and the Linux `editor-part-params.png` golden is regenerated. The filter
   envelope card carries its own on switch, rates, levels, release and mode. The host
   text for `cutoff` and `res` round-trips at 21 normalised points per parameter, which
   is the check the CLAP `param-conversions` validator makes.
