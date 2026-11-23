@@ -124,7 +124,7 @@ Every page fills the same height:
   the feedback knob, the envelope and the LFO picks the feedback family, so a
   negative level can cross zero from any knob setting. The two envelope cards
   carry copy and paste in their headers, and their graphs mark the sustain and loop
-  boundaries with a pink vertical line.
+  boundaries with a dotted pink vertical line, a 2 px dash and a 2 px gap.
 - op lfos: four operator columns, a 240 px scope and spectro pair, then the
   107 px `amp lfo`, `fb lfo` and `detune lfo` cards with 12 px gaps. The
   oscillator stays on the op envs page. Each LFO card carries copy and paste

@@ -12,17 +12,17 @@
     },
     "editor-envelope-loops.png": {
       "height": 985,
-      "sha256": "ad06117399fad03e72cc741133975e666d6b99e841d41455c6bccfa8abbfbd59",
+      "sha256": "5faabd3630aa3faa1551f2703752a3ed4f2c5c00d74bc5a5c0b5cf533a54c2c8",
       "width": 1240
     },
     "editor-fxmod-loops.png": {
       "height": 985,
-      "sha256": "d8e64ebe1a4fd50f6a77d20c72960691521e92a6179552a95a8e9d0fec4b08bd",
+      "sha256": "e844135196683ad6dd5755150509a6f3642004b3ca8a9005062409289189b83b",
       "width": 1240
     },
     "editor-fxmod.png": {
       "height": 985,
-      "sha256": "b7ef1c7e42480cc7d095ef20f830a5a759810b697a9fa41e806842ee256e4e84",
+      "sha256": "49f745bc86e95f1005a0d54248d4dbcdb8b133e36cd7a6d1c0e82478d48b6043",
       "width": 1240
     },
     "editor-half.png": {
@@ -37,32 +37,32 @@
     },
     "editor-op-phasemap-live.png": {
       "height": 985,
-      "sha256": "2b00d9adea874244dccf50e0424914d17fcf00f908e0cfb31040e2713b5df61e",
+      "sha256": "0692128cca83325d138cc33f08e07751664476fc00fcba568dc4734729fd81a5",
       "width": 1240
     },
     "editor-op-phasemap.png": {
       "height": 985,
-      "sha256": "2587a44bdbcbad66306f0813114d543aa6feb4f5d23468ec807e2cf8231687d1",
+      "sha256": "1ea63274916a69af202593513feb11c99f2b982f444168a64377e17a8e091d8c",
       "width": 1240
     },
     "editor-op-spectra-mod-levels.png": {
       "height": 985,
-      "sha256": "40a5bbe5094af49366c81b977ec76dacfe4b2137dfeb9ab9117f4ba987cad6f2",
+      "sha256": "c11338882f1d61b10404df9844f8c19567ea72a1d4e61209f48ecc123d7b92e7",
       "width": 1240
     },
     "editor-op-spectra-mod-ranges.png": {
       "height": 985,
-      "sha256": "9cfa7200799d9763d0886e9c7b2b609e155ec80bf9b00954b423b58af89d8ed7",
+      "sha256": "b49f3c348d19daa8c79be8a2bcac491ee2fdd6772d16febaeb21b3935e7c8552",
       "width": 1240
     },
     "editor-op-spectra-mod.png": {
       "height": 985,
-      "sha256": "796990df5b3f78e618afd0cb853d6439ea1a92af60ac3cb17305cc1737e8f05f",
+      "sha256": "9bf7983752d3c15b39f851eba9aaaa73a97f2d09706b3b5ad5e27f760da97363",
       "width": 1240
     },
     "editor-operator-envs.png": {
       "height": 985,
-      "sha256": "cb8e0cf5d027b3586f00aede100920d890968f3d6bbe122ef46c55472b80a9e0",
+      "sha256": "73f4238c0e057fb97336fd2006a9d3401cac72747147c5908282e06b3ee33f35",
       "width": 1240
     },
     "editor-operator-lfos-fades.png": {

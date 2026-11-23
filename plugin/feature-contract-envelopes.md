@@ -135,10 +135,11 @@ Old libraries are remapped, not rejected.
 - The Linux snapshot set shows the operator, pitch, feedback, filter, spectral and
   pan cards with the new controls. Every envelope's mode is a dropdown with
   `sustain off`, `sustain on`, `loop 1` and `loop 2`. `editor-envelope-loops.png`
-  and `editor-fxmod-loops.png` show the pink boundary lines at the sustain and
+  and `editor-fxmod-loops.png` show the dotted pink boundary lines at the sustain and
   loop boundaries and the left arrow under the loop.
 - The operator graph draws the warm-up convex, the surge concave and the decays and
-  release straight, with the sustain or loop boundaries marked.
+  release straight, with the sustain or loop boundaries marked by the dotted pink
+  line and a left arrow under the loop.
 
 ### Filter envelope rate resolution
 

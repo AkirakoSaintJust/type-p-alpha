@@ -337,10 +337,11 @@ below. The `fb env` card holds R1 to R3 and the release rate on the first row, t
 L1 to L3 and the release level on the second, with signed levels in feedback units,
 a mode dropdown in the card and an `on` switch in the card header. Every envelope's
 mode is a dropdown with `sustain off`, `sustain on`, `loop 1` and `loop 2`, and
-every envelope graph marks its sustain and loop boundaries with a pink vertical
-line, the same marker as the phase map breakpoint. The signed sum of the feedback knob,
-the envelope and the LFO chooses the feedback family, so a negative level can cross
-zero into the negative family. Every envelope and LFO card carries
+every envelope graph marks its sustain and loop boundaries with a dotted pink
+vertical line, a 2 px dash and a 2 px gap, the same line as the phase map order
+jumps. The signed sum of the feedback knob, the envelope and the LFO chooses
+the feedback family, so a negative level can cross zero into the negative
+family. Every envelope and LFO card carries
 `copy` and `paste` in its header, so a shape or an LFO moves between operators
 without touching the rest of the operator. The four oscillator knobs spread across
 the card. The envelope rates and levels each get their own row.

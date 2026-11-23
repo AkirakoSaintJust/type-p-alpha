@@ -1313,11 +1313,13 @@ void P1Envelope::paint(juce::Graphics& g)
         const float t = static_cast<float>(99 - juce::jlimit(0, 99, rate));
         return t * t;
     };
-    const auto boundary = [this, &g, &area](float bx) {
-        g.setColour(colour(tokens::pink).withAlpha(0.9f));
-        g.drawVerticalLine(juce::roundToInt(bx), area.getY(), area.getBottom());
+    const auto boundary = [&g, &area](float bx) {
+        const float dashes[] = {2.0f, 2.0f};
+        g.setColour(colour(tokens::pink));
+        g.drawDashedLine(juce::Line<float>(bx, area.getY(), bx, area.getBottom()),
+                         dashes, 2, 1.0f);
     };
-    const auto loopArrow = [this, &g, area](float x0, float x1) {
+    const auto loopArrow = [&g, area](float x0, float x1) {
         const float ay = area.getBottom() - 1.0f;
         g.setColour(colour(tokens::pink).withAlpha(0.9f));
         g.drawLine(x0, ay, x1, ay, 1.0f);
