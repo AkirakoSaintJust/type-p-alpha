@@ -8,8 +8,7 @@
 - **Brief section:** [`../design/ringmod.md`](../design/ringmod.md).
 - **Owner / date:** P1Onken, 2026-11-24.
 - **Disposition:** the parameters, the route math, the spec and part-record step,
-  the card and the tests are built. The packaged release build with the feature is
-  outstanding.
+  the card, the tests and the Windows release build are built.
 
 ## Player outcome
 
@@ -91,8 +90,18 @@ and no controls.
   and the first pair on, and `editor-part-params-ringmod-empty.png` with one carrier
   and `no ringmod`. The three existing part-params snapshots change because the card
   is in the grid.
-- The full Linux suite is 18 of 18. A release build from this head still needs
-  pluginval and the packaged binary check.
+- The full Linux suite is 18 of 18, and the Windows build passes its 17 tests.
+  `pluginval` 1.0.4 at strictness level 5 with the GUI tests skipped reports
+  `SUCCESS` on the VST3. The release package
+  `Type-P.alpha-windows-x86_64.zip` (20,206,945 bytes, SHA-256
+  `E2A2E618E09904B024942B648AACD4827E73F3A544345C6B9372245ACCB41540`) carries the
+  VST3 (15,815,168 bytes,
+  `763843B31CF02026A91417C9785C24423C00107B1DEF45CB97B38E33CC7F8955`), the CLAP
+  (15,794,688 bytes,
+  `3BA2EFE682872CED2A91DF123DA034C9D61589587D5532380518F67C92FD70CB`), the
+  standalone (16,165,376 bytes,
+  `24D303B3E1A0A85CF5E67C25D848BA65FFF50767CCA0C48D1971D530C21942D1`) and the
+  licences. The CLAP validator runs in the macOS CI.
 
 ## Limits
 

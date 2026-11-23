@@ -1,8 +1,8 @@
 # Ring modulation
 
-Status: built. The parameters, the route math, the spec and part record, the card
-and the tests are in. The open work is a release build with the feature, and any
-later macro-target or pairing change.
+Status: built. The parameters, the route math, the spec and part record, the card,
+the tests and the Windows release package are in. The open work is any later
+pairing, macro-target or post-filter change.
 
 ## The idea
 
