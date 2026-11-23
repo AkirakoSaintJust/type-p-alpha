@@ -14,6 +14,7 @@
 #include <juce_audio_processors/juce_audio_processors.h>
 
 #include "Engine.hpp"
+#include "MacroTargets.h"
 #include "ParamIDs.h"
 #include "Params.h"
 #include "PluginProcessor.h"
@@ -95,6 +96,34 @@ int main()
         }
         check(macroAutomatable == 6,
               "only the six macro values are automatable");
+    }
+    check(p1::macros::kTargetCount == 58,
+          "the macro target table has 58 rows");
+    check(std::string(p1::macros::kTargets.front().name) ==
+                  "part 1 filter cutoff" &&
+              std::string(p1::macros::kTargets.back().name) ==
+                  "part 2 modulator breakpoint xs",
+          "the macro target table starts and ends in order");
+    {
+        std::set<std::string> names;
+        bool sectionsKnown = true;
+        for (const auto& target : p1::macros::kTargets) {
+            names.insert(target.name);
+            bool found = false;
+            for (const auto* section : p1::macros::kSections)
+                if (std::string(section) == target.section)
+                    found = true;
+            sectionsKnown = sectionsKnown && found;
+        }
+        check(names.size() == p1::macros::kTargetCount,
+              "the macro target names are unique");
+        check(sectionsKnown, "every macro target has a listed section");
+    }
+    if (const auto* targetSpec = p1::ui::findSpec("macro1_target1")) {
+        check(targetSpec->max == p1::macros::kTargetCount,
+              "the target enum matches the table");
+    } else {
+        check(false, "the macro target spec is present");
     }
     check(p1::volumeGainFromPosition(p1::kVolumeUnity) == 1.0f &&
               p1::volumeGainFromPosition(0) == 0.0f,

@@ -1,0 +1,201 @@
+{
+  "sections": [
+    "part params",
+    "env rates",
+    "op lfo rates",
+    "op lfo depths",
+    "op levels",
+    "op feedbacks",
+    "op morphs",
+    "op breakpoint xs"
+  ],
+  "targets": [
+    {
+      "name": "filter cutoff",
+      "section": "part params",
+      "members": [
+        "cutoff.p{part}"
+      ]
+    },
+    {
+      "name": "resonance",
+      "section": "part params",
+      "members": [
+        "res.p{part}"
+      ]
+    },
+    {
+      "name": "pan",
+      "section": "part params",
+      "members": [
+        "pan.p{part}"
+      ]
+    },
+    {
+      "name": "detune",
+      "section": "part params",
+      "members": [
+        "detune.p{part}"
+      ]
+    },
+    {
+      "name": "velocity depth",
+      "section": "part params",
+      "family": "velocity_depth"
+    },
+    {
+      "name": "pitch lfo rate",
+      "section": "part params",
+      "members": [
+        "pitch_rate.p{part}"
+      ]
+    },
+    {
+      "name": "pitch lfo depth",
+      "section": "part params",
+      "members": [
+        "pitch_depth.p{part}"
+      ]
+    },
+    {
+      "name": "filter and pitch env rates",
+      "section": "env rates",
+      "members": [
+        "fenv_r1.p{part}",
+        "fenv_r2.p{part}",
+        "fenv_r3.p{part}",
+        "fenv_relr.p{part}",
+        "penv_r1.p{part}",
+        "penv_r2.p{part}",
+        "penv_r3.p{part}",
+        "penv_relr.p{part}"
+      ]
+    },
+    {
+      "name": "op env rates",
+      "section": "env rates",
+      "family": "op_env_rates",
+      "role": "all"
+    },
+    {
+      "name": "carrier env rates",
+      "section": "env rates",
+      "family": "op_env_rates",
+      "role": "carrier"
+    },
+    {
+      "name": "modulator env rates",
+      "section": "env rates",
+      "family": "op_env_rates",
+      "role": "modulator"
+    },
+    {
+      "name": "op lfo rates",
+      "section": "op lfo rates",
+      "family": "op_lfo_rates",
+      "role": "all"
+    },
+    {
+      "name": "carrier lfo rates",
+      "section": "op lfo rates",
+      "family": "op_lfo_rates",
+      "role": "carrier"
+    },
+    {
+      "name": "modulator lfo rates",
+      "section": "op lfo rates",
+      "family": "op_lfo_rates",
+      "role": "modulator"
+    },
+    {
+      "name": "op lfo depths",
+      "section": "op lfo depths",
+      "family": "op_lfo_depths",
+      "role": "all"
+    },
+    {
+      "name": "carrier lfo depths",
+      "section": "op lfo depths",
+      "family": "op_lfo_depths",
+      "role": "carrier"
+    },
+    {
+      "name": "modulator lfo depths",
+      "section": "op lfo depths",
+      "family": "op_lfo_depths",
+      "role": "modulator"
+    },
+    {
+      "name": "op levels",
+      "section": "op levels",
+      "family": "op_levels",
+      "role": "all"
+    },
+    {
+      "name": "carrier levels",
+      "section": "op levels",
+      "family": "op_levels",
+      "role": "carrier"
+    },
+    {
+      "name": "modulator levels",
+      "section": "op levels",
+      "family": "op_levels",
+      "role": "modulator"
+    },
+    {
+      "name": "op feedbacks",
+      "section": "op feedbacks",
+      "family": "op_feedbacks",
+      "role": "all"
+    },
+    {
+      "name": "carrier feedbacks",
+      "section": "op feedbacks",
+      "family": "op_feedbacks",
+      "role": "carrier"
+    },
+    {
+      "name": "modulator feedbacks",
+      "section": "op feedbacks",
+      "family": "op_feedbacks",
+      "role": "modulator"
+    },
+    {
+      "name": "op morphs",
+      "section": "op morphs",
+      "family": "op_morphs",
+      "role": "all"
+    },
+    {
+      "name": "carrier morphs",
+      "section": "op morphs",
+      "family": "op_morphs",
+      "role": "carrier"
+    },
+    {
+      "name": "modulator morphs",
+      "section": "op morphs",
+      "family": "op_morphs",
+      "role": "modulator"
+    },
+    {
+      "name": "op breakpoint xs",
+      "section": "op breakpoint xs",
+      "family": "op_breakpoints",
+      "role": "all"
+    },
+    {
+      "name": "carrier breakpoint xs",
+      "section": "op breakpoint xs",
+      "family": "op_breakpoints",
+      "role": "carrier"
+    },
+    {
+      "name": "modulator breakpoint xs",
+      "section": "op breakpoint xs",
+      "family": "op_breakpoints",
+      "role": "modulator"
+    }
+  ]
+}

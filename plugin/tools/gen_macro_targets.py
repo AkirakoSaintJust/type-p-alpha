@@ -1,0 +1,208 @@
+"""Generate MacroTargets.h from synth/macros.json and the parameter manifest.
+
+The target enum is the bridge between the macro parameters and the panel. The spec
+lists the 29 base targets in order, and every target exists once per part, so the
+enum is 58 rows. The generator resolves each target's members against the manifest
+names, which catches a renamed parameter at build time, and emits the display names
+and sections for the panel.
+
+usage: gen_macro_targets.py macros.json params.json tables.c MacroTargets.h
+"""
+
+from __future__ import annotations
+
+import json
+import re
+import sys
+from pathlib import Path
+from typing import Any, cast
+
+def op_env_rates(op: int) -> list[str]:
+    """The amp, feedback, morph and phase rate names for one operator.
+
+    Operator 1's surge and release are the legacy `attack` and `release` names,
+    which the editor maps for the same knobs. The other operators carry their own
+    `eg.surge` and `eg.rel` names.
+    """
+    if op == 1:
+        amp = [
+            "op1.eg.warm.p{part}",
+            "attack.p{part}",
+            "op1.eg.d1r.p{part}",
+            "op1.eg.d2r.p{part}",
+            "release.p{part}",
+        ]
+    else:
+        amp = [
+            f"op{op}.eg.warm.p{{part}}",
+            f"op{op}.eg.surge.p{{part}}",
+            f"op{op}.eg.d1r.p{{part}}",
+            f"op{op}.eg.d2r.p{{part}}",
+            f"op{op}.eg.rel.p{{part}}",
+        ]
+    return amp + [
+        f"op{op}_fbenv_r1.p{{part}}",
+        f"op{op}_fbenv_r2.p{{part}}",
+        f"op{op}_fbenv_r3.p{{part}}",
+        f"op{op}_fbenv_relr.p{{part}}",
+        f"op{op}_spec_env_r1.p{{part}}",
+        f"op{op}_spec_env_r2.p{{part}}",
+        f"op{op}_spec_env_r3.p{{part}}",
+        f"op{op}_spec_env_relr.p{{part}}",
+        f"op{op}_phase_env_r1.p{{part}}",
+        f"op{op}_phase_env_r2.p{{part}}",
+        f"op{op}_phase_env_r3.p{{part}}",
+        f"op{op}_phase_env_relr.p{{part}}",
+    ]
+
+
+FAMILIES: dict[str, list[str]] = {
+    "op_env_rates": [],  # built per operator by op_env_rates()
+    "op_lfo_rates": [
+        "op{op}_trem_rate.p{part}",
+        "op{op}_fblfo_rate.p{part}",
+        "op{op}_dlfo_rate.p{part}",
+        "op{op}_spec_lfo_rate.p{part}",
+        "op{op}_phase_lfo_rate.p{part}",
+    ],
+    "op_lfo_depths": [
+        "op{op}_trem_depth.p{part}",
+        "op{op}_fblfo_depth.p{part}",
+        "op{op}_dlfo_depth.p{part}",
+        "op{op}_spec_lfo_depth.p{part}",
+        "op{op}_phase_lfo_depth.p{part}",
+    ],
+    "op_levels": ["op{op}_level.p{part}"],
+    "op_feedbacks": ["op{op}_feedback.p{part}"],
+    "op_morphs": ["op{op}_spec_morph.p{part}"],
+    "op_breakpoints": ["op{op}_phase_bp.p{part}"],
+}
+
+VELOCITY_DEPTH = [
+    *[f"op{op}_{field}_vs.p{{part}}"
+      for op in range(1, 5)
+      for field in ("level", "fb", "aenv")],
+    "penv_vs.p{part}",
+    "f1_cutoff_vs.p{part}",
+    "fenv_vs.p{part}",
+    *[f"op{op}_phase_vs.p{{part}}" for op in range(1, 5)],
+]
+
+
+def c_string(value: str) -> str:
+    return '"' + value.replace("\\", "\\\\").replace('"', '\\"') + '"'
+
+
+def load_carriers(tables_path: Path) -> list[list[bool]]:
+    """Read the 8 carrier masks from the generated routing table."""
+    text = tables_path.read_text(encoding="utf-8")
+    match = re.search(r"table_routing\[160\]\s*=\s*\{(.*?)\};", text, re.S)
+    if match is None:
+        raise SystemExit(f"{tables_path}: the routing table is missing")
+    values = [int(v) for v in re.findall(r"-?\d+", match.group(1))]
+    if len(values) != 160:
+        raise SystemExit(f"{tables_path}: expected 160 routing values")
+    return [
+        [values[algorithm * 20 + 16 + op] != 0 for op in range(4)]
+        for algorithm in range(8)
+    ]
+
+
+def resolve(entry: dict[str, Any], part_suffix: str, carrier: list[bool]) -> list[str]:
+    if "members" in entry:
+        return [name.replace("{part}", part_suffix) for name in entry["members"]]
+    family = entry["family"]
+    if family == "velocity_depth":
+        return [name.replace("{part}", part_suffix) for name in VELOCITY_DEPTH]
+    role = entry.get("role", "all")
+    names: list[str] = []
+    for op in range(1, 5):
+        is_carrier = carrier[op - 1]
+        if role == "carrier" and not is_carrier:
+            continue
+        if role == "modulator" and is_carrier:
+            continue
+        templates = op_env_rates(op) if family == "op_env_rates" else FAMILIES[family]
+        names.extend(template.format(op=op, part=part_suffix) for template in templates)
+    return names
+
+
+def main() -> int:
+    if len(sys.argv) != 5:
+        print(
+            "usage: gen_macro_targets.py macros.json params.json tables.c "
+            "MacroTargets.h",
+            file=sys.stderr,
+        )
+        return 2
+    spec = cast(dict[str, Any], json.loads(Path(sys.argv[1]).read_text(encoding="utf-8")))
+    manifest = cast(
+        dict[str, Any], json.loads(Path(sys.argv[2]).read_text(encoding="utf-8"))
+    )
+    carriers = load_carriers(Path(sys.argv[3]))
+    params = cast(list[dict[str, Any]], manifest["params"])
+    known = {str(param["name"]) for param in params}
+    target_max = next(
+        (int(param["max"]) for param in params if param["name"] == "macro1_target1"),
+        -1,
+    )
+    sections = [str(section) for section in spec["sections"]]
+    entries = cast(list[dict[str, Any]], spec["targets"])
+
+    rows: list[tuple[str, str]] = []
+    for entry in entries:
+        for part, suffix in ((1, "0"), (2, "1")):
+            for carrier in carriers:
+                names = resolve(entry, suffix, carrier)
+                unknown = [name for name in names if name not in known]
+                if unknown:
+                    raise SystemExit(
+                        f"{entry['name']} part {part}: unknown members {unknown[:4]}"
+                    )
+            rows.append((f"part {part} {entry['name']}", str(entry["section"])))
+    if len(rows) != target_max:
+        raise SystemExit(
+            f"the spec has {len(rows)} rows but the manifest target enum is "
+            f"0..{target_max}"
+        )
+
+    lines = [
+        "/* GENERATED by plugin/tools/gen_macro_targets.py - do not edit. */",
+        "#pragma once",
+        "#include <array>",
+        "",
+        "namespace p1::macros {",
+        "",
+        "struct TargetInfo {",
+        "    const char* name;",
+        "    const char* section;",
+        "};",
+        "",
+        f"inline constexpr int kTargetCount = {len(rows)};",
+        f"inline constexpr std::array<TargetInfo, kTargetCount> kTargets = {{{{",
+    ]
+    for name, section in rows:
+        lines.append(f"    {{{c_string(name)}, {c_string(section)}}},")
+    lines += [
+        "}};",
+        "",
+        f"inline constexpr int kSectionCount = {len(sections)};",
+        "inline constexpr std::array<const char*, kSectionCount> kSections = {{",
+    ]
+    for section in sections:
+        lines.append(f"    {c_string(section)},")
+    lines += [
+        "}};",
+        "",
+        "} // namespace p1::macros",
+        "",
+    ]
+    target = Path(sys.argv[4])
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text("\n".join(lines), encoding="utf-8")
+    print(f"wrote {target} ({len(rows)} targets)")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

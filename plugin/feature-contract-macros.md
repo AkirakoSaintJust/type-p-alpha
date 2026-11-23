@@ -8,9 +8,9 @@
 - **Brief section:** [`../design/macros.md`](../design/macros.md), with the research
   in [`../docs/research/macros.md`](../docs/research/macros.md).
 - **Owner / date:** P1Onken, 2026-11-23.
-- **Disposition:** the 54 parameters, the CC map, the automation flags and the multi
-  record are built. The offset layer and the panel are outstanding, so the evidence
-  below is partly run and partly a list.
+- **Disposition:** the 54 parameters, the CC map, the automation flags, the multi
+  record and the target table are built. The offset layer and the panel are
+  outstanding, so the evidence below is partly run and partly a list.
 
 ## Player outcome
 
@@ -83,11 +83,15 @@
 
 ## Evidence
 
-Run on the parameter layer and the multi record:
+Run on the parameter layer, the multi record and the target table:
 
 - `plugin_smoke` passes `the APVTS exposes every manifest parameter and the output
-  volume` and `only the six macro values are automatable`, and its text round-trip
-  covers the 54 new parameters.
+  volume`, `only the six macro values are automatable`, `the macro target table has
+  58 rows` and `the target enum matches the table`, and its text round-trip covers
+  the 54 new parameters.
+- The target table is generated from `synth/macros.json` against the manifest names,
+  so a renamed member fails the build, and its first row is `part 1 filter cutoff`
+  with the last `part 2 modulator breakpoint xs`.
 - `preset_smoke` saves a multi with a 54-value macro block and six names and checks
   that both round-trip, then loads a hand-built multi bank with the old record size
   and checks that the macro vector arrives empty, which is how the editor detects a
@@ -110,8 +114,8 @@ Still outstanding:
 
 ## Limits
 
-- **The parameter layer and the multi record are built.** The offsets and the panel
-  are not.
+- **The parameter layer, the multi record and the target table are built.** The
+  offsets and the panel are not.
 - **The display follows the newest voice.** A velocity macro differs per voice, and
   the stored value, the effective value and the dotted green arc can only show one of
   them.

@@ -55,6 +55,22 @@ add_custom_command(
 )
 add_custom_target(p1_params DEPENDS "${P1_PARAMS_HEADER}")
 
+set(P1_MACRO_TARGETS_HEADER "${P1_GENERATED_DIR}/MacroTargets.h")
+add_custom_command(
+    OUTPUT "${P1_MACRO_TARGETS_HEADER}"
+    COMMAND "${CMAKE_COMMAND}" -E make_directory "${P1_GENERATED_DIR}"
+    COMMAND "${Python3_EXECUTABLE}"
+            "${CMAKE_CURRENT_SOURCE_DIR}/tools/gen_macro_targets.py"
+            "${CMAKE_CURRENT_SOURCE_DIR}/../synth/macros.json"
+            "${P1_PLUGIN_PARAMS}" "${P1_SYNTH_GEN}/tables.c"
+            "${P1_MACRO_TARGETS_HEADER}"
+    DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/../synth/macros.json"
+            "${P1_PLUGIN_PARAMS}" "${P1_SYNTH_GEN}/tables.c"
+            "${CMAKE_CURRENT_SOURCE_DIR}/tools/gen_macro_targets.py"
+    VERBATIM
+)
+add_custom_target(p1_macro_targets DEPENDS "${P1_MACRO_TARGETS_HEADER}")
+
 if(MSVC OR (WIN32 AND CMAKE_CXX_COMPILER_ID MATCHES "Clang"))
     set(P1_MSVC_ABI ON)
 else()

@@ -75,7 +75,7 @@ target_link_libraries(p1_editor PUBLIC
     juce::juce_recommended_warning_flags
 )
 target_compile_definitions(p1_editor PUBLIC ${P1_JUCE_DEFINITIONS})
-add_dependencies(p1_editor p1_params p1_tokens)
+add_dependencies(p1_editor p1_params p1_tokens p1_macro_targets)
 
 if(NOT P1_SANITIZERS)
 juce_add_plugin(${P1_PLUGIN_TARGET}
@@ -100,7 +100,7 @@ target_link_libraries(${P1_PLUGIN_TARGET} PRIVATE
     juce::juce_recommended_warning_flags
 )
 target_compile_definitions(${P1_PLUGIN_TARGET} PRIVATE ${P1_JUCE_DEFINITIONS})
-add_dependencies(${P1_PLUGIN_TARGET} p1_params p1_tokens)
+add_dependencies(${P1_PLUGIN_TARGET} p1_params p1_tokens p1_macro_targets)
 
 if(P1_BUILD_CLAP)
     clap_juce_extensions_plugin(
@@ -121,7 +121,7 @@ target_link_libraries(p1_smoke PRIVATE
     juce::juce_recommended_warning_flags
 )
 target_compile_definitions(p1_smoke PRIVATE ${P1_JUCE_DEFINITIONS})
-add_dependencies(p1_smoke p1_params p1_tokens)
+add_dependencies(p1_smoke p1_params p1_tokens p1_macro_targets)
 add_test(NAME plugin_smoke COMMAND p1_smoke)
 
 juce_add_console_app(p1_stability PRODUCT_NAME "p1_stability")
@@ -146,7 +146,7 @@ target_link_libraries(p1_editor_snapshot PRIVATE
     juce::juce_recommended_warning_flags
 )
 target_compile_definitions(p1_editor_snapshot PRIVATE ${P1_JUCE_DEFINITIONS})
-add_dependencies(p1_editor_snapshot p1_params p1_tokens)
+add_dependencies(p1_editor_snapshot p1_params p1_tokens p1_macro_targets)
 
 find_program(XVFB_RUN xvfb-run)
 if(XVFB_RUN)
