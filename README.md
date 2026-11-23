@@ -42,7 +42,7 @@ Results so far seem to be fit for intent. I've been able to easily make rudiment
 ## Potential things I'm considering
 
 1. A sustain stage on the LFO rate and depth fades?
-2. Control macros. What kind of macro controls would make the synth friendlier, more performable, and more modulatable, without turning the panel into an overwhelming mod matrix?
+2. Control macros. What kind of macro controls would make the synth friendlier, more performable, and more modulatable, without turning the panel into an overwhelming mod matrix? I've started that study in [the macro note](docs/research/macros.md).
 3. Documentation and graphic design. The panel is mostly ok, but I'd like to work on the wordmark, a nicely designed and human-written manual, and complementary materials such as posters, web graphics, etc. Also refine the panel.
 4. Ring mod/AM algorithms?
 

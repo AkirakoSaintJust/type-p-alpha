@@ -27,6 +27,9 @@ Further research:
 - [Stochastic phase shaping](stochastic-phaseshaping.md): the Phase Transfer
   Lab's breakpoint, drifting segments, flips and reordering, which shipped as the
   per-operator phase map at 1×, and the questions it left open.
+- [Macros in the Prophecy, Vital and Pigments](macros.md): the five performance
+  knobs with a destination window and curve, the two modulation-source designs,
+  and the smallest macro layer that fits this engine's parameter set.
 
 The note answers two questions:
 

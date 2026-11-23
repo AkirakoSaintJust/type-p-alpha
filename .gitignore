@@ -4,3 +4,6 @@ publish/
 __pycache__/
 *.pyc
 .DS_Store
+
+# Third-party manuals used for research. Cite them by title, do not redistribute.
+docs/research/macros/*.pdf
