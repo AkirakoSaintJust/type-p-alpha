@@ -86,6 +86,16 @@ int main()
 
     check(processor.getParameters().size() == kP1ParamCount + 1,
           "the APVTS exposes every manifest parameter and the output volume");
+    {
+        int macroAutomatable = 0;
+        for (auto* parameter : processor.getParameters()) {
+            if (parameter->getName(64).startsWith("macro") &&
+                parameter->isAutomatable())
+                ++macroAutomatable;
+        }
+        check(macroAutomatable == 6,
+              "only the six macro values are automatable");
+    }
     check(p1::volumeGainFromPosition(p1::kVolumeUnity) == 1.0f &&
               p1::volumeGainFromPosition(0) == 0.0f,
           "the volume is silent at the floor and unity at 0 dB");

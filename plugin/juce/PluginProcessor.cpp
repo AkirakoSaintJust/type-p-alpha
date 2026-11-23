@@ -200,7 +200,8 @@ TypePAlphaAudioProcessor::createLayout()
         const int high = spec.max > spec.min ? spec.max : spec.min + 1;
         const int def = juce::jlimit(low, high, spec.def);
         const auto display = juce::String(spec.display);
-        auto attributes = juce::AudioParameterIntAttributes();
+        auto attributes = juce::AudioParameterIntAttributes()
+                              .withAutomatable(spec.automatable);
         if (display == "cutoff" || display == "oct" || display == "pct" ||
             display == "frac3" || display == "lfo_wave") {
             attributes = attributes

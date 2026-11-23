@@ -57,7 +57,13 @@
     "unison_detune.p1",
     "legato.p1",
     "portamento.p1",
-    "note_priority.p1"
+    "note_priority.p1",
+    "macro1",
+    "macro2",
+    "macro3",
+    "macro4",
+    "macro5",
+    "macro6"
   ],
   "taps": [
     "op1.audio",
@@ -1488,6 +1494,438 @@
       "max": 127,
       "curve": "linear",
       "display": "note"
+    },
+    "macro1": {
+      "target": "macro.g1",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip",
+      "automatable": true
+    },
+    "macro2": {
+      "target": "macro.g2",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip",
+      "automatable": true
+    },
+    "macro3": {
+      "target": "macro.g3",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip",
+      "automatable": true
+    },
+    "macro4": {
+      "target": "macro.g4",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip",
+      "automatable": true
+    },
+    "macro5": {
+      "target": "macro.g5",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip",
+      "automatable": true
+    },
+    "macro6": {
+      "target": "macro.g6",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip",
+      "automatable": true
+    },
+    "macro1_midi": {
+      "target": "macro.s1",
+      "min": 0,
+      "max": 3,
+      "curve": "linear",
+      "display": "raw",
+      "automatable": false
+    },
+    "macro2_midi": {
+      "target": "macro.s2",
+      "min": 0,
+      "max": 3,
+      "curve": "linear",
+      "display": "raw",
+      "automatable": false
+    },
+    "macro3_midi": {
+      "target": "macro.s3",
+      "min": 0,
+      "max": 3,
+      "curve": "linear",
+      "display": "raw",
+      "automatable": false
+    },
+    "macro4_midi": {
+      "target": "macro.s4",
+      "min": 0,
+      "max": 3,
+      "curve": "linear",
+      "display": "raw",
+      "automatable": false
+    },
+    "macro5_midi": {
+      "target": "macro.s5",
+      "min": 0,
+      "max": 3,
+      "curve": "linear",
+      "display": "raw",
+      "automatable": false
+    },
+    "macro6_midi": {
+      "target": "macro.s6",
+      "min": 0,
+      "max": 3,
+      "curve": "linear",
+      "display": "raw",
+      "automatable": false
+    },
+    "macro1_midi_range": {
+      "target": "macro.sr1",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip",
+      "automatable": false
+    },
+    "macro2_midi_range": {
+      "target": "macro.sr2",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip",
+      "automatable": false
+    },
+    "macro3_midi_range": {
+      "target": "macro.sr3",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip",
+      "automatable": false
+    },
+    "macro4_midi_range": {
+      "target": "macro.sr4",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip",
+      "automatable": false
+    },
+    "macro5_midi_range": {
+      "target": "macro.sr5",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip",
+      "automatable": false
+    },
+    "macro6_midi_range": {
+      "target": "macro.sr6",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip",
+      "automatable": false
+    },
+    "macro1_target1": {
+      "target": "macro.t1a",
+      "min": 0,
+      "max": 58,
+      "curve": "linear",
+      "display": "raw",
+      "automatable": false
+    },
+    "macro1_target2": {
+      "target": "macro.t1b",
+      "min": 0,
+      "max": 58,
+      "curve": "linear",
+      "display": "raw",
+      "automatable": false
+    },
+    "macro1_target3": {
+      "target": "macro.t1c",
+      "min": 0,
+      "max": 58,
+      "curve": "linear",
+      "display": "raw",
+      "automatable": false
+    },
+    "macro2_target1": {
+      "target": "macro.t2a",
+      "min": 0,
+      "max": 58,
+      "curve": "linear",
+      "display": "raw",
+      "automatable": false
+    },
+    "macro2_target2": {
+      "target": "macro.t2b",
+      "min": 0,
+      "max": 58,
+      "curve": "linear",
+      "display": "raw",
+      "automatable": false
+    },
+    "macro2_target3": {
+      "target": "macro.t2c",
+      "min": 0,
+      "max": 58,
+      "curve": "linear",
+      "display": "raw",
+      "automatable": false
+    },
+    "macro3_target1": {
+      "target": "macro.t3a",
+      "min": 0,
+      "max": 58,
+      "curve": "linear",
+      "display": "raw",
+      "automatable": false
+    },
+    "macro3_target2": {
+      "target": "macro.t3b",
+      "min": 0,
+      "max": 58,
+      "curve": "linear",
+      "display": "raw",
+      "automatable": false
+    },
+    "macro3_target3": {
+      "target": "macro.t3c",
+      "min": 0,
+      "max": 58,
+      "curve": "linear",
+      "display": "raw",
+      "automatable": false
+    },
+    "macro4_target1": {
+      "target": "macro.t4a",
+      "min": 0,
+      "max": 58,
+      "curve": "linear",
+      "display": "raw",
+      "automatable": false
+    },
+    "macro4_target2": {
+      "target": "macro.t4b",
+      "min": 0,
+      "max": 58,
+      "curve": "linear",
+      "display": "raw",
+      "automatable": false
+    },
+    "macro4_target3": {
+      "target": "macro.t4c",
+      "min": 0,
+      "max": 58,
+      "curve": "linear",
+      "display": "raw",
+      "automatable": false
+    },
+    "macro5_target1": {
+      "target": "macro.t5a",
+      "min": 0,
+      "max": 58,
+      "curve": "linear",
+      "display": "raw",
+      "automatable": false
+    },
+    "macro5_target2": {
+      "target": "macro.t5b",
+      "min": 0,
+      "max": 58,
+      "curve": "linear",
+      "display": "raw",
+      "automatable": false
+    },
+    "macro5_target3": {
+      "target": "macro.t5c",
+      "min": 0,
+      "max": 58,
+      "curve": "linear",
+      "display": "raw",
+      "automatable": false
+    },
+    "macro6_target1": {
+      "target": "macro.t6a",
+      "min": 0,
+      "max": 58,
+      "curve": "linear",
+      "display": "raw",
+      "automatable": false
+    },
+    "macro6_target2": {
+      "target": "macro.t6b",
+      "min": 0,
+      "max": 58,
+      "curve": "linear",
+      "display": "raw",
+      "automatable": false
+    },
+    "macro6_target3": {
+      "target": "macro.t6c",
+      "min": 0,
+      "max": 58,
+      "curve": "linear",
+      "display": "raw",
+      "automatable": false
+    },
+    "macro1_range1": {
+      "target": "macro.r1a",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip",
+      "automatable": false
+    },
+    "macro1_range2": {
+      "target": "macro.r1b",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip",
+      "automatable": false
+    },
+    "macro1_range3": {
+      "target": "macro.r1c",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip",
+      "automatable": false
+    },
+    "macro2_range1": {
+      "target": "macro.r2a",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip",
+      "automatable": false
+    },
+    "macro2_range2": {
+      "target": "macro.r2b",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip",
+      "automatable": false
+    },
+    "macro2_range3": {
+      "target": "macro.r2c",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip",
+      "automatable": false
+    },
+    "macro3_range1": {
+      "target": "macro.r3a",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip",
+      "automatable": false
+    },
+    "macro3_range2": {
+      "target": "macro.r3b",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip",
+      "automatable": false
+    },
+    "macro3_range3": {
+      "target": "macro.r3c",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip",
+      "automatable": false
+    },
+    "macro4_range1": {
+      "target": "macro.r4a",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip",
+      "automatable": false
+    },
+    "macro4_range2": {
+      "target": "macro.r4b",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip",
+      "automatable": false
+    },
+    "macro4_range3": {
+      "target": "macro.r4c",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip",
+      "automatable": false
+    },
+    "macro5_range1": {
+      "target": "macro.r5a",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip",
+      "automatable": false
+    },
+    "macro5_range2": {
+      "target": "macro.r5b",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip",
+      "automatable": false
+    },
+    "macro5_range3": {
+      "target": "macro.r5c",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip",
+      "automatable": false
+    },
+    "macro6_range1": {
+      "target": "macro.r6a",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip",
+      "automatable": false
+    },
+    "macro6_range2": {
+      "target": "macro.r6b",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip",
+      "automatable": false
+    },
+    "macro6_range3": {
+      "target": "macro.r6c",
+      "min": -100,
+      "max": 100,
+      "curve": "linear",
+      "display": "pct_bip",
+      "automatable": false
     },
     "op1_level_ks_lo": {
       "target": "op1.level_ks.lo",
@@ -6784,6 +7222,11 @@
         "params": {
           "r": 32738
         }
+      },
+      {
+        "id": "macro",
+        "type": "macro",
+        "params": {}
       }
     ],
     "wires": [

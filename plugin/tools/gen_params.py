@@ -29,6 +29,7 @@ class ParamDoc(TypedDict):
     rate: str
     modulatable: bool
     display: str
+    automatable: bool
 
 
 class ParamsDoc(TypedDict, total=False):
@@ -106,6 +107,7 @@ def main() -> int:
         "    int32_t def;",
         "    bool logarithmic;",
         "    bool modulatable;",
+        "    bool automatable;",
         "    bool audioRate;",
         "};",
         "",
@@ -126,6 +128,8 @@ def main() -> int:
             + ("true" if p["curve"] == "log" else "false")
             + ", "
             + ("true" if p["modulatable"] else "false")
+            + ", "
+            + ("true" if p["automatable"] else "false")
             + ", "
             + ("true" if p["rate"] == "sample" else "false")
         )

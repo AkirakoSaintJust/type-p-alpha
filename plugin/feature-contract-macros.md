@@ -8,9 +8,9 @@
 - **Brief section:** [`../design/macros.md`](../design/macros.md), with the research
   in [`../docs/research/macros.md`](../docs/research/macros.md).
 - **Owner / date:** P1Onken, 2026-11-23.
-- **Disposition:** design signed off, not built. The engine offset layer, the panel,
-  the storage and the snapshots are outstanding, and the evidence below is the list
-  the milestone has to produce rather than a result.
+- **Disposition:** the 54 parameters, the CC map and the automation flags are built.
+  The offset layer, the multi record, the panel and the snapshots are outstanding, so
+  the evidence below is partly run and partly a list.
 
 ## Player outcome
 
@@ -83,9 +83,18 @@
 
 ## Evidence
 
-Not run. The implementation has not started, so the design is the only artefact.
+Run on the parameter layer:
 
-The milestone needs:
+- `plugin_smoke` passes `the APVTS exposes every manifest parameter and the output
+  volume` and `only the six macro values are automatable`, and its text round-trip
+  covers the 54 new parameters.
+- `engine_parity` and the other 17 tests pass, because the macro node carries
+  parameters only and changes no audio.
+
+Still outstanding:
+
+- The parameter layer has no offset, so the macro-at-0 render sweep has not run yet.
+  It is the first test for the offset slice.
 
 - `plugin_smoke` checks that the APVTS exposes 54 macro parameters, that exactly six
   are automatable, that the effective macro law gives the knob at source 0 and the
@@ -106,7 +115,8 @@ The milestone needs:
 
 ## Limits
 
-- **Not built.** Every claim above is the design.
+- **The parameter layer is built.** The offsets, the multi record and the panel are
+  not.
 - **The display follows the newest voice.** A velocity macro differs per voice, and
   the stored value, the effective value and the dotted green arc can only show one of
   them.

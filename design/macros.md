@@ -1,7 +1,8 @@
 # Macros
 
-Status: the design for the patch-level macro layer, decided in the design interview
-of 23 November 2026. Nothing is built. The research is in
+Status: the parameter layer is built: the 54 global parameters, the CC72 to CC77 map
+and the non-automatable config. The offset layer, the multi record and the panel are
+outstanding. The research is in
 [`../docs/research/macros.md`](../docs/research/macros.md), and the parameter list and
 the evidence the milestone needs are in
 [`../plugin/feature-contract-macros.md`](../plugin/feature-contract-macros.md).

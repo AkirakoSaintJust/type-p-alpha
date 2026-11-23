@@ -1337,6 +1337,60 @@ typedef struct type_p_alpha_state {
     int32_t key_on_on;
     int32_t vel_on_on;
     int32_t dc_r;
+    int32_t macro_g1;
+    int32_t macro_g2;
+    int32_t macro_g3;
+    int32_t macro_g4;
+    int32_t macro_g5;
+    int32_t macro_g6;
+    int32_t macro_s1;
+    int32_t macro_s2;
+    int32_t macro_s3;
+    int32_t macro_s4;
+    int32_t macro_s5;
+    int32_t macro_s6;
+    int32_t macro_sr1;
+    int32_t macro_sr2;
+    int32_t macro_sr3;
+    int32_t macro_sr4;
+    int32_t macro_sr5;
+    int32_t macro_sr6;
+    int32_t macro_t1a;
+    int32_t macro_t1b;
+    int32_t macro_t1c;
+    int32_t macro_t2a;
+    int32_t macro_t2b;
+    int32_t macro_t2c;
+    int32_t macro_t3a;
+    int32_t macro_t3b;
+    int32_t macro_t3c;
+    int32_t macro_t4a;
+    int32_t macro_t4b;
+    int32_t macro_t4c;
+    int32_t macro_t5a;
+    int32_t macro_t5b;
+    int32_t macro_t5c;
+    int32_t macro_t6a;
+    int32_t macro_t6b;
+    int32_t macro_t6c;
+    int32_t macro_r1a;
+    int32_t macro_r1b;
+    int32_t macro_r1c;
+    int32_t macro_r2a;
+    int32_t macro_r2b;
+    int32_t macro_r2c;
+    int32_t macro_r3a;
+    int32_t macro_r3b;
+    int32_t macro_r3c;
+    int32_t macro_r4a;
+    int32_t macro_r4b;
+    int32_t macro_r4c;
+    int32_t macro_r5a;
+    int32_t macro_r5b;
+    int32_t macro_r5c;
+    int32_t macro_r6a;
+    int32_t macro_r6b;
+    int32_t macro_r6c;
     uint32_t ctrl_serial;
     uint32_t patch_gate;
     uint32_t patch_trig;
@@ -1553,11 +1607,11 @@ static const int32_t pan_r_table[201] = {
     92682,
 };
 
-#define PARAM_COUNT 1976
+#define PARAM_COUNT 2030
 
 typedef struct { uint32_t id; const char *name; int32_t min, max, def;
                  uint8_t curve; uint8_t rate; const char *unit; } dsp_param;
-const dsp_param type_p_alpha_dsp_params[1976] = {
+const dsp_param type_p_alpha_dsp_params[2030] = {
     { 0u, "op1_ratio.p0", 32768, 1048576, 65536, 0u, 0u, "" },
     { 1u, "op1_detune.p0", -50, 50, 0, 0u, 0u, "" },
     { 2u, "op1_waveform.p0", 0, 13, 0, 0u, 0u, "" },
@@ -3524,19 +3578,73 @@ const dsp_param type_p_alpha_dsp_params[1976] = {
     { 1963u, "key_sens_on", 0, 1, 1, 0u, 0u, "" },
     { 1964u, "vel_sens_on", 0, 1, 1, 0u, 0u, "" },
     { 1965u, "dc.r", -32768, 32767, 32738, 0u, 0u, "" },
-    { 1966u, "channel.p0", -1, 15, 0, 0u, 0u, "" },
-    { 1967u, "channel.p1", -1, 15, 1, 0u, 0u, "" },
-    { 1968u, "low.p0", 0, 127, 0, 0u, 0u, "" },
-    { 1969u, "low.p1", 0, 127, 0, 0u, 0u, "" },
-    { 1970u, "high.p0", 0, 127, 127, 0u, 0u, "" },
-    { 1971u, "high.p1", 0, 127, 127, 0u, 0u, "" },
-    { 1972u, "level.p0", 0, 99, 99, 0u, 0u, "" },
-    { 1973u, "level.p1", 0, 99, 99, 0u, 0u, "" },
-    { 1974u, "delay.p0", 0, 1000, 0, 0u, 0u, "ms" },
-    { 1975u, "delay.p1", 0, 1000, 0, 0u, 0u, "ms" },
+    { 1966u, "macro1", -100, 100, 0, 0u, 0u, "" },
+    { 1967u, "macro2", -100, 100, 0, 0u, 0u, "" },
+    { 1968u, "macro3", -100, 100, 0, 0u, 0u, "" },
+    { 1969u, "macro4", -100, 100, 0, 0u, 0u, "" },
+    { 1970u, "macro5", -100, 100, 0, 0u, 0u, "" },
+    { 1971u, "macro6", -100, 100, 0, 0u, 0u, "" },
+    { 1972u, "macro1_midi", 0, 3, 1, 0u, 0u, "" },
+    { 1973u, "macro2_midi", 0, 3, 1, 0u, 0u, "" },
+    { 1974u, "macro3_midi", 0, 3, 1, 0u, 0u, "" },
+    { 1975u, "macro4_midi", 0, 3, 1, 0u, 0u, "" },
+    { 1976u, "macro5_midi", 0, 3, 1, 0u, 0u, "" },
+    { 1977u, "macro6_midi", 0, 3, 1, 0u, 0u, "" },
+    { 1978u, "macro1_midi_range", -100, 100, 0, 0u, 0u, "" },
+    { 1979u, "macro2_midi_range", -100, 100, 0, 0u, 0u, "" },
+    { 1980u, "macro3_midi_range", -100, 100, 0, 0u, 0u, "" },
+    { 1981u, "macro4_midi_range", -100, 100, 0, 0u, 0u, "" },
+    { 1982u, "macro5_midi_range", -100, 100, 0, 0u, 0u, "" },
+    { 1983u, "macro6_midi_range", -100, 100, 0, 0u, 0u, "" },
+    { 1984u, "macro1_target1", 0, 58, 0, 0u, 0u, "" },
+    { 1985u, "macro1_target2", 0, 58, 0, 0u, 0u, "" },
+    { 1986u, "macro1_target3", 0, 58, 0, 0u, 0u, "" },
+    { 1987u, "macro2_target1", 0, 58, 0, 0u, 0u, "" },
+    { 1988u, "macro2_target2", 0, 58, 0, 0u, 0u, "" },
+    { 1989u, "macro2_target3", 0, 58, 0, 0u, 0u, "" },
+    { 1990u, "macro3_target1", 0, 58, 0, 0u, 0u, "" },
+    { 1991u, "macro3_target2", 0, 58, 0, 0u, 0u, "" },
+    { 1992u, "macro3_target3", 0, 58, 0, 0u, 0u, "" },
+    { 1993u, "macro4_target1", 0, 58, 0, 0u, 0u, "" },
+    { 1994u, "macro4_target2", 0, 58, 0, 0u, 0u, "" },
+    { 1995u, "macro4_target3", 0, 58, 0, 0u, 0u, "" },
+    { 1996u, "macro5_target1", 0, 58, 0, 0u, 0u, "" },
+    { 1997u, "macro5_target2", 0, 58, 0, 0u, 0u, "" },
+    { 1998u, "macro5_target3", 0, 58, 0, 0u, 0u, "" },
+    { 1999u, "macro6_target1", 0, 58, 0, 0u, 0u, "" },
+    { 2000u, "macro6_target2", 0, 58, 0, 0u, 0u, "" },
+    { 2001u, "macro6_target3", 0, 58, 0, 0u, 0u, "" },
+    { 2002u, "macro1_range1", -100, 100, 0, 0u, 0u, "" },
+    { 2003u, "macro1_range2", -100, 100, 0, 0u, 0u, "" },
+    { 2004u, "macro1_range3", -100, 100, 0, 0u, 0u, "" },
+    { 2005u, "macro2_range1", -100, 100, 0, 0u, 0u, "" },
+    { 2006u, "macro2_range2", -100, 100, 0, 0u, 0u, "" },
+    { 2007u, "macro2_range3", -100, 100, 0, 0u, 0u, "" },
+    { 2008u, "macro3_range1", -100, 100, 0, 0u, 0u, "" },
+    { 2009u, "macro3_range2", -100, 100, 0, 0u, 0u, "" },
+    { 2010u, "macro3_range3", -100, 100, 0, 0u, 0u, "" },
+    { 2011u, "macro4_range1", -100, 100, 0, 0u, 0u, "" },
+    { 2012u, "macro4_range2", -100, 100, 0, 0u, 0u, "" },
+    { 2013u, "macro4_range3", -100, 100, 0, 0u, 0u, "" },
+    { 2014u, "macro5_range1", -100, 100, 0, 0u, 0u, "" },
+    { 2015u, "macro5_range2", -100, 100, 0, 0u, 0u, "" },
+    { 2016u, "macro5_range3", -100, 100, 0, 0u, 0u, "" },
+    { 2017u, "macro6_range1", -100, 100, 0, 0u, 0u, "" },
+    { 2018u, "macro6_range2", -100, 100, 0, 0u, 0u, "" },
+    { 2019u, "macro6_range3", -100, 100, 0, 0u, 0u, "" },
+    { 2020u, "channel.p0", -1, 15, 0, 0u, 0u, "" },
+    { 2021u, "channel.p1", -1, 15, 1, 0u, 0u, "" },
+    { 2022u, "low.p0", 0, 127, 0, 0u, 0u, "" },
+    { 2023u, "low.p1", 0, 127, 0, 0u, 0u, "" },
+    { 2024u, "high.p0", 0, 127, 127, 0u, 0u, "" },
+    { 2025u, "high.p1", 0, 127, 127, 0u, 0u, "" },
+    { 2026u, "level.p0", 0, 99, 99, 0u, 0u, "" },
+    { 2027u, "level.p1", 0, 99, 99, 0u, 0u, "" },
+    { 2028u, "delay.p0", 0, 1000, 0, 0u, 0u, "ms" },
+    { 2029u, "delay.p1", 0, 1000, 0, 0u, 0u, "ms" },
 };
 typedef struct { uint32_t off; uint8_t part; } type_p_alpha_slot_t;
-static const type_p_alpha_slot_t type_p_alpha_slots[1976] = {
+static const type_p_alpha_slot_t type_p_alpha_slots[2030] = {
     { (uint32_t)offsetof(type_p_alpha_state, op1_ph_inc_ratio), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_ph_detune), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, op1_osc_waveform), 0u },
@@ -5503,6 +5611,60 @@ static const type_p_alpha_slot_t type_p_alpha_slots[1976] = {
     { (uint32_t)offsetof(type_p_alpha_state, key_on_on), 255u },
     { (uint32_t)offsetof(type_p_alpha_state, vel_on_on), 255u },
     { (uint32_t)offsetof(type_p_alpha_state, dc_r), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_g1), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_g2), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_g3), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_g4), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_g5), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_g6), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_s1), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_s2), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_s3), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_s4), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_s5), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_s6), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_sr1), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_sr2), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_sr3), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_sr4), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_sr5), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_sr6), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_t1a), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_t1b), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_t1c), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_t2a), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_t2b), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_t2c), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_t3a), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_t3b), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_t3c), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_t4a), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_t4b), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_t4c), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_t5a), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_t5b), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_t5c), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_t6a), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_t6b), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_t6c), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_r1a), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_r1b), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_r1c), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_r2a), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_r2b), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_r2c), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_r3a), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_r3b), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_r3c), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_r4a), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_r4b), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_r4c), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_r5a), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_r5b), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_r5c), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_r6a), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_r6b), 255u },
+    { (uint32_t)offsetof(type_p_alpha_state, macro_r6c), 255u },
     { (uint32_t)offsetof(type_p_alpha_state, part_channel), 0u },
     { (uint32_t)offsetof(type_p_alpha_state, part_channel), 1u },
     { (uint32_t)offsetof(type_p_alpha_state, part_low), 0u },
@@ -6865,6 +7027,60 @@ P1_DSP_API void type_p_alpha_dsp_state_init(type_p_alpha_state *s) {
 #define key_on_on (S->key_on_on)
 #define vel_on_on (S->vel_on_on)
 #define dc_r (S->dc_r)
+#define macro_g1 (S->macro_g1)
+#define macro_g2 (S->macro_g2)
+#define macro_g3 (S->macro_g3)
+#define macro_g4 (S->macro_g4)
+#define macro_g5 (S->macro_g5)
+#define macro_g6 (S->macro_g6)
+#define macro_s1 (S->macro_s1)
+#define macro_s2 (S->macro_s2)
+#define macro_s3 (S->macro_s3)
+#define macro_s4 (S->macro_s4)
+#define macro_s5 (S->macro_s5)
+#define macro_s6 (S->macro_s6)
+#define macro_sr1 (S->macro_sr1)
+#define macro_sr2 (S->macro_sr2)
+#define macro_sr3 (S->macro_sr3)
+#define macro_sr4 (S->macro_sr4)
+#define macro_sr5 (S->macro_sr5)
+#define macro_sr6 (S->macro_sr6)
+#define macro_t1a (S->macro_t1a)
+#define macro_t1b (S->macro_t1b)
+#define macro_t1c (S->macro_t1c)
+#define macro_t2a (S->macro_t2a)
+#define macro_t2b (S->macro_t2b)
+#define macro_t2c (S->macro_t2c)
+#define macro_t3a (S->macro_t3a)
+#define macro_t3b (S->macro_t3b)
+#define macro_t3c (S->macro_t3c)
+#define macro_t4a (S->macro_t4a)
+#define macro_t4b (S->macro_t4b)
+#define macro_t4c (S->macro_t4c)
+#define macro_t5a (S->macro_t5a)
+#define macro_t5b (S->macro_t5b)
+#define macro_t5c (S->macro_t5c)
+#define macro_t6a (S->macro_t6a)
+#define macro_t6b (S->macro_t6b)
+#define macro_t6c (S->macro_t6c)
+#define macro_r1a (S->macro_r1a)
+#define macro_r1b (S->macro_r1b)
+#define macro_r1c (S->macro_r1c)
+#define macro_r2a (S->macro_r2a)
+#define macro_r2b (S->macro_r2b)
+#define macro_r2c (S->macro_r2c)
+#define macro_r3a (S->macro_r3a)
+#define macro_r3b (S->macro_r3b)
+#define macro_r3c (S->macro_r3c)
+#define macro_r4a (S->macro_r4a)
+#define macro_r4b (S->macro_r4b)
+#define macro_r4c (S->macro_r4c)
+#define macro_r5a (S->macro_r5a)
+#define macro_r5b (S->macro_r5b)
+#define macro_r5c (S->macro_r5c)
+#define macro_r6a (S->macro_r6a)
+#define macro_r6b (S->macro_r6b)
+#define macro_r6c (S->macro_r6c)
 #define ctrl_serial (S->ctrl_serial)
 #define patch_gate (S->patch_gate)
 #define patch_trig (S->patch_trig)
@@ -7086,6 +7302,7 @@ P1_DSP_API void type_p_alpha_render_pre_block(void) {
     patch_trig = 0u;
     for (uint32_t _pt = 0; _pt < NVOICE; _pt++)
         if (voice_trig[_pt]) { patch_trig = 1u; break; }
+    /* The macro node carries parameters only. The offset layer reads them. */
     /* the global velocity-sensitivity switch: the param is passed through as a
        control signal, so the per-voice vel_scale nodes can read it. */
     vel_on_on_x = vel_on_on;
