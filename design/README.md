@@ -313,8 +313,9 @@ the rename, copy and paste row.
 One page, a four by two grid that fills the window. `filter`, the filter envelope,
 the pitch LFO and the pitch envelope fill the first row. Pan envelope, key follow
 and velocity fill the second row, and the last cell stays empty. The filter
-card has cutoff, resonance and env amount, whilst key and velocity tracking sit in
-the two follow cards rather than on the filter card. The filter, its envelope and
+card has cutoff and resonance, whilst the filter envelope has its own card and key
+and velocity tracking sit in the two follow cards rather than on the filter card.
+The filter, its envelope and
 its two follow targets address the active part, because each part has its own
 filter and its own envelope.
 

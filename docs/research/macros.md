@@ -16,6 +16,15 @@ the Prophecy plugin, so everything below about its behaviour is the manual's
 description rather than a measurement, and the places where the two guides disagree are
 marked as questions.
 
+Status: the design interview of 23 November 2026 chose a three-destination offset layer
+rather than the Prophecy's single-destination editor, because the destinations must
+keep their stored values, the sources have to sit around an automatable centre, and
+velocity has to reach the voices. The agreed design is
+[`../../design/macros.md`](../../design/macros.md), and the parameters and evidence are
+in [`../../plugin/feature-contract-macros.md`](../../plugin/feature-contract-macros.md).
+The recommendation at the end of this note predates that interview and is the smallest
+shape, not the chosen one.
+
 ## The Prophecy performance editor
 
 The Prophecy puts five knobs in its header row, under the name PERFORMANCE EDIT, and
