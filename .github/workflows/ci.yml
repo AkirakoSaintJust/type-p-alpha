@@ -91,6 +91,8 @@ jobs:
       - uses: actions/checkout@v7
       - name: Build and test
         run: .\windows\build.ps1
+      - name: Bench the baseline and AVX2 engines
+        run: .\windows\bench-isa.ps1
 
   macos:
     runs-on: macos-15-intel
