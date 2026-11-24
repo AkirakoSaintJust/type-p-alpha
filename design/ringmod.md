@@ -83,9 +83,10 @@ pair rows and an original-output row.
 
 A pair row holds a small graph, an `on` toggle and a level knob. The graph is two
 pink operator boxes with their operator numbers, arrows into a non-solid box
-labelled `R`, and a purple arrow out of the R. The `R` is set in Zen Dots, the same
-typeface as the wordmark, so the dot matrix carries the symbol. The operator numbers
-are the current carriers, so the graph changes with the algorithm. The toggle is
+labelled `R`, and a purple arrow out of the R. The `R` is set in Zen Dots, the
+display face, and its outline is widened so it reads bold because the family ships a
+single weight. The operator numbers are the current carriers, so the graph changes
+with the algorithm. The toggle is
 green when the pair is on. The level knob is a 42 px dial with the raw 0 to 99
 value, dimmed to 0.35 while the pair is off.
 
@@ -111,8 +112,8 @@ The header algorithm graph carries the same R. While a pair is on, the pair's tw
 carrier arrows become the R input arrows and one purple output; the other carriers
 keep their direct arrows. The header reads the active part's pair states each tick,
 so the ring is visible from every tab. With every active pair off the header draws
-the plain algorithm. The `R` takes the same Zen Dots face as the card, scaled to the
-graph's 20 by 14 box.
+the plain algorithm. The `R` takes the same bold Zen Dots face as the card, scaled
+to the graph's 20 by 14 box.
 
 ## Defaults and bypass
 

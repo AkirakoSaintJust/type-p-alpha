@@ -80,7 +80,7 @@
   .logo .dot { color: var(--pink); text-shadow: 4px 4px 0 #c2ad00; }
   .logo .alpha {
     font-family: var(--font-brand);
-    font-weight: 400;
+    font-weight: 700;
     font-size: 30px;
     letter-spacing: .02em;
   }
@@ -1360,7 +1360,7 @@
       g += wire(a[0] + OPW / 2, a[1] + OPH, rx + 6, ry);
       g += wire(b[0] + OPW / 2, b[1] + OPH, rx + 14, ry);
       g += '<rect x="' + rx + '" y="' + ry + '" width="20" height="14" fill="none" stroke="#2e2e2e"/>';
-      g += '<text x="' + cx + '" y="' + (ry + 11) + '" fill="#ff2e7e" font-size="10" ' +
+      g += '<text x="' + cx + '" y="' + (ry + 11) + '" fill="#ff2e7e" font-size="10" font-weight="700" ' +
         'text-anchor="middle" font-family="Zen Dots, DotGothic16, monospace">R</text>';
       g += '<line x1="' + cx + '" y1="' + (ry + 14) + '" x2="' + cx + '" y2="' + (ry + 22) +
         '" stroke="#c780ff" stroke-width="1.4"/>' +
@@ -2581,7 +2581,7 @@
       '" fill="none" stroke="#2e2e2e" stroke-width="1.2"/>';
     g += '<text x="' + (rx + rw / 2) + '" y="' + (ry + 15) +
       '" fill="#ff2e7e" font-size="11" font-weight="700" text-anchor="middle" ' +
-      'font-family="DotGothic16, monospace">R</text>';
+      'font-family="Zen Dots, DotGothic16, monospace">R</text>';
     const outX = W - 2;
     g += '<line x1="' + (rx + rw) + '" y1="' + rMid + '" x2="' + (outX - 5) +
       '" y2="' + rMid + '" stroke="#c780ff" stroke-width="1.4"/>' +

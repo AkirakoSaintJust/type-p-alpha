@@ -8,9 +8,10 @@ and the web pages follow the same decisions, not a second style.
 
 ## The mark
 
-The shipped mark is `TYPE P.` in Zen Dots with a pink dot and an Unbounded
+The shipped mark is `TYPE P.` in Zen Dots with a pink dot and an Unbounded Bold
 lowercase `a`. Both families are OFL, so they can travel in the binary and in the
-mockup. The compromise is visible: the `a` is not a Greek alpha and does not read
+mockup. The bold cut gives the alpha its own weight against the dot caps. The
+compromise is visible: the `a` is not a Greek alpha and does not read
 as one, because I could not find an OFL family with the Greek alphabet in the
 shape I wanted. Zen Dots also has caps that read odd rather than futuristic or
 techno to me.

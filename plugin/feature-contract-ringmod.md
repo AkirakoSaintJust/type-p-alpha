@@ -80,7 +80,8 @@ multi record check accepts the old record and the macro values start empty.
 The card fills the eighth part-params cell. Each pair row holds a 112 by 56 graph,
 an `on` toggle and a 42 px level knob. The graph is two pink operator boxes with
 their numbers, arrows into an outlined box labelled `R`, and a purple arrow out. The
-`R` is set in Zen Dots, the wordmark face. The level knob dims to 0.35 while the
+`R` is set in Zen Dots with a widened outline, because the family ships one weight. The
+level knob dims to 0.35 while the
 pair is off. The original row is an `original`
 caption and one `opN` toggle per current carrier; the track shows the state. The row
 is active while any active pair is on, and dims to 0.35 with every active pair off.
@@ -89,7 +90,8 @@ values and returns when its algorithm comes back. One carrier shows `no ringmod`
 and no controls. The header algorithm graph carries the R too: an active pair's two
 direct arrows become the R inputs and one purple output, and the header reads the
 active part's pair states on its tick, so the indicator follows the tab's part. The
-header `R` is in the same Zen Dots face, scaled for its 20 by 14 box.
+header `R` is in the same bold Zen Dots face, scaled for its 20 by 14 box. The
+wordmark's alpha now uses the Unbounded Bold cut, so its weight matches.
 
 ## Evidence
 
@@ -111,7 +113,8 @@ header `R` is in the same Zen Dots face, scaled for its 20 by 14 box.
   the first pair on and the header's R on that pair, and
   `editor-part-params-ringmod-empty.png` with one carrier and `no ringmod`. The three
   existing part-params snapshots change because the card is in the grid, the original
-  row is dimmed while the ring is off, and the pair graph's R is in Zen Dots.
+  row is dimmed while the ring is off, and the pair graph's R is in Zen Dots. Every
+  golden takes the Unbounded Bold alpha in the wordmark.
 - The full Linux suite is 18 of 18, and the Windows build passes its 17 tests.
   `pluginval` 1.0.4 at strictness level 5 with the GUI tests skipped reports
   `SUCCESS` on the VST3. The release package
