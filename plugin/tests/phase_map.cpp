@@ -15,14 +15,16 @@
 
 #include "Engine.hpp"
 #include "Params.h"
+#include "PhaseMapLayout.h"
 
 namespace {
 
 constexpr int kVoices = 24;
 constexpr int kTickFrames = 32;
 
-/* The phase_map pool layout, mirrored from the node. */
-constexpr uint32_t kWords = 2560u;
+/* The phase_map pool layout, mirrored from the node. The stride follows the
+ * compiled read table. */
+constexpr uint32_t kWords = p1::phase_map::kWords;
 constexpr uint32_t kNx = 0u;
 constexpr uint32_t kNslope = 33u;
 constexpr uint32_t kNflip = 65u;
@@ -846,38 +848,41 @@ int main()
         check(finite, "the mapped render is finite");
         check(rms(pcm) > 0.0, "the mapped render is not silent");
 
-        auto measure = [](bool worst) {
+        auto measure = [](bool worst, bool staticMap, int bp = 500) {
             p1::Engine e;
             e.reset();
             base_setup(e);
+            const bool active = worst;
             for (int op = 1; op <= 4; ++op) {
                 char name[64];
                 std::snprintf(name, sizeof(name), "op%d_phase_on.p0", op);
-                set_param(e, name, worst ? 1 : 0);
+                set_param(e, name, active ? 1 : 0);
+                std::snprintf(name, sizeof(name), "op%d_phase_bp.p0", op);
+                set_param(e, name, bp);
                 std::snprintf(name, sizeof(name), "op%d_phase_segments.p0", op);
                 set_param(e, name, 32);
                 std::snprintf(name, sizeof(name), "op%d_phase_flip.p0", op);
-                set_param(e, name, worst ? 100 : 0);
+                set_param(e, name, active ? 100 : 0);
                 std::snprintf(name, sizeof(name), "op%d_phase_flip_rate.p0", op);
-                set_param(e, name, 20000000);
+                set_param(e, name, (active && !staticMap) ? 20000000 : 0);
                 std::snprintf(name, sizeof(name), "op%d_phase_reorder.p0", op);
-                set_param(e, name, worst ? 100 : 0);
+                set_param(e, name, active ? 100 : 0);
                 std::snprintf(name, sizeof(name), "op%d_phase_reorder_rate.p0", op);
-                set_param(e, name, 20000000);
+                set_param(e, name, (active && !staticMap) ? 20000000 : 0);
                 std::snprintf(name, sizeof(name), "op%d_phase_drift.p0", op);
-                set_param(e, name, worst ? 100 : 0);
+                set_param(e, name, active ? 100 : 0);
                 std::snprintf(name, sizeof(name), "op%d_phase_drift_rate.p0", op);
-                set_param(e, name, 20000000);
+                set_param(e, name, (active && !staticMap) ? 20000000 : 0);
                 std::snprintf(name, sizeof(name), "op%d_phase_lfo_depth.p0", op);
-                set_param(e, name, worst ? 50 : 0);
+                set_param(e, name, (active && !staticMap) ? 50 : 0);
                 std::snprintf(name, sizeof(name), "op%d_phase_env_on.p0", op);
-                set_param(e, name, worst ? 1 : 0);
+                set_param(e, name, (active && !staticMap) ? 1 : 0);
                 std::snprintf(name, sizeof(name), "op%d_level.p0", op);
                 set_param(e, name, 75);
                 std::snprintf(name, sizeof(name), "op%d_mute.p0", op);
                 set_param(e, name, 0);
             }
-            if (worst)
+            if (active)
                 set_param(e, "op1_waveform.p0", 13);
             for (int n = 0; n < kVoices; ++n)
                 e.noteOn(24u + static_cast<uint32_t>(n), 100, 0);
@@ -888,13 +893,23 @@ int main()
             const auto end = std::chrono::steady_clock::now();
             return std::chrono::duration<double>(end - start).count();
         };
-        const double base = measure(false);
-        const double worst = measure(true);
+        const double base = measure(false, false);
+        const double worst = measure(true, false);
+        const double staticMap = measure(true, true);
         const double ratio = worst / base;
-        std::printf("phase_map: CPU baseline %.3f ms, worst %.3f ms, ratio %.2f\n",
-                    base * 1000.0, worst * 1000.0, ratio);
+        std::printf("phase_map: CPU baseline %.3f ms, worst %.3f ms, static %.3f ms, "
+                    "ratio %.2f\n",
+                    base * 1000.0, worst * 1000.0, staticMap * 1000.0, ratio);
         check(ratio > 0.0 && ratio < 6.0,
               "the 1x worst case stays inside the measurement budget");
+
+        /* The breakpoint sweep with the stochastic clocks and modulation off,
+         * so this is the base map character rather than the random texture. */
+        static const int bps[] = {0, 125, 250, 375, 500, 625, 750, 875, 999};
+        for (int value : bps) {
+            const double t = measure(true, true, value);
+            std::printf("phase_map: static bp %d %.3f ms\n", value, t * 1000.0);
+        }
     }
 
     if (failures == 0)

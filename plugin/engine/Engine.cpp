@@ -4,13 +4,15 @@
 #include <cstring>
 
 #include "p1_math.h"  /* brings in spectral.h for the bank offsets */
+#include "PhaseMapLayout.h"
 
 namespace p1 {
 namespace {
 
-/* The phase_map pool layout. These offsets are the node's fixed
- * `int16_t[10880]` layout, indexed by part. */
-constexpr uint32_t kPmWords = 2560u;
+/* The phase_map pool layout. These offsets are the node's layout; the pool
+ * stride comes from the shared header so a read-table build keeps the parts
+ * apart. */
+constexpr uint32_t kPmWords = phase_map::kWords;
 constexpr uint32_t kPmNx = 0u;
 constexpr uint32_t kPmNflip = 65u;
 constexpr uint32_t kPmOrder = 97u;

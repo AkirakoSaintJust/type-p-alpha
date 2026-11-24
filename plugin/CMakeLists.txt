@@ -12,6 +12,48 @@ endif()
 
 option(P1_BUILD_JUCE "Build the JUCE VST3 and standalone host" OFF)
 
+set(P1_PHASE_READ 11 CACHE STRING
+    "phase-map read table: 0 current, 1 exact 4096, 2 512 step, 3 512 linear, 4 1024 linear, 5 256 step, 6 256 linear, 7 256 q-step, 8 256 q-linear, 9 512 q-linear, 10 1024 q-linear, 11 1024 q-direct exact")
+if(P1_PHASE_READ EQUAL 1)
+    set(P1_PM_TABLE_N 4096)
+    set(P1_PM_TABLE_EXTRA 0)
+elseif(P1_PHASE_READ EQUAL 2)
+    set(P1_PM_TABLE_N 512)
+    set(P1_PM_TABLE_EXTRA 0)
+elseif(P1_PHASE_READ EQUAL 3)
+    set(P1_PM_TABLE_N 512)
+    set(P1_PM_TABLE_EXTRA 1)
+elseif(P1_PHASE_READ EQUAL 4)
+    set(P1_PM_TABLE_N 1024)
+    set(P1_PM_TABLE_EXTRA 1)
+elseif(P1_PHASE_READ EQUAL 5)
+    set(P1_PM_TABLE_N 256)
+    set(P1_PM_TABLE_EXTRA 0)
+elseif(P1_PHASE_READ EQUAL 6)
+    set(P1_PM_TABLE_N 256)
+    set(P1_PM_TABLE_EXTRA 1)
+elseif(P1_PHASE_READ EQUAL 7)
+    set(P1_PM_TABLE_N 256)
+    set(P1_PM_TABLE_EXTRA 0)
+elseif(P1_PHASE_READ EQUAL 8)
+    set(P1_PM_TABLE_N 256)
+    set(P1_PM_TABLE_EXTRA 1)
+elseif(P1_PHASE_READ EQUAL 9)
+    set(P1_PM_TABLE_N 512)
+    set(P1_PM_TABLE_EXTRA 1)
+elseif(P1_PHASE_READ EQUAL 10)
+    set(P1_PM_TABLE_N 1024)
+    set(P1_PM_TABLE_EXTRA 1)
+elseif(P1_PHASE_READ EQUAL 11)
+    set(P1_PM_TABLE_N 1024)
+    set(P1_PM_TABLE_EXTRA 1)
+else()
+    set(P1_PM_TABLE_N 0)
+    set(P1_PM_TABLE_EXTRA 0)
+endif()
+math(EXPR P1_PM_TABLE_WORDS "(${P1_PM_TABLE_N} + ${P1_PM_TABLE_EXTRA} + 1) / 2")
+math(EXPR P1_PM_WORDS_EXPECTED "2560 + ${P1_PM_TABLE_WORDS}")
+
 # The checked-in Type P.alpha engine and product identity for a plain
 # `cmake -S plugin` build or the root `cmake -S .` build.
 set(P1_ENGINE "${CMAKE_CURRENT_SOURCE_DIR}/../engine" CACHE PATH "engine root")
@@ -113,6 +155,10 @@ target_compile_definitions(p1_engine PRIVATE
     P1_MIDI_EXTERNAL
     "P1_STATE_PTR=${P1_STATE_PTR}"
 )
+target_compile_definitions(p1_engine PUBLIC
+    "P1_PHASE_READ=${P1_PHASE_READ}"
+    "P1_PM_WORDS_EXPECTED=${P1_PM_WORDS_EXPECTED}"
+)
 add_dependencies(p1_engine p1_macro_targets)
 
 add_executable(engine_parity tests/engine_parity.cpp)
@@ -162,6 +208,13 @@ target_link_libraries(phase_map PRIVATE p1_engine)
 target_include_directories(phase_map PRIVATE "${P1_GENERATED_DIR}")
 add_dependencies(phase_map p1_params)
 add_test(NAME phase_map COMMAND phase_map)
+
+add_executable(phase_map_perceptual tests/phase_map_perceptual.cpp)
+target_link_libraries(phase_map_perceptual PRIVATE p1_engine)
+target_include_directories(phase_map_perceptual PRIVATE "${P1_GENERATED_DIR}")
+add_dependencies(phase_map_perceptual p1_params)
+
+add_executable(phase_map_perceptual_compare tests/phase_map_perceptual_compare.cpp)
 
 add_executable(voice_alloc tests/voice_alloc.cpp)
 target_link_libraries(voice_alloc PRIVATE p1_engine)
