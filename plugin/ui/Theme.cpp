@@ -36,8 +36,10 @@ juce::Typeface::Ptr displayTypeface()
 
 juce::Typeface::Ptr brandTypeface()
 {
-    static const auto typeface = makeTypeface(BinaryData::UnboundedRegular_ttf,
-                                              BinaryData::UnboundedRegular_ttfSize);
+    /* The provisional wordmark's alpha takes the bold cut, so it has real
+     * weight rather than a second draw at an offset. */
+    static const auto typeface = makeTypeface(BinaryData::UnboundedBold_ttf,
+                                              BinaryData::UnboundedBold_ttfSize);
     return typeface;
 }
 
@@ -54,6 +56,22 @@ juce::Font displayFont(float height)
 juce::Font brandFont(float height)
 {
     return juce::Font(juce::FontOptions(brandTypeface())).withHeight(height + 4.0f);
+}
+
+void drawBoldText(juce::Graphics& g, const juce::Font& font,
+                  const juce::String& text, juce::Rectangle<float> area,
+                  float extraWeight)
+{
+    juce::GlyphArrangement glyphs;
+    glyphs.addFittedText(font, text, area.getX(), area.getY(), area.getWidth(),
+                         area.getHeight(), juce::Justification::centred, 1);
+    juce::Path path;
+    glyphs.createPath(path);
+    g.fillPath(path);
+    if (extraWeight > 0.0f)
+        g.strokePath(path, juce::PathStrokeType(extraWeight,
+                                                juce::PathStrokeType::curved,
+                                                juce::PathStrokeType::rounded));
 }
 
 float textWidth(const juce::Font& font, const juce::String& text)

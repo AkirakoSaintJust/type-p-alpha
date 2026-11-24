@@ -231,11 +231,9 @@ private:
         draw(name, display, shadow, x + 4.0f, 4.0f);
         draw(".", display, shadow, x + wordWidth + 4.0f, 4.0f);
         draw("a", brand, shadow, x + wordWidth + dotWidth + 4.0f, 4.0f);
-        draw("a", brand, shadow, x + wordWidth + dotWidth + 4.7f, 4.4f);
         draw(name, display, ink, x, 0.0f);
         draw(".", display, pink, x + wordWidth, 0.0f);
         draw("a", brand, ink, x + wordWidth + dotWidth, 0.0f);
-        draw("a", brand, ink, x + wordWidth + dotWidth + 0.7f, 0.4f);
     }
 
     PluginEditor& editor_;

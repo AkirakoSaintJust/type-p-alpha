@@ -46,5 +46,5 @@ loader, the emulator, the web build, the M-VAVE assets, or the JieLi toolchain. 
 My personal framework tooling remains GPL-3.0-only in its own repository. Type P.fm1
 is abandoned and stays there.
 
-The wordmark uses Zen Dots for `TYPE P.` and Unbounded Regular for the lowercase
+The wordmark uses Zen Dots for `TYPE P.` and Unbounded Bold for the lowercase
 `a`. Digital Desolation Plus is not bundled or used.

@@ -36,7 +36,7 @@ add_custom_target(p1_tokens DEPENDS "${P1_TOKENS_HEADER}")
 juce_add_binary_data(p1_resources SOURCES
     resources/fonts/DotGothic16-Regular.ttf
     resources/fonts/ZenDots-Regular.ttf
-    resources/fonts/Unbounded-Regular.ttf
+    resources/fonts/Unbounded-Bold.ttf
 )
 
 set(P1_JUCE_DEFINITIONS

@@ -20,6 +20,11 @@ juce::Font displayFont(float height);
 juce::Font brandFont(float height);
 float textWidth(const juce::Font& font, const juce::String& text);
 
+/* Zen Dots has one weight, so the R boxes widen the outline to read bold. */
+void drawBoldText(juce::Graphics& g, const juce::Font& font,
+                  const juce::String& text, juce::Rectangle<float> area,
+                  float extraWeight);
+
 void drawSectionTitle(juce::Graphics& g, juce::Rectangle<int> area,
                       const juce::String& title);
 
