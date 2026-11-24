@@ -11,6 +11,6 @@ if(P1_SANITIZERS)
     add_link_options(-fsanitize=${P1_SANITIZERS})
 endif()
 set(P1_PHASE_READ 0 CACHE STRING
-    "phase-map read table: 0 current, 1 exact 4096, 2 512 step, 3 512 linear, 4 1024 linear")
+    "phase-map read table: 0 current, 1 exact 4096, 2 512 step, 3 512 linear, 4 1024 linear, 5 256 step, 6 256 linear")
 enable_testing()
 add_subdirectory(plugin)

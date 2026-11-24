@@ -11448,6 +11448,14 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             #define P1_PM_TABLE_N 1024u
             #define P1_PM_TABLE_STEP 4u
             #define P1_PM_TABLE_EXTRA 1u
+            #elif P1_PHASE_READ == 5
+            #define P1_PM_TABLE_N 256u
+            #define P1_PM_TABLE_STEP 16u
+            #define P1_PM_TABLE_EXTRA 0u
+            #elif P1_PHASE_READ == 6
+            #define P1_PM_TABLE_N 256u
+            #define P1_PM_TABLE_STEP 16u
+            #define P1_PM_TABLE_EXTRA 1u
             #else
             #define P1_PM_TABLE_N 0u
             #define P1_PM_TABLE_STEP 1u
@@ -11971,6 +11979,16 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                 int32_t y1 = (int32_t)pt[ti + 1u];
                 int32_t yi = y0 + (((y1 - y0) * (int32_t)fr) >> 2);
                 op4_phase_phase_x = (uint32_t)yi << 20;
+            #elif P1_PHASE_READ == 5
+                uint32_t y = pt[x >> 4];
+                op4_phase_phase_x = y << 20;
+            #elif P1_PHASE_READ == 6
+                uint32_t ti = x >> 4;
+                uint32_t fr = x & 15u;
+                int32_t y0 = (int32_t)pt[ti];
+                int32_t y1 = (int32_t)pt[ti + 1u];
+                int32_t yi = y0 + (((y1 - y0) * (int32_t)fr) >> 4);
+                op4_phase_phase_x = (uint32_t)yi << 20;
             #endif
             #endif
             }
@@ -12130,6 +12148,14 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             #elif P1_PHASE_READ == 4
             #define P1_PM_TABLE_N 1024u
             #define P1_PM_TABLE_STEP 4u
+            #define P1_PM_TABLE_EXTRA 1u
+            #elif P1_PHASE_READ == 5
+            #define P1_PM_TABLE_N 256u
+            #define P1_PM_TABLE_STEP 16u
+            #define P1_PM_TABLE_EXTRA 0u
+            #elif P1_PHASE_READ == 6
+            #define P1_PM_TABLE_N 256u
+            #define P1_PM_TABLE_STEP 16u
             #define P1_PM_TABLE_EXTRA 1u
             #else
             #define P1_PM_TABLE_N 0u
@@ -12654,6 +12680,16 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                 int32_t y1 = (int32_t)pt[ti + 1u];
                 int32_t yi = y0 + (((y1 - y0) * (int32_t)fr) >> 2);
                 op3_phase_phase_x = (uint32_t)yi << 20;
+            #elif P1_PHASE_READ == 5
+                uint32_t y = pt[x >> 4];
+                op3_phase_phase_x = y << 20;
+            #elif P1_PHASE_READ == 6
+                uint32_t ti = x >> 4;
+                uint32_t fr = x & 15u;
+                int32_t y0 = (int32_t)pt[ti];
+                int32_t y1 = (int32_t)pt[ti + 1u];
+                int32_t yi = y0 + (((y1 - y0) * (int32_t)fr) >> 4);
+                op3_phase_phase_x = (uint32_t)yi << 20;
             #endif
             #endif
             }
@@ -12813,6 +12849,14 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             #elif P1_PHASE_READ == 4
             #define P1_PM_TABLE_N 1024u
             #define P1_PM_TABLE_STEP 4u
+            #define P1_PM_TABLE_EXTRA 1u
+            #elif P1_PHASE_READ == 5
+            #define P1_PM_TABLE_N 256u
+            #define P1_PM_TABLE_STEP 16u
+            #define P1_PM_TABLE_EXTRA 0u
+            #elif P1_PHASE_READ == 6
+            #define P1_PM_TABLE_N 256u
+            #define P1_PM_TABLE_STEP 16u
             #define P1_PM_TABLE_EXTRA 1u
             #else
             #define P1_PM_TABLE_N 0u
@@ -13337,6 +13381,16 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                 int32_t y1 = (int32_t)pt[ti + 1u];
                 int32_t yi = y0 + (((y1 - y0) * (int32_t)fr) >> 2);
                 op2_phase_phase_x = (uint32_t)yi << 20;
+            #elif P1_PHASE_READ == 5
+                uint32_t y = pt[x >> 4];
+                op2_phase_phase_x = y << 20;
+            #elif P1_PHASE_READ == 6
+                uint32_t ti = x >> 4;
+                uint32_t fr = x & 15u;
+                int32_t y0 = (int32_t)pt[ti];
+                int32_t y1 = (int32_t)pt[ti + 1u];
+                int32_t yi = y0 + (((y1 - y0) * (int32_t)fr) >> 4);
+                op2_phase_phase_x = (uint32_t)yi << 20;
             #endif
             #endif
             }
@@ -13496,6 +13550,14 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             #elif P1_PHASE_READ == 4
             #define P1_PM_TABLE_N 1024u
             #define P1_PM_TABLE_STEP 4u
+            #define P1_PM_TABLE_EXTRA 1u
+            #elif P1_PHASE_READ == 5
+            #define P1_PM_TABLE_N 256u
+            #define P1_PM_TABLE_STEP 16u
+            #define P1_PM_TABLE_EXTRA 0u
+            #elif P1_PHASE_READ == 6
+            #define P1_PM_TABLE_N 256u
+            #define P1_PM_TABLE_STEP 16u
             #define P1_PM_TABLE_EXTRA 1u
             #else
             #define P1_PM_TABLE_N 0u
@@ -14019,6 +14081,16 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                 int32_t y0 = (int32_t)pt[ti];
                 int32_t y1 = (int32_t)pt[ti + 1u];
                 int32_t yi = y0 + (((y1 - y0) * (int32_t)fr) >> 2);
+                op1_phase_phase_x = (uint32_t)yi << 20;
+            #elif P1_PHASE_READ == 5
+                uint32_t y = pt[x >> 4];
+                op1_phase_phase_x = y << 20;
+            #elif P1_PHASE_READ == 6
+                uint32_t ti = x >> 4;
+                uint32_t fr = x & 15u;
+                int32_t y0 = (int32_t)pt[ti];
+                int32_t y1 = (int32_t)pt[ti + 1u];
+                int32_t yi = y0 + (((y1 - y0) * (int32_t)fr) >> 4);
                 op1_phase_phase_x = (uint32_t)yi << 20;
             #endif
             #endif
