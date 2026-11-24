@@ -26,5 +26,7 @@ if(P1_MODERN)
         add_compile_options(-march=x86-64-v3)
     endif()
 endif()
+set(P1_PHASE_READ 11 CACHE STRING
+    "phase-map read table: 0 current, 1 exact 4096, 2 512 step, 3 512 linear, 4 1024 linear, 5 256 step, 6 256 linear, 7 256 q-step, 8 256 q-linear, 9 512 q-linear, 10 1024 q-linear, 11 1024 q-direct exact")
 enable_testing()
 add_subdirectory(plugin)
