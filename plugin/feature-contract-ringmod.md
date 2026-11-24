@@ -98,7 +98,9 @@ active part's pair states on its tick, so the indicator follows the tab's part.
   direct pair`. The last one compares the steady RMS of the ring-only output with the
   direct pair and expects the ring within 0.6 to 1.6 of it.
 - `preset_smoke` keeps `the part record has the ringmod block` at 991 and the old
-  version 16 record expands with the ring defaults; the part record round-trips.
+  version 16 record expands with the ring defaults; the part record round-trips. The
+  direct part bank import and the library loader both load a version 16 bank and
+  gain the ring defaults.
 - The snapshots add `editor-part-params-ringmod.png` with four carriers, three pairs,
   the first pair on and the header's R on that pair, and
   `editor-part-params-ringmod-empty.png` with one carrier and `no ringmod`. The three

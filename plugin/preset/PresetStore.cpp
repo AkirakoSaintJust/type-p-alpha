@@ -286,7 +286,28 @@ std::vector<uint8_t> PresetStore::packPartBank() const
 bool PresetStore::loadPartBank(const uint8_t* data, std::size_t size)
 {
     const auto recordSize = partRecordSize();
-    if (data == nullptr || size != recordSize * kPartSlots)
+    if (data == nullptr)
+        return false;
+    std::vector<uint8_t> migrated;
+    if (size != recordSize * static_cast<std::size_t>(kPartSlots)) {
+        /* A part bank saved before the ringmod block uses the old record size.
+         * The import path applies the same migration as the library loader, so
+         * an older bank still lands with the ring defaults. */
+        if (size == 0 || size % static_cast<std::size_t>(kPartSlots) != 0u)
+            return false;
+        const auto oldRecord = size / static_cast<std::size_t>(kPartSlots);
+        if (oldRecord < PP_RECORD(0u))
+            return false;
+        const auto oldCount = (oldRecord - PP_RECORD(0u)) / 4u;
+        if ((oldRecord - PP_RECORD(0u)) % 4u != 0u || oldCount == 0u ||
+            oldCount >= static_cast<std::size_t>(partParamCount_))
+            return false;
+        if (!migratePartBank(data, static_cast<uint32_t>(oldCount), migrated))
+            return false;
+        data = migrated.data();
+        size = migrated.size();
+    }
+    if (size != recordSize * static_cast<std::size_t>(kPartSlots))
         return false;
     for (int slot = 0; slot < kPartSlots; ++slot) {
         auto& part = parts_[static_cast<std::size_t>(slot)];

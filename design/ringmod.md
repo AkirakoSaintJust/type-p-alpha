@@ -68,9 +68,11 @@ existing indices. The part record grows from 981 to 991 values, ten more for one
 part, so the preset version takes a new step and old part records gain the defaults
 at the end. A version 16 part record ends at the phase block, which means the loader
 can append the ten ringmod defaults after it without touching any existing value,
-whilst a record from before the phase block gains both blocks in order. The macro
-block, the multi record and the project state keep their sizes; a missing new
-parameter in a project state takes its default.
+whilst a record from before the phase block gains both blocks in order. The
+library loader and the part bank import run the same migration, so an older shared
+part bank is not rejected on import. The macro block, the multi record and the
+project state keep their sizes; a missing new parameter in a project state takes its
+default.
 
 ## The card
 
@@ -133,7 +135,9 @@ it is on.
   direct pair. The 64 times makeup gives the raw product the same ballpark as the
   direct signals.
 - An old version 16 part record expands with the ring defaults; `preset_smoke`
-  keeps the version 16 count check at 981 and the current count at 991.
+  keeps the version 16 count check at 981 and the current count at 991. The direct
+  part bank import and the library path both load the old record and gain the ring
+  defaults.
 - The snapshots cover the card at four carriers with a pair on and the header's R
   on that pair, the same card with one carrier and no controls, and the default
   two-carrier card. The three existing part params snapshots change because the

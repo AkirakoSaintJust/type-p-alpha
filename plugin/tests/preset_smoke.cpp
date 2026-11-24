@@ -382,6 +382,57 @@ int main()
               "a current-law cutoff is not converted twice");
     }
 
+    /* A version 16 part record, before the ringmod block. The direct part bank
+     * import and the library loader must both append the ten defaults. */
+    {
+        const uint32_t oldCount = kP1PartParamCount - 10u;
+        const auto oldRecord = PP_RECORD(oldCount);
+        std::vector<uint8_t> bank(static_cast<std::size_t>(oldRecord) * 128u,
+                                  0xFF);
+        std::vector<int32_t> params(oldCount, 3);
+        params[static_cast<std::size_t>(kP1PartCutoffIndex)] = 4321;
+        preset_part_pack(
+            bank.data() + static_cast<std::size_t>(6u) * oldRecord, "v16 part",
+            params.data(), oldCount);
+        p1::PresetStore imported{kP1PartParamCount, kP1PartCount,
+                                 p1::partParamDefaults(), kP1PartCutoffIndex};
+        check(imported.loadPartBank(bank.data(), bank.size()),
+              "import a version 16 part bank");
+        check(imported.partUsed(6) && imported.partName(6) == "v16 part",
+              "the imported version 16 part keeps its name");
+        const auto& grown = imported.partParams(6);
+        check(grown.size() == static_cast<std::size_t>(kP1PartParamCount) &&
+                  grown[static_cast<std::size_t>(kP1PartCutoffIndex)] == 4321 &&
+                  grown[oldCount] == 0 && grown[oldCount + 1u] == 99 &&
+                  grown[oldCount + 9u] == 1,
+              "the imported version 16 part gains the ring defaults");
+
+        std::vector<uint8_t> library;
+        const auto put32 = [&library](uint32_t value) {
+            library.push_back(static_cast<uint8_t>(value & 0xFFu));
+            library.push_back(static_cast<uint8_t>((value >> 8) & 0xFFu));
+            library.push_back(static_cast<uint8_t>((value >> 16) & 0xFFu));
+            library.push_back(static_cast<uint8_t>((value >> 24) & 0xFFu));
+        };
+        static const uint8_t magic[7] = {'P', '1', 'L', 'I', 'B', '3', '\n'};
+        library.insert(library.end(), magic, magic + 7);
+        put32(4);
+        put32(static_cast<uint32_t>(bank.size()));
+        library.insert(library.end(), bank.begin(), bank.end());
+        const auto multiSize =
+            MP_RECORD(static_cast<uint32_t>(kP1PartCount)) * 64u;
+        put32(static_cast<uint32_t>(multiSize));
+        library.insert(library.end(), multiSize, 0xFF);
+        p1::PresetStore fromLibrary{kP1PartParamCount, kP1PartCount,
+                                    p1::partParamDefaults(),
+                                    kP1PartCutoffIndex};
+        check(fromLibrary.loadLibrary(library.data(), library.size()),
+              "load a version 16 library");
+        check(fromLibrary.partUsed(6) &&
+                  fromLibrary.partParams(6)[oldCount + 1u] == 99,
+              "the library part gains the ring defaults");
+    }
+
     /* A version 12 part record, before the pitch and feedback envelopes gained
      * a mode and swapped the fourth level for a release level. The loader
      * inserts one slot per block and keeps the pan block aligned. */
