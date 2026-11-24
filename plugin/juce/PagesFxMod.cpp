@@ -539,7 +539,7 @@ public:
         g.setColour(colour(tokens::lineStrong));
         g.drawRect(rx, ry, rw, rh, 1);
         g.setColour(colour(tokens::pink));
-        g.setFont(displayFont(11.0f));
+        g.setFont(brandFont(7.0f));
         g.drawText("R", rx, ry, rw, rh, juce::Justification::centred, false);
         const int outX = getWidth() - 2;
         const int outY = ry + rh / 2;

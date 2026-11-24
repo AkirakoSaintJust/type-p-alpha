@@ -2215,7 +2215,7 @@ void drawAlgorithmGraph(juce::Graphics& g, juce::Rectangle<float> area, int algo
             20.0f * scale, 14.0f * scale);
         g.setColour(colour(tokens::lineStrong));
         g.drawRect(rect, 1.0f);
-        g.setFont(uiFont(9.0f * scale));
+        g.setFont(brandFont(6.0f * scale));
         g.setColour(colour(tokens::pink));
         g.drawText("R", rect, juce::Justification::centred, false);
         arrow(point(ring.cx, ring.y + 14.0f), point(ring.cx, ring.y + 26.0f),
