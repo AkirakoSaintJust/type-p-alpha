@@ -26,6 +26,11 @@ jobs:
               -DCMAKE_MODULE_LINKER_FLAGS=-fuse-ld=lld &&
             cmake --build build/linux-amd64-clang &&
             ctest --test-dir build/linux-amd64-clang --output-on-failure -E linux_daws'
+      - name: Bench the baseline engine
+        run: |
+          docker run --rm -v "$PWD:/work" -w /work type-p-alpha-build:ci sh -c '
+            ./build/linux-amd64-clang/plugin/phase_map | tail -4 &&
+            ./build/linux-amd64-clang/plugin/spectral_bench | tail -6'
       - name: Build and bench the AVX2 engine
         run: |
           docker run --rm -v "$PWD:/work" -w /work type-p-alpha-build:ci sh -c '
@@ -145,7 +150,7 @@ jobs:
             "build/plugin/juce/type_p_alpha_artefacts/Release/CLAP/Type P.alpha.clap"
 
   arm64:
-    runs-on: macos-14
+    runs-on: macos-15
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v7
