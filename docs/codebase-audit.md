@@ -60,10 +60,12 @@ a second implementation in a node.
 `engine/runtime/presets.h` and `presets.c` own the record layout, and the format is
 deliberately boring because it has to survive a decade of saves. A record is a
 version byte, a 33-byte name field, the body and a CRC-32, and an empty slot is
-`0xFF`. The current version is 7, the library magic is `P1LIB2`, and a part or patch
+`0xFF`. The current version is 17, the part record holds 991 values, the multi
+record carries the macro block, and the library magic is `P1LIB3`. A part or patch
 name holds 32 characters. If you change the layout, bump the version and write the
 migration in the same commit, because the CRC will not save you from a mismatched
-body.
+body. The loader also keys the older part layouts on the record size, because the
+phase and ringmod blocks were appended before the version byte moved.
 
 The part bank has 128 slots and the multi bank has 64. The plugin host uses the pack
 and unpack functions and keeps the banks in `PresetStore`. The bank and settings
@@ -112,6 +114,7 @@ bypasses it, so the core stays exact. The kernel is 128 taps by 1024 phases, and
 `latencySamples` reports its delay in host samples. The bypass is the part to test
 first, because a resampler that is almost right is worse than one that is obviously
 wrong.
+
 ## Preset store
 
 `plugin/preset/PresetStore.hpp` and `PresetStore.cpp` own the 128 part slots and the
@@ -120,7 +123,7 @@ references and the routing. The session pointers are `currentMulti` and the per-
 source slot, and the per-part source is what lets a patch point at a stored part
 without copying it.
 
-The store packs and loads the two banks, writes and reads `P1LIB2`, finds free slots
+The store packs and loads the two banks, writes and reads `P1LIB3`, finds free slots
 and truncates names to 32 characters. `plugin/preset/part_defaults.h` builds the
 default vector from `kP1ParamSpecs`, so a new parameter gets a default in the store
 without a second list. The store is also where the cutoff migration runs when an old
@@ -152,8 +155,8 @@ changing the spectra pages.
 
 ## Pages
 
-The tab bar has seven pages: patch settings, part fx/mod, operator envs, operator
-lfos, op spectra a, op spectra b and op spectra mod. The processor writes
+The tab bar has nine pages: patch settings, macros, part params, op envs, op lfos,
+op phasemap, op spectra a, op spectra b and op spectra mod. The processor writes
 `uiPageLayout` 3 with the page and remaps the four-tab order and the old mod page
 position when it restores an older state, so an old session lands on the page it
 meant rather than the page with the same index.
@@ -188,7 +191,7 @@ one-line functions and let the compiler catch the misspelt id.
 | `operator_lfos.cpp` | Check the feedback and detune LFOs at depth 0, above 0 and with a negative depth. |
 | `voice_alloc.cpp` | Check the chord, scale, part channel and voice recycling cases. |
 | `rate_bridge_test.cpp` | Check the resampler latency and spectral behaviour. |
-| `preset_smoke.cpp` | Check the current record, the 32-character name and the `P1LIB2` library. |
+| `preset_smoke.cpp` | Check the current record, the 32-character name, the `P1LIB3` library and the old part and multi records. |
 | `plugin_smoke.cpp` | Check state restore, the global library, automation, the 48 kHz bridge and a chord. |
 | `plugin_stability.cpp` | Stress every parameter, polyphony, MIDI storms and truncated state. |
 | `editor_snapshot.cpp` | Render the pages, dialogs, long name, section paste and half-size frame. |
@@ -228,8 +231,9 @@ current contract win, and the research page keeps the old number as history.
 
 The 2026-10 cleanup removed the FM-1 migration maps, the old 146, 160 and 179 part
 layouts, the 16-byte name reader, the `P1LIB1` loader and the duplicated list and
-card header machinery. The tree now has one part layout, one multi layout and one
-`P1LIB2` magic, and a pre-`P1LIB2` library is not read by the plugin. The removed
+card header machinery. The tree then had one part layout, one multi layout and one
+`P1LIB2` magic; the library magic is `P1LIB3` now, and a pre-`P1LIB2` library is not
+read by the plugin. The removed
 symbols and the old tests are in git history, which is the right place for a list
 that no longer describes the current tree. I wrote the removed table once, read it
 once, and then stopped needing it.

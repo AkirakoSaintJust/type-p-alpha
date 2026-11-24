@@ -42,9 +42,7 @@ Results so far seem to be fit for intent. I've been able to easily make rudiment
 ## Potential things I'm considering
 
 1. A sustain stage on the LFO rate and depth fades?
-2. Control macros. What kind of macro controls would make the synth friendlier, more performable, and more modulatable, without turning the panel into an overwhelming mod matrix? I've started that study in [the macro note](docs/research/macros.md).
-3. Documentation and graphic design. The panel is mostly ok, but I'd like to work on the wordmark, a nicely designed and human-written manual, and complementary materials such as posters, web graphics, etc. Also refine the panel.
-4. Ring mod/AM algorithms?
+2. Documentation and graphic design. The panel is mostly ok, but I'd like to work on the wordmark, a nicely designed and human-written manual, and complementary materials such as posters, web graphics, etc. Also refine the panel.
 
 ## Done
 
@@ -57,6 +55,8 @@ Results so far seem to be fit for intent. I've been able to easily make rudiment
 7. Library synchronisation across running instances.
 8. Rate and depth fades on every LFO, with the envelope rate table's time scale and a two-line graph.
 9. Per-operator stochastic phaseshaping, with a live composed map, zero-crossing locks, drift, flips, a local reorder, and a dedicated LFO and signed envelope on the `op phasemap` tab (see [the stochastic phaseshaping contract](plugin/feature-contract-stochastic-phaseshaping.md)). The read is 1×. The 2× half-band was designed but not built, because the 1× path measured 2.01× the phase-off baseline and the aliasing would need a fresh CPU budget.
+10. Six macros with relative CC, wheel and velocity sources, per-voice operator levels, feedbacks, morphs, envelope rates and LFO rates and depths, and a macros page (see [the macro contract](plugin/feature-contract-macros.md)). The per-voice breakpoints and pan note policy are still to come.
+11. Ring modulation between consecutive carriers, with three pairs, a per-pair level and one original-output gate per carrier (see [the ringmod contract](plugin/feature-contract-ringmod.md)).
 
 ## Empyrical stuff I'd like to try
 
