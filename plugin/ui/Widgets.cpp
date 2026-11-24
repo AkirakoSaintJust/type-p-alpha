@@ -2,6 +2,7 @@
 #include "Widgets.h"
 
 #include <algorithm>
+#include <bit>
 #include <cmath>
 #include <vector>
 
@@ -880,7 +881,11 @@ P1Scope::P1Scope()
 
 void P1Scope::setSamples(const float* samples, int count)
 {
-    samples_.assign(samples, samples + juce::jmax(0, count));
+    count = juce::jmax(0, count);
+    if (count == static_cast<int>(samples_.size()) &&
+        std::equal(samples_.begin(), samples_.end(), samples))
+        return;
+    samples_.assign(samples, samples + count);
     repaint();
 }
 
@@ -901,6 +906,7 @@ void P1Scope::paint(juce::Graphics& g)
         path.startNewSubPath(area.getX(), area.getCentreY());
         path.lineTo(area.getRight(), area.getCentreY());
     } else {
+        path.preallocateSpace(n * 3);
         for (int i = 0; i < n; ++i) {
             const float x = area.getX() +
                             area.getWidth() * static_cast<float>(i) /
@@ -921,11 +927,25 @@ void P1Scope::paint(juce::Graphics& g)
 P1Spectro::P1Spectro()
 {
     setInterceptsMouseClicks(false, false);
+    for (int i = 0; i < kWindow; ++i) {
+        window_[static_cast<size_t>(i)] =
+            0.5f - 0.5f * std::cos(juce::MathConstants<float>::twoPi *
+                                  static_cast<float>(i) / 511.0f);
+    }
+    for (int i = 0; i < kBars; ++i) {
+        barBin_[static_cast<size_t>(i)] =
+            juce::jlimit(1, 220, 2 + static_cast<int>(
+                std::pow(static_cast<double>(i) / kBars, 2.0) * 210.0));
+    }
 }
 
 void P1Spectro::setSamples(const float* samples, int count)
 {
-    samples_.assign(samples, samples + juce::jmax(0, count));
+    count = juce::jmax(0, count);
+    if (count == static_cast<int>(samples_.size()) &&
+        std::equal(samples_.begin(), samples_.end(), samples))
+        return;
+    samples_.assign(samples, samples + count);
     repaint();
 }
 
@@ -933,18 +953,14 @@ void P1Spectro::paint(juce::Graphics& g)
 {
     g.fillAll(colour(tokens::bg));
     fftData_.fill(0.0f);
-    const int n = juce::jmin(512, static_cast<int>(samples_.size()));
-    for (int i = 0; i < n; ++i) {
-        const float window = 0.5f - 0.5f * std::cos(
-            juce::MathConstants<float>::twoPi * static_cast<float>(i) / 511.0f);
-        fftData_[static_cast<size_t>(i)] = samples_[static_cast<size_t>(i)] * window;
-    }
+    const int n = juce::jmin(kWindow, static_cast<int>(samples_.size()));
+    for (int i = 0; i < n; ++i)
+        fftData_[static_cast<size_t>(i)] =
+            samples_[static_cast<size_t>(i)] * window_[static_cast<size_t>(i)];
     fft_.performFrequencyOnlyForwardTransform(fftData_.data());
-    const int bars = 22;
-    const float barWidth = static_cast<float>(getWidth()) / bars;
-    for (int i = 0; i < bars; ++i) {
-        const int bin = juce::jlimit(1, 220, 2 + static_cast<int>(
-            std::pow(static_cast<double>(i) / bars, 2.0) * 210.0));
+    const float barWidth = static_cast<float>(getWidth()) / kBars;
+    for (int i = 0; i < kBars; ++i) {
+        const int bin = barBin_[static_cast<size_t>(i)];
         float magnitude = 0.0f;
         for (int k = bin; k < juce::jmin(256, bin + 3); ++k)
             magnitude = juce::jmax(magnitude, fftData_[static_cast<size_t>(k)]);
@@ -1166,6 +1182,39 @@ P1SpectrumDisplay::P1SpectrumDisplay(APVTS& state, juce::StringArray aIDs,
     setInterceptsMouseClicks(false, false);
 }
 
+void P1SpectrumDisplay::tick()
+{
+    const auto mix = [](uint64_t h, uint64_t value) {
+        h ^= value;
+        h *= 1099511628211ull;
+        return h;
+    };
+    uint64_t h = 1469598103934665603ull;
+    for (int i = 0; i < aIDs_.size(); ++i)
+        h = mix(h, std::bit_cast<uint64_t>(levelAt(aIDs_, i)));
+    for (int i = 0; i < bIDs_.size(); ++i)
+        h = mix(h, std::bit_cast<uint64_t>(levelAt(bIDs_, i)));
+    const auto raw = [this](const juce::String& id) {
+        if (auto* value = state_.getRawParameterValue(id))
+            return static_cast<double>(value->load());
+        return 0.0;
+    };
+    h = mix(h, std::bit_cast<uint64_t>(raw(morphID_)));
+    h = mix(h, std::bit_cast<uint64_t>(raw(rangeAID_)));
+    h = mix(h, std::bit_cast<uint64_t>(raw(rangeBID_)));
+    h = mix(h, std::bit_cast<uint64_t>(liveMorph_));
+    if (!haveSignature_) {
+        haveSignature_ = true;
+        lastSignature_ = h;
+        repaint();
+        return;
+    }
+    if (h != lastSignature_) {
+        lastSignature_ = h;
+        repaint();
+    }
+}
+
 double P1SpectrumDisplay::levelAt(const juce::StringArray& ids, int index) const
 {
     if (index < 0 || index >= ids.size())
@@ -1366,6 +1415,42 @@ P1Envelope::P1Envelope(APVTS& state, juce::StringArray rateIDs,
       startScale_(startScale)
 {
     setInterceptsMouseClicks(false, false);
+}
+
+void P1Envelope::tick()
+{
+    const auto mix = [](uint64_t h, uint64_t value) {
+        h ^= value;
+        h *= 1099511628211ull;
+        return h;
+    };
+    uint64_t h = 1469598103934665603ull;
+    for (int i = 0; i < rateIDs_.size() && i < 5; ++i) {
+        if (auto* value = state_.getRawParameterValue(rateIDs_[i]))
+            h = mix(h, static_cast<uint64_t>(std::lround(value->load())));
+    }
+    for (int i = 0; i < levelIDs_.size() && i < 4; ++i) {
+        if (auto* value = state_.getRawParameterValue(levelIDs_[i]))
+            h = mix(h, std::bit_cast<uint32_t>(value->load()));
+    }
+    if (modeID_.isNotEmpty()) {
+        if (auto* value = state_.getRawParameterValue(modeID_))
+            h = mix(h, static_cast<uint64_t>(std::lround(value->load())));
+    }
+    if (startID_.isNotEmpty()) {
+        if (auto* value = state_.getRawParameterValue(startID_))
+            h = mix(h, std::bit_cast<uint32_t>(value->load()));
+    }
+    if (!haveSignature_) {
+        haveSignature_ = true;
+        lastSignature_ = h;
+        repaint();
+        return;
+    }
+    if (h != lastSignature_) {
+        lastSignature_ = h;
+        repaint();
+    }
 }
 
 void P1Envelope::paint(juce::Graphics& g)
@@ -1605,6 +1690,23 @@ P1Wave::P1Wave(APVTS& state, juce::String waveID, juce::Colour curveColour)
     : state_(state), waveID_(std::move(waveID)), colour_(curveColour)
 {
     setInterceptsMouseClicks(false, false);
+}
+
+void P1Wave::tick()
+{
+    int wave = 0;
+    if (auto* value = state_.getRawParameterValue(waveID_))
+        wave = static_cast<int>(std::lround(value->load()));
+    if (!haveWave_) {
+        haveWave_ = true;
+        lastWave_ = wave;
+        repaint();
+        return;
+    }
+    if (wave != lastWave_) {
+        lastWave_ = wave;
+        repaint();
+    }
 }
 
 void P1Wave::paint(juce::Graphics& g)

@@ -2,6 +2,7 @@
 #include "Pages.h"
 
 #include <array>
+#include <bit>
 #include <cmath>
 
 #include "ParamIDs.h"
@@ -41,6 +42,63 @@ public:
           part_(part)
     {
         setInterceptsMouseClicks(false, false);
+    }
+
+    void tick()
+    {
+        p1::PhaseMapSnapshot live;
+        const bool hasLive = processor_.phaseMap(op_, part_, live);
+        const int on = static_cast<int>(
+            std::lround(rawValue(state_, params::opPhase(op_, "on", part_))));
+        const int fallbackSegments = juce::jlimit(
+            1, 32, static_cast<int>(std::lround(
+                       rawValue(state_, params::opPhase(op_, "segments", part_)))));
+        const bool liveMap = hasLive && on != 0;
+        const int segments = liveMap ? live.segments : fallbackSegments;
+        const float bp = liveMap
+            ? static_cast<float>(live.bp) / 1000.0f
+            : rawValue(state_, params::opPhase(op_, "bp", part_)) / 1000.0f;
+
+        const auto mix = [](uint64_t h, uint64_t value) {
+            h ^= value;
+            h *= 1099511628211ull;
+            return h;
+        };
+        uint64_t h = 1469598103934665603ull;
+        h = mix(h, static_cast<uint64_t>(on));
+        h = mix(h, liveMap ? 1u : 0u);
+        h = mix(h, static_cast<uint64_t>(segments));
+        h = mix(h, std::bit_cast<uint32_t>(bp));
+        if (liveMap) {
+            h = mix(h, static_cast<uint64_t>(live.segments));
+            h = mix(h, static_cast<uint64_t>(live.active));
+            h = mix(h, static_cast<uint64_t>(live.voices));
+            if (live.voices > 0) {
+                h = mix(h, static_cast<uint64_t>(live.phaseQ));
+                h = mix(h, static_cast<uint64_t>(live.phaseY));
+            }
+            const auto active = static_cast<std::size_t>(live.active);
+            for (std::size_t k = 0; k < active; ++k) {
+                h = mix(h, static_cast<uint64_t>(live.x[k]));
+                h = mix(h, static_cast<uint64_t>(live.x[k + 1]));
+                h = mix(h, static_cast<uint64_t>(live.y0[k]));
+                h = mix(h, static_cast<uint64_t>(
+                               static_cast<uint32_t>(live.slope[k])));
+                h = mix(h, static_cast<uint64_t>(live.flip[k]));
+                h = mix(h, static_cast<uint64_t>(live.order[k]));
+                h = mix(h, static_cast<uint64_t>(live.locked[k]));
+            }
+        }
+        if (!haveSignature_) {
+            haveSignature_ = true;
+            lastSignature_ = h;
+            repaint();
+            return;
+        }
+        if (h != lastSignature_) {
+            lastSignature_ = h;
+            repaint();
+        }
     }
 
     void paint(juce::Graphics& g) override
@@ -170,6 +228,8 @@ private:
     TypePAlphaAudioProcessor& processor_;
     int op_ = 0;
     int part_ = 0;
+    uint64_t lastSignature_ = 0;
+    bool haveSignature_ = false;
 };
 
 class PhaseCard : public P1Card {
@@ -307,7 +367,7 @@ public:
         on_.setBounds(headerTrailingBounds());
     }
 
-    void tick() { envView_.repaint(); }
+    void tick() { envView_.tick(); }
 
 private:
     P1Envelope envView_;
@@ -436,7 +496,7 @@ public:
     void tick()
     {
         header_.tick();
-        map_.repaint();
+        map_.tick();
         env_.tick();
     }
 

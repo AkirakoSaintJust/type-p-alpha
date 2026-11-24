@@ -129,7 +129,7 @@ public:
         to_.setBounds(on_.getX() - 16 - 32, 1, 32, 18);
     }
 
-    void tick() { envView_.repaint(); }
+    void tick() { envView_.tick(); }
 
 private:
     int part_ = 0;
@@ -188,7 +188,7 @@ public:
         mode_.setBounds(bottom.removeFromLeft(110));
     }
 
-    void tick() { waveView_.repaint(); }
+    void tick() { waveView_.tick(); }
 
 private:
     int part_ = 0;
@@ -270,7 +270,7 @@ public:
         to_.setBounds(on_.getX() - 16 - 32, 1, 32, 18);
     }
 
-    void tick() { envView_.repaint(); }
+    void tick() { envView_.tick(); }
 
 private:
     int part_ = 0;
@@ -348,7 +348,7 @@ public:
         to_.setBounds(on_.getX() - 16 - 32, 1, 32, 18);
     }
 
-    void tick() { envView_.repaint(); }
+    void tick() { envView_.tick(); }
 
 private:
     int part_ = 0;

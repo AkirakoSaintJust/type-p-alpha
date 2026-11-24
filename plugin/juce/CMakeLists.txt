@@ -149,6 +149,18 @@ target_link_libraries(p1_editor_snapshot PRIVATE
 target_compile_definitions(p1_editor_snapshot PRIVATE ${P1_JUCE_DEFINITIONS})
 add_dependencies(p1_editor_snapshot p1_params p1_tokens p1_macro_targets)
 
+juce_add_console_app(p1_ui_frame_bench PRODUCT_NAME "p1_ui_frame_bench")
+target_sources(p1_ui_frame_bench PRIVATE PluginProcessor.cpp
+                                         ../tests/ui_frame_bench.cpp)
+target_link_libraries(p1_ui_frame_bench PRIVATE
+    p1_editor
+    juce::juce_audio_utils
+    juce::juce_recommended_config_flags
+    juce::juce_recommended_warning_flags
+)
+target_compile_definitions(p1_ui_frame_bench PRIVATE ${P1_JUCE_DEFINITIONS})
+add_dependencies(p1_ui_frame_bench p1_params p1_tokens p1_macro_targets)
+
 find_program(XVFB_RUN xvfb-run)
 if(XVFB_RUN)
     add_test(NAME plugin_editor_snapshot
