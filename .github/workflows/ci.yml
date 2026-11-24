@@ -26,6 +26,23 @@ jobs:
               -DCMAKE_MODULE_LINKER_FLAGS=-fuse-ld=lld &&
             cmake --build build/linux-amd64-clang &&
             ctest --test-dir build/linux-amd64-clang --output-on-failure -E linux_daws'
+      - name: Build and bench the AVX2 engine
+        run: |
+          docker run --rm -v "$PWD:/work" -w /work type-p-alpha-build:ci sh -c '
+            cmake -S . -B build/linux-avx2 -G Ninja -DCMAKE_BUILD_TYPE=Release \
+              -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ \
+              -DCMAKE_EXE_LINKER_FLAGS=-fuse-ld=lld \
+              -DCMAKE_SHARED_LINKER_FLAGS=-fuse-ld=lld \
+              -DCMAKE_MODULE_LINKER_FLAGS=-fuse-ld=lld \
+              -DCMAKE_C_FLAGS=-march=haswell \
+              -DCMAKE_CXX_FLAGS=-march=haswell \
+              -DFETCHCONTENT_SOURCE_DIR_JUCE=/work/build/linux-amd64-clang/_deps/juce-src \
+              -DFETCHCONTENT_SOURCE_DIR_CLAP-JUCE-EXTENSIONS=/work/build/linux-amd64-clang/_deps/clap-juce-extensions-src \
+              -DFETCHCONTENT_FULLY_DISCONNECTED=ON &&
+            cmake --build build/linux-avx2 --target phase_map spectral_bench engine_parity -j 4 &&
+            ./build/linux-avx2/plugin/engine_parity >/dev/null &&
+            ./build/linux-avx2/plugin/phase_map | tail -4 &&
+            ./build/linux-avx2/plugin/spectral_bench | tail -6'
 
   sanitizers:
     runs-on: ubuntu-22.04
@@ -126,3 +143,24 @@ jobs:
             --strictness-level 5 --skip-gui-tests
           "$clap" validate --only-failed \
             "build/plugin/juce/type_p_alpha_artefacts/Release/CLAP/Type P.alpha.clap"
+
+  arm64:
+    runs-on: macos-14
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v7
+      - name: Configure arm64
+        run: >
+          cmake -S . -B build-arm64 -G Ninja -DCMAKE_BUILD_TYPE=Release
+          -DCMAKE_OSX_ARCHITECTURES=arm64
+          -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0
+      - name: Build
+        run: cmake --build build-arm64
+      - name: Test
+        run: >
+          ctest --test-dir build-arm64 --output-on-failure
+          -E "linux_daws|plugin_editor_snapshot|plugin_editor_snapshot_diff"
+      - name: Bench the arm64 engine
+        run: |
+          ./build-arm64/plugin/phase_map | tail -4
+          ./build-arm64/plugin/spectral_bench | tail -6
