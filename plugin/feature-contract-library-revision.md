@@ -19,8 +19,9 @@
   slots this instance changed. A slot the other side changed keeps the disk
   version, and the editor names the slot and the patch. Opening an old project no
   longer rewrites the library with the project's copy.
-- **Failure mode:** a silent overwrite of another instance's slot, a project load
-  replacing every slot with an older bank, or a corrupt file written over.
+- **Failure mode:** a silent overwrite of another instance's slot, a macro edit
+  that never reaches the disk, a project load replacing every slot with an older
+  bank, or a corrupt file written over.
 
 ## Dependencies and interactions
 
@@ -42,6 +43,12 @@
 - Before a save, the file is loaded into a fresh store. A dirty slot whose disk
   value still equals its base is copied across. A dirty slot whose disk value has
   moved is a conflict: the disk value stays and the slot is reported.
+- The patch comparison carries the macro values and the macro names, so a
+  macro-only edit counts as an edit and a conflicting macro is a conflict.
+- The read, merge and write run under one interprocess lock, so the standalone and
+  a DAW cannot both read revision N and then replace each other's slot. A save waits
+  for the lock; if the operating system cannot grant it, the editor reports that the
+  save did not run.
 - A conflict does not block the other slots. The non-conflicting changes are still
   written, and the editor reports the first conflict by bank, slot and name.
 - A project still carries a copy of the part and multi banks. `setStateInformation`
@@ -52,9 +59,15 @@
 ## Evidence
 
 - `preset_smoke` passes `a slot only A changed merges without a conflict`, `both
-  instances keep their slot after the merge`, the multi-slot merge, `the right
+  instances keep their slot after the merge`, the multi-slot merge, `a macro-only
+  patch edit merges without a conflict`, `the merged patch keeps the macro values
+  and names`, `the right instance reports the macro both changed`, `the conflicting
+  macro keeps the disk version`, `the right
   instance reports the slot both changed`, `the conflicting slot keeps the disk
   version`, the v2 load as revision 0, and the old-record-size expansion.
+- The save transaction holds a named interprocess lock from the disk read to the
+  atomic replace. The in-process two-store tests cover the merge; the lock covers
+  the same transaction across processes, and a busy lock is reported to the editor.
 - `plugin_smoke` passes `a project load does not overwrite the shared library` and
   `the reader's own slot still reaches the library`, with a second processor over
   the same temporary file.

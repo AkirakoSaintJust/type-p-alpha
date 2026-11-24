@@ -440,13 +440,14 @@ void TypePAlphaAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBl
     midi_.reset();
     rateBridge_.reset();
     directBuffer_.assign(static_cast<std::size_t>(kControlBlock) * 2u, 0);
+    monoFold_.assign(static_cast<std::size_t>(std::max(1, samplesPerBlock)), 0.0f);
     scheduled_.clear();
     scheduled_.reserve(static_cast<std::size_t>(std::max(1, samplesPerBlock)) * 2u + 16u);
     deferredOffs_.clear();
     deferredOffs_.reserve(64);
     nextScheduled_ = 0;
     coreFrames_ = 0;
-    chunkNotes_.fill(0);
+    chunkNotes_.reset();
     for (auto& value : liveMorph_)
         value.store(-1, std::memory_order_relaxed);
     if (std::abs(sampleRate - kCoreRate) > 0.5) {
@@ -643,16 +644,20 @@ void TypePAlphaAudioProcessor::publishMorph(p1::Engine& engine)
 
 void TypePAlphaAudioProcessor::publishPhaseMaps(p1::Engine& engine)
 {
-    /* Three buffers so the audio thread never writes the buffer the UI is
-     * copying while it swaps the published index. */
-    const uint32_t next = (phaseMapWriteIndex_ + 1u) % 3u;
+    /* The audio side writes its own buffer, then hands it over by swapping it
+     * with the middle slot. The reader swaps its own buffer in the same way, so
+     * the writer's back buffer is never the buffer the reader is copying. */
+    static constexpr uint32_t kIndexMask = 3u;
+    static constexpr uint32_t kNewData = 4u;
+    const uint32_t back = phaseMapBack_;
     for (int part = 0; part < kP1PartCount; ++part)
         for (int op = 0; op < 4; ++op)
             engine.phaseMapSnapshot(
                 op, part,
-                phaseMapSnapshots_[next][static_cast<std::size_t>(part * 4 + op)]);
-    phaseMapWriteIndex_ = next;
-    phaseMapIndex_.store(next, std::memory_order_release);
+                phaseMapSnapshots_[back][static_cast<std::size_t>(part * 4 + op)]);
+    phaseMapBack_ =
+        phaseMapMiddle_.exchange(back | kNewData, std::memory_order_acq_rel) &
+        kIndexMask;
 }
 
 void TypePAlphaAudioProcessor::feedScheduled(int64_t limit)
@@ -664,8 +669,8 @@ void TypePAlphaAudioProcessor::feedScheduled(int64_t limit)
         const bool noteOff =
             message.isNoteOff() ||
             (message.isNoteOn() && message.getVelocity() == 0);
-        if (noteOff && chunkNotes_[static_cast<std::size_t>(
-                           message.getNoteNumber())]) {
+        if (noteOff && chunkNotes_.held(message.getChannel(),
+                                        message.getNoteNumber())) {
             /* The note started in this same tick, so the release waits until the
              * tick has rendered. It sounds for one control block rather than
              * cancelling before any audio. */
@@ -673,7 +678,8 @@ void TypePAlphaAudioProcessor::feedScheduled(int64_t limit)
         } else {
             feedMessage(midi_, message);
             if (message.isNoteOn() && message.getVelocity() > 0)
-                chunkNotes_[static_cast<std::size_t>(message.getNoteNumber())] = 1;
+                chunkNotes_.noteOn(message.getChannel(),
+                                   message.getNoteNumber());
         }
         ++nextScheduled_;
     }
@@ -692,7 +698,7 @@ void TypePAlphaAudioProcessor::coreChunk(void* context, p1::Engine& engine,
     auto* self = static_cast<TypePAlphaAudioProcessor*>(context);
     self->flushDeferred();
     self->coreFrames_ += static_cast<uint64_t>(frames);
-    self->chunkNotes_.fill(0);
+    self->chunkNotes_.reset();
     self->feedScheduled(static_cast<int64_t>(self->coreFrames_) + kControlBlock);
     self->pushTapScopes(engine, frames);
     self->publishMorph(engine);
@@ -726,7 +732,7 @@ void TypePAlphaAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
             const int length = std::min(kControlBlock, frames - pos);
             const int end = pos + length;
 
-            chunkNotes_.fill(0);
+            chunkNotes_.reset();
             deferredOffs_.clear();
             while (event != midi.end() && (*event).samplePosition < end) {
                 const auto message = (*event).getMessage();
@@ -752,14 +758,14 @@ void TypePAlphaAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
                 const bool noteOff =
                     message.isNoteOff() ||
                     (message.isNoteOn() && message.getVelocity() == 0);
-                if (noteOff && chunkNotes_[static_cast<std::size_t>(
-                                   message.getNoteNumber())]) {
+                if (noteOff && chunkNotes_.held(message.getChannel(),
+                                                message.getNoteNumber())) {
                     deferredOffs_.push_back(message);
                 } else {
                     feedMessage(midi_, message);
                     if (message.isNoteOn() && message.getVelocity() > 0)
-                        chunkNotes_[static_cast<std::size_t>(
-                            message.getNoteNumber())] = 1;
+                        chunkNotes_.noteOn(message.getChannel(),
+                                           message.getNoteNumber());
                 }
                 ++event;
             }
@@ -769,10 +775,18 @@ void TypePAlphaAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
             renderCore(directBuffer_.data(), length);
             for (int i = 0; i < length; ++i) {
                 const auto index = static_cast<std::size_t>(i) * 2u;
-                left[pos + i] = static_cast<float>(directBuffer_[index]) * kIntToFloat;
-                if (right != nullptr)
-                    right[pos + i] =
-                        static_cast<float>(directBuffer_[index + 1u]) * kIntToFloat;
+                const float l =
+                    static_cast<float>(directBuffer_[index]) * kIntToFloat;
+                const float r =
+                    static_cast<float>(directBuffer_[index + 1u]) * kIntToFloat;
+                if (right != nullptr) {
+                    left[pos + i] = l;
+                    right[pos + i] = r;
+                } else {
+                    /* Fold the stereo pair down at 0.5, so a centred part keeps
+                     * its level and a hard-panned part sits 6 dB down. */
+                    left[pos + i] = (l + r) * 0.5f;
+                }
             }
             flushDeferred();
             outputScope_.push(left + pos, length);
@@ -794,12 +808,12 @@ void TypePAlphaAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
          * block generates fewer core frames than host frames, so an event can
          * fall in a tick that the next block renders. Those wait in
          * `scheduled_`; this block applies any that are still there first. */
-        chunkNotes_.fill(0);
+        chunkNotes_.reset();
         if (nextScheduled_ < scheduled_.size())
             feedScheduled(std::numeric_limits<int64_t>::max());
         scheduled_.clear();
         nextScheduled_ = 0;
-        chunkNotes_.fill(0);
+        chunkNotes_.reset();
         const double ratio = rateBridge_.ratio();
         for (const auto metadata : midi) {
             const auto message = metadata.getMessage();
@@ -827,10 +841,19 @@ void TypePAlphaAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
         syncParams();
         syncMacros();
         float* left = buffer.getWritePointer(0);
-        float* right = channels > 1 ? buffer.getWritePointer(1) : left;
+        const bool mono = channels == 1;
+        if (mono && monoFold_.size() < static_cast<std::size_t>(frames))
+            monoFold_.resize(static_cast<std::size_t>(frames));
+        /* The bridge writes two channels, so a mono host takes the second one in
+         * a scratch buffer and folds it down after the pull. */
+        float* right = mono ? monoFold_.data() : buffer.getWritePointer(1);
         if (rateBridge_.hasCore(frames))
             feedScheduled(static_cast<int64_t>(coreFrames_) + kControlBlock);
         rateBridge_.process(engine_, left, right, frames, &coreChunk, this);
+        if (mono) {
+            for (int i = 0; i < frames; ++i)
+                left[i] = (left[i] + right[i]) * 0.5f;
+        }
         outputScope_.push(left, frames);
         publishMorph(engine_);
         publishPhaseMaps(engine_);
@@ -859,8 +882,13 @@ bool TypePAlphaAudioProcessor::phaseMap(int op, int part,
 {
     if (op < 0 || op > 3 || part < 0 || part >= kP1PartCount)
         return false;
-    const uint32_t index = phaseMapIndex_.load(std::memory_order_acquire);
-    out = phaseMapSnapshots_[index][static_cast<std::size_t>(part * 4 + op)];
+    static constexpr uint32_t kIndexMask = 3u;
+    static constexpr uint32_t kNewData = 4u;
+    if ((phaseMapMiddle_.load(std::memory_order_acquire) & kNewData) != 0u)
+        phaseMapFront_ =
+            phaseMapMiddle_.exchange(phaseMapFront_, std::memory_order_acq_rel) &
+            kIndexMask;
+    out = phaseMapSnapshots_[phaseMapFront_][static_cast<std::size_t>(part * 4 + op)];
     return out.valid;
 }
 
@@ -917,6 +945,22 @@ LibrarySaveResult TypePAlphaAudioProcessor::saveLibrary()
     LibrarySaveResult result;
     const auto file = libraryFile();
     file.getParentDirectory().createDirectory();
+
+    /* The read-merge-write must be one transaction across processes, or a save
+     * from the standalone and one from the DAW can each read the same revision
+     * and the second replaces the first's slot. The wait is unbounded because the
+     * transaction is short and the OS releases the lock if a holder dies; JUCE's
+     * POSIX path reports a timed-out attempt as success, so a finite timeout
+     * would not give the exclusion this needs. */
+    juce::InterProcessLock libraryLock("P1Onken-TypePAlpha-Library");
+    if (!libraryLock.enter(-1)) {
+        result.busy = true;
+        return result;
+    }
+    struct LockRelease {
+        juce::InterProcessLock& lock;
+        ~LockRelease() { lock.exit(); }
+    } release{libraryLock};
 
     if (!file.existsAsFile()) {
         /* The first save: write this instance's bank as revision 1. */

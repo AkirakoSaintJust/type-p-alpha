@@ -473,10 +473,13 @@ drag. It draws:
 - the caption `bp 0.500 · π`, the active and requested segment counts, and the
   locked count when it is above zero.
 
-The snapshot is published per operator per part at 30 Hz through a double buffer
-with an atomic index, the same pattern as the scope and morph taps. The audio
-thread writes only the fixed snapshot: no allocation, lock or file access. The
-UI timer reads the latest snapshot and draws. It does not read engine internals.
+The snapshot is published per operator per part through three buffers with an atomic
+handoff, the same three-buffer pattern the scope and morph taps use. The writer owns
+one buffer, the reader owns another, and the middle index carries a new-data bit, so
+the writer never writes the buffer the UI is copying. The audio thread publishes on
+each core chunk; the UI timer samples the latest snapshot when it paints. The audio
+thread writes only the fixed snapshot: no allocation, lock or file access. The UI
+timer reads the latest snapshot and draws. It does not read engine internals.
 When `phase on` is off, the plot draws the neutral parameter geometry, not the
 last live map, so the display resets with the switch and with a patch load. When
 `voices == 0` the last live map stays on screen and the dot stops. The next note

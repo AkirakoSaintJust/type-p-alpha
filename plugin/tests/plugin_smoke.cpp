@@ -274,6 +274,65 @@ int main()
               "the master volume scales every output block");
     }
     {
+        /* A mono host must hear both sides of the pan. The 48 kHz path writes the
+         * engine's two channels directly; the bridge path needs a real second
+         * pointer rather than aliasing the mono buffer. */
+        const auto renderPan = [](double rate, int pan, int channels) {
+            auto instance = std::make_unique<TypePAlphaAudioProcessor>();
+            if (auto* panParameter =
+                    instance->parameters().getParameter("pan.p0"))
+                panParameter->setValueNotifyingHost(
+                    panParameter->convertTo0to1(static_cast<float>(pan)));
+            instance->setRateAndBufferSizeDetails(rate, 512);
+            instance->prepareToPlay(rate, 512);
+            juce::AudioBuffer<float> out(channels, 512);
+            double energy = 0.0;
+            for (int block = 0; block < 16; ++block) {
+                out.clear();
+                juce::MidiBuffer events;
+                if (block == 0)
+                    events.addEvent(
+                        juce::MidiMessage::noteOn(1, 60,
+                                                  static_cast<juce::uint8>(100)),
+                        0);
+                instance->processBlock(out, events);
+                for (int channel = 0; channel < channels; ++channel)
+                    for (int i = 0; i < 512; ++i)
+                        energy += std::abs(out.getSample(channel, i));
+            }
+            return energy;
+        };
+        const double mono48Left = renderPan(48000.0, -100, 1);
+        const double mono48Right = renderPan(48000.0, 100, 1);
+        const double mono44Left = renderPan(44100.0, -100, 1);
+        const double mono44Right = renderPan(44100.0, 100, 1);
+        check(mono48Left > 1.0e-4 && mono48Right > 1.0e-4,
+              "mono keeps a hard-left and hard-right part at 48 kHz");
+        check(mono44Left > 1.0e-4 && mono44Right > 1.0e-4,
+              "mono keeps a hard-left and hard-right part at 44.1 kHz");
+        const double stereo48Left = renderPan(48000.0, -100, 2);
+        check(mono48Left > stereo48Left * 0.4 &&
+                  mono48Left < stereo48Left * 0.6,
+              "the mono fold-down takes half of a hard-panned part");
+    }
+
+    {
+        p1::ChunkNoteSet chunk;
+        chunk.reset();
+        chunk.noteOn(1, 60);
+        check(chunk.held(1, 60),
+              "the chunk note set keeps the channel and pitch");
+        check(!chunk.held(2, 60),
+              "a note on another channel does not hold the pitch");
+        check(!chunk.held(1, 61), "a different pitch is not held");
+        chunk.noteOn(16, 127);
+        check(chunk.held(16, 127),
+              "the last channel and pitch are both tracked");
+        chunk.reset();
+        check(!chunk.held(1, 60), "the chunk note set clears each block");
+    }
+
+    {
         int bad = 0;
         for (auto* parameter : processor.getParameters()) {
             for (int step = 0; step <= 20; ++step) {

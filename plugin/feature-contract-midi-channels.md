@@ -48,6 +48,9 @@
 - Sustain is a per-channel flag with a per-channel deferred-note table. CC 123
   releases the notes and the pedal on its own channel; the global panic still
   stops every part.
+- The plugin's same-chunk note tracking keys on channel and pitch, so a note-on on
+  one channel does not hold a same-pitch release on another. The plugin defers the
+  release only when that channel started the pitch in the same chunk.
 - The 14-bit wheel is converted per part: `cents = (value - 8192) * range * 100 /
   8192`, then `p1_tune_q16`. Centre is 8192.
 
@@ -58,6 +61,10 @@
   releases its own part`, `sustain holds its own channel and not the other`,
   `lifting the pedal releases the notes it held`, the four bend routing checks, and
   the engine render reference, which is unchanged at centre bend.
+- `plugin_smoke` passes `the chunk note set keeps the channel and pitch`, `a note on
+  another channel does not hold the pitch`, `a different pitch is not held`, `the
+  last channel and pitch are both tracked` and `the chunk note set clears each
+  block`.
 - `engine_parity` passes `CC 123 releases only the part on its channel`, `CC 123
   on the second channel releases the second part` and `the global panic releases
   every part`.

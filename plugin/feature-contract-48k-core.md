@@ -23,7 +23,9 @@
   core output untouched.
   A 44.1, 96 or 192 kHz host is resampled at the output with the 128-tap polyphase
   bridge, so the old 44.1 kHz rule is withdrawn, the engine has one musical base,
-  and I'm glad to see the second one go.
+  and I'm glad to see the second one go. A mono host hears the two channels folded
+  down at 0.5, so a hard-panned part stays audible and a centred part keeps its
+  level.
 - **Failure mode:** a pitch offset, an envelope or LFO that changes speed, a filter
   cutoff that moves, part delay that drifts, resampling that images, or a 48 kHz
   render that isn't bit-exact with the core.
@@ -170,6 +172,10 @@ float, file access or display enters the audio path.
   measured image is -95.9 dB at 44.1, -108.0 dB at 96 and -104.3 dB at 192 kHz.
   The bridge latency is 58 host samples at 44.1, 0 at the 48 kHz bypass, 127 at 96
   and 254 at 192, from the 63.5 core-sample kernel delay.
+- **Mono vector:** `plugin_smoke` passes `mono keeps a hard-left and hard-right part
+  at 48 kHz`, the same at 44.1 kHz, and `the mono fold-down takes half of a
+  hard-panned part`. The two paths are separate: the core writes one channel and
+  the bridge takes a second scratch pointer, so neither aliases the mono buffer.
 - **Target package check:** the VST3, CLAP and standalone targets build, and the
   editor snapshot test passes against the current goldens.
 - **Host timing and platform check:** the Windows clang-cl/lld build passes all 12

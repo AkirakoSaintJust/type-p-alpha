@@ -11,6 +11,7 @@
 #include <juce_audio_processors/juce_audio_processors.h>
 
 #include "Engine.hpp"
+#include "ChunkNoteSet.h"
 #include "MidiBridge.hpp"
 #include "P1Product.h"
 #include "Params.h"
@@ -39,6 +40,7 @@ struct LibrarySaveResult {
     bool written = false;
     bool unreadable = false;
     bool conflict = false;
+    bool busy = false;
     bool multi = false;
     int slot = -1;
     std::string name;
@@ -159,18 +161,23 @@ private:
     std::atomic<float>* outputVolume_ = nullptr;
     float volumeGain_ = 1.0f;
     std::vector<int32_t> directBuffer_;
+    std::vector<float> monoFold_;
     std::atomic<bool> paramsDirty_{false};
     double hostRate_ = 48000.0;
 
     std::vector<ScheduledEvent> scheduled_;
     std::size_t nextScheduled_ = 0;
-    std::array<uint8_t, 128> chunkNotes_{};
+    p1::ChunkNoteSet chunkNotes_{};
     std::vector<juce::MidiMessage> deferredOffs_;
     uint64_t coreFrames_ = 0;
     std::array<std::atomic<int>, 8> liveMorph_{};
     std::array<std::array<p1::PhaseMapSnapshot, 8>, 3> phaseMapSnapshots_{};
-    std::atomic<uint32_t> phaseMapIndex_{0};
-    uint32_t phaseMapWriteIndex_ = 0;
+    /* A three-buffer handoff. The writer owns `phaseMapBack_`, the reader owns
+     * `phaseMapFront_`, and `phaseMapMiddle_` carries the index plus a new-data
+     * bit. The writer never writes the buffer the reader holds. */
+    mutable std::atomic<uint32_t> phaseMapMiddle_{1};
+    uint32_t phaseMapBack_ = 0;
+    mutable uint32_t phaseMapFront_ = 2;
 
     ScopeRing outputScope_;
     std::array<ScopeRing, 10> tapScopes_;

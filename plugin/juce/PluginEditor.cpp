@@ -1603,7 +1603,10 @@ void PluginEditor::reportLibrarySave(const LibrarySaveResult& result)
     if (result.written && !result.conflict)
         return;
     juce::String message;
-    if (result.unreadable) {
+    if (result.busy) {
+        message = "The library lock could not be taken, so this save did not "
+                  "run. Check the permissions on the library folder.";
+    } else if (result.unreadable) {
         message = "The library file could not be read, so nothing was overwritten. "
                   "The file is at " +
                   processor_.libraryFile().getFullPathName() + ".";
