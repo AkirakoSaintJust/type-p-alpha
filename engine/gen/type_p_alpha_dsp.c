@@ -11220,7 +11220,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                 route_mod3_x = 0;
                 route_mod4_x = rc * 2;
                 if (route_ring1_on[voice_part[v]])
-                    rm1 = p1_q15_mul(p1_q15_mul(d2_out_x, d4_out_x), lv1) << 6;
+                    rm1 = p1_q15_mul(p1_q15_mul(d2_out_x, d4_out_x), lv1) * 64;
                 route_car_x = ((!route_ring1_on[voice_part[v]] || route_car2_out[voice_part[v]]) ? rb : 0) +
                              ((!route_ring1_on[voice_part[v]] || route_car4_out[voice_part[v]]) ? rd : 0) + rm1;
                 break;
@@ -11229,9 +11229,9 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                 route_mod3_x = ra * 2;
                 route_mod4_x = ra * 2;
                 if (route_ring1_on[voice_part[v]])
-                    rm1 = p1_q15_mul(p1_q15_mul(d2_out_x, d3_out_x), lv1) << 6;
+                    rm1 = p1_q15_mul(p1_q15_mul(d2_out_x, d3_out_x), lv1) * 64;
                 if (route_ring2_on[voice_part[v]])
-                    rm2 = p1_q15_mul(p1_q15_mul(d3_out_x, d4_out_x), lv2) << 6;
+                    rm2 = p1_q15_mul(p1_q15_mul(d3_out_x, d4_out_x), lv2) * 64;
                 route_car_x = ((!route_ring1_on[voice_part[v]] && !route_ring2_on[voice_part[v]] ||
                                route_car2_out[voice_part[v]]) ? rb : 0) +
                              ((!route_ring1_on[voice_part[v]] && !route_ring2_on[voice_part[v]] ||
@@ -11244,9 +11244,9 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                 route_mod3_x = 0;
                 route_mod4_x = 0;
                 if (route_ring1_on[voice_part[v]])
-                    rm1 = p1_q15_mul(p1_q15_mul(d2_out_x, d3_out_x), lv1) << 6;
+                    rm1 = p1_q15_mul(p1_q15_mul(d2_out_x, d3_out_x), lv1) * 64;
                 if (route_ring2_on[voice_part[v]])
-                    rm2 = p1_q15_mul(p1_q15_mul(d3_out_x, d4_out_x), lv2) << 6;
+                    rm2 = p1_q15_mul(p1_q15_mul(d3_out_x, d4_out_x), lv2) * 64;
                 route_car_x = ((!route_ring1_on[voice_part[v]] && !route_ring2_on[voice_part[v]] ||
                                route_car2_out[voice_part[v]]) ? rb : 0) +
                              ((!route_ring1_on[voice_part[v]] && !route_ring2_on[voice_part[v]] ||
@@ -11259,11 +11259,11 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                 route_mod3_x = 0;
                 route_mod4_x = 0;
                 if (route_ring1_on[voice_part[v]])
-                    rm1 = p1_q15_mul(p1_q15_mul(d1_out_x, d2_out_x), lv1) << 6;
+                    rm1 = p1_q15_mul(p1_q15_mul(d1_out_x, d2_out_x), lv1) * 64;
                 if (route_ring2_on[voice_part[v]])
-                    rm2 = p1_q15_mul(p1_q15_mul(d2_out_x, d3_out_x), lv2) << 6;
+                    rm2 = p1_q15_mul(p1_q15_mul(d2_out_x, d3_out_x), lv2) * 64;
                 if (route_ring3_on[voice_part[v]])
-                    rm3 = p1_q15_mul(p1_q15_mul(d3_out_x, d4_out_x), lv3) << 6;
+                    rm3 = p1_q15_mul(p1_q15_mul(d3_out_x, d4_out_x), lv3) * 64;
                 route_car_x = ((!route_ring1_on[voice_part[v]] && !route_ring2_on[voice_part[v]] &&
                                !route_ring3_on[voice_part[v]] || route_car1_out[voice_part[v]]) ? ra : 0) +
                              ((!route_ring1_on[voice_part[v]] && !route_ring2_on[voice_part[v]] &&

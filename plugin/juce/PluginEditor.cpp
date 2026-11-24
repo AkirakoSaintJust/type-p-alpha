@@ -170,9 +170,17 @@ public:
 
     void tick()
     {
-        const int algorithm = static_cast<int>(std::lround(p1::ui::getParam(
-            editor_, p1::params::algorithm(editor_.activePart()))));
+        const int part = editor_.activePart();
+        const int algorithm = static_cast<int>(
+            std::lround(p1::ui::getParam(editor_, p1::params::algorithm(part))));
         alg_.setAlgorithm(algorithm);
+        uint8_t ring = 0;
+        for (int i = 0; i < 3; ++i) {
+            if (std::lround(
+                    p1::ui::getParam(editor_, p1::params::ringOn(i, part))) != 0)
+                ring |= static_cast<uint8_t>(1u << i);
+        }
+        alg_.setRingMask(ring);
         setPatchName(editor_.processor().getPatchName());
         editor_.processor().readOutputScope(scratch_.data(),
                                             static_cast<int>(scratch_.size()));

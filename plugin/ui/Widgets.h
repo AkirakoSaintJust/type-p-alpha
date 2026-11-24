@@ -390,6 +390,7 @@ class P1AlgorithmBlock : public juce::Component {
 public:
     P1AlgorithmBlock();
     void setAlgorithm(int algorithm);
+    void setRingMask(uint8_t mask);
     void paint(juce::Graphics& g) override;
     void mouseUp(const juce::MouseEvent& event) override;
     void mouseEnter(const juce::MouseEvent& event) override;
@@ -402,6 +403,7 @@ public:
 
 private:
     int algorithm_ = 4;
+    uint8_t ringMask_ = 0;
     bool hover_ = false;
 };
 
@@ -427,6 +429,6 @@ private:
 };
 
 void drawAlgorithmGraph(juce::Graphics& g, juce::Rectangle<float> area,
-                        int algorithm);
+                        int algorithm, uint8_t ringMask = 0);
 
 } // namespace p1::ui

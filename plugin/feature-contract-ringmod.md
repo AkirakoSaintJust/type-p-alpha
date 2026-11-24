@@ -20,7 +20,9 @@
   envelope shape both. A carrier in two pairs is still heard directly once. A pair at
   level 0 adds nothing even while it is on. A one-carrier algorithm has no pair and
   no ringmod controls. The direct gates apply only while an active pair is on; when
-  every active pair is off, the part is exactly the pre-feature carrier sum.
+  every active pair is off, the part is exactly the pre-feature carrier sum. The
+  header algorithm graph adds the R on every active pair, so the ring is visible
+  from every tab.
 - **Failure mode:** a ring pair that adds nothing while on, a carrier that is heard
   twice because it feeds two pairs, a card that does not follow the algorithm, or an
   old part record that loses values when the ringmod block is appended.
@@ -82,7 +84,9 @@ caption and one `opN` toggle per current carrier; the track shows the state. The
 is active while any active pair is on, and dims to 0.35 with every active pair off.
 The card follows the algorithm on the next tick; a hidden pair keeps its parameter
 values and returns when its algorithm comes back. One carrier shows `no ringmod`
-and no controls.
+and no controls. The header algorithm graph carries the R too: an active pair's two
+direct arrows become the R inputs and one purple output, and the header reads the
+active part's pair states on its tick, so the indicator follows the tab's part.
 
 ## Evidence
 
@@ -95,10 +99,11 @@ and no controls.
   direct pair and expects the ring within 0.6 to 1.6 of it.
 - `preset_smoke` keeps `the part record has the ringmod block` at 991 and the old
   version 16 record expands with the ring defaults; the part record round-trips.
-- The snapshots add `editor-part-params-ringmod.png` with four carriers, three pairs
-  and the first pair on, and `editor-part-params-ringmod-empty.png` with one carrier
-  and `no ringmod`. The three existing part-params snapshots change because the card
-  is in the grid.
+- The snapshots add `editor-part-params-ringmod.png` with four carriers, three pairs,
+  the first pair on and the header's R on that pair, and
+  `editor-part-params-ringmod-empty.png` with one carrier and `no ringmod`. The three
+  existing part-params snapshots change because the card is in the grid and the
+  original row is dimmed while the ring is off.
 - The full Linux suite is 18 of 18, and the Windows build passes its 17 tests.
   `pluginval` 1.0.4 at strictness level 5 with the GUI tests skipped reports
   `SUCCESS` on the VST3. The release package

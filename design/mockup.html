@@ -1318,8 +1318,18 @@
       (x + 3.2) + "," + (y + len - 4) + '" fill="#c780ff"/>';
   }
 
-  function algSvg(n) {
+  function algSvg(n, ringMask) {
+    ringMask = ringMask || 0;
     const L = ALG_LAYOUT[n] || ALG_LAYOUT[0];
+    const pairs = [];
+    const ringed = {};
+    for (let i = 0; i + 1 < L.car.length; i++) {
+      if (ringMask & (1 << i)) {
+        const a = L.car[i], b = L.car[i + 1];
+        pairs.push([a, b]);
+        ringed[a] = 1; ringed[b] = 1;
+      }
+    }
     let g = "";
     L.edges.forEach(function (e) {
       const a = L.pos[e[0]], b = L.pos[e[1]];
@@ -1334,12 +1344,28 @@
       const isCar = L.car.indexOf(i) >= 0;
       fit(p[0], p[1]);
       fit(p[0] + OPW, p[1] + OPH);
-      if (isCar) fit(p[0] + OPW / 2, p[1] + OPH + 1 + 12);
+      if (isCar && !ringed[i]) fit(p[0] + OPW / 2, p[1] + OPH + 1 + 12);
       g += '<rect x="' + p[0] + '" y="' + p[1] + '" width="' + OPW + '" height="' + OPH + '" fill="' +
         (isCar ? "#ff2e7e" : "#ffffff") + '"/>' +
         '<text x="' + (p[0] + OPW / 2) + '" y="' + (p[1] + 12.5) + '" fill="#000" font-size="9" font-weight="700" ' +
         'text-anchor="middle" font-family="DotGothic16, monospace">op' + (i + 1) + "</text>";
-      if (isCar) g += arrowDown(p[0] + OPW / 2, p[1] + OPH + 1, 12);
+      if (isCar && !ringed[i]) g += arrowDown(p[0] + OPW / 2, p[1] + OPH + 1, 12);
+    });
+    pairs.forEach(function (pair) {
+      const a = L.pos[pair[0]], b = L.pos[pair[1]];
+      const cx = (a[0] + b[0]) / 2 + OPW / 2;
+      const top = Math.max(a[1], b[1]) + OPH + 6;
+      const rx = cx - 10, ry = top;
+      fit(rx, ry); fit(rx + 20, ry + 14); fit(cx, ry + 26);
+      g += wire(a[0] + OPW / 2, a[1] + OPH, rx + 6, ry);
+      g += wire(b[0] + OPW / 2, b[1] + OPH, rx + 14, ry);
+      g += '<rect x="' + rx + '" y="' + ry + '" width="20" height="14" fill="none" stroke="#2e2e2e"/>';
+      g += '<text x="' + cx + '" y="' + (ry + 10) + '" fill="#ff2e7e" font-size="9" font-weight="700" ' +
+        'text-anchor="middle" font-family="DotGothic16, monospace">R</text>';
+      g += '<line x1="' + cx + '" y1="' + (ry + 14) + '" x2="' + cx + '" y2="' + (ry + 22) +
+        '" stroke="#c780ff" stroke-width="1.4"/>' +
+        '<polygon points="' + cx + "," + (ry + 26) + " " + (cx - 3) + "," + (ry + 21) + " " +
+        (cx + 3) + "," + (ry + 21) + '" fill="#c780ff"/>';
     });
     const dx = (240 - (maxX - minX)) / 2 - minX;
     const dy = (128 - (maxY - minY)) / 2 - minY;
@@ -1347,9 +1373,18 @@
       '<g transform="translate(' + dx.toFixed(1) + "," + dy.toFixed(1) + ')">' + g + "</g></svg>";
   }
 
+  function ringMaskFor(n) {
+    const ring = PART_DATA[activePart - 1].ring;
+    const cars = (ALG_LAYOUT[n] || ALG_LAYOUT[0]).car;
+    let mask = 0;
+    for (let i = 0; i + 1 < cars.length; i++)
+      if (ring.on[i]) mask |= 1 << i;
+    return mask;
+  }
+
   function renderAlg() {
     document.getElementById("algVal").textContent = ALG;
-    document.getElementById("hdrAlg").innerHTML = algSvg(ALG);
+    document.getElementById("hdrAlg").innerHTML = algSvg(ALG, ringMaskFor(ALG));
   }
 
   function setAlg(n) {
@@ -2751,7 +2786,7 @@
     const t = TABS.find(function (x) { return x.id === id; });
     body.appendChild(t.view());
   }
-  function rerender() { showTab(current); }
+  function rerender() { showTab(current); renderAlg(); }
 
   /* ---------------- header scope toggle ---------------- */
   document.getElementById("visSeg").addEventListener("click", function (e) {

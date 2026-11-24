@@ -888,6 +888,7 @@ int main(int argc, char** argv)
     /* The ringmod card follows the algorithm: three pairs and four direct gates
      * at four carriers, and no controls at one carrier. */
     {
+        editor->setSize(1240, 985);
         p1editor->setActivePart(0);
         p1editor->showTab(2);
         auto setRing = [&](const char* id, float value) {

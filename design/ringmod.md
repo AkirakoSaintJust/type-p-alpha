@@ -101,6 +101,14 @@ two direct toggles; three draw two pairs and three toggles; four draw all three
 pairs and four toggles. A hidden row keeps its values. Switching the algorithm back
 restores them.
 
+## Header
+
+The header algorithm graph carries the same R. While a pair is on, the pair's two
+carrier arrows become the R input arrows and one purple output; the other carriers
+keep their direct arrows. The header reads the active part's pair states each tick,
+so the ring is visible from every tab. With every active pair off the header draws
+the plain algorithm.
+
 ## Defaults and bypass
 
 The ring pairs are off, so the card opens in the bypass state and the patch sounds
@@ -126,8 +134,8 @@ it is on.
   direct signals.
 - An old version 16 part record expands with the ring defaults; `preset_smoke`
   keeps the version 16 count check at 981 and the current count at 991.
-- The snapshots cover the card at four carriers with a pair on, the same card with
-  one carrier and no controls, and the default two-carrier card. The three existing
-  part params snapshots change because the card is in the grid and the original row
-  is dimmed while the ring is off.
+- The snapshots cover the card at four carriers with a pair on and the header's R
+  on that pair, the same card with one carrier and no controls, and the default
+  two-carrier card. The three existing part params snapshots change because the
+  card is in the grid and the original row is dimmed while the ring is off.
 - The full Linux suite is 18 of 18, and the Windows build passes its 17 tests.

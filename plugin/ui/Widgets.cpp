@@ -1907,6 +1907,14 @@ void P1AlgorithmBlock::setAlgorithm(int algorithm)
     repaint();
 }
 
+void P1AlgorithmBlock::setRingMask(uint8_t mask)
+{
+    if (ringMask_ == mask)
+        return;
+    ringMask_ = mask;
+    repaint();
+}
+
 void P1AlgorithmBlock::paint(juce::Graphics& g)
 {
     const int textTop = (getHeight() - 50) / 2;
@@ -1925,7 +1933,7 @@ void P1AlgorithmBlock::paint(juce::Graphics& g)
     drawAlgorithmGraph(g, juce::Rectangle<float>(78.0f, 0.0f,
                                                  static_cast<float>(getWidth() - 78),
                                                  static_cast<float>(getHeight())),
-                       algorithm_);
+                       algorithm_, ringMask_);
 }
 
 void P1AlgorithmBlock::mouseUp(const juce::MouseEvent& event)
@@ -2061,7 +2069,8 @@ void P1Dialog::mouseUp(const juce::MouseEvent& event)
     }
 }
 
-void drawAlgorithmGraph(juce::Graphics& g, juce::Rectangle<float> area, int algorithm)
+void drawAlgorithmGraph(juce::Graphics& g, juce::Rectangle<float> area, int algorithm,
+                        uint8_t ringMask)
 {
     struct Layout {
         float x[4];
@@ -2084,6 +2093,28 @@ void drawAlgorithmGraph(juce::Graphics& g, juce::Rectangle<float> area, int algo
     const float opw = 36.0f;
     const float oph = 18.0f;
     const auto& layout = layouts[juce::jlimit(0, 7, algorithm)];
+    struct RingBox {
+        float cx = 0.0f;
+        float y = 0.0f;
+        int a = 0;
+        int b = 0;
+    };
+    bool ringed[4] = {false, false, false, false};
+    RingBox rings[3] = {};
+    int ringCount = 0;
+    const int pairCount = juce::jmax(0, layout.carCount - 1);
+    for (int i = 0; i < pairCount; ++i) {
+        if ((ringMask & (1u << i)) == 0)
+            continue;
+        const int a = layout.cars[i];
+        const int b = layout.cars[i + 1];
+        rings[ringCount] = {(layout.x[a] + layout.x[b]) * 0.5f + opw * 0.5f,
+                            juce::jmax(layout.y[a], layout.y[b]) + oph + 6.0f,
+                            a, b};
+        ringed[a] = true;
+        ringed[b] = true;
+        ++ringCount;
+    }
     float minX = 1e9f, maxX = -1e9f, minY = 1e9f, maxY = -1e9f;
     for (int i = 0; i < 4; ++i) {
         const float x = layout.x[i];
@@ -2093,9 +2124,14 @@ void drawAlgorithmGraph(juce::Graphics& g, juce::Rectangle<float> area, int algo
         minY = juce::jmin(minY, y);
         maxY = juce::jmax(maxY, y + oph);
         for (int c = 0; c < layout.carCount; ++c) {
-            if (layout.cars[c] == i)
+            if (layout.cars[c] == i && !ringed[i])
                 maxY = juce::jmax(maxY, y + oph + 13.0f);
         }
+    }
+    for (int r = 0; r < ringCount; ++r) {
+        minX = juce::jmin(minX, rings[r].cx - 10.0f);
+        maxX = juce::jmax(maxX, rings[r].cx + 10.0f);
+        maxY = juce::jmax(maxY, rings[r].y + 26.0f);
     }
     const float scale = juce::jmin(area.getWidth() / (maxX - minX),
                                    area.getHeight() / (maxY - minY));
@@ -2139,7 +2175,7 @@ void drawAlgorithmGraph(juce::Graphics& g, juce::Rectangle<float> area, int algo
         g.setColour(colour(tokens::bg));
         g.drawText("op" + juce::String(i + 1), rect,
                    juce::Justification::centred, false);
-        if (carrier) {
+        if (carrier && !ringed[i]) {
             const auto start = point(x + opw * 0.5f, y + oph + 1.0f);
             const auto end = point(x + opw * 0.5f, y + oph + 12.0f);
             g.setColour(colour(tokens::purple));
@@ -2149,6 +2185,41 @@ void drawAlgorithmGraph(juce::Graphics& g, juce::Rectangle<float> area, int algo
                               end + juce::Point<float>(3.2f * scale, -4.0f * scale));
             g.fillPath(arrow);
         }
+    }
+
+    auto arrow = [&g, scale](juce::Point<float> from, juce::Point<float> to,
+                             juce::Colour c, float width) {
+        g.setColour(c);
+        g.drawLine({from, to}, width);
+        const auto angle = std::atan2(to.y - from.y, to.x - from.x);
+        const auto left = to - juce::Point<float>(std::cos(angle - 0.45f),
+                                                  std::sin(angle - 0.45f)) *
+                                  5.0f * scale;
+        const auto right = to - juce::Point<float>(std::cos(angle + 0.45f),
+                                                   std::sin(angle + 0.45f)) *
+                                   5.0f * scale;
+        juce::Path head;
+        head.addTriangle(to, left, right);
+        g.fillPath(head);
+    };
+    for (int r = 0; r < ringCount; ++r) {
+        const auto& ring = rings[r];
+        const auto top = point(ring.cx - 5.0f, ring.y);
+        const auto topB = point(ring.cx + 5.0f, ring.y);
+        arrow(point(layout.x[ring.a] + opw * 0.5f, layout.y[ring.a] + oph), top,
+              colour(0xff666666), 1.2f * scale);
+        arrow(point(layout.x[ring.b] + opw * 0.5f, layout.y[ring.b] + oph), topB,
+              colour(0xff666666), 1.2f * scale);
+        const auto rect = juce::Rectangle<float>(
+            originX + (ring.cx - 10.0f) * scale, originY + ring.y * scale,
+            20.0f * scale, 14.0f * scale);
+        g.setColour(colour(tokens::lineStrong));
+        g.drawRect(rect, 1.0f);
+        g.setFont(uiFont(9.0f * scale));
+        g.setColour(colour(tokens::pink));
+        g.drawText("R", rect, juce::Justification::centred, false);
+        arrow(point(ring.cx, ring.y + 14.0f), point(ring.cx, ring.y + 26.0f),
+              colour(tokens::purple), 1.6f * scale);
     }
 }
 
