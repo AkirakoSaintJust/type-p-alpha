@@ -174,3 +174,20 @@ jobs:
           docker run --rm -v "$PWD:/work" -w /work type-p-alpha-build:ci sh -c '
             ./build/linux-arm64/plugin/phase_map | tail -4 &&
             ./build/linux-arm64/plugin/spectral_bench | tail -6'
+      - name: Build and bench the native-CPU arm64 engine
+        run: |
+          docker run --rm -v "$PWD:/work" -w /work type-p-alpha-build:ci sh -c '
+            cmake -S . -B build/linux-arm64-native -G Ninja -DCMAKE_BUILD_TYPE=Release \
+              -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ \
+              -DCMAKE_EXE_LINKER_FLAGS=-fuse-ld=lld \
+              -DCMAKE_SHARED_LINKER_FLAGS=-fuse-ld=lld \
+              -DCMAKE_MODULE_LINKER_FLAGS=-fuse-ld=lld \
+              -DCMAKE_C_FLAGS=-mcpu=native \
+              -DCMAKE_CXX_FLAGS=-mcpu=native \
+              -DFETCHCONTENT_SOURCE_DIR_JUCE=/work/build/linux-arm64/_deps/juce-src \
+              -DFETCHCONTENT_SOURCE_DIR_CLAP-JUCE-EXTENSIONS=/work/build/linux-arm64/_deps/clap-juce-extensions-src \
+              -DFETCHCONTENT_FULLY_DISCONNECTED=ON &&
+            cmake --build build/linux-arm64-native --target phase_map spectral_bench engine_parity -j 4 &&
+            ./build/linux-arm64-native/plugin/engine_parity >/dev/null &&
+            ./build/linux-arm64-native/plugin/phase_map | tail -4 &&
+            ./build/linux-arm64-native/plugin/spectral_bench | tail -6'
