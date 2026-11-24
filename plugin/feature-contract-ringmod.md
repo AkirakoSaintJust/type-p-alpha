@@ -48,7 +48,8 @@ the plugin spec and at the route node in the engine.
 The part record grows from 981 to 991 values. A version 16 record gains the ten
 defaults at the end, and a record from before the phase block gains the phase and
 ringmod blocks in order. The macro block, the multi record and the project state
-keep their sizes.
+keep their sizes. A library saved before the macro block also loads, because the
+multi record check accepts the old record and the macro values start empty.
 
 ## Laws
 
@@ -79,14 +80,16 @@ keep their sizes.
 The card fills the eighth part-params cell. Each pair row holds a 112 by 56 graph,
 an `on` toggle and a 42 px level knob. The graph is two pink operator boxes with
 their numbers, arrows into an outlined box labelled `R`, and a purple arrow out. The
-level knob dims to 0.35 while the pair is off. The original row is an `original`
+`R` is set in Zen Dots, the wordmark face. The level knob dims to 0.35 while the
+pair is off. The original row is an `original`
 caption and one `opN` toggle per current carrier; the track shows the state. The row
 is active while any active pair is on, and dims to 0.35 with every active pair off.
 The card follows the algorithm on the next tick; a hidden pair keeps its parameter
 values and returns when its algorithm comes back. One carrier shows `no ringmod`
 and no controls. The header algorithm graph carries the R too: an active pair's two
 direct arrows become the R inputs and one purple output, and the header reads the
-active part's pair states on its tick, so the indicator follows the tab's part.
+active part's pair states on its tick, so the indicator follows the tab's part. The
+header `R` is in the same Zen Dots face, scaled for its 20 by 14 box.
 
 ## Evidence
 
@@ -100,12 +103,15 @@ active part's pair states on its tick, so the indicator follows the tab's part.
 - `preset_smoke` keeps `the part record has the ringmod block` at 991 and the old
   version 16 record expands with the ring defaults; the part record round-trips. The
   direct part bank import and the library loader both load a version 16 bank and
-  gain the ring defaults.
+  gain the ring defaults. A library with a version 16 part bank and a pre-macro
+  multi bank loads, keeps both parts, and gains the ring defaults; that shape matches
+  the shipped library. The import path reports a file it cannot read, so a rejected
+  library no longer does nothing in silence.
 - The snapshots add `editor-part-params-ringmod.png` with four carriers, three pairs,
   the first pair on and the header's R on that pair, and
   `editor-part-params-ringmod-empty.png` with one carrier and `no ringmod`. The three
-  existing part-params snapshots change because the card is in the grid and the
-  original row is dimmed while the ring is off.
+  existing part-params snapshots change because the card is in the grid, the original
+  row is dimmed while the ring is off, and the pair graph's R is in Zen Dots.
 - The full Linux suite is 18 of 18, and the Windows build passes its 17 tests.
   `pluginval` 1.0.4 at strictness level 5 with the GUI tests skipped reports
   `SUCCESS` on the VST3. The release package

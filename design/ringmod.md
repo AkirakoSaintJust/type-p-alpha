@@ -70,9 +70,10 @@ at the end. A version 16 part record ends at the phase block, which means the lo
 can append the ten ringmod defaults after it without touching any existing value,
 whilst a record from before the phase block gains both blocks in order. The
 library loader and the part bank import run the same migration, so an older shared
-part bank is not rejected on import. The macro block, the multi record and the
-project state keep their sizes; a missing new parameter in a project state takes its
-default.
+part bank is not rejected on import. A library written before the macro block still
+loads, because the multi record check accepts the old record and the macro values
+start empty. The macro block and the project state keep their sizes; a missing new
+parameter in a project state takes its default.
 
 ## The card
 
@@ -82,10 +83,11 @@ pair rows and an original-output row.
 
 A pair row holds a small graph, an `on` toggle and a level knob. The graph is two
 pink operator boxes with their operator numbers, arrows into a non-solid box
-labelled `R`, and a purple arrow out of the R. The operator numbers are the
-current carriers, so the graph changes with the algorithm. The toggle is green
-when the pair is on. The level knob is a 42 px dial with the raw 0 to 99 value,
-dimmed to 0.35 while the pair is off.
+labelled `R`, and a purple arrow out of the R. The `R` is set in Zen Dots, the same
+typeface as the wordmark, so the dot matrix carries the symbol. The operator numbers
+are the current carriers, so the graph changes with the algorithm. The toggle is
+green when the pair is on. The level knob is a 42 px dial with the raw 0 to 99
+value, dimmed to 0.35 while the pair is off.
 
 The original-output row is an `original` caption and one toggle for each current
 carrier, labelled `op1` to `op4`. The toggle shows the label and a track, and the
@@ -109,7 +111,8 @@ The header algorithm graph carries the same R. While a pair is on, the pair's tw
 carrier arrows become the R input arrows and one purple output; the other carriers
 keep their direct arrows. The header reads the active part's pair states each tick,
 so the ring is visible from every tab. With every active pair off the header draws
-the plain algorithm.
+the plain algorithm. The `R` takes the same Zen Dots face as the card, scaled to the
+graph's 20 by 14 box.
 
 ## Defaults and bypass
 
