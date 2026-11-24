@@ -212,8 +212,12 @@ public:
     void paint(juce::Graphics& g) override;
 
 private:
+    static constexpr int kWindow = 512;
+    static constexpr int kBars = 22;
     juce::dsp::FFT fft_{9};
     std::array<float, 1024> fftData_{};
+    std::array<float, kWindow> window_{};
+    std::array<int, kBars> barBin_{};
     std::vector<float> samples_;
 };
 

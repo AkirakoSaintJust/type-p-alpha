@@ -901,6 +901,7 @@ void P1Scope::paint(juce::Graphics& g)
         path.startNewSubPath(area.getX(), area.getCentreY());
         path.lineTo(area.getRight(), area.getCentreY());
     } else {
+        path.preallocateSpace(n * 3);
         for (int i = 0; i < n; ++i) {
             const float x = area.getX() +
                             area.getWidth() * static_cast<float>(i) /
@@ -921,6 +922,16 @@ void P1Scope::paint(juce::Graphics& g)
 P1Spectro::P1Spectro()
 {
     setInterceptsMouseClicks(false, false);
+    for (int i = 0; i < kWindow; ++i) {
+        window_[static_cast<size_t>(i)] =
+            0.5f - 0.5f * std::cos(juce::MathConstants<float>::twoPi *
+                                  static_cast<float>(i) / 511.0f);
+    }
+    for (int i = 0; i < kBars; ++i) {
+        barBin_[static_cast<size_t>(i)] =
+            juce::jlimit(1, 220, 2 + static_cast<int>(
+                std::pow(static_cast<double>(i) / kBars, 2.0) * 210.0));
+    }
 }
 
 void P1Spectro::setSamples(const float* samples, int count)
@@ -933,18 +944,14 @@ void P1Spectro::paint(juce::Graphics& g)
 {
     g.fillAll(colour(tokens::bg));
     fftData_.fill(0.0f);
-    const int n = juce::jmin(512, static_cast<int>(samples_.size()));
-    for (int i = 0; i < n; ++i) {
-        const float window = 0.5f - 0.5f * std::cos(
-            juce::MathConstants<float>::twoPi * static_cast<float>(i) / 511.0f);
-        fftData_[static_cast<size_t>(i)] = samples_[static_cast<size_t>(i)] * window;
-    }
+    const int n = juce::jmin(kWindow, static_cast<int>(samples_.size()));
+    for (int i = 0; i < n; ++i)
+        fftData_[static_cast<size_t>(i)] =
+            samples_[static_cast<size_t>(i)] * window_[static_cast<size_t>(i)];
     fft_.performFrequencyOnlyForwardTransform(fftData_.data());
-    const int bars = 22;
-    const float barWidth = static_cast<float>(getWidth()) / bars;
-    for (int i = 0; i < bars; ++i) {
-        const int bin = juce::jlimit(1, 220, 2 + static_cast<int>(
-            std::pow(static_cast<double>(i) / bars, 2.0) * 210.0));
+    const float barWidth = static_cast<float>(getWidth()) / kBars;
+    for (int i = 0; i < kBars; ++i) {
+        const int bin = barBin_[static_cast<size_t>(i)];
         float magnitude = 0.0f;
         for (int k = bin; k < juce::jmin(256, bin + 3); ++k)
             magnitude = juce::jmax(magnitude, fftData_[static_cast<size_t>(k)]);
