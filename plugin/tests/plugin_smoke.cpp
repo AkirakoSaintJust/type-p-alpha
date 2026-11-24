@@ -501,7 +501,7 @@ int main()
         /* Ring modulation is in the carrier sum, so the default pair state
          * matches the reference and each stage is checked on its own. */
         const auto renderRing = [&](int algorithm, int on, int level,
-                                    int car2) {
+                                    int car2, int car4 = 1, int blocks = 1) {
             auto instance = std::make_unique<TypePAlphaAudioProcessor>();
             instance->setRateAndBufferSizeDetails(48000.0, kFrames);
             instance->prepareToPlay(48000.0, kFrames);
@@ -509,12 +509,18 @@ int main()
             set(*instance, "ring1_on.p0", on);
             set(*instance, "ring1_level.p0", level);
             set(*instance, "car2_out.p0", car2);
+            set(*instance, "car4_out.p0", car4);
             juce::AudioBuffer<float> out(2, kFrames);
-            juce::MidiBuffer events;
-            events.addEvent(
-                juce::MidiMessage::noteOn(1, 60, static_cast<juce::uint8>(100)),
-                0);
-            instance->processBlock(out, events);
+            for (int block = 0; block < blocks; ++block) {
+                out.clear();
+                juce::MidiBuffer events;
+                if (block == 0) {
+                    events.addEvent(juce::MidiMessage::noteOn(
+                                        1, 60, static_cast<juce::uint8>(100)),
+                                    0);
+                }
+                instance->processBlock(out, events);
+            }
             return out;
         };
         std::array<int32_t, kFrames * 2> reference0{};
@@ -527,14 +533,32 @@ int main()
               "a ring pair changes the render");
         check(matches(renderRing(4, 1, 0, 1), reference, kFrames),
               "a ring level of 0 adds nothing");
-        check(!matches(renderRing(4, 0, 99, 0), reference, kFrames),
-              "a direct carrier gate removes the carrier");
+        check(matches(renderRing(4, 0, 99, 0), reference, kFrames),
+              "the direct gates are ignored while the ring is off");
+        check(!matches(renderRing(4, 1, 99, 0), reference, kFrames),
+              "a direct gate applies while the ring is on");
         check(matches(renderRing(0, 1, 99, 1), reference0.data(), kFrames),
               "one carrier has no ring modulation");
         check(matches(renderRing(7, 0, 99, 1), reference7.data(), kFrames),
               "four carriers with the ring off match");
         check(!matches(renderRing(7, 1, 99, 1), reference7.data(), kFrames),
               "four carriers ring the first pair");
+        {
+            const auto rms = [](const juce::AudioBuffer<float>& buffer) {
+                double sum = 0.0;
+                for (int i = 0; i < buffer.getNumSamples(); ++i)
+                    sum += static_cast<double>(buffer.getSample(0, i)) *
+                           buffer.getSample(0, i);
+                return std::sqrt(sum / buffer.getNumSamples());
+            };
+            const auto ringOnly = renderRing(4, 1, 99, 0, 0, 8);
+            const auto directPair = renderRing(4, 0, 99, 1, 1, 8);
+            const double ringLevel = rms(ringOnly);
+            const double directLevel = rms(directPair);
+            check(directLevel > 1.0e-6 && ringLevel > directLevel * 0.6 &&
+                      ringLevel < directLevel * 1.6,
+                  "the ring level 99 is in the ballpark of the direct pair");
+        }
     }
 
     juce::MemoryBlock state;

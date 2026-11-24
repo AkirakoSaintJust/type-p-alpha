@@ -620,6 +620,16 @@ public:
             level.setEnabled(on);
             level.setAlpha(on ? 1.0f : 0.35f);
         }
+        bool anyOn = false;
+        const int pairs = juce::jmax(0, carrierCount_ - 1);
+        for (int i = 0; i < pairs; ++i)
+            anyOn = anyOn || std::lround(
+                                   getParam(editor_, params::ringOn(i, part_))) != 0;
+        original_.setAlpha(anyOn ? 1.0f : 0.35f);
+        for (auto& toggle : out_) {
+            toggle->setEnabled(anyOn);
+            toggle->setAlpha(anyOn ? 1.0f : 0.35f);
+        }
     }
 
 private:

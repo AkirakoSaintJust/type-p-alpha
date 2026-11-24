@@ -19,7 +19,8 @@
   the pair level and adds it to the direct carrier sum. The part filter and its
   envelope shape both. A carrier in two pairs is still heard directly once. A pair at
   level 0 adds nothing even while it is on. A one-carrier algorithm has no pair and
-  no ringmod controls.
+  no ringmod controls. The direct gates apply only while an active pair is on; when
+  every active pair is off, the part is exactly the pre-feature carrier sum.
 - **Failure mode:** a ring pair that adds nothing while on, a carrier that is heard
   twice because it feeds two pairs, a card that does not follow the algorithm, or an
   old part record that loses values when the ringmod block is appended.
@@ -53,11 +54,15 @@ keep their sizes.
   and paired consecutively: c1 with c2, c2 with c3, c3 with c4. Two carriers have one
   pair, three have two, four have three, and one has none.
 - A pair product is `p1_q15_mul(carrierA, carrierB)`, scaled by
-  `p1_level_gain[level]` and gated by the pair on/off. The level law is the project's
-  0.75 dB per step law: 0 is silence and 99 is unity.
-- The direct sum is `sum(out_i ? carrier_i : 0)`. A carrier's direct term appears
-  once, whatever the pair count. The one-carrier algorithms keep their single direct
-  term and ignore the direct gate, because the card has no control for it.
+  `p1_level_gain[level]` and by a fixed 64 times makeup, and gated by the pair
+  on/off. The raw product is the square of the already attenuated carriers, so the
+  36 dB makeup puts a full pair at the default operator levels at the direct pair's
+  RMS. The level law remains 0.75 dB per step: 0 is silence and 99 is the compensated
+  unity.
+- The direct sum is `sum(out_i ? carrier_i : 0)` while at least one active pair is
+  on. When every active pair is off, the gates are ignored. A carrier's direct term
+  appears once, whatever the pair count. The one-carrier algorithms keep their single
+  direct term and ignore the direct gate, because the card has no control for it.
 - The route node produces the carrier sum for the part filter, so the ring products
   and the direct carriers share the filter, the filter envelope and the amplitude
   envelope.
@@ -73,17 +78,21 @@ The card fills the eighth part-params cell. Each pair row holds a 112 by 56 grap
 an `on` toggle and a 42 px level knob. The graph is two pink operator boxes with
 their numbers, arrows into an outlined box labelled `R`, and a purple arrow out. The
 level knob dims to 0.35 while the pair is off. The original row is an `original`
-caption and one `opN` toggle per current carrier; the track shows the state. The
-card follows the algorithm on the next tick; a hidden pair keeps its parameter
+caption and one `opN` toggle per current carrier; the track shows the state. The row
+is active while any active pair is on, and dims to 0.35 with every active pair off.
+The card follows the algorithm on the next tick; a hidden pair keeps its parameter
 values and returns when its algorithm comes back. One carrier shows `no ringmod`
 and no controls.
 
 ## Evidence
 
 - `plugin_smoke` passes `the ring off leaves the render bit-exact`, `a ring pair
-  changes the render`, `a ring level of 0 adds nothing`, `a direct carrier gate
-  removes the carrier`, `one carrier has no ring modulation`, `four carriers with the
-  ring off match` and `four carriers ring the first pair`.
+  changes the render`, `a ring level of 0 adds nothing`, `the direct gates are
+  ignored while the ring is off`, `a direct gate applies while the ring is on`, `one
+  carrier has no ring modulation`, `four carriers with the ring off match`, `four
+  carriers ring the first pair` and `the ring level 99 is in the ballpark of the
+  direct pair`. The last one compares the steady RMS of the ring-only output with the
+  direct pair and expects the ring within 0.6 to 1.6 of it.
 - `preset_smoke` keeps `the part record has the ringmod block` at 991 and the old
   version 16 record expands with the ring defaults; the part record round-trips.
 - The snapshots add `editor-part-params-ringmod.png` with four carriers, three pairs
@@ -93,14 +102,14 @@ and no controls.
 - The full Linux suite is 18 of 18, and the Windows build passes its 17 tests.
   `pluginval` 1.0.4 at strictness level 5 with the GUI tests skipped reports
   `SUCCESS` on the VST3. The release package
-  `Type-P.alpha-windows-x86_64.zip` (20,206,945 bytes, SHA-256
-  `E2A2E618E09904B024942B648AACD4827E73F3A544345C6B9372245ACCB41540`) carries the
-  VST3 (15,815,168 bytes,
-  `763843B31CF02026A91417C9785C24423C00107B1DEF45CB97B38E33CC7F8955`), the CLAP
-  (15,794,688 bytes,
-  `3BA2EFE682872CED2A91DF123DA034C9D61589587D5532380518F67C92FD70CB`), the
-  standalone (16,165,376 bytes,
-  `24D303B3E1A0A85CF5E67C25D848BA65FFF50767CCA0C48D1971D530C21942D1`) and the
+  `Type-P.alpha-windows-x86_64.zip` (20,205,575 bytes, SHA-256
+  `66E6306589800A84A2D833ECF3F2DE290CF54C724CD11581762265E7E543C6DF`) carries the
+  VST3 (15,816,704 bytes,
+  `5A088B2C6238179BAD363C595D880365DF1AA15797DC41D24BB1AC0FB68F4AAD`), the CLAP
+  (15,795,712 bytes,
+  `BC36CF9A03D54F99E3CCBEE8A52CCF7CECBE8E338EC83AED721114E888AA6938`), the
+  standalone (16,166,912 bytes,
+  `F02D009800473E01791BB56C8CAE490704B569D4CE537F663C35B690A4EC5D6D`) and the
   licences. The CLAP validator runs in the macOS CI.
 
 ## Limits
@@ -113,5 +122,6 @@ and no controls.
   to the macro table would add rows and part-record references.
 - The one-carrier algorithms ignore `carN_out`, because the card has no control for
   the single carrier. The value stays in the record for a later algorithm.
-- The level law is the same 0.75 dB per step law as the operator levels, so 99 is
-  the table's 32767 rather than a mathematically exact 1.0.
+- The level law is the same 0.75 dB per step law as the operator levels, with the 36
+  dB makeup. The 99 setting follows the operator levels: the makeup is tuned at the
+  default levels, so a much quieter operator pair gives a quieter ring at 99.

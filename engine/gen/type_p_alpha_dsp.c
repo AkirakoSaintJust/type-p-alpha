@@ -11173,9 +11173,13 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                The carrier sum carries the ring modulation. The carriers are the operators the
                algorithm marks as carriers, in operator order. The consecutive carriers are
                paired (c1 x c2, c2 x c3, c3 x c4), each product is scaled by its pair level and
-               gated by its pair on/off, and the products join the direct carrier sum. Each
-               direct carrier is added at most once, whatever the number of pairs that name it.
-               A one-carrier routing keeps its single direct term and has no ring modulation. */
+               gated by its pair on/off, and the products join the direct carrier sum. A pair
+               product is multiplied by 64 (36 dB) so a pair at the default operator levels has the direct
+               pair RMS at level 99; the raw product is far below because it is the square of
+               the already attenuated carriers. The direct gates apply only while
+               at least one active pair is on, so the feature off is exactly the pre-feature
+               carrier sum. A one-carrier routing keeps its single direct term and has no ring
+               modulation. */
             uint32_t alg = algo_alg_x[v] > 7u ? 7u : algo_alg_x[v];
             const int32_t ra = p1_q15_mul(d1_out_x, 32767);
             const int32_t rb = p1_q15_mul(d2_out_x, 32767);
@@ -11216,48 +11220,59 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                 route_mod3_x = 0;
                 route_mod4_x = rc * 2;
                 if (route_ring1_on[voice_part[v]])
-                    rm1 = p1_q15_mul(p1_q15_mul(d2_out_x, d4_out_x), lv1);
-                route_car_x = (route_car2_out[voice_part[v]] ? rb : 0) +
-                             (route_car4_out[voice_part[v]] ? rd : 0) + rm1;
+                    rm1 = p1_q15_mul(p1_q15_mul(d2_out_x, d4_out_x), lv1) << 6;
+                route_car_x = ((!route_ring1_on[voice_part[v]] || route_car2_out[voice_part[v]]) ? rb : 0) +
+                             ((!route_ring1_on[voice_part[v]] || route_car4_out[voice_part[v]]) ? rd : 0) + rm1;
                 break;
             case 5u: /* (O1 -> O2) + (O1 -> O3) + (O1 -> O4) -> out (O2 + O3 + O4) */
                 route_mod2_x = ra * 2;
                 route_mod3_x = ra * 2;
                 route_mod4_x = ra * 2;
                 if (route_ring1_on[voice_part[v]])
-                    rm1 = p1_q15_mul(p1_q15_mul(d2_out_x, d3_out_x), lv1);
+                    rm1 = p1_q15_mul(p1_q15_mul(d2_out_x, d3_out_x), lv1) << 6;
                 if (route_ring2_on[voice_part[v]])
-                    rm2 = p1_q15_mul(p1_q15_mul(d3_out_x, d4_out_x), lv2);
-                route_car_x = (route_car2_out[voice_part[v]] ? rb : 0) +
-                             (route_car3_out[voice_part[v]] ? rc : 0) +
-                             (route_car4_out[voice_part[v]] ? rd : 0) + rm1 + rm2;
+                    rm2 = p1_q15_mul(p1_q15_mul(d3_out_x, d4_out_x), lv2) << 6;
+                route_car_x = ((!route_ring1_on[voice_part[v]] && !route_ring2_on[voice_part[v]] ||
+                               route_car2_out[voice_part[v]]) ? rb : 0) +
+                             ((!route_ring1_on[voice_part[v]] && !route_ring2_on[voice_part[v]] ||
+                               route_car3_out[voice_part[v]]) ? rc : 0) +
+                             ((!route_ring1_on[voice_part[v]] && !route_ring2_on[voice_part[v]] ||
+                               route_car4_out[voice_part[v]]) ? rd : 0) + rm1 + rm2;
                 break;
             case 6u: /* (O1 -> O2) + O3 + O4 -> out (O2 + O3 + O4) */
                 route_mod2_x = ra * 2;
                 route_mod3_x = 0;
                 route_mod4_x = 0;
                 if (route_ring1_on[voice_part[v]])
-                    rm1 = p1_q15_mul(p1_q15_mul(d2_out_x, d3_out_x), lv1);
+                    rm1 = p1_q15_mul(p1_q15_mul(d2_out_x, d3_out_x), lv1) << 6;
                 if (route_ring2_on[voice_part[v]])
-                    rm2 = p1_q15_mul(p1_q15_mul(d3_out_x, d4_out_x), lv2);
-                route_car_x = (route_car2_out[voice_part[v]] ? rb : 0) +
-                             (route_car3_out[voice_part[v]] ? rc : 0) +
-                             (route_car4_out[voice_part[v]] ? rd : 0) + rm1 + rm2;
+                    rm2 = p1_q15_mul(p1_q15_mul(d3_out_x, d4_out_x), lv2) << 6;
+                route_car_x = ((!route_ring1_on[voice_part[v]] && !route_ring2_on[voice_part[v]] ||
+                               route_car2_out[voice_part[v]]) ? rb : 0) +
+                             ((!route_ring1_on[voice_part[v]] && !route_ring2_on[voice_part[v]] ||
+                               route_car3_out[voice_part[v]]) ? rc : 0) +
+                             ((!route_ring1_on[voice_part[v]] && !route_ring2_on[voice_part[v]] ||
+                               route_car4_out[voice_part[v]]) ? rd : 0) + rm1 + rm2;
                 break;
             default: /* 7 (alg is clamped 0..7): O1 + O2 + O3 + O4 -> out */
                 route_mod2_x = 0;
                 route_mod3_x = 0;
                 route_mod4_x = 0;
                 if (route_ring1_on[voice_part[v]])
-                    rm1 = p1_q15_mul(p1_q15_mul(d1_out_x, d2_out_x), lv1);
+                    rm1 = p1_q15_mul(p1_q15_mul(d1_out_x, d2_out_x), lv1) << 6;
                 if (route_ring2_on[voice_part[v]])
-                    rm2 = p1_q15_mul(p1_q15_mul(d2_out_x, d3_out_x), lv2);
+                    rm2 = p1_q15_mul(p1_q15_mul(d2_out_x, d3_out_x), lv2) << 6;
                 if (route_ring3_on[voice_part[v]])
-                    rm3 = p1_q15_mul(p1_q15_mul(d3_out_x, d4_out_x), lv3);
-                route_car_x = (route_car1_out[voice_part[v]] ? ra : 0) +
-                             (route_car2_out[voice_part[v]] ? rb : 0) +
-                             (route_car3_out[voice_part[v]] ? rc : 0) +
-                             (route_car4_out[voice_part[v]] ? rd : 0) + rm1 + rm2 + rm3;
+                    rm3 = p1_q15_mul(p1_q15_mul(d3_out_x, d4_out_x), lv3) << 6;
+                route_car_x = ((!route_ring1_on[voice_part[v]] && !route_ring2_on[voice_part[v]] &&
+                               !route_ring3_on[voice_part[v]] || route_car1_out[voice_part[v]]) ? ra : 0) +
+                             ((!route_ring1_on[voice_part[v]] && !route_ring2_on[voice_part[v]] &&
+                               !route_ring3_on[voice_part[v]] || route_car2_out[voice_part[v]]) ? rb : 0) +
+                             ((!route_ring1_on[voice_part[v]] && !route_ring2_on[voice_part[v]] &&
+                               !route_ring3_on[voice_part[v]] || route_car3_out[voice_part[v]]) ? rc : 0) +
+                             ((!route_ring1_on[voice_part[v]] && !route_ring2_on[voice_part[v]] &&
+                               !route_ring3_on[voice_part[v]] || route_car4_out[voice_part[v]]) ? rd : 0) +
+                             rm1 + rm2 + rm3;
                 break;
             }
             /* A 4-pole resonant lowpass ladder in the spirit of the Ripples / Liquid Filter
