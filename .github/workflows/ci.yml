@@ -150,22 +150,25 @@ jobs:
             "build/plugin/juce/type_p_alpha_artefacts/Release/CLAP/Type P.alpha.clap"
 
   arm64:
-    runs-on: macos-15
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v7
-      - name: Configure arm64
-        run: >
-          cmake -S . -B build-arm64 -G Ninja -DCMAKE_BUILD_TYPE=Release
-          -DCMAKE_OSX_ARCHITECTURES=arm64
-          -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0
-      - name: Build
-        run: cmake --build build-arm64
-      - name: Test
-        run: >
-          ctest --test-dir build-arm64 --output-on-failure
-          -E "linux_daws|plugin_editor_snapshot|plugin_editor_snapshot_diff"
+      - name: Build the arm64 Debian trixie image
+        run: docker build -f docker/Dockerfile -t type-p-alpha-build:ci .
+      - name: Configure, build and test
+        run: |
+          docker run --rm -v "$PWD:/work" -w /work type-p-alpha-build:ci sh -c '
+            cmake -S . -B build/linux-arm64 -G Ninja -DCMAKE_BUILD_TYPE=Release \
+              -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ \
+              -DCMAKE_EXE_LINKER_FLAGS=-fuse-ld=lld \
+              -DCMAKE_SHARED_LINKER_FLAGS=-fuse-ld=lld \
+              -DCMAKE_MODULE_LINKER_FLAGS=-fuse-ld=lld &&
+            cmake --build build/linux-arm64 &&
+            ctest --test-dir build/linux-arm64 --output-on-failure \
+              -E "linux_daws|plugin_editor_snapshot|plugin_editor_snapshot_diff"'
       - name: Bench the arm64 engine
         run: |
-          ./build-arm64/plugin/phase_map | tail -4
-          ./build-arm64/plugin/spectral_bench | tail -6
+          docker run --rm -v "$PWD:/work" -w /work type-p-alpha-build:ci sh -c '
+            ./build/linux-arm64/plugin/phase_map | tail -4 &&
+            ./build/linux-arm64/plugin/spectral_bench | tail -6'
