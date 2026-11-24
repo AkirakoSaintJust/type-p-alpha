@@ -191,21 +191,23 @@ jobs:
           rm -rf "$dist"
           mkdir -p "$dist"
           cp -R "$x/VST3/Type P.alpha.vst3" "$dist/"
-          cp "$x/CLAP/Type P.alpha.clap" "$dist/"
+          cp -R "$x/CLAP/Type P.alpha.clap" "$dist/"
           cp -R "$x/Standalone/Type P.alpha.app" "$dist/"
           lipo -create \
             "$x/VST3/Type P.alpha.vst3/Contents/MacOS/Type P.alpha" \
             "$a/VST3/Type P.alpha.vst3/Contents/MacOS/Type P.alpha" \
             -output "$dist/Type P.alpha.vst3/Contents/MacOS/Type P.alpha"
-          lipo -create "$x/CLAP/Type P.alpha.clap" "$a/CLAP/Type P.alpha.clap" \
-            -output "$dist/Type P.alpha.clap"
+          lipo -create \
+            "$x/CLAP/Type P.alpha.clap/Contents/MacOS/Type P.alpha" \
+            "$a/CLAP/Type P.alpha.clap/Contents/MacOS/Type P.alpha" \
+            -output "$dist/Type P.alpha.clap/Contents/MacOS/Type P.alpha"
           lipo -create \
             "$x/Standalone/Type P.alpha.app/Contents/MacOS/Type P.alpha" \
             "$a/Standalone/Type P.alpha.app/Contents/MacOS/Type P.alpha" \
             -output "$dist/Type P.alpha.app/Contents/MacOS/Type P.alpha"
           for f in \
             "$dist/Type P.alpha.vst3/Contents/MacOS/Type P.alpha" \
-            "$dist/Type P.alpha.clap" \
+            "$dist/Type P.alpha.clap/Contents/MacOS/Type P.alpha" \
             "$dist/Type P.alpha.app/Contents/MacOS/Type P.alpha"; do
             archs=$(lipo -archs "$f")
             echo "$f: $archs"
