@@ -15,14 +15,16 @@
 
 #include "Engine.hpp"
 #include "Params.h"
+#include "PhaseMapLayout.h"
 
 namespace {
 
 constexpr int kVoices = 24;
 constexpr int kTickFrames = 32;
 
-/* The phase_map pool layout, mirrored from the node. */
-constexpr uint32_t kWords = 2560u;
+/* The phase_map pool layout, mirrored from the node. The stride follows the
+ * compiled read table. */
+constexpr uint32_t kWords = p1::phase_map::kWords;
 constexpr uint32_t kNx = 0u;
 constexpr uint32_t kNslope = 33u;
 constexpr uint32_t kNflip = 65u;
@@ -846,7 +848,7 @@ int main()
         check(finite, "the mapped render is finite");
         check(rms(pcm) > 0.0, "the mapped render is not silent");
 
-        auto measure = [](bool worst, bool staticMap) {
+        auto measure = [](bool worst, bool staticMap, int bp = 500) {
             p1::Engine e;
             e.reset();
             base_setup(e);
@@ -855,6 +857,8 @@ int main()
                 char name[64];
                 std::snprintf(name, sizeof(name), "op%d_phase_on.p0", op);
                 set_param(e, name, active ? 1 : 0);
+                std::snprintf(name, sizeof(name), "op%d_phase_bp.p0", op);
+                set_param(e, name, bp);
                 std::snprintf(name, sizeof(name), "op%d_phase_segments.p0", op);
                 set_param(e, name, 32);
                 std::snprintf(name, sizeof(name), "op%d_phase_flip.p0", op);
@@ -898,6 +902,14 @@ int main()
                     base * 1000.0, worst * 1000.0, staticMap * 1000.0, ratio);
         check(ratio > 0.0 && ratio < 6.0,
               "the 1x worst case stays inside the measurement budget");
+
+        /* The breakpoint sweep with the stochastic clocks and modulation off,
+         * so this is the base map character rather than the random texture. */
+        static const int bps[] = {0, 125, 250, 375, 500, 625, 750, 875, 999};
+        for (int value : bps) {
+            const double t = measure(true, true, value);
+            std::printf("phase_map: static bp %d %.3f ms\n", value, t * 1000.0);
+        }
     }
 
     if (failures == 0)
