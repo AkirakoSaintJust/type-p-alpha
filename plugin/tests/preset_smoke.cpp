@@ -383,7 +383,9 @@ int main()
     }
 
     /* A version 16 part record, before the ringmod block. The direct part bank
-     * import and the library loader must both append the ten defaults. */
+     * import and the library loader must both append the ten defaults. The
+     * library also carries a pre-macro multi bank, which is the shape the shipped
+     * library used: version 16 parts with an 80-byte multi record. */
     {
         const uint32_t oldCount = kP1PartParamCount - 10u;
         const auto oldRecord = PP_RECORD(oldCount);
@@ -394,6 +396,13 @@ int main()
         preset_part_pack(
             bank.data() + static_cast<std::size_t>(6u) * oldRecord, "v16 part",
             params.data(), oldCount);
+        setRecordVersion(bank.data() + static_cast<std::size_t>(6u) * oldRecord,
+                         oldCount, 16);
+        preset_part_pack(
+            bank.data() + static_cast<std::size_t>(7u) * oldRecord, "v16 pair",
+            params.data(), oldCount);
+        setRecordVersion(bank.data() + static_cast<std::size_t>(7u) * oldRecord,
+                         oldCount, 16);
         p1::PresetStore imported{kP1PartParamCount, kP1PartCount,
                                  p1::partParamDefaults(), kP1PartCutoffIndex};
         check(imported.loadPartBank(bank.data(), bank.size()),
@@ -407,6 +416,30 @@ int main()
                   grown[oldCount + 9u] == 1,
               "the imported version 16 part gains the ring defaults");
 
+        const auto oldMultiRecord = static_cast<std::size_t>(
+            MP_RECORD_OLD(static_cast<uint32_t>(kP1PartCount)));
+        std::vector<uint8_t> multi(oldMultiRecord * 64u, 0xFF);
+        auto* rawMulti = multi.data() + oldMultiRecord;
+        const auto put32At = [](uint8_t* p, uint32_t value) {
+            p[0] = static_cast<uint8_t>(value & 0xFFu);
+            p[1] = static_cast<uint8_t>((value >> 8) & 0xFFu);
+            p[2] = static_cast<uint8_t>((value >> 16) & 0xFFu);
+            p[3] = static_cast<uint8_t>((value >> 24) & 0xFFu);
+        };
+        rawMulti[0] = 16u;
+        std::memset(rawMulti + 1, 0, PRESET_NAME_LEN);
+        std::memcpy(rawMulti + 1, "old patch", 10);
+        std::size_t rawOff = 1u + PRESET_NAME_LEN;
+        rawMulti[rawOff++] = 6;
+        rawMulti[rawOff++] = 7;
+        for (int field = 0; field < 5; ++field)
+            for (int i = 0; i < kP1PartCount; ++i) {
+                put32At(rawMulti + rawOff, field == 4 ? 127u : 0u);
+                rawOff += 4u;
+            }
+        put32At(rawMulti + rawOff,
+                preset_crc32(rawMulti, static_cast<uint32_t>(rawOff)));
+
         std::vector<uint8_t> library;
         const auto put32 = [&library](uint32_t value) {
             library.push_back(static_cast<uint8_t>(value & 0xFFu));
@@ -419,10 +452,8 @@ int main()
         put32(4);
         put32(static_cast<uint32_t>(bank.size()));
         library.insert(library.end(), bank.begin(), bank.end());
-        const auto multiSize =
-            MP_RECORD(static_cast<uint32_t>(kP1PartCount)) * 64u;
-        put32(static_cast<uint32_t>(multiSize));
-        library.insert(library.end(), multiSize, 0xFF);
+        put32(static_cast<uint32_t>(multi.size()));
+        library.insert(library.end(), multi.begin(), multi.end());
         p1::PresetStore fromLibrary{kP1PartParamCount, kP1PartCount,
                                     p1::partParamDefaults(),
                                     kP1PartCutoffIndex};
@@ -431,6 +462,13 @@ int main()
         check(fromLibrary.partUsed(6) &&
                   fromLibrary.partParams(6)[oldCount + 1u] == 99,
               "the library part gains the ring defaults");
+        p1::PresetStore::Multi oldPatch;
+        check(fromLibrary.loadMulti(1, oldPatch) &&
+                  oldPatch.name == "old patch" &&
+                  oldPatch.partSlot ==
+                      std::vector<uint8_t>{6, 7} &&
+                  oldPatch.macro.empty(),
+              "a pre-macro multi in the same library loads");
     }
 
     /* A version 12 part record, before the pitch and feedback envelopes gained

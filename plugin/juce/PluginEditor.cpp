@@ -1085,6 +1085,13 @@ void PluginEditor::importLibrary()
                     static_cast<const uint8_t*>(data.getData()), data.getSize())) {
                 reportLibrarySave(processor_.saveLibrary());
                 refreshNames();
+            } else {
+                juce::AlertWindow::showMessageBoxAsync(
+                    juce::MessageBoxIconType::WarningIcon, "import library",
+                    "The file could not be read as a Type P.alpha library, so "
+                    "nothing was changed. " +
+                        file.getFileName() + " is at " +
+                        file.getFullPathName() + ".");
             }
         });
 }

@@ -493,9 +493,17 @@ bool PresetStore::loadLibrary(const uint8_t* data, std::size_t size)
         partData = migrated.data();
         partSize = static_cast<uint32_t>(currentPartSize);
     }
+    /* A library written before the macro block has the old multi record. The
+     * multi loader already reads that layout, so the size check accepts it and
+     * the macro values take their defaults. */
+    const auto currentMultiSize =
+        multiRecordSize() * static_cast<std::size_t>(kMultiSlots);
+    const auto oldMultiSize =
+        static_cast<std::size_t>(MP_RECORD_OLD(static_cast<uint32_t>(partCount_))) *
+        static_cast<std::size_t>(kMultiSlots);
     if (!get32(multiSize) ||
-        static_cast<std::size_t>(multiSize) !=
-            multiRecordSize() * static_cast<std::size_t>(kMultiSlots))
+        (static_cast<std::size_t>(multiSize) != currentMultiSize &&
+         static_cast<std::size_t>(multiSize) != oldMultiSize))
         return false;
     if (offset + multiSize != size)
         return false;
