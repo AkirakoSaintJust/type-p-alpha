@@ -246,7 +246,6 @@
     "op4.eg.d2l": 87,
     "op4.eg.rel": 80,
     "op4.eg.mode": 1,
-    "breakpoint": 60,
     "op1_level_ks_lo": -50,
     "op1_level_ks_hi": -50,
     "op1_fb_ks_lo": 0,
@@ -277,8 +276,6 @@
     "f1_cutoff_ks_hi": 0,
     "fenv_ks_lo": 0,
     "fenv_ks_hi": 0,
-    "key_sens_on": 1,
-    "vel_sens_on": 1,
     "op1_level_vs": 0,
     "op1_fb_vs": 0,
     "op1_aenv_vs": 0,
@@ -293,7 +290,13 @@
     "op4_aenv_vs": 0,
     "penv_vs": 0,
     "f1_cutoff_vs": 0,
-    "fenv_vs": 0
+    "fenv_vs": 0,
+    "breakpoint.p0": 60,
+    "breakpoint.p1": 60,
+    "key_sens_on.p0": 1,
+    "key_sens_on.p1": 1,
+    "vel_sens_on.p0": 1,
+    "vel_sens_on.p1": 1
   },
   "tables": {
     "routing": {
@@ -7142,6 +7145,27 @@
         "ins": {
           "scale": "256"
         }
+      },
+      {
+        "id": "key_bp",
+        "type": "key_bp",
+        "params": {
+          "bp": 60
+        }
+      },
+      {
+        "id": "key_on",
+        "type": "key_on",
+        "params": {
+          "on": 1
+        }
+      },
+      {
+        "id": "vel_on",
+        "type": "vel_on",
+        "params": {
+          "on": 1
+        }
       }
     ],
     "wires": [
@@ -7260,47 +7284,7 @@
       {
         "from": "fenv_vs.k",
         "to": "fenv.vk"
-      }
-    ],
-    "voice_out": "lp.out"
-  },
-  "global": {
-    "nodes": [
-      {
-        "id": "key_bp",
-        "type": "key_bp",
-        "params": {
-          "bp": 60
-        }
       },
-      {
-        "id": "key_on",
-        "type": "key_on",
-        "params": {
-          "on": 1
-        }
-      },
-      {
-        "id": "vel_on",
-        "type": "vel_on",
-        "params": {
-          "on": 1
-        }
-      },
-      {
-        "id": "dc",
-        "type": "dc_block",
-        "params": {
-          "r": 32738
-        }
-      },
-      {
-        "id": "macro",
-        "type": "macro",
-        "params": {}
-      }
-    ],
-    "wires": [
       {
         "from": "key_bp.bp",
         "to": "op1.bp"
@@ -7384,7 +7368,26 @@
       {
         "from": "vel_on.on",
         "to": "fenv_vs.on"
+      }
+    ],
+    "voice_out": "lp.out"
+  },
+  "global": {
+    "nodes": [
+      {
+        "id": "dc",
+        "type": "dc_block",
+        "params": {
+          "r": 32738
+        }
       },
+      {
+        "id": "macro",
+        "type": "macro",
+        "params": {}
+      }
+    ],
+    "wires": [
       {
         "from": "voice",
         "to": "dc.in"
