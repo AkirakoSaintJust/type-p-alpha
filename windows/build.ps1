@@ -1,6 +1,7 @@
 param(
     [ValidateSet("lld", "msvc")][string]$Linker = "lld",
-    [string]$Sanitizers = ""
+    [string]$Sanitizers = "",
+    [switch]$Modern
 )
 
 $ErrorActionPreference = "Stop"
@@ -60,6 +61,7 @@ if ($root -match '[^\x00-\x7F]') {
     }
 }
 $build = "build/windows-clangcl-$Linker"
+if ($Modern) { $build += "-modern" }
 if ($Sanitizers) { $build += "-sanitize" }
 
 $cmakeArgs = @(
@@ -73,6 +75,7 @@ $cmakeArgs = @(
     "-DCMAKE_EXE_LINKER_FLAGS=-fuse-ld=$linkerFlag",
     "-DCMAKE_SHARED_LINKER_FLAGS=-fuse-ld=$linkerFlag"
 )
+if ($Modern) { $cmakeArgs += "-DP1_MODERN=ON" }
 if ($Sanitizers) { $cmakeArgs += "-DP1_SANITIZERS=$Sanitizers" }
 
 Push-Location $root
