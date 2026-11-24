@@ -15,14 +15,16 @@
 
 #include "Engine.hpp"
 #include "Params.h"
+#include "PhaseMapLayout.h"
 
 namespace {
 
 constexpr int kVoices = 24;
 constexpr int kTickFrames = 32;
 
-/* The phase_map pool layout, mirrored from the node. */
-constexpr uint32_t kWords = 2560u;
+/* The phase_map pool layout, mirrored from the node. The stride follows the
+ * compiled read table. */
+constexpr uint32_t kWords = p1::phase_map::kWords;
 constexpr uint32_t kNx = 0u;
 constexpr uint32_t kNslope = 33u;
 constexpr uint32_t kNflip = 65u;

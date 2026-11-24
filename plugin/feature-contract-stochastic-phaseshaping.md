@@ -404,6 +404,58 @@ and recorded as a limit. No join ramp
 is added. A reorder jump is the intended inharmonic event, and a short crossfade
 stays a future option if a listening test asks for it.
 
+### The post-F direct table
+
+The per-sample read is `q = F[x >> 2] << 2`, then the segment lookup and the
+segment interpolation. `q` is always a multiple of four, so a 1024-entry table
+indexed by `q >> 2` replaces the segment lookup exactly; the 4095 clamp uses one
+tail entry, read with `pt[(q + 3) >> 2]`. The table depends on the segment
+layout, not on `F`, so a breakpoint sweep (the knob, the LFO, the envelope, key
+and velocity follow) does not rebuild it. It is rebuilt on segment, mask, drift,
+flip and reorder changes.
+
+The perceptual battery (`plugin/tests/phase_map_perceptual.cpp` and
+`phase_map_perceptual_compare.cpp`) renders 133 pre-seeded scenarios: waves 0,
+11, 12 and 13, notes 24–96, breakpoints 1–999, 1–32 segments, drift, flips and
+reorder at 2–20 Hz, the phase LFO at 0–20 Hz, the phase envelope, the wave-13
+morph and an automated morph sweep, note releases and chords. Each scenario
+starts from `Engine::reset()`, so the seed is the fixed `0x9E3779B9 + part*4`
+and the event sequence is reproducible across builds. The comparator first
+requires the geometry and stochastic timeline to be identical, then measures
+per-frame log-spectral distance, 1/3-octave bands, centroid, 95% rolloff,
+flatness, harmonic levels, the non-harmonic ratio, the 5 ms RMS and peak
+envelopes and attack/release times. The gate is per-frame LSD 0.5 dB max and
+0.25 dB at the 95th percentile, 0.5 dB per 1/3-octave band, 2% centroid and
+rolloff, 0.02 flatness, 0.5 dB RMS and peak, 1 ms attack and release, 0.5 dB
+harmonic and +0.5 dB alias, with a −40 dB null floor.
+
+The results are unambiguous:
+
+- the exact 4096-entry input-phase table (mode 1) is sample-identical;
+- the 1024-entry post-F table with interpolation (mode 10) is sample-identical,
+  because its step is the 4-phase `q` grid and the interpolation fraction is
+  always zero;
+- the 1024-entry post-F direct read (mode 11) is sample-identical and drops the
+  interpolation arithmetic;
+- the 256/512 post-F tables (modes 7–9) fail. A reorder puts the intended step
+  between two table samples; the 512 linear read smears it by up to 900 phase
+  LSB (−25 dB null, 3.3 dB LSD at the 20 Hz reorder), which is the join itself,
+  not a stale table;
+- the input-phase tables (modes 2–6) fail even earlier: at `bp = 1` the F knee
+  compresses the input, and a 1024 linear table misses by up to 1795 LSB.
+
+Mode 11 is therefore the shipped read. It is bit-exact on all 133 scenarios and
+all 17 engine tests. On the 24-voice, four-operator phase-map bench the static
+map falls from 81.5 to 66.1 ms and the worst case from 83.5 to 78.4 ms (minimum
+of six interleaved runs); on the modern AVX2 build the static figure falls from
+77.3 to 67.6 ms and the worst case from 91.2 to 74.8 ms (four runs). The table
+is 1025 `int16` per part. The phase-map state field is sized on its own
+(`18432 int16` for the two parts and the 4096 reference), and the oscillator,
+LFO, envelope and delay pools return to `10880 int16`. `P1_PHASE_READ` defaults
+to 11; modes 0 and 1 remain the current and exact references and 2–10 the
+rejected candidates.
+
+
 ## Editor
 
 ### Tab and page

@@ -1644,22 +1644,22 @@ typedef struct type_p_alpha_state {
     int32_t type_p_alpha_render_bus1[CONTROL_BLOCK];
     int32_t type_p_alpha_tap0[N_TAP_CH][DSP_TAP_FRAMES];
     int32_t type_p_alpha_tap1[N_TAP_CH][DSP_TAP_FRAMES];
-    int16_t op1_osc_bank[19072];
-    int16_t op1_phase_map[19072];
-    int16_t op1_phase_lfo_pool[19072];
-    int16_t op1_phase_env_pool[19072];
-    int16_t op2_osc_bank[19072];
-    int16_t op2_phase_map[19072];
-    int16_t op2_phase_lfo_pool[19072];
-    int16_t op2_phase_env_pool[19072];
-    int16_t op3_osc_bank[19072];
-    int16_t op3_phase_map[19072];
-    int16_t op3_phase_lfo_pool[19072];
-    int16_t op3_phase_env_pool[19072];
-    int16_t op4_osc_bank[19072];
-    int16_t op4_phase_map[19072];
-    int16_t op4_phase_lfo_pool[19072];
-    int16_t op4_phase_env_pool[19072];
+    int16_t op1_osc_bank[10880];
+    int16_t op1_phase_map[18432];
+    int16_t op1_phase_lfo_pool[10880];
+    int16_t op1_phase_env_pool[10880];
+    int16_t op2_osc_bank[10880];
+    int16_t op2_phase_map[18432];
+    int16_t op2_phase_lfo_pool[10880];
+    int16_t op2_phase_env_pool[10880];
+    int16_t op3_osc_bank[10880];
+    int16_t op3_phase_map[18432];
+    int16_t op3_phase_lfo_pool[10880];
+    int16_t op3_phase_env_pool[10880];
+    int16_t op4_osc_bank[10880];
+    int16_t op4_phase_map[18432];
+    int16_t op4_phase_lfo_pool[10880];
+    int16_t op4_phase_env_pool[10880];
     uint16_t voice_rel[NVOICE];
     uint8_t voice_gate[NVOICE];
     uint8_t voice_note[NVOICE];
@@ -11426,8 +11426,9 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             #define P1_PM_LASTWAVE 2413u
             #define P1_PM_LASTON 2414u
             /* The direct read table. Mode 0 keeps the F and segment tables. Mode 1 is the
-               exact 4096-entry table, 2 the 512 step, 3 the 512 linear and 4 the 1024
-               linear. The table is 16-bit and sits at word P1_PM_TABLE in each part's pool. */
+               exact 4096-entry table, 2 the 512 step, 3 the 512 linear, 4 the 1024
+               linear, 5 the 256 step and 6 the 256 linear. The table is 16-bit and sits
+               at word P1_PM_TABLE in each part's pool. */
             #ifndef P1_PHASE_READ
             #define P1_PHASE_READ 0
             #endif
@@ -11456,6 +11457,26 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             #define P1_PM_TABLE_N 256u
             #define P1_PM_TABLE_STEP 16u
             #define P1_PM_TABLE_EXTRA 1u
+            #elif P1_PHASE_READ == 7
+            #define P1_PM_TABLE_N 256u
+            #define P1_PM_TABLE_STEP 16u
+            #define P1_PM_TABLE_EXTRA 0u
+            #elif P1_PHASE_READ == 8
+            #define P1_PM_TABLE_N 256u
+            #define P1_PM_TABLE_STEP 16u
+            #define P1_PM_TABLE_EXTRA 1u
+            #elif P1_PHASE_READ == 9
+            #define P1_PM_TABLE_N 512u
+            #define P1_PM_TABLE_STEP 8u
+            #define P1_PM_TABLE_EXTRA 1u
+            #elif P1_PHASE_READ == 10
+            #define P1_PM_TABLE_N 1024u
+            #define P1_PM_TABLE_STEP 4u
+            #define P1_PM_TABLE_EXTRA 1u
+            #elif P1_PHASE_READ == 11
+            #define P1_PM_TABLE_N 1024u
+            #define P1_PM_TABLE_STEP 4u
+            #define P1_PM_TABLE_EXTRA 1u
             #else
             #define P1_PM_TABLE_N 0u
             #define P1_PM_TABLE_STEP 1u
@@ -11466,6 +11487,15 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             #define P1_PM_WORDS (P1_PM_TABLE + P1_PM_TABLE_WORDS)
             #else
             #define P1_PM_WORDS 2560u
+            #endif
+            #if P1_PHASE_READ >= 7
+            #define P1_PM_TABLE_Q 1
+            #else
+            #define P1_PM_TABLE_Q 0
+            #endif
+            #ifdef P1_PM_WORDS_EXPECTED
+            _Static_assert(P1_PM_WORDS == (uint32_t)P1_PM_WORDS_EXPECTED,
+                "P1_PM_WORDS disagrees with the build; update the CMake table size");
             #endif
             #ifndef P1_PM_SAMPLE
             #define P1_PM_SAMPLE(wave, bank, part, q, ab)                              \
@@ -11639,7 +11669,33 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                      (int32_t)(pm)[P1_PM_PSLOPE + yk] >> 16); \
                 (y) = (uint32_t)yy; \
             } while (0)
-            #if P1_PM_TABLE_N > 0
+            /* The post-F segment map y(q). It does not depend on the F breakpoint. */
+            #define P1_PHASE_MAP_YQ(pm, q, m, y) do { \
+                uint32_t yq = (q); \
+                if (yq > 4095u) yq = 4095u; \
+                uint32_t ysh = (yq & 3u) * 8u; \
+                uint32_t yk = ((pm)[P1_PM_SEG + (yq >> 2)] >> ysh) & 0xFFu; \
+                if (yk >= (uint32_t)(m)) yk = (uint32_t)(m) - 1u; \
+                int32_t yy = (int32_t)(pm)[P1_PM_PY0 + yk] + \
+                    (((int32_t)yq - (int32_t)(pm)[P1_PM_NX + yk]) * \
+                     (int32_t)(pm)[P1_PM_PSLOPE + yk] >> 16); \
+                (y) = (uint32_t)yy; \
+            } while (0)
+            #if P1_PM_TABLE_Q
+            #define P1_PHASE_TABLE(pm, m) do { \
+                uint16_t *pt = (uint16_t *)(void *)((pm) + P1_PM_TABLE); \
+                for (uint32_t ti = 0u; ti < P1_PM_TABLE_N; ti++) { \
+                    uint32_t ty; \
+                    P1_PHASE_MAP_YQ((pm), ti * P1_PM_TABLE_STEP, (m), ty); \
+                    pt[ti] = (uint16_t)ty; \
+                } \
+                if (P1_PM_TABLE_EXTRA) { \
+                    uint32_t ty; \
+                    P1_PHASE_MAP_YQ((pm), 4095u, (m), ty); \
+                    pt[P1_PM_TABLE_N] = (uint16_t)ty; \
+                } \
+            } while (0)
+            #elif P1_PM_TABLE_N > 0
             #define P1_PHASE_TABLE(pm, m) do { \
                 uint16_t *pt = (uint16_t *)(void *)((pm) + P1_PM_TABLE); \
                 for (uint32_t ti = 0u; ti < P1_PM_TABLE_N; ti++) { \
@@ -11658,7 +11714,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             #endif
             uint32_t op4_phase_phase_x = op4_ph_acc_x;
             {
-            _Static_assert(P1_PM_WORDS * (uint32_t)N_PART <= 9536u,
+            _Static_assert(P1_PM_WORDS * (uint32_t)N_PART <= 9216u,
                 "phase_map pool layout exceeds the pool");
             uint32_t *pm = (uint32_t *)(void *)op4_phase_map;
             uint32_t part = (uint32_t)voice_part[v];
@@ -11729,6 +11785,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                         pm[P1_PM_MASKID] = maskid;
                         pm[P1_PM_LASTWAVE] = wave;
                     }
+                    int table_dirty = 0;
                     if (pm[P1_PM_LASTSEGS] != m || mask_changed) {
                         pm[P1_PM_LASTSEGS] = m;
                         for (uint32_t k = 0u; k < m; k++) {
@@ -11823,6 +11880,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                         pm[P1_PM_LOCK] = locks;
                         P1_PHASE_MAP_LAYOUT(pm, active);
                         m = active;
+                        table_dirty = 1;
                     } else {
                         m = pm[P1_PM_ACTIVE];
                         if (m < 1u) m = 1u;
@@ -11852,7 +11910,9 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                     if (pm[P1_PM_BP] != xb) {
                         pm[P1_PM_BP] = xb;
                         P1_PHASE_MAP_F(pm, xb);
-                        P1_PHASE_TABLE(pm, m);
+            #if !P1_PM_TABLE_Q
+                        table_dirty = 1;
+            #endif
                     }
                     uint32_t old = pm[P1_PM_DACC];
                     pm[P1_PM_DACC] = old + (uint32_t)op4_phase_drift_rate[voice_part[v]] * CONTROL_BLOCK;
@@ -11890,7 +11950,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                         }
                         pm[P1_PM_NX + m] = 4096u;
                         P1_PHASE_MAP_LAYOUT(pm, m);
-                        P1_PHASE_TABLE(pm, m);
+                        table_dirty = 1;
                     }
                     uint32_t flip = (uint32_t)op4_phase_flip[voice_part[v]];
                     if (flip > 100u) flip = 100u;
@@ -11905,7 +11965,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                                 pm[P1_PM_NFLIP + k] ^= 1u;
                         }
                         P1_PHASE_MAP_LAYOUT(pm, m);
-                        P1_PHASE_TABLE(pm, m);
+                        table_dirty = 1;
                     }
                     uint32_t reorder = (uint32_t)op4_phase_reorder[voice_part[v]];
                     if (reorder > 100u) reorder = 100u;
@@ -11941,9 +12001,11 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                             pm[P1_PM_ORDER + i] = pm[P1_PM_ORDER + j];
                             pm[P1_PM_ORDER + j] = t;
                             P1_PHASE_MAP_LAYOUT(pm, m);
-                            P1_PHASE_TABLE(pm, m);
+                            table_dirty = 1;
                         }
                     }
+                    if (table_dirty)
+                        P1_PHASE_TABLE(pm, m);
                     pm[P1_PM_LASTB] = block;
                 }
                 uint32_t x = (uint32_t)op4_ph_acc_x >> 20;
@@ -11957,6 +12019,39 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                     (((int32_t)q - (int32_t)pm[P1_PM_NX + k]) *
                      (int32_t)pm[P1_PM_PSLOPE + k] >> 16);
                 op4_phase_phase_x = (uint32_t)y << 20;
+            #elif P1_PM_TABLE_Q
+                uint32_t q = pm[P1_PM_F + (x >> 2)] << 2;
+                if (q > 4095u) q = 4095u;
+                const uint16_t *pt = (const uint16_t *)(const void *)(pm + P1_PM_TABLE);
+            #if P1_PHASE_READ == 7
+                uint32_t y = pt[q >> 4];
+                op4_phase_phase_x = y << 20;
+            #elif P1_PHASE_READ == 8
+                uint32_t ti = q >> 4;
+                uint32_t fr = q & 15u;
+                int32_t y0 = (int32_t)pt[ti];
+                int32_t y1 = (int32_t)pt[ti + 1u];
+                int32_t yi = y0 + (((y1 - y0) * (int32_t)fr) >> 4);
+                op4_phase_phase_x = (uint32_t)yi << 20;
+            #elif P1_PHASE_READ == 9
+                uint32_t ti = q >> 3;
+                uint32_t fr = q & 7u;
+                int32_t y0 = (int32_t)pt[ti];
+                int32_t y1 = (int32_t)pt[ti + 1u];
+                int32_t yi = y0 + (((y1 - y0) * (int32_t)fr) >> 3);
+                op4_phase_phase_x = (uint32_t)yi << 20;
+            #elif P1_PHASE_READ == 10
+                uint32_t ti = q >> 2;
+                uint32_t fr = q & 3u;
+                int32_t y0 = (int32_t)pt[ti];
+                int32_t y1 = (int32_t)pt[ti + 1u];
+                int32_t yi = y0 + (((y1 - y0) * (int32_t)fr) >> 2);
+                op4_phase_phase_x = (uint32_t)yi << 20;
+            #elif P1_PHASE_READ == 11
+                /* q is a multiple of four; the only other value is the 4095 clamp. */
+                uint32_t y = pt[(q + 3u) >> 2];
+                op4_phase_phase_x = y << 20;
+            #endif
             #else
                 const uint16_t *pt = (const uint16_t *)(const void *)(pm + P1_PM_TABLE);
             #if P1_PHASE_READ == 1
@@ -12127,8 +12222,9 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             #define P1_PM_LASTWAVE 2413u
             #define P1_PM_LASTON 2414u
             /* The direct read table. Mode 0 keeps the F and segment tables. Mode 1 is the
-               exact 4096-entry table, 2 the 512 step, 3 the 512 linear and 4 the 1024
-               linear. The table is 16-bit and sits at word P1_PM_TABLE in each part's pool. */
+               exact 4096-entry table, 2 the 512 step, 3 the 512 linear, 4 the 1024
+               linear, 5 the 256 step and 6 the 256 linear. The table is 16-bit and sits
+               at word P1_PM_TABLE in each part's pool. */
             #ifndef P1_PHASE_READ
             #define P1_PHASE_READ 0
             #endif
@@ -12157,6 +12253,26 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             #define P1_PM_TABLE_N 256u
             #define P1_PM_TABLE_STEP 16u
             #define P1_PM_TABLE_EXTRA 1u
+            #elif P1_PHASE_READ == 7
+            #define P1_PM_TABLE_N 256u
+            #define P1_PM_TABLE_STEP 16u
+            #define P1_PM_TABLE_EXTRA 0u
+            #elif P1_PHASE_READ == 8
+            #define P1_PM_TABLE_N 256u
+            #define P1_PM_TABLE_STEP 16u
+            #define P1_PM_TABLE_EXTRA 1u
+            #elif P1_PHASE_READ == 9
+            #define P1_PM_TABLE_N 512u
+            #define P1_PM_TABLE_STEP 8u
+            #define P1_PM_TABLE_EXTRA 1u
+            #elif P1_PHASE_READ == 10
+            #define P1_PM_TABLE_N 1024u
+            #define P1_PM_TABLE_STEP 4u
+            #define P1_PM_TABLE_EXTRA 1u
+            #elif P1_PHASE_READ == 11
+            #define P1_PM_TABLE_N 1024u
+            #define P1_PM_TABLE_STEP 4u
+            #define P1_PM_TABLE_EXTRA 1u
             #else
             #define P1_PM_TABLE_N 0u
             #define P1_PM_TABLE_STEP 1u
@@ -12167,6 +12283,15 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             #define P1_PM_WORDS (P1_PM_TABLE + P1_PM_TABLE_WORDS)
             #else
             #define P1_PM_WORDS 2560u
+            #endif
+            #if P1_PHASE_READ >= 7
+            #define P1_PM_TABLE_Q 1
+            #else
+            #define P1_PM_TABLE_Q 0
+            #endif
+            #ifdef P1_PM_WORDS_EXPECTED
+            _Static_assert(P1_PM_WORDS == (uint32_t)P1_PM_WORDS_EXPECTED,
+                "P1_PM_WORDS disagrees with the build; update the CMake table size");
             #endif
             #ifndef P1_PM_SAMPLE
             #define P1_PM_SAMPLE(wave, bank, part, q, ab)                              \
@@ -12340,7 +12465,33 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                      (int32_t)(pm)[P1_PM_PSLOPE + yk] >> 16); \
                 (y) = (uint32_t)yy; \
             } while (0)
-            #if P1_PM_TABLE_N > 0
+            /* The post-F segment map y(q). It does not depend on the F breakpoint. */
+            #define P1_PHASE_MAP_YQ(pm, q, m, y) do { \
+                uint32_t yq = (q); \
+                if (yq > 4095u) yq = 4095u; \
+                uint32_t ysh = (yq & 3u) * 8u; \
+                uint32_t yk = ((pm)[P1_PM_SEG + (yq >> 2)] >> ysh) & 0xFFu; \
+                if (yk >= (uint32_t)(m)) yk = (uint32_t)(m) - 1u; \
+                int32_t yy = (int32_t)(pm)[P1_PM_PY0 + yk] + \
+                    (((int32_t)yq - (int32_t)(pm)[P1_PM_NX + yk]) * \
+                     (int32_t)(pm)[P1_PM_PSLOPE + yk] >> 16); \
+                (y) = (uint32_t)yy; \
+            } while (0)
+            #if P1_PM_TABLE_Q
+            #define P1_PHASE_TABLE(pm, m) do { \
+                uint16_t *pt = (uint16_t *)(void *)((pm) + P1_PM_TABLE); \
+                for (uint32_t ti = 0u; ti < P1_PM_TABLE_N; ti++) { \
+                    uint32_t ty; \
+                    P1_PHASE_MAP_YQ((pm), ti * P1_PM_TABLE_STEP, (m), ty); \
+                    pt[ti] = (uint16_t)ty; \
+                } \
+                if (P1_PM_TABLE_EXTRA) { \
+                    uint32_t ty; \
+                    P1_PHASE_MAP_YQ((pm), 4095u, (m), ty); \
+                    pt[P1_PM_TABLE_N] = (uint16_t)ty; \
+                } \
+            } while (0)
+            #elif P1_PM_TABLE_N > 0
             #define P1_PHASE_TABLE(pm, m) do { \
                 uint16_t *pt = (uint16_t *)(void *)((pm) + P1_PM_TABLE); \
                 for (uint32_t ti = 0u; ti < P1_PM_TABLE_N; ti++) { \
@@ -12359,7 +12510,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             #endif
             uint32_t op3_phase_phase_x = op3_ph_acc_x;
             {
-            _Static_assert(P1_PM_WORDS * (uint32_t)N_PART <= 9536u,
+            _Static_assert(P1_PM_WORDS * (uint32_t)N_PART <= 9216u,
                 "phase_map pool layout exceeds the pool");
             uint32_t *pm = (uint32_t *)(void *)op3_phase_map;
             uint32_t part = (uint32_t)voice_part[v];
@@ -12430,6 +12581,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                         pm[P1_PM_MASKID] = maskid;
                         pm[P1_PM_LASTWAVE] = wave;
                     }
+                    int table_dirty = 0;
                     if (pm[P1_PM_LASTSEGS] != m || mask_changed) {
                         pm[P1_PM_LASTSEGS] = m;
                         for (uint32_t k = 0u; k < m; k++) {
@@ -12524,6 +12676,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                         pm[P1_PM_LOCK] = locks;
                         P1_PHASE_MAP_LAYOUT(pm, active);
                         m = active;
+                        table_dirty = 1;
                     } else {
                         m = pm[P1_PM_ACTIVE];
                         if (m < 1u) m = 1u;
@@ -12553,7 +12706,9 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                     if (pm[P1_PM_BP] != xb) {
                         pm[P1_PM_BP] = xb;
                         P1_PHASE_MAP_F(pm, xb);
-                        P1_PHASE_TABLE(pm, m);
+            #if !P1_PM_TABLE_Q
+                        table_dirty = 1;
+            #endif
                     }
                     uint32_t old = pm[P1_PM_DACC];
                     pm[P1_PM_DACC] = old + (uint32_t)op3_phase_drift_rate[voice_part[v]] * CONTROL_BLOCK;
@@ -12591,7 +12746,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                         }
                         pm[P1_PM_NX + m] = 4096u;
                         P1_PHASE_MAP_LAYOUT(pm, m);
-                        P1_PHASE_TABLE(pm, m);
+                        table_dirty = 1;
                     }
                     uint32_t flip = (uint32_t)op3_phase_flip[voice_part[v]];
                     if (flip > 100u) flip = 100u;
@@ -12606,7 +12761,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                                 pm[P1_PM_NFLIP + k] ^= 1u;
                         }
                         P1_PHASE_MAP_LAYOUT(pm, m);
-                        P1_PHASE_TABLE(pm, m);
+                        table_dirty = 1;
                     }
                     uint32_t reorder = (uint32_t)op3_phase_reorder[voice_part[v]];
                     if (reorder > 100u) reorder = 100u;
@@ -12642,9 +12797,11 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                             pm[P1_PM_ORDER + i] = pm[P1_PM_ORDER + j];
                             pm[P1_PM_ORDER + j] = t;
                             P1_PHASE_MAP_LAYOUT(pm, m);
-                            P1_PHASE_TABLE(pm, m);
+                            table_dirty = 1;
                         }
                     }
+                    if (table_dirty)
+                        P1_PHASE_TABLE(pm, m);
                     pm[P1_PM_LASTB] = block;
                 }
                 uint32_t x = (uint32_t)op3_ph_acc_x >> 20;
@@ -12658,6 +12815,39 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                     (((int32_t)q - (int32_t)pm[P1_PM_NX + k]) *
                      (int32_t)pm[P1_PM_PSLOPE + k] >> 16);
                 op3_phase_phase_x = (uint32_t)y << 20;
+            #elif P1_PM_TABLE_Q
+                uint32_t q = pm[P1_PM_F + (x >> 2)] << 2;
+                if (q > 4095u) q = 4095u;
+                const uint16_t *pt = (const uint16_t *)(const void *)(pm + P1_PM_TABLE);
+            #if P1_PHASE_READ == 7
+                uint32_t y = pt[q >> 4];
+                op3_phase_phase_x = y << 20;
+            #elif P1_PHASE_READ == 8
+                uint32_t ti = q >> 4;
+                uint32_t fr = q & 15u;
+                int32_t y0 = (int32_t)pt[ti];
+                int32_t y1 = (int32_t)pt[ti + 1u];
+                int32_t yi = y0 + (((y1 - y0) * (int32_t)fr) >> 4);
+                op3_phase_phase_x = (uint32_t)yi << 20;
+            #elif P1_PHASE_READ == 9
+                uint32_t ti = q >> 3;
+                uint32_t fr = q & 7u;
+                int32_t y0 = (int32_t)pt[ti];
+                int32_t y1 = (int32_t)pt[ti + 1u];
+                int32_t yi = y0 + (((y1 - y0) * (int32_t)fr) >> 3);
+                op3_phase_phase_x = (uint32_t)yi << 20;
+            #elif P1_PHASE_READ == 10
+                uint32_t ti = q >> 2;
+                uint32_t fr = q & 3u;
+                int32_t y0 = (int32_t)pt[ti];
+                int32_t y1 = (int32_t)pt[ti + 1u];
+                int32_t yi = y0 + (((y1 - y0) * (int32_t)fr) >> 2);
+                op3_phase_phase_x = (uint32_t)yi << 20;
+            #elif P1_PHASE_READ == 11
+                /* q is a multiple of four; the only other value is the 4095 clamp. */
+                uint32_t y = pt[(q + 3u) >> 2];
+                op3_phase_phase_x = y << 20;
+            #endif
             #else
                 const uint16_t *pt = (const uint16_t *)(const void *)(pm + P1_PM_TABLE);
             #if P1_PHASE_READ == 1
@@ -12828,8 +13018,9 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             #define P1_PM_LASTWAVE 2413u
             #define P1_PM_LASTON 2414u
             /* The direct read table. Mode 0 keeps the F and segment tables. Mode 1 is the
-               exact 4096-entry table, 2 the 512 step, 3 the 512 linear and 4 the 1024
-               linear. The table is 16-bit and sits at word P1_PM_TABLE in each part's pool. */
+               exact 4096-entry table, 2 the 512 step, 3 the 512 linear, 4 the 1024
+               linear, 5 the 256 step and 6 the 256 linear. The table is 16-bit and sits
+               at word P1_PM_TABLE in each part's pool. */
             #ifndef P1_PHASE_READ
             #define P1_PHASE_READ 0
             #endif
@@ -12858,6 +13049,26 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             #define P1_PM_TABLE_N 256u
             #define P1_PM_TABLE_STEP 16u
             #define P1_PM_TABLE_EXTRA 1u
+            #elif P1_PHASE_READ == 7
+            #define P1_PM_TABLE_N 256u
+            #define P1_PM_TABLE_STEP 16u
+            #define P1_PM_TABLE_EXTRA 0u
+            #elif P1_PHASE_READ == 8
+            #define P1_PM_TABLE_N 256u
+            #define P1_PM_TABLE_STEP 16u
+            #define P1_PM_TABLE_EXTRA 1u
+            #elif P1_PHASE_READ == 9
+            #define P1_PM_TABLE_N 512u
+            #define P1_PM_TABLE_STEP 8u
+            #define P1_PM_TABLE_EXTRA 1u
+            #elif P1_PHASE_READ == 10
+            #define P1_PM_TABLE_N 1024u
+            #define P1_PM_TABLE_STEP 4u
+            #define P1_PM_TABLE_EXTRA 1u
+            #elif P1_PHASE_READ == 11
+            #define P1_PM_TABLE_N 1024u
+            #define P1_PM_TABLE_STEP 4u
+            #define P1_PM_TABLE_EXTRA 1u
             #else
             #define P1_PM_TABLE_N 0u
             #define P1_PM_TABLE_STEP 1u
@@ -12868,6 +13079,15 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             #define P1_PM_WORDS (P1_PM_TABLE + P1_PM_TABLE_WORDS)
             #else
             #define P1_PM_WORDS 2560u
+            #endif
+            #if P1_PHASE_READ >= 7
+            #define P1_PM_TABLE_Q 1
+            #else
+            #define P1_PM_TABLE_Q 0
+            #endif
+            #ifdef P1_PM_WORDS_EXPECTED
+            _Static_assert(P1_PM_WORDS == (uint32_t)P1_PM_WORDS_EXPECTED,
+                "P1_PM_WORDS disagrees with the build; update the CMake table size");
             #endif
             #ifndef P1_PM_SAMPLE
             #define P1_PM_SAMPLE(wave, bank, part, q, ab)                              \
@@ -13041,7 +13261,33 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                      (int32_t)(pm)[P1_PM_PSLOPE + yk] >> 16); \
                 (y) = (uint32_t)yy; \
             } while (0)
-            #if P1_PM_TABLE_N > 0
+            /* The post-F segment map y(q). It does not depend on the F breakpoint. */
+            #define P1_PHASE_MAP_YQ(pm, q, m, y) do { \
+                uint32_t yq = (q); \
+                if (yq > 4095u) yq = 4095u; \
+                uint32_t ysh = (yq & 3u) * 8u; \
+                uint32_t yk = ((pm)[P1_PM_SEG + (yq >> 2)] >> ysh) & 0xFFu; \
+                if (yk >= (uint32_t)(m)) yk = (uint32_t)(m) - 1u; \
+                int32_t yy = (int32_t)(pm)[P1_PM_PY0 + yk] + \
+                    (((int32_t)yq - (int32_t)(pm)[P1_PM_NX + yk]) * \
+                     (int32_t)(pm)[P1_PM_PSLOPE + yk] >> 16); \
+                (y) = (uint32_t)yy; \
+            } while (0)
+            #if P1_PM_TABLE_Q
+            #define P1_PHASE_TABLE(pm, m) do { \
+                uint16_t *pt = (uint16_t *)(void *)((pm) + P1_PM_TABLE); \
+                for (uint32_t ti = 0u; ti < P1_PM_TABLE_N; ti++) { \
+                    uint32_t ty; \
+                    P1_PHASE_MAP_YQ((pm), ti * P1_PM_TABLE_STEP, (m), ty); \
+                    pt[ti] = (uint16_t)ty; \
+                } \
+                if (P1_PM_TABLE_EXTRA) { \
+                    uint32_t ty; \
+                    P1_PHASE_MAP_YQ((pm), 4095u, (m), ty); \
+                    pt[P1_PM_TABLE_N] = (uint16_t)ty; \
+                } \
+            } while (0)
+            #elif P1_PM_TABLE_N > 0
             #define P1_PHASE_TABLE(pm, m) do { \
                 uint16_t *pt = (uint16_t *)(void *)((pm) + P1_PM_TABLE); \
                 for (uint32_t ti = 0u; ti < P1_PM_TABLE_N; ti++) { \
@@ -13060,7 +13306,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             #endif
             uint32_t op2_phase_phase_x = op2_ph_acc_x;
             {
-            _Static_assert(P1_PM_WORDS * (uint32_t)N_PART <= 9536u,
+            _Static_assert(P1_PM_WORDS * (uint32_t)N_PART <= 9216u,
                 "phase_map pool layout exceeds the pool");
             uint32_t *pm = (uint32_t *)(void *)op2_phase_map;
             uint32_t part = (uint32_t)voice_part[v];
@@ -13131,6 +13377,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                         pm[P1_PM_MASKID] = maskid;
                         pm[P1_PM_LASTWAVE] = wave;
                     }
+                    int table_dirty = 0;
                     if (pm[P1_PM_LASTSEGS] != m || mask_changed) {
                         pm[P1_PM_LASTSEGS] = m;
                         for (uint32_t k = 0u; k < m; k++) {
@@ -13225,6 +13472,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                         pm[P1_PM_LOCK] = locks;
                         P1_PHASE_MAP_LAYOUT(pm, active);
                         m = active;
+                        table_dirty = 1;
                     } else {
                         m = pm[P1_PM_ACTIVE];
                         if (m < 1u) m = 1u;
@@ -13254,7 +13502,9 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                     if (pm[P1_PM_BP] != xb) {
                         pm[P1_PM_BP] = xb;
                         P1_PHASE_MAP_F(pm, xb);
-                        P1_PHASE_TABLE(pm, m);
+            #if !P1_PM_TABLE_Q
+                        table_dirty = 1;
+            #endif
                     }
                     uint32_t old = pm[P1_PM_DACC];
                     pm[P1_PM_DACC] = old + (uint32_t)op2_phase_drift_rate[voice_part[v]] * CONTROL_BLOCK;
@@ -13292,7 +13542,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                         }
                         pm[P1_PM_NX + m] = 4096u;
                         P1_PHASE_MAP_LAYOUT(pm, m);
-                        P1_PHASE_TABLE(pm, m);
+                        table_dirty = 1;
                     }
                     uint32_t flip = (uint32_t)op2_phase_flip[voice_part[v]];
                     if (flip > 100u) flip = 100u;
@@ -13307,7 +13557,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                                 pm[P1_PM_NFLIP + k] ^= 1u;
                         }
                         P1_PHASE_MAP_LAYOUT(pm, m);
-                        P1_PHASE_TABLE(pm, m);
+                        table_dirty = 1;
                     }
                     uint32_t reorder = (uint32_t)op2_phase_reorder[voice_part[v]];
                     if (reorder > 100u) reorder = 100u;
@@ -13343,9 +13593,11 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                             pm[P1_PM_ORDER + i] = pm[P1_PM_ORDER + j];
                             pm[P1_PM_ORDER + j] = t;
                             P1_PHASE_MAP_LAYOUT(pm, m);
-                            P1_PHASE_TABLE(pm, m);
+                            table_dirty = 1;
                         }
                     }
+                    if (table_dirty)
+                        P1_PHASE_TABLE(pm, m);
                     pm[P1_PM_LASTB] = block;
                 }
                 uint32_t x = (uint32_t)op2_ph_acc_x >> 20;
@@ -13359,6 +13611,39 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                     (((int32_t)q - (int32_t)pm[P1_PM_NX + k]) *
                      (int32_t)pm[P1_PM_PSLOPE + k] >> 16);
                 op2_phase_phase_x = (uint32_t)y << 20;
+            #elif P1_PM_TABLE_Q
+                uint32_t q = pm[P1_PM_F + (x >> 2)] << 2;
+                if (q > 4095u) q = 4095u;
+                const uint16_t *pt = (const uint16_t *)(const void *)(pm + P1_PM_TABLE);
+            #if P1_PHASE_READ == 7
+                uint32_t y = pt[q >> 4];
+                op2_phase_phase_x = y << 20;
+            #elif P1_PHASE_READ == 8
+                uint32_t ti = q >> 4;
+                uint32_t fr = q & 15u;
+                int32_t y0 = (int32_t)pt[ti];
+                int32_t y1 = (int32_t)pt[ti + 1u];
+                int32_t yi = y0 + (((y1 - y0) * (int32_t)fr) >> 4);
+                op2_phase_phase_x = (uint32_t)yi << 20;
+            #elif P1_PHASE_READ == 9
+                uint32_t ti = q >> 3;
+                uint32_t fr = q & 7u;
+                int32_t y0 = (int32_t)pt[ti];
+                int32_t y1 = (int32_t)pt[ti + 1u];
+                int32_t yi = y0 + (((y1 - y0) * (int32_t)fr) >> 3);
+                op2_phase_phase_x = (uint32_t)yi << 20;
+            #elif P1_PHASE_READ == 10
+                uint32_t ti = q >> 2;
+                uint32_t fr = q & 3u;
+                int32_t y0 = (int32_t)pt[ti];
+                int32_t y1 = (int32_t)pt[ti + 1u];
+                int32_t yi = y0 + (((y1 - y0) * (int32_t)fr) >> 2);
+                op2_phase_phase_x = (uint32_t)yi << 20;
+            #elif P1_PHASE_READ == 11
+                /* q is a multiple of four; the only other value is the 4095 clamp. */
+                uint32_t y = pt[(q + 3u) >> 2];
+                op2_phase_phase_x = y << 20;
+            #endif
             #else
                 const uint16_t *pt = (const uint16_t *)(const void *)(pm + P1_PM_TABLE);
             #if P1_PHASE_READ == 1
@@ -13529,8 +13814,9 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             #define P1_PM_LASTWAVE 2413u
             #define P1_PM_LASTON 2414u
             /* The direct read table. Mode 0 keeps the F and segment tables. Mode 1 is the
-               exact 4096-entry table, 2 the 512 step, 3 the 512 linear and 4 the 1024
-               linear. The table is 16-bit and sits at word P1_PM_TABLE in each part's pool. */
+               exact 4096-entry table, 2 the 512 step, 3 the 512 linear, 4 the 1024
+               linear, 5 the 256 step and 6 the 256 linear. The table is 16-bit and sits
+               at word P1_PM_TABLE in each part's pool. */
             #ifndef P1_PHASE_READ
             #define P1_PHASE_READ 0
             #endif
@@ -13559,6 +13845,26 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             #define P1_PM_TABLE_N 256u
             #define P1_PM_TABLE_STEP 16u
             #define P1_PM_TABLE_EXTRA 1u
+            #elif P1_PHASE_READ == 7
+            #define P1_PM_TABLE_N 256u
+            #define P1_PM_TABLE_STEP 16u
+            #define P1_PM_TABLE_EXTRA 0u
+            #elif P1_PHASE_READ == 8
+            #define P1_PM_TABLE_N 256u
+            #define P1_PM_TABLE_STEP 16u
+            #define P1_PM_TABLE_EXTRA 1u
+            #elif P1_PHASE_READ == 9
+            #define P1_PM_TABLE_N 512u
+            #define P1_PM_TABLE_STEP 8u
+            #define P1_PM_TABLE_EXTRA 1u
+            #elif P1_PHASE_READ == 10
+            #define P1_PM_TABLE_N 1024u
+            #define P1_PM_TABLE_STEP 4u
+            #define P1_PM_TABLE_EXTRA 1u
+            #elif P1_PHASE_READ == 11
+            #define P1_PM_TABLE_N 1024u
+            #define P1_PM_TABLE_STEP 4u
+            #define P1_PM_TABLE_EXTRA 1u
             #else
             #define P1_PM_TABLE_N 0u
             #define P1_PM_TABLE_STEP 1u
@@ -13569,6 +13875,15 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             #define P1_PM_WORDS (P1_PM_TABLE + P1_PM_TABLE_WORDS)
             #else
             #define P1_PM_WORDS 2560u
+            #endif
+            #if P1_PHASE_READ >= 7
+            #define P1_PM_TABLE_Q 1
+            #else
+            #define P1_PM_TABLE_Q 0
+            #endif
+            #ifdef P1_PM_WORDS_EXPECTED
+            _Static_assert(P1_PM_WORDS == (uint32_t)P1_PM_WORDS_EXPECTED,
+                "P1_PM_WORDS disagrees with the build; update the CMake table size");
             #endif
             #ifndef P1_PM_SAMPLE
             #define P1_PM_SAMPLE(wave, bank, part, q, ab)                              \
@@ -13742,7 +14057,33 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                      (int32_t)(pm)[P1_PM_PSLOPE + yk] >> 16); \
                 (y) = (uint32_t)yy; \
             } while (0)
-            #if P1_PM_TABLE_N > 0
+            /* The post-F segment map y(q). It does not depend on the F breakpoint. */
+            #define P1_PHASE_MAP_YQ(pm, q, m, y) do { \
+                uint32_t yq = (q); \
+                if (yq > 4095u) yq = 4095u; \
+                uint32_t ysh = (yq & 3u) * 8u; \
+                uint32_t yk = ((pm)[P1_PM_SEG + (yq >> 2)] >> ysh) & 0xFFu; \
+                if (yk >= (uint32_t)(m)) yk = (uint32_t)(m) - 1u; \
+                int32_t yy = (int32_t)(pm)[P1_PM_PY0 + yk] + \
+                    (((int32_t)yq - (int32_t)(pm)[P1_PM_NX + yk]) * \
+                     (int32_t)(pm)[P1_PM_PSLOPE + yk] >> 16); \
+                (y) = (uint32_t)yy; \
+            } while (0)
+            #if P1_PM_TABLE_Q
+            #define P1_PHASE_TABLE(pm, m) do { \
+                uint16_t *pt = (uint16_t *)(void *)((pm) + P1_PM_TABLE); \
+                for (uint32_t ti = 0u; ti < P1_PM_TABLE_N; ti++) { \
+                    uint32_t ty; \
+                    P1_PHASE_MAP_YQ((pm), ti * P1_PM_TABLE_STEP, (m), ty); \
+                    pt[ti] = (uint16_t)ty; \
+                } \
+                if (P1_PM_TABLE_EXTRA) { \
+                    uint32_t ty; \
+                    P1_PHASE_MAP_YQ((pm), 4095u, (m), ty); \
+                    pt[P1_PM_TABLE_N] = (uint16_t)ty; \
+                } \
+            } while (0)
+            #elif P1_PM_TABLE_N > 0
             #define P1_PHASE_TABLE(pm, m) do { \
                 uint16_t *pt = (uint16_t *)(void *)((pm) + P1_PM_TABLE); \
                 for (uint32_t ti = 0u; ti < P1_PM_TABLE_N; ti++) { \
@@ -13761,7 +14102,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             #endif
             uint32_t op1_phase_phase_x = op1_ph_acc_x;
             {
-            _Static_assert(P1_PM_WORDS * (uint32_t)N_PART <= 9536u,
+            _Static_assert(P1_PM_WORDS * (uint32_t)N_PART <= 9216u,
                 "phase_map pool layout exceeds the pool");
             uint32_t *pm = (uint32_t *)(void *)op1_phase_map;
             uint32_t part = (uint32_t)voice_part[v];
@@ -13832,6 +14173,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                         pm[P1_PM_MASKID] = maskid;
                         pm[P1_PM_LASTWAVE] = wave;
                     }
+                    int table_dirty = 0;
                     if (pm[P1_PM_LASTSEGS] != m || mask_changed) {
                         pm[P1_PM_LASTSEGS] = m;
                         for (uint32_t k = 0u; k < m; k++) {
@@ -13926,6 +14268,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                         pm[P1_PM_LOCK] = locks;
                         P1_PHASE_MAP_LAYOUT(pm, active);
                         m = active;
+                        table_dirty = 1;
                     } else {
                         m = pm[P1_PM_ACTIVE];
                         if (m < 1u) m = 1u;
@@ -13955,7 +14298,9 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                     if (pm[P1_PM_BP] != xb) {
                         pm[P1_PM_BP] = xb;
                         P1_PHASE_MAP_F(pm, xb);
-                        P1_PHASE_TABLE(pm, m);
+            #if !P1_PM_TABLE_Q
+                        table_dirty = 1;
+            #endif
                     }
                     uint32_t old = pm[P1_PM_DACC];
                     pm[P1_PM_DACC] = old + (uint32_t)op1_phase_drift_rate[voice_part[v]] * CONTROL_BLOCK;
@@ -13993,7 +14338,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                         }
                         pm[P1_PM_NX + m] = 4096u;
                         P1_PHASE_MAP_LAYOUT(pm, m);
-                        P1_PHASE_TABLE(pm, m);
+                        table_dirty = 1;
                     }
                     uint32_t flip = (uint32_t)op1_phase_flip[voice_part[v]];
                     if (flip > 100u) flip = 100u;
@@ -14008,7 +14353,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                                 pm[P1_PM_NFLIP + k] ^= 1u;
                         }
                         P1_PHASE_MAP_LAYOUT(pm, m);
-                        P1_PHASE_TABLE(pm, m);
+                        table_dirty = 1;
                     }
                     uint32_t reorder = (uint32_t)op1_phase_reorder[voice_part[v]];
                     if (reorder > 100u) reorder = 100u;
@@ -14044,9 +14389,11 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                             pm[P1_PM_ORDER + i] = pm[P1_PM_ORDER + j];
                             pm[P1_PM_ORDER + j] = t;
                             P1_PHASE_MAP_LAYOUT(pm, m);
-                            P1_PHASE_TABLE(pm, m);
+                            table_dirty = 1;
                         }
                     }
+                    if (table_dirty)
+                        P1_PHASE_TABLE(pm, m);
                     pm[P1_PM_LASTB] = block;
                 }
                 uint32_t x = (uint32_t)op1_ph_acc_x >> 20;
@@ -14060,6 +14407,39 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                     (((int32_t)q - (int32_t)pm[P1_PM_NX + k]) *
                      (int32_t)pm[P1_PM_PSLOPE + k] >> 16);
                 op1_phase_phase_x = (uint32_t)y << 20;
+            #elif P1_PM_TABLE_Q
+                uint32_t q = pm[P1_PM_F + (x >> 2)] << 2;
+                if (q > 4095u) q = 4095u;
+                const uint16_t *pt = (const uint16_t *)(const void *)(pm + P1_PM_TABLE);
+            #if P1_PHASE_READ == 7
+                uint32_t y = pt[q >> 4];
+                op1_phase_phase_x = y << 20;
+            #elif P1_PHASE_READ == 8
+                uint32_t ti = q >> 4;
+                uint32_t fr = q & 15u;
+                int32_t y0 = (int32_t)pt[ti];
+                int32_t y1 = (int32_t)pt[ti + 1u];
+                int32_t yi = y0 + (((y1 - y0) * (int32_t)fr) >> 4);
+                op1_phase_phase_x = (uint32_t)yi << 20;
+            #elif P1_PHASE_READ == 9
+                uint32_t ti = q >> 3;
+                uint32_t fr = q & 7u;
+                int32_t y0 = (int32_t)pt[ti];
+                int32_t y1 = (int32_t)pt[ti + 1u];
+                int32_t yi = y0 + (((y1 - y0) * (int32_t)fr) >> 3);
+                op1_phase_phase_x = (uint32_t)yi << 20;
+            #elif P1_PHASE_READ == 10
+                uint32_t ti = q >> 2;
+                uint32_t fr = q & 3u;
+                int32_t y0 = (int32_t)pt[ti];
+                int32_t y1 = (int32_t)pt[ti + 1u];
+                int32_t yi = y0 + (((y1 - y0) * (int32_t)fr) >> 2);
+                op1_phase_phase_x = (uint32_t)yi << 20;
+            #elif P1_PHASE_READ == 11
+                /* q is a multiple of four; the only other value is the 4095 clamp. */
+                uint32_t y = pt[(q + 3u) >> 2];
+                op1_phase_phase_x = y << 20;
+            #endif
             #else
                 const uint16_t *pt = (const uint16_t *)(const void *)(pm + P1_PM_TABLE);
             #if P1_PHASE_READ == 1
