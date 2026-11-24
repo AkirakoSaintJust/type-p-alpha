@@ -951,7 +951,10 @@ LibrarySaveResult TypePAlphaAudioProcessor::saveLibrary()
      * and the second replaces the first's slot. The wait is unbounded because the
      * transaction is short and the OS releases the lock if a holder dies; JUCE's
      * POSIX path reports a timed-out attempt as success, so a finite timeout
-     * would not give the exclusion this needs. */
+     * would not give the exclusion this needs. A POSIX fcntl lock is per process,
+     * so the process-wide lock comes first for two plugin instances in one host. */
+    static juce::CriticalSection processSaveLock;
+    const juce::ScopedLock processLock(processSaveLock);
     juce::InterProcessLock libraryLock("P1Onken-TypePAlpha-Library");
     if (!libraryLock.enter(-1)) {
         result.busy = true;

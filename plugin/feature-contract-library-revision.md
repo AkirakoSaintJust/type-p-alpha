@@ -45,10 +45,10 @@
   moved is a conflict: the disk value stays and the slot is reported.
 - The patch comparison carries the macro values and the macro names, so a
   macro-only edit counts as an edit and a conflicting macro is a conflict.
-- The read, merge and write run under one interprocess lock, so the standalone and
-  a DAW cannot both read revision N and then replace each other's slot. A save waits
-  for the lock; if the operating system cannot grant it, the editor reports that the
-  save did not run.
+- The read, merge and write run under one process-wide lock and one interprocess
+  lock, so two plugin instances and the standalone cannot both read revision N and
+  then replace each other's slot. A save waits for the lock; if the operating
+  system cannot grant it, the editor reports that the save did not run.
 - A conflict does not block the other slots. The non-conflicting changes are still
   written, and the editor reports the first conflict by bank, slot and name.
 - A project still carries a copy of the part and multi banks. `setStateInformation`
