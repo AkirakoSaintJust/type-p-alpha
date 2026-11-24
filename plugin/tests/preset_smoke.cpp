@@ -781,6 +781,61 @@ int main()
           "the merged patch reaches the disk bank");
     instanceA.markSaved();
 
+    /* A macro-only patch edit must reach the disk, and a macro edit on both
+     * sides of the same patch must be a conflict. */
+    std::vector<int32_t> macroEdit(
+        static_cast<std::size_t>(p1::PresetStore::kMacroParams), 0);
+    macroEdit[0] = 41;
+    std::array<std::string, p1::PresetStore::kMacroCount> macroNameEdit{};
+    macroNameEdit[0] = "shape";
+    p1::PresetStore::Multi afterMacro;
+    {
+        check(instanceA.saveMulti(3, "multi-a", {1, 2}, level, delay, channel,
+                                  low, high, macroEdit, macroNameEdit),
+              "save a patch that changes only its macro block");
+        check(instanceA.mergeInto(merged).empty(),
+              "a macro-only patch edit merges without a conflict");
+        check(merged.loadMulti(3, afterMacro) &&
+                  afterMacro.macro == macroEdit &&
+                  afterMacro.macroNames == macroNameEdit,
+              "the merged patch keeps the macro values and names");
+        instanceA.markSaved();
+        instanceA.saveMulti(3, "multi-a", {1, 2}, level, delay, channel, low,
+                            high, macroEdit, macroNameEdit);
+    }
+    {
+        const auto macroBaseBytes = merged.packLibrary();
+        p1::PresetStore macroLeft{kP1PartParamCount, kP1PartCount};
+        p1::PresetStore macroRight{kP1PartParamCount, kP1PartCount};
+        check(macroLeft.loadLibrary(macroBaseBytes.data(), macroBaseBytes.size()) &&
+                  macroRight.loadLibrary(macroBaseBytes.data(),
+                                         macroBaseBytes.size()),
+              "two instances load the macro base");
+        auto leftMacro = afterMacro.macro;
+        auto rightMacro = afterMacro.macro;
+        leftMacro[2] = 11;
+        rightMacro[2] = 22;
+        check(macroLeft.saveMulti(3, "multi-a", {1, 2}, level, delay, channel,
+                                  low, high, leftMacro, afterMacro.macroNames) &&
+                  macroRight.saveMulti(3, "multi-a", {1, 2}, level, delay, channel,
+                                       low, high, rightMacro,
+                                       afterMacro.macroNames),
+              "both instances change the same macro");
+        p1::PresetStore macroDisk{kP1PartParamCount, kP1PartCount};
+        check(macroDisk.loadLibrary(macroBaseBytes.data(),
+                                    macroBaseBytes.size()) &&
+                  macroLeft.mergeInto(macroDisk).empty(),
+              "the left macro edit saves first");
+        const auto macroConflicts = macroRight.mergeInto(macroDisk);
+        check(macroConflicts.size() == 1 && macroConflicts[0].multi &&
+                  macroConflicts[0].slot == 3,
+              "the right instance reports the macro both changed");
+        p1::PresetStore::Multi diskMacro;
+        check(macroDisk.loadMulti(3, diskMacro) &&
+                  diskMacro.macro == leftMacro,
+              "the conflicting macro keeps the disk version");
+    }
+
     p1::PresetStore left{kP1PartParamCount, kP1PartCount};
     p1::PresetStore right{kP1PartParamCount, kP1PartCount};
     check(left.loadLibrary(baseBytes.data(), baseBytes.size()) &&

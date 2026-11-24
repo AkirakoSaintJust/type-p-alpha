@@ -974,7 +974,8 @@ std::vector<PresetStore::Conflict> PresetStore::mergeInto(PresetStore& disk)
         return a.used == b.used && a.name == b.name &&
                a.partSlot == b.partSlot && a.level == b.level &&
                a.delay == b.delay && a.channel == b.channel &&
-               a.low == b.low && a.high == b.high;
+               a.low == b.low && a.high == b.high && a.macro == b.macro &&
+               a.macroNames == b.macroNames;
     };
 
     for (int slot = 0; slot < kPartSlots; ++slot) {
