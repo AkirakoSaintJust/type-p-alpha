@@ -153,6 +153,108 @@ jobs:
           "$clap" validate --only-failed \
             "build/plugin/juce/type_p_alpha_artefacts/Release/CLAP/Type P.alpha.clap"
 
+  macos-modern:
+    runs-on: macos-15-intel
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v7
+      - name: Configure arm64
+        run: >
+          cmake -S . -B build-arm -G Ninja -DCMAKE_BUILD_TYPE=Release
+          -DCMAKE_OSX_ARCHITECTURES=arm64
+          -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0
+          -DP1_MODERN=ON
+      - name: Build arm64
+        run: cmake --build build-arm
+      - name: Configure x86_64
+        run: >
+          cmake -S . -B build-x86 -G Ninja -DCMAKE_BUILD_TYPE=Release
+          -DCMAKE_OSX_ARCHITECTURES=x86_64
+          -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0
+          -DP1_MODERN=ON
+      - name: Build x86_64
+        run: cmake --build build-x86
+      - name: Test x86_64
+        run: >
+          ctest --test-dir build-x86 --output-on-failure
+          -E "linux_daws|plugin_editor_snapshot|plugin_editor_snapshot_diff"
+      - name: Bench x86_64
+        run: |
+          ./build-x86/plugin/phase_map | tail -4
+          ./build-x86/plugin/spectral_bench | tail -6
+      - name: Join the modern universal plugin
+        run: |
+          set -e
+          x=build-x86/plugin/juce/type_p_alpha_artefacts/Release
+          a=build-arm/plugin/juce/type_p_alpha_artefacts/Release
+          dist=dist-modern
+          rm -rf "$dist"
+          mkdir -p "$dist"
+          cp -R "$x/VST3/Type P.alpha.vst3" "$dist/"
+          cp "$x/CLAP/Type P.alpha.clap" "$dist/"
+          cp -R "$x/Standalone/Type P.alpha.app" "$dist/"
+          lipo -create \
+            "$x/VST3/Type P.alpha.vst3/Contents/MacOS/Type P.alpha" \
+            "$a/VST3/Type P.alpha.vst3/Contents/MacOS/Type P.alpha" \
+            -output "$dist/Type P.alpha.vst3/Contents/MacOS/Type P.alpha"
+          lipo -create "$x/CLAP/Type P.alpha.clap" "$a/CLAP/Type P.alpha.clap" \
+            -output "$dist/Type P.alpha.clap"
+          lipo -create \
+            "$x/Standalone/Type P.alpha.app/Contents/MacOS/Type P.alpha" \
+            "$a/Standalone/Type P.alpha.app/Contents/MacOS/Type P.alpha" \
+            -output "$dist/Type P.alpha.app/Contents/MacOS/Type P.alpha"
+          for f in \
+            "$dist/Type P.alpha.vst3/Contents/MacOS/Type P.alpha" \
+            "$dist/Type P.alpha.clap" \
+            "$dist/Type P.alpha.app/Contents/MacOS/Type P.alpha"; do
+            archs=$(lipo -archs "$f")
+            echo "$f: $archs"
+            case "$archs" in
+              *arm64*x86_64*|*x86_64*arm64*) ;;
+              *) echo "ci: $f is not universal"; exit 1 ;;
+            esac
+          done
+      - name: Download the validators
+        run: |
+          curl -fsSL -o pluginval.zip \
+            https://github.com/Tracktion/pluginval/releases/download/v1.0.4/pluginval_macOS.zip
+          unzip -q pluginval.zip -d pluginval
+          curl -fsSL -o clap-validator.zip \
+            https://github.com/free-audio/clap-validator/releases/download/0.4.1/clap-validator-0.4.1-127-g152b982-macos-15-x86_64.zip
+          unzip -q clap-validator.zip -d clap-validator
+          tar -xzf clap-validator/*.tar.gz -C clap-validator
+      - name: Validate the modern x86_64 slice
+        run: |
+          pluginval=$(find pluginval -type f -name pluginval | head -n 1)
+          clap=$(find clap-validator -type f -name clap-validator | head -n 1)
+          chmod +x "$pluginval" "$clap"
+          "$pluginval" --validate \
+            "dist-modern/Type P.alpha.vst3" \
+            --strictness-level 5 --skip-gui-tests
+          "$clap" validate --only-failed "dist-modern/Type P.alpha.clap"
+
+  macos-arm:
+    runs-on: macos-15
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v7
+      - name: Configure arm64
+        run: >
+          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+          -DCMAKE_OSX_ARCHITECTURES=arm64
+          -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0
+          -DP1_MODERN=ON
+      - name: Build arm64
+        run: cmake --build build
+      - name: Test arm64
+        run: >
+          ctest --test-dir build --output-on-failure
+          -E "linux_daws|plugin_editor_snapshot|plugin_editor_snapshot_diff"
+      - name: Bench arm64
+        run: |
+          ./build/plugin/phase_map | tail -4
+          ./build/plugin/spectral_bench | tail -6
+
   arm64:
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 60
