@@ -312,7 +312,7 @@ public:
         on_.setBounds(headerTrailingBounds());
     }
 
-    void tick() { env_.repaint(); }
+    void tick() { env_.tick(); }
 
 private:
     P1Envelope env_;
@@ -879,7 +879,7 @@ public:
     {
         header_.tick();
         display_.setLiveMorph(editor_.processor().specMorph(op_, part_));
-        display_.repaint();
+        display_.tick();
         env_.tick();
         repaint();
     }

@@ -264,6 +264,7 @@ public:
     void paint(juce::Graphics& g) override;
     /* The morph the engine last read, 0 to 1, or -1 for the base parameter. */
     void setLiveMorph(double value) { liveMorph_ = value; }
+    void tick();
 
 private:
     double levelAt(const juce::StringArray& ids, int index) const;
@@ -277,6 +278,8 @@ private:
     juce::Colour aColour_;
     juce::Colour bColour_;
     double liveMorph_ = -1.0;
+    uint64_t lastSignature_ = 0;
+    bool haveSignature_ = false;
 };
 
 enum class EnvelopeShape {
@@ -318,11 +321,14 @@ class P1Wave : public juce::Component {
 public:
     P1Wave(APVTS& state, juce::String waveID, juce::Colour curveColour);
     void paint(juce::Graphics& g) override;
+    void tick();
 
 private:
     APVTS& state_;
     juce::String waveID_;
     juce::Colour colour_;
+    int lastWave_ = -1;
+    bool haveWave_ = false;
 };
 
 class P1LevelSlider : public juce::Component, public MacroFeedbackTarget {
