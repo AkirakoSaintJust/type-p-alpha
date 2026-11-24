@@ -2,6 +2,7 @@
 #include "Widgets.h"
 
 #include <algorithm>
+#include <bit>
 #include <cmath>
 #include <vector>
 
@@ -1373,6 +1374,42 @@ P1Envelope::P1Envelope(APVTS& state, juce::StringArray rateIDs,
       startScale_(startScale)
 {
     setInterceptsMouseClicks(false, false);
+}
+
+void P1Envelope::tick()
+{
+    const auto mix = [](uint64_t h, uint64_t value) {
+        h ^= value;
+        h *= 1099511628211ull;
+        return h;
+    };
+    uint64_t h = 1469598103934665603ull;
+    for (int i = 0; i < rateIDs_.size() && i < 5; ++i) {
+        if (auto* value = state_.getRawParameterValue(rateIDs_[i]))
+            h = mix(h, static_cast<uint64_t>(std::lround(value->load())));
+    }
+    for (int i = 0; i < levelIDs_.size() && i < 4; ++i) {
+        if (auto* value = state_.getRawParameterValue(levelIDs_[i]))
+            h = mix(h, std::bit_cast<uint32_t>(value->load()));
+    }
+    if (modeID_.isNotEmpty()) {
+        if (auto* value = state_.getRawParameterValue(modeID_))
+            h = mix(h, static_cast<uint64_t>(std::lround(value->load())));
+    }
+    if (startID_.isNotEmpty()) {
+        if (auto* value = state_.getRawParameterValue(startID_))
+            h = mix(h, std::bit_cast<uint32_t>(value->load()));
+    }
+    if (!haveSignature_) {
+        haveSignature_ = true;
+        lastSignature_ = h;
+        repaint();
+        return;
+    }
+    if (h != lastSignature_) {
+        lastSignature_ = h;
+        repaint();
+    }
 }
 
 void P1Envelope::paint(juce::Graphics& g)

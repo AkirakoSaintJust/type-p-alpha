@@ -11,6 +11,7 @@
 #include <typeinfo>
 
 #include "Widgets.h"
+#include "ParamIDs.h"
 #include "PluginEditor.h"
 #include "PluginProcessor.h"
 
@@ -152,11 +153,34 @@ int main()
 
     const double editorPhaseUs = measureEditor(5);
     const double editorSpectraUs = measureEditor(6);
+
+    TypePAlphaAudioProcessor envelopeProcessor;
+    p1::ui::P1Envelope envelope(
+        envelopeProcessor.parameters(),
+        {p1::params::opPhaseEnv(0, "r1", 0),
+         p1::params::opPhaseEnv(0, "r2", 0),
+         p1::params::opPhaseEnv(0, "r3", 0),
+         p1::params::opPhaseEnv(0, "relr", 0)},
+        {p1::params::opPhaseEnv(0, "l1", 0),
+         p1::params::opPhaseEnv(0, "l2", 0),
+         p1::params::opPhaseEnv(0, "l3", 0),
+         p1::params::opPhaseEnv(0, "rell", 0)},
+        p1::ui::colour(p1::tokens::purple), -100.0, 100.0, true,
+        p1::ui::EnvelopeShape::bipolar,
+        p1::params::opPhaseEnv(0, "mode", 0));
+    envelope.setBounds(0, 0, 278, 48);
+    juce::Image envelopeImage(juce::Image::ARGB, 278, 48, true);
+    juce::Graphics envelopeGraphics(envelopeImage);
+    const double envelopePaintUs =
+        measure([&] { envelope.paint(envelopeGraphics); });
+    const double envelopeTickUs = measure([&] { envelope.tick(); });
+
     std::printf(
         "ui frame: scope %.1f us, spectro %.1f us, update %.1f us, "
-        "combined %.1f us, editor phase %.1f us, editor spectra %.1f us\n",
+        "combined %.1f us, editor phase %.1f us, editor spectra %.1f us, "
+        "envelope paint %.1f us, envelope tick %.2f us\n",
         scopeUs, spectroUs, updateUs, combinedUs, editorPhaseUs,
-        editorSpectraUs);
+        editorSpectraUs, envelopePaintUs, envelopeTickUs);
     reportEditorTree(5);
     return 0;
 }

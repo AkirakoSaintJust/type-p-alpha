@@ -191,8 +191,15 @@ public:
         setPatchName(editor_.processor().getPatchName());
         editor_.processor().readOutputScope(scratch_.data(),
                                             static_cast<int>(scratch_.size()));
-        scopeView_.setSamples(scratch_.data(), static_cast<int>(scratch_.size()));
-        spectroView_.setSamples(scratch_.data(), static_cast<int>(scratch_.size()));
+        if (!haveScratch_ ||
+            !std::equal(scratch_.begin(), scratch_.end(), lastScratch_.begin())) {
+            haveScratch_ = true;
+            lastScratch_ = scratch_;
+            scopeView_.setSamples(scratch_.data(),
+                                  static_cast<int>(scratch_.size()));
+            spectroView_.setSamples(scratch_.data(),
+                                    static_cast<int>(scratch_.size()));
+        }
     }
 
     void setPatchName(const juce::String& name)
@@ -254,6 +261,8 @@ private:
     SegmentButton spectroSeg_{"spectro"};
     bool spectroMode_ = false;
     std::array<float, 512> scratch_{};
+    std::array<float, 512> lastScratch_{};
+    bool haveScratch_ = false;
     juce::String multiName_{"init patch"};
 };
 

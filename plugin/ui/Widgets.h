@@ -295,6 +295,8 @@ public:
                double startScale = 1.0);
     void paint(juce::Graphics& g) override;
     void refresh() { repaint(); }
+    /* Repaint only when the drawn parameter state changed. */
+    void tick();
 
 private:
     APVTS& state_;
@@ -308,6 +310,8 @@ private:
     juce::String modeID_;
     juce::String startID_;
     double startScale_ = 1.0;
+    uint64_t lastSignature_ = 0;
+    bool haveSignature_ = false;
 };
 
 class P1Wave : public juce::Component {
