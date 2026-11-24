@@ -1161,12 +1161,15 @@ static std::vector<juce::String> fxSectionParamIDs(
         add(p1::params::panEnvMode(part));
         break;
     case PluginEditor::PartFxSection::keyFollow:
+        add(p1::params::withPart("key_sens_on", part));
+        add(p1::params::withPart("breakpoint", part));
         for (const auto& target : p1::params::followTargets(part)) {
             add(target.keyLo);
             add(target.keyHi);
         }
         break;
     case PluginEditor::PartFxSection::velocityFollow:
+        add(p1::params::withPart("vel_sens_on", part));
         for (const auto& target : p1::params::followTargets(part))
             add(target.velocity);
         break;

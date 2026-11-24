@@ -89,6 +89,44 @@ def reorder_ring(params: list[ParamDoc]) -> list[ParamDoc]:
     )
 
 
+def reorder_key(params: list[ParamDoc]) -> list[ParamDoc]:
+    """Move the key-follow part rows to the end of each part group.
+
+    The preset record stores part parameters in spec order. The breakpoint and
+    the two follow enables are new in version 18 and must append after every
+    earlier part row, so every existing part index keeps its position.
+    """
+    key_names = {"breakpoint", "key_sens_on", "vel_sens_on"}
+
+    def is_key(name: str) -> bool:
+        return name.split(".")[0] in key_names
+
+    p1_start = next(
+        (i for i, p in enumerate(params) if str(p["name"]).endswith(".p1")),
+        None,
+    )
+    if p1_start is None:
+        return params
+    p1_end = next(
+        (
+            i
+            for i in range(p1_start + 1, len(params))
+            if not str(params[i]["name"]).endswith(".p1")
+        ),
+        len(params),
+    )
+
+    def move(group: list[ParamDoc]) -> list[ParamDoc]:
+        key = [p for p in group if is_key(str(p["name"]))]
+        return [p for p in group if not is_key(str(p["name"]))] + key
+
+    return (
+        move(params[:p1_start])
+        + move(params[p1_start:p1_end])
+        + params[p1_end:]
+    )
+
+
 def c_string(value: str) -> str:
     return '"' + value.replace("\\", "\\\\").replace('"', '\\"') + '"'
 
@@ -101,7 +139,7 @@ def main() -> int:
     target = Path(sys.argv[2])
     raw = cast(object, json.loads(source.read_text(encoding="utf-8")))
     data = cast(ParamsDoc, raw)
-    params = reorder_ring(data["params"])
+    params = reorder_key(reorder_ring(data["params"]))
     from ratio import ratio_detents
 
     ratio_params = [p for p in params if p["display"] == "ratio"]

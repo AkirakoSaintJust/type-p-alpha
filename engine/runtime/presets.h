@@ -12,7 +12,7 @@
 #include <stdint.h>
 
 #define PRESET_NAME_LEN 33u
-#define PRESET_VERSION 17u
+#define PRESET_VERSION 18u
 /* The version that introduced the current cutoff law. A record older than this
  * needs `cutoffOldToNew`; v7 and later already carry the new position. */
 #define PRESET_CUTOFF_LAW_VERSION 7u

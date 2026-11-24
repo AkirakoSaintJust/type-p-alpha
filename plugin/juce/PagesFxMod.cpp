@@ -370,7 +370,9 @@ public:
           key_(key),
           part_(editor.activePart()),
           targets_(params::followTargets(part_)),
-          on_(editor.state(), key ? "key_sens_on" : "vel_sens_on", "on"),
+          on_(editor.state(),
+              params::withPart(key ? "key_sens_on" : "vel_sens_on", part_),
+              "on"),
           to_(std::move(toLabel), true)
     {
         wipe_.setButtonText("wipe all");
@@ -388,7 +390,8 @@ public:
         addAndMakeVisible(to_);
         if (key_) {
             breakpoint_ = std::make_unique<ParamKnob>(
-                editor.state(), "breakpoint", "breakpoint", 42.0f);
+                editor.state(), params::withPart("breakpoint", part_),
+                "breakpoint", 42.0f);
             addAndMakeVisible(*breakpoint_);
         }
         below_ = std::make_unique<ParamKnob>(
@@ -441,8 +444,9 @@ public:
 
     void refresh()
     {
-        const bool enabled = getParam(editor_, key_ ? "key_sens_on" : "vel_sens_on") >
-                             0.5;
+        const bool enabled = getParam(
+            editor_, params::withPart(key_ ? "key_sens_on" : "vel_sens_on",
+                                      part_)) > 0.5;
         const float alpha = enabled ? 1.0f : 0.45f;
         target_.setAlpha(alpha);
         if (breakpoint_ != nullptr)
