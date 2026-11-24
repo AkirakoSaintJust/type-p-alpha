@@ -248,6 +248,32 @@ int main()
     std::setvbuf(stdout, nullptr, _IONBF, 0);
     std::printf("phase map\n");
 
+    /* The key-follow breakpoint and the key/velocity enables are part
+     * parameters. Editing one part must not move the other. */
+    {
+        p1::Engine engine;
+        engine.reset();
+        bool ok = set_param(engine, "key_sens_on.p0", 1) &&
+                  set_param(engine, "key_sens_on.p1", 0) &&
+                  set_param(engine, "vel_sens_on.p0", 0) &&
+                  set_param(engine, "vel_sens_on.p1", 1) &&
+                  set_param(engine, "breakpoint.p0", 72) &&
+                  set_param(engine, "breakpoint.p1", 48);
+        if (!ok) {
+            std::printf("phase_map: key follow setup failed\n");
+            return 1;
+        }
+        check(engine.state()->key_on_on[0] == 1 &&
+                  engine.state()->key_on_on[1] == 0,
+              "key follow on/off is per part");
+        check(engine.state()->vel_on_on[0] == 0 &&
+                  engine.state()->vel_on_on[1] == 1,
+              "velocity follow on/off is per part");
+        check(engine.state()->key_bp_bp[0] == 72 &&
+                  engine.state()->key_bp_bp[1] == 48,
+              "key follow breakpoint is per part");
+    }
+
     /* Off is the current operator: the phase parameters are ignored and two
      * renders with different inert settings are identical. */
     {
@@ -622,8 +648,8 @@ int main()
             engine.reset();
             if (!base_setup(engine) || !map_on(engine))
                 return false;
-            set_param(engine, "key_sens_on", key ? 1 : 0);
-            set_param(engine, "vel_sens_on", key ? 0 : 1);
+            set_param(engine, "key_sens_on.p0", key ? 1 : 0);
+            set_param(engine, "vel_sens_on.p0", key ? 0 : 1);
             set_param(engine, "op1_phase_ks_lo.p0", -100);
             set_param(engine, "op1_phase_ks_hi.p0", 100);
             set_param(engine, "op1_phase_vs.p0", 25);

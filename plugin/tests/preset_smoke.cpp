@@ -72,8 +72,9 @@ int main()
     /* `migratePartBank` derives the v12 to v15 record counts by subtracting
      * from the current count. A param that joins the part record without a
      * migration step shifts every later index and misreads an old record as an
-     * even older one, so the count is pinned here. */
-    check(kP1PartParamCount == 991,
+     * even older one, so the count is pinned here. Version 18 appends the three
+     * key-follow rows and has its own append step. */
+    check(kP1PartParamCount == 994,
           "the part record has the ringmod block");
     const auto fades = lfoFadeIndices();
     check(fades[33] >= 0, "find the 34 LFO fade parameters");
@@ -293,7 +294,7 @@ int main()
         /* The version 10 record is 179 params shorter: 116 phase values, the 34
          * fades, the four operator slots, the five offset and ten absolute
          * envelope slots, and the ten ringmod values. */
-        const uint32_t oldCount = kP1PartParamCount - 10u - 116u - 19u - 34u;
+        const uint32_t oldCount = kP1PartParamCount - 3u - 10u - 116u - 19u - 34u;
         const auto oldRecord = PP_RECORD(oldCount);
         std::vector<uint8_t> oldBank(static_cast<std::size_t>(oldRecord) * 128u,
                                      0xFF);
@@ -387,7 +388,7 @@ int main()
      * library also carries a pre-macro multi bank, which is the shape the shipped
      * library used: version 16 parts with an 80-byte multi record. */
     {
-        const uint32_t oldCount = kP1PartParamCount - 10u;
+        const uint32_t oldCount = kP1PartParamCount - 3u - 10u;
         const auto oldRecord = PP_RECORD(oldCount);
         std::vector<uint8_t> bank(static_cast<std::size_t>(oldRecord) * 128u,
                                   0xFF);
@@ -495,7 +496,7 @@ int main()
         check(bases[0] > 0 && bases[4] > bases[0] && panBase > bases[4],
               "find the offset and pan envelope blocks");
 
-        const uint32_t oldCount = kP1PartParamCount - 10u - 116u - 15u - 34u;
+        const uint32_t oldCount = kP1PartParamCount - 3u - 10u - 116u - 15u - 34u;
         const auto oldRecord = PP_RECORD(oldCount);
         std::vector<uint8_t> oldBank(static_cast<std::size_t>(oldRecord) * 128u,
                                      0xFF);
@@ -593,7 +594,7 @@ int main()
                   absBases[0] > absBases[4],
               "find the absolute envelope blocks");
 
-        const uint32_t oldCount = kP1PartParamCount - 10u - 116u - 10u - 34u;
+        const uint32_t oldCount = kP1PartParamCount - 3u - 10u - 116u - 10u - 34u;
         const auto oldRecord = PP_RECORD(oldCount);
         std::vector<uint8_t> oldBank(static_cast<std::size_t>(oldRecord) * 128u,
                                      0xFF);
@@ -676,7 +677,7 @@ int main()
         };
         const int filterBase = indexOf("fenv_on.p0");
         const int modeBase = indexOf("mode.p0");
-        const auto oldCount = static_cast<uint32_t>(kP1PartParamCount - 10u - 116u - 34u - 2u);
+        const auto oldCount = static_cast<uint32_t>(kP1PartParamCount - 3u - 10u - 116u - 34u - 2u);
         const auto oldRecord = PP_RECORD(oldCount);
         std::vector<uint8_t> oldBank(static_cast<std::size_t>(oldRecord) * 128u,
                                      0xFF);
@@ -912,6 +913,43 @@ int main()
     check(currentLoaded.partParams(0)[static_cast<std::size_t>(
               kP1PartCutoffIndex)] == 8000,
           "a current record keeps its raw cutoff");
+
+    /* A version 17 record is the layout before the three key-follow rows. It
+     * must keep every old value and gain the three defaults at the end. */
+    {
+        const uint32_t oldCount =
+            static_cast<uint32_t>(kP1PartParamCount - 3);
+        const auto oldRecord = PP_RECORD(oldCount);
+        std::vector<int32_t> oldParams(oldCount, 0);
+        oldParams[0] = 11;
+        oldParams[1] = 22;
+        oldParams[static_cast<std::size_t>(oldCount) - 1u] = 33;
+        std::vector<uint8_t> oldBank(
+            static_cast<std::size_t>(oldRecord) *
+                p1::PresetStore::kPartSlots,
+            0xFF);
+        preset_part_pack(oldBank.data(), "v17", oldParams.data(), oldCount);
+        oldBank[0] = 17;
+        const std::size_t body = oldRecord - 4u;
+        const uint32_t crc =
+            preset_crc32(oldBank.data(), static_cast<uint32_t>(body));
+        for (int i = 0; i < 4; ++i)
+            oldBank[body + static_cast<std::size_t>(i)] =
+                static_cast<uint8_t>((crc >> (8 * i)) & 0xFFu);
+        p1::PresetStore v17{kP1PartParamCount, kP1PartCount,
+                            p1::partParamDefaults(), kP1PartCutoffIndex};
+        check(v17.loadPartBank(oldBank.data(), oldBank.size()),
+              "load a version 17 part bank");
+        const auto& params = v17.partParams(0);
+        check(params.size() == static_cast<std::size_t>(kP1PartParamCount) &&
+                  params[0] == 11 && params[1] == 22 &&
+                  params[static_cast<std::size_t>(oldCount) - 1u] == 33,
+              "the version 17 values survive");
+        check(params[static_cast<std::size_t>(oldCount)] == 60 &&
+                  params[static_cast<std::size_t>(oldCount) + 1u] == 1 &&
+                  params[static_cast<std::size_t>(oldCount) + 2u] == 1,
+              "the version 17 key follow slots default");
+    }
 
     std::printf("preset: %s\n", failures ? "FAILED" : "passed");
     return failures ? 1 : 0;

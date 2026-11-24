@@ -22,6 +22,11 @@ constexpr int kPhaseParamsPerPart = 116;
  * direct carrier gates. */
 constexpr int kRingmodParamsPerPart = 10;
 
+/* The version 18 key-follow block: the breakpoint and the key/velocity on/off
+ * switches are part parameters now. They are appended after every earlier part
+ * parameter, so old records only gain three default slots at the end. */
+constexpr int kKeyFollowParamsPerPart = 3;
+
 /* The five envelope blocks that gained a slot in version 13: one pitch and one
  * feedback envelope for each operator. */
 constexpr int kOffsetEnvelopeBlocks = 5;
@@ -620,10 +625,14 @@ bool PresetStore::migratePartBank(const uint8_t* data, uint32_t oldCount,
     const auto newRecord = partRecordSize();
     out.assign(newRecord * kPartSlots, 0xFF);
     const auto target = static_cast<std::size_t>(partParamCount_);
-    const auto v16Count =
-        target >= static_cast<std::size_t>(kRingmodParamsPerPart)
-            ? target - static_cast<std::size_t>(kRingmodParamsPerPart)
+    const auto v17Count =
+        target >= static_cast<std::size_t>(kKeyFollowParamsPerPart)
+            ? target - static_cast<std::size_t>(kKeyFollowParamsPerPart)
             : target;
+    const auto v16Count =
+        v17Count >= static_cast<std::size_t>(kRingmodParamsPerPart)
+            ? v17Count - static_cast<std::size_t>(kRingmodParamsPerPart)
+            : v17Count;
     const auto v15Count =
         v16Count >= static_cast<std::size_t>(kPhaseParamsPerPart)
             ? v16Count - static_cast<std::size_t>(kPhaseParamsPerPart)
@@ -750,6 +759,10 @@ bool PresetStore::migratePartBank(const uint8_t* data, uint32_t oldCount,
         } else if (oldCount == static_cast<uint32_t>(target)) {
             grown.assign(target, 0);
             for (std::size_t i = 0; i < target; ++i)
+                grown[i] = params[i];
+        } else if (oldCount == static_cast<uint32_t>(v17Count)) {
+            grown.assign(v17Count, 0);
+            for (std::size_t i = 0; i < v17Count; ++i)
                 grown[i] = params[i];
         } else if (oldCount == static_cast<uint32_t>(v16Count)) {
             grown.assign(v16Count, 0);
@@ -931,10 +944,21 @@ bool PresetStore::migratePartBank(const uint8_t* data, uint32_t oldCount,
 
         /* Version 17 appends the ringmod block after the phase block. */
         if (grown.size() == v16Count) {
-            expanded.assign(target, 0);
+            expanded.assign(v17Count, 0);
             for (std::size_t i = 0; i < v16Count; ++i)
                 expanded[i] = grown[i];
-            for (std::size_t i = v16Count; i < target; ++i)
+            for (std::size_t i = v16Count; i < v17Count; ++i)
+                expanded[i] = i < defaults_.size() ? defaults_[i] : 0;
+            grown.swap(expanded);
+        }
+
+        /* Version 18 appends the key-follow breakpoint and the key/velocity
+         * on/off switches after every earlier part parameter. */
+        if (grown.size() == v17Count && raw[0] < 18u) {
+            expanded.assign(target, 0);
+            for (std::size_t i = 0; i < v17Count; ++i)
+                expanded[i] = grown[i];
+            for (std::size_t i = v17Count; i < target; ++i)
                 expanded[i] = i < defaults_.size() ? defaults_[i] : 0;
             grown.swap(expanded);
         }
