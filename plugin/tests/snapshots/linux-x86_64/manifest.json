@@ -107,12 +107,17 @@
     },
     "editor-part-params-ringmod-empty.png": {
       "height": 985,
-      "sha256": "a4ad65b2b0c3836ffa6477570eaee100a881c05853412799596f30d20f5c3954",
+      "sha256": "84b5633059a2674bbb1ecb7eb7360b7c37384bbac8ef946dae226cbf6a6cbbe7",
+      "width": 1240
+    },
+    "editor-part-params-ringmod-mid.png": {
+      "height": 985,
+      "sha256": "f48a3ea792bc6c7ab1ebac8f4e2c3528e8d5798475ba4cb288e013c070f5a02e",
       "width": 1240
     },
     "editor-part-params-ringmod.png": {
       "height": 985,
-      "sha256": "1b087d12da9e62c521884a6e9e386abec2be1a890cdb55046b31c6303e4e124a",
+      "sha256": "c49c00727c2294d86aeb1df261ba9d4109789fe3bdab84424f1e80128e43b531",
       "width": 1240
     },
     "editor-part-params.png": {

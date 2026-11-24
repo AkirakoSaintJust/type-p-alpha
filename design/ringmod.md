@@ -88,7 +88,10 @@ display face, and its outline is widened so it reads bold because the family shi
 single weight. The operator numbers are the current carriers, so the graph changes
 with the algorithm. The toggle is
 green when the pair is on. The level knob is a 42 px dial with the raw 0 to 99
-value, dimmed to 0.35 while the pair is off.
+value, dimmed to 0.35 while the pair is off. While the pair is on, a carrier whose
+original output is on gets a purple arrow from its box to the right edge, past the
+R, so the row shows that the carrier is heard directly. With the pair off, no direct
+arrow is drawn.
 
 The original-output row is an `original` caption and one toggle for each current
 carrier, labelled `op1` to `op4`. The toggle shows the label and a track, and the
@@ -110,10 +113,14 @@ restores them.
 
 The header algorithm graph carries the same R. While a pair is on, the pair's two
 carrier arrows become the R input arrows and one purple output; the other carriers
-keep their direct arrows. The header reads the active part's pair states each tick,
-so the ring is visible from every tab. With every active pair off the header draws
-the plain algorithm. The `R` takes the same bold Zen Dots face as the card, scaled
-to the graph's 20 by 14 box.
+keep their direct arrows. A carrier in an active pair whose original output is on
+gets a long purple tap beside the R, level with the R's output, so the graph shows
+that the carrier is still heard. The tap is drawn once per carrier, so a middle
+carrier in two pairs has one. When any pair is on, the direct arrow of a carrier
+outside the ring follows its original gate. The header reads the active part's pair
+states and four original gates each tick, so the ring is visible from every tab.
+With every active pair off the header draws the plain algorithm. The `R` takes the
+same bold Zen Dots face as the card, scaled to the graph's 20 by 14 box.
 
 ## Defaults and bypass
 

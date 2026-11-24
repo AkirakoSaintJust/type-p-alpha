@@ -904,6 +904,16 @@ int main(int argc, char** argv)
                  *editor,
                  directory.getChildFile("editor-part-params-ringmod.png")) &&
              ok;
+        /* Algorithm 5 has a middle carrier in both pairs. Both pairs on must
+         * still draw one direct arrow from that carrier in the header. */
+        p1editor->applyAlgorithm(5);
+        setRing("ring2_on.p0", 1.0f);
+        fill();
+        ok = saveSnapshot(
+                 *editor,
+                 directory.getChildFile("editor-part-params-ringmod-mid.png")) &&
+             ok;
+        setRing("ring2_on.p0", 0.0f);
         p1editor->applyAlgorithm(0);
         fill();
         ok = saveSnapshot(

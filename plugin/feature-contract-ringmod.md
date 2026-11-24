@@ -79,7 +79,9 @@ multi record check accepts the old record and the macro values start empty.
 
 The card fills the eighth part-params cell. Each pair row holds a 112 by 56 graph,
 an `on` toggle and a 42 px level knob. The graph is two pink operator boxes with
-their numbers, arrows into an outlined box labelled `R`, and a purple arrow out. The
+their numbers, arrows into an outlined box labelled `R`, and a purple arrow out. A
+carrier whose pair is on and whose original output is on also gets a purple arrow
+from its box to the right edge, past the R. The
 `R` is set in Zen Dots with a widened outline, because the family ships one weight. The
 level knob dims to 0.35 while the
 pair is off. The original row is an `original`
@@ -89,7 +91,9 @@ The card follows the algorithm on the next tick; a hidden pair keeps its paramet
 values and returns when its algorithm comes back. One carrier shows `no ringmod`
 and no controls. The header algorithm graph carries the R too: an active pair's two
 direct arrows become the R inputs and one purple output, and the header reads the
-active part's pair states on its tick, so the indicator follows the tab's part. The
+active part's pair states and four original gates on its tick, so the indicator
+follows the tab's part. An audible carrier in an active pair gets a long purple tap
+beside the R, drawn once per carrier, so a middle carrier in two pairs has one. The
 header `R` is in the same bold Zen Dots face, scaled for its 20 by 14 box. The
 wordmark's alpha now uses the Unbounded Bold cut, so its weight matches.
 
@@ -110,7 +114,9 @@ wordmark's alpha now uses the Unbounded Bold cut, so its weight matches.
   the shipped library. The import path reports a file it cannot read, so a rejected
   library no longer does nothing in silence.
 - The snapshots add `editor-part-params-ringmod.png` with four carriers, three pairs,
-  the first pair on and the header's R on that pair, and
+  the first pair on and the header's R on that pair, `editor-part-params-ringmod-mid.png`
+  with three carriers and both pairs on, where the middle carrier feeds two pairs and
+  still gets one direct tap, and
   `editor-part-params-ringmod-empty.png` with one carrier and `no ringmod`. The three
   existing part-params snapshots change because the card is in the grid, the original
   row is dimmed while the ring is off, and the pair graph's R is in Zen Dots. Every

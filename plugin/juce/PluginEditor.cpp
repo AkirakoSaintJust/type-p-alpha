@@ -181,6 +181,13 @@ public:
                 ring |= static_cast<uint8_t>(1u << i);
         }
         alg_.setRingMask(ring);
+        uint8_t direct = 0;
+        for (int i = 0; i < 4; ++i) {
+            if (std::lround(
+                    p1::ui::getParam(editor_, p1::params::carrierOut(i, part))) != 0)
+                direct |= static_cast<uint8_t>(1u << i);
+        }
+        alg_.setDirectMask(direct);
         setPatchName(editor_.processor().getPatchName());
         editor_.processor().readOutputScope(scratch_.data(),
                                             static_cast<int>(scratch_.size()));

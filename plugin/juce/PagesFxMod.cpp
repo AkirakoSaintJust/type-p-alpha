@@ -507,6 +507,15 @@ public:
         repaint();
     }
 
+    void setDirect(bool a, bool b)
+    {
+        if (directA_ == a && directB_ == b)
+            return;
+        directA_ = a;
+        directB_ = b;
+        repaint();
+    }
+
     void paint(juce::Graphics& g) override
     {
         constexpr int boxW = 24;
@@ -555,11 +564,29 @@ public:
                          static_cast<float>(outX - 6), static_cast<float>(outY - 3),
                          static_cast<float>(outX - 6), static_cast<float>(outY + 3));
         g.fillPath(head);
+        const auto directArrow = [&](int y) {
+            g.setColour(colour(tokens::purple));
+            g.drawLine(static_cast<float>(boxW + 2), static_cast<float>(y),
+                       static_cast<float>(outX - 5), static_cast<float>(y), 1.4f);
+            juce::Path directHead;
+            directHead.addTriangle(static_cast<float>(outX), static_cast<float>(y),
+                                   static_cast<float>(outX - 6),
+                                   static_cast<float>(y - 3),
+                                   static_cast<float>(outX - 6),
+                                   static_cast<float>(y + 3));
+            g.fillPath(directHead);
+        };
+        if (directA_)
+            directArrow(ay + boxH / 2);
+        if (directB_)
+            directArrow(by + boxH / 2);
     }
 
 private:
     int a_ = 0;
     int b_ = 0;
+    bool directA_ = false;
+    bool directB_ = false;
 };
 
 class RingmodCard : public P1Card {
@@ -623,6 +650,11 @@ public:
             auto& level = *level_[static_cast<std::size_t>(i)];
             level.setEnabled(on);
             level.setAlpha(on ? 1.0f : 0.35f);
+            if (i + 1 < carrierCount_)
+                graph_[static_cast<std::size_t>(i)].setDirect(
+                    on && carrierOutOn(carriers_[static_cast<std::size_t>(i)]),
+                    on && carrierOutOn(
+                              carriers_[static_cast<std::size_t>(i + 1)]));
         }
         bool anyOn = false;
         const int pairs = juce::jmax(0, carrierCount_ - 1);
@@ -637,6 +669,11 @@ public:
     }
 
 private:
+    bool carrierOutOn(int op) const
+    {
+        return std::lround(getParam(editor_, params::carrierOut(op, part_))) != 0;
+    }
+
     bool isCarrier(int op) const
     {
         for (int i = 0; i < carrierCount_; ++i)
@@ -654,9 +691,16 @@ private:
             graph_[row].setVisible(show);
             on_[row]->setVisible(show);
             level_[row]->setVisible(show);
-            if (show)
+            if (show) {
+                const bool on = std::lround(
+                                    getParam(editor_, params::ringOn(i, part_))) != 0;
                 graph_[row].setPair(carriers_[row],
                                     carriers_[static_cast<std::size_t>(i + 1)]);
+                graph_[row].setDirect(
+                    on && carrierOutOn(carriers_[row]),
+                    on && carrierOutOn(
+                              carriers_[static_cast<std::size_t>(i + 1)]));
+            }
         }
         const bool controls = carrierCount_ > 1;
         noRing_.setVisible(!controls);

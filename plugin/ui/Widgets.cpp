@@ -1915,6 +1915,14 @@ void P1AlgorithmBlock::setRingMask(uint8_t mask)
     repaint();
 }
 
+void P1AlgorithmBlock::setDirectMask(uint8_t mask)
+{
+    if (directMask_ == mask)
+        return;
+    directMask_ = mask;
+    repaint();
+}
+
 void P1AlgorithmBlock::paint(juce::Graphics& g)
 {
     const int textTop = (getHeight() - 50) / 2;
@@ -1933,7 +1941,7 @@ void P1AlgorithmBlock::paint(juce::Graphics& g)
     drawAlgorithmGraph(g, juce::Rectangle<float>(78.0f, 0.0f,
                                                  static_cast<float>(getWidth() - 78),
                                                  static_cast<float>(getHeight())),
-                       algorithm_, ringMask_);
+                       algorithm_, ringMask_, directMask_);
 }
 
 void P1AlgorithmBlock::mouseUp(const juce::MouseEvent& event)
@@ -2070,7 +2078,7 @@ void P1Dialog::mouseUp(const juce::MouseEvent& event)
 }
 
 void drawAlgorithmGraph(juce::Graphics& g, juce::Rectangle<float> area, int algorithm,
-                        uint8_t ringMask)
+                        uint8_t ringMask, uint8_t directMask)
 {
     struct Layout {
         float x[4];
@@ -2115,6 +2123,7 @@ void drawAlgorithmGraph(juce::Graphics& g, juce::Rectangle<float> area, int algo
         ringed[b] = true;
         ++ringCount;
     }
+    const bool anyRing = ringCount > 0;
     float minX = 1e9f, maxX = -1e9f, minY = 1e9f, maxY = -1e9f;
     for (int i = 0; i < 4; ++i) {
         const float x = layout.x[i];
@@ -2124,7 +2133,11 @@ void drawAlgorithmGraph(juce::Graphics& g, juce::Rectangle<float> area, int algo
         minY = juce::jmin(minY, y);
         maxY = juce::jmax(maxY, y + oph);
         for (int c = 0; c < layout.carCount; ++c) {
-            if (layout.cars[c] == i && !ringed[i])
+            if (layout.cars[c] != i)
+                continue;
+            const bool heard =
+                anyRing ? (directMask & (1u << i)) != 0 : true;
+            if (!ringed[i] && heard)
                 maxY = juce::jmax(maxY, y + oph + 13.0f);
         }
     }
@@ -2175,15 +2188,23 @@ void drawAlgorithmGraph(juce::Graphics& g, juce::Rectangle<float> area, int algo
         g.setColour(colour(tokens::bg));
         g.drawText("op" + juce::String(i + 1), rect,
                    juce::Justification::centred, false);
-        if (carrier && !ringed[i]) {
-            const auto start = point(x + opw * 0.5f, y + oph + 1.0f);
-            const auto end = point(x + opw * 0.5f, y + oph + 12.0f);
-            g.setColour(colour(tokens::purple));
-            g.drawLine({start, end}, 1.6f * scale);
-            juce::Path arrow;
-            arrow.addTriangle(end, end - juce::Point<float>(3.2f * scale, 4.0f * scale),
-                              end + juce::Point<float>(3.2f * scale, -4.0f * scale));
-            g.fillPath(arrow);
+        if (carrier) {
+            const bool heard =
+                anyRing ? (directMask & (1u << i)) != 0 : true;
+            if (heard) {
+                /* A ringed carrier that still feeds the original output gets a
+                 * long tap beside the R; a carrier outside the ring keeps the
+                 * short arrow below its box. */
+                const float tip = ringed[i] ? y + oph + 32.0f : y + oph + 12.0f;
+                const auto start = point(x + opw * 0.5f, y + oph + 1.0f);
+                const auto end = point(x + opw * 0.5f, tip);
+                g.setColour(colour(tokens::purple));
+                g.drawLine({start, end}, 1.6f * scale);
+                juce::Path arrow;
+                arrow.addTriangle(end, end - juce::Point<float>(3.2f * scale, 4.0f * scale),
+                                  end + juce::Point<float>(3.2f * scale, -4.0f * scale));
+                g.fillPath(arrow);
+            }
         }
     }
 
