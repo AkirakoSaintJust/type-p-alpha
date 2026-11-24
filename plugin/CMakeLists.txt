@@ -112,6 +112,7 @@ target_include_directories(p1_engine PUBLIC
 target_compile_definitions(p1_engine PRIVATE
     P1_MIDI_EXTERNAL
     "P1_STATE_PTR=${P1_STATE_PTR}"
+    "P1_PHASE_READ=${P1_PHASE_READ}"
 )
 add_dependencies(p1_engine p1_macro_targets)
 
