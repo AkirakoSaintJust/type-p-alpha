@@ -238,7 +238,7 @@ it replaced. The research pages in `docs/research/` carry the measurements of th
 discarded experiments. If a contract and this page disagree, the code and the
 current contract win, and the research page keeps the old number as history. The
 current manifest is 2,053 parameters with a 994-value part block and preset
-version 18.
+version 19.
 
 ## History
 

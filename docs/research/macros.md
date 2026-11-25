@@ -128,7 +128,7 @@ them on, and Vital and Pigments spend the equivalent effort on the route list.
 
 > **Note (2026-11-25):** at this study the manifest was 1,976 host parameters
 > (981 per part) and preset version 16. The current values are 2,053 parameters,
-> 994 per part and preset version 18.
+> 994 per part and preset version 19.
 
 At this study the manifest was 1,976 host parameters: 981 per part, 10 routing parameters for
 level, delay, channel, keyzone low and high, and 4 globals. (See the note above for

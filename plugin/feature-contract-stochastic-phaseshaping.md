@@ -22,7 +22,7 @@
   aliasing are recorded in the Evidence and Limits sections below.
 
 > **Current state (2026-11-25).** The manifest is 2,053 parameters with a
-> 994-value part block and preset version 18. The phase-map read is mode 11, the
+> 994-value part block and preset version 19. The phase-map read is mode 11, the
 > exact 1024-entry post-F table. The earlier phase-map slice below records the
 > original 1× F/segment read and the v16 migration; the **post-F direct table**
 > section near the end is the current read. Current minima on the 24-voice,
@@ -65,7 +65,7 @@ The feature covers four operators in each of the two parts:
 | follow amounts | 3 | 12 | 24 |
 | new parameters | 29 | 116 | 232 |
 
-- **Waves:** every wave, including wave 13 (`spectrum`) and its morph read. The
+- **Waves:** every wave, including wave 14 (`spectrum`) and its morph read. The
   map applies to the oscillator's own phase, not to the modulator.
 - **Voice modes:** poly and unison retrigger the phase envelope on every note.
   Mono and legato trigger it only on the first note of a phrase. The amp
@@ -274,7 +274,7 @@ reorder through a zero crossing or a silent flat:
 4. Lock every span whose y range contains a protected point. A locked segment
    never flips and never takes part in a reorder swap.
 
-The 13 fixed waves build their mask from their mip-0 table on first use. Wave 13
+The 14 fixed waves build their mask from their mip-0 table on first use. Wave 14
 builds two masks from the regenerated additive bank, one for spectrum a and one
 for b, and combines them with the part's base `morph` `m` in Q8:
 
@@ -410,7 +410,7 @@ engine path rather than a flag on the existing one.
 
 The measured 1× worst case before the post-F table was 2.01× the phase-off
 baseline: 24 voices, four operators on, 32 segments, the maximum event rates, both
-modulation sources, wave 13 and 1,000 blocks. The post-F table removes the
+modulation sources, wave 14 and 1,000 blocks. The post-F table removes the
 per-sample segment lookup, so the current worst case is about 1.5× the baseline
 (the minimum of interleaved runs; the static map falls from 81.5 to 66.1 ms and
 the worst from 83.5 to 78.4 ms in the baseline build). The 1.6× figure was the
@@ -664,7 +664,7 @@ follow positions and the CPU ratio.
 | velocity follow | velocities 20 and 120, amount 25 | 539 and 736 |
 | trigger | poly and legato | poly resets, legato holds |
 | parts | part 0 and part 1 | separate breakpoints, counts and seeds |
-| wave 13 | a/b spectra and base morph | mask non-empty and unchanged by segment count |
+| wave 14 | a/b spectra and base morph | mask non-empty and unchanged by segment count |
 | render | 48,000 frames | finite and not silent |
 | CPU | 24 voices, four operators, worst case | about 1.5× the phase-off baseline; static 66.1 vs 81.5 ms |
 
@@ -679,7 +679,7 @@ render, and the aliasing limit is recorded below.
 
 | Other evidence | Result |
 | --- | --- |
-| `preset_smoke` | old versions load through the current version 18 append; the part block is 994 values |
+| `preset_smoke` | old versions load through the current version 19 remap; the part block is 994 values |
 | snapshots | 31 PNGs and the manifest; the two phase pages are new |
 | manifest | 2,053 parameters and a 994-value part block |
 | suite | 17/17 local; the feature run passed Linux, Windows, macOS, TSan and CodeQL |
@@ -700,7 +700,7 @@ render, and the aliasing limit is recorded below.
 
 - **CPU:** baseline 24 voices, four operators, phase off, 48 kHz; worst case 24
   voices, four operators all on, 32 segments, the maximum event rates, 100% flip
-  and reorder, both modulation sources, wave 13. Render 1,000 blocks and divide
+  and reorder, both modulation sources, wave 14. Render 1,000 blocks and divide
   by the baseline. The current read is about **1.5×** with the post-F table; the
   static map is 66.1 ms against 81.5 ms in the baseline build. The 1.6× gate was
   the budget for the 2× design; the current 1× leaves almost no room, and the 2×
@@ -732,7 +732,7 @@ render, and the aliasing limit is recorded below.
 - **Reorder is local reflected swaps.** It is not the lab's full permutation or
   its forward jump with wraparound. The `jump` knob widens the distance, and a
   jump past the last position reflects back into the active range.
-- **The map is not a new oscillator.** The 13 waves and the additive bank are
+- **The map is not a new oscillator.** The 14 waves and the additive bank are
   unchanged. Only the phase walking through them moves.
 - **No factory preset.** The init state is fully off. The demo above is for the
   golden, not a bank slot.
@@ -748,7 +748,7 @@ render, and the aliasing limit is recorded below.
   and an unmapped modulator stay aligned. A future 2× path would need the
   per-voice alignment delay described in the 1× section above.
 - **Locks.** The full lab rule is in the node: the fixed waves build a mask from
-  their mip-0 table, and wave 13 interpolates the a and b masks at the base
+  their mip-0 table, and wave 14 interpolates the a and b masks at the base
   morph. A voice's live morph is not in the mask; that is the recorded limit.
 - **Clicks.** Reorder jumps are intentional and no crossfade was added. If a
   listening test asks for one, add a short crossfade at the join and re-measure;
@@ -759,7 +759,7 @@ render, and the aliasing limit is recorded below.
   uses the current target count. Set `v15Count` and `v14Count` as above and test
   v15 before v14/v13; otherwise the fade slots land in the wrong place.
 - **Rollback.** Remove the tab and the 232 phase parameters. A rollback after the
-  current version must keep preset version 18 and add a removal migration; do not
+  current version must keep preset version 19 and add a removal migration; do not
   return the version byte to 15.
 
 ## Files

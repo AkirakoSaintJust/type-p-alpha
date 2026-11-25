@@ -421,7 +421,7 @@ inline juce::StringArray waveNames()
 {
     return {"sine", "triangle", "half sine", "half tri", "2x sine", "2x tri",
             "2x half sine", "2x half tri", "rect sine", "rect tri", "pulse",
-            "square", "saw", "spectrum"};
+            "half square", "square", "saw", "spectrum"};
 }
 
 inline juce::StringArray lfoWaveNames()

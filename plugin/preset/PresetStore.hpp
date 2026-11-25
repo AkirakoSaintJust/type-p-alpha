@@ -144,6 +144,16 @@ public:
         std::sort(fadeBases_.begin(), fadeBases_.end());
     }
 
+    /* The part-block index of `algorithm` and of each operator's `waveform`,
+     * used to remap a version 18 record: version 19 inserts the half square
+     * after pulse and two algorithms after 4 and 6. -1 means the caller has no
+     * layout, so the values stay as they are. */
+    void setInsertionIndices(int algorithm, const std::array<int, 4>& waves)
+    {
+        algorithmIndex_ = algorithm;
+        waveIndices_ = waves;
+    }
+
     /* Drop the queued changes after the file holds them. */
     void markSaved();
 
@@ -208,6 +218,8 @@ private:
     int filterEnvBase_ = -1;
     std::array<int, 4> specEnvBase_{{ -1, -1, -1, -1 }};
     std::array<int, 34> fadeBases_{};
+    int algorithmIndex_ = -1;
+    std::array<int, 4> waveIndices_{{ -1, -1, -1, -1 }};
 };
 
 } // namespace p1

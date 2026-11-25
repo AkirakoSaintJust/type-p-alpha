@@ -114,7 +114,7 @@ public:
         alg_.onWheel = [this](int direction) {
             const int current = static_cast<int>(std::lround(p1::ui::getParam(
                 editor_, p1::params::algorithm(editor_.activePart()))));
-            editor_.applyAlgorithm((current + direction + 8) % 8);
+            editor_.applyAlgorithm((current + direction + 10) % 10);
         };
         addAndMakeVisible(alg_);
 
@@ -564,9 +564,9 @@ private:
 class AlgPickerBody : public juce::Component {
 public:
     explicit AlgPickerBody(int selected)
-        : selected_(juce::jlimit(0, 7, selected))
+        : selected_(juce::jlimit(0, 9, selected))
     {
-        for (int i = 0; i < 8; ++i) {
+        for (int i = 0; i < 10; ++i) {
             tiles_[static_cast<size_t>(i)] = std::make_unique<AlgTile>(
                 i, [this](int index) { select(index); });
             tiles_[static_cast<size_t>(i)]->setSelected(i == selected_);
@@ -585,9 +585,9 @@ public:
     void resized() override
     {
         auto area = getLocalBounds();
-        auto grid = area.removeFromTop(2 * 140 + 8);
+        auto grid = area.removeFromTop(3 * 140 + 16);
         const int width = (grid.getWidth() - 24) / 4;
-        for (int i = 0; i < 8; ++i) {
+        for (int i = 0; i < 10; ++i) {
             const int column = i % 4;
             const int row = i / 4;
             tiles_[static_cast<size_t>(i)]->setBounds(
@@ -599,13 +599,13 @@ public:
 private:
     void select(int index)
     {
-        selected_ = juce::jlimit(0, 7, index);
-        for (int i = 0; i < 8; ++i)
+        selected_ = juce::jlimit(0, 9, index);
+        for (int i = 0; i < 10; ++i)
             tiles_[static_cast<size_t>(i)]->setSelected(i == selected_);
     }
 
     int selected_ = 4;
-    std::array<std::unique_ptr<AlgTile>, 8> tiles_{};
+    std::array<std::unique_ptr<AlgTile>, 10> tiles_{};
     juce::Label note_;
 };
 
@@ -910,7 +910,7 @@ void PluginEditor::showAlgorithmPicker()
     auto body = std::make_unique<AlgPickerBody>(current);
     auto* bodyPtr = body.get();
     dialog_ = std::make_unique<p1::ui::P1Dialog>(
-        "algorithm", std::move(body), 780, 490,
+        "algorithm", std::move(body), 780, 600,
         juce::StringArray{"load", "cancel"},
         [this, bodyPtr](int index) {
             if (index == 0)
@@ -926,7 +926,7 @@ void PluginEditor::showAlgorithmPicker()
 void PluginEditor::applyAlgorithm(int algorithm)
 {
     p1::ui::setParam(*this, p1::params::algorithm(activePart_),
-                     juce::jlimit(0, 7, algorithm));
+                     juce::jlimit(0, 9, algorithm));
     if (header_ != nullptr)
         header_->tick();
 }
@@ -1417,7 +1417,7 @@ void PluginEditor::pasteOperatorSection(int op, int part,
         if (auto* parameter = state().getParameter(
                 p1::params::opWaveform(op, part))) {
             parameter->setValueNotifyingHost(
-                parameter->convertTo0to1(13.0f));
+                parameter->convertTo0to1(14.0f));
         }
     }
     buildPage();

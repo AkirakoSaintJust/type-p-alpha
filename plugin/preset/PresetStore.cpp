@@ -140,6 +140,46 @@ void remapAbsFilterBlock(const std::vector<int32_t>& in, int oldBase,
     put(9, 1);
 }
 
+/* Version 19 inserts the half square at waveform 11, so the old square, saw and
+ * spectrum move up one. Values below 11 keep their meaning. */
+int32_t remapWaveform19(int32_t value)
+{
+    return value >= 11 && value <= 13 ? value + 1 : value;
+}
+
+/* Version 19 inserts one algorithm after 4 and another after 6, so the old
+ * algorithms 5, 6 and 7 become 6, 7 and 9. */
+int32_t remapAlgorithm19(int32_t value)
+{
+    if (value == 5)
+        return 6;
+    if (value == 6)
+        return 7;
+    if (value == 7)
+        return 9;
+    return value;
+}
+
+/* Shift the algorithm and waveform values of a version 18 (or earlier) record.
+ * The record length is unchanged, so this runs on both the grow path and the
+ * same-size load path. */
+void remapInsertionValues(std::vector<int32_t>& params, uint8_t version,
+                          int algorithmIndex,
+                          const std::array<int, 4>& waveIndices)
+{
+    if (version >= 19u)
+        return;
+    const auto size = static_cast<int>(params.size());
+    if (algorithmIndex >= 0 && algorithmIndex < size)
+        params[static_cast<std::size_t>(algorithmIndex)] =
+            remapAlgorithm19(params[static_cast<std::size_t>(algorithmIndex)]);
+    for (const int index : waveIndices) {
+        if (index >= 0 && index < size)
+            params[static_cast<std::size_t>(index)] =
+                remapWaveform19(params[static_cast<std::size_t>(index)]);
+    }
+}
+
 } // namespace
 
 PresetStore::PresetStore(int partParamCount, int partCount,
@@ -328,6 +368,7 @@ bool PresetStore::loadPartBank(const uint8_t* data, std::size_t size)
                                params.data())) {
             if (panEnvBase_ >= 0 && raw[0] < 12u)
                 remapPanBlock(params, panEnvBase_);
+            remapInsertionValues(params, raw[0], algorithmIndex_, waveIndices_);
             if (raw[0] < PRESET_CUTOFF_LAW_VERSION && cutoffIndex_ >= 0)
                 params[static_cast<std::size_t>(cutoffIndex_)] =
                     p1::cutoffOldToNew(
@@ -519,6 +560,7 @@ bool PresetStore::loadLibrary(const uint8_t* data, std::size_t size)
     staging.setOffsetEnvelopeIndices(fbEnvBase_, pitchEnvBase_);
     staging.setAbsEnvelopeIndices(filterEnvBase_, specEnvBase_);
     staging.setLfoFadeIndices(fadeBases_);
+    staging.setInsertionIndices(algorithmIndex_, waveIndices_);
     if (!staging.loadPartBank(partData, partSize) ||
         !staging.loadMultiBank(multiData, multiSize))
         return false;
@@ -965,6 +1007,9 @@ bool PresetStore::migratePartBank(const uint8_t* data, uint32_t oldCount,
 
         if (grown.size() < target)
             grown.resize(target, 0);
+        /* Version 19 inserts the half square and two algorithms, so the stored
+         * values shift even though the record length does not. */
+        remapInsertionValues(grown, raw[0], algorithmIndex_, waveIndices_);
         if (raw[0] < PRESET_CUTOFF_LAW_VERSION && cutoffIndex_ >= 0 &&
             cutoffIndex_ < partParamCount_)
             grown[static_cast<std::size_t>(cutoffIndex_)] =

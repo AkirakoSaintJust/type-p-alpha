@@ -12,7 +12,7 @@ The reasons for abandoning Type P.fm1 are that I've decided to disengage from th
 
 - The usual output level, frequency ratio and detune controls.
 - Bipolar phase modulation feedback, with a dedicated LFO and envelope.
-- A set of 13 waveforms: the full OPL3 and OPZ/TX81z/DX11/V50 set, plus `rect tri`, with the tables generated from formulas rather than copied from the chips.
+- A set of 14 waveforms: the full OPL3 and OPZ/TX81z/DX11/V50 set, plus `rect tri` and `half square`, with the tables generated from formulas rather than copied from the chips.
 - An amplitude LFO over a warm-up, a surge and two decay stages, with four modes.
 - A pitch LFO for evolving PM timbres.
 - An additive spectral mode with two 64-harmonic tables, an LFO and envelope for morphing between them, and spectral controls inspired by the Kawai K5.
@@ -89,7 +89,7 @@ References:
 The build fetches JUCE 9.0.5 and the pinned `clap-juce-extensions` commit at
 configure time. It also needs CMake 3.22, Ninja, clang, and the platform JUCE
 dependencies. The current manifest is 2,053 parameters (994 per part) and the
-preset record is version 18.
+preset record is version 19.
 
 ```sh
 cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release \
@@ -127,8 +127,10 @@ docker/build.sh linux/amd64
 The compiler is clang on every platform, so the Windows script uses clang-cl with
 lld-link and macOS uses AppleClang. The modern Windows package is
 `Type-P.alpha-windows-x86_64-avx2.zip`; the baseline package is
-`Type-P.alpha-windows-x86_64.zip`. See [`docker/README.md`](docker/README.md) for
-more info on the platform matrix, sanitizer build and clang tooling.
+`Type-P.alpha-windows-x86_64.zip`, and the release also attaches the modern
+universal macOS package `Type-P.alpha-macos-universal-modern.zip`. See
+[`docker/README.md`](docker/README.md) for more info on the platform matrix,
+sanitizer build and clang tooling.
 
 The plugin compiles into `build/plugin/juce/type_p_alpha_artefacts/Release/`:
 

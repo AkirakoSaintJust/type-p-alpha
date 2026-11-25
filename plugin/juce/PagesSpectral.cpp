@@ -18,7 +18,7 @@ bool isCarrier(int algorithm, int op)
         {3, -1, -1, -1}, {3, -1, -1, -1}, {3, -1, -1, -1}, {3, -1, -1, -1},
         {1, 3, -1, -1},  {1, 2, 3, -1},   {1, 2, 3, -1},   {0, 1, 2, 3},
     };
-    algorithm = juce::jlimit(0, 7, algorithm);
+    algorithm = juce::jlimit(0, 9, algorithm);
     for (int value : cars[algorithm]) {
         if (value == op)
             return true;

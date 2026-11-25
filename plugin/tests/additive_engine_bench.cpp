@@ -122,7 +122,7 @@ int main(int argc, char** argv)
         p1_additive_morph_start = 0;
         p1_additive_morph_step = 0;
         p1_additive_morph_now = 0;
-        setEngineParam(engine, "algorithm.p0", 7);
+        setEngineParam(engine, "algorithm.p0", 9);
         setEngineParam(engine, "level.p1", 0);
         setEngineParam(engine, "op1_level.p0", 99);
         setEngineParam(engine, "op1_feedback.p0", 0);

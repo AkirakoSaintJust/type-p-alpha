@@ -73,7 +73,8 @@ int main()
      * from the current count. A param that joins the part record without a
      * migration step shifts every later index and misreads an old record as an
      * even older one, so the count is pinned here. Version 18 appends the three
-     * key-follow rows and has its own append step. */
+     * key-follow rows and has its own append step. Version 19 keeps the record
+     * length and only remaps the algorithm and waveform values. */
     check(kP1PartParamCount == 994,
           "the part record has the ringmod block");
     const auto fades = lfoFadeIndices();
@@ -949,6 +950,57 @@ int main()
                   params[static_cast<std::size_t>(oldCount) + 1u] == 1 &&
                   params[static_cast<std::size_t>(oldCount) + 2u] == 1,
               "the version 17 key follow slots default");
+    }
+
+    /* A version 18 record stores the pre-insertion algorithm and wave numbers.
+     * Version 19 inserts the half square at 11 and two algorithms, so the loader
+     * must shift the stored values even though the record length is unchanged. */
+    {
+        const auto indexOf = [](const char* name) {
+            for (int i = 0; i < kP1PartParamCount; ++i) {
+                if (std::string(name) ==
+                    kP1ParamSpecs[static_cast<std::size_t>(i)].id)
+                    return i;
+            }
+            return -1;
+        };
+        const int algorithm = indexOf("algorithm.p0");
+        const std::array<int, 4> waves = {
+            indexOf("op1_waveform.p0"), indexOf("op2_waveform.p0"),
+            indexOf("op3_waveform.p0"), indexOf("op4_waveform.p0")};
+        check(algorithm > 0 && waves[0] > 0 && waves[3] > waves[0],
+              "find the algorithm and waveform slots");
+
+        std::vector<int32_t> oldParams(
+            static_cast<std::size_t>(kP1PartParamCount), 0);
+        oldParams[static_cast<std::size_t>(algorithm)] = 6;
+        oldParams[static_cast<std::size_t>(waves[0])] = 10;
+        oldParams[static_cast<std::size_t>(waves[1])] = 11;
+        oldParams[static_cast<std::size_t>(waves[2])] = 12;
+        oldParams[static_cast<std::size_t>(waves[3])] = 13;
+
+        const auto record = PP_RECORD(static_cast<uint32_t>(kP1PartParamCount));
+        std::vector<uint8_t> oldBank(
+            static_cast<std::size_t>(record) * p1::PresetStore::kPartSlots,
+            0xFF);
+        preset_part_pack(oldBank.data(), "v18", oldParams.data(),
+                         static_cast<uint32_t>(kP1PartParamCount));
+        setRecordVersion(oldBank.data(), static_cast<uint32_t>(kP1PartParamCount),
+                         18u);
+
+        p1::PresetStore v18{kP1PartParamCount, kP1PartCount,
+                            p1::partParamDefaults(), kP1PartCutoffIndex};
+        v18.setInsertionIndices(algorithm, waves);
+        check(v18.loadPartBank(oldBank.data(), oldBank.size()),
+              "load a version 18 part bank");
+        const auto& params = v18.partParams(0);
+        check(params[static_cast<std::size_t>(algorithm)] == 7,
+              "the version 18 algorithm moves to the inserted slot");
+        check(params[static_cast<std::size_t>(waves[0])] == 10 &&
+                  params[static_cast<std::size_t>(waves[1])] == 12 &&
+                  params[static_cast<std::size_t>(waves[2])] == 13 &&
+                  params[static_cast<std::size_t>(waves[3])] == 14,
+              "the version 18 wave numbers move after the half square");
     }
 
     std::printf("preset: %s\n", failures ? "FAILED" : "passed");

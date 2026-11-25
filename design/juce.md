@@ -338,7 +338,7 @@ order.
   parameters.
 - op spectra a and op spectra b: per operator, the 64 a levels, the 64 b levels,
   the two ranges, the morph value, the morph envelope and the morph LFO. The
-  waveform parameter grows to 0 to 13, with `spectrum` at 13.
+  waveform parameter grows to 0 to 14, with `spectrum` at 14.
 - global: algorithm and patch name.
 
 Use stable parameter IDs derived from the manifest. Host automation, state save and

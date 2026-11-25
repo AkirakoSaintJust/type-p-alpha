@@ -20,10 +20,10 @@ KnobLookAndFeel& knobLookAndFeel()
     return lnf;
 }
 
-const char* const waveNames[14] = {
+const char* const waveNames[15] = {
     "sine",      "triangle", "half sine", "half tri", "2x sine", "2x tri",
-    "2x half sine", "2x half tri", "rect sine", "rect tri", "pulse", "square",
-    "saw", "spectrum"};
+    "2x half sine", "2x half tri", "rect sine", "rect tri", "pulse",
+    "half square", "square", "saw", "spectrum"};
 
 juce::String signedNumber(int value)
 {
@@ -131,7 +131,7 @@ juce::String formatParamValue(const P1ParamSpec& spec, double value)
     if (display == "semitones")
         return signedNumber(v) + "st";
     if (display == "wave") {
-        if (v >= 0 && v < 14)
+        if (v >= 0 && v < 15)
             return waveNames[v];
         return juce::String(v);
     }
@@ -2005,7 +2005,7 @@ P1AlgorithmBlock::P1AlgorithmBlock()
 
 void P1AlgorithmBlock::setAlgorithm(int algorithm)
 {
-    algorithm_ = juce::jlimit(0, 7, algorithm);
+    algorithm_ = juce::jlimit(0, 9, algorithm);
     repaint();
 }
 
@@ -2190,19 +2190,21 @@ void drawAlgorithmGraph(juce::Graphics& g, juce::Rectangle<float> area, int algo
         int cars[4];
         int carCount;
     };
-    static const Layout layouts[8] = {
+    static const Layout layouts[10] = {
         {{60, 60, 60, 60}, {6, 34, 62, 90}, {{0, 1}, {1, 2}, {2, 3}, {0, 0}}, 3, {3, 0, 0, 0}, 1},
         {{18, 92, 55, 55}, {6, 6, 44, 82}, {{0, 2}, {1, 2}, {2, 3}, {0, 0}}, 3, {3, 0, 0, 0}, 1},
         {{16, 96, 96, 56}, {6, 6, 44, 82}, {{1, 2}, {0, 3}, {2, 3}, {0, 0}}, 3, {3, 0, 0, 0}, 1},
         {{80, 22, 138, 80}, {6, 46, 46, 86}, {{0, 1}, {0, 2}, {1, 3}, {2, 3}}, 4, {3, 0, 0, 0}, 1},
         {{32, 32, 108, 108}, {10, 50, 10, 50}, {{0, 1}, {2, 3}, {0, 0}, {0, 0}}, 2, {1, 3, 0, 0}, 2},
+        {{32, 128, 80, 128}, {10, 10, 50, 90}, {{0, 2}, {2, 1}, {2, 3}, {0, 0}}, 3, {1, 3, 0, 0}, 2},
         {{80, 10, 80, 150}, {8, 58, 58, 58}, {{0, 1}, {0, 2}, {0, 3}, {0, 0}}, 3, {1, 2, 3, 0}, 3},
         {{24, 24, 90, 156}, {8, 58, 58, 58}, {{0, 1}, {0, 0}, {0, 0}, {0, 0}}, 1, {1, 2, 3, 0}, 3},
+        {{24, 24, 90, 156}, {8, 58, 58, 58}, {{0, 1}, {0, 2}, {0, 0}, {0, 0}}, 2, {1, 2, 3, 0}, 3},
         {{16, 66, 116, 166}, {38, 38, 38, 38}, {{0, 0}, {0, 0}, {0, 0}, {0, 0}}, 0, {0, 1, 2, 3}, 4},
     };
     const float opw = 36.0f;
     const float oph = 18.0f;
-    const auto& layout = layouts[juce::jlimit(0, 7, algorithm)];
+    const auto& layout = layouts[juce::jlimit(0, 9, algorithm)];
     struct RingBox {
         float cx = 0.0f;
         float y = 0.0f;

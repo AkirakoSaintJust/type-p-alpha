@@ -259,7 +259,7 @@ the routing graph. The graph is 240 by 128 in the viewBox, scaled to about 244 b
 tiles share one optical centre. White operators are modulators, pink operators are
 carriers, grey lines are modulation, and purple downward arrows mark carrier
 output. Clicking the block opens the algorithm picker, whilst the mouse wheel over
-the block cycles the eight algorithms without opening the picker.
+the block cycles the ten algorithms without opening the picker.
 
 The output section is a label plus a `scope` and `spectro` segmented control, with
 the active segment in purple. The plot is 50px high, borderless, black. A `volume`

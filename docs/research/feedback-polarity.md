@@ -21,7 +21,7 @@ separate `engine_parity` test passed against the captured reference, so the
 positive path (`neg` at 0) is bit-exact.
 
 The test used one sine operator: note 60, velocity 100, ratio 1.0, level 99,
-algorithm 7, the other three operators muted, a flat DX envelope (`r1..r4` and
+algorithm 9, the other three operators muted, a flat DX envelope (`r1..r4` and
 `l1..l3` at 99), the filter off, and no amplitude LFO. It rendered 8,192 frames
 at 44.1 kHz, skipped the first 2,048, and applied a Hann-windowed DFT at the
 exact harmonic frequencies, with a fresh engine state for each render. The engine

@@ -1746,7 +1746,7 @@ typedef struct { uint32_t id; const char *name; int32_t min, max, def;
 const dsp_param type_p_alpha_dsp_params[2053] = {
     { 0u, "op1_ratio.p0", 32768, 1048576, 65536, 0u, 0u, "" },
     { 1u, "op1_detune.p0", -50, 50, 0, 0u, 0u, "" },
-    { 2u, "op1_waveform.p0", 0, 13, 0, 0u, 0u, "" },
+    { 2u, "op1_waveform.p0", 0, 14, 0, 0u, 0u, "" },
     { 3u, "op1_spec_range_a.p0", 0, 1, 0, 0u, 0u, "" },
     { 4u, "op1_spec_range_b.p0", 0, 1, 0, 0u, 0u, "" },
     { 5u, "op1_spec_a1.p0", 0, 99, 99, 0u, 0u, "" },
@@ -1947,7 +1947,7 @@ const dsp_param type_p_alpha_dsp_params[2053] = {
     { 200u, "op1_spec_lfo_depth_fade.p0", 0, 99, 0, 0u, 0u, "" },
     { 201u, "op2_ratio.p0", 32768, 1048576, 65536, 0u, 0u, "" },
     { 202u, "op2_detune.p0", -50, 50, 0, 0u, 0u, "" },
-    { 203u, "op2_waveform.p0", 0, 13, 0, 0u, 0u, "" },
+    { 203u, "op2_waveform.p0", 0, 14, 0, 0u, 0u, "" },
     { 204u, "op2_spec_range_a.p0", 0, 1, 0, 0u, 0u, "" },
     { 205u, "op2_spec_range_b.p0", 0, 1, 0, 0u, 0u, "" },
     { 206u, "op2_spec_a1.p0", 0, 99, 99, 0u, 0u, "" },
@@ -2148,7 +2148,7 @@ const dsp_param type_p_alpha_dsp_params[2053] = {
     { 401u, "op2_spec_lfo_depth_fade.p0", 0, 99, 0, 0u, 0u, "" },
     { 402u, "op3_ratio.p0", 32768, 1048576, 196608, 0u, 0u, "" },
     { 403u, "op3_detune.p0", -50, 50, 0, 0u, 0u, "" },
-    { 404u, "op3_waveform.p0", 0, 13, 0, 0u, 0u, "" },
+    { 404u, "op3_waveform.p0", 0, 14, 0, 0u, 0u, "" },
     { 405u, "op3_spec_range_a.p0", 0, 1, 0, 0u, 0u, "" },
     { 406u, "op3_spec_range_b.p0", 0, 1, 0, 0u, 0u, "" },
     { 407u, "op3_spec_a1.p0", 0, 99, 99, 0u, 0u, "" },
@@ -2349,7 +2349,7 @@ const dsp_param type_p_alpha_dsp_params[2053] = {
     { 602u, "op3_spec_lfo_depth_fade.p0", 0, 99, 0, 0u, 0u, "" },
     { 603u, "op4_ratio.p0", 32768, 1048576, 131072, 0u, 0u, "" },
     { 604u, "op4_detune.p0", -50, 50, 0, 0u, 0u, "" },
-    { 605u, "op4_waveform.p0", 0, 13, 0, 0u, 0u, "" },
+    { 605u, "op4_waveform.p0", 0, 14, 0, 0u, 0u, "" },
     { 606u, "op4_spec_range_a.p0", 0, 1, 0, 0u, 0u, "" },
     { 607u, "op4_spec_range_b.p0", 0, 1, 0, 0u, 0u, "" },
     { 608u, "op4_spec_a1.p0", 0, 99, 99, 0u, 0u, "" },
@@ -2548,7 +2548,7 @@ const dsp_param type_p_alpha_dsp_params[2053] = {
     { 801u, "op4_spec_lfo_mode.p0", 0, 1, 1, 0u, 0u, "" },
     { 802u, "op4_spec_lfo_rate_fade.p0", 0, 99, 0, 0u, 0u, "" },
     { 803u, "op4_spec_lfo_depth_fade.p0", 0, 99, 0, 0u, 0u, "" },
-    { 804u, "algorithm.p0", 0, 7, 4, 0u, 0u, "" },
+    { 804u, "algorithm.p0", 0, 9, 4, 0u, 0u, "" },
     { 805u, "ring1_on.p0", 0, 1, 0, 0u, 0u, "" },
     { 806u, "ring1_level.p0", 0, 99, 99, 0u, 0u, "" },
     { 807u, "ring2_on.p0", 0, 1, 0, 0u, 0u, "" },
@@ -2740,7 +2740,7 @@ const dsp_param type_p_alpha_dsp_params[2053] = {
     { 993u, "op4_phase_env_mode.p0", 0, 3, 1, 0u, 0u, "" },
     { 994u, "op1_ratio.p1", 32768, 1048576, 65536, 0u, 0u, "" },
     { 995u, "op1_detune.p1", -50, 50, 0, 0u, 0u, "" },
-    { 996u, "op1_waveform.p1", 0, 13, 0, 0u, 0u, "" },
+    { 996u, "op1_waveform.p1", 0, 14, 0, 0u, 0u, "" },
     { 997u, "op1_spec_range_a.p1", 0, 1, 0, 0u, 0u, "" },
     { 998u, "op1_spec_range_b.p1", 0, 1, 0, 0u, 0u, "" },
     { 999u, "op1_spec_a1.p1", 0, 99, 99, 0u, 0u, "" },
@@ -2941,7 +2941,7 @@ const dsp_param type_p_alpha_dsp_params[2053] = {
     { 1194u, "op1_spec_lfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
     { 1195u, "op2_ratio.p1", 32768, 1048576, 65536, 0u, 0u, "" },
     { 1196u, "op2_detune.p1", -50, 50, 0, 0u, 0u, "" },
-    { 1197u, "op2_waveform.p1", 0, 13, 0, 0u, 0u, "" },
+    { 1197u, "op2_waveform.p1", 0, 14, 0, 0u, 0u, "" },
     { 1198u, "op2_spec_range_a.p1", 0, 1, 0, 0u, 0u, "" },
     { 1199u, "op2_spec_range_b.p1", 0, 1, 0, 0u, 0u, "" },
     { 1200u, "op2_spec_a1.p1", 0, 99, 99, 0u, 0u, "" },
@@ -3142,7 +3142,7 @@ const dsp_param type_p_alpha_dsp_params[2053] = {
     { 1395u, "op2_spec_lfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
     { 1396u, "op3_ratio.p1", 32768, 1048576, 196608, 0u, 0u, "" },
     { 1397u, "op3_detune.p1", -50, 50, 0, 0u, 0u, "" },
-    { 1398u, "op3_waveform.p1", 0, 13, 0, 0u, 0u, "" },
+    { 1398u, "op3_waveform.p1", 0, 14, 0, 0u, 0u, "" },
     { 1399u, "op3_spec_range_a.p1", 0, 1, 0, 0u, 0u, "" },
     { 1400u, "op3_spec_range_b.p1", 0, 1, 0, 0u, 0u, "" },
     { 1401u, "op3_spec_a1.p1", 0, 99, 99, 0u, 0u, "" },
@@ -3343,7 +3343,7 @@ const dsp_param type_p_alpha_dsp_params[2053] = {
     { 1596u, "op3_spec_lfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
     { 1597u, "op4_ratio.p1", 32768, 1048576, 131072, 0u, 0u, "" },
     { 1598u, "op4_detune.p1", -50, 50, 0, 0u, 0u, "" },
-    { 1599u, "op4_waveform.p1", 0, 13, 0, 0u, 0u, "" },
+    { 1599u, "op4_waveform.p1", 0, 14, 0, 0u, 0u, "" },
     { 1600u, "op4_spec_range_a.p1", 0, 1, 0, 0u, 0u, "" },
     { 1601u, "op4_spec_range_b.p1", 0, 1, 0, 0u, 0u, "" },
     { 1602u, "op4_spec_a1.p1", 0, 99, 99, 0u, 0u, "" },
@@ -3542,7 +3542,7 @@ const dsp_param type_p_alpha_dsp_params[2053] = {
     { 1795u, "op4_spec_lfo_mode.p1", 0, 1, 1, 0u, 0u, "" },
     { 1796u, "op4_spec_lfo_rate_fade.p1", 0, 99, 0, 0u, 0u, "" },
     { 1797u, "op4_spec_lfo_depth_fade.p1", 0, 99, 0, 0u, 0u, "" },
-    { 1798u, "algorithm.p1", 0, 7, 4, 0u, 0u, "" },
+    { 1798u, "algorithm.p1", 0, 9, 4, 0u, 0u, "" },
     { 1799u, "ring1_on.p1", 0, 1, 0, 0u, 0u, "" },
     { 1800u, "ring1_level.p1", 0, 99, 99, 0u, 0u, "" },
     { 1801u, "ring2_on.p1", 0, 1, 0, 0u, 0u, "" },
@@ -8037,8 +8037,8 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
         /* control-rate summer: add the two control inputs. */
         psum_cv_x[v] = plfo_cv_x[v] + penv_cv_x[v];
         /* the FM algorithm selector (control rate): echo the algorithm for the router.
-           The 8 shipped routings clamp at 7. */
-        uint32_t alg = algo_algorithm[voice_part[v]] > 7u ? 7u : algo_algorithm[voice_part[v]];
+           The 10 shipped routings clamp at 9. */
+        uint32_t alg = algo_algorithm[voice_part[v]] > 9u ? 9u : algo_algorithm[voice_part[v]];
         algo_alg_x[v] = (int32_t)alg;
         /* Per-part signed phase envelope. The pool is one per operator, indexed by the
            part; the first active voice advances it once per control block. A trigger on
@@ -8216,8 +8216,8 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                     if (wave > 5u) wave = 0u;
                     uint32_t base = 0u;
                     if (wave == 1u) base = (uint32_t)p1_wave_base[1];
-                    else if (wave == 2u || wave == 3u) base = (uint32_t)p1_wave_base[12];
-                    else if (wave == 4u) base = (uint32_t)p1_wave_base[11];
+                    else if (wave == 2u || wave == 3u) base = (uint32_t)p1_wave_base[13];
+                    else if (wave == 4u) base = (uint32_t)p1_wave_base[12];
                     else base = (uint32_t)p1_wave_base[0];
                     pm[P1_PL_BASE] = base << 10;
                     pm[P1_PL_RATE_STEP] = p1_fade_step(op4_phase_lfo_rate_fade[voice_part[v]]);
@@ -8913,8 +8913,8 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                     if (wave > 5u) wave = 0u;
                     uint32_t base = 0u;
                     if (wave == 1u) base = (uint32_t)p1_wave_base[1];
-                    else if (wave == 2u || wave == 3u) base = (uint32_t)p1_wave_base[12];
-                    else if (wave == 4u) base = (uint32_t)p1_wave_base[11];
+                    else if (wave == 2u || wave == 3u) base = (uint32_t)p1_wave_base[13];
+                    else if (wave == 4u) base = (uint32_t)p1_wave_base[12];
                     else base = (uint32_t)p1_wave_base[0];
                     pm[P1_PL_BASE] = base << 10;
                     pm[P1_PL_RATE_STEP] = p1_fade_step(op3_phase_lfo_rate_fade[voice_part[v]]);
@@ -9610,8 +9610,8 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                     if (wave > 5u) wave = 0u;
                     uint32_t base = 0u;
                     if (wave == 1u) base = (uint32_t)p1_wave_base[1];
-                    else if (wave == 2u || wave == 3u) base = (uint32_t)p1_wave_base[12];
-                    else if (wave == 4u) base = (uint32_t)p1_wave_base[11];
+                    else if (wave == 2u || wave == 3u) base = (uint32_t)p1_wave_base[13];
+                    else if (wave == 4u) base = (uint32_t)p1_wave_base[12];
                     else base = (uint32_t)p1_wave_base[0];
                     pm[P1_PL_BASE] = base << 10;
                     pm[P1_PL_RATE_STEP] = p1_fade_step(op2_phase_lfo_rate_fade[voice_part[v]]);
@@ -10307,8 +10307,8 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                     if (wave > 5u) wave = 0u;
                     uint32_t base = 0u;
                     if (wave == 1u) base = (uint32_t)p1_wave_base[1];
-                    else if (wave == 2u || wave == 3u) base = (uint32_t)p1_wave_base[12];
-                    else if (wave == 4u) base = (uint32_t)p1_wave_base[11];
+                    else if (wave == 2u || wave == 3u) base = (uint32_t)p1_wave_base[13];
+                    else if (wave == 4u) base = (uint32_t)p1_wave_base[12];
                     else base = (uint32_t)p1_wave_base[0];
                     pm[P1_PL_BASE] = base << 10;
                     pm[P1_PL_RATE_STEP] = p1_fade_step(op1_phase_lfo_rate_fade[voice_part[v]]);
@@ -10938,9 +10938,9 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
         op4_specenv_r2_eff[v] = (uint32_t)p1_key_apply(op4_specenv_r2_base[v], p1_key_add(0, 0), 0, 99);
         op4_specenv_r3_eff[v] = (uint32_t)p1_key_apply(op4_specenv_r3_base[v], p1_key_add(0, 0), 0, 99);
         op4_specenv_r4_eff[v] = (uint32_t)p1_key_apply(op4_specenv_relr_base[v], p1_key_add(0, 0), 0, 99);
-        op4_osc_wave[v] = ((op4_osc_waveform[voice_part[v]] > 13u) ? 0u : op4_osc_waveform[voice_part[v]]);
-        op4_osc_base[v] = ((uint32_t)p1_wave_base[(op4_osc_wave[v] > 12u) ? 0u : op4_osc_wave[v]] << 10);
-        op4_osc_bl[v] = ((op4_osc_wave[v] >= 10u && op4_osc_wave[v] <= 12u) ? 1u : 0u);
+        op4_osc_wave[v] = ((op4_osc_waveform[voice_part[v]] > 14u) ? 0u : op4_osc_waveform[voice_part[v]]);
+        op4_osc_base[v] = ((uint32_t)p1_wave_base[(op4_osc_wave[v] > 13u) ? 0u : op4_osc_wave[v]] << 10);
+        op4_osc_bl[v] = ((op4_osc_wave[v] >= 10u && op4_osc_wave[v] <= 13u) ? 1u : 0u);
         op4_osc_morph_macro[v] = p1_macro_velocity_morph(S, voice_part[v], v, 4);
         op4_osc_tick[v] = ((v == 0) ? (p1_spectral_tick(op4_osc_bank, op4_osc_waveform, op4_osc_spec_range_a, op4_osc_spec_range_b, op4_osc_spec_a1, op4_osc_spec_a2, op4_osc_spec_a3, op4_osc_spec_a4, op4_osc_spec_a5, op4_osc_spec_a6, op4_osc_spec_a7, op4_osc_spec_a8, op4_osc_spec_a9, op4_osc_spec_a10, op4_osc_spec_a11, op4_osc_spec_a12, op4_osc_spec_a13, op4_osc_spec_a14, op4_osc_spec_a15, op4_osc_spec_a16, op4_osc_spec_a17, op4_osc_spec_a18, op4_osc_spec_a19, op4_osc_spec_a20, op4_osc_spec_a21, op4_osc_spec_a22, op4_osc_spec_a23, op4_osc_spec_a24, op4_osc_spec_a25, op4_osc_spec_a26, op4_osc_spec_a27, op4_osc_spec_a28, op4_osc_spec_a29, op4_osc_spec_a30, op4_osc_spec_a31, op4_osc_spec_a32, op4_osc_spec_a33, op4_osc_spec_a34, op4_osc_spec_a35, op4_osc_spec_a36, op4_osc_spec_a37, op4_osc_spec_a38, op4_osc_spec_a39, op4_osc_spec_a40, op4_osc_spec_a41, op4_osc_spec_a42, op4_osc_spec_a43, op4_osc_spec_a44, op4_osc_spec_a45, op4_osc_spec_a46, op4_osc_spec_a47, op4_osc_spec_a48, op4_osc_spec_a49, op4_osc_spec_a50, op4_osc_spec_a51, op4_osc_spec_a52, op4_osc_spec_a53, op4_osc_spec_a54, op4_osc_spec_a55, op4_osc_spec_a56, op4_osc_spec_a57, op4_osc_spec_a58, op4_osc_spec_a59, op4_osc_spec_a60, op4_osc_spec_a61, op4_osc_spec_a62, op4_osc_spec_a63, op4_osc_spec_a64, op4_osc_spec_b1, op4_osc_spec_b2, op4_osc_spec_b3, op4_osc_spec_b4, op4_osc_spec_b5, op4_osc_spec_b6, op4_osc_spec_b7, op4_osc_spec_b8, op4_osc_spec_b9, op4_osc_spec_b10, op4_osc_spec_b11, op4_osc_spec_b12, op4_osc_spec_b13, op4_osc_spec_b14, op4_osc_spec_b15, op4_osc_spec_b16, op4_osc_spec_b17, op4_osc_spec_b18, op4_osc_spec_b19, op4_osc_spec_b20, op4_osc_spec_b21, op4_osc_spec_b22, op4_osc_spec_b23, op4_osc_spec_b24, op4_osc_spec_b25, op4_osc_spec_b26, op4_osc_spec_b27, op4_osc_spec_b28, op4_osc_spec_b29, op4_osc_spec_b30, op4_osc_spec_b31, op4_osc_spec_b32, op4_osc_spec_b33, op4_osc_spec_b34, op4_osc_spec_b35, op4_osc_spec_b36, op4_osc_spec_b37, op4_osc_spec_b38, op4_osc_spec_b39, op4_osc_spec_b40, op4_osc_spec_b41, op4_osc_spec_b42, op4_osc_spec_b43, op4_osc_spec_b44, op4_osc_spec_b45, op4_osc_spec_b46, op4_osc_spec_b47, op4_osc_spec_b48, op4_osc_spec_b49, op4_osc_spec_b50, op4_osc_spec_b51, op4_osc_spec_b52, op4_osc_spec_b53, op4_osc_spec_b54, op4_osc_spec_b55, op4_osc_spec_b56, op4_osc_spec_b57, op4_osc_spec_b58, op4_osc_spec_b59, op4_osc_spec_b60, op4_osc_spec_b61, op4_osc_spec_b62, op4_osc_spec_b63, op4_osc_spec_b64), 0u) : 0u);
         op4_tl_level_eff[v] = (uint32_t)p1_key_apply(p1_clamp((int32_t)op4_tl_level[voice_part[v]] + op4_lfo_cv_x[v] + p1_macro_velocity_level(S, voice_part[v], v, 4), 0, 99), p1_key_add(op4_level_ks_k_x[v], op4_level_vs_k_x[v]), 0, 99);
@@ -11000,9 +11000,9 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
         op3_specenv_r2_eff[v] = (uint32_t)p1_key_apply(op3_specenv_r2_base[v], p1_key_add(0, 0), 0, 99);
         op3_specenv_r3_eff[v] = (uint32_t)p1_key_apply(op3_specenv_r3_base[v], p1_key_add(0, 0), 0, 99);
         op3_specenv_r4_eff[v] = (uint32_t)p1_key_apply(op3_specenv_relr_base[v], p1_key_add(0, 0), 0, 99);
-        op3_osc_wave[v] = ((op3_osc_waveform[voice_part[v]] > 13u) ? 0u : op3_osc_waveform[voice_part[v]]);
-        op3_osc_base[v] = ((uint32_t)p1_wave_base[(op3_osc_wave[v] > 12u) ? 0u : op3_osc_wave[v]] << 10);
-        op3_osc_bl[v] = ((op3_osc_wave[v] >= 10u && op3_osc_wave[v] <= 12u) ? 1u : 0u);
+        op3_osc_wave[v] = ((op3_osc_waveform[voice_part[v]] > 14u) ? 0u : op3_osc_waveform[voice_part[v]]);
+        op3_osc_base[v] = ((uint32_t)p1_wave_base[(op3_osc_wave[v] > 13u) ? 0u : op3_osc_wave[v]] << 10);
+        op3_osc_bl[v] = ((op3_osc_wave[v] >= 10u && op3_osc_wave[v] <= 13u) ? 1u : 0u);
         op3_osc_morph_macro[v] = p1_macro_velocity_morph(S, voice_part[v], v, 3);
         op3_osc_tick[v] = ((v == 0) ? (p1_spectral_tick(op3_osc_bank, op3_osc_waveform, op3_osc_spec_range_a, op3_osc_spec_range_b, op3_osc_spec_a1, op3_osc_spec_a2, op3_osc_spec_a3, op3_osc_spec_a4, op3_osc_spec_a5, op3_osc_spec_a6, op3_osc_spec_a7, op3_osc_spec_a8, op3_osc_spec_a9, op3_osc_spec_a10, op3_osc_spec_a11, op3_osc_spec_a12, op3_osc_spec_a13, op3_osc_spec_a14, op3_osc_spec_a15, op3_osc_spec_a16, op3_osc_spec_a17, op3_osc_spec_a18, op3_osc_spec_a19, op3_osc_spec_a20, op3_osc_spec_a21, op3_osc_spec_a22, op3_osc_spec_a23, op3_osc_spec_a24, op3_osc_spec_a25, op3_osc_spec_a26, op3_osc_spec_a27, op3_osc_spec_a28, op3_osc_spec_a29, op3_osc_spec_a30, op3_osc_spec_a31, op3_osc_spec_a32, op3_osc_spec_a33, op3_osc_spec_a34, op3_osc_spec_a35, op3_osc_spec_a36, op3_osc_spec_a37, op3_osc_spec_a38, op3_osc_spec_a39, op3_osc_spec_a40, op3_osc_spec_a41, op3_osc_spec_a42, op3_osc_spec_a43, op3_osc_spec_a44, op3_osc_spec_a45, op3_osc_spec_a46, op3_osc_spec_a47, op3_osc_spec_a48, op3_osc_spec_a49, op3_osc_spec_a50, op3_osc_spec_a51, op3_osc_spec_a52, op3_osc_spec_a53, op3_osc_spec_a54, op3_osc_spec_a55, op3_osc_spec_a56, op3_osc_spec_a57, op3_osc_spec_a58, op3_osc_spec_a59, op3_osc_spec_a60, op3_osc_spec_a61, op3_osc_spec_a62, op3_osc_spec_a63, op3_osc_spec_a64, op3_osc_spec_b1, op3_osc_spec_b2, op3_osc_spec_b3, op3_osc_spec_b4, op3_osc_spec_b5, op3_osc_spec_b6, op3_osc_spec_b7, op3_osc_spec_b8, op3_osc_spec_b9, op3_osc_spec_b10, op3_osc_spec_b11, op3_osc_spec_b12, op3_osc_spec_b13, op3_osc_spec_b14, op3_osc_spec_b15, op3_osc_spec_b16, op3_osc_spec_b17, op3_osc_spec_b18, op3_osc_spec_b19, op3_osc_spec_b20, op3_osc_spec_b21, op3_osc_spec_b22, op3_osc_spec_b23, op3_osc_spec_b24, op3_osc_spec_b25, op3_osc_spec_b26, op3_osc_spec_b27, op3_osc_spec_b28, op3_osc_spec_b29, op3_osc_spec_b30, op3_osc_spec_b31, op3_osc_spec_b32, op3_osc_spec_b33, op3_osc_spec_b34, op3_osc_spec_b35, op3_osc_spec_b36, op3_osc_spec_b37, op3_osc_spec_b38, op3_osc_spec_b39, op3_osc_spec_b40, op3_osc_spec_b41, op3_osc_spec_b42, op3_osc_spec_b43, op3_osc_spec_b44, op3_osc_spec_b45, op3_osc_spec_b46, op3_osc_spec_b47, op3_osc_spec_b48, op3_osc_spec_b49, op3_osc_spec_b50, op3_osc_spec_b51, op3_osc_spec_b52, op3_osc_spec_b53, op3_osc_spec_b54, op3_osc_spec_b55, op3_osc_spec_b56, op3_osc_spec_b57, op3_osc_spec_b58, op3_osc_spec_b59, op3_osc_spec_b60, op3_osc_spec_b61, op3_osc_spec_b62, op3_osc_spec_b63, op3_osc_spec_b64), 0u) : 0u);
         op3_tl_level_eff[v] = (uint32_t)p1_key_apply(p1_clamp((int32_t)op3_tl_level[voice_part[v]] + op3_lfo_cv_x[v] + p1_macro_velocity_level(S, voice_part[v], v, 3), 0, 99), p1_key_add(op3_level_ks_k_x[v], op3_level_vs_k_x[v]), 0, 99);
@@ -11062,9 +11062,9 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
         op2_specenv_r2_eff[v] = (uint32_t)p1_key_apply(op2_specenv_r2_base[v], p1_key_add(0, 0), 0, 99);
         op2_specenv_r3_eff[v] = (uint32_t)p1_key_apply(op2_specenv_r3_base[v], p1_key_add(0, 0), 0, 99);
         op2_specenv_r4_eff[v] = (uint32_t)p1_key_apply(op2_specenv_relr_base[v], p1_key_add(0, 0), 0, 99);
-        op2_osc_wave[v] = ((op2_osc_waveform[voice_part[v]] > 13u) ? 0u : op2_osc_waveform[voice_part[v]]);
-        op2_osc_base[v] = ((uint32_t)p1_wave_base[(op2_osc_wave[v] > 12u) ? 0u : op2_osc_wave[v]] << 10);
-        op2_osc_bl[v] = ((op2_osc_wave[v] >= 10u && op2_osc_wave[v] <= 12u) ? 1u : 0u);
+        op2_osc_wave[v] = ((op2_osc_waveform[voice_part[v]] > 14u) ? 0u : op2_osc_waveform[voice_part[v]]);
+        op2_osc_base[v] = ((uint32_t)p1_wave_base[(op2_osc_wave[v] > 13u) ? 0u : op2_osc_wave[v]] << 10);
+        op2_osc_bl[v] = ((op2_osc_wave[v] >= 10u && op2_osc_wave[v] <= 13u) ? 1u : 0u);
         op2_osc_morph_macro[v] = p1_macro_velocity_morph(S, voice_part[v], v, 2);
         op2_osc_tick[v] = ((v == 0) ? (p1_spectral_tick(op2_osc_bank, op2_osc_waveform, op2_osc_spec_range_a, op2_osc_spec_range_b, op2_osc_spec_a1, op2_osc_spec_a2, op2_osc_spec_a3, op2_osc_spec_a4, op2_osc_spec_a5, op2_osc_spec_a6, op2_osc_spec_a7, op2_osc_spec_a8, op2_osc_spec_a9, op2_osc_spec_a10, op2_osc_spec_a11, op2_osc_spec_a12, op2_osc_spec_a13, op2_osc_spec_a14, op2_osc_spec_a15, op2_osc_spec_a16, op2_osc_spec_a17, op2_osc_spec_a18, op2_osc_spec_a19, op2_osc_spec_a20, op2_osc_spec_a21, op2_osc_spec_a22, op2_osc_spec_a23, op2_osc_spec_a24, op2_osc_spec_a25, op2_osc_spec_a26, op2_osc_spec_a27, op2_osc_spec_a28, op2_osc_spec_a29, op2_osc_spec_a30, op2_osc_spec_a31, op2_osc_spec_a32, op2_osc_spec_a33, op2_osc_spec_a34, op2_osc_spec_a35, op2_osc_spec_a36, op2_osc_spec_a37, op2_osc_spec_a38, op2_osc_spec_a39, op2_osc_spec_a40, op2_osc_spec_a41, op2_osc_spec_a42, op2_osc_spec_a43, op2_osc_spec_a44, op2_osc_spec_a45, op2_osc_spec_a46, op2_osc_spec_a47, op2_osc_spec_a48, op2_osc_spec_a49, op2_osc_spec_a50, op2_osc_spec_a51, op2_osc_spec_a52, op2_osc_spec_a53, op2_osc_spec_a54, op2_osc_spec_a55, op2_osc_spec_a56, op2_osc_spec_a57, op2_osc_spec_a58, op2_osc_spec_a59, op2_osc_spec_a60, op2_osc_spec_a61, op2_osc_spec_a62, op2_osc_spec_a63, op2_osc_spec_a64, op2_osc_spec_b1, op2_osc_spec_b2, op2_osc_spec_b3, op2_osc_spec_b4, op2_osc_spec_b5, op2_osc_spec_b6, op2_osc_spec_b7, op2_osc_spec_b8, op2_osc_spec_b9, op2_osc_spec_b10, op2_osc_spec_b11, op2_osc_spec_b12, op2_osc_spec_b13, op2_osc_spec_b14, op2_osc_spec_b15, op2_osc_spec_b16, op2_osc_spec_b17, op2_osc_spec_b18, op2_osc_spec_b19, op2_osc_spec_b20, op2_osc_spec_b21, op2_osc_spec_b22, op2_osc_spec_b23, op2_osc_spec_b24, op2_osc_spec_b25, op2_osc_spec_b26, op2_osc_spec_b27, op2_osc_spec_b28, op2_osc_spec_b29, op2_osc_spec_b30, op2_osc_spec_b31, op2_osc_spec_b32, op2_osc_spec_b33, op2_osc_spec_b34, op2_osc_spec_b35, op2_osc_spec_b36, op2_osc_spec_b37, op2_osc_spec_b38, op2_osc_spec_b39, op2_osc_spec_b40, op2_osc_spec_b41, op2_osc_spec_b42, op2_osc_spec_b43, op2_osc_spec_b44, op2_osc_spec_b45, op2_osc_spec_b46, op2_osc_spec_b47, op2_osc_spec_b48, op2_osc_spec_b49, op2_osc_spec_b50, op2_osc_spec_b51, op2_osc_spec_b52, op2_osc_spec_b53, op2_osc_spec_b54, op2_osc_spec_b55, op2_osc_spec_b56, op2_osc_spec_b57, op2_osc_spec_b58, op2_osc_spec_b59, op2_osc_spec_b60, op2_osc_spec_b61, op2_osc_spec_b62, op2_osc_spec_b63, op2_osc_spec_b64), 0u) : 0u);
         op2_tl_level_eff[v] = (uint32_t)p1_key_apply(p1_clamp((int32_t)op2_tl_level[voice_part[v]] + op2_lfo_cv_x[v] + p1_macro_velocity_level(S, voice_part[v], v, 2), 0, 99), p1_key_add(op2_level_ks_k_x[v], op2_level_vs_k_x[v]), 0, 99);
@@ -11124,9 +11124,9 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
         op1_specenv_r2_eff[v] = (uint32_t)p1_key_apply(op1_specenv_r2_base[v], p1_key_add(0, 0), 0, 99);
         op1_specenv_r3_eff[v] = (uint32_t)p1_key_apply(op1_specenv_r3_base[v], p1_key_add(0, 0), 0, 99);
         op1_specenv_r4_eff[v] = (uint32_t)p1_key_apply(op1_specenv_relr_base[v], p1_key_add(0, 0), 0, 99);
-        op1_osc_wave[v] = ((op1_osc_waveform[voice_part[v]] > 13u) ? 0u : op1_osc_waveform[voice_part[v]]);
-        op1_osc_base[v] = ((uint32_t)p1_wave_base[(op1_osc_wave[v] > 12u) ? 0u : op1_osc_wave[v]] << 10);
-        op1_osc_bl[v] = ((op1_osc_wave[v] >= 10u && op1_osc_wave[v] <= 12u) ? 1u : 0u);
+        op1_osc_wave[v] = ((op1_osc_waveform[voice_part[v]] > 14u) ? 0u : op1_osc_waveform[voice_part[v]]);
+        op1_osc_base[v] = ((uint32_t)p1_wave_base[(op1_osc_wave[v] > 13u) ? 0u : op1_osc_wave[v]] << 10);
+        op1_osc_bl[v] = ((op1_osc_wave[v] >= 10u && op1_osc_wave[v] <= 13u) ? 1u : 0u);
         op1_osc_morph_macro[v] = p1_macro_velocity_morph(S, voice_part[v], v, 1);
         op1_osc_tick[v] = ((v == 0) ? (p1_spectral_tick(op1_osc_bank, op1_osc_waveform, op1_osc_spec_range_a, op1_osc_spec_range_b, op1_osc_spec_a1, op1_osc_spec_a2, op1_osc_spec_a3, op1_osc_spec_a4, op1_osc_spec_a5, op1_osc_spec_a6, op1_osc_spec_a7, op1_osc_spec_a8, op1_osc_spec_a9, op1_osc_spec_a10, op1_osc_spec_a11, op1_osc_spec_a12, op1_osc_spec_a13, op1_osc_spec_a14, op1_osc_spec_a15, op1_osc_spec_a16, op1_osc_spec_a17, op1_osc_spec_a18, op1_osc_spec_a19, op1_osc_spec_a20, op1_osc_spec_a21, op1_osc_spec_a22, op1_osc_spec_a23, op1_osc_spec_a24, op1_osc_spec_a25, op1_osc_spec_a26, op1_osc_spec_a27, op1_osc_spec_a28, op1_osc_spec_a29, op1_osc_spec_a30, op1_osc_spec_a31, op1_osc_spec_a32, op1_osc_spec_a33, op1_osc_spec_a34, op1_osc_spec_a35, op1_osc_spec_a36, op1_osc_spec_a37, op1_osc_spec_a38, op1_osc_spec_a39, op1_osc_spec_a40, op1_osc_spec_a41, op1_osc_spec_a42, op1_osc_spec_a43, op1_osc_spec_a44, op1_osc_spec_a45, op1_osc_spec_a46, op1_osc_spec_a47, op1_osc_spec_a48, op1_osc_spec_a49, op1_osc_spec_a50, op1_osc_spec_a51, op1_osc_spec_a52, op1_osc_spec_a53, op1_osc_spec_a54, op1_osc_spec_a55, op1_osc_spec_a56, op1_osc_spec_a57, op1_osc_spec_a58, op1_osc_spec_a59, op1_osc_spec_a60, op1_osc_spec_a61, op1_osc_spec_a62, op1_osc_spec_a63, op1_osc_spec_a64, op1_osc_spec_b1, op1_osc_spec_b2, op1_osc_spec_b3, op1_osc_spec_b4, op1_osc_spec_b5, op1_osc_spec_b6, op1_osc_spec_b7, op1_osc_spec_b8, op1_osc_spec_b9, op1_osc_spec_b10, op1_osc_spec_b11, op1_osc_spec_b12, op1_osc_spec_b13, op1_osc_spec_b14, op1_osc_spec_b15, op1_osc_spec_b16, op1_osc_spec_b17, op1_osc_spec_b18, op1_osc_spec_b19, op1_osc_spec_b20, op1_osc_spec_b21, op1_osc_spec_b22, op1_osc_spec_b23, op1_osc_spec_b24, op1_osc_spec_b25, op1_osc_spec_b26, op1_osc_spec_b27, op1_osc_spec_b28, op1_osc_spec_b29, op1_osc_spec_b30, op1_osc_spec_b31, op1_osc_spec_b32, op1_osc_spec_b33, op1_osc_spec_b34, op1_osc_spec_b35, op1_osc_spec_b36, op1_osc_spec_b37, op1_osc_spec_b38, op1_osc_spec_b39, op1_osc_spec_b40, op1_osc_spec_b41, op1_osc_spec_b42, op1_osc_spec_b43, op1_osc_spec_b44, op1_osc_spec_b45, op1_osc_spec_b46, op1_osc_spec_b47, op1_osc_spec_b48, op1_osc_spec_b49, op1_osc_spec_b50, op1_osc_spec_b51, op1_osc_spec_b52, op1_osc_spec_b53, op1_osc_spec_b54, op1_osc_spec_b55, op1_osc_spec_b56, op1_osc_spec_b57, op1_osc_spec_b58, op1_osc_spec_b59, op1_osc_spec_b60, op1_osc_spec_b61, op1_osc_spec_b62, op1_osc_spec_b63, op1_osc_spec_b64), 0u) : 0u);
         op1_tl_level_eff[v] = (uint32_t)p1_key_apply(p1_clamp((int32_t)op1_tl_level[voice_part[v]] + op1_lfo_cv_x[v] + p1_macro_velocity_level(S, voice_part[v], v, 1), 0, 99), p1_key_add(op1_level_ks_k_x[v], op1_level_vs_k_x[v]), 0, 99);
@@ -11160,9 +11160,9 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             /* 4-op FM algorithm router (audio rate). The patch consumes four routing rows:
                rows 1/2/3 modulate op2/op3/op4, and row 4 is the carrier mask. Each row is a
                weighted sum of the four delayed operator outputs, indexed by the `alg` control
-               input, which is the selected algorithm clamped to the 8 shipped routings. Row 0,
+               input, which is the selected algorithm clamped to the 10 shipped routings. Row 0,
                the modulation into op1, is all-zero and omitted.
-               The router is specialised, because the 8 algorithms' weights are 0/1. In Q15,
+               The router is specialised, because the 10 algorithms' weights are 0/1. In Q15,
                `32768`, the true "1.0", does not fit an int16 and would overflow the top value,
                so a 1-weight is `32767`. Each output is then a selective sum:
                `p1_q15_mul(x, 32767)` for a 1-weight and nothing for a 0-weight, instead of
@@ -11186,7 +11186,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                at least one active pair is on, so the feature off is exactly the pre-feature
                carrier sum. A one-carrier routing keeps its single direct term and has no ring
                modulation. */
-            uint32_t alg = algo_alg_x[v] > 7u ? 7u : algo_alg_x[v];
+            uint32_t alg = algo_alg_x[v] > 9u ? 9u : algo_alg_x[v];
             const int32_t ra = p1_q15_mul(d1_out_x, 32767);
             const int32_t rb = p1_q15_mul(d2_out_x, 32767);
             const int32_t rc = p1_q15_mul(d3_out_x, 32767);
@@ -11230,7 +11230,16 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                 route_car_x = ((!route_ring1_on[voice_part[v]] || route_car2_out[voice_part[v]]) ? rb : 0) +
                              ((!route_ring1_on[voice_part[v]] || route_car4_out[voice_part[v]]) ? rd : 0) + rm1;
                 break;
-            case 5u: /* (O1 -> O2) + (O1 -> O3) + (O1 -> O4) -> out (O2 + O3 + O4) */
+            case 5u: /* O1 -> O3, O3 -> O2 and O3 -> O4 -> out (O2 + O4) */
+                route_mod2_x = rc * 2;
+                route_mod3_x = ra * 2;
+                route_mod4_x = rc * 2;
+                if (route_ring1_on[voice_part[v]])
+                    rm1 = p1_q15_mul(p1_q15_mul(d2_out_x, d4_out_x), lv1) * 64;
+                route_car_x = ((!route_ring1_on[voice_part[v]] || route_car2_out[voice_part[v]]) ? rb : 0) +
+                             ((!route_ring1_on[voice_part[v]] || route_car4_out[voice_part[v]]) ? rd : 0) + rm1;
+                break;
+            case 6u: /* (O1 -> O2) + (O1 -> O3) + (O1 -> O4) -> out (O2 + O3 + O4) */
                 route_mod2_x = ra * 2;
                 route_mod3_x = ra * 2;
                 route_mod4_x = ra * 2;
@@ -11245,7 +11254,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                              ((!route_ring1_on[voice_part[v]] && !route_ring2_on[voice_part[v]] ||
                                route_car4_out[voice_part[v]]) ? rd : 0) + rm1 + rm2;
                 break;
-            case 6u: /* (O1 -> O2) + O3 + O4 -> out (O2 + O3 + O4) */
+            case 7u: /* (O1 -> O2) + O3 + O4 -> out (O2 + O3 + O4) */
                 route_mod2_x = ra * 2;
                 route_mod3_x = 0;
                 route_mod4_x = 0;
@@ -11260,7 +11269,22 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                              ((!route_ring1_on[voice_part[v]] && !route_ring2_on[voice_part[v]] ||
                                route_car4_out[voice_part[v]]) ? rd : 0) + rm1 + rm2;
                 break;
-            default: /* 7 (alg is clamped 0..7): O1 + O2 + O3 + O4 -> out */
+            case 8u: /* (O1 -> O2) + (O1 -> O3) + O4 -> out (O2 + O3 + O4) */
+                route_mod2_x = ra * 2;
+                route_mod3_x = ra * 2;
+                route_mod4_x = 0;
+                if (route_ring1_on[voice_part[v]])
+                    rm1 = p1_q15_mul(p1_q15_mul(d2_out_x, d3_out_x), lv1) * 64;
+                if (route_ring2_on[voice_part[v]])
+                    rm2 = p1_q15_mul(p1_q15_mul(d3_out_x, d4_out_x), lv2) * 64;
+                route_car_x = ((!route_ring1_on[voice_part[v]] && !route_ring2_on[voice_part[v]] ||
+                               route_car2_out[voice_part[v]]) ? rb : 0) +
+                             ((!route_ring1_on[voice_part[v]] && !route_ring2_on[voice_part[v]] ||
+                               route_car3_out[voice_part[v]]) ? rc : 0) +
+                             ((!route_ring1_on[voice_part[v]] && !route_ring2_on[voice_part[v]] ||
+                               route_car4_out[voice_part[v]]) ? rd : 0) + rm1 + rm2;
+                break;
+            default: /* 9 (alg is clamped 0..9): O1 + O2 + O3 + O4 -> out */
                 route_mod2_x = 0;
                 route_mod3_x = 0;
                 route_mod4_x = 0;
@@ -11398,8 +11422,8 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                direct copy.
                The y boundaries are snapped away from the waveform's protected points and a
                segment whose span contains a protected point is locked: it never flips and
-               never takes part in a reorder. The fixed 13 waves use their mip-0 table; wave
-               13 builds an a and a b mask from the regenerated additive bank and combines
+               never takes part in a reorder. The fixed 14 waves use their mip-0 table; wave
+               14 builds an a and a b mask from the regenerated additive bank and combines
                them with the base morph, exactly as the bank morph reads them. The map is
                per part, so the morph used here is the base knob, not a voice's live morph.
                The 2x map/table read, the half-band decimator and the 16-sample alignment
@@ -11505,11 +11529,11 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             #endif
             #ifndef P1_PM_SAMPLE
             #define P1_PM_SAMPLE(wave, bank, part, q, ab)                              \
-                (((wave) >= 13u)                                                       \
+                (((wave) >= 14u)                                                       \
                      ? (int32_t)((const int16_t *)(bank))[                             \
                            ((ab) ? P1_SPEC_B(part) : P1_SPEC_A(part)) + ((q) >> 4)]    \
                      : (int32_t)p1_wave[                                               \
-                           ((int32_t)p1_wave_base[((wave) > 12u) ? 0u : (wave)] << 10) \
+                           ((int32_t)p1_wave_base[((wave) > 13u) ? 0u : (wave)] << 10) \
                            + ((q) >> 2)])
             #endif
             #ifndef P1_PM_SET
@@ -11739,13 +11763,13 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                 if (m < 1u) m = 1u;
                 if (m > 32u) m = 32u;
                 uint32_t wave = (uint32_t)op4_osc_waveform[part];
-                if (wave > 13u) wave = 0u;
+                if (wave > 14u) wave = 0u;
                 int32_t morph = (int32_t)op4_morphbase_out_x[v];
                 if (morph < 0) morph = 0;
                 if (morph > 99) morph = 99;
                 const int16_t *bank = op4_osc_bank;
                 uint32_t maskid = (wave << 16) ^ ((uint32_t)morph << 8);
-                if (wave >= 13u) {
+                if (wave >= 14u) {
                     maskid ^= (uint32_t)(uint16_t)bank[P1_SPEC_HASH + (int)part * 2];
                     maskid ^= (uint32_t)(uint16_t)bank[P1_SPEC_HASH + (int)part * 2 + 1]
                               << 1;
@@ -11766,7 +11790,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                     }
                     uint32_t mask_changed = (pm[P1_PM_MASKID] != maskid);
                     if (mask_changed) {
-                        if (wave >= 13u) {
+                        if (wave >= 14u) {
                             uint32_t amask[128];
                             uint32_t bmask[128];
                             P1_PM_MASK_BUILD(amask, wave, bank, part, 0);
@@ -12097,15 +12121,15 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             /* Add the FM/feedback sum after the map. The sum is the same `(fm << 20)` that
                the phasor used, so the off map path is the old accumulator-add-read path. */
             uint32_t op4_padd_phase_x = op4_phase_phase_x + ((uint32_t)op4_sum_audio_x << 20);
-            /* Waveform reader. Values 0-12 read the precomputed 13-wave table (`p1_wave`):
-               one load, with the band-limited mip added for waves 10/11/12. Value 13 reads
+            /* Waveform reader. Values 0-13 read the precomputed 14-wave table (`p1_wave`):
+               one load, with the band-limited mip added for waves 10/11/12/13. Value 14 reads
                the additive bank: the a and b spectra at the mip selected from the phasor,
                blended by the per-voice morph. The morph is the absolute envelope position
                when `env_on` is set, otherwise the `morph` input from the knob, plus the LFO
                in panel units. The bank is regenerated at the first voice of each control
                block by the block-derived `tick`, and the 10 ms crossfade is in the read. */
             int32_t op4_osc_audio_x;
-            if (op4_osc_wave[v] >= 13u) {
+            if (op4_osc_wave[v] >= 14u) {
                 op4_osc_live[v] = p1_spectral_morph(
                     op4_specenv_active_x[v] ? op4_specenv_cv_x[v]
                                  : p1_clamp(op4_morphbase_out_x[v] + op4_osc_morph_macro[v], 0, 99),
@@ -12194,8 +12218,8 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                direct copy.
                The y boundaries are snapped away from the waveform's protected points and a
                segment whose span contains a protected point is locked: it never flips and
-               never takes part in a reorder. The fixed 13 waves use their mip-0 table; wave
-               13 builds an a and a b mask from the regenerated additive bank and combines
+               never takes part in a reorder. The fixed 14 waves use their mip-0 table; wave
+               14 builds an a and a b mask from the regenerated additive bank and combines
                them with the base morph, exactly as the bank morph reads them. The map is
                per part, so the morph used here is the base knob, not a voice's live morph.
                The 2x map/table read, the half-band decimator and the 16-sample alignment
@@ -12301,11 +12325,11 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             #endif
             #ifndef P1_PM_SAMPLE
             #define P1_PM_SAMPLE(wave, bank, part, q, ab)                              \
-                (((wave) >= 13u)                                                       \
+                (((wave) >= 14u)                                                       \
                      ? (int32_t)((const int16_t *)(bank))[                             \
                            ((ab) ? P1_SPEC_B(part) : P1_SPEC_A(part)) + ((q) >> 4)]    \
                      : (int32_t)p1_wave[                                               \
-                           ((int32_t)p1_wave_base[((wave) > 12u) ? 0u : (wave)] << 10) \
+                           ((int32_t)p1_wave_base[((wave) > 13u) ? 0u : (wave)] << 10) \
                            + ((q) >> 2)])
             #endif
             #ifndef P1_PM_SET
@@ -12535,13 +12559,13 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                 if (m < 1u) m = 1u;
                 if (m > 32u) m = 32u;
                 uint32_t wave = (uint32_t)op3_osc_waveform[part];
-                if (wave > 13u) wave = 0u;
+                if (wave > 14u) wave = 0u;
                 int32_t morph = (int32_t)op3_morphbase_out_x[v];
                 if (morph < 0) morph = 0;
                 if (morph > 99) morph = 99;
                 const int16_t *bank = op3_osc_bank;
                 uint32_t maskid = (wave << 16) ^ ((uint32_t)morph << 8);
-                if (wave >= 13u) {
+                if (wave >= 14u) {
                     maskid ^= (uint32_t)(uint16_t)bank[P1_SPEC_HASH + (int)part * 2];
                     maskid ^= (uint32_t)(uint16_t)bank[P1_SPEC_HASH + (int)part * 2 + 1]
                               << 1;
@@ -12562,7 +12586,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                     }
                     uint32_t mask_changed = (pm[P1_PM_MASKID] != maskid);
                     if (mask_changed) {
-                        if (wave >= 13u) {
+                        if (wave >= 14u) {
                             uint32_t amask[128];
                             uint32_t bmask[128];
                             P1_PM_MASK_BUILD(amask, wave, bank, part, 0);
@@ -12893,15 +12917,15 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             /* Add the FM/feedback sum after the map. The sum is the same `(fm << 20)` that
                the phasor used, so the off map path is the old accumulator-add-read path. */
             uint32_t op3_padd_phase_x = op3_phase_phase_x + ((uint32_t)op3_sum_audio_x << 20);
-            /* Waveform reader. Values 0-12 read the precomputed 13-wave table (`p1_wave`):
-               one load, with the band-limited mip added for waves 10/11/12. Value 13 reads
+            /* Waveform reader. Values 0-13 read the precomputed 14-wave table (`p1_wave`):
+               one load, with the band-limited mip added for waves 10/11/12/13. Value 14 reads
                the additive bank: the a and b spectra at the mip selected from the phasor,
                blended by the per-voice morph. The morph is the absolute envelope position
                when `env_on` is set, otherwise the `morph` input from the knob, plus the LFO
                in panel units. The bank is regenerated at the first voice of each control
                block by the block-derived `tick`, and the 10 ms crossfade is in the read. */
             int32_t op3_osc_audio_x;
-            if (op3_osc_wave[v] >= 13u) {
+            if (op3_osc_wave[v] >= 14u) {
                 op3_osc_live[v] = p1_spectral_morph(
                     op3_specenv_active_x[v] ? op3_specenv_cv_x[v]
                                  : p1_clamp(op3_morphbase_out_x[v] + op3_osc_morph_macro[v], 0, 99),
@@ -12990,8 +13014,8 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                direct copy.
                The y boundaries are snapped away from the waveform's protected points and a
                segment whose span contains a protected point is locked: it never flips and
-               never takes part in a reorder. The fixed 13 waves use their mip-0 table; wave
-               13 builds an a and a b mask from the regenerated additive bank and combines
+               never takes part in a reorder. The fixed 14 waves use their mip-0 table; wave
+               14 builds an a and a b mask from the regenerated additive bank and combines
                them with the base morph, exactly as the bank morph reads them. The map is
                per part, so the morph used here is the base knob, not a voice's live morph.
                The 2x map/table read, the half-band decimator and the 16-sample alignment
@@ -13097,11 +13121,11 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             #endif
             #ifndef P1_PM_SAMPLE
             #define P1_PM_SAMPLE(wave, bank, part, q, ab)                              \
-                (((wave) >= 13u)                                                       \
+                (((wave) >= 14u)                                                       \
                      ? (int32_t)((const int16_t *)(bank))[                             \
                            ((ab) ? P1_SPEC_B(part) : P1_SPEC_A(part)) + ((q) >> 4)]    \
                      : (int32_t)p1_wave[                                               \
-                           ((int32_t)p1_wave_base[((wave) > 12u) ? 0u : (wave)] << 10) \
+                           ((int32_t)p1_wave_base[((wave) > 13u) ? 0u : (wave)] << 10) \
                            + ((q) >> 2)])
             #endif
             #ifndef P1_PM_SET
@@ -13331,13 +13355,13 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                 if (m < 1u) m = 1u;
                 if (m > 32u) m = 32u;
                 uint32_t wave = (uint32_t)op2_osc_waveform[part];
-                if (wave > 13u) wave = 0u;
+                if (wave > 14u) wave = 0u;
                 int32_t morph = (int32_t)op2_morphbase_out_x[v];
                 if (morph < 0) morph = 0;
                 if (morph > 99) morph = 99;
                 const int16_t *bank = op2_osc_bank;
                 uint32_t maskid = (wave << 16) ^ ((uint32_t)morph << 8);
-                if (wave >= 13u) {
+                if (wave >= 14u) {
                     maskid ^= (uint32_t)(uint16_t)bank[P1_SPEC_HASH + (int)part * 2];
                     maskid ^= (uint32_t)(uint16_t)bank[P1_SPEC_HASH + (int)part * 2 + 1]
                               << 1;
@@ -13358,7 +13382,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                     }
                     uint32_t mask_changed = (pm[P1_PM_MASKID] != maskid);
                     if (mask_changed) {
-                        if (wave >= 13u) {
+                        if (wave >= 14u) {
                             uint32_t amask[128];
                             uint32_t bmask[128];
                             P1_PM_MASK_BUILD(amask, wave, bank, part, 0);
@@ -13689,15 +13713,15 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             /* Add the FM/feedback sum after the map. The sum is the same `(fm << 20)` that
                the phasor used, so the off map path is the old accumulator-add-read path. */
             uint32_t op2_padd_phase_x = op2_phase_phase_x + ((uint32_t)op2_sum_audio_x << 20);
-            /* Waveform reader. Values 0-12 read the precomputed 13-wave table (`p1_wave`):
-               one load, with the band-limited mip added for waves 10/11/12. Value 13 reads
+            /* Waveform reader. Values 0-13 read the precomputed 14-wave table (`p1_wave`):
+               one load, with the band-limited mip added for waves 10/11/12/13. Value 14 reads
                the additive bank: the a and b spectra at the mip selected from the phasor,
                blended by the per-voice morph. The morph is the absolute envelope position
                when `env_on` is set, otherwise the `morph` input from the knob, plus the LFO
                in panel units. The bank is regenerated at the first voice of each control
                block by the block-derived `tick`, and the 10 ms crossfade is in the read. */
             int32_t op2_osc_audio_x;
-            if (op2_osc_wave[v] >= 13u) {
+            if (op2_osc_wave[v] >= 14u) {
                 op2_osc_live[v] = p1_spectral_morph(
                     op2_specenv_active_x[v] ? op2_specenv_cv_x[v]
                                  : p1_clamp(op2_morphbase_out_x[v] + op2_osc_morph_macro[v], 0, 99),
@@ -13786,8 +13810,8 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                direct copy.
                The y boundaries are snapped away from the waveform's protected points and a
                segment whose span contains a protected point is locked: it never flips and
-               never takes part in a reorder. The fixed 13 waves use their mip-0 table; wave
-               13 builds an a and a b mask from the regenerated additive bank and combines
+               never takes part in a reorder. The fixed 14 waves use their mip-0 table; wave
+               14 builds an a and a b mask from the regenerated additive bank and combines
                them with the base morph, exactly as the bank morph reads them. The map is
                per part, so the morph used here is the base knob, not a voice's live morph.
                The 2x map/table read, the half-band decimator and the 16-sample alignment
@@ -13893,11 +13917,11 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             #endif
             #ifndef P1_PM_SAMPLE
             #define P1_PM_SAMPLE(wave, bank, part, q, ab)                              \
-                (((wave) >= 13u)                                                       \
+                (((wave) >= 14u)                                                       \
                      ? (int32_t)((const int16_t *)(bank))[                             \
                            ((ab) ? P1_SPEC_B(part) : P1_SPEC_A(part)) + ((q) >> 4)]    \
                      : (int32_t)p1_wave[                                               \
-                           ((int32_t)p1_wave_base[((wave) > 12u) ? 0u : (wave)] << 10) \
+                           ((int32_t)p1_wave_base[((wave) > 13u) ? 0u : (wave)] << 10) \
                            + ((q) >> 2)])
             #endif
             #ifndef P1_PM_SET
@@ -14127,13 +14151,13 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                 if (m < 1u) m = 1u;
                 if (m > 32u) m = 32u;
                 uint32_t wave = (uint32_t)op1_osc_waveform[part];
-                if (wave > 13u) wave = 0u;
+                if (wave > 14u) wave = 0u;
                 int32_t morph = (int32_t)op1_morphbase_out_x[v];
                 if (morph < 0) morph = 0;
                 if (morph > 99) morph = 99;
                 const int16_t *bank = op1_osc_bank;
                 uint32_t maskid = (wave << 16) ^ ((uint32_t)morph << 8);
-                if (wave >= 13u) {
+                if (wave >= 14u) {
                     maskid ^= (uint32_t)(uint16_t)bank[P1_SPEC_HASH + (int)part * 2];
                     maskid ^= (uint32_t)(uint16_t)bank[P1_SPEC_HASH + (int)part * 2 + 1]
                               << 1;
@@ -14154,7 +14178,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                     }
                     uint32_t mask_changed = (pm[P1_PM_MASKID] != maskid);
                     if (mask_changed) {
-                        if (wave >= 13u) {
+                        if (wave >= 14u) {
                             uint32_t amask[128];
                             uint32_t bmask[128];
                             P1_PM_MASK_BUILD(amask, wave, bank, part, 0);
@@ -14485,15 +14509,15 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
             /* Add the FM/feedback sum after the map. The sum is the same `(fm << 20)` that
                the phasor used, so the off map path is the old accumulator-add-read path. */
             uint32_t op1_padd_phase_x = op1_phase_phase_x + ((uint32_t)op1_sum_audio_x << 20);
-            /* Waveform reader. Values 0-12 read the precomputed 13-wave table (`p1_wave`):
-               one load, with the band-limited mip added for waves 10/11/12. Value 13 reads
+            /* Waveform reader. Values 0-13 read the precomputed 14-wave table (`p1_wave`):
+               one load, with the band-limited mip added for waves 10/11/12/13. Value 14 reads
                the additive bank: the a and b spectra at the mip selected from the phasor,
                blended by the per-voice morph. The morph is the absolute envelope position
                when `env_on` is set, otherwise the `morph` input from the knob, plus the LFO
                in panel units. The bank is regenerated at the first voice of each control
                block by the block-derived `tick`, and the 10 ms crossfade is in the read. */
             int32_t op1_osc_audio_x;
-            if (op1_osc_wave[v] >= 13u) {
+            if (op1_osc_wave[v] >= 14u) {
                 op1_osc_live[v] = p1_spectral_morph(
                     op1_specenv_active_x[v] ? op1_specenv_cv_x[v]
                                  : p1_clamp(op1_morphbase_out_x[v] + op1_osc_morph_macro[v], 0, 99),

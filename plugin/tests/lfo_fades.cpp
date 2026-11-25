@@ -58,7 +58,7 @@ bool set_param(p1::Engine& engine, const char* name, int32_t value)
 bool base_setup(p1::Engine& engine)
 {
     bool ok = true;
-    ok &= set_param(engine, "algorithm.p0", 7);
+    ok &= set_param(engine, "algorithm.p0", 9);
     ok &= set_param(engine, "op1_waveform.p0", 0);
     ok &= set_param(engine, "op1_ratio.p0", 65536);
     ok &= set_param(engine, "op1_detune.p0", 0);

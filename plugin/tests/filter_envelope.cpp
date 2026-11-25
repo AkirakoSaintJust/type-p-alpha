@@ -45,7 +45,7 @@ void set_param(p1::Engine& engine, const char* name, int32_t value)
 
 void setup(p1::Engine& engine, int32_t r1)
 {
-    set_param(engine, "algorithm.p0", 7);
+    set_param(engine, "algorithm.p0", 9);
     set_param(engine, "op1_waveform.p0", 0);
     set_param(engine, "op1_ratio.p0", 65536);
     set_param(engine, "op1_level.p0", 99);

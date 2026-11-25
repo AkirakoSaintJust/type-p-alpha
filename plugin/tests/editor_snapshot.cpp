@@ -480,7 +480,7 @@ int main(int argc, char** argv)
             1, 0, PluginEditor::OperatorSection::spectrumA);
         if (std::lround(readRaw("op2_spec_a1.p0")) != 77 ||
             std::lround(readRaw("op2_spec_range_a.p0")) != 1 ||
-            std::lround(readRaw("op2_waveform.p0")) != 13) {
+            std::lround(readRaw("op2_waveform.p0")) != 14) {
             std::printf("editor snapshot: spectrum paste did not activate the mode\n");
             ok = false;
         }

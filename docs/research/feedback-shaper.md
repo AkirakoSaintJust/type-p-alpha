@@ -22,7 +22,7 @@ The shipped control is the bipolar feedback knob, and the `feedback_bipolar` tes
 covers it.
 
 The test uses one sine operator: note 60, velocity 100, ratio 1.0, level 99,
-algorithm 7, the other three operators muted, a flat operator envelope, the
+algorithm 9, the other three operators muted, a flat operator envelope, the
 filter off and no amplitude LFO. It renders 16,384 frames at 44.1 kHz into a
 2 x 16,384 buffer and analyses the left channel in the last 8,192 samples with a
 Hann-windowed DFT at the harmonics and at 8 to 20 kHz for the high-frequency

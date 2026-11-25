@@ -532,7 +532,7 @@ int main()
             auto instance = std::make_unique<TypePAlphaAudioProcessor>();
             instance->setRateAndBufferSizeDetails(48000.0, kFrames);
             instance->prepareToPlay(48000.0, kFrames);
-            set(*instance, "op1_waveform.p0", 13);
+            set(*instance, "op1_waveform.p0", 14);
             if (targeted) {
                 set(*instance, "macro1", 0);
                 set(*instance, "macro1_target1",
@@ -585,7 +585,7 @@ int main()
         std::array<int32_t, kFrames * 2> reference0{};
         std::array<int32_t, kFrames * 2> reference7{};
         renderReference(reference0.data(), kFrames, 0, 0);
-        renderReference(reference7.data(), kFrames, 0, 7);
+        renderReference(reference7.data(), kFrames, 0, 9);
         check(matches(renderRing(4, 0, 99, 1), reference, kFrames),
               "the ring off leaves the render bit-exact");
         check(!matches(renderRing(4, 1, 99, 1), reference, kFrames),
@@ -598,9 +598,9 @@ int main()
               "a direct gate applies while the ring is on");
         check(matches(renderRing(0, 1, 99, 1), reference0.data(), kFrames),
               "one carrier has no ring modulation");
-        check(matches(renderRing(7, 0, 99, 1), reference7.data(), kFrames),
+        check(matches(renderRing(9, 0, 99, 1), reference7.data(), kFrames),
               "four carriers with the ring off match");
-        check(!matches(renderRing(7, 1, 99, 1), reference7.data(), kFrames),
+        check(!matches(renderRing(9, 1, 99, 1), reference7.data(), kFrames),
               "four carriers ring the first pair");
         {
             const auto rms = [](const juce::AudioBuffer<float>& buffer) {
@@ -708,6 +708,39 @@ int main()
             check(cutoff != nullptr &&
                       std::lround(cutoff->load()) == 36958,
                   "an old state migrates the cutoff to 909 Hz");
+            processor.setStateInformation(state.getData(),
+                                          static_cast<int>(state.getSize()));
+        }
+    }
+
+    {
+        std::unique_ptr<juce::XmlElement> oldXml(processor.getXmlFromBinary(
+            state.getData(), static_cast<int>(state.getSize())));
+        if (oldXml != nullptr) {
+            auto tree = juce::ValueTree::fromXml(*oldXml);
+            tree.setProperty("stateVersion", 14, nullptr);
+            for (int i = 0; i < tree.getNumChildren(); ++i) {
+                auto child = tree.getChild(i);
+                if (!child.hasType("PARAM"))
+                    continue;
+                const auto id = child.getProperty("id").toString();
+                if (id == "algorithm.p0")
+                    child.setProperty("value", 7, nullptr);
+                else if (id == "op1_waveform.p0")
+                    child.setProperty("value", 13, nullptr);
+            }
+            juce::MemoryBlock older;
+            processor.copyXmlToBinary(*tree.createXml(), older);
+            processor.setStateInformation(older.getData(),
+                                          static_cast<int>(older.getSize()));
+            auto* algorithm =
+                processor.parameters().getRawParameterValue("algorithm.p0");
+            auto* waveform =
+                processor.parameters().getRawParameterValue("op1_waveform.p0");
+            check(algorithm != nullptr && std::lround(algorithm->load()) == 9 &&
+                      waveform != nullptr &&
+                      std::lround(waveform->load()) == 14,
+                  "an old state moves the algorithm and wave values");
             processor.setStateInformation(state.getData(),
                                           static_cast<int>(state.getSize()));
         }

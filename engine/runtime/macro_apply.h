@@ -10,7 +10,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-extern const int16_t table_routing[160];
+extern const int16_t table_routing[200];
 #ifdef __cplusplus
 }
 #endif
@@ -37,8 +37,8 @@ static inline int32_t p1_macro_velocity_role_offset(
     int32_t algorithm = state->algo_algorithm[part];
     if (algorithm < 0)
         algorithm = 0;
-    else if (algorithm > 7)
-        algorithm = 7;
+    else if (algorithm > 9)
+        algorithm = 9;
     const int is_carrier =
         table_routing[algorithm * 20 + 16 + (op - 1)] != 0;
 

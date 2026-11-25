@@ -48,7 +48,7 @@ bool setup(p1::Engine& engine, int32_t l1, int32_t l2, int32_t l3,
            int32_t relLevel, int32_t mode, int32_t r1 = 99)
 {
     bool ok = true;
-    ok &= set_param(engine, "algorithm.p0", 7);
+    ok &= set_param(engine, "algorithm.p0", 9);
     ok &= set_param(engine, "op1_waveform.p0", 0);
     ok &= set_param(engine, "op1_ratio.p0", 65536);
     ok &= set_param(engine, "op1_level.p0", 99);

@@ -36,7 +36,7 @@ struct TickResult {
 TickResult runTickSeries(int ticks, bool reads)
 {
     int16_t bank[P1_SPEC_BANK] = {0};
-    int32_t waveform[2] = {13, 13};
+    int32_t waveform[2] = {14, 14};
     int32_t rangeA[2] = {0, 0};
     int32_t rangeB[2] = {0, 0};
     int32_t a[P1_SPEC_HARMONICS][2] = {};
@@ -95,14 +95,14 @@ void setupSpectrumEngine(p1::Engine& engine)
 {
     engine.reset();
     setAll(engine, {
-        {"algorithm.p0", 7}, {"algorithm.p1", 7},
+        {"algorithm.p0", 9}, {"algorithm.p1", 9},
         {"filter_on.p0", 0}, {"filter_on.p1", 0},
         {"op1_level.p0", 99}, {"op1_level.p1", 99},
         {"op1_feedback.p0", 0}, {"op1_feedback.p1", 0},
-        {"op1_waveform.p0", 13}, {"op1_waveform.p1", 13},
-        {"op2_waveform.p0", 13}, {"op2_waveform.p1", 13},
-        {"op3_waveform.p0", 13}, {"op3_waveform.p1", 13},
-        {"op4_waveform.p0", 13}, {"op4_waveform.p1", 13},
+        {"op1_waveform.p0", 14}, {"op1_waveform.p1", 14},
+        {"op2_waveform.p0", 14}, {"op2_waveform.p1", 14},
+        {"op3_waveform.p0", 14}, {"op3_waveform.p1", 14},
+        {"op4_waveform.p0", 14}, {"op4_waveform.p1", 14},
         {"op2_level.p0", 0}, {"op2_level.p1", 0},
         {"op3_level.p0", 0}, {"op3_level.p1", 0},
         {"op4_level.p0", 0}, {"op4_level.p1", 0},

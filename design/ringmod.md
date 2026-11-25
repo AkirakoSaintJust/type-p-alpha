@@ -66,9 +66,9 @@ engine keeps the values at the route node, whilst the plugin spec moves those ro
 to the end of each part group, so the part record appends them without shifting the
 existing indices. The part record grew from 981 to 991 values, ten more for one
 part, so the preset version took a new step and old part records gain the defaults
-at the end. (The current part record is 994 and preset version 18; 991 and version
-17 are the ringmod-slice values, and version 18 later appended the three key-follow
-rows.) A version 16 part record ends at the phase block, which means the loader
+at the end. (The current part record is 994 and preset version 19; 991 and version
+17 are the ringmod-slice values, version 18 later appended the three key-follow
+rows, and version 19 remapped the algorithm and waveform values.) A version 16 part record ends at the phase block, which means the loader
 can append the ten ringmod defaults after it without touching any existing value,
 whilst a record from before the phase block gains both blocks in order. The
 library loader and the part bank import run the same migration, so an older shared
@@ -149,7 +149,7 @@ it is on.
   direct signals.
 - An old version 16 part record expands with the ring defaults; `preset_smoke`
   keeps the version 16 count check at 981 and the ringmod-slice count at 991.
-  (The current part block is 994 and preset version 18.) The direct part bank
+  (The current part block is 994 and preset version 19.) The direct part bank
   import and the library path both load the old record and gain the ring
   defaults.
 - The snapshots cover the card at four carriers with a pair on and the header's R

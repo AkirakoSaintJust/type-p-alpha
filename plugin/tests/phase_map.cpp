@@ -79,7 +79,7 @@ bool set_param(p1::Engine& engine, const char* name, int32_t value)
 bool base_setup(p1::Engine& engine)
 {
     bool ok = true;
-    ok &= set_param(engine, "algorithm.p0", 7);
+    ok &= set_param(engine, "algorithm.p0", 9);
     ok &= set_param(engine, "op1_waveform.p0", 0);
     ok &= set_param(engine, "op1_ratio.p0", 65536);
     ok &= set_param(engine, "op1_detune.p0", 0);
@@ -780,7 +780,7 @@ int main()
             std::printf("phase_map: setup failed\n");
             return 1;
         }
-        set_param(engine, "op1_waveform.p0", 13);
+        set_param(engine, "op1_waveform.p0", 14);
         set_param(engine, "op1_spec_range_a.p0", 64);
         set_param(engine, "op1_spec_range_b.p0", 64);
         set_param(engine, "op1_spec_a1.p0", 99);
@@ -792,7 +792,7 @@ int main()
         engine.noteOn(60, 100, 0);
         tick(engine);
         uint32_t* p = pm(engine, 0, 0);
-        check(mask_nonempty(p), "wave 13 builds a protected mask");
+        check(mask_nonempty(p), "wave 14 builds a protected mask");
         const uint32_t aMask = p[kMask];
         set_param(engine, "op1_phase_segments.p0", 13);
         tick(engine);
@@ -804,7 +804,7 @@ int main()
         set_param(engine, "op1_spec_morph.p0", 99);
         tick(engine);
         p = pm(engine, 0, 0);
-        check(mask_nonempty(p), "wave 13 keeps a mask at the b end of the morph");
+        check(mask_nonempty(p), "wave 14 keeps a mask at the b end of the morph");
     }
 
     /* Turning the map off and on, or resetting it for a patch load, clears the
@@ -909,7 +909,7 @@ int main()
                 set_param(e, name, 0);
             }
             if (active)
-                set_param(e, "op1_waveform.p0", 13);
+                set_param(e, "op1_waveform.p0", 14);
             for (int n = 0; n < kVoices; ++n)
                 e.noteOn(24u + static_cast<uint32_t>(n), 100, 0);
             std::vector<int32_t> out(2 * kTickFrames, 0);

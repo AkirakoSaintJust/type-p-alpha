@@ -633,7 +633,7 @@ public:
         const int algorithm = static_cast<int>(
             std::lround(getParam(editor_, params::algorithm(part_))));
         const auto& mask = p1::macros::kCarrierMasks[static_cast<std::size_t>(
-            juce::jlimit(0, 7, algorithm))];
+            juce::jlimit(0, 9, algorithm))];
         int next[4] = {0, 0, 0, 0};
         int count = 0;
         for (int op = 0; op < 4; ++op)

@@ -31,9 +31,9 @@ inline void ensureSpectrumMode(PluginEditor& editor, int op, int part,
     if (std::lround(getParam(editor, valueID)) == 0)
         return;
     const auto waveID = params::opWaveform(op, part);
-    if (std::lround(getParam(editor, waveID)) == 13)
+    if (std::lround(getParam(editor, waveID)) == 14)
         return;
-    setParam(editor, waveID, 13.0f);
+    setParam(editor, waveID, 14.0f);
 }
 
 class InlineMuteSwitch : public juce::Component {

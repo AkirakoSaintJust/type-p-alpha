@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: GPL-3.0-only */
-/* Checks the generated 13-wave table and the analysis table. The checksums are
- * the pre-change 12-wave table, so the current waves stay byte for byte after the
- * rectified triangle moves pulse, square and saw to 10, 11 and 12. */
+/* Checks the generated 14-wave table and the analysis table. The checksums are
+ * the pre-change table, so the current waves stay byte for byte after the half
+ * square moves square and saw to 12 and 13. */
 #include <cstddef>
 #include <cstdint>
 #include <cstdio>
@@ -26,8 +26,8 @@ uint64_t fnv(const int16_t* data, size_t count)
 
 bool checkBase()
 {
-    const uint8_t expected[13] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 19, 28};
-    for (size_t i = 0; i < 13; ++i) {
+    const uint8_t expected[14] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 19, 28, 37};
+    for (size_t i = 0; i < 14; ++i) {
         if (p1_wave_base[i] != expected[i]) {
             std::printf("wavetable: base %zu is %u, expected %u\n", i,
                         static_cast<unsigned>(p1_wave_base[i]),
@@ -55,11 +55,16 @@ bool checkHarmonics()
     }
     if (p1_wave_harmonics[11][0] != 99 || p1_wave_harmonics[11][1] != 0 ||
         p1_wave_harmonics[11][2] != 33) {
+        std::printf("wavetable: the half square analysis changed\n");
+        return false;
+    }
+    if (p1_wave_harmonics[12][0] != 99 || p1_wave_harmonics[12][1] != 0 ||
+        p1_wave_harmonics[12][2] != 33) {
         std::printf("wavetable: the square analysis changed\n");
         return false;
     }
-    if (p1_wave_harmonics[12][0] != 99 || p1_wave_harmonics[12][1] != 49 ||
-        p1_wave_harmonics[12][2] != 33) {
+    if (p1_wave_harmonics[13][0] != 99 || p1_wave_harmonics[13][1] != 49 ||
+        p1_wave_harmonics[13][2] != 33) {
         std::printf("wavetable: the saw analysis changed\n");
         return false;
     }
@@ -70,15 +75,28 @@ bool checkSamples()
 {
     constexpr size_t kWaves0To8 = 9 * 1024;
     constexpr size_t kRectTri = 9 * 1024;
-    constexpr size_t kShiftedStart = 10 * 1024;
-    constexpr size_t kShiftedCount = 27 * 1024;
+    constexpr size_t kPulse = 10 * 1024;
+    constexpr size_t kHalfSquare = 19 * 1024;
+    constexpr size_t kSquare = 28 * 1024;
+    constexpr size_t kSaw = 37 * 1024;
     if (fnv(p1_wave, kWaves0To8) != 0xcb3338ebe43ab531ull) {
         std::printf("wavetable: waves 0 to 8 do not match the old table\n");
         return false;
     }
-    if (fnv(p1_wave + kShiftedStart, kShiftedCount) !=
-        0xbe8251411868918dull) {
-        std::printf("wavetable: pulse, square and saw do not match the old table\n");
+    if (fnv(p1_wave + kPulse, 9 * 1024) != 0x556a200d14d701b4ull) {
+        std::printf("wavetable: the pulse table changed\n");
+        return false;
+    }
+    if (fnv(p1_wave + kHalfSquare, 9 * 1024) != 0x805f0ed9d6dc08b7ull) {
+        std::printf("wavetable: the half square table changed\n");
+        return false;
+    }
+    if (fnv(p1_wave + kSquare, 9 * 1024) != 0x6b392ed210eb9524ull) {
+        std::printf("wavetable: the square table changed\n");
+        return false;
+    }
+    if (fnv(p1_wave + kSaw, 9 * 1024) != 0xfad16a10324b3941ull) {
+        std::printf("wavetable: the saw table changed\n");
         return false;
     }
     if (fnv(p1_wave + kRectTri, 1024) != 0x752b7188e38a5725ull) {
@@ -106,6 +124,6 @@ int main()
 {
     if (!checkBase() || !checkSamples() || !checkHarmonics())
         return 1;
-    std::printf("wavetable: 13 waves, analysis and checksums pass\n");
+    std::printf("wavetable: 14 waves, analysis and checksums pass\n");
     return 0;
 }

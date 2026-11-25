@@ -66,13 +66,13 @@ double magnitude(const std::vector<int32_t>& samples, int start, int count,
 bool setupCarrier(p1::Engine& engine)
 {
     return setAll(engine, {
-        {"algorithm.p0", 7},
+        {"algorithm.p0", 9},
         {"level.p1", 0},
         {"filter_on.p0", 0},
         {"op1_mute.p0", 0},
         {"op1_level.p0", 99},
         {"op1_feedback.p0", 0},
-        {"op1_waveform.p0", 13},
+        {"op1_waveform.p0", 14},
         {"op2_mute.p0", 1}, {"op3_mute.p0", 1}, {"op4_mute.p0", 1},
         {"op1_spec_morph.p0", 0},
         {"op1_spec_env_on.p0", 0},

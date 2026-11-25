@@ -16,7 +16,7 @@ constexpr double kPi = 3.14159265358979323846;
 std::array<double, 64> analyseWaveTable(int wave, int firstHarmonic)
 {
     std::array<double, 64> levels{};
-    if (wave < 0 || wave > 12)
+    if (wave < 0 || wave > 13)
         return levels;
     const int base = static_cast<int>(p1_wave_base[wave]) << 10;
     for (int h = 0; h < 64; ++h) {

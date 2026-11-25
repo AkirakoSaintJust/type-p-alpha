@@ -39,7 +39,7 @@
   accepts the `P1LIB2` layout only at this slice, since the 146, 160 and 179 layouts and the
   16-byte `P1LIB1` name field are removed. Each part and multi record grows by 17
   bytes, so a library made before `P1LIB2` needs conversion outside the plugin.
-  (The current record is version 18 and the library magic is `P1LIB3`; this is the
+  (The current record is version 19 and the library magic is `P1LIB3`; this is the
   UI-library slice.)
 - **MIDI/clock impact:** none.
 

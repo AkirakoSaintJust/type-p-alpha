@@ -9,7 +9,7 @@
 #pragma once
 #include <stdint.h>
 #include "math_tables.h"                       /* p1_sin_q15 / p1_exp2_q16 / p1_log2_q16 */
-#include "wavetable.h"                         /* p1_wave (the 13-wave OPZ+OPL union) */
+#include "wavetable.h"                         /* p1_wave (the 14-wave OPZ+OPL union) */
 #include "naive_wave.h"                        /* p1_naive_wave (the 4 naive shapes) */
 
 /* These helpers belong in the hot loop, so they are always inline. The plugin
@@ -158,23 +158,23 @@ P1_MATH_INLINE int32_t p1_sin(uint32_t phase)
 
 P1_MATH_INLINE int32_t p1_cos(uint32_t phase) { return p1_sin(phase + 0x40000000u); }
 
-/* The 13-waveform union of the OPZ (YM2414) and OPL2/OPL3 (YM3812) sets, from
+/* The 14-waveform union of the OPZ (YM2414) and OPL2/OPL3 (YM3812) sets, from
    ymfm's `opz_registers` and `opl_registers_base` constructors (BSD-3-Clause,
-   re-implemented in linear Q15), plus the rectified triangle. `phase` is Q32
-   (full cycle), and `ws` is 0..12.
+   re-implemented in linear Q15), plus the rectified triangle and the half square.
+   `phase` is Q32 (full cycle), and `ws` is 0..13.
    0-7 are the OPZ set (sine, triangle, half sine, half triangle, double sine,
    double triangle, double half sine, double half triangle), 8 is the rectified
-   sine, 9 is the rectified triangle, and 10-12 are the OPL-only shapes (pulse,
-   square, saw). A bad `ws` degrades to sine.
+   sine, 9 is the rectified triangle, and 10-13 are the OPL-only shapes (pulse,
+   half square, square, saw). A bad `ws` degrades to sine.
    Precomputed into gen/wavetable.h (`p1_wave`, tools/gen_wavetable.py): waves
-   0-9 are one 1024-sample table each, whilst 10 (pulse) / 11 (square) / 12 (saw)
-   are nine band-limited tables each (harmonic counts 256..1) for the top-octave
-   anti-aliasing. `p1_wave_base[ws]` is ws's mip-0 offset, and this helper reads
-   the richest (mip-0) table. The oscillator node adds the `mip` selected from
-   its note's increment. */
+   0-9 are one 1024-sample table each, whilst 10 (pulse) / 11 (half square) / 12
+   (square) / 13 (saw) are nine band-limited tables each (harmonic counts 256..1)
+   for the top-octave anti-aliasing. `p1_wave_base[ws]` is ws's mip-0 offset, and
+   this helper reads the richest (mip-0) table. The oscillator node adds the `mip`
+   selected from its note's increment. */
 P1_MATH_INLINE int32_t p1_sin_wave(uint32_t phase, uint32_t ws)
 {
-    if (ws > 12u) ws = 0u;   /* out of range degrades to sine (not a masked OOB read) */
+    if (ws > 13u) ws = 0u;   /* out of range degrades to sine (not a masked OOB read) */
     return p1_wave[((uint32_t)p1_wave_base[ws] << 10) | (phase >> 22)];
 }
 

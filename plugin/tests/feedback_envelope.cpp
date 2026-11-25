@@ -54,7 +54,7 @@ bool setup(p1::Engine& engine, int32_t feedback, int32_t envL1, int32_t envR1,
            int32_t on)
 {
     bool ok = true;
-    ok &= set_param(engine, "algorithm.p0", 7);
+    ok &= set_param(engine, "algorithm.p0", 9);
     ok &= set_param(engine, "op1_waveform.p0", 0);
     ok &= set_param(engine, "op1_ratio.p0", 65536);
     ok &= set_param(engine, "op1_detune.p0", 0);

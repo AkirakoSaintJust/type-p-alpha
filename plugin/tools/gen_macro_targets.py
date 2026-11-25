@@ -132,17 +132,18 @@ def reorder_ring(params: list[dict[str, Any]]) -> list[dict[str, Any]]:
 
 
 def load_carriers(tables_path: Path) -> list[list[bool]]:
-    """Read the 8 carrier masks from the generated routing table."""
+    """Read the carrier masks from the generated routing table."""
     text = tables_path.read_text(encoding="utf-8")
-    match = re.search(r"table_routing\[160\]\s*=\s*\{(.*?)\};", text, re.S)
+    match = re.search(r"table_routing\[(\d+)\]\s*=\s*\{(.*?)\};", text, re.S)
     if match is None:
         raise SystemExit(f"{tables_path}: the routing table is missing")
-    values = [int(v) for v in re.findall(r"-?\d+", match.group(1))]
-    if len(values) != 160:
-        raise SystemExit(f"{tables_path}: expected 160 routing values")
+    declared = int(match.group(1))
+    values = [int(v) for v in re.findall(r"-?\d+", match.group(2))]
+    if len(values) != declared or declared % 20 != 0:
+        raise SystemExit(f"{tables_path}: expected {declared} routing values")
     return [
         [values[algorithm * 20 + 16 + op] != 0 for op in range(4)]
-        for algorithm in range(8)
+        for algorithm in range(declared // 20)
     ]
 
 
@@ -360,7 +361,8 @@ def main() -> int:
         "                              kLfoDepthMembers.end(), id);",
         "}",
         "",
-        "inline constexpr std::array<std::array<uint8_t, 4>, 8> kCarrierMasks = {{",
+        f"inline constexpr std::array<std::array<uint8_t, 4>, {len(carriers)}> "
+        "kCarrierMasks = {{",
     ]
     for mask in carriers:
         lines.append("    {{" + ", ".join("1" if c else "0" for c in mask) + "}},")

@@ -92,7 +92,7 @@ the page needs the height for the envelope and the LFO.
 ## Oscillator card
 
 The mode is per operator. The wave select carries the mode, so there is no separate
-switch. It lists fourteen entries: the thirteen waves and `spectrum` at the end.
+switch. It lists fifteen entries: the fourteen waves and `spectrum` at the end.
 The two spectral pages add a `morph` knob to the oscillator row. The operators
 and op lfos pages keep the current card and show the same wave select, so
 `spectrum` is visible and selectable there too.
@@ -103,7 +103,7 @@ and op lfos pages keep the current card and show the same wave select, so
 | detune | oscillator detune in cents, as now |
 | level | operator output level, as now |
 | feedback | operator feedback, as now |
-| wave | select a wave 0 to 12, or `spectrum` at 13 for the additive oscillator |
+| wave | select a wave 0 to 13, or `spectrum` at 14 for the additive oscillator |
 | morph | blend from spectrum a at 0 to spectrum b at 99 |
 
 Selecting `spectrum` uses the stored a and b spectra. Selecting a wave returns the
@@ -163,7 +163,7 @@ of them from a wave.
 | Control | Meaning |
 | --- | --- |
 | `range` | the harmonic block the 64 bars address: 1-64 or 65-128 |
-| `load spectrum template...` | analyse one of the thirteen waves into this row |
+| `load spectrum template...` | analyse one of the fourteen waves into this row |
 | 64 bars | the selected range, 0 to 99 per bar |
 | `copy` / `paste` | move the whole spectrum to another operator |
 | `to b` / `to a` | copy the 64 levels to the other spectrum of the operator |
@@ -301,7 +301,7 @@ template button loads a wave into either row without touching the waveform.
 
 Every new parameter is per operator and per part. The ids below use `opN` for
 operators 1 to 4 and `.pP` for parts 0 and 1. All are block rate. The existing
-waveform parameter grows from 0 to 11 to 0 to 13, where 13 selects `spectrum`.
+waveform parameter grows from 0 to 11 to 0 to 14, where 14 selects `spectrum`.
 
 | Group | Id | Count | Range | Default |
 | --- | --- | --- | --- | --- |
@@ -324,7 +324,7 @@ That is 145 parameters per operator, 580 per part, and 1,160 for the spectral gr
 The part block grew from 228 to 800 at this slice, and the manifest from 470 to
 1,614. The later envelope family moved the totals to 1,676 manifest parameters and an
 831 part block, and the LFO fade family to 1,744 and 865. The current totals are
-2,053 manifest parameters and a 994-value part block, preset version 18.
+2,053 manifest parameters and a 994-value part block, preset version 19.
 
 The range is the harmonic block the 64 bars address: 0 is 1 to 64 and 1 is
 65 to 128. A and b each carry their own range, so the mod display zooms

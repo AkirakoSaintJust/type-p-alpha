@@ -51,15 +51,15 @@ you go digging.
 - `filter_envelope` checks the filter envelope rate resolution, from the slowest setting to instant.
 - `phase_map` checks the per-operator map: the off path, `F`, the reflective fold,
   the locks, flips, reorder, drift, the LFO and envelope, per-part key and velocity
-  follow, the trigger rule, the two parts, wave 13's spectral mask and the CPU
+  follow, the trigger rule, the two parts, wave 14's spectral mask and the CPU
   ratio. The map runs at 1×; the 2× read is not built. The shipped read is the
   exact 1024-entry post-F table.
 - `phase_map_perceptual` and `phase_map_perceptual_compare` are the pre-seeded
   perceptual harness: 133 scenarios, per-frame spectral, band, harmonic, alias,
   envelope and attack/release metrics. They are manual/CI comparison tools rather
   than CTest gates.
-- `preset_smoke` checks the preset records, including the version 17 -> 18 append
-  and the current version 18 part layout.
+- `preset_smoke` checks the preset records, including the version 17 -> 18 append,
+  the version 18 -> 19 value remap and the current version 19 part layout.
 - `plugin_smoke` checks the APVTS, the state and the automation.
 - `plugin_stability` checks repeated load and render.
 - `plugin_editor_snapshot` renders every page, and `plugin_editor_snapshot_diff`

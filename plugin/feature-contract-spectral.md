@@ -27,7 +27,7 @@
   The `op spectra mod` page carries the spectrum display, the morph, the morph
   envelope and the morph LFO.
 - **Sound and behaviour:** the wave select is the mode, so values 0 to 12 read the
-  wave table and value 13 (`spectrum`) reads the additive bank, and the mode is saved.
+  wave table and value 14 (`spectrum`) reads the additive bank, and the mode is saved.
   Because the wave select is the mode, choosing `spectrum` after an edit restores the
   stored pair, choosing any other wave keeps the pair for the next selection, and a
   template load writes only the chosen row, so the player can move between the wave
@@ -67,8 +67,9 @@
   remap for the mod page, keyed on `uiPageLayout` 3. The later envelope family moved
   the totals to 1,676 manifest parameters and an 831 part block, and the LFO fade
   family to 1,744 and 865. (The current totals are 2,053 manifest parameters and a
-  994-value part block, preset version 18, after the phase-map, ringmod, macro and
-  key-follow slices.)
+  994-value part block, preset version 19, after the phase-map, ringmod, macro,
+  key-follow and half-square slices.) The half-square slice inserts `half square`
+  at waveform 11, so square, saw and `spectrum` move to 12, 13 and 14.
 - **MIDI/clock impact:** none, since the new parameters are host-automatable and stay
   out of the default CC map. The spectrum mode is the waveform parameter, so a host
   can automate the mode.
@@ -76,11 +77,11 @@
 ## Parameter and event semantics
 
 The spectral parameters are per operator and per part, at block rate, and the existing
-waveform parameter grows from 0 to 11 to 0 to 13.
+waveform parameter grows from 0 to 11 to 0 to 14.
 
 | Parameter | Target | Range | Default | Display |
 | --- | --- | --- | --- | --- |
-| `opN_waveform` | `opN.osc.waveform` | 0..13 | 0 | `wave` |
+| `opN_waveform` | `opN.osc.waveform` | 0..14 | 0 | `wave` |
 | `opN_spec_range_a` | `opN.osc.spec_range_a` | 0..1 | 0 | `range` |
 | `opN_spec_range_b` | `opN.osc.spec_range_b` | 0..1 | 0 | `range` |
 | `opN_spec_a1` ... `opN_spec_a64` | `opN.osc.spec_a1` ... `a64` | 0..99 | 99, then 0 | raw |
@@ -125,8 +126,8 @@ away from zero writes the waveform as 13, so the modulation has something to mov
   samples per operator, so 21,760 bytes per operator and 87,040 bytes for four
   operators. Each part reads its two tables and the shadow at the selected mip, so a
   voice touches 3 x 256 samples for the operator, and the part block grows by 384
-  spectral parameters, 1,536 bytes per part, and reaches 800 parameters. The 13-wave
-  table is 37,888 samples, 75,776 bytes, and the bank is bounded.
+  spectral parameters, 1,536 bytes per part, and reaches 800 parameters. The 14-wave
+  table is 47,104 samples, 94,208 bytes, and the bank is bounded.
 - **Table update schedule:** `spectral_bench` measures about 60 µs to generate one
   spectrum (seven mips, 127 harmonic sums per sample) on the Windows clang-cl build. A
   block that changes all eight spectra costs about 482 µs of generation, and about

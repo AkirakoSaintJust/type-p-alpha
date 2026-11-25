@@ -123,7 +123,7 @@ bool setPart(p1::Engine& engine, int part, const char* stem, int32_t value)
 bool configurePart(p1::Engine& engine, int part, const Scenario& s)
 {
     bool ok = true;
-    ok &= setPart(engine, part, "algorithm", 7);
+    ok &= setPart(engine, part, "algorithm", 9);
     ok &= setPart(engine, part, "level", 99);
     ok &= setPart(engine, part, "filter_on", 0);
     ok &= setPart(engine, part, "attack", 99);
@@ -178,7 +178,7 @@ bool configurePart(p1::Engine& engine, int part, const Scenario& s)
         ok &= setPart(engine, part, "op1_phase_env_l3", 99);
     }
 
-    if (s.wave == 13) {
+    if (s.wave == 14) {
         /* A bright saw-like a and a hollow odd-harmonic b. The phase map's
          * protected mask is built from these, and the morph sweeps exercise
          * the mask rebuild. */
@@ -438,7 +438,7 @@ std::vector<Scenario> buildScenarios()
 
     /* The static base character: a note sweep, a breakpoint sweep and a
      * segment sweep, with no stochastic clocks and no modulation. */
-    for (int wave : {0, 11, 12, 13}) {
+    for (int wave : {0, 11, 12, 13, 14}) {
         for (int note : {24, 36, 48, 60, 72, 84, 96}) {
             Scenario s;
             s.id = named("static-w%d-n%d", wave, note);
@@ -591,7 +591,7 @@ std::vector<Scenario> buildScenarios()
         for (int morph : {0, 50, 99}) {
             Scenario s;
             s.id = named("morph-s%d-m%d", seg, morph);
-            s.wave = 13;
+            s.wave = 14;
             s.segments = seg;
             s.morph = morph;
             add(s);
@@ -600,7 +600,7 @@ std::vector<Scenario> buildScenarios()
     for (int seg : {8, 32}) {
         Scenario s;
         s.id = named("morphsweep-s%d", seg);
-        s.wave = 13;
+        s.wave = 14;
         s.segments = seg;
         s.morphSweep = 1;
         add(s);

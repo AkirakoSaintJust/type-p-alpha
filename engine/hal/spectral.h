@@ -166,7 +166,7 @@ static inline void p1_spectral_tick(
          * straight into place. */
         const int used = bank[P1_SPEC_USED + part] != 0;
         bank[P1_SPEC_USED + part] = 0;
-        if (waveform[part] != 13)
+        if (waveform[part] != 14)
             continue;
 
         if (bank[P1_SPEC_XFADE + part] > 0) {

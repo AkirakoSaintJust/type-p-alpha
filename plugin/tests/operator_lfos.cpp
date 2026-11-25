@@ -45,7 +45,7 @@ bool setup(p1::Engine& engine, int32_t feedbackLfoDepth, int32_t detuneLfoDepth,
            int32_t feedbackLfoRate, int32_t detuneLfoRate)
 {
     bool ok = true;
-    ok &= set_param(engine, "algorithm.p0", 7);
+    ok &= set_param(engine, "algorithm.p0", 9);
     ok &= set_param(engine, "op1_waveform.p0", 0);
     ok &= set_param(engine, "op1_ratio.p0", 65536);
     ok &= set_param(engine, "op1_detune.p0", 0);

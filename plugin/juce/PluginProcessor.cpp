@@ -19,7 +19,7 @@ namespace {
 
 constexpr double kCoreRate = 48000.0;
 constexpr int kControlBlock = 32;
-constexpr int kStateVersion = 14;
+constexpr int kStateVersion = 15;
 /* The state version whose cutoff values already use the current law. A later
  * version bump must not run the cutoff conversion again. */
 constexpr int kCutoffLawStateVersion = 5;
@@ -28,6 +28,10 @@ constexpr int kUiPageLayout = 5;
 /* Layout 4 inserted op phasemap at 4, which moved the three spectral pages. */
 constexpr int kPhaseMapPageLayout = 4;
 constexpr float kIntToFloat = 1.0f / 32768.0f;
+
+/* The state version that inserted the half square and the two algorithms. A
+ * later version bump must not shift the stored values again. */
+constexpr int kInsertionStateVersion = 15;
 
 bool isEngineMessage(const juce::MidiMessage& message)
 {
@@ -135,6 +139,12 @@ void configurePresetStore(p1::PresetStore& store)
     fadeIndices[static_cast<std::size_t>(fadeCount++)] =
         partParamIndex("pitch_depth_fade.p0");
     store.setLfoFadeIndices(fadeIndices);
+    store.setInsertionIndices(
+        partParamIndex("algorithm.p0"),
+        {partParamIndex("op1_waveform.p0"),
+         partParamIndex("op2_waveform.p0"),
+         partParamIndex("op3_waveform.p0"),
+         partParamIndex("op4_waveform.p0")});
 }
 
 } // namespace
@@ -547,7 +557,7 @@ void TypePAlphaAudioProcessor::syncMacros()
                                   ->load()))
                         : 0;
                 const auto& mask = p1::macros::kCarrierMasks[static_cast<std::size_t>(
-                    juce::jlimit(0, 7, algorithm))];
+                    juce::jlimit(0, 9, algorithm))];
                 const int role = p1::macros::kTargetRole[row];
                 const int start = p1::macros::kTargetMemberOffsets[row];
                 const int end = p1::macros::kTargetMemberOffsets[row + 1];
@@ -1065,15 +1075,34 @@ void TypePAlphaAudioProcessor::setStateInformation(const void* data, int sizeInB
     if (!state.isValid() || !state.hasType(apvts_.state.getType()))
         return;
     const int loadedVersion = static_cast<int>(state.getProperty("stateVersion", 0));
-    if (loadedVersion < kCutoffLawStateVersion) {
+    const bool insertionMigration =
+        loadedVersion < kInsertionStateVersion;
+    if (loadedVersion < kCutoffLawStateVersion || insertionMigration) {
         for (int i = 0; i < state.getNumChildren(); ++i) {
             auto child = state.getChild(i);
             if (!child.hasType("PARAM"))
                 continue;
             const auto id = child.getProperty("id").toString();
-            if (id == "cutoff.p0" || id == "cutoff.p1") {
+            if (loadedVersion < kCutoffLawStateVersion &&
+                (id == "cutoff.p0" || id == "cutoff.p1")) {
                 const int old = static_cast<int>(child.getProperty("value"));
                 child.setProperty("value", p1::cutoffOldToNew(old), nullptr);
+            }
+            if (!insertionMigration)
+                continue;
+            const int old = static_cast<int>(child.getProperty("value"));
+            if (id == "algorithm.p0" || id == "algorithm.p1") {
+                int value = old;
+                if (value == 5)
+                    value = 6;
+                else if (value == 6)
+                    value = 7;
+                else if (value == 7)
+                    value = 9;
+                child.setProperty("value", value, nullptr);
+            } else if (id.startsWith("op") && id.contains("_waveform.")) {
+                const int value = old >= 11 && old <= 13 ? old + 1 : old;
+                child.setProperty("value", value, nullptr);
             }
         }
     }

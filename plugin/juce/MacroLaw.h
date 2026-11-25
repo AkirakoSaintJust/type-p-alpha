@@ -16,7 +16,7 @@ inline bool macroRowIncludes(int row, int index, int algorithm)
         return false;
     const int role = macros::kTargetRole[row];
     const auto& mask = macros::kCarrierMasks[static_cast<std::size_t>(
-        std::clamp(algorithm, 0, 7))];
+        std::clamp(algorithm, 0, 9))];
     const int start = macros::kTargetMemberOffsets[row];
     const int end = macros::kTargetMemberOffsets[row + 1];
     for (int i = start; i < end; ++i) {
