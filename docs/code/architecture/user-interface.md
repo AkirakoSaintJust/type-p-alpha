@@ -278,9 +278,9 @@ the parameter but does not draw the product.
 ## Dialogs
 
 `P1Dialog` is a modal overlay with a black 72% background, a raised panel, a
-title, a close cross and a row of buttons. The dialog body is any
-`juce::Component`. The footer is 42px high and the buttons are at the bottom
-right. The dialog is centred in the canvas.
+title, a close cross and a row of buttons. The dialog body is any `juce::Component`. The footer starts at 42px for one row
+of buttons and grows by 32px for each extra row. The dialog is centred in the
+canvas.
 
 The editor uses dialogs for:
 

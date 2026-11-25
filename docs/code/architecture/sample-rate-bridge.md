@@ -129,9 +129,9 @@ and the phase-map display see every core chunk even when the host block is
 smaller than a control block.
 
 `hasCore(hostFrames)` tells the processor whether a `process` call will render at
-least one chunk. At high host rates, a host block can generate no core frame, so
-the processor uses that check to decide whether to feed the first scheduled
-events before the bridge runs.
+least one chunk. At a high host rate a very small host block can need no new
+core frame, so the processor uses that check to decide whether to feed the first
+scheduled events before the bridge runs.
 
 ## Latency
 
@@ -141,10 +141,10 @@ events before the bridge runs.
 round((kTaps - 1) * 0.5 * hostRate / 48000);
 ```
 
-The 128-tap kernel has a group delay of 63.5 core samples. At 48 kHz that is 64
-host samples, at 44.1 kHz it is about 58, at 96 kHz it is 127 and at 192 kHz it is
-254. The processor reports that value through `setLatencySamples`. At 48 kHz it
-reports 0 because the bridge is bypassed and the core output is bit-exact.
+The 128-tap kernel has a group delay of 63.5 core samples. The formula would
+give 64 host samples at 48 kHz, about 58 at 44.1 kHz, 127 at 96 kHz and 254 at
+192 kHz. The processor reports the value through `setLatencySamples`. At 48 kHz
+it reports 0 because the bridge is bypassed and the core output is bit-exact.
 
 ## The 48 kHz bypass
 

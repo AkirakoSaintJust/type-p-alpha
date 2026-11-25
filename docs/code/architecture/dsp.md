@@ -84,13 +84,15 @@ turn any modulator DC into a detune.
 
 `ph_step` is block-derived from the base increment and the pitch LFO. The
 per-sample body is one add. The selected mip is also block-derived and copied to
-the oscillator.
+the oscillator. The phasor's own `ph_phase_x` (the unmapped sum) is left unused
+in the shipped graph, and the generated line is cast to `(void)`.
 
 The phase-map node sits after the accumulator and before the FM offset. It reads
 the pre-FM `acc` phase and returns a warped phase in the same Q32 domain. The
-FM offset from `phase_add` is added after the map, so a modulator cannot warp the
-shape of the map that feeds it. This is the one-rate shipping path. The designed
-2x path is not built.
+`phase_add` node then forms `padd_phase = mapped + (sum << 20)`, and the
+oscillator indexes with `padd_phase >> 22`. A modulator cannot warp the shape of
+the map that feeds it. This is the one-rate shipping path. The designed 2x path
+is not built.
 
 ## The wavetable oscillator
 

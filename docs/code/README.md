@@ -3,8 +3,8 @@
 This directory is the full code reference for the tracked tree. It has two
 layers. The hand-written chapters explain the design, the memory model and the
 actual call paths. The reference pages are generated from the source and list
-every file, type, function, macro, global, state field and manifest parameter
-with its exact location.
+every file, type, function, macro, global and state field with an exact
+location, plus every manifest parameter with its id, target, range and display.
 
 Start here:
 

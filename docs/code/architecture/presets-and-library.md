@@ -74,9 +74,9 @@ and the record size and applies the steps in order.
 | 7 | the cutoff law conversion |
 | 10 | the operator envelope grew from 7 to 8 values |
 | 11 | the pan envelope reorder |
-| 12 | the offset envelope blocks |
-| 13 | the filter and spectral envelopes |
-| 14 | the absolute envelope blocks |
+| 12 | the five offset envelope blocks |
+| 13 | those five blocks gain their release slot |
+| 14 | the filter and spectral envelopes become absolute |
 | 15 | the 34 LFO fade slots |
 | 16 | the 116 phase-map parameters |
 | 17 | the 10 ringmod parameters |
@@ -108,11 +108,14 @@ The earlier migrations are index remaps:
   later block shifts by one.
 - version 11: the pan block changes from `on, r1..r4, l1..l4, depth` to
   `on, r1..r3, l1..l3, rel rate, rel level, mode`.
-- version 12: the pitch and feedback envelopes gain a mode and swap the fourth
-  level for a release level.
-- version 13: the filter and spectral envelopes become absolute and gain `on`,
-  release and mode, and the spectral depth moves into the block.
-- version 14: the filter block grows by two.
+- version 12: the five offset envelope blocks arrive: the four feedback
+  envelopes and the pitch envelope.
+- version 13: those five blocks gain `rel rate`, `rel level` and `mode`, so the
+  fourth level becomes the release level and the block grows by one.
+- version 14: the filter and spectral envelopes become absolute. Each spectral
+  block drops its separate depth and gains `on`, two rates and a mode, and the
+  depth moves into the block, netting two values per operator. The filter block
+  grows by two in the following step and keeps its version byte.
 - version 15: 34 LFO fade values are inserted.
 - version 16: 116 phase-map values are appended.
 - version 17: 10 ringmod values are appended.
