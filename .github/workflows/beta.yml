@@ -1,0 +1,268 @@
+name: beta release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Release version, for example 0.1.0-beta.1"
+        required: true
+        default: "0.1.0-beta.1"
+      prerelease:
+        description: "Mark the release as a pre-release"
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+env:
+  PRODUCT: Type P.alpha
+
+jobs:
+  linux-x86_64:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v7
+      - name: Build the Debian trixie image
+        run: docker build -f docker/Dockerfile -t type-p-alpha-build:beta .
+      - name: Configure, build and test the AVX2 build
+        run: |
+          docker run --rm -v "$PWD:/work" -w /work type-p-alpha-build:beta sh -c '
+            cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release \
+              -DP1_MODERN=ON \
+              -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ \
+              -DCMAKE_EXE_LINKER_FLAGS=-fuse-ld=lld \
+              -DCMAKE_SHARED_LINKER_FLAGS=-fuse-ld=lld \
+              -DCMAKE_MODULE_LINKER_FLAGS=-fuse-ld=lld &&
+            cmake --build build &&
+            ctest --test-dir build --output-on-failure \
+              -E "linux_daws|plugin_editor_snapshot|plugin_editor_snapshot_diff"'
+      - name: Package
+        run: |
+          set -eu
+          version="${{ inputs.version }}"
+          arte="build/plugin/juce/type_p_alpha_artefacts/Release"
+
+          for format in vst3 clap; do
+            stage="stage-$format"
+            rm -rf "$stage"
+            mkdir -p "$stage/licences"
+            cp LICENSE LICENSING.md "$stage/"
+            cp third-party-licenses/*.txt "$stage/licences/"
+          done
+          cp -R "$arte/VST3/Type P.alpha.vst3" stage-vst3/
+          cp "$arte/CLAP/Type P.alpha.clap" stage-clap/
+
+          cat > stage-vst3/INSTALL.txt <<'EOF'
+          Type P.alpha, Linux x86_64, VST3, AVX2 build
+
+          Copy the "Type P.alpha.vst3" folder into ~/.vst3/ and rescan the
+          plugins in your host. The build needs a CPU with AVX2.
+          EOF
+
+          cat > stage-clap/INSTALL.txt <<'EOF'
+          Type P.alpha, Linux x86_64, CLAP, AVX2 build
+
+          Copy "Type P.alpha.clap" into ~/.clap/ and rescan the plugins in
+          your host. The build needs a CPU with AVX2.
+          EOF
+
+          (cd stage-vst3 && zip -qr "../Type-P.alpha-${version}-linux-x86_64-avx2-vst3.zip" .)
+          (cd stage-clap && zip -qr "../Type-P.alpha-${version}-linux-x86_64-avx2-clap.zip" .)
+      - uses: actions/upload-artifact@v7
+        with:
+          name: linux-x86_64-vst3
+          path: "Type-P.alpha-${{ inputs.version }}-linux-x86_64-avx2-vst3.zip"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: linux-x86_64-clap
+          path: "Type-P.alpha-${{ inputs.version }}-linux-x86_64-avx2-clap.zip"
+
+  linux-aarch64:
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v7
+      - name: Build the Debian trixie image
+        run: docker build -f docker/Dockerfile -t type-p-alpha-build:beta .
+      - name: Configure, build and test
+        run: |
+          docker run --rm -v "$PWD:/work" -w /work type-p-alpha-build:beta sh -c '
+            cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release \
+              -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ \
+              -DCMAKE_EXE_LINKER_FLAGS=-fuse-ld=lld \
+              -DCMAKE_SHARED_LINKER_FLAGS=-fuse-ld=lld \
+              -DCMAKE_MODULE_LINKER_FLAGS=-fuse-ld=lld &&
+            cmake --build build &&
+            ctest --test-dir build --output-on-failure \
+              -E "linux_daws|plugin_editor_snapshot|plugin_editor_snapshot_diff"'
+      - name: Package
+        run: |
+          set -eu
+          version="${{ inputs.version }}"
+          arte="build/plugin/juce/type_p_alpha_artefacts/Release"
+
+          for format in vst3 clap; do
+            stage="stage-$format"
+            rm -rf "$stage"
+            mkdir -p "$stage/licences"
+            cp LICENSE LICENSING.md "$stage/"
+            cp third-party-licenses/*.txt "$stage/licences/"
+          done
+          cp -R "$arte/VST3/Type P.alpha.vst3" stage-vst3/
+          cp "$arte/CLAP/Type P.alpha.clap" stage-clap/
+
+          cat > stage-vst3/INSTALL.txt <<'EOF'
+          Type P.alpha, Linux aarch64, VST3
+
+          Copy the "Type P.alpha.vst3" folder into ~/.vst3/ and rescan the
+          plugins in your host.
+          EOF
+
+          cat > stage-clap/INSTALL.txt <<'EOF'
+          Type P.alpha, Linux aarch64, CLAP
+
+          Copy "Type P.alpha.clap" into ~/.clap/ and rescan the plugins in
+          your host.
+          EOF
+
+          (cd stage-vst3 && zip -qr "../Type-P.alpha-${version}-linux-aarch64-vst3.zip" .)
+          (cd stage-clap && zip -qr "../Type-P.alpha-${version}-linux-aarch64-clap.zip" .)
+      - uses: actions/upload-artifact@v7
+        with:
+          name: linux-aarch64-vst3
+          path: "Type-P.alpha-${{ inputs.version }}-linux-aarch64-vst3.zip"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: linux-aarch64-clap
+          path: "Type-P.alpha-${{ inputs.version }}-linux-aarch64-clap.zip"
+
+  windows-x86_64:
+    runs-on: windows-2022
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v7
+      - name: Build and test the AVX2 build
+        run: .\windows\build.ps1 -Modern
+      - name: Package
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          $version = "${{ inputs.version }}"
+          $arte = "build/windows-clangcl-lld-modern/plugin/juce/type_p_alpha_artefacts/Release"
+
+          foreach ($format in @("vst3", "clap")) {
+              $stage = "stage-$format"
+              Remove-Item -Recurse -Force $stage -ErrorAction SilentlyContinue
+              New-Item -ItemType Directory -Force "$stage\licences" | Out-Null
+              Copy-Item LICENSE,LICENSING.md $stage
+              Copy-Item third-party-licenses\*.txt "$stage\licences"
+          }
+          Copy-Item "$arte\VST3\Type P.alpha.vst3" stage-vst3 -Recurse
+          Copy-Item "$arte\CLAP\Type P.alpha.clap" stage-clap
+
+          @"
+          Type P.alpha, Windows x86_64, VST3, AVX2 build
+
+          Copy the "Type P.alpha.vst3" folder into:
+            C:\Program Files\Common Files\VST3
+
+          Rescan the plugins in your host. The build needs a CPU with AVX2.
+          "@ | Set-Content -Encoding ascii stage-vst3\INSTALL.txt
+
+          @"
+          Type P.alpha, Windows x86_64, CLAP, AVX2 build
+
+          Copy "Type P.alpha.clap" into:
+            C:\Program Files\Common Files\CLAP
+
+          Rescan the plugins in your host. The build needs a CPU with AVX2.
+          "@ | Set-Content -Encoding ascii stage-clap\INSTALL.txt
+
+          Compress-Archive -Path stage-vst3\* `
+            -DestinationPath "Type-P.alpha-$version-windows-x86_64-avx2-vst3.zip"
+          Compress-Archive -Path stage-clap\* `
+            -DestinationPath "Type-P.alpha-$version-windows-x86_64-avx2-clap.zip"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: windows-x86_64-vst3
+          path: "Type-P.alpha-${{ inputs.version }}-windows-x86_64-avx2-vst3.zip"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: windows-x86_64-clap
+          path: "Type-P.alpha-${{ inputs.version }}-windows-x86_64-avx2-clap.zip"
+
+  release:
+    needs: [linux-x86_64, linux-aarch64, windows-x86_64]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/download-artifact@v8
+        with:
+          path: artifacts
+          merge-multiple: true
+      - name: Source archive and checksums
+        env:
+          VERSION: ${{ inputs.version }}
+        run: |
+          set -eu
+          git archive --format=tar.gz \
+            --prefix="type-p-alpha-v${VERSION}/" \
+            -o "artifacts/Type-P.alpha-${VERSION}-source.tar.gz" HEAD
+          cd artifacts
+          sha256sum * > ../SHA256SUMS.txt
+      - uses: softprops/action-gh-release@v3
+        with:
+          tag_name: v${{ inputs.version }}
+          name: Type P.alpha ${{ inputs.version }}
+          prerelease: ${{ inputs.prerelease }}
+          make_latest: false
+          files: |
+            artifacts/*
+            SHA256SUMS.txt
+          body: |
+            **Beta 1.** This is an early build, shared for testing. Presets, the
+            parameter layout and the preset file format can still change before
+            1.0.
+
+            Type P.alpha is a two-part, four-operator FM and phase-shaping
+            synthesizer with 24 voices at a fixed 48 kHz core.
+
+            ## Downloads
+
+            | Platform | Formats | CPU |
+            | --- | --- | --- |
+            | Windows x86_64 | VST3, CLAP | AVX2 |
+            | Linux x86_64 | VST3, CLAP | AVX2 |
+            | Linux aarch64 | VST3, CLAP | ARMv8 |
+
+            Each zip contains the plugin, `INSTALL.txt`, `LICENSE`,
+            `LICENSING.md` and the third-party licence texts.
+
+            ## Install
+
+            - **Windows VST3:** copy `Type P.alpha.vst3` into
+              `C:\Program Files\Common Files\VST3`.
+            - **Windows CLAP:** copy `Type P.alpha.clap` into
+              `C:\Program Files\Common Files\CLAP`.
+            - **Linux VST3:** copy `Type P.alpha.vst3` into `~/.vst3/`.
+            - **Linux CLAP:** copy `Type P.alpha.clap` into `~/.clap/`.
+
+            Rescan the plugins in your host after copying.
+
+            ## Notes
+
+            - The Windows and Linux x86_64 packages are compiled with the
+              x86-64-v3 instruction set, so the CPU must support AVX2.
+            - The Linux packages are built inside the project's Debian trixie
+              container. A distribution older than that can miss the C library
+              symbols.
+            - There is no macOS build in this beta.
+            - `SHA256SUMS.txt` covers every asset in this release.
+            - The source archive is attached as well.
+
+            ## Licence
+
+            GPL-3.0-only. See `LICENSE`, `LICENSING.md` and the `licences`
+            folder in each zip.
