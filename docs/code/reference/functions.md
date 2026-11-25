@@ -554,7 +554,7 @@ paths in depth.
 | `macroFeedback` |  | `plugin/juce/PluginProcessor.cpp:239` | `TypePAlphaAudioProcessor::MacroFeedback TypePAlphaAudioProcessor::macroFeedback(int index) const` | Returns the macro feedback value. |
 | `readOutputScope` |  | `plugin/juce/PluginProcessor.cpp:303` | `void TypePAlphaAudioProcessor::readOutputScope(float* destination, int count)` | Reads the output scope. |
 | `readTapScope` |  | `plugin/juce/PluginProcessor.cpp:308` | `void TypePAlphaAudioProcessor::readTapScope(int channel, float* destination, int count)` | Reads the tap scope. |
-| `TypePAlphaAudioProcessor` |  | `plugin/juce/PluginProcessor.cpp:317` | `TypePAlphaAudioProcessor::TypePAlphaAudioProcessor() : AudioProcessor(BusesProperties().withOutput( "Output", juce::AudioChannelSet::stereo(), true)), midi_(engine_), apvts_(*th...` | Constructs the processor, the engine seam, the MIDI bridge, the APVTS and the library. |
+| `TypePAlphaAudioProcessor` |  | `plugin/juce/PluginProcessor.cpp:317` | `TypePAlphaAudioProcessor::TypePAlphaAudioProcessor() : AudioProcessor(BusesProperties().withOutput( "Output", juce::AudioChannelSet::stereo(), true)), midi_(engine_), apvts_(*th...` | Constructs the processor, the engine interface, the MIDI bridge, the APVTS and the library. |
 | `createLayout` |  | `plugin/juce/PluginProcessor.cpp:372` | `juce::AudioProcessorValueTreeState::ParameterLayout TypePAlphaAudioProcessor::createLayout()` | Creates the layout. |
 | `prepareToPlay` |  | `plugin/juce/PluginProcessor.cpp:446` | `void TypePAlphaAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)` | Resets the engine, sizes the rate bridge and buffers, and syncs the parameters. |
 | `releaseResources` |  | `plugin/juce/PluginProcessor.cpp:479` | `void TypePAlphaAudioProcessor::releaseResources()` | Releases every engine voice. |
@@ -562,7 +562,7 @@ paths in depth.
 | `syncParams` |  | `plugin/juce/PluginProcessor.cpp:493` | `void TypePAlphaAudioProcessor::syncParams()` | Writes the changed APVTS values to the engine. |
 | `syncMacros` |  | `plugin/juce/PluginProcessor.cpp:514` | `void TypePAlphaAudioProcessor::syncMacros()` | Resolves the six macros to destination offsets and writes the effective values. |
 | `feedMessage` |  | `plugin/juce/PluginProcessor.cpp:620` | `void TypePAlphaAudioProcessor::feedMessage(p1::MidiBridge& midi, const juce::MidiMessage& message)` | Feeds the message. |
-| `renderCore` |  | `plugin/juce/PluginProcessor.cpp:627` | `void TypePAlphaAudioProcessor::renderCore(int32_t* out, int frames)` | Renders one core chunk through the engine seam. |
+| `renderCore` |  | `plugin/juce/PluginProcessor.cpp:627` | `void TypePAlphaAudioProcessor::renderCore(int32_t* out, int frames)` | Renders one core chunk through the engine interface. |
 | `pushTapScopes` |  | `plugin/juce/PluginProcessor.cpp:632` | `void TypePAlphaAudioProcessor::pushTapScopes(p1::Engine& engine, int frames)` | Copies the ten engine tap buffers into the scope rings. |
 | `publishMorph` |  | `plugin/juce/PluginProcessor.cpp:647` | `void TypePAlphaAudioProcessor::publishMorph(p1::Engine& engine)` | Publishes the eight live spectral morphs. |
 | `publishPhaseMaps` |  | `plugin/juce/PluginProcessor.cpp:655` | `void TypePAlphaAudioProcessor::publishPhaseMaps(p1::Engine& engine)` | Publishes the eight phase-map snapshots through the three-buffer handoff. |
@@ -630,7 +630,7 @@ paths in depth.
 | `feedMessage` | TypePAlphaAudioProcessor | `plugin/juce/PluginProcessor.h:124` | `static void feedMessage(p1::MidiBridge& midi, const juce::MidiMessage& message)` | Feeds the message. |
 | `syncParams` | TypePAlphaAudioProcessor | `plugin/juce/PluginProcessor.h:125` | `void syncParams()` | Writes the changed APVTS values to the engine. |
 | `syncMacros` | TypePAlphaAudioProcessor | `plugin/juce/PluginProcessor.h:126` | `void syncMacros()` | Resolves the six macros to destination offsets and writes the effective values. |
-| `renderCore` | TypePAlphaAudioProcessor | `plugin/juce/PluginProcessor.h:127` | `void renderCore(int32_t* out, int frames)` | Renders one core chunk through the engine seam. |
+| `renderCore` | TypePAlphaAudioProcessor | `plugin/juce/PluginProcessor.h:127` | `void renderCore(int32_t* out, int frames)` | Renders one core chunk through the engine interface. |
 | `pushTapScopes` | TypePAlphaAudioProcessor | `plugin/juce/PluginProcessor.h:128` | `void pushTapScopes(p1::Engine& engine, int frames)` | Copies the ten engine tap buffers into the scope rings. |
 | `publishMorph` | TypePAlphaAudioProcessor | `plugin/juce/PluginProcessor.h:129` | `void publishMorph(p1::Engine& engine)` | Publishes the eight live spectral morphs. |
 | `publishPhaseMaps` | TypePAlphaAudioProcessor | `plugin/juce/PluginProcessor.h:130` | `void publishPhaseMaps(p1::Engine& engine)` | Publishes the eight phase-map snapshots through the three-buffer handoff. |
@@ -2570,7 +2570,7 @@ paths in depth.
 - `readTapScope` at line 308 through 315: `void TypePAlphaAudioProcessor::readTapScope(int channel, float* destination, int count)`
   Reads the tap scope.
 - `TypePAlphaAudioProcessor` at line 317 through 370: `TypePAlphaAudioProcessor::TypePAlphaAudioProcessor() : AudioProcessor(BusesProperties().withOutput( "Output", juce::AudioChannelSet::stereo(), true)), midi_(engine_), apvts_(*this, nullptr, P1_STATE_TREE_ID, createLayout())`
-  Constructs the processor, the engine seam, the MIDI bridge, the APVTS and the library.
+  Constructs the processor, the engine interface, the MIDI bridge, the APVTS and the library.
 - `createLayout` at line 372 through 444: `juce::AudioProcessorValueTreeState::ParameterLayout TypePAlphaAudioProcessor::createLayout()`
   Creates the layout.
 - `prepareToPlay` at line 446 through 477: `void TypePAlphaAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)`
@@ -2586,7 +2586,7 @@ paths in depth.
 - `feedMessage` at line 620 through 625: `void TypePAlphaAudioProcessor::feedMessage(p1::MidiBridge& midi, const juce::MidiMessage& message)`
   Feeds the message.
 - `renderCore` at line 627 through 630: `void TypePAlphaAudioProcessor::renderCore(int32_t* out, int frames)`
-  Renders one core chunk through the engine seam.
+  Renders one core chunk through the engine interface.
 - `pushTapScopes` at line 632 through 645: `void TypePAlphaAudioProcessor::pushTapScopes(p1::Engine& engine, int frames)`
   Copies the ten engine tap buffers into the scope rings.
 - `publishMorph` at line 647 through 653: `void TypePAlphaAudioProcessor::publishMorph(p1::Engine& engine)`
@@ -2725,7 +2725,7 @@ paths in depth.
 - `syncMacros` at line 126 through 126: `void syncMacros()`
   Resolves the six macros to destination offsets and writes the effective values.
 - `renderCore` at line 127 through 127: `void renderCore(int32_t* out, int frames)`
-  Renders one core chunk through the engine seam.
+  Renders one core chunk through the engine interface.
 - `pushTapScopes` at line 128 through 128: `void pushTapScopes(p1::Engine& engine, int frames)`
   Copies the ten engine tap buffers into the scope rings.
 - `publishMorph` at line 129 through 129: `void publishMorph(p1::Engine& engine)`

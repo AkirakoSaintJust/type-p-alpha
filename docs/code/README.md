@@ -111,7 +111,7 @@ code change that altered the symbols.
 | `engine/hal/` | Fixed-point arithmetic, wavetable lookup, key and velocity scaling, spectral bank helpers |
 | `engine/runtime/` | Preset record format, MIDI parser, host stubs |
 | `engine/gen/` | Generated state, parameter table, init table, wavetable, harmonics, render code |
-| `plugin/engine/` | C++ engine seam, phase-map snapshot, MIDI bridge and sample-rate bridge |
+| `plugin/engine/` | C++ engine interface, phase-map snapshot, MIDI bridge and sample-rate bridge |
 | `plugin/juce/` | JUCE processor, editor, pages and the shared UI header |
 | `plugin/ui/` | Widgets, theme, token bridge and spectrum analysis |
 | `plugin/preset/` | Library store, record migrations and cutoff law |

@@ -155,7 +155,7 @@ the product evidence, though it points one way, because a single sign bit does
 not give a consistent odd-harmonic rise. The engine measurement below confirms
 the inconsistency and adds a regime change the model does not show.
 
-The safe seam, if the experiment proceeds, is the `fb_tap` output:
+The safe insertion point, if the experiment proceeds, is the `fb_tap` output:
 
 ```c
 int32_t out = ((audio + prev) * level_eff) >> 16;

@@ -26,8 +26,8 @@ Every tracked source and build file, with its line count and role.
 | `manual/build.py` | 145 | Python | manual pipeline |
 | `manual/figures.py` | 45 | Python | manual pipeline |
 | `plugin/CMakeLists.txt` | 296 | CMake | project source |
-| `plugin/engine/Engine.cpp` | 251 | C++ | engine seam implementation, parameter writes and phase-map snapshot copy |
-| `plugin/engine/Engine.hpp` | 67 | C++ header | C++ seam over the generated state, phase-map snapshot and render call |
+| `plugin/engine/Engine.cpp` | 251 | C++ | engine interface implementation, parameter writes and phase-map snapshot copy |
+| `plugin/engine/Engine.hpp` | 67 | C++ header | C++ interface over the generated state, phase-map snapshot and render call |
 | `plugin/engine/MidiBridge.cpp` | 77 | C++ | MIDI bridge implementation and the engine callback table |
 | `plugin/engine/MidiBridge.hpp` | 26 | C++ header | MIDI bridge interface between the host queue and the engine |
 | `plugin/engine/PhaseMapLayout.h` | 95 | C/C++ header | phase-map pool layout shared by the engine snapshot and tests |

@@ -1,7 +1,7 @@
 # Memory and processing model
 
 The engine is one generated C state machine at a fixed 48 kHz core rate. The
-plugin wraps it in a C++ seam, feeds it host MIDI and parameter changes, and
+plugin wraps it in a C++ interface, feeds it host MIDI and parameter changes, and
 either passes its output through at 48 kHz or resamples it at the host rate. This
 chapter follows the actual objects, the state layout and the per-block order.
 
@@ -41,7 +41,7 @@ It never shares memory with the audio callback.
 
 `engine/gen/dsp.h` declares one struct. Its size is **492,900 bytes** on the
 built Linux target (481.35 KiB). The field order is fixed by the generator and is
-part of the ABI between the generated code and the engine seam. The state starts
+part of the ABI between the generated code and the engine API. The state starts
 with per-voice parameter and node fields, then adds the part-level routing and
 macro fields, the per-voice voice allocator fields, and finally the large
 operator pools.

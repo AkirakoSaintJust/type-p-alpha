@@ -350,7 +350,7 @@ dc_y1 = dc_out_x;
 
 The pole is about 0.999. It removes the DC of an asymmetric pulse or half square
 without touching the audio band. The output is interleaved `int32_t` at the
-engine seam.
+engine boundary.
 
 ## The tap buffers and scopes
 

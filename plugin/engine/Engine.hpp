@@ -28,7 +28,7 @@ struct PhaseMapSnapshot {
     std::array<uint8_t, 32> locked{};
 };
 
-/* One generated engine state behind a small C++ seam. There is no JUCE and no
+/* One generated engine state behind a small C++ interface. There is no JUCE and no
  * audio backend here, because the wrappers are the only place the host touches
  * the generated C API. */
 class Engine {

@@ -15,10 +15,10 @@ field index in `state-fields.md`.
 | `p1_fft_cpx` | typedef | `engine/hal/p1_math.h:360` | 1 |  |
 | `synth_midi_ctx` | typedef | `engine/runtime/synth_midi.h:20` | 1 |  |
 | `PhaseMapSnapshot` | struct | `plugin/engine/Engine.hpp:15` | 13 | The display view of one per-part phase map. It is a copy of the map pool geometry plus the newest voice's mapped phase, so the UI never reads the engine state directly. |
-| `Engine` | class | `plugin/engine/Engine.hpp:34` | 16 | One generated engine state behind a small C++ seam. There is no JUCE and no audio backend here, because the wrappers are the only place the host touches the generated C API. |
-| `Engine` | class forward declaration | `plugin/engine/MidiBridge.hpp:10` | 0 | The C++ seam over one generated engine state. |
+| `Engine` | class | `plugin/engine/Engine.hpp:34` | 16 | One generated engine state behind a small C++ interface. There is no JUCE and no audio backend here, because the wrappers are the only place the host touches the generated C API. |
+| `Engine` | class forward declaration | `plugin/engine/MidiBridge.hpp:10` | 0 | The C++ interface over one generated engine state. |
 | `MidiBridge` | class | `plugin/engine/MidiBridge.hpp:14` | 4 | The device MIDI handler for one engine. The sustain state is stored in the context, so each bridge keeps its own pedal state. |
-| `Engine` | class forward declaration | `plugin/engine/RateBridge.hpp:10` | 0 | The C++ seam over one generated engine state. |
+| `Engine` | class forward declaration | `plugin/engine/RateBridge.hpp:10` | 0 | The C++ interface over one generated engine state. |
 | `RateBridge` | class | `plugin/engine/RateBridge.hpp:15` | 17 | Output-only 128-tap Kaiser-windowed sinc polyphase resampler. The core runs at 48 kHz, whilst the bridge converts to the host rate, and at 48 kHz the processor bypasses it so the core output stays bit-exact there. |
 | `ChunkNoteSet` | class | `plugin/juce/ChunkNoteSet.h:12` | 3 | Tracks the notes that started in the current control chunk, by MIDI channel and pitch, so a release in the same chunk waits for the chunk to render. Two channels can hold the same pitch without deferring each other's releases. |
 | `ModeButton` | class | `plugin/juce/Pages.cpp:15` | 1 |  |
@@ -241,7 +241,7 @@ Fields and enumerators:
 
 `class` at `plugin/engine/Engine.hpp:34` through line 65.
 
-One generated engine state behind a small C++ seam. There is no JUCE and no audio backend here, because the wrappers are the only place the host touches the generated C API.
+One generated engine state behind a small C++ interface. There is no JUCE and no audio backend here, because the wrappers are the only place the host touches the generated C API.
 
 Fields and enumerators:
 
@@ -271,7 +271,7 @@ Methods:
 
 `class forward declaration` at `plugin/engine/MidiBridge.hpp:10` through line 10.
 
-The C++ seam over one generated engine state.
+The C++ interface over one generated engine state.
 
 ### `MidiBridge`
 
@@ -290,7 +290,7 @@ Fields and enumerators:
 
 `class forward declaration` at `plugin/engine/RateBridge.hpp:10` through line 10.
 
-The C++ seam over one generated engine state.
+The C++ interface over one generated engine state.
 
 ### `RateBridge`
 

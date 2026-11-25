@@ -28,7 +28,7 @@
 
 - **Other features:** the engine generator, the MIDI handler, the plugin bridge, the
   parameter manifest, the part record and the editor's part card.
-- **Platform/API/HAL changes:** the engine seam gains
+- **Platform/API/HAL changes:** the engine interface gains
   `note_off_ch(note, channel)` and `set_bend_ch(value14, channel)`. The omni entry
   points remain and pass `0xFFFFFFFF`.
 - **Persistence/version impact:** the manifest moves from 1,614 to 1,616 parameters

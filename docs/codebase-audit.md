@@ -3,7 +3,7 @@
 This is the map I use when I come back to the tree after a few weeks away, usually
 because a test has gone red or because I want to add a parameter without re-reading
 the whole engine. It says which parts are hand-written and which are generated,
-where the main seams sit, and what each test is for. The feature contracts carry the
+where the main boundaries sit, and what each test is for. The feature contracts carry the
 dated evidence, so this page stays a map rather than a second history, and I'd
 rather keep it short enough that I actually read it.
 
@@ -20,7 +20,7 @@ scope, so anything that only makes sense for the old device belongs in that hist
 | `engine/hal/` | integer maths, wave tables and the filter coefficient | hand-written |
 | `engine/runtime/` | preset records and the MIDI parser | hand-written |
 | `engine/gen/` | generated DSP, parameters, tables and wave data | generated |
-| `plugin/engine/` | C++ engine seam, MIDI bridge and rate bridge | hand-written |
+| `plugin/engine/` | C++ engine interface, MIDI bridge and rate bridge | hand-written |
 | `plugin/preset/` | preset bank, defaults and the host record stubs | hand-written |
 | `plugin/ui/` | theme, widgets and parameter id helpers | hand-written |
 | `plugin/juce/` | processor, editor, pages and dialogs | hand-written |
@@ -73,7 +73,7 @@ helpers stay in the shared runtime because the plugin links the same source and
 splitting it would fork the engine, and a fork is how two record readers drift
 apart.
 
-`engine/runtime/synth_midi.c` turns a raw MIDI stream into the engine seam. The
+`engine/runtime/synth_midi.c` turns a raw MIDI stream into engine calls. The
 sustain state sits in the parser context, so two engines can share one parser
 without borrowing each other's pedal. The plugin feeds the context directly and the
 `midi_get` stub remains for the shared runtime.
@@ -98,9 +98,9 @@ contracts are the evidence for what changed and why.
 ## Plugin engine
 
 `p1::Engine` in `plugin/engine/Engine.hpp` and `Engine.cpp` puts one generated state
-behind a small C++ seam with no JUCE dependency. It owns reset, parameter access,
+behind a small C++ wrapper with no JUCE dependency. It owns reset, parameter access,
 note on and off, pitch bend, render, the lit LED base, the quiet check and the taps.
-The seam is intentionally thin, because every host wrapper should be able to drive
+The interface is intentionally thin, because every host wrapper should be able to drive
 the same engine without learning the generated state.
 
 `p1::MidiBridge` connects the C parser to the C++ engine. The free `p1_bridge_*`
@@ -127,7 +127,7 @@ The store packs and loads the two banks, writes and reads `P1LIB3`, finds free s
 and truncates names to 32 characters. `plugin/preset/part_defaults.h` builds the
 default vector from `kP1ParamSpecs`, so a new parameter gets a default in the store
 without a second list. The store is also where the cutoff migration runs when an old
-part bank comes in, because that is the seam that knows about old records.
+part bank comes in, because that is the layer that knows about old records.
 
 ## UI layer
 

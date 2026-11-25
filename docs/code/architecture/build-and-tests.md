@@ -18,7 +18,7 @@ build directory:
 | `MacroTargets.h` | `plugin/tools/gen_macro_targets.py` | the macro processor and the editor |
 | `macro_target_ids.h` | `plugin/tools/gen_macro_targets.py` | the C and C++ macro tests |
 | `UiTokens.h` | `plugin/tools/gen_tokens.py` | the panel theme |
-| `P1Synth.h` | the root CMake alias | the engine seam |
+| `P1Synth.h` | the root CMake alias | the engine API |
 | `type_p_alpha_dsp.c` | checked in, from `.dev/generate.py` | the engine |
 | `tables.c` | checked in, from `.dev/generate.py` | the routing and table data |
 | `wavetable.h` | `tools/gen_wavetable.py` | the oscillator |
@@ -75,7 +75,7 @@ The test targets are:
 
 | Test | Source | What it proves |
 | --- | --- | --- |
-| `engine_parity` | `plugin/tests/engine_parity.cpp` | the generated C seam matches the reference render, the note-derived path, the macro rows and the filter gate |
+| `engine_parity` | `plugin/tests/engine_parity.cpp` | the generated C API matches the reference render, the note-derived path, the macro rows and the filter gate |
 | `feedback_envelope` | `plugin/tests/feedback_envelope.cpp` | the signed feedback envelope changes the positive and negative families |
 | `feedback_bipolar` | `plugin/tests/feedback_bipolar.cpp` | the bipolar feedback law and the negative pulse family |
 | `pitch_envelope` | `plugin/tests/pitch_envelope.cpp` | the pitch envelope and its mode |

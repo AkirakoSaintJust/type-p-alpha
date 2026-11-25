@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: GPL-3.0-only */
 /* Copyright (C) 2026 P1Onken */
-/* The MIDI handler: note on/off -> the seam's `note_on_ch`/`note_off_ch`, CC ->
+/* The MIDI handler: note on/off -> the engine's `note_on_ch`/`note_off_ch`, CC ->
  * the fixed cc-map's param (a 7-bit value scaled to the param's full [min, max]
  * range), CC 64 sustain (note-offs deferred until the pedal lifts on that
  * channel), CC 123 all-notes-off on channel, 14-bit bend (±2 semitones) ->
