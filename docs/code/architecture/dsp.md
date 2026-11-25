@@ -120,11 +120,14 @@ The 14 waveforms are:
 | 13 | saw | 9 mips |
 | 14 | spectrum | additive bank |
 
-The first ten waves come from the OPZ/OPL union and the rectified shapes. The
-four band-limited waves use a truncated Fourier synthesis with harmonic counts
-256, 128, 64, 32, 16, 8, 4, 2 and 1. The oscillator selects a mip from
+Waves 0 to 7 are the OPZ set (sine, triangle, half sine, half triangle and
+their doubled pairs), 8 and 9 are the rectified sine and triangle, and 10 to 13
+are the OPL-only shapes (pulse, half square, square and saw). Waves 10 to 13
+carry nine band-limited mips, from a truncated Fourier synthesis with harmonic
+counts 256, 128, 64, 32, 16, 8, 4, 2 and 1. The oscillator selects a mip from
 `p1_wave_mip(step)`. A step is a Q32 increment, so the mip loop shifts it down
-until the top harmonic sits at or below `Nyquist / 2.25`.
+until the top harmonic sits at or below `Nyquist / 2.25`. Waves 0 to 9 have a
+single 1,024-sample table and rely on their own band-limited construction.
 
 The half square is the first half of a square held positive and the second half
 held at zero. It has a DC term by construction, like the pulse and the rectified

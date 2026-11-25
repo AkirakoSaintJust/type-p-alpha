@@ -1013,186 +1013,197 @@ because the state field index covers the same names.
 | `kind_label` | module constant | `tools/gen_code_docs.py:272` | `kind_label = kind if body is not None else f"{kind} forward declaration"` |  |
 | `fields` | module constant | `tools/gen_code_docs.py:273` | `fields: list[str] = []` |  |
 | `methods` | module constant | `tools/gen_code_docs.py:274` | `methods: list[str] = []` |  |
-| `t` | module constant | `tools/gen_code_docs.py:297` | `t = node.type` |  |
-| `alias` | module constant | `tools/gen_code_docs.py:303` | `alias = name_of(node.child_by_field_name("declarator"), src)` |  |
-| `underlying` | module constant | `tools/gen_code_docs.py:304` | `underlying = node.child_by_field_name("type")` |  |
-| `first` | module constant | `tools/gen_code_docs.py:306` | `first = node.start_point[0] + 1` |  |
-| `key` | module constant | `tools/gen_code_docs.py:307` | `key = (rel, first, alias)` |  |
-| `name_node` | module constant | `tools/gen_code_docs.py:324` | `name_node = node.child_by_field_name("name")` |  |
-| `name` | module constant | `tools/gen_code_docs.py:325` | `name = text(name_node, src) if name_node is not None else ""` |  |
-| `first` | module constant | `tools/gen_code_docs.py:327` | `first = node.start_point[0] + 1` |  |
-| `key` | module constant | `tools/gen_code_docs.py:328` | `key = (rel, first, name)` |  |
-| `declarator` | module constant | `tools/gen_code_docs.py:342` | `declarator = node.child_by_field_name("declarator")` |  |
-| `is_function` | module constant | `tools/gen_code_docs.py:343` | `is_function = declarator is not None and ( declarator.type == "function_declarator" or "function_declarator" in {c.ty...` |  |
-| `name` | module constant | `tools/gen_code_docs.py:352` | `name = name_of(child.child_by_field_name("declarator"), src)` |  |
-| `name` | module constant | `tools/gen_code_docs.py:354` | `name = name_of(child, src)` |  |
-| `first` | module constant | `tools/gen_code_docs.py:359` | `first = node.start_point[0] + 1` |  |
-| `key` | module constant | `tools/gen_code_docs.py:360` | `key = (rel, first, name)` |  |
-| `declarator` | module constant | `tools/gen_code_docs.py:375` | `declarator = node.child_by_field_name("declarator")` |  |
-| `is_function` | module constant | `tools/gen_code_docs.py:376` | `is_function = declarator is not None and ( declarator.type == "function_declarator" or "function_declarator" in {c.ty...` |  |
-| `name` | module constant | `tools/gen_code_docs.py:383` | `name = name_of(node, src)` |  |
-| `first` | module constant | `tools/gen_code_docs.py:385` | `first = node.start_point[0] + 1` |  |
-| `key` | module constant | `tools/gen_code_docs.py:386` | `key = (rel, first, name)` |  |
-| `raw` | module constant | `tools/gen_code_docs.py:407` | `raw = path.read_text(encoding="utf-8", errors="replace")` |  |
-| `lines` | module constant | `tools/gen_code_docs.py:408` | `lines = raw.splitlines()` |  |
-| `src` | module constant | `tools/gen_code_docs.py:409` | `src = raw.encode("utf-8")` |  |
-| `tree` | module constant | `tools/gen_code_docs.py:410` | `tree = parser_for(path).parse(src)` |  |
-| `rel` | module constant | `tools/gen_code_docs.py:411` | `rel = str(path.relative_to(ROOT)).replace("\\", "/")` |  |
-| `functions` | module constant | `tools/gen_code_docs.py:412` | `functions: list[Function] = []` |  |
-| `types` | module constant | `tools/gen_code_docs.py:413` | `types: list[Type] = []` |  |
-| `symbols` | module constant | `tools/gen_code_docs.py:414` | `symbols: list[Symbol] = []` |  |
-| `body` | module constant | `tools/gen_code_docs.py:417` | `body = node.child_by_field_name("body")` |  |
-| `first` | module constant | `tools/gen_code_docs.py:422` | `first = child.children[0]` |  |
-| `value` | module constant | `tools/gen_code_docs.py:424` | `value = text(first, src).strip("\"'")` |  |
-| `name` | module constant | `tools/gen_code_docs.py:430` | `name = name_of(node.child_by_field_name("name"), src)` |  |
-| `params` | module constant | `tools/gen_code_docs.py:432` | `params: list[str] = []` |  |
-| `parameters` | module constant | `tools/gen_code_docs.py:433` | `parameters = node.child_by_field_name("parameters")` |  |
-| `name` | module constant | `tools/gen_code_docs.py:452` | `name = name_of(node.child_by_field_name("name"), src)` |  |
-| `left` | module constant | `tools/gen_code_docs.py:470` | `left = child.child_by_field_name("left")` |  |
-| `files` | module constant | `tools/gen_code_docs.py:490` | `files: list[Path] = []` |  |
-| `path` | module constant | `tools/gen_code_docs.py:494` | `path = Path(base, name)` |  |
-| `raw` | module constant | `tools/gen_code_docs.py:507` | `raw = path.read_text(encoding="utf-8", errors="replace")` |  |
-| `lines` | module constant | `tools/gen_code_docs.py:510` | `lines = raw.splitlines()` |  |
-| `chunks` | module constant | `tools/gen_code_docs.py:516` | `chunks: list[str] = []` |  |
-| `inside` | module constant | `tools/gen_code_docs.py:517` | `inside = False` |  |
-| `saw_code` | module constant | `tools/gen_code_docs.py:518` | `saw_code = False` |  |
-| `stripped` | module constant | `tools/gen_code_docs.py:520` | `stripped = line.strip()` |  |
-| `body` | module constant | `tools/gen_code_docs.py:527` | `body = re.sub(r"^/\*+", "", stripped)` |  |
-| `inside` | module constant | `tools/gen_code_docs.py:532` | `inside = True` |  |
-| `saw_code` | module constant | `tools/gen_code_docs.py:540` | `saw_code = True` |  |
-| `inside` | module constant | `tools/gen_code_docs.py:544` | `inside = False` |  |
-| `cleaned` | module constant | `tools/gen_code_docs.py:549` | `cleaned = [chunk.strip() for chunk in chunks if chunk.strip()]` |  |
-| `text` | module constant | `tools/gen_code_docs.py:552` | `text = " ".join(cleaned)` |  |
-| `text` | module constant | `tools/gen_code_docs.py:553` | `text = re.sub(r"SPDX-License-Identifier:\s*\S+", " ", text)` |  |
-| `text` | module constant | `tools/gen_code_docs.py:554` | `text = re.sub(r"Copyright\s*\(C\)[^.]*\.?", " ", text)` |  |
-| `text` | module constant | `tools/gen_code_docs.py:555` | `text = re.sub(r"GENERATED by [^,]*,\s*do not edit[^.]*\.", " ", text, flags=re.I)` |  |
-| `text` | module constant | `tools/gen_code_docs.py:556` | `text = re.sub(r"GENERATED by [^.]*\.", " ", text, flags=re.I)` |  |
-| `text` | module constant | `tools/gen_code_docs.py:557` | `text = re.sub(r"\s+", " ", text).strip()` |  |
-| `sentence` | module constant | `tools/gen_code_docs.py:559` | `sentence = sentence.strip().rstrip(".")` |  |
-| `FILE_ROLES` | module constant | `tools/gen_code_docs.py:565` | `FILE_ROLES = { "engine/gen/dsp.h": "generated state struct, parameter table, slot table and engine API", "engine/gen/...` |  |
-| `lines` | module constant | `tools/gen_code_docs.py:617` | `lines = [ "# File index", "", "Every tracked source and build file, with its line count and role.", "", "\| File \| Lin...` |  |
-| `roles` | module constant | `tools/gen_code_docs.py:625` | `roles = [ ("engine/hal/", "fixed-point DSP, tables and spectral bank"), ("engine/runtime/", "preset records and the M...` |  |
-| `rel` | module constant | `tools/gen_code_docs.py:645` | `rel = str(path.relative_to(ROOT)).replace("\\", "/")` |  |
-| `count` | module constant | `tools/gen_code_docs.py:647` | `count = len(path.read_text(encoding="utf-8", errors="replace").splitlines())` |  |
-| `count` | module constant | `tools/gen_code_docs.py:649` | `count = 0` |  |
-| `lang` | module constant | `tools/gen_code_docs.py:650` | `lang = { ".c": "C", ".h": "C/C++ header", ".hpp": "C++ header", ".cpp": "C++", ".py": "Python", ".ps1": "PowerShell",...` |  |
-| `lang` | module constant | `tools/gen_code_docs.py:665` | `lang = "CMake"` |  |
-| `role` | module constant | `tools/gen_code_docs.py:666` | `role = "project source"` |  |
-| `role` | module constant | `tools/gen_code_docs.py:669` | `role = value` |  |
-| `summary` | module constant | `tools/gen_code_docs.py:671` | `summary = file_summary(path)` |  |
-| `role` | module constant | `tools/gen_code_docs.py:673` | `role = FILE_ROLES[rel]` |  |
-| `role` | module constant | `tools/gen_code_docs.py:675` | `role = summary` |  |
-| `lines` | module constant | `tools/gen_code_docs.py:681` | `lines = [ "# Type, class, struct, union and enum index", "", "Every type definition found in the tracked C, C++ and P...` |  |
-| `description` | module constant | `tools/gen_code_docs.py:692` | `description = t.description or CORE_TYPES.get(t.name, "")` |  |
+| `body_node` | module constant | `tools/gen_code_docs.py:282` | `body_node = child.child_by_field_name("body")` |  |
+| `raw` | module constant | `tools/gen_code_docs.py:284` | `raw = src[child.start_byte : body_node.start_byte].decode( "utf-8", "replace" )` |  |
+| `raw` | module constant | `tools/gen_code_docs.py:288` | `raw = text(child, src)` |  |
+| `t` | module constant | `tools/gen_code_docs.py:304` | `t = node.type` |  |
+| `alias` | module constant | `tools/gen_code_docs.py:310` | `alias = name_of(node.child_by_field_name("declarator"), src)` |  |
+| `underlying` | module constant | `tools/gen_code_docs.py:311` | `underlying = node.child_by_field_name("type")` |  |
+| `first` | module constant | `tools/gen_code_docs.py:313` | `first = node.start_point[0] + 1` |  |
+| `key` | module constant | `tools/gen_code_docs.py:314` | `key = (rel, first, alias)` |  |
+| `name_node` | module constant | `tools/gen_code_docs.py:331` | `name_node = node.child_by_field_name("name")` |  |
+| `name` | module constant | `tools/gen_code_docs.py:332` | `name = text(name_node, src) if name_node is not None else ""` |  |
+| `first` | module constant | `tools/gen_code_docs.py:334` | `first = node.start_point[0] + 1` |  |
+| `key` | module constant | `tools/gen_code_docs.py:335` | `key = (rel, first, name)` |  |
+| `declarator` | module constant | `tools/gen_code_docs.py:349` | `declarator = node.child_by_field_name("declarator")` |  |
+| `is_function` | module constant | `tools/gen_code_docs.py:350` | `is_function = declarator is not None and ( declarator.type == "function_declarator" or "function_declarator" in {c.ty...` |  |
+| `name` | module constant | `tools/gen_code_docs.py:359` | `name = name_of(child.child_by_field_name("declarator"), src)` |  |
+| `name` | module constant | `tools/gen_code_docs.py:361` | `name = name_of(child, src)` |  |
+| `first` | module constant | `tools/gen_code_docs.py:366` | `first = node.start_point[0] + 1` |  |
+| `key` | module constant | `tools/gen_code_docs.py:367` | `key = (rel, first, name)` |  |
+| `declarator` | module constant | `tools/gen_code_docs.py:382` | `declarator = node.child_by_field_name("declarator")` |  |
+| `is_function` | module constant | `tools/gen_code_docs.py:383` | `is_function = declarator is not None and ( declarator.type == "function_declarator" or "function_declarator" in {c.ty...` |  |
+| `name` | module constant | `tools/gen_code_docs.py:390` | `name = name_of(node, src)` |  |
+| `first` | module constant | `tools/gen_code_docs.py:392` | `first = node.start_point[0] + 1` |  |
+| `key` | module constant | `tools/gen_code_docs.py:393` | `key = (rel, first, name)` |  |
+| `raw` | module constant | `tools/gen_code_docs.py:414` | `raw = path.read_text(encoding="utf-8", errors="replace")` |  |
+| `lines` | module constant | `tools/gen_code_docs.py:415` | `lines = raw.splitlines()` |  |
+| `src` | module constant | `tools/gen_code_docs.py:416` | `src = raw.encode("utf-8")` |  |
+| `tree` | module constant | `tools/gen_code_docs.py:417` | `tree = parser_for(path).parse(src)` |  |
+| `rel` | module constant | `tools/gen_code_docs.py:418` | `rel = str(path.relative_to(ROOT)).replace("\\", "/")` |  |
+| `functions` | module constant | `tools/gen_code_docs.py:419` | `functions: list[Function] = []` |  |
+| `types` | module constant | `tools/gen_code_docs.py:420` | `types: list[Type] = []` |  |
+| `symbols` | module constant | `tools/gen_code_docs.py:421` | `symbols: list[Symbol] = []` |  |
+| `body` | module constant | `tools/gen_code_docs.py:424` | `body = node.child_by_field_name("body")` |  |
+| `first` | module constant | `tools/gen_code_docs.py:429` | `first = child.children[0]` |  |
+| `value` | module constant | `tools/gen_code_docs.py:431` | `value = text(first, src).strip("\"'")` |  |
+| `name` | module constant | `tools/gen_code_docs.py:437` | `name = name_of(node.child_by_field_name("name"), src)` |  |
+| `params` | module constant | `tools/gen_code_docs.py:439` | `params: list[str] = []` |  |
+| `parameters` | module constant | `tools/gen_code_docs.py:440` | `parameters = node.child_by_field_name("parameters")` |  |
+| `name` | module constant | `tools/gen_code_docs.py:459` | `name = name_of(node.child_by_field_name("name"), src)` |  |
+| `left` | module constant | `tools/gen_code_docs.py:477` | `left = child.child_by_field_name("left")` |  |
+| `files` | module constant | `tools/gen_code_docs.py:497` | `files: list[Path] = []` |  |
+| `path` | module constant | `tools/gen_code_docs.py:501` | `path = Path(base, name)` |  |
+| `raw` | module constant | `tools/gen_code_docs.py:514` | `raw = path.read_text(encoding="utf-8", errors="replace")` |  |
+| `lines` | module constant | `tools/gen_code_docs.py:517` | `lines = raw.splitlines()` |  |
+| `chunks` | module constant | `tools/gen_code_docs.py:523` | `chunks: list[str] = []` |  |
+| `inside` | module constant | `tools/gen_code_docs.py:524` | `inside = False` |  |
+| `saw_code` | module constant | `tools/gen_code_docs.py:525` | `saw_code = False` |  |
+| `stripped` | module constant | `tools/gen_code_docs.py:527` | `stripped = line.strip()` |  |
+| `body` | module constant | `tools/gen_code_docs.py:534` | `body = re.sub(r"^/\*+", "", stripped)` |  |
+| `inside` | module constant | `tools/gen_code_docs.py:539` | `inside = True` |  |
+| `saw_code` | module constant | `tools/gen_code_docs.py:547` | `saw_code = True` |  |
+| `inside` | module constant | `tools/gen_code_docs.py:551` | `inside = False` |  |
+| `cleaned` | module constant | `tools/gen_code_docs.py:556` | `cleaned = [chunk.strip() for chunk in chunks if chunk.strip()]` |  |
+| `text` | module constant | `tools/gen_code_docs.py:559` | `text = " ".join(cleaned)` |  |
+| `text` | module constant | `tools/gen_code_docs.py:560` | `text = re.sub(r"SPDX-License-Identifier:\s*\S+", " ", text)` |  |
+| `text` | module constant | `tools/gen_code_docs.py:561` | `text = re.sub(r"Copyright\s*\(C\)[^.]*\.?", " ", text)` |  |
+| `text` | module constant | `tools/gen_code_docs.py:562` | `text = re.sub(r"GENERATED by [^,]*,\s*do not edit[^.]*\.", " ", text, flags=re.I)` |  |
+| `text` | module constant | `tools/gen_code_docs.py:563` | `text = re.sub(r"GENERATED by [^.]*\.", " ", text, flags=re.I)` |  |
+| `text` | module constant | `tools/gen_code_docs.py:564` | `text = re.sub(r"\s+", " ", text).strip()` |  |
+| `sentence` | module constant | `tools/gen_code_docs.py:566` | `sentence = sentence.strip().rstrip(".")` |  |
+| `FILE_ROLES` | module constant | `tools/gen_code_docs.py:572` | `FILE_ROLES = { "engine/gen/dsp.h": "generated state struct, parameter table, slot table and engine API", "engine/gen/...` |  |
+| `lines` | module constant | `tools/gen_code_docs.py:624` | `lines = [ "# File index", "", "Every tracked source and build file, with its line count and role.", "", "\| File \| Lin...` |  |
+| `roles` | module constant | `tools/gen_code_docs.py:632` | `roles = [ ("engine/hal/", "fixed-point DSP, tables and spectral bank"), ("engine/runtime/", "preset records and the M...` |  |
+| `rel` | module constant | `tools/gen_code_docs.py:652` | `rel = str(path.relative_to(ROOT)).replace("\\", "/")` |  |
+| `count` | module constant | `tools/gen_code_docs.py:654` | `count = len(path.read_text(encoding="utf-8", errors="replace").splitlines())` |  |
+| `count` | module constant | `tools/gen_code_docs.py:656` | `count = 0` |  |
+| `lang` | module constant | `tools/gen_code_docs.py:657` | `lang = { ".c": "C", ".h": "C/C++ header", ".hpp": "C++ header", ".cpp": "C++", ".py": "Python", ".ps1": "PowerShell",...` |  |
+| `lang` | module constant | `tools/gen_code_docs.py:672` | `lang = "CMake"` |  |
+| `role` | module constant | `tools/gen_code_docs.py:673` | `role = "project source"` |  |
+| `role` | module constant | `tools/gen_code_docs.py:676` | `role = value` |  |
+| `summary` | module constant | `tools/gen_code_docs.py:678` | `summary = file_summary(path)` |  |
+| `role` | module constant | `tools/gen_code_docs.py:680` | `role = FILE_ROLES[rel]` |  |
+| `role` | module constant | `tools/gen_code_docs.py:682` | `role = summary` |  |
+| `lines` | module constant | `tools/gen_code_docs.py:688` | `lines = [ "# Type, class, struct, union and enum index", "", "Every type definition found in the tracked C, C++ and P...` |  |
 | `description` | module constant | `tools/gen_code_docs.py:699` | `description = t.description or CORE_TYPES.get(t.name, "")` |  |
-| `CORE_FUNCTIONS` | module constant | `tools/gen_code_docs.py:722` | `CORE_FUNCTIONS = { "PluginEditor": "Builds the editor, the header, the toolbar, the tabs and the first page, then sta...` |  |
-| `CORE_TYPES` | module constant | `tools/gen_code_docs.py:820` | `CORE_TYPES = { "type_p_alpha_state": "The generated engine state. One instance per plugin instance.", "P1ParamSpec": ...` |  |
-| `ACRONYMS` | module constant | `tools/gen_code_docs.py:845` | `ACRONYMS = { "pcm": "PCM", "midi": "MIDI", "ui": "UI", "dsp": "DSP", "crc": "CRC", "id": "id", "ids": "ids", "cpu": "...` |  |
-| `name` | module constant | `tools/gen_code_docs.py:875` | `name = re.sub(r"^[~_]*(?:p1_\|type_p_alpha_)?", "", name)` |  |
-| `pieces` | module constant | `tools/gen_code_docs.py:876` | `pieces = re.findall(r"[A-Z]+(?=[A-Z][a-z])\|[A-Z]?[a-z]+\|[A-Z]+\|\d+[a-z]*", name)` |  |
-| `out` | module constant | `tools/gen_code_docs.py:877` | `out = [ACRONYMS.get(p.lower(), p.lower()) for p in pieces if p]` |  |
-| `end` | module constant | `tools/gen_code_docs.py:883` | `end = min(f.end_line, len(lines))` |  |
-| `i` | module constant | `tools/gen_code_docs.py:884` | `i = f.line - 1` |  |
-| `stripped` | module constant | `tools/gen_code_docs.py:889` | `stripped = lines[i].strip()` |  |
-| `block` | module constant | `tools/gen_code_docs.py:894` | `block = []` |  |
-| `text` | module constant | `tools/gen_code_docs.py:898` | `text = " ".join(block)` |  |
-| `block` | module constant | `tools/gen_code_docs.py:900` | `block = [stripped]` |  |
-| `text` | module constant | `tools/gen_code_docs.py:904` | `text = " ".join(block)` |  |
-| `text` | module constant | `tools/gen_code_docs.py:905` | `text = re.sub(r"/\*+\|\*/", " ", text)` |  |
-| `text` | module constant | `tools/gen_code_docs.py:906` | `text = re.sub(r"^\*+\s?", "", text.strip())` |  |
-| `text` | module constant | `tools/gen_code_docs.py:909` | `text = re.sub(r"\s+", " ", text).strip()` |  |
-| `match` | module constant | `tools/gen_code_docs.py:910` | `match = re.match(r"([A-Z][^.]*\.)", text)` |  |
-| `sentence` | module constant | `tools/gen_code_docs.py:912` | `sentence = match.group(1).strip()` |  |
-| `name` | module constant | `tools/gen_code_docs.py:924` | `name = f.name` |  |
-| `scope` | module constant | `tools/gen_code_docs.py:927` | `scope = f.scope` |  |
-| `roles` | module constant | `tools/gen_code_docs.py:935` | `roles = { "note_to_inc": "Converts a MIDI note to a Q32 phase increment.", "type_p_alpha_param_slot": "Maps a manifes...` |  |
-| `body` | module constant | `tools/gen_code_docs.py:987` | `body = " ".join(lines[f.line - 1 : f.end_line])` |  |
-| `match` | module constant | `tools/gen_code_docs.py:988` | `match = re.search(r"withPart\(\"([^\"]+)\"", body)` |  |
-| `match` | module constant | `tools/gen_code_docs.py:991` | `match = re.search(r"opBase\(op,\s*\"([^\"]+)\"", body)` |  |
-| `words` | module constant | `tools/gen_code_docs.py:1012` | `words = split_words(name)` |  |
-| `rest` | module constant | `tools/gen_code_docs.py:1017` | `rest = split_words(name[5:])` |  |
-| `rest` | module constant | `tools/gen_code_docs.py:1020` | `rest = split_words(name[7:])` |  |
-| `rest` | module constant | `tools/gen_code_docs.py:1029` | `rest = split_words(name[4:])` |  |
-| `rest` | module constant | `tools/gen_code_docs.py:1032` | `rest = split_words(name[5:])` |  |
-| `overrides` | module constant | `tools/gen_code_docs.py:1049` | `overrides = { "paintButton": "Draws the button in its normal, highlighted and down states.", "paintListBoxItem": "Dra...` |  |
-| `rest` | module constant | `tools/gen_code_docs.py:1075` | `rest = split_words(name[5:] if name.startswith("paint") else name[4:])` |  |
-| `rest` | module constant | `tools/gen_code_docs.py:1078` | `rest = split_words(name[7:])` |  |
-| `verb_prefixes` | module constant | `tools/gen_code_docs.py:1080` | `verb_prefixes = ( ("get", "Reads"), ("set", "Writes"), ("is", "Tests whether the"), ("has", "Tests whether the"), ("c...` |  |
-| `rest` | module constant | `tools/gen_code_docs.py:1149` | `rest = split_words(name[len(prefix):])` |  |
-| `roles` | module constant | `tools/gen_code_docs.py:1153` | `roles = { "midi_get": "The host hook that pops one raw MIDI message.", "synth_midi_feed": "Applies one MIDI message, ...` |  |
-| `comment` | module constant | `tools/gen_code_docs.py:1162` | `comment = inner_comment(f, lines)` |  |
-| `head` | module constant | `tools/gen_code_docs.py:1165` | `head = f.signature.split("(")[0]` |  |
-| `returns` | module constant | `tools/gen_code_docs.py:1166` | `returns = head.replace(name, "").strip()` |  |
-| `lines` | module constant | `tools/gen_code_docs.py:1175` | `lines = [ "# Function and method index", "", "Every function definition and declaration found in the tracked C, C++ a...` |  |
-| `cache` | module constant | `tools/gen_code_docs.py:1187` | `cache: dict[str, list[str]] = {}` |  |
-| `known` | module constant | `tools/gen_code_docs.py:1188` | `known: dict[tuple[str, str], str] = {}` |  |
-| `ordered` | module constant | `tools/gen_code_docs.py:1189` | `ordered = sorted(functions, key=lambda x: (x.path, x.line, x.name))` |  |
-| `source_lines` | module constant | `tools/gen_code_docs.py:1191` | `source_lines = cache.setdefault( f.path, (ROOT / f.path).read_text(encoding="utf-8", errors="replace").splitlines(), )` |  |
-| `strong` | module constant | `tools/gen_code_docs.py:1195` | `strong = f.description or inner_comment(f, source_lines)` |  |
-| `source_lines` | module constant | `tools/gen_code_docs.py:1203` | `source_lines = cache[f.path]` |  |
-| `description` | module constant | `tools/gen_code_docs.py:1204` | `description = describe_function(f, source_lines, known)` |  |
-| `signature` | module constant | `tools/gen_code_docs.py:1207` | `signature = f.signature` |  |
-| `signature` | module constant | `tools/gen_code_docs.py:1209` | `signature = signature[:177] + "..."` |  |
-| `current` | module constant | `tools/gen_code_docs.py:1216` | `current = ""` |  |
-| `current` | module constant | `tools/gen_code_docs.py:1219` | `current = f.path` |  |
-| `source_lines` | module constant | `tools/gen_code_docs.py:1225` | `source_lines = cache[f.path]` |  |
-| `description` | module constant | `tools/gen_code_docs.py:1226` | `description = describe_function(f, source_lines, known)` |  |
-| `lines` | module constant | `tools/gen_code_docs.py:1233` | `lines = [ "# Macro, global, alias and constant index", "", "Every macro, global variable, alias, using declaration an...` |  |
-| `value` | module constant | `tools/gen_code_docs.py:1246` | `value = s.value` |  |
-| `value` | module constant | `tools/gen_code_docs.py:1248` | `value = value[:117] + "..."` |  |
-| `path` | module constant | `tools/gen_code_docs.py:1257` | `path = ROOT / "engine" / "gen" / "dsp.h"` |  |
-| `raw` | module constant | `tools/gen_code_docs.py:1258` | `raw = path.read_text(encoding="utf-8")` |  |
-| `start` | module constant | `tools/gen_code_docs.py:1259` | `start = raw.find("typedef struct type_p_alpha_state {")` |  |
-| `end` | module constant | `tools/gen_code_docs.py:1260` | `end = raw.find("} type_p_alpha_state;", start)` |  |
-| `body` | module constant | `tools/gen_code_docs.py:1261` | `body = raw[start:end]` |  |
-| `out` | module constant | `tools/gen_code_docs.py:1262` | `out: list[tuple[str, str]] = []` |  |
-| `line` | module constant | `tools/gen_code_docs.py:1264` | `line = line.strip()` |  |
-| `m` | module constant | `tools/gen_code_docs.py:1265` | `m = re.match(r"^(.+?)\s+([A-Za-z_]\w*)(\[[^\]]+\])?;$", line)` |  |
-| `lines` | module constant | `tools/gen_code_docs.py:1272` | `lines = [ "# `type_p_alpha_state` field index", "", "Every field of the generated engine state, in declaration order....` |  |
-| `data` | module constant | `tools/gen_code_docs.py:1287` | `data = json.loads((ROOT / "engine" / "gen" / "params.json").read_text(encoding="utf-8"))` |  |
-| `params` | module constant | `tools/gen_code_docs.py:1288` | `params = data["params"]` |  |
-| `lines` | module constant | `tools/gen_code_docs.py:1289` | `lines = [ "# Parameter index", "", "Every manifest parameter. The part block has 994 values, mirrored for", "`.p0` an...` |  |
-| `name` | module constant | `tools/gen_code_docs.py:1301` | `name = str(p["name"])` |  |
-| `automatable` | module constant | `tools/gen_code_docs.py:1304` | `automatable = "yes" if p.get("automatable") else "no"` |  |
-| `modulatable` | module constant | `tools/gen_code_docs.py:1305` | `modulatable = "yes" if p.get("modulatable") else "no"` |  |
-| `path` | module constant | `tools/gen_code_docs.py:1315` | `path = ROOT / "engine" / "gen" / "type_p_alpha_dsp.c"` |  |
-| `lines` | module constant | `tools/gen_code_docs.py:1318` | `lines = path.read_text(encoding="utf-8").splitlines()` |  |
-| `out` | module constant | `tools/gen_code_docs.py:1319` | `out = [ "# Generated render walk", "", "The generated engine is one translation unit with a parameter table, a", "sta...` |  |
-| `functions` | module constant | `tools/gen_code_docs.py:1334` | `functions = [ ("type_p_alpha_dsp_state_init", "initialise the state and apply the init table"), ("type_p_alpha_render...` |  |
-| `start` | module constant | `tools/gen_code_docs.py:1362` | `start = next(i for i, l in enumerate(lines) if "type_p_alpha_render_voices_block" in l)` |  |
-| `end` | module constant | `tools/gen_code_docs.py:1363` | `end = next(i for i, l in enumerate(lines) if "type_p_alpha_render_post_block" in l)` |  |
-| `comments` | module constant | `tools/gen_code_docs.py:1364` | `comments: list[tuple[int, str]] = []` |  |
-| `i` | module constant | `tools/gen_code_docs.py:1365` | `i = start` |  |
-| `line` | module constant | `tools/gen_code_docs.py:1367` | `line = lines[i]` |  |
-| `s` | module constant | `tools/gen_code_docs.py:1369` | `s = line.index("/*")` |  |
-| `j` | module constant | `tools/gen_code_docs.py:1370` | `j = i` |  |
-| `buf` | module constant | `tools/gen_code_docs.py:1371` | `buf: list[str] = []` |  |
-| `l` | module constant | `tools/gen_code_docs.py:1373` | `l = lines[j]` |  |
-| `begin` | module constant | `tools/gen_code_docs.py:1374` | `begin = s + 2 if j == i else 0` |  |
-| `k` | module constant | `tools/gen_code_docs.py:1375` | `k = l.find("*/", begin)` |  |
-| `txt` | module constant | `tools/gen_code_docs.py:1381` | `txt = " ".join(x.strip() for x in buf if x.strip())` |  |
-| `i` | module constant | `tools/gen_code_docs.py:1384` | `i = j` |  |
-| `seen` | module constant | `tools/gen_code_docs.py:1386` | `seen: set[str] = set()` |  |
-| `counts` | module constant | `tools/gen_code_docs.py:1388` | `counts = Counter(t for _, t in comments)` |  |
-| `nodes_dir` | module constant | `tools/gen_code_docs.py:1398` | `nodes_dir = ROOT / ".dev" / "modules"` |  |
-| `lines` | module constant | `tools/gen_code_docs.py:1401` | `lines = [ "# Generator node catalogue", "", "The local `.dev` tree is the generator library and is not part of the pu...` |  |
-| `data` | module constant | `tools/gen_code_docs.py:1413` | `data = json.loads(path.read_text(encoding="utf-8"))` |  |
-| `ins` | module constant | `tools/gen_code_docs.py:1414` | `ins = ", ".join(data.get("ins", {}).keys())` |  |
-| `outs` | module constant | `tools/gen_code_docs.py:1415` | `outs = ", ".join(data.get("outs", {}).keys())` |  |
-| `data` | module constant | `tools/gen_code_docs.py:1422` | `data = json.loads(path.read_text(encoding="utf-8"))` |  |
-| `exe_sources` | module constant | `tools/gen_code_docs.py:1431` | `exe_sources: dict[str, str] = {}` |  |
-| `cmake` | module constant | `tools/gen_code_docs.py:1432` | `cmake = (ROOT / "plugin" / "CMakeLists.txt").read_text(encoding="utf-8")` |  |
-| `juce` | module constant | `tools/gen_code_docs.py:1436` | `juce = (ROOT / "plugin" / "juce" / "CMakeLists.txt").read_text(encoding="utf-8")` |  |
-| `manual` | module constant | `tools/gen_code_docs.py:1440` | `manual = { "linux_daws": "plugin/tests/linux_daws.sh", "plugin_smoke": "plugin/tests/plugin_smoke.cpp", "plugin_stabi...` |  |
-| `tests` | module constant | `tools/gen_code_docs.py:1447` | `tests: list[tuple[str, str, str]] = []` |  |
-| `lines` | module constant | `tools/gen_code_docs.py:1457` | `lines = [ "# Test index", "", "The CTest targets and their source files. The hand-written build chapter", "explains w...` |  |
-| `source` | module constant | `tools/gen_code_docs.py:1468` | `source = "plugin/" + source` |  |
-| `parser` | module constant | `tools/gen_code_docs.py:1474` | `parser = argparse.ArgumentParser()` |  |
-| `args` | module constant | `tools/gen_code_docs.py:1476` | `args = parser.parse_args()` |  |
-| `paths` | module constant | `tools/gen_code_docs.py:1478` | `paths = source_files(args.include_dev)` |  |
-| `functions` | module constant | `tools/gen_code_docs.py:1479` | `functions: list[Function] = []` |  |
-| `types` | module constant | `tools/gen_code_docs.py:1480` | `types: list[Type] = []` |  |
-| `symbols` | module constant | `tools/gen_code_docs.py:1481` | `symbols: list[Symbol] = []` |  |
+| `description` | module constant | `tools/gen_code_docs.py:706` | `description = t.description or CORE_TYPES.get(t.name, "")` |  |
+| `shown_fields` | module constant | `tools/gen_code_docs.py:717` | `shown_fields = t.fields[:40]` |  |
+| `field_text` | module constant | `tools/gen_code_docs.py:720` | `field_text = field_text[:197] + "..."` |  |
+| `hidden` | module constant | `tools/gen_code_docs.py:722` | `hidden = len(t.fields) - len(shown_fields)` |  |
+| `shown_methods` | module constant | `tools/gen_code_docs.py:734` | `shown_methods = t.methods[:60]` |  |
+| `method` | module constant | `tools/gen_code_docs.py:737` | `method = method[:197] + "..."` |  |
+| `hidden` | module constant | `tools/gen_code_docs.py:739` | `hidden = len(t.methods) - len(shown_methods)` |  |
+| `CORE_FUNCTIONS` | module constant | `tools/gen_code_docs.py:748` | `CORE_FUNCTIONS = { "PluginEditor": "Builds the editor, the header, the toolbar, the tabs and the first page, then sta...` |  |
+| `CORE_TYPES` | module constant | `tools/gen_code_docs.py:846` | `CORE_TYPES = { "type_p_alpha_state": "The generated engine state. One instance per plugin instance.", "P1ParamSpec": ...` |  |
+| `ACRONYMS` | module constant | `tools/gen_code_docs.py:871` | `ACRONYMS = { "pcm": "PCM", "midi": "MIDI", "ui": "UI", "dsp": "DSP", "crc": "CRC", "id": "id", "ids": "ids", "cpu": "...` |  |
+| `name` | module constant | `tools/gen_code_docs.py:901` | `name = re.sub(r"^[~_]*(?:p1_\|type_p_alpha_)?", "", name)` |  |
+| `pieces` | module constant | `tools/gen_code_docs.py:902` | `pieces = re.findall(r"[A-Z]+(?=[A-Z][a-z])\|[A-Z]?[a-z]+\|[A-Z]+\|\d+[a-z]*", name)` |  |
+| `out` | module constant | `tools/gen_code_docs.py:903` | `out = [ACRONYMS.get(p.lower(), p.lower()) for p in pieces if p]` |  |
+| `end` | module constant | `tools/gen_code_docs.py:909` | `end = min(f.end_line, len(lines))` |  |
+| `i` | module constant | `tools/gen_code_docs.py:910` | `i = f.line - 1` |  |
+| `stripped` | module constant | `tools/gen_code_docs.py:915` | `stripped = lines[i].strip()` |  |
+| `block` | module constant | `tools/gen_code_docs.py:920` | `block = []` |  |
+| `text` | module constant | `tools/gen_code_docs.py:924` | `text = " ".join(block)` |  |
+| `block` | module constant | `tools/gen_code_docs.py:926` | `block = [stripped]` |  |
+| `text` | module constant | `tools/gen_code_docs.py:930` | `text = " ".join(block)` |  |
+| `text` | module constant | `tools/gen_code_docs.py:931` | `text = re.sub(r"/\*+\|\*/", " ", text)` |  |
+| `text` | module constant | `tools/gen_code_docs.py:932` | `text = re.sub(r"^\*+\s?", "", text.strip())` |  |
+| `text` | module constant | `tools/gen_code_docs.py:935` | `text = re.sub(r"\s+", " ", text).strip()` |  |
+| `match` | module constant | `tools/gen_code_docs.py:936` | `match = re.match(r"([A-Z][^.]*\.)", text)` |  |
+| `sentence` | module constant | `tools/gen_code_docs.py:938` | `sentence = match.group(1).strip()` |  |
+| `name` | module constant | `tools/gen_code_docs.py:950` | `name = f.name` |  |
+| `scope` | module constant | `tools/gen_code_docs.py:957` | `scope = f.scope` |  |
+| `roles` | module constant | `tools/gen_code_docs.py:965` | `roles = { "note_to_inc": "Converts a MIDI note to a Q32 phase increment.", "type_p_alpha_param_slot": "Maps a manifes...` |  |
+| `body` | module constant | `tools/gen_code_docs.py:1017` | `body = " ".join(lines[f.line - 1 : f.end_line])` |  |
+| `match` | module constant | `tools/gen_code_docs.py:1018` | `match = re.search(r"withPart\(\"([^\"]+)\"", body)` |  |
+| `match` | module constant | `tools/gen_code_docs.py:1021` | `match = re.search(r"opBase\(op,\s*\"([^\"]+)\"", body)` |  |
+| `words` | module constant | `tools/gen_code_docs.py:1042` | `words = split_words(name)` |  |
+| `rest` | module constant | `tools/gen_code_docs.py:1047` | `rest = split_words(name[5:])` |  |
+| `rest` | module constant | `tools/gen_code_docs.py:1050` | `rest = split_words(name[7:])` |  |
+| `rest` | module constant | `tools/gen_code_docs.py:1059` | `rest = split_words(name[4:])` |  |
+| `rest` | module constant | `tools/gen_code_docs.py:1062` | `rest = split_words(name[5:])` |  |
+| `overrides` | module constant | `tools/gen_code_docs.py:1079` | `overrides = { "paintButton": "Draws the button in its normal, highlighted and down states.", "paintListBoxItem": "Dra...` |  |
+| `rest` | module constant | `tools/gen_code_docs.py:1105` | `rest = split_words(name[5:] if name.startswith("paint") else name[4:])` |  |
+| `rest` | module constant | `tools/gen_code_docs.py:1108` | `rest = split_words(name[7:])` |  |
+| `flags` | module constant | `tools/gen_code_docs.py:1110` | `flags = { "active", "compact", "selected", "visible", "enabled", "muted", "open", "closed", "bipolar", }` |  |
+| `verb_prefixes` | module constant | `tools/gen_code_docs.py:1123` | `verb_prefixes = ( ("get", "Reads"), ("set", "Writes"), ("is", "Tests whether the"), ("has", "Tests whether the"), ("c...` |  |
+| `rest` | module constant | `tools/gen_code_docs.py:1192` | `rest = split_words(name[len(prefix):])` |  |
+| `roles` | module constant | `tools/gen_code_docs.py:1196` | `roles = { "midi_get": "The host hook that pops one raw MIDI message.", "synth_midi_feed": "Applies one MIDI message, ...` |  |
+| `comment` | module constant | `tools/gen_code_docs.py:1205` | `comment = inner_comment(f, lines)` |  |
+| `head` | module constant | `tools/gen_code_docs.py:1208` | `head = f.signature.split("(")[0]` |  |
+| `returns` | module constant | `tools/gen_code_docs.py:1209` | `returns = head.replace(name, "").strip()` |  |
+| `lines` | module constant | `tools/gen_code_docs.py:1218` | `lines = [ "# Function and method index", "", "Every function definition and declaration found in the tracked C, C++ a...` |  |
+| `cache` | module constant | `tools/gen_code_docs.py:1230` | `cache: dict[str, list[str]] = {}` |  |
+| `known` | module constant | `tools/gen_code_docs.py:1231` | `known: dict[tuple[str, str], str] = {}` |  |
+| `ordered` | module constant | `tools/gen_code_docs.py:1232` | `ordered = sorted(functions, key=lambda x: (x.path, x.line, x.name))` |  |
+| `source_lines` | module constant | `tools/gen_code_docs.py:1234` | `source_lines = cache.setdefault( f.path, (ROOT / f.path).read_text(encoding="utf-8", errors="replace").splitlines(), )` |  |
+| `strong` | module constant | `tools/gen_code_docs.py:1238` | `strong = f.description or inner_comment(f, source_lines)` |  |
+| `source_lines` | module constant | `tools/gen_code_docs.py:1246` | `source_lines = cache[f.path]` |  |
+| `description` | module constant | `tools/gen_code_docs.py:1247` | `description = describe_function(f, source_lines, known)` |  |
+| `description` | module constant | `tools/gen_code_docs.py:1249` | `description = description[0].upper() + description[1:]` |  |
+| `signature` | module constant | `tools/gen_code_docs.py:1252` | `signature = f.signature` |  |
+| `signature` | module constant | `tools/gen_code_docs.py:1254` | `signature = signature[:177] + "..."` |  |
+| `current` | module constant | `tools/gen_code_docs.py:1261` | `current = ""` |  |
+| `current` | module constant | `tools/gen_code_docs.py:1264` | `current = f.path` |  |
+| `source_lines` | module constant | `tools/gen_code_docs.py:1270` | `source_lines = cache[f.path]` |  |
+| `description` | module constant | `tools/gen_code_docs.py:1271` | `description = describe_function(f, source_lines, known)` |  |
+| `lines` | module constant | `tools/gen_code_docs.py:1278` | `lines = [ "# Macro, global, alias and constant index", "", "Every macro, global variable, alias, using declaration an...` |  |
+| `value` | module constant | `tools/gen_code_docs.py:1291` | `value = s.value` |  |
+| `value` | module constant | `tools/gen_code_docs.py:1293` | `value = value[:117] + "..."` |  |
+| `path` | module constant | `tools/gen_code_docs.py:1302` | `path = ROOT / "engine" / "gen" / "dsp.h"` |  |
+| `raw` | module constant | `tools/gen_code_docs.py:1303` | `raw = path.read_text(encoding="utf-8")` |  |
+| `start` | module constant | `tools/gen_code_docs.py:1304` | `start = raw.find("typedef struct type_p_alpha_state {")` |  |
+| `end` | module constant | `tools/gen_code_docs.py:1305` | `end = raw.find("} type_p_alpha_state;", start)` |  |
+| `body` | module constant | `tools/gen_code_docs.py:1306` | `body = raw[start:end]` |  |
+| `out` | module constant | `tools/gen_code_docs.py:1307` | `out: list[tuple[str, str]] = []` |  |
+| `line` | module constant | `tools/gen_code_docs.py:1309` | `line = line.strip()` |  |
+| `m` | module constant | `tools/gen_code_docs.py:1310` | `m = re.match(r"^(.+?)\s+([A-Za-z_]\w*)(\[[^\]]+\])?;$", line)` |  |
+| `lines` | module constant | `tools/gen_code_docs.py:1317` | `lines = [ "# `type_p_alpha_state` field index", "", "Every field of the generated engine state, in declaration order....` |  |
+| `data` | module constant | `tools/gen_code_docs.py:1332` | `data = json.loads((ROOT / "engine" / "gen" / "params.json").read_text(encoding="utf-8"))` |  |
+| `params` | module constant | `tools/gen_code_docs.py:1333` | `params = data["params"]` |  |
+| `lines` | module constant | `tools/gen_code_docs.py:1334` | `lines = [ "# Parameter index", "", "Every manifest parameter. The part block has 994 values, mirrored for", "`.p0` an...` |  |
+| `name` | module constant | `tools/gen_code_docs.py:1346` | `name = str(p["name"])` |  |
+| `automatable` | module constant | `tools/gen_code_docs.py:1349` | `automatable = "yes" if p.get("automatable") else "no"` |  |
+| `modulatable` | module constant | `tools/gen_code_docs.py:1350` | `modulatable = "yes" if p.get("modulatable") else "no"` |  |
+| `path` | module constant | `tools/gen_code_docs.py:1360` | `path = ROOT / "engine" / "gen" / "type_p_alpha_dsp.c"` |  |
+| `lines` | module constant | `tools/gen_code_docs.py:1363` | `lines = path.read_text(encoding="utf-8").splitlines()` |  |
+| `out` | module constant | `tools/gen_code_docs.py:1364` | `out = [ "# Generated render walk", "", "The generated engine is one translation unit with a parameter table, a", "sta...` |  |
+| `functions` | module constant | `tools/gen_code_docs.py:1379` | `functions = [ ("type_p_alpha_dsp_state_init", "initialise the state and apply the init table"), ("type_p_alpha_render...` |  |
+| `start` | module constant | `tools/gen_code_docs.py:1407` | `start = next(i for i, l in enumerate(lines) if "type_p_alpha_render_voices_block" in l)` |  |
+| `end` | module constant | `tools/gen_code_docs.py:1408` | `end = next(i for i, l in enumerate(lines) if "type_p_alpha_render_post_block" in l)` |  |
+| `comments` | module constant | `tools/gen_code_docs.py:1409` | `comments: list[tuple[int, str]] = []` |  |
+| `i` | module constant | `tools/gen_code_docs.py:1410` | `i = start` |  |
+| `line` | module constant | `tools/gen_code_docs.py:1412` | `line = lines[i]` |  |
+| `s` | module constant | `tools/gen_code_docs.py:1414` | `s = line.index("/*")` |  |
+| `j` | module constant | `tools/gen_code_docs.py:1415` | `j = i` |  |
+| `buf` | module constant | `tools/gen_code_docs.py:1416` | `buf: list[str] = []` |  |
+| `l` | module constant | `tools/gen_code_docs.py:1418` | `l = lines[j]` |  |
+| `begin` | module constant | `tools/gen_code_docs.py:1419` | `begin = s + 2 if j == i else 0` |  |
+| `k` | module constant | `tools/gen_code_docs.py:1420` | `k = l.find("*/", begin)` |  |
+| `txt` | module constant | `tools/gen_code_docs.py:1426` | `txt = " ".join(x.strip() for x in buf if x.strip())` |  |
+| `i` | module constant | `tools/gen_code_docs.py:1429` | `i = j` |  |
+| `seen` | module constant | `tools/gen_code_docs.py:1431` | `seen: set[str] = set()` |  |
+| `counts` | module constant | `tools/gen_code_docs.py:1433` | `counts = Counter(t for _, t in comments)` |  |
+| `nodes_dir` | module constant | `tools/gen_code_docs.py:1443` | `nodes_dir = ROOT / ".dev" / "modules"` |  |
+| `lines` | module constant | `tools/gen_code_docs.py:1446` | `lines = [ "# Generator node catalogue", "", "The local `.dev` tree is the generator library and is not part of the pu...` |  |
+| `data` | module constant | `tools/gen_code_docs.py:1458` | `data = json.loads(path.read_text(encoding="utf-8"))` |  |
+| `ins` | module constant | `tools/gen_code_docs.py:1459` | `ins = ", ".join(data.get("ins", {}).keys())` |  |
+| `outs` | module constant | `tools/gen_code_docs.py:1460` | `outs = ", ".join(data.get("outs", {}).keys())` |  |
+| `data` | module constant | `tools/gen_code_docs.py:1467` | `data = json.loads(path.read_text(encoding="utf-8"))` |  |
+| `exe_sources` | module constant | `tools/gen_code_docs.py:1476` | `exe_sources: dict[str, str] = {}` |  |
+| `cmake` | module constant | `tools/gen_code_docs.py:1477` | `cmake = (ROOT / "plugin" / "CMakeLists.txt").read_text(encoding="utf-8")` |  |
+| `juce` | module constant | `tools/gen_code_docs.py:1481` | `juce = (ROOT / "plugin" / "juce" / "CMakeLists.txt").read_text(encoding="utf-8")` |  |
+| `manual` | module constant | `tools/gen_code_docs.py:1485` | `manual = { "linux_daws": "plugin/tests/linux_daws.sh", "plugin_smoke": "plugin/tests/plugin_smoke.cpp", "plugin_stabi...` |  |
+| `tests` | module constant | `tools/gen_code_docs.py:1492` | `tests: list[tuple[str, str, str]] = []` |  |
+| `lines` | module constant | `tools/gen_code_docs.py:1502` | `lines = [ "# Test index", "", "The CTest targets and their source files. The hand-written build chapter", "explains w...` |  |
+| `source` | module constant | `tools/gen_code_docs.py:1513` | `source = "plugin/" + source` |  |
+| `parser` | module constant | `tools/gen_code_docs.py:1519` | `parser = argparse.ArgumentParser()` |  |
+| `args` | module constant | `tools/gen_code_docs.py:1521` | `args = parser.parse_args()` |  |
+| `paths` | module constant | `tools/gen_code_docs.py:1523` | `paths = source_files(args.include_dev)` |  |
+| `functions` | module constant | `tools/gen_code_docs.py:1524` | `functions: list[Function] = []` |  |
+| `types` | module constant | `tools/gen_code_docs.py:1525` | `types: list[Type] = []` |  |
+| `symbols` | module constant | `tools/gen_code_docs.py:1526` | `symbols: list[Symbol] = []` |  |
 | `ROOT` | module constant | `tools/gen_math_tables.py:21` | `ROOT = Path(__file__).resolve().parents[1]` |  |
 | `OUT` | module constant | `tools/gen_math_tables.py:22` | `OUT = ROOT / "engine" / "gen" / "math_tables.h"` |  |
 | `OLD_RATE` | module constant | `tools/gen_math_tables.py:23` | `OLD_RATE = 44100.0` |  |

@@ -86,17 +86,17 @@ paths in depth.
 | `preset_crc16` |  | `engine/runtime/presets.c:33` | `uint16_t preset_crc16(const uint8_t *p, uint32_t n)` | Returns the preset CRC 16 value. |
 | `name_put` |  | `engine/runtime/presets.c:45` | `static void name_put(uint8_t *out, const char *name)` | Copies or trims a fixed-width record name field. |
 | `seal` |  | `engine/runtime/presets.c:55` | `static void seal(uint8_t *out, uint32_t body)` | Writes the record CRC into the trailing four bytes. |
-| `preset_part_pack` |  | `engine/runtime/presets.c:60` | `uint32_t preset_part_pack(uint8_t *out, const char *name, const int32_t *params, uint32_t n)` | pack -> the record length, the name is truncated to PRESET_NAME_LEN-1 chars. |
+| `preset_part_pack` |  | `engine/runtime/presets.c:60` | `uint32_t preset_part_pack(uint8_t *out, const char *name, const int32_t *params, uint32_t n)` | Pack -> the record length, the name is truncated to PRESET_NAME_LEN-1 chars. |
 | `preset_multi_pack` |  | `engine/runtime/presets.c:71` | `uint32_t preset_multi_pack(uint8_t *out, const char *name, const uint8_t *part_slot, const int32_t *level, const int32_t *delay, const int32_t *channel, const int32_t *low, cons...` | Packs a record into its little-endian bytes and appends the CRC. |
 | `preset_settings_pack` |  | `engine/runtime/presets.c:115` | `uint32_t preset_settings_pack(uint8_t *out, int32_t base_channel, int32_t master_tune)` | Packs a record into its little-endian bytes and appends the CRC. |
-| `preset_part_unpack` |  | `engine/runtime/presets.c:124` | `int preset_part_unpack(const uint8_t *raw, uint32_t n, char *name, int32_t *params)` | unpack -> 1 and fills the outputs, 0 when the slot is empty or the CRC fails (the outputs are then left untouched). |
+| `preset_part_unpack` |  | `engine/runtime/presets.c:124` | `int preset_part_unpack(const uint8_t *raw, uint32_t n, char *name, int32_t *params)` | Unpack -> 1 and fills the outputs, 0 when the slot is empty or the CRC fails (the outputs are then left untouched). |
 | `preset_multi_unpack` |  | `engine/runtime/presets.c:140` | `int preset_multi_unpack(const uint8_t *raw, uint32_t p, int has_macro, char *name, uint8_t *part_slot, int32_t *level, int32_t *delay, int32_t *channel, int32_t *low, int32_t *h...` | Unpacks and CRC-checks a record. |
 | `preset_settings_unpack` |  | `engine/runtime/presets.c:192` | `int preset_settings_unpack(const uint8_t *raw, int32_t *base_channel, int32_t *master_tune)` | Unpacks and CRC-checks a record. |
 | `bank_per` |  | `engine/runtime/presets.c:207` | `static uint32_t bank_per(uint32_t rec)` | Returns the bank per value. |
-| `bank_slots` |  | `engine/runtime/presets.c:210` | `static uint32_t bank_slots(uint32_t count, uint32_t rec)` | the number of storage slots a bank of `count` records of `rec` bytes spans. |
+| `bank_slots` |  | `engine/runtime/presets.c:210` | `static uint32_t bank_slots(uint32_t count, uint32_t rec)` | The number of storage slots a bank of `count` records of `rec` bytes spans. |
 | `bank_save` |  | `engine/runtime/presets.c:216` | `static int bank_save(const uint8_t *bank, uint32_t count, uint32_t rec, uint32_t slot0)` | Writes a bank or record through the host store. |
 | `bank_load` |  | `engine/runtime/presets.c:228` | `static int bank_load(uint8_t *bank, uint32_t count, uint32_t rec, uint32_t slot0)` | Reads a bank, record or library file and migrates it. |
-| `preset_part_bank_save` |  | `engine/runtime/presets.c:242` | `int preset_part_bank_save(const uint8_t *bank, uint32_t n)` | banks, over the platform's `slot_save`/`slot_load` services. `n` = the part-patch param count (PP_RECORD) and `p` = the multi-patch part count (MP_RECORD). The multi bank's `n` is carried too so its flash slot can follow the part bank. |
+| `preset_part_bank_save` |  | `engine/runtime/presets.c:242` | `int preset_part_bank_save(const uint8_t *bank, uint32_t n)` | Banks, over the platform's `slot_save`/`slot_load` services. `n` = the part-patch param count (PP_RECORD) and `p` = the multi-patch part count (MP_RECORD). The multi bank's `n` is carried too so its flash slot can follow the part bank. |
 | `preset_part_bank_load` |  | `engine/runtime/presets.c:246` | `int preset_part_bank_load(uint8_t *bank, uint32_t n)` | Reads a bank, record or library file and migrates it. |
 | `preset_multi_bank_save` |  | `engine/runtime/presets.c:250` | `int preset_multi_bank_save(const uint8_t *bank, uint32_t n, uint32_t p)` | Writes a bank or record through the host store. |
 | `preset_multi_bank_load` |  | `engine/runtime/presets.c:255` | `int preset_multi_bank_load(uint8_t *bank, uint32_t n, uint32_t p)` | Reads a bank, record or library file and migrates it. |
@@ -104,13 +104,13 @@ paths in depth.
 | `preset_settings_load` |  | `engine/runtime/presets.c:261` | `int preset_settings_load(uint8_t *rec)` | Reads a bank, record or library file and migrates it. |
 | `preset_crc32` |  | `engine/runtime/presets.h:46` | `uint32_t preset_crc32(const uint8_t *p, uint32_t n)` | Computes the reflected CRC-32 over a record body. |
 | `preset_crc16` |  | `engine/runtime/presets.h:47` | `uint16_t preset_crc16(const uint8_t *p, uint32_t n)` | Returns the preset CRC 16 value. |
-| `preset_part_pack` |  | `engine/runtime/presets.h:50` | `uint32_t preset_part_pack(uint8_t *out, const char *name, const int32_t *params, uint32_t n)` | pack -> the record length, the name is truncated to PRESET_NAME_LEN-1 chars. |
+| `preset_part_pack` |  | `engine/runtime/presets.h:50` | `uint32_t preset_part_pack(uint8_t *out, const char *name, const int32_t *params, uint32_t n)` | Pack -> the record length, the name is truncated to PRESET_NAME_LEN-1 chars. |
 | `preset_multi_pack` |  | `engine/runtime/presets.h:51` | `uint32_t preset_multi_pack(uint8_t *out, const char *name, const uint8_t *part_slot, const int32_t *level, const int32_t *delay, const int32_t *channel, const int32_t *low, cons...` | Packs a record into its little-endian bytes and appends the CRC. |
 | `preset_settings_pack` |  | `engine/runtime/presets.h:55` | `uint32_t preset_settings_pack(uint8_t *out, int32_t base_channel, int32_t master_tune)` | Packs a record into its little-endian bytes and appends the CRC. |
-| `preset_part_unpack` |  | `engine/runtime/presets.h:59` | `int preset_part_unpack(const uint8_t *raw, uint32_t n, char *name, int32_t *params)` | unpack -> 1 and fills the outputs, 0 when the slot is empty or the CRC fails (the outputs are then left untouched). |
+| `preset_part_unpack` |  | `engine/runtime/presets.h:59` | `int preset_part_unpack(const uint8_t *raw, uint32_t n, char *name, int32_t *params)` | Unpack -> 1 and fills the outputs, 0 when the slot is empty or the CRC fails (the outputs are then left untouched). |
 | `preset_multi_unpack` |  | `engine/runtime/presets.h:60` | `int preset_multi_unpack(const uint8_t *raw, uint32_t p, int has_macro, char *name, uint8_t *part_slot, int32_t *level, int32_t *delay, int32_t *channel, int32_t *low, int32_t *h...` | Unpacks and CRC-checks a record. |
 | `preset_settings_unpack` |  | `engine/runtime/presets.h:64` | `int preset_settings_unpack(const uint8_t *raw, int32_t *base_channel, int32_t *master_tune)` | Unpacks and CRC-checks a record. |
-| `preset_part_bank_save` |  | `engine/runtime/presets.h:69` | `int preset_part_bank_save(const uint8_t *bank, uint32_t n)` | banks, over the platform's `slot_save`/`slot_load` services. `n` = the part-patch param count (PP_RECORD) and `p` = the multi-patch part count (MP_RECORD). The multi bank's `n` is carried too so its flash slot can follow the part bank. |
+| `preset_part_bank_save` |  | `engine/runtime/presets.h:69` | `int preset_part_bank_save(const uint8_t *bank, uint32_t n)` | Banks, over the platform's `slot_save`/`slot_load` services. `n` = the part-patch param count (PP_RECORD) and `p` = the multi-patch part count (MP_RECORD). The multi bank's `n` is carried too so its flash slot can follow the part bank. |
 | `preset_part_bank_load` |  | `engine/runtime/presets.h:70` | `int preset_part_bank_load(uint8_t *bank, uint32_t n)` | Reads a bank, record or library file and migrates it. |
 | `preset_multi_bank_save` |  | `engine/runtime/presets.h:71` | `int preset_multi_bank_save(const uint8_t *bank, uint32_t n, uint32_t p)` | Writes a bank or record through the host store. |
 | `preset_multi_bank_load` |  | `engine/runtime/presets.h:72` | `int preset_multi_bank_load(uint8_t *bank, uint32_t n, uint32_t p)` | Reads a bank, record or library file and migrates it. |
@@ -200,18 +200,18 @@ paths in depth.
 | `macroOffset` |  | `plugin/juce/MacroLaw.h:51` | `inline double macroOffset(double macro, int range)` | The macro destination law. The offset is a fraction of the destination's span, so a macro at 100 with a range of 100 moves the whole span and half of each moves half. The destination is clamped in the normalised domain, which keeps a log parameter's offset musical instead of raw. |
 | `macroTargetNormalised` |  | `plugin/juce/MacroLaw.h:56` | `inline double macroTargetNormalised(double base, double offset)` | Returns the macro target normalised value. |
 | `ModeButton` | ModeButton | `plugin/juce/Pages.cpp:17` | `explicit ModeButton(const juce::String& label) : juce::Button(label)` | Constructs the object. |
-| `setActive` | ModeButton | `plugin/juce/Pages.cpp:22` | `void setActive(bool active)` | Writes the active. |
+| `setActive` | ModeButton | `plugin/juce/Pages.cpp:22` | `void setActive(bool active)` | Sets the active flag. |
 | `paintButton` | ModeButton | `plugin/juce/Pages.cpp:30` | `void paintButton(juce::Graphics& g, bool highlighted, bool) override` | Draws the button in its normal, highlighted and down states. |
 | `PartCard` | PartCard | `plugin/juce/Pages.cpp:52` | `PartCard(PluginEditor& editor, int part, bool active) : editor_(editor), part_(part), active_(active), header_(true, true, [this] { editor_.showRenameDialog(true, part_); }, [th...` | Constructs the object. |
-| `resized` | PartCard | `plugin/juce/Pages.cpp:89` | `void resized() override` | Scales the fixed design canvas into the host window. |
+| `resized` | PartCard | `plugin/juce/Pages.cpp:89` | `void resized() override` | Lays out the child components. |
 | `paint` | PartCard | `plugin/juce/Pages.cpp:107` | `void paint(juce::Graphics& g) override` | Draws the component. |
 | `tick` | PartCard | `plugin/juce/Pages.cpp:122` | `void tick()` | Refreshes the live display state. |
 | `VoiceMode` | VoiceMode | `plugin/juce/Pages.cpp:147` | `explicit VoiceMode(PluginEditor& editor) : editor_(editor), part_(editor.activePart())` | Constructs the object. |
-| `resized` | VoiceMode | `plugin/juce/Pages.cpp:176` | `void resized() override` | Scales the fixed design canvas into the host window. |
+| `resized` | VoiceMode | `plugin/juce/Pages.cpp:176` | `void resized() override` | Lays out the child components. |
 | `paint` | VoiceMode | `plugin/juce/Pages.cpp:191` | `void paint(juce::Graphics& g) override` | Draws the component. |
 | `tick` | VoiceMode | `plugin/juce/Pages.cpp:200` | `void tick()` | Refreshes the live display state. |
 | `PatchPage` | PatchPage | `plugin/juce/Pages.cpp:233` | `explicit PatchPage(PluginEditor& editor)` | Constructs the object. |
-| `resized` | PatchPage | `plugin/juce/Pages.cpp:244` | `void resized() override` | Scales the fixed design canvas into the host window. |
+| `resized` | PatchPage | `plugin/juce/Pages.cpp:244` | `void resized() override` | Lays out the child components. |
 | `tick` | PatchPage | `plugin/juce/Pages.cpp:256` | `void tick() override` | Refreshes the live display state. |
 | `makePatchPage` |  | `plugin/juce/Pages.cpp:270` | `std::unique_ptr<PageBase> makePatchPage(PluginEditor& editor)` | Creates the patch page. |
 | `setParam` |  | `plugin/juce/Pages.h:11` | `inline void setParam(PluginEditor& editor, const juce::String& id, double value)` | Writes the param. |
@@ -221,35 +221,35 @@ paths in depth.
 | `paint` | InlineMuteSwitch | `plugin/juce/Pages.h:48` | `void paint(juce::Graphics& g) override` | Draws the component. |
 | `mouseUp` | InlineMuteSwitch | `plugin/juce/Pages.h:68` | `void mouseUp(const juce::MouseEvent&) override` | Handles a mouse interaction. |
 | `CardHeader` | CardHeader | `plugin/juce/Pages.h:82` | `CardHeader(bool partLayout, bool withRename, std::function<void()> onRename, std::function<void()> onCopy, std::function<void()> onPaste, std::function<bool()> getMuted, std::fu...` | Constructs the object. |
-| `resized` | CardHeader | `plugin/juce/Pages.h:102` | `void resized() override` | Scales the fixed design canvas into the host window. |
+| `resized` | CardHeader | `plugin/juce/Pages.h:102` | `void resized() override` | Lays out the child components. |
 | `tick` | CardHeader | `plugin/juce/Pages.h:126` | `void tick()` | Refreshes the live display state. |
 | `OscillatorCard` | OscillatorCard | `plugin/juce/Pages.h:140` | `OscillatorCard(PluginEditor& editor, int op, int part, bool withMorph = false) : P1Card("oscillator", [&ed = editor, op, part] { ed.copyOperatorSection( op, part, PluginEditor::...` | Constructs the object. |
-| `resized` | OscillatorCard | `plugin/juce/Pages.h:171` | `void resized() override` | Scales the fixed design canvas into the host window. |
+| `resized` | OscillatorCard | `plugin/juce/Pages.h:171` | `void resized() override` | Lays out the child components. |
 | `AmplitudeEnvelopeCard` | AmplitudeEnvelopeCard | `plugin/juce/Pages.h:200` | `AmplitudeEnvelopeCard(PluginEditor& editor, int op, int part) : P1Card("amp env", [&ed = editor, op, part] { ed.copyOperatorSection( op, part, PluginEditor::OperatorSection::amp...` | Constructs the object. |
-| `resized` | AmplitudeEnvelopeCard | `plugin/juce/Pages.h:241` | `void resized() override` | Scales the fixed design canvas into the host window. |
+| `resized` | AmplitudeEnvelopeCard | `plugin/juce/Pages.h:241` | `void resized() override` | Lays out the child components. |
 | `tick` | AmplitudeEnvelopeCard | `plugin/juce/Pages.h:264` | `void tick()` | Refreshes the live display state. |
 | `FeedbackEnvelopeCard` | FeedbackEnvelopeCard | `plugin/juce/Pages.h:274` | `FeedbackEnvelopeCard(PluginEditor& editor, int op, int part) : P1Card("fb env", [&ed = editor, op, part] { ed.copyOperatorSection( op, part, PluginEditor::OperatorSection::feedb...` | Constructs the object. |
-| `resized` | FeedbackEnvelopeCard | `plugin/juce/Pages.h:327` | `void resized() override` | Scales the fixed design canvas into the host window. |
+| `resized` | FeedbackEnvelopeCard | `plugin/juce/Pages.h:327` | `void resized() override` | Lays out the child components. |
 | `tick` | FeedbackEnvelopeCard | `plugin/juce/Pages.h:349` | `void tick()` | Refreshes the live display state. |
 | `LfoCard` | LfoCard | `plugin/juce/Pages.h:361` | `LfoCard(PluginEditor& editor, juce::String title, juce::String rateID, juce::String depthID, juce::String waveID, juce::String modeID, juce::String rateFadeID, juce::String dept...` | Constructs the object. |
-| `resized` | LfoCard | `plugin/juce/Pages.h:392` | `void resized() override` | Scales the fixed design canvas into the host window. |
+| `resized` | LfoCard | `plugin/juce/Pages.h:392` | `void resized() override` | Lays out the child components. |
 | `FilterCard` | FilterCard | `plugin/juce/PagesFxMod.cpp:14` | `FilterCard(PluginEditor& editor, juce::String title, juce::String cutoffID, juce::String resID, juce::String typeID, juce::String onID, std::function<void()> onToPart = {}, juce...` | Constructs the object. |
-| `resized` | FilterCard | `plugin/juce/PagesFxMod.cpp:34` | `void resized() override` | Scales the fixed design canvas into the host window. |
+| `resized` | FilterCard | `plugin/juce/PagesFxMod.cpp:34` | `void resized() override` | Lays out the child components. |
 | `paint` | FilterCard | `plugin/juce/PagesFxMod.cpp:47` | `void paint(juce::Graphics& g) override` | Draws the component. |
 | `FilterEnvelopeCard` | FilterEnvelopeCard | `plugin/juce/PagesFxMod.cpp:65` | `FilterEnvelopeCard(PluginEditor& editor, int part, std::function<void()> onToPart = {}, juce::String toLabel = "to 2") : P1Card("filter envelope"), part_(part), envView_(editor....` | Constructs the object. |
-| `resized` | FilterEnvelopeCard | `plugin/juce/PagesFxMod.cpp:111` | `void resized() override` | Scales the fixed design canvas into the host window. |
+| `resized` | FilterEnvelopeCard | `plugin/juce/PagesFxMod.cpp:111` | `void resized() override` | Lays out the child components. |
 | `tick` | FilterEnvelopeCard | `plugin/juce/PagesFxMod.cpp:132` | `void tick()` | Refreshes the live display state. |
 | `PitchLfoCard` | PitchLfoCard | `plugin/juce/PagesFxMod.cpp:146` | `explicit PitchLfoCard(PluginEditor& editor, std::function<void()> onToPart = {}, juce::String toLabel = "to 2") : P1Card("pitch lfo"), part_(editor.activePart()), waveView_(edit...` | Constructs the object. |
-| `resized` | PitchLfoCard | `plugin/juce/PagesFxMod.cpp:173` | `void resized() override` | Scales the fixed design canvas into the host window. |
+| `resized` | PitchLfoCard | `plugin/juce/PagesFxMod.cpp:173` | `void resized() override` | Lays out the child components. |
 | `tick` | PitchLfoCard | `plugin/juce/PagesFxMod.cpp:191` | `void tick()` | Refreshes the live display state. |
 | `PitchEnvelopeCard` | PitchEnvelopeCard | `plugin/juce/PagesFxMod.cpp:207` | `explicit PitchEnvelopeCard(PluginEditor& editor, std::function<void()> onToPart = {}, juce::String toLabel = "to 2") : P1Card("pitch envelope"), part_(editor.activePart()), envV...` | Constructs the object. |
-| `resized` | PitchEnvelopeCard | `plugin/juce/PagesFxMod.cpp:252` | `void resized() override` | Scales the fixed design canvas into the host window. |
+| `resized` | PitchEnvelopeCard | `plugin/juce/PagesFxMod.cpp:252` | `void resized() override` | Lays out the child components. |
 | `tick` | PitchEnvelopeCard | `plugin/juce/PagesFxMod.cpp:273` | `void tick()` | Refreshes the live display state. |
 | `PanEnvelopeCard` | PanEnvelopeCard | `plugin/juce/PagesFxMod.cpp:287` | `explicit PanEnvelopeCard(PluginEditor& editor, std::function<void()> onToPart = {}, juce::String toLabel = "to 2") : P1Card("pan envelope"), part_(editor.activePart()), envView_...` | Constructs the object. |
-| `resized` | PanEnvelopeCard | `plugin/juce/PagesFxMod.cpp:330` | `void resized() override` | Scales the fixed design canvas into the host window. |
+| `resized` | PanEnvelopeCard | `plugin/juce/PagesFxMod.cpp:330` | `void resized() override` | Lays out the child components. |
 | `tick` | PanEnvelopeCard | `plugin/juce/PagesFxMod.cpp:351` | `void tick()` | Refreshes the live display state. |
 | `FollowCard` | FollowCard | `plugin/juce/PagesFxMod.cpp:365` | `FollowCard(PluginEditor& editor, bool key, juce::String title, std::function<void()> onToPart = {}, juce::String toLabel = "to 2") : P1Card(std::move(title)), editor_(editor), k...` | Constructs the object. |
-| `resized` | FollowCard | `plugin/juce/PagesFxMod.cpp:415` | `void resized() override` | Scales the fixed design canvas into the host window. |
+| `resized` | FollowCard | `plugin/juce/PagesFxMod.cpp:415` | `void resized() override` | Lays out the child components. |
 | `paint` | FollowCard | `plugin/juce/PagesFxMod.cpp:432` | `void paint(juce::Graphics& g) override` | Draws the component. |
 | `refresh` | FollowCard | `plugin/juce/PagesFxMod.cpp:445` | `void refresh()` | Refreshes the display. |
 | `targetItems` | FollowCard | `plugin/juce/PagesFxMod.cpp:461` | `juce::StringArray targetItems() const` | Returns the target items value. |
@@ -259,49 +259,49 @@ paths in depth.
 | `setDirect` | RingGraph | `plugin/juce/PagesFxMod.cpp:514` | `void setDirect(bool a, bool b)` | Writes the direct. |
 | `paint` | RingGraph | `plugin/juce/PagesFxMod.cpp:523` | `void paint(juce::Graphics& g) override` | Draws the component. |
 | `RingmodCard` | RingmodCard | `plugin/juce/PagesFxMod.cpp:598` | `RingmodCard(PluginEditor& editor, int part) : P1Card("ringmod"), editor_(editor), part_(part)` | Constructs the object. |
-| `resized` | RingmodCard | `plugin/juce/PagesFxMod.cpp:629` | `void resized() override` | Scales the fixed design canvas into the host window. |
+| `resized` | RingmodCard | `plugin/juce/PagesFxMod.cpp:629` | `void resized() override` | Lays out the child components. |
 | `tick` | RingmodCard | `plugin/juce/PagesFxMod.cpp:631` | `void tick()` | Refreshes the live display state. |
 | `carrierOutOn` | RingmodCard | `plugin/juce/PagesFxMod.cpp:676` | `bool carrierOutOn(int op) const` | Tests the carrier out on condition. |
 | `isCarrier` | RingmodCard | `plugin/juce/PagesFxMod.cpp:681` | `bool isCarrier(int op) const` | Tests whether the the carrier. |
 | `updateCarriers` | RingmodCard | `plugin/juce/PagesFxMod.cpp:689` | `void updateCarriers()` | Updates the carriers. |
 | `layout` | RingmodCard | `plugin/juce/PagesFxMod.cpp:718` | `void layout()` | Runs the layout step for the surrounding code. |
 | `FxModPage` | FxModPage | `plugin/juce/PagesFxMod.cpp:761` | `explicit FxModPage(PluginEditor& editor)` | Constructs the object. |
-| `resized` | FxModPage | `plugin/juce/PagesFxMod.cpp:799` | `void resized() override` | Scales the fixed design canvas into the host window. |
+| `resized` | FxModPage | `plugin/juce/PagesFxMod.cpp:799` | `void resized() override` | Lays out the child components. |
 | `tick` | FxModPage | `plugin/juce/PagesFxMod.cpp:819` | `void tick() override` | Refreshes the live display state. |
 | `makeFxModPage` |  | `plugin/juce/PagesFxMod.cpp:843` | `std::unique_ptr<PageBase> makeFxModPage(PluginEditor& editor)` | Creates the FX mod page. |
 | `MacroRange` | MacroRange | `plugin/juce/PagesMacros.cpp:18` | `MacroRange(APVTS& state, juce::String paramID, juce::Colour fill) : state_(state), paramID_(std::move(paramID)), fill_(fill)` | Constructs the object. |
-| `resized` | MacroRange | `plugin/juce/PagesMacros.cpp:33` | `void resized() override` | Scales the fixed design canvas into the host window. |
+| `resized` | MacroRange | `plugin/juce/PagesMacros.cpp:33` | `void resized() override` | Lays out the child components. |
 | `paint` | MacroRange | `plugin/juce/PagesMacros.cpp:38` | `void paint(juce::Graphics& g) override` | Draws the component. |
 | `mouseDown` | MacroRange | `plugin/juce/PagesMacros.cpp:70` | `void mouseDown(const juce::MouseEvent& event) override` | Handles a mouse interaction. |
 | `mouseDrag` | MacroRange | `plugin/juce/PagesMacros.cpp:78` | `void mouseDrag(const juce::MouseEvent& event) override` | Handles a mouse interaction. |
 | `mouseUp` | MacroRange | `plugin/juce/PagesMacros.cpp:80` | `void mouseUp(const juce::MouseEvent&) override` | Handles a mouse interaction. |
 | `setFromMouse` | MacroRange | `plugin/juce/PagesMacros.cpp:87` | `void setFromMouse(const juce::MouseEvent& event)` | Writes the from mouse. |
 | `MacroTargetChoice` | MacroTargetChoice | `plugin/juce/PagesMacros.cpp:113` | `MacroTargetChoice(APVTS& state, juce::String paramID) : state_(state), paramID_(std::move(paramID))` | Constructs the object. |
-| `resized` | MacroTargetChoice | `plugin/juce/PagesMacros.cpp:152` | `void resized() override` | Scales the fixed design canvas into the host window. |
+| `resized` | MacroTargetChoice | `plugin/juce/PagesMacros.cpp:152` | `void resized() override` | Lays out the child components. |
 | `MacroCard` | MacroCard | `plugin/juce/PagesMacros.cpp:164` | `MacroCard(PluginEditor& editor, int index) : editor_(editor), index_(index), knob_(editor.state(), params::macroValue(index), "", 92.0f), source_(editor.state(), params::macroMi...` | Constructs the object. |
-| `resized` | MacroCard | `plugin/juce/PagesMacros.cpp:193` | `void resized() override` | Scales the fixed design canvas into the host window. |
+| `resized` | MacroCard | `plugin/juce/PagesMacros.cpp:193` | `void resized() override` | Lays out the child components. |
 | `paint` | MacroCard | `plugin/juce/PagesMacros.cpp:226` | `void paint(juce::Graphics& g) override` | Draws the component. |
 | `tick` | MacroCard | `plugin/juce/PagesMacros.cpp:246` | `void tick()` | Refreshes the live display state. |
 | `title` | MacroCard | `plugin/juce/PagesMacros.cpp:274` | `juce::String title() const` | Returns the title value. |
 | `MacrosPage` | MacrosPage | `plugin/juce/PagesMacros.cpp:297` | `explicit MacrosPage(PluginEditor& editor) : editor_(editor)` | Constructs the object. |
-| `resized` | MacrosPage | `plugin/juce/PagesMacros.cpp:306` | `void resized() override` | Scales the fixed design canvas into the host window. |
+| `resized` | MacrosPage | `plugin/juce/PagesMacros.cpp:306` | `void resized() override` | Lays out the child components. |
 | `paint` | MacrosPage | `plugin/juce/PagesMacros.cpp:321` | `void paint(juce::Graphics& g) override` | Draws the component. |
 | `tick` | MacrosPage | `plugin/juce/PagesMacros.cpp:323` | `void tick() override` | Refreshes the live display state. |
 | `makeMacrosPage` |  | `plugin/juce/PagesMacros.cpp:336` | `std::unique_ptr<PageBase> makeMacrosPage(PluginEditor& editor)` | Creates the macros page. |
 | `isCarrier` |  | `plugin/juce/PagesOperators.cpp:11` | `bool isCarrier(int algorithm, int op)` | Tests whether the the carrier. |
 | `OpColumn` | OpColumn | `plugin/juce/PagesOperators.cpp:27` | `OpColumn(PluginEditor& editor, int op, std::function<void(int)> onCopy, std::function<void(int)> onPaste) : editor_(editor), op_(op), part_(editor.activePart()), header_(false, ...` | Constructs the object. |
-| `resized` | OpColumn | `plugin/juce/PagesOperators.cpp:54` | `void resized() override` | Scales the fixed design canvas into the host window. |
+| `resized` | OpColumn | `plugin/juce/PagesOperators.cpp:54` | `void resized() override` | Lays out the child components. |
 | `paint` | OpColumn | `plugin/juce/PagesOperators.cpp:71` | `void paint(juce::Graphics& g) override` | Draws the component. |
 | `tick` | OpColumn | `plugin/juce/PagesOperators.cpp:82` | `void tick()` | Refreshes the live display state. |
 | `OpLfoColumn` | OpLfoColumn | `plugin/juce/PagesOperators.cpp:109` | `OpLfoColumn(PluginEditor& editor, int op, std::function<void(int)> onCopy, std::function<void(int)> onPaste) : editor_(editor), op_(op), part_(editor.activePart()), header_(fals...` | Constructs the object. |
-| `resized` | OpLfoColumn | `plugin/juce/PagesOperators.cpp:154` | `void resized() override` | Scales the fixed design canvas into the host window. |
+| `resized` | OpLfoColumn | `plugin/juce/PagesOperators.cpp:154` | `void resized() override` | Lays out the child components. |
 | `paint` | OpLfoColumn | `plugin/juce/PagesOperators.cpp:171` | `void paint(juce::Graphics& g) override` | Draws the component. |
 | `tick` | OpLfoColumn | `plugin/juce/PagesOperators.cpp:182` | `void tick()` | Refreshes the live display state. |
 | `OperatorsPage` | OperatorsPage | `plugin/juce/PagesOperators.cpp:207` | `explicit OperatorsPage(PluginEditor& editor) : editor_(editor)` | Constructs the object. |
-| `resized` | OperatorsPage | `plugin/juce/PagesOperators.cpp:217` | `void resized() override` | Scales the fixed design canvas into the host window. |
+| `resized` | OperatorsPage | `plugin/juce/PagesOperators.cpp:217` | `void resized() override` | Lays out the child components. |
 | `tick` | OperatorsPage | `plugin/juce/PagesOperators.cpp:227` | `void tick() override` | Refreshes the live display state. |
 | `OperatorLfosPage` | OperatorLfosPage | `plugin/juce/PagesOperators.cpp:240` | `explicit OperatorLfosPage(PluginEditor& editor) : editor_(editor)` | Constructs the object. |
-| `resized` | OperatorLfosPage | `plugin/juce/PagesOperators.cpp:250` | `void resized() override` | Scales the fixed design canvas into the host window. |
+| `resized` | OperatorLfosPage | `plugin/juce/PagesOperators.cpp:250` | `void resized() override` | Lays out the child components. |
 | `tick` | OperatorLfosPage | `plugin/juce/PagesOperators.cpp:260` | `void tick() override` | Refreshes the live display state. |
 | `makeOperatorsPage` |  | `plugin/juce/PagesOperators.cpp:273` | `std::unique_ptr<PageBase> makeOperatorsPage(PluginEditor& editor)` | Creates the operators page. |
 | `makeOperatorLfosPage` |  | `plugin/juce/PagesOperators.cpp:278` | `std::unique_ptr<PageBase> makeOperatorLfosPage(PluginEditor& editor)` | Creates the operator LFOs page. |
@@ -311,19 +311,19 @@ paths in depth.
 | `tick` | PhaseMapView | `plugin/juce/PagesPhase.cpp:47` | `void tick()` | Refreshes the live display state. |
 | `paint` | PhaseMapView | `plugin/juce/PagesPhase.cpp:104` | `void paint(juce::Graphics& g) override` | Draws the component. |
 | `PhaseCard` | PhaseCard | `plugin/juce/PagesPhase.cpp:237` | `PhaseCard(PluginEditor& editor, int op, int part) : P1Card("phase", [&ed = editor, op, part] { ed.copyOperatorSection( op, part, PluginEditor::OperatorSection::phase); }, [&ed =...` | Constructs the object. |
-| `resized` | PhaseCard | `plugin/juce/PagesPhase.cpp:265` | `void resized() override` | Scales the fixed design canvas into the host window. |
+| `resized` | PhaseCard | `plugin/juce/PagesPhase.cpp:265` | `void resized() override` | Lays out the child components. |
 | `PhaseEnvelopeCard` | PhaseEnvelopeCard | `plugin/juce/PagesPhase.cpp:292` | `PhaseEnvelopeCard(PluginEditor& editor, int op, int part) : P1Card("phase env", [&ed = editor, op, part] { ed.copyOperatorSection( op, part, PluginEditor::OperatorSection::phase...` | Constructs the object. |
-| `resized` | PhaseEnvelopeCard | `plugin/juce/PagesPhase.cpp:349` | `void resized() override` | Scales the fixed design canvas into the host window. |
+| `resized` | PhaseEnvelopeCard | `plugin/juce/PagesPhase.cpp:349` | `void resized() override` | Lays out the child components. |
 | `tick` | PhaseEnvelopeCard | `plugin/juce/PagesPhase.cpp:370` | `void tick()` | Refreshes the live display state. |
 | `CompactOscillator` | CompactOscillator | `plugin/juce/PagesPhase.cpp:382` | `CompactOscillator(PluginEditor& editor, int op, int part) : ratio_(editor.state(), params::opRatio(op, part), "ratio", 22.0f), detune_(editor.state(), params::opDetune(op, part)...` | Constructs the object. |
-| `resized` | CompactOscillator | `plugin/juce/PagesPhase.cpp:398` | `void resized() override` | Scales the fixed design canvas into the host window. |
+| `resized` | CompactOscillator | `plugin/juce/PagesPhase.cpp:398` | `void resized() override` | Lays out the child components. |
 | `paint` | CompactOscillator | `plugin/juce/PagesPhase.cpp:413` | `void paint(juce::Graphics& g) override` | Draws the component. |
 | `PhaseColumn` | PhaseColumn | `plugin/juce/PagesPhase.cpp:432` | `PhaseColumn(PluginEditor& editor, int op, std::function<void(int)> onCopy, std::function<void(int)> onPaste) : editor_(editor), op_(op), part_(editor.activePart()), header_(fals...` | Constructs the object. |
-| `resized` | PhaseColumn | `plugin/juce/PagesPhase.cpp:468` | `void resized() override` | Scales the fixed design canvas into the host window. |
+| `resized` | PhaseColumn | `plugin/juce/PagesPhase.cpp:468` | `void resized() override` | Lays out the child components. |
 | `paint` | PhaseColumn | `plugin/juce/PagesPhase.cpp:484` | `void paint(juce::Graphics& g) override` | Draws the component. |
 | `tick` | PhaseColumn | `plugin/juce/PagesPhase.cpp:496` | `void tick()` | Refreshes the live display state. |
 | `PhaseMapPage` | PhaseMapPage | `plugin/juce/PagesPhase.cpp:517` | `explicit PhaseMapPage(PluginEditor& editor) : editor_(editor)` | Constructs the object. |
-| `resized` | PhaseMapPage | `plugin/juce/PagesPhase.cpp:528` | `void resized() override` | Scales the fixed design canvas into the host window. |
+| `resized` | PhaseMapPage | `plugin/juce/PagesPhase.cpp:528` | `void resized() override` | Lays out the child components. |
 | `tick` | PhaseMapPage | `plugin/juce/PagesPhase.cpp:541` | `void tick() override` | Refreshes the live display state. |
 | `makePhaseMapPage` |  | `plugin/juce/PagesPhase.cpp:554` | `std::unique_ptr<PageBase> makePhaseMapPage(PluginEditor& editor)` | Creates the phase map page. |
 | `isCarrier` |  | `plugin/juce/PagesSpectral.cpp:15` | `bool isCarrier(int algorithm, int op)` | Tests whether the the carrier. |
@@ -343,11 +343,11 @@ paths in depth.
 | `paint` | MaskRow | `plugin/juce/PagesSpectral.cpp:194` | `void paint(juce::Graphics& g) override` | Draws the component. |
 | `mouseDown` | MaskRow | `plugin/juce/PagesSpectral.cpp:215` | `void mouseDown(const juce::MouseEvent& event) override` | Handles a mouse interaction. |
 | `MorphEnvelopeCard` | MorphEnvelopeCard | `plugin/juce/PagesSpectral.cpp:239` | `MorphEnvelopeCard(PluginEditor& editor, int op, int part) : P1Card("morph env", [&ed = editor, op, part] { ed.copyOperatorSection( op, part, PluginEditor::OperatorSection::spect...` | Constructs the object. |
-| `resized` | MorphEnvelopeCard | `plugin/juce/PagesSpectral.cpp:295` | `void resized() override` | Scales the fixed design canvas into the host window. |
+| `resized` | MorphEnvelopeCard | `plugin/juce/PagesSpectral.cpp:295` | `void resized() override` | Lays out the child components. |
 | `tick` | MorphEnvelopeCard | `plugin/juce/PagesSpectral.cpp:315` | `void tick()` | Refreshes the live display state. |
 | `SpectrumRow` | SpectrumRow | `plugin/juce/PagesSpectral.cpp:327` | `SpectrumRow(PluginEditor& editor, int op, int part, bool a) : P1Card("op" + juce::String(op + 1) + " spectrum " + (a ? "a" : "b"), [&ed = editor, op, part, a] { ed.copyOperatorS...` | Constructs the object. |
 | `tick` | SpectrumRow | `plugin/juce/PagesSpectral.cpp:432` | `void tick()` | Refreshes the live display state. |
-| `resized` | SpectrumRow | `plugin/juce/PagesSpectral.cpp:445` | `void resized() override` | Scales the fixed design canvas into the host window. |
+| `resized` | SpectrumRow | `plugin/juce/PagesSpectral.cpp:445` | `void resized() override` | Lays out the child components. |
 | `firstHarmonic` | SpectrumRow | `plugin/juce/PagesSpectral.cpp:489` | `int firstHarmonic() const` | Returns the first harmonic value. |
 | `refreshGroupTest` | SpectrumRow | `plugin/juce/PagesSpectral.cpp:499` | `void refreshGroupTest()` | Refreshes the group test display. |
 | `windowFor` | SpectrumRow | `plugin/juce/PagesSpectral.cpp:507` | `std::pair<int, int> windowFor(int index) const` | Returns the window for value. |
@@ -366,45 +366,45 @@ paths in depth.
 | `loadTemplate` | SpectrumRow | `plugin/juce/PagesSpectral.cpp:671` | `void loadTemplate(int wave)` | Loads the template. |
 | `refreshLegend` | SpectrumRow | `plugin/juce/PagesSpectral.cpp:682` | `void refreshLegend()` | Refreshes the legend display. |
 | `SpectraOperatorCard` | SpectraOperatorCard | `plugin/juce/PagesSpectral.cpp:734` | `SpectraOperatorCard(PluginEditor& editor, int op) : editor_(editor), op_(op), part_(editor.activePart()), header_( false, false, {}, [&ed = editor, op] { ed.copyOperator(op); },...` | Constructs the object. |
-| `resized` | SpectraOperatorCard | `plugin/juce/PagesSpectral.cpp:759` | `void resized() override` | Scales the fixed design canvas into the host window. |
+| `resized` | SpectraOperatorCard | `plugin/juce/PagesSpectral.cpp:759` | `void resized() override` | Lays out the child components. |
 | `tick` | SpectraOperatorCard | `plugin/juce/PagesSpectral.cpp:772` | `void tick()` | Refreshes the live display state. |
 | `paint` | SpectraOperatorCard | `plugin/juce/PagesSpectral.cpp:783` | `void paint(juce::Graphics& g) override` | Draws the component. |
 | `SpectraModColumn` | SpectraModColumn | `plugin/juce/PagesSpectral.cpp:808` | `SpectraModColumn(PluginEditor& editor, int op, std::function<void(int)> onCopy, std::function<void(int)> onPaste) : editor_(editor), op_(op), part_(editor.activePart()), header_...` | Constructs the object. |
-| `resized` | SpectraModColumn | `plugin/juce/PagesSpectral.cpp:852` | `void resized() override` | Scales the fixed design canvas into the host window. |
+| `resized` | SpectraModColumn | `plugin/juce/PagesSpectral.cpp:852` | `void resized() override` | Lays out the child components. |
 | `paint` | SpectraModColumn | `plugin/juce/PagesSpectral.cpp:866` | `void paint(juce::Graphics& g) override` | Draws the component. |
 | `tick` | SpectraModColumn | `plugin/juce/PagesSpectral.cpp:878` | `void tick()` | Refreshes the live display state. |
 | `OperatorSpectraPage` | OperatorSpectraPage | `plugin/juce/PagesSpectral.cpp:900` | `OperatorSpectraPage(PluginEditor& editor, bool a)` | Constructs the object. |
-| `resized` | OperatorSpectraPage | `plugin/juce/PagesSpectral.cpp:916` | `void resized() override` | Scales the fixed design canvas into the host window. |
+| `resized` | OperatorSpectraPage | `plugin/juce/PagesSpectral.cpp:916` | `void resized() override` | Lays out the child components. |
 | `tick` | OperatorSpectraPage | `plugin/juce/PagesSpectral.cpp:937` | `void tick() override` | Refreshes the live display state. |
 | `OperatorSpectraModPage` | OperatorSpectraModPage | `plugin/juce/PagesSpectral.cpp:954` | `explicit OperatorSpectraModPage(PluginEditor& editor) : editor_(editor)` | Constructs the object. |
-| `resized` | OperatorSpectraModPage | `plugin/juce/PagesSpectral.cpp:965` | `void resized() override` | Scales the fixed design canvas into the host window. |
+| `resized` | OperatorSpectraModPage | `plugin/juce/PagesSpectral.cpp:965` | `void resized() override` | Lays out the child components. |
 | `tick` | OperatorSpectraModPage | `plugin/juce/PagesSpectral.cpp:975` | `void tick() override` | Refreshes the live display state. |
 | `makeOperatorSpectraPage` |  | `plugin/juce/PagesSpectral.cpp:988` | `std::unique_ptr<PageBase> makeOperatorSpectraPage(PluginEditor& editor, bool a)` | Creates the operator spectra page. |
 | `makeOperatorSpectraModPage` |  | `plugin/juce/PagesSpectral.cpp:993` | `std::unique_ptr<PageBase> makeOperatorSpectraModPage(PluginEditor& editor)` | Creates the operator spectra mod page. |
 | `PatchButton` | PatchButton | `plugin/juce/PluginEditor.cpp:19` | `PatchButton() : juce::Button("multi-patch library...")` | Constructs the object. |
 | `paintButton` | PatchButton | `plugin/juce/PluginEditor.cpp:24` | `void paintButton(juce::Graphics& g, bool highlighted, bool) override` | Draws the button in its normal, highlighted and down states. |
 | `SegmentButton` | SegmentButton | `plugin/juce/PluginEditor.cpp:40` | `explicit SegmentButton(const juce::String& label) : juce::Button(label)` | Constructs the object. |
-| `setActive` | SegmentButton | `plugin/juce/PluginEditor.cpp:45` | `void setActive(bool active)` | Writes the active. |
+| `setActive` | SegmentButton | `plugin/juce/PluginEditor.cpp:45` | `void setActive(bool active)` | Sets the active flag. |
 | `paintButton` | SegmentButton | `plugin/juce/PluginEditor.cpp:53` | `void paintButton(juce::Graphics& g, bool highlighted, bool) override` | Draws the button in its normal, highlighted and down states. |
 | `PartChoiceButton` | PartChoiceButton | `plugin/juce/PluginEditor.cpp:74` | `explicit PartChoiceButton(const juce::String& label) : juce::Button(label)` | Constructs the object. |
-| `setActive` | PartChoiceButton | `plugin/juce/PluginEditor.cpp:79` | `void setActive(bool active)` | Writes the active. |
+| `setActive` | PartChoiceButton | `plugin/juce/PluginEditor.cpp:79` | `void setActive(bool active)` | Sets the active flag. |
 | `paintButton` | PartChoiceButton | `plugin/juce/PluginEditor.cpp:87` | `void paintButton(juce::Graphics& g, bool highlighted, bool) override` | Draws the button in its normal, highlighted and down states. |
 | `Header` | Header | `plugin/juce/PluginEditor.cpp:110` | `explicit Header(PluginEditor& editor) : editor_(editor), volume_(editor.state(), p1::kVolumeParamID)` | Constructs the object. |
-| `resized` | Header | `plugin/juce/PluginEditor.cpp:137` | `void resized() override` | Scales the fixed design canvas into the host window. |
+| `resized` | Header | `plugin/juce/PluginEditor.cpp:137` | `void resized() override` | Lays out the child components. |
 | `paint` | Header | `plugin/juce/PluginEditor.cpp:149` | `void paint(juce::Graphics& g) override` | Draws the component. |
 | `tick` | Header | `plugin/juce/PluginEditor.cpp:171` | `void tick()` | Refreshes the live display state. |
 | `setPatchName` | Header | `plugin/juce/PluginEditor.cpp:205` | `void setPatchName(const juce::String& name)` | Writes the patch name. |
 | `setSpectroMode` | Header | `plugin/juce/PluginEditor.cpp:213` | `void setSpectroMode(bool spectro)` | Writes the spectro mode. |
 | `drawWordmark` | Header | `plugin/juce/PluginEditor.cpp:223` | `void drawWordmark(juce::Graphics& g)` | Draws the wordmark. |
 | `Toolbar` | Toolbar | `plugin/juce/PluginEditor.cpp:271` | `explicit Toolbar(PluginEditor& editor) : editor_(editor)` | Constructs the object. |
-| `resized` | Toolbar | `plugin/juce/PluginEditor.cpp:306` | `void resized() override` | Scales the fixed design canvas into the host window. |
+| `resized` | Toolbar | `plugin/juce/PluginEditor.cpp:306` | `void resized() override` | Lays out the child components. |
 | `paint` | Toolbar | `plugin/juce/PluginEditor.cpp:324` | `void paint(juce::Graphics& g) override` | Draws the component. |
 | `refreshPartNames` | Toolbar | `plugin/juce/PluginEditor.cpp:337` | `void refreshPartNames()` | Refreshes the part names display. |
 | `tick` | Toolbar | `plugin/juce/PluginEditor.cpp:347` | `void tick()` | Refreshes the live display state. |
 | `drawLegend` | Toolbar | `plugin/juce/PluginEditor.cpp:364` | `void drawLegend(juce::Graphics& g)` | Draws the legend. |
 | `ListBody` | ListBody | `plugin/juce/PluginEditor.cpp:402` | `ListBody(int count, int rowHeight, int selected, const juce::String& name) : count_(juce::jmax(0, count)), selected_(juce::jlimit(0, juce::jmax(0, count_ - 1), selected)), list_...` | Constructs the object. |
 | `selected` | ListBody | `plugin/juce/PluginEditor.cpp:417` | `int selected() const` | Selects the ed. |
-| `resized` | ListBody | `plugin/juce/PluginEditor.cpp:419` | `void resized() override` | Scales the fixed design canvas into the host window. |
+| `resized` | ListBody | `plugin/juce/PluginEditor.cpp:419` | `void resized() override` | Lays out the child components. |
 | `getNumRows` | ListBody | `plugin/juce/PluginEditor.cpp:425` | `int getNumRows() override` | Reads the num rows. |
 | `paintListBoxItem` | ListBody | `plugin/juce/PluginEditor.cpp:427` | `void paintListBoxItem(int row, juce::Graphics& g, int width, int height, bool selected) override` | Draws one list-box row. |
 | `listBoxItemClicked` | ListBody | `plugin/juce/PluginEditor.cpp:445` | `void listBoxItemClicked(int row, const juce::MouseEvent&) override` | Handles a list-box row click. |
@@ -414,21 +414,21 @@ paths in depth.
 | `ModeListBody` | ModeListBody | `plugin/juce/PluginEditor.cpp:498` | `ModeListBody(juce::StringArray modes, int selected) : ListBody(modes.size(), 28, selected, "modes"), modes_(std::move(modes))` | Constructs the object. |
 | `paintRow` | ModeListBody | `plugin/juce/PluginEditor.cpp:505` | `void paintRow(juce::Graphics& g, int row, juce::Rectangle<int> area, bool selected) override` | Draws one row of the control. |
 | `AlgTile` | AlgTile | `plugin/juce/PluginEditor.cpp:520` | `AlgTile(int index, std::function<void(int)> onSelect) : juce::Button("alg"), index_(index), onSelect_(std::move(onSelect))` | Constructs the object. |
-| `setSelected` | AlgTile | `plugin/juce/PluginEditor.cpp:526` | `void setSelected(bool selected)` | Writes the selected. |
+| `setSelected` | AlgTile | `plugin/juce/PluginEditor.cpp:526` | `void setSelected(bool selected)` | Sets the selected flag. |
 | `paintButton` | AlgTile | `plugin/juce/PluginEditor.cpp:534` | `void paintButton(juce::Graphics& g, bool highlighted, bool) override` | Draws the button in its normal, highlighted and down states. |
 | `mouseUp` | AlgTile | `plugin/juce/PluginEditor.cpp:552` | `void mouseUp(const juce::MouseEvent&) override` | Handles a mouse interaction. |
 | `AlgPickerBody` | AlgPickerBody | `plugin/juce/PluginEditor.cpp:566` | `explicit AlgPickerBody(int selected) : selected_(juce::jlimit(0, 9, selected))` | Constructs the object. |
 | `selected` | AlgPickerBody | `plugin/juce/PluginEditor.cpp:583` | `int selected() const` | Selects the ed. |
-| `resized` | AlgPickerBody | `plugin/juce/PluginEditor.cpp:585` | `void resized() override` | Scales the fixed design canvas into the host window. |
+| `resized` | AlgPickerBody | `plugin/juce/PluginEditor.cpp:585` | `void resized() override` | Lays out the child components. |
 | `select` | AlgPickerBody | `plugin/juce/PluginEditor.cpp:600` | `void select(int index)` | Runs the select step for the surrounding code. |
 | `RenameBody` | RenameBody | `plugin/juce/PluginEditor.cpp:614` | `explicit RenameBody(const juce::String& initial)` | Constructs the object. |
 | `text` | RenameBody | `plugin/juce/PluginEditor.cpp:631` | `juce::String text() const` | Returns the text value. |
 | `focus` | RenameBody | `plugin/juce/PluginEditor.cpp:632` | `void focus()` | Moves keyboard focus to the control. |
-| `resized` | RenameBody | `plugin/juce/PluginEditor.cpp:634` | `void resized() override` | Scales the fixed design canvas into the host window. |
+| `resized` | RenameBody | `plugin/juce/PluginEditor.cpp:634` | `void resized() override` | Lays out the child components. |
 | `PluginEditor` |  | `plugin/juce/PluginEditor.cpp:649` | `PluginEditor::PluginEditor(TypePAlphaAudioProcessor& audioProcessor) : AudioProcessorEditor(&audioProcessor), processor_(audioProcessor)` | Builds the editor, the header, the toolbar, the tabs and the first page, then starts the 30 Hz timer. |
 | `~PluginEditor` |  | `plugin/juce/PluginEditor.cpp:681` | `PluginEditor::~PluginEditor()` | Destroys the object. |
 | `paint` |  | `plugin/juce/PluginEditor.cpp:688` | `void PluginEditor::paint(juce::Graphics& g)` | Draws the component. |
-| `resized` |  | `plugin/juce/PluginEditor.cpp:693` | `void PluginEditor::resized()` | Scales the fixed design canvas into the host window. |
+| `resized` |  | `plugin/juce/PluginEditor.cpp:693` | `void PluginEditor::resized()` | Lays out the child components. |
 | `timerCallback` |  | `plugin/juce/PluginEditor.cpp:709` | `void PluginEditor::timerCallback()` | Runs the startup fit and refreshes the live visualisers. |
 | `fitToHostWindow` |  | `plugin/juce/PluginEditor.cpp:726` | `void PluginEditor::fitToHostWindow()` | Measures the host chrome and sizes the editor to the display work area. |
 | `updateVisualizers` |  | `plugin/juce/PluginEditor.cpp:765` | `void PluginEditor::updateVisualizers()` | Refreshes the header, toolbar and page once per timer tick. |
@@ -918,7 +918,7 @@ paths in depth.
 | `setParam` |  | `plugin/tests/spectral_bench.cpp:75` | `bool setParam(p1::Engine& engine, const char* id, int32_t value)` | Writes the param. |
 | `setAll` |  | `plugin/tests/spectral_bench.cpp:86` | `void setAll(p1::Engine& engine, const std::vector<std::pair<const char*, int32_t>>& values)` | Writes the all. |
 | `setupSpectrumEngine` |  | `plugin/tests/spectral_bench.cpp:94` | `void setupSpectrumEngine(p1::Engine& engine)` | Four operators, both parts, spectrum mode, one clean carrier per part. |
-| `runEngineChanges` |  | `plugin/tests/spectral_bench.cpp:119` | `BlockResult runEngineChanges(int blocks, int parts)` | parts is the number of parts with notes: 0, 1 or 2. |
+| `runEngineChanges` |  | `plugin/tests/spectral_bench.cpp:119` | `BlockResult runEngineChanges(int blocks, int parts)` | Parts is the number of parts with notes: 0, 1 or 2. |
 | `generateWide` |  | `plugin/tests/spectral_bench.cpp:173` | `void generateWide(int16_t *out, const int32_t *levels, int first, int size, int shift)` | A 64-harmonic spectrum with seven mips (64, 32, 16, 8, 4, 2, 1). This is the production layout. The bench keeps a local copy so the 512-sample comparison does not depend on the engine build. |
 | `main` |  | `plugin/tests/spectral_bench.cpp:201` | `int main()` | Runs the test or tool entry point. |
 | `makeSignal` |  | `plugin/tests/ui_frame_bench.cpp:24` | `std::array<float, 512> makeSignal()` | Creates the signal. |
@@ -1133,7 +1133,7 @@ paths in depth.
 | `setParamID` |  | `plugin/ui/Widgets.cpp:501` | `void ParamKnob::setParamID(const juce::String& paramID)` | Writes the param id. |
 | `setMacroFeedback` |  | `plugin/ui/Widgets.cpp:519` | `void ParamKnob::setMacroFeedback(bool targeted, bool hasEffective, double effective)` | Writes the macro feedback. |
 | `setModArc` |  | `plugin/ui/Widgets.cpp:531` | `void ParamKnob::setModArc(double fraction)` | Writes the mod arc. |
-| `resized` |  | `plugin/ui/Widgets.cpp:542` | `void ParamKnob::resized()` | Scales the fixed design canvas into the host window. |
+| `resized` |  | `plugin/ui/Widgets.cpp:542` | `void ParamKnob::resized()` | Lays out the child components. |
 | `paint` |  | `plugin/ui/Widgets.cpp:555` | `void ParamKnob::paint(juce::Graphics&)` | Draws the component. |
 | `updateValueText` |  | `plugin/ui/Widgets.cpp:557` | `void ParamKnob::updateValueText()` | Updates the value text. |
 | `refreshValueDisplay` |  | `plugin/ui/Widgets.cpp:565` | `void ParamKnob::refreshValueDisplay()` | Refreshes the value display display. |
@@ -1148,15 +1148,15 @@ paths in depth.
 | `P1Toggle` |  | `plugin/ui/Widgets.cpp:680` | `P1Toggle::P1Toggle(APVTS& state, const juce::String& paramID, const juce::String& label) : juce::Button(label), label_(label)` | Returns the p 1 toggle value. |
 | `paintButton` |  | `plugin/ui/Widgets.cpp:690` | `void P1Toggle::paintButton(juce::Graphics& g, bool highlighted, bool)` | Draws the button in its normal, highlighted and down states. |
 | `ParamChoice` |  | `plugin/ui/Widgets.cpp:713` | `ParamChoice::ParamChoice(APVTS& state, const juce::String& paramID, juce::StringArray items)` | Returns the param choice value. |
-| `resized` |  | `plugin/ui/Widgets.cpp:733` | `void ParamChoice::resized()` | Scales the fixed design canvas into the host window. |
+| `resized` |  | `plugin/ui/Widgets.cpp:733` | `void ParamChoice::resized()` | Lays out the child components. |
 | `updateFromNormalized` |  | `plugin/ui/Widgets.cpp:738` | `void ParamChoice::updateFromNormalized(float normalized)` | Updates the from normalized. |
 | `Tab` |  | `plugin/ui/Widgets.cpp:747` | `P1TabBar::Tab::Tab(const juce::String& label, int index, P1TabBar& owner) : juce::Button(label), index_(index), owner_(owner)` | Returns the tab value. |
 | `paintButton` |  | `plugin/ui/Widgets.cpp:756` | `void P1TabBar::Tab::paintButton(juce::Graphics& g, bool highlighted, bool)` | Draws the button in its normal, highlighted and down states. |
 | `P1TabBar` |  | `plugin/ui/Widgets.cpp:784` | `P1TabBar::P1TabBar() = default` | Returns the p 1 tab bar value. |
 | `setLabels` |  | `plugin/ui/Widgets.cpp:786` | `void P1TabBar::setLabels(const juce::StringArray& labels)` | Writes the labels. |
-| `setCompact` |  | `plugin/ui/Widgets.cpp:802` | `void P1TabBar::setCompact(bool compact)` | Writes the compact. |
-| `setActive` |  | `plugin/ui/Widgets.cpp:811` | `void P1TabBar::setActive(int index)` | Writes the active. |
-| `resized` |  | `plugin/ui/Widgets.cpp:824` | `void P1TabBar::resized()` | Scales the fixed design canvas into the host window. |
+| `setCompact` |  | `plugin/ui/Widgets.cpp:802` | `void P1TabBar::setCompact(bool compact)` | Sets the compact flag. |
+| `setActive` |  | `plugin/ui/Widgets.cpp:811` | `void P1TabBar::setActive(int index)` | Sets the active flag. |
+| `resized` |  | `plugin/ui/Widgets.cpp:824` | `void P1TabBar::resized()` | Lays out the child components. |
 | `paint` |  | `plugin/ui/Widgets.cpp:870` | `void P1TabBar::paint(juce::Graphics& g)` | Draws the component. |
 | `P1Scope` |  | `plugin/ui/Widgets.cpp:877` | `P1Scope::P1Scope()` | Returns the p 1 scope value. |
 | `setSamples` |  | `plugin/ui/Widgets.cpp:882` | `void P1Scope::setSamples(const float* samples, int count)` | Writes the samples. |
@@ -1190,20 +1190,20 @@ paths in depth.
 | `paint` |  | `plugin/ui/Widgets.cpp:1712` | `void P1Wave::paint(juce::Graphics& g)` | Draws the component. |
 | `P1LevelSlider` |  | `plugin/ui/Widgets.cpp:1749` | `P1LevelSlider::P1LevelSlider(APVTS& state, const juce::String& paramID, juce::String caption, bool bipolar) : state_(state), paramID_(paramID), caption_(std::move(caption)), bip...` | Returns the p 1 level slider value. |
 | `setMacroFeedback` |  | `plugin/ui/Widgets.cpp:1771` | `void P1LevelSlider::setMacroFeedback(bool targeted, bool hasEffective, double effective)` | Writes the macro feedback. |
-| `resized` |  | `plugin/ui/Widgets.cpp:1783` | `void P1LevelSlider::resized()` | Scales the fixed design canvas into the host window. |
+| `resized` |  | `plugin/ui/Widgets.cpp:1783` | `void P1LevelSlider::resized()` | Lays out the child components. |
 | `paint` |  | `plugin/ui/Widgets.cpp:1788` | `void P1LevelSlider::paint(juce::Graphics& g)` | Draws the component. |
 | `mouseDown` |  | `plugin/ui/Widgets.cpp:1855` | `void P1LevelSlider::mouseDown(const juce::MouseEvent& event)` | Handles a mouse interaction. |
 | `mouseDrag` |  | `plugin/ui/Widgets.cpp:1860` | `void P1LevelSlider::mouseDrag(const juce::MouseEvent& event)` | Handles a mouse interaction. |
 | `setFromMouse` |  | `plugin/ui/Widgets.cpp:1865` | `void P1LevelSlider::setFromMouse(const juce::MouseEvent& event)` | Writes the from mouse. |
 | `P1VolumeSlider` |  | `plugin/ui/Widgets.cpp:1878` | `P1VolumeSlider::P1VolumeSlider(APVTS& state, const juce::String& paramID) : state_(state), paramID_(paramID)` | Returns the p 1 volume slider value. |
-| `resized` |  | `plugin/ui/Widgets.cpp:1894` | `void P1VolumeSlider::resized()` | Scales the fixed design canvas into the host window. |
+| `resized` |  | `plugin/ui/Widgets.cpp:1894` | `void P1VolumeSlider::resized()` | Lays out the child components. |
 | `paint` |  | `plugin/ui/Widgets.cpp:1899` | `void P1VolumeSlider::paint(juce::Graphics& g)` | Draws the component. |
 | `mouseDown` |  | `plugin/ui/Widgets.cpp:1930` | `void P1VolumeSlider::mouseDown(const juce::MouseEvent& event)` | Handles a mouse interaction. |
 | `mouseDrag` |  | `plugin/ui/Widgets.cpp:1935` | `void P1VolumeSlider::mouseDrag(const juce::MouseEvent& event)` | Handles a mouse interaction. |
 | `setFromMouse` |  | `plugin/ui/Widgets.cpp:1940` | `void P1VolumeSlider::setFromMouse(const juce::MouseEvent& event)` | Writes the from mouse. |
 | `P1Card` |  | `plugin/ui/Widgets.cpp:1952` | `P1Card::P1Card(juce::String title, std::function<void()> onCopy, std::function<void()> onPaste) : title_(std::move(title))` | Returns the p 1 card value. |
 | `paint` |  | `plugin/ui/Widgets.cpp:1966` | `void P1Card::paint(juce::Graphics& g)` | Draws the component. |
-| `resized` |  | `plugin/ui/Widgets.cpp:1972` | `void P1Card::resized()` | Scales the fixed design canvas into the host window. |
+| `resized` |  | `plugin/ui/Widgets.cpp:1972` | `void P1Card::resized()` | Lays out the child components. |
 | `setHeaderTrailingWidth` |  | `plugin/ui/Widgets.cpp:1984` | `void P1Card::setHeaderTrailingWidth(int width)` | Writes the header trailing width. |
 | `headerTrailingBounds` |  | `plugin/ui/Widgets.cpp:1990` | `juce::Rectangle<int> P1Card::headerTrailingBounds() const` | Returns the header trailing bounds value. |
 | `contentArea` |  | `plugin/ui/Widgets.cpp:1996` | `juce::Rectangle<int> P1Card::contentArea() const` | Returns the content area value. |
@@ -1218,7 +1218,7 @@ paths in depth.
 | `mouseWheelMove` |  | `plugin/ui/Widgets.cpp:2067` | `void P1AlgorithmBlock::mouseWheelMove(const juce::MouseEvent&, const juce::MouseWheelDetails& wheel)` | Handles a mouse interaction. |
 | `P1Dialog` |  | `plugin/ui/Widgets.cpp:2074` | `P1Dialog::P1Dialog(juce::String title, std::unique_ptr<juce::Component> body, int width, int height, juce::StringArray buttons, std::function<void(int)> onButton, std::function<...` | Returns the p 1 dialog value. |
 | `paint` |  | `plugin/ui/Widgets.cpp:2107` | `void P1Dialog::paint(juce::Graphics& g)` | Draws the component. |
-| `resized` |  | `plugin/ui/Widgets.cpp:2126` | `void P1Dialog::resized()` | Scales the fixed design canvas into the host window. |
+| `resized` |  | `plugin/ui/Widgets.cpp:2126` | `void P1Dialog::resized()` | Lays out the child components. |
 | `mouseUp` |  | `plugin/ui/Widgets.cpp:2170` | `void P1Dialog::mouseUp(const juce::MouseEvent& event)` | Handles a mouse interaction. |
 | `drawAlgorithmGraph` |  | `plugin/ui/Widgets.cpp:2182` | `void drawAlgorithmGraph(juce::Graphics& g, juce::Rectangle<float> area, int algorithm, uint8_t ringMask, uint8_t directMask)` | Draws the algorithm graph. |
 | `~MacroFeedbackTarget` | MacroFeedbackTarget | `plugin/ui/Widgets.h:37` | `virtual ~MacroFeedbackTarget() = default` | Destroys the object. |
@@ -1231,7 +1231,7 @@ paths in depth.
 | `setModArc` | ParamKnob | `plugin/ui/Widgets.h:66` | `void setModArc(double fraction)` | Writes the mod arc. |
 | `macroParamIndex` | ParamKnob | `plugin/ui/Widgets.h:67` | `int macroParamIndex() const override` | Returns the manifest index used for macro feedback. |
 | `setMacroFeedback` | ParamKnob | `plugin/ui/Widgets.h:68` | `void setMacroFeedback(bool targeted, bool hasEffective, double effective) override` | Writes the macro feedback. |
-| `resized` | ParamKnob | `plugin/ui/Widgets.h:70` | `void resized() override` | Scales the fixed design canvas into the host window. |
+| `resized` | ParamKnob | `plugin/ui/Widgets.h:70` | `void resized() override` | Lays out the child components. |
 | `paint` | ParamKnob | `plugin/ui/Widgets.h:71` | `void paint(juce::Graphics& g) override` | Draws the component. |
 | `keyPressed` | KnobSlider | `plugin/ui/Widgets.h:85` | `bool keyPressed(const juce::KeyPress& key) override` | Handles a key press. |
 | `mouseWheelMove` | KnobSlider | `plugin/ui/Widgets.h:92` | `void mouseWheelMove(const juce::MouseEvent& event, const juce::MouseWheelDetails& wheel) override` | Handles a mouse interaction. |
@@ -1245,12 +1245,12 @@ paths in depth.
 | `paintButton` | P1MuteTile | `plugin/ui/Widgets.h:135` | `void paintButton(juce::Graphics& g, bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown) override` | Draws the button in its normal, highlighted and down states. |
 | `paintButton` | P1Toggle | `plugin/ui/Widgets.h:143` | `void paintButton(juce::Graphics& g, bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown) override` | Draws the button in its normal, highlighted and down states. |
 | `P1Choice` | P1Choice | `plugin/ui/Widgets.h:153` | `P1Choice() = default` | Constructs the object. |
-| `resized` | ParamChoice | `plugin/ui/Widgets.h:160` | `void resized() override` | Scales the fixed design canvas into the host window. |
+| `resized` | ParamChoice | `plugin/ui/Widgets.h:160` | `void resized() override` | Lays out the child components. |
 | `updateFromNormalized` | ParamChoice | `plugin/ui/Widgets.h:163` | `void updateFromNormalized(float normalized)` | Updates the from normalized. |
 | `setLabels` | P1TabBar | `plugin/ui/Widgets.h:174` | `void setLabels(const juce::StringArray& labels)` | Writes the labels. |
-| `setActive` | P1TabBar | `plugin/ui/Widgets.h:175` | `void setActive(int index)` | Writes the active. |
-| `setCompact` | P1TabBar | `plugin/ui/Widgets.h:176` | `void setCompact(bool compact)` | Writes the compact. |
-| `resized` | P1TabBar | `plugin/ui/Widgets.h:177` | `void resized() override` | Scales the fixed design canvas into the host window. |
+| `setActive` | P1TabBar | `plugin/ui/Widgets.h:175` | `void setActive(int index)` | Sets the active flag. |
+| `setCompact` | P1TabBar | `plugin/ui/Widgets.h:176` | `void setCompact(bool compact)` | Sets the compact flag. |
+| `resized` | P1TabBar | `plugin/ui/Widgets.h:177` | `void resized() override` | Lays out the child components. |
 | `paint` | P1TabBar | `plugin/ui/Widgets.h:178` | `void paint(juce::Graphics& g) override` | Draws the component. |
 | `paintButton` | Tab | `plugin/ui/Widgets.h:185` | `void paintButton(juce::Graphics& g, bool highlighted, bool down) override` | Draws the button in its normal, highlighted and down states. |
 | `setSamples` | P1Scope | `plugin/ui/Widgets.h:201` | `void setSamples(const float* samples, int count)` | Writes the samples. |
@@ -1279,20 +1279,20 @@ paths in depth.
 | `tick` | P1Envelope | `plugin/ui/Widgets.h:302` | `void tick()` | Repaint only when the drawn parameter state changed. |
 | `paint` | P1Wave | `plugin/ui/Widgets.h:323` | `void paint(juce::Graphics& g) override` | Draws the component. |
 | `tick` | P1Wave | `plugin/ui/Widgets.h:324` | `void tick()` | Repaint only when the drawn parameter state changed. |
-| `resized` | P1LevelSlider | `plugin/ui/Widgets.h:338` | `void resized() override` | Scales the fixed design canvas into the host window. |
+| `resized` | P1LevelSlider | `plugin/ui/Widgets.h:338` | `void resized() override` | Lays out the child components. |
 | `paint` | P1LevelSlider | `plugin/ui/Widgets.h:339` | `void paint(juce::Graphics& g) override` | Draws the component. |
 | `mouseDown` | P1LevelSlider | `plugin/ui/Widgets.h:340` | `void mouseDown(const juce::MouseEvent& event) override` | Handles a mouse interaction. |
 | `mouseDrag` | P1LevelSlider | `plugin/ui/Widgets.h:341` | `void mouseDrag(const juce::MouseEvent& event) override` | Handles a mouse interaction. |
 | `macroParamIndex` | P1LevelSlider | `plugin/ui/Widgets.h:342` | `int macroParamIndex() const override` | Returns the manifest index used for macro feedback. |
 | `setMacroFeedback` | P1LevelSlider | `plugin/ui/Widgets.h:343` | `void setMacroFeedback(bool targeted, bool hasEffective, double effective) override` | Writes the macro feedback. |
 | `setFromMouse` | P1LevelSlider | `plugin/ui/Widgets.h:347` | `void setFromMouse(const juce::MouseEvent& event)` | Writes the from mouse. |
-| `resized` | P1VolumeSlider | `plugin/ui/Widgets.h:369` | `void resized() override` | Scales the fixed design canvas into the host window. |
+| `resized` | P1VolumeSlider | `plugin/ui/Widgets.h:369` | `void resized() override` | Lays out the child components. |
 | `paint` | P1VolumeSlider | `plugin/ui/Widgets.h:370` | `void paint(juce::Graphics& g) override` | Draws the component. |
 | `mouseDown` | P1VolumeSlider | `plugin/ui/Widgets.h:371` | `void mouseDown(const juce::MouseEvent& event) override` | Handles a mouse interaction. |
 | `mouseDrag` | P1VolumeSlider | `plugin/ui/Widgets.h:372` | `void mouseDrag(const juce::MouseEvent& event) override` | Handles a mouse interaction. |
 | `setFromMouse` | P1VolumeSlider | `plugin/ui/Widgets.h:375` | `void setFromMouse(const juce::MouseEvent& event)` | Writes the from mouse. |
 | `paint` | P1Card | `plugin/ui/Widgets.h:388` | `void paint(juce::Graphics& g) override` | Draws the component. |
-| `resized` | P1Card | `plugin/ui/Widgets.h:389` | `void resized() override` | Scales the fixed design canvas into the host window. |
+| `resized` | P1Card | `plugin/ui/Widgets.h:389` | `void resized() override` | Lays out the child components. |
 | `setHeaderTrailingWidth` | P1Card | `plugin/ui/Widgets.h:391` | `void setHeaderTrailingWidth(int width)` | Writes the header trailing width. |
 | `headerTrailingBounds` | P1Card | `plugin/ui/Widgets.h:392` | `juce::Rectangle<int> headerTrailingBounds() const` | Returns the header trailing bounds value. |
 | `contentArea` | P1Card | `plugin/ui/Widgets.h:393` | `juce::Rectangle<int> contentArea() const` | Returns the content area value. |
@@ -1305,7 +1305,7 @@ paths in depth.
 | `mouseExit` | P1AlgorithmBlock | `plugin/ui/Widgets.h:412` | `void mouseExit(const juce::MouseEvent& event) override` | Handles a mouse interaction. |
 | `mouseWheelMove` | P1AlgorithmBlock | `plugin/ui/Widgets.h:413` | `void mouseWheelMove(const juce::MouseEvent& event, const juce::MouseWheelDetails& wheel) override` | Handles a mouse interaction. |
 | `paint` | P1Dialog | `plugin/ui/Widgets.h:432` | `void paint(juce::Graphics& g) override` | Draws the component. |
-| `resized` | P1Dialog | `plugin/ui/Widgets.h:433` | `void resized() override` | Scales the fixed design canvas into the host window. |
+| `resized` | P1Dialog | `plugin/ui/Widgets.h:433` | `void resized() override` | Lays out the child components. |
 | `mouseUp` | P1Dialog | `plugin/ui/Widgets.h:434` | `void mouseUp(const juce::MouseEvent& event) override` | Handles a mouse interaction. |
 | `load` |  | `tools/audit_modules.py:23` | `def load(path: Path)` | Returns the load value. |
 | `module_spec` |  | `tools/audit_modules.py:27` | `def module_spec(kind: str)` | Returns the module spec value. |
@@ -1321,27 +1321,27 @@ paths in depth.
 | `collect_c_family` |  | `tools/gen_code_docs.py:199` | `def collect_c_family(path: Path)` | Returns the collect c family value. |
 | `add_function` |  | `tools/gen_code_docs.py:217` | `def add_function(node)` | Adds the function. |
 | `add_type` |  | `tools/gen_code_docs.py:256` | `def add_type(node)` | Adds the type. |
-| `walk` |  | `tools/gen_code_docs.py:296` | `def walk(node)` | Returns the walk value. |
-| `collect_python` |  | `tools/gen_code_docs.py:406` | `def collect_python(path: Path)` | Returns the collect python value. |
-| `docstring` |  | `tools/gen_code_docs.py:416` | `def docstring(node)` | Returns the docstring value. |
-| `walk` |  | `tools/gen_code_docs.py:428` | `def walk(node)` | Returns the walk value. |
-| `source_files` |  | `tools/gen_code_docs.py:489` | `def source_files(include_dev: bool)` | Returns the source files value. |
-| `md_escape` |  | `tools/gen_code_docs.py:500` | `def md_escape(value: str)` | Returns the md escape value. |
-| `file_summary` |  | `tools/gen_code_docs.py:504` | `def file_summary(path: Path)` | The first prose sentence of the file's leading comment or heading. |
-| `write_files` |  | `tools/gen_code_docs.py:616` | `def write_files(paths: list[Path], out: Path)` | Writes the files. |
-| `write_types` |  | `tools/gen_code_docs.py:680` | `def write_types(types: list[Type], out: Path)` | Writes the types. |
-| `split_words` |  | `tools/gen_code_docs.py:873` | `def split_words(name: str)` | Splits a camelCase or snake_case identifier into lower-case words. |
-| `inner_comment` |  | `tools/gen_code_docs.py:881` | `def inner_comment(f: Function, lines: list[str])` | The prose comment at the top of the function body, as one sentence. |
-| `describe_function` |  | `tools/gen_code_docs.py:919` | `def describe_function(f: Function, lines: list[str])` | Returns the describe function value. |
-| `write_functions` |  | `tools/gen_code_docs.py:1174` | `def write_functions(functions: list[Function], out: Path)` | Writes the functions. |
-| `write_symbols` |  | `tools/gen_code_docs.py:1232` | `def write_symbols(symbols: list[Symbol], out: Path)` | Writes the symbols. |
-| `state_fields` |  | `tools/gen_code_docs.py:1256` | `def state_fields()` | Returns the state fields value. |
-| `write_state` |  | `tools/gen_code_docs.py:1271` | `def write_state(fields: list[tuple[str, str]], out: Path)` | Writes the state. |
-| `write_parameters` |  | `tools/gen_code_docs.py:1286` | `def write_parameters(out: Path)` | Writes the parameters. |
-| `render_walk` |  | `tools/gen_code_docs.py:1314` | `def render_walk()` | Renders the walk. |
-| `write_nodes` |  | `tools/gen_code_docs.py:1397` | `def write_nodes(out: Path)` | Writes the nodes. |
-| `write_tests` |  | `tools/gen_code_docs.py:1430` | `def write_tests(out: Path)` | Writes the tests. |
-| `main` |  | `tools/gen_code_docs.py:1473` | `def main()` | Runs the test or tool entry point. |
+| `walk` |  | `tools/gen_code_docs.py:303` | `def walk(node)` | Returns the walk value. |
+| `collect_python` |  | `tools/gen_code_docs.py:413` | `def collect_python(path: Path)` | Returns the collect python value. |
+| `docstring` |  | `tools/gen_code_docs.py:423` | `def docstring(node)` | Returns the docstring value. |
+| `walk` |  | `tools/gen_code_docs.py:435` | `def walk(node)` | Returns the walk value. |
+| `source_files` |  | `tools/gen_code_docs.py:496` | `def source_files(include_dev: bool)` | Returns the source files value. |
+| `md_escape` |  | `tools/gen_code_docs.py:507` | `def md_escape(value: str)` | Returns the md escape value. |
+| `file_summary` |  | `tools/gen_code_docs.py:511` | `def file_summary(path: Path)` | The first prose sentence of the file's leading comment or heading. |
+| `write_files` |  | `tools/gen_code_docs.py:623` | `def write_files(paths: list[Path], out: Path)` | Writes the files. |
+| `write_types` |  | `tools/gen_code_docs.py:687` | `def write_types(types: list[Type], out: Path)` | Writes the types. |
+| `split_words` |  | `tools/gen_code_docs.py:899` | `def split_words(name: str)` | Splits a camelCase or snake_case identifier into lower-case words. |
+| `inner_comment` |  | `tools/gen_code_docs.py:907` | `def inner_comment(f: Function, lines: list[str])` | The prose comment at the top of the function body, as one sentence. |
+| `describe_function` |  | `tools/gen_code_docs.py:945` | `def describe_function(f: Function, lines: list[str])` | Returns the describe function value. |
+| `write_functions` |  | `tools/gen_code_docs.py:1217` | `def write_functions(functions: list[Function], out: Path)` | Writes the functions. |
+| `write_symbols` |  | `tools/gen_code_docs.py:1277` | `def write_symbols(symbols: list[Symbol], out: Path)` | Writes the symbols. |
+| `state_fields` |  | `tools/gen_code_docs.py:1301` | `def state_fields()` | Returns the state fields value. |
+| `write_state` |  | `tools/gen_code_docs.py:1316` | `def write_state(fields: list[tuple[str, str]], out: Path)` | Writes the state. |
+| `write_parameters` |  | `tools/gen_code_docs.py:1331` | `def write_parameters(out: Path)` | Writes the parameters. |
+| `render_walk` |  | `tools/gen_code_docs.py:1359` | `def render_walk()` | Renders the walk. |
+| `write_nodes` |  | `tools/gen_code_docs.py:1442` | `def write_nodes(out: Path)` | Writes the nodes. |
+| `write_tests` |  | `tools/gen_code_docs.py:1475` | `def write_tests(out: Path)` | Writes the tests. |
+| `main` |  | `tools/gen_code_docs.py:1518` | `def main()` | Runs the test or tool entry point. |
 | `q15` |  | `tools/gen_math_tables.py:40` | `def q15(x: float)` | Returns the q 15 value. |
 | `q16` |  | `tools/gen_math_tables.py:45` | `def q16(x: float)` | Returns the q 16 value. |
 | `c_array` |  | `tools/gen_math_tables.py:50` | `def c_array(ctype: str, name: str, values: list[int], width: int)` | Returns the c array value. |
@@ -1809,13 +1809,13 @@ paths in depth.
 - `ModeButton` at line 17 through 20: `explicit ModeButton(const juce::String& label) : juce::Button(label)`
   Constructs the object.
 - `setActive` at line 22 through 28: `void setActive(bool active)`
-  Writes the active.
+  Sets the active flag.
 - `paintButton` at line 30 through 44: `void paintButton(juce::Graphics& g, bool highlighted, bool) override`
   Draws the button in its normal, highlighted and down states.
 - `PartCard` at line 52 through 87: `PartCard(PluginEditor& editor, int part, bool active) : editor_(editor), part_(part), active_(active), header_(true, true, [this] { editor_.showRenameDialog(true, part_); }, [this] { editor_.copyPart(part_); }, [this] { editor_.pastePart(part_); }, [this] { return getParam(editor_, params::level(part_)) <= 0.0; }, [this](bool muted) { editor_.togglePartMute(part_, muted); })`
   Constructs the object.
 - `resized` at line 89 through 105: `void resized() override`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `paint` at line 107 through 120: `void paint(juce::Graphics& g) override`
   Draws the component.
 - `tick` at line 122 through 130: `void tick()`
@@ -1823,7 +1823,7 @@ paths in depth.
 - `VoiceMode` at line 147 through 174: `explicit VoiceMode(PluginEditor& editor) : editor_(editor), part_(editor.activePart())`
   Constructs the object.
 - `resized` at line 176 through 189: `void resized() override`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `paint` at line 191 through 198: `void paint(juce::Graphics& g) override`
   Draws the component.
 - `tick` at line 200 through 219: `void tick()`
@@ -1831,7 +1831,7 @@ paths in depth.
 - `PatchPage` at line 233 through 242: `explicit PatchPage(PluginEditor& editor)`
   Constructs the object.
 - `resized` at line 244 through 254: `void resized() override`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `tick` at line 256 through 261: `void tick() override`
   Refreshes the live display state.
 - `makePatchPage` at line 270 through 273: `std::unique_ptr<PageBase> makePatchPage(PluginEditor& editor)`
@@ -1854,66 +1854,66 @@ paths in depth.
 - `CardHeader` at line 82 through 100: `CardHeader(bool partLayout, bool withRename, std::function<void()> onRename, std::function<void()> onCopy, std::function<void()> onPaste, std::function<bool()> getMuted, std::function<void(bool)> setMuted, bool wideHeader = false) : partLayout_(partLayout), withRename_(withRename), wideHeader_(wideHeader)`
   Constructs the object.
 - `resized` at line 102 through 124: `void resized() override`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `tick` at line 126 through 126: `void tick()`
   Refreshes the live display state.
 - `OscillatorCard` at line 140 through 169: `OscillatorCard(PluginEditor& editor, int op, int part, bool withMorph = false) : P1Card("oscillator", [&ed = editor, op, part] { ed.copyOperatorSection( op, part, PluginEditor::OperatorSection::oscillator); }, [&ed = editor, op, part] { ed.pasteOperatorSection( op, part, PluginEditor::OperatorSection::oscillator); }), ratio_(editor.state(), params::opRatio(op, part), "ratio", 28.0f), detune_(editor.state(), params::opDetune(op, part), "detune", 28.0f), level_(editor.state(), params::opLevel(op, part), "level", 28.0f), feedback_(editor.state(), params::opFeedback(op, part), "feedback", 28.0f), wave_(editor.state(), params::opWaveform(op, part), params::waveNames())`
   Constructs the object.
 - `resized` at line 171 through 187: `void resized() override`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `AmplitudeEnvelopeCard` at line 200 through 239: `AmplitudeEnvelopeCard(PluginEditor& editor, int op, int part) : P1Card("amp env", [&ed = editor, op, part] { ed.copyOperatorSection( op, part, PluginEditor::OperatorSection::amplitudeEnvelope); }, [&ed = editor, op, part] { ed.pasteOperatorSection( op, part, PluginEditor::OperatorSection::amplitudeEnvelope); }), envView_(editor.state(), {params::opEnv(op, "warm", part), params::opEnv(op, "surge", part), params::opEnv(op, "d1r", part), params::opEnv(op, "d2r", part), params::opEnv(op, "rel", part)}, {params::opEnv(op, "d1l", part), params::opEnv(op, "d2l", part)}, colour(tokens::purple), 0.0, 99.0, false, EnvelopeShape::operatorAmp, params::opEnv(op, "mode", part)), mode_(editor.state(), params::opEnv(op, "mode", part), {"sustain off", "sustain on", "loop 1", "loop 2"})`
   Constructs the object.
 - `resized` at line 241 through 262: `void resized() override`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `tick` at line 264 through 264: `void tick()`
   Refreshes the live display state.
 - `FeedbackEnvelopeCard` at line 274 through 325: `FeedbackEnvelopeCard(PluginEditor& editor, int op, int part) : P1Card("fb env", [&ed = editor, op, part] { ed.copyOperatorSection( op, part, PluginEditor::OperatorSection::feedbackEnvelope); }, [&ed = editor, op, part] { ed.pasteOperatorSection( op, part, PluginEditor::OperatorSection::feedbackEnvelope); }), envView_(editor.state(), {params::opFeedbackRate(op, 0, part), params::opFeedbackRate(op, 1, part), params::opFeedbackRate(op, 2, part), params::opFeedbackRelRate(op, part)}, {params::opFeedbackLevel(op, 0, part), params::opFeedbackLevel(op, 1, part), params::opFeedbackLevel(op, 2, part), params::opFeedbackRelLevel(op, part)}, colour(tokens::purple), -32768.0, 32767.0, true, EnvelopeShape::bipolar, params::opFeedbackMode(op, part)), on_(editor.state(), params::opFeedbackOn(op, part), "on"), mode_(editor.state(), params::opFeedbackMode(op, part), {"sustain off", "sustain on", "loop 1", "loop 2"})`
   Constructs the object.
 - `resized` at line 327 through 347: `void resized() override`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `tick` at line 349 through 349: `void tick()`
   Refreshes the live display state.
 - `LfoCard` at line 361 through 390: `LfoCard(PluginEditor& editor, juce::String title, juce::String rateID, juce::String depthID, juce::String waveID, juce::String modeID, juce::String rateFadeID, juce::String depthFadeID, int op, int part, PluginEditor::OperatorSection section, std::function<void()> onDepthEdit = {}, bool compact = false, juce::String modeLabel = "bipolar") : P1Card(std::move(title), [&ed = editor, op, part, section] { ed.copyOperatorSection(op, part, section); }, [&ed = editor, op, part, section] { ed.pasteOperatorSection(op, part, section); }), rate_(editor.state(), rateID, "rate", 28.0f), depth_(editor.state(), depthID, "depth", 28.0f), rateFade_(editor.state(), rateFadeID, "rate fade", compact ? 22.0f : 28.0f), depthFade_(editor.state(), depthFadeID, "depth fade", compact ? 22.0f : 28.0f), wave_(editor.state(), std::move(waveID), params::lfoWaveNames()), mode_(editor.state(), std::move(modeID), std::move(modeLabel))`
   Constructs the object.
 - `resized` at line 392 through 407: `void resized() override`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 
 ### `plugin/juce/PagesFxMod.cpp`
 
 - `FilterCard` at line 14 through 32: `FilterCard(PluginEditor& editor, juce::String title, juce::String cutoffID, juce::String resID, juce::String typeID, juce::String onID, std::function<void()> onToPart = {}, juce::String toLabel = "to 2") : P1Card(std::move(title)), cutoff_(editor.state(), std::move(cutoffID), "cutoff", 42.0f), res_(editor.state(), std::move(resID), "res", 42.0f), type_(editor.state(), std::move(typeID), {"lpf", "bpf", "hpf"}), on_(editor.state(), std::move(onID), "on"), to_(std::move(toLabel), true)`
   Constructs the object.
 - `resized` at line 34 through 45: `void resized() override`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `paint` at line 47 through 53: `void paint(juce::Graphics& g) override`
   Draws the component.
 - `FilterEnvelopeCard` at line 65 through 109: `FilterEnvelopeCard(PluginEditor& editor, int part, std::function<void()> onToPart = {}, juce::String toLabel = "to 2") : P1Card("filter envelope"), part_(part), envView_(editor.state(), {params::filterRate(0, part), params::filterRate(1, part), params::filterRate(2, part), params::filterEnvRelRate(part)}, {params::filterLevel(0, part), params::filterLevel(1, part), params::filterLevel(2, part), params::filterEnvRelLevel(part)}, colour(tokens::green), 0.0, 99.0, false, EnvelopeShape::bipolar, params::filterEnvMode(part), params::filterCutoff(part), 99.0 / 55296.0), on_(editor.state(), params::filterEnvOn(part), "on"), mode_(editor.state(), params::filterEnvMode(part), {"sustain off", "sustain on", "loop 1", "loop 2"}), to_(std::move(toLabel), true)`
   Constructs the object.
 - `resized` at line 111 through 130: `void resized() override`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `tick` at line 132 through 132: `void tick()`
   Refreshes the live display state.
 - `PitchLfoCard` at line 146 through 171: `explicit PitchLfoCard(PluginEditor& editor, std::function<void()> onToPart = {}, juce::String toLabel = "to 2") : P1Card("pitch lfo"), part_(editor.activePart()), waveView_(editor.state(), params::pitchWave(part_), colour(tokens::green)), rate_(editor.state(), params::pitchRate(part_), "rate", 36.0f), depth_(editor.state(), params::pitchDepth(part_), "depth", 36.0f), rateFade_(editor.state(), params::pitchRateFade(part_), "rate fade", 36.0f), depthFade_(editor.state(), params::pitchDepthFade(part_), "depth fade", 36.0f), wave_(editor.state(), params::pitchWave(part_), params::lfoWaveNames()), mode_(editor.state(), params::pitchMode(part_), "bipolar"), to_(std::move(toLabel), true)`
   Constructs the object.
 - `resized` at line 173 through 189: `void resized() override`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `tick` at line 191 through 191: `void tick()`
   Refreshes the live display state.
 - `PitchEnvelopeCard` at line 207 through 250: `explicit PitchEnvelopeCard(PluginEditor& editor, std::function<void()> onToPart = {}, juce::String toLabel = "to 2") : P1Card("pitch envelope"), part_(editor.activePart()), envView_(editor.state(), {params::pitchEnvRate(0, part_), params::pitchEnvRate(1, part_), params::pitchEnvRate(2, part_), params::pitchEnvRelRate(part_)}, {params::pitchEnvLevel(0, part_), params::pitchEnvLevel(1, part_), params::pitchEnvLevel(2, part_), params::pitchEnvRelLevel(part_)}, colour(tokens::purple), -32768.0, 32767.0, true, EnvelopeShape::bipolar, params::pitchEnvMode(part_)), on_(editor.state(), params::pitchEnvOn(part_), "on"), mode_(editor.state(), params::pitchEnvMode(part_), {"sustain off", "sustain on", "loop 1", "loop 2"}), to_(std::move(toLabel), true)`
   Constructs the object.
 - `resized` at line 252 through 271: `void resized() override`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `tick` at line 273 through 273: `void tick()`
   Refreshes the live display state.
 - `PanEnvelopeCard` at line 287 through 328: `explicit PanEnvelopeCard(PluginEditor& editor, std::function<void()> onToPart = {}, juce::String toLabel = "to 2") : P1Card("pan envelope"), part_(editor.activePart()), envView_(editor.state(), {params::panEnvRate(0, part_), params::panEnvRate(1, part_), params::panEnvRate(2, part_), params::panEnvRelRate(part_)}, {params::panEnvLevel(0, part_), params::panEnvLevel(1, part_), params::panEnvLevel(2, part_), params::panEnvRelLevel(part_)}, colour(tokens::purple), -99.0, 99.0, true, EnvelopeShape::bipolar, params::panEnvMode(part_), params::pan(part_)), on_(editor.state(), params::panEnvOn(part_), "on"), mode_(editor.state(), params::panEnvMode(part_), {"sustain off", "sustain on", "loop 1", "loop 2"}), to_(std::move(toLabel), true)`
   Constructs the object.
 - `resized` at line 330 through 349: `void resized() override`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `tick` at line 351 through 351: `void tick()`
   Refreshes the live display state.
 - `FollowCard` at line 365 through 413: `FollowCard(PluginEditor& editor, bool key, juce::String title, std::function<void()> onToPart = {}, juce::String toLabel = "to 2") : P1Card(std::move(title)), editor_(editor), key_(key), part_(editor.activePart()), targets_(params::followTargets(part_)), on_(editor.state(), params::withPart(key ? "key_sens_on" : "vel_sens_on", part_), "on"), to_(std::move(toLabel), true)`
   Constructs the object.
 - `resized` at line 415 through 430: `void resized() override`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `paint` at line 432 through 443: `void paint(juce::Graphics& g) override`
   Draws the component.
 - `refresh` at line 445 through 458: `void refresh()`
@@ -1933,7 +1933,7 @@ paths in depth.
 - `RingmodCard` at line 598 through 627: `RingmodCard(PluginEditor& editor, int part) : P1Card("ringmod"), editor_(editor), part_(part)`
   Constructs the object.
 - `resized` at line 629 through 629: `void resized() override`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `tick` at line 631 through 673: `void tick()`
   Refreshes the live display state.
 - `carrierOutOn` at line 676 through 679: `bool carrierOutOn(int op) const`
@@ -1947,7 +1947,7 @@ paths in depth.
 - `FxModPage` at line 761 through 797: `explicit FxModPage(PluginEditor& editor)`
   Constructs the object.
 - `resized` at line 799 through 817: `void resized() override`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `tick` at line 819 through 828: `void tick() override`
   Refreshes the live display state.
 - `makeFxModPage` at line 843 through 846: `std::unique_ptr<PageBase> makeFxModPage(PluginEditor& editor)`
@@ -1958,7 +1958,7 @@ paths in depth.
 - `MacroRange` at line 18 through 31: `MacroRange(APVTS& state, juce::String paramID, juce::Colour fill) : state_(state), paramID_(std::move(paramID)), fill_(fill)`
   Constructs the object.
 - `resized` at line 33 through 36: `void resized() override`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `paint` at line 38 through 68: `void paint(juce::Graphics& g) override`
   Draws the component.
 - `mouseDown` at line 70 through 76: `void mouseDown(const juce::MouseEvent& event) override`
@@ -1972,11 +1972,11 @@ paths in depth.
 - `MacroTargetChoice` at line 113 through 150: `MacroTargetChoice(APVTS& state, juce::String paramID) : state_(state), paramID_(std::move(paramID))`
   Constructs the object.
 - `resized` at line 152 through 152: `void resized() override`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `MacroCard` at line 164 through 191: `MacroCard(PluginEditor& editor, int index) : editor_(editor), index_(index), knob_(editor.state(), params::macroValue(index), "", 92.0f), source_(editor.state(), params::macroMidi(index), {"off", "cc " + juce::String(72 + index), "mod wheel", "velocity"}), midiRange_(editor.state(), params::macroMidiRange(index), colour(tokens::green)), rename_("rename", true)`
   Constructs the object.
 - `resized` at line 193 through 224: `void resized() override`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `paint` at line 226 through 244: `void paint(juce::Graphics& g) override`
   Draws the component.
 - `tick` at line 246 through 271: `void tick()`
@@ -1986,7 +1986,7 @@ paths in depth.
 - `MacrosPage` at line 297 through 304: `explicit MacrosPage(PluginEditor& editor) : editor_(editor)`
   Constructs the object.
 - `resized` at line 306 through 319: `void resized() override`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `paint` at line 321 through 321: `void paint(juce::Graphics& g) override`
   Draws the component.
 - `tick` at line 323 through 327: `void tick() override`
@@ -2001,7 +2001,7 @@ paths in depth.
 - `OpColumn` at line 27 through 52: `OpColumn(PluginEditor& editor, int op, std::function<void(int)> onCopy, std::function<void(int)> onPaste) : editor_(editor), op_(op), part_(editor.activePart()), header_(false, false, {}, [this, onCopy] { onCopy(op_); }, [this, onPaste] { onPaste(op_); }, [this] { return getParam(editor_, params::opMute(op_, part_)) > 0.5; }, [this](bool muted) { setParam(editor_, params::opMute(op_, part_), muted ? 1 : 0); }), osc_(editor, op, part_), amp_(editor, op, part_), fb_(editor, op, part_)`
   Constructs the object.
 - `resized` at line 54 through 69: `void resized() override`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `paint` at line 71 through 80: `void paint(juce::Graphics& g) override`
   Draws the component.
 - `tick` at line 82 through 92: `void tick()`
@@ -2009,7 +2009,7 @@ paths in depth.
 - `OpLfoColumn` at line 109 through 152: `OpLfoColumn(PluginEditor& editor, int op, std::function<void(int)> onCopy, std::function<void(int)> onPaste) : editor_(editor), op_(op), part_(editor.activePart()), header_(false, false, {}, [this, onCopy] { onCopy(op_); }, [this, onPaste] { onPaste(op_); }, [this] { return getParam(editor_, params::opMute(op_, part_)) > 0.5; }, [this](bool muted) { setParam(editor_, params::opMute(op_, part_), muted ? 1 : 0); }), ampLfo_(editor, "amp lfo", params::opTremRate(op, part_), params::opTremDepth(op, part_), params::opTremWave(op, part_), params::opTremMode(op, part_), params::opTremRateFade(op, part_), params::opTremDepthFade(op, part_), op, part_, PluginEditor::OperatorSection::amplitudeLfo), feedbackLfo_(editor, "fb lfo", params::opFeedbackLfoRate(op, part_), params::opFeedbackLfoDepth(op, part_), params::opFeedbackLfoWave(op, part_), params::opFeedbackLfoMode(op, part_), params::opFeedbackLfoRateFade(op, part_), params::opFeedbackLfoDepthFade(op, part_), op, part_, PluginEditor::OperatorSection::feedbackLfo), detuneLfo_(editor, "detune lfo", params::opDetuneLfoRate(op, part_), params::opDetuneLfoDepth(op, part_), params::opDetuneLfoWave(op, part_), params::opDetuneLfoMode(op, part_), params::opDetuneLfoRateFade(op, part_), params::opDetuneLfoDepthFade(op, part_), op, part_, PluginEditor::OperatorSection::detuneLfo)`
   Constructs the object.
 - `resized` at line 154 through 169: `void resized() override`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `paint` at line 171 through 180: `void paint(juce::Graphics& g) override`
   Draws the component.
 - `tick` at line 182 through 190: `void tick()`
@@ -2017,13 +2017,13 @@ paths in depth.
 - `OperatorsPage` at line 207 through 215: `explicit OperatorsPage(PluginEditor& editor) : editor_(editor)`
   Constructs the object.
 - `resized` at line 217 through 225: `void resized() override`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `tick` at line 227 through 231: `void tick() override`
   Refreshes the live display state.
 - `OperatorLfosPage` at line 240 through 248: `explicit OperatorLfosPage(PluginEditor& editor) : editor_(editor)`
   Constructs the object.
 - `resized` at line 250 through 258: `void resized() override`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `tick` at line 260 through 264: `void tick() override`
   Refreshes the live display state.
 - `makeOperatorsPage` at line 273 through 276: `std::unique_ptr<PageBase> makeOperatorsPage(PluginEditor& editor)`
@@ -2046,23 +2046,23 @@ paths in depth.
 - `PhaseCard` at line 237 through 263: `PhaseCard(PluginEditor& editor, int op, int part) : P1Card("phase", [&ed = editor, op, part] { ed.copyOperatorSection( op, part, PluginEditor::OperatorSection::phase); }, [&ed = editor, op, part] { ed.pasteOperatorSection( op, part, PluginEditor::OperatorSection::phase); }), on_(editor.state(), params::opPhase(op, "on", part), "on")`
   Constructs the object.
 - `resized` at line 265 through 283: `void resized() override`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `PhaseEnvelopeCard` at line 292 through 347: `PhaseEnvelopeCard(PluginEditor& editor, int op, int part) : P1Card("phase env", [&ed = editor, op, part] { ed.copyOperatorSection( op, part, PluginEditor::OperatorSection::phaseEnvelope); }, [&ed = editor, op, part] { ed.pasteOperatorSection( op, part, PluginEditor::OperatorSection::phaseEnvelope); }), envView_(editor.state(), {params::opPhaseEnv(op, "r1", part), params::opPhaseEnv(op, "r2", part), params::opPhaseEnv(op, "r3", part), params::opPhaseEnv(op, "relr", part)}, {params::opPhaseEnv(op, "l1", part), params::opPhaseEnv(op, "l2", part), params::opPhaseEnv(op, "l3", part), params::opPhaseEnv(op, "rell", part)}, colour(tokens::purple), -100.0, 100.0, true, EnvelopeShape::bipolar, params::opPhaseEnv(op, "mode", part)), on_(editor.state(), params::opPhaseEnv(op, "on", part), "on"), mode_(editor.state(), params::opPhaseEnv(op, "mode", part), {"sustain off", "sustain on", "loop 1", "loop 2"})`
   Constructs the object.
 - `resized` at line 349 through 368: `void resized() override`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `tick` at line 370 through 370: `void tick()`
   Refreshes the live display state.
 - `CompactOscillator` at line 382 through 396: `CompactOscillator(PluginEditor& editor, int op, int part) : ratio_(editor.state(), params::opRatio(op, part), "ratio", 22.0f), detune_(editor.state(), params::opDetune(op, part), "detune", 22.0f), level_(editor.state(), params::opLevel(op, part), "level", 22.0f), feedback_(editor.state(), params::opFeedback(op, part), "feedback", 22.0f), wave_(editor.state(), params::opWaveform(op, part), params::waveNames())`
   Constructs the object.
 - `resized` at line 398 through 411: `void resized() override`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `paint` at line 413 through 420: `void paint(juce::Graphics& g) override`
   Draws the component.
 - `PhaseColumn` at line 432 through 466: `PhaseColumn(PluginEditor& editor, int op, std::function<void(int)> onCopy, std::function<void(int)> onPaste) : editor_(editor), op_(op), part_(editor.activePart()), header_(false, false, {}, [this, onCopy] { onCopy(op_); }, [this, onPaste] { onPaste(op_); }, [this] { return getParam(editor_, params::opMute(op_, part_)) > 0.5; }, [this](bool muted) { setParam(editor_, params::opMute(op_, part_), muted ? 1 : 0); }), osc_(editor, op, part_), map_(editor, op, part_), phase_(editor, op, part_), lfo_(editor, "phase lfo", params::opPhaseLfo(op, "rate", part_), params::opPhaseLfo(op, "depth", part_), params::opPhaseLfo(op, "wave", part_), params::opPhaseLfo(op, "mode", part_), params::opPhaseLfo(op, "rate_fade", part_), params::opPhaseLfo(op, "depth_fade", part_), op, part_, PluginEditor::OperatorSection::phaseLfo, {}, true, "bipolar"), env_(editor, op, part_)`
   Constructs the object.
 - `resized` at line 468 through 482: `void resized() override`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `paint` at line 484 through 494: `void paint(juce::Graphics& g) override`
   Draws the component.
 - `tick` at line 496 through 501: `void tick()`
@@ -2070,7 +2070,7 @@ paths in depth.
 - `PhaseMapPage` at line 517 through 526: `explicit PhaseMapPage(PluginEditor& editor) : editor_(editor)`
   Constructs the object.
 - `resized` at line 528 through 539: `void resized() override`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `tick` at line 541 through 545: `void tick() override`
   Refreshes the live display state.
 - `makePhaseMapPage` at line 554 through 557: `std::unique_ptr<PageBase> makePhaseMapPage(PluginEditor& editor)`
@@ -2113,7 +2113,7 @@ paths in depth.
 - `MorphEnvelopeCard` at line 239 through 293: `MorphEnvelopeCard(PluginEditor& editor, int op, int part) : P1Card("morph env", [&ed = editor, op, part] { ed.copyOperatorSection( op, part, PluginEditor::OperatorSection::spectrumEnvelope); }, [&ed = editor, op, part] { ed.pasteOperatorSection( op, part, PluginEditor::OperatorSection::spectrumEnvelope); }), env_(editor.state(), {params::opSpecEnvRate(op, 0, part), params::opSpecEnvRate(op, 1, part), params::opSpecEnvRate(op, 2, part), params::opSpecEnvRelRate(op, part)}, {params::opSpecEnvLevel(op, 0, part), params::opSpecEnvLevel(op, 1, part), params::opSpecEnvLevel(op, 2, part), params::opSpecEnvRelLevel(op, part)}, colour(tokens::purple), 0.0, 99.0, false, EnvelopeShape::bipolar, params::opSpecEnvMode(op, part), params::opSpecMorph(op, part)), on_(editor.state(), params::opSpecEnvOn(op, part), "on"), mode_(editor.state(), params::opSpecEnvMode(op, part), {"sustain off", "sustain on", "loop 1", "loop 2"})`
   Constructs the object.
 - `resized` at line 295 through 313: `void resized() override`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `tick` at line 315 through 315: `void tick()`
   Refreshes the live display state.
 - `SpectrumRow` at line 327 through 430: `SpectrumRow(PluginEditor& editor, int op, int part, bool a) : P1Card("op" + juce::String(op + 1) + " spectrum " + (a ? "a" : "b"), [&ed = editor, op, part, a] { ed.copyOperatorSection( op, part, a ? PluginEditor::OperatorSection::spectrumA : PluginEditor::OperatorSection::spectrumB); }, [&ed = editor, op, part, a] { ed.pasteOperatorSection( op, part, a ? PluginEditor::OperatorSection::spectrumA : PluginEditor::OperatorSection::spectrumB); }), editor_(editor), op_(op), part_(part), isA_(a), bars_(editor.state(), spectrumIDs(op, part, a), colour(a ? tokens::purple : tokens::pink)), range_(editor.state(), a ? params::opSpecRangeA(op, part) : params::opSpecRangeB(op, part), rangeNames()), mask_(2), tilt_( "tilt", [this] { beginMacro(); }, [this](double value) { applyTilt(value); }, [this] { endMacro(); }), level_( "level", [this] { beginMacro(); }, [this](double value) { applyLevel(value); }, [this] { endMacro(); }), formant_( "formant", [this] { beginMacro(); }, [this](double value) { applyFormant(value); }, [this] { endMacro(); })`
@@ -2121,7 +2121,7 @@ paths in depth.
 - `tick` at line 432 through 443: `void tick()`
   Refreshes the live display state.
 - `resized` at line 445 through 486: `void resized() override`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `firstHarmonic` at line 489 through 497: `int firstHarmonic() const`
   Returns the first harmonic value.
 - `refreshGroupTest` at line 499 through 505: `void refreshGroupTest()`
@@ -2159,7 +2159,7 @@ paths in depth.
 - `SpectraOperatorCard` at line 734 through 757: `SpectraOperatorCard(PluginEditor& editor, int op) : editor_(editor), op_(op), part_(editor.activePart()), header_( false, false, {}, [&ed = editor, op] { ed.copyOperator(op); }, [&ed = editor, op] { ed.pasteOperator(op); }, [&ed = editor, op] { return getParam(ed, params::opMute(op, ed.activePart())) > 0.5; }, [&ed = editor, op](bool muted) { setParam(ed, params::opMute(op, ed.activePart()), muted ? 1 : 0); }, true), osc_(editor, op, editor.activePart(), true)`
   Constructs the object.
 - `resized` at line 759 through 770: `void resized() override`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `tick` at line 772 through 781: `void tick()`
   Refreshes the live display state.
 - `paint` at line 783 through 793: `void paint(juce::Graphics& g) override`
@@ -2167,7 +2167,7 @@ paths in depth.
 - `SpectraModColumn` at line 808 through 850: `SpectraModColumn(PluginEditor& editor, int op, std::function<void(int)> onCopy, std::function<void(int)> onPaste) : editor_(editor), op_(op), part_(editor.activePart()), header_(false, false, {}, [this, onCopy] { onCopy(op_); }, [this, onPaste] { onPaste(op_); }, [this] { return getParam(editor_, params::opMute(op_, part_)) > 0.5; }, [this](bool muted) { setParam(editor_, params::opMute(op_, part_), muted ? 1 : 0); }), osc_(editor, op, part_, true), display_(editor.state(), spectrumIDs(op, part_, true), spectrumIDs(op, part_, false), params::opSpecMorph(op, part_), params::opSpecRangeA(op, part_), params::opSpecRangeB(op, part_), colour(tokens::purple), colour(tokens::pink)), env_(editor, op, part_), lfo_(editor, "morph lfo", params::opSpecLfoRate(op, part_), params::opSpecLfoDepth(op, part_), params::opSpecLfoWave(op, part_), params::opSpecLfoMode(op, part_), params::opSpecLfoRateFade(op, part_), params::opSpecLfoDepthFade(op, part_), op, part_, PluginEditor::OperatorSection::spectrumLfo, [&ed = editor, op] { ensureSpectrumMode(ed, op, ed.activePart(), params::opSpecLfoDepth(op, ed.activePart())); }, true)`
   Constructs the object.
 - `resized` at line 852 through 864: `void resized() override`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `paint` at line 866 through 876: `void paint(juce::Graphics& g) override`
   Draws the component.
 - `tick` at line 878 through 885: `void tick()`
@@ -2175,13 +2175,13 @@ paths in depth.
 - `OperatorSpectraPage` at line 900 through 914: `OperatorSpectraPage(PluginEditor& editor, bool a)`
   Constructs the object.
 - `resized` at line 916 through 935: `void resized() override`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `tick` at line 937 through 943: `void tick() override`
   Refreshes the live display state.
 - `OperatorSpectraModPage` at line 954 through 963: `explicit OperatorSpectraModPage(PluginEditor& editor) : editor_(editor)`
   Constructs the object.
 - `resized` at line 965 through 973: `void resized() override`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `tick` at line 975 through 979: `void tick() override`
   Refreshes the live display state.
 - `makeOperatorSpectraPage` at line 988 through 991: `std::unique_ptr<PageBase> makeOperatorSpectraPage(PluginEditor& editor, bool a)`
@@ -2198,19 +2198,19 @@ paths in depth.
 - `SegmentButton` at line 40 through 43: `explicit SegmentButton(const juce::String& label) : juce::Button(label)`
   Constructs the object.
 - `setActive` at line 45 through 51: `void setActive(bool active)`
-  Writes the active.
+  Sets the active flag.
 - `paintButton` at line 53 through 66: `void paintButton(juce::Graphics& g, bool highlighted, bool) override`
   Draws the button in its normal, highlighted and down states.
 - `PartChoiceButton` at line 74 through 77: `explicit PartChoiceButton(const juce::String& label) : juce::Button(label)`
   Constructs the object.
 - `setActive` at line 79 through 85: `void setActive(bool active)`
-  Writes the active.
+  Sets the active flag.
 - `paintButton` at line 87 through 100: `void paintButton(juce::Graphics& g, bool highlighted, bool) override`
   Draws the button in its normal, highlighted and down states.
 - `Header` at line 110 through 135: `explicit Header(PluginEditor& editor) : editor_(editor), volume_(editor.state(), p1::kVolumeParamID)`
   Constructs the object.
 - `resized` at line 137 through 147: `void resized() override`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `paint` at line 149 through 169: `void paint(juce::Graphics& g) override`
   Draws the component.
 - `tick` at line 171 through 203: `void tick()`
@@ -2224,7 +2224,7 @@ paths in depth.
 - `Toolbar` at line 271 through 304: `explicit Toolbar(PluginEditor& editor) : editor_(editor)`
   Constructs the object.
 - `resized` at line 306 through 322: `void resized() override`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `paint` at line 324 through 335: `void paint(juce::Graphics& g) override`
   Draws the component.
 - `refreshPartNames` at line 337 through 345: `void refreshPartNames()`
@@ -2238,7 +2238,7 @@ paths in depth.
 - `selected` at line 417 through 417: `int selected() const`
   Selects the ed.
 - `resized` at line 419 through 423: `void resized() override`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `getNumRows` at line 425 through 425: `int getNumRows() override`
   Reads the num rows.
 - `paintListBoxItem` at line 427 through 443: `void paintListBoxItem(int row, juce::Graphics& g, int width, int height, bool selected) override`
@@ -2258,7 +2258,7 @@ paths in depth.
 - `AlgTile` at line 520 through 524: `AlgTile(int index, std::function<void(int)> onSelect) : juce::Button("alg"), index_(index), onSelect_(std::move(onSelect))`
   Constructs the object.
 - `setSelected` at line 526 through 532: `void setSelected(bool selected)`
-  Writes the selected.
+  Sets the selected flag.
 - `paintButton` at line 534 through 550: `void paintButton(juce::Graphics& g, bool highlighted, bool) override`
   Draws the button in its normal, highlighted and down states.
 - `mouseUp` at line 552 through 556: `void mouseUp(const juce::MouseEvent&) override`
@@ -2268,7 +2268,7 @@ paths in depth.
 - `selected` at line 583 through 583: `int selected() const`
   Selects the ed.
 - `resized` at line 585 through 597: `void resized() override`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `select` at line 600 through 605: `void select(int index)`
   Runs the select step for the surrounding code.
 - `RenameBody` at line 614 through 629: `explicit RenameBody(const juce::String& initial)`
@@ -2278,7 +2278,7 @@ paths in depth.
 - `focus` at line 632 through 632: `void focus()`
   Moves keyboard focus to the control.
 - `resized` at line 634 through 640: `void resized() override`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `PluginEditor` at line 649 through 679: `PluginEditor::PluginEditor(TypePAlphaAudioProcessor& audioProcessor) : AudioProcessorEditor(&audioProcessor), processor_(audioProcessor)`
   Builds the editor, the header, the toolbar, the tabs and the first page, then starts the 30 Hz timer.
 - `~PluginEditor` at line 681 through 686: `PluginEditor::~PluginEditor()`
@@ -2286,7 +2286,7 @@ paths in depth.
 - `paint` at line 688 through 691: `void PluginEditor::paint(juce::Graphics& g)`
   Draws the component.
 - `resized` at line 693 through 707: `void PluginEditor::resized()`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `timerCallback` at line 709 through 724: `void PluginEditor::timerCallback()`
   Runs the startup fit and refreshes the live visualisers.
 - `fitToHostWindow` at line 726 through 763: `void PluginEditor::fitToHostWindow()`
@@ -3828,7 +3828,7 @@ paths in depth.
 - `setModArc` at line 531 through 540: `void ParamKnob::setModArc(double fraction)`
   Writes the mod arc.
 - `resized` at line 542 through 553: `void ParamKnob::resized()`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `paint` at line 555 through 555: `void ParamKnob::paint(juce::Graphics&)`
   Draws the component.
 - `updateValueText` at line 557 through 563: `void ParamKnob::updateValueText()`
@@ -3858,7 +3858,7 @@ paths in depth.
 - `ParamChoice` at line 713 through 731: `ParamChoice::ParamChoice(APVTS& state, const juce::String& paramID, juce::StringArray items)`
   Returns the param choice value.
 - `resized` at line 733 through 736: `void ParamChoice::resized()`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `updateFromNormalized` at line 738 through 745: `void ParamChoice::updateFromNormalized(float normalized)`
   Updates the from normalized.
 - `Tab` at line 747 through 754: `P1TabBar::Tab::Tab(const juce::String& label, int index, P1TabBar& owner) : juce::Button(label), index_(index), owner_(owner)`
@@ -3870,11 +3870,11 @@ paths in depth.
 - `setLabels` at line 786 through 800: `void P1TabBar::setLabels(const juce::StringArray& labels)`
   Writes the labels.
 - `setCompact` at line 802 through 809: `void P1TabBar::setCompact(bool compact)`
-  Writes the compact.
+  Sets the compact flag.
 - `setActive` at line 811 through 822: `void P1TabBar::setActive(int index)`
-  Writes the active.
+  Sets the active flag.
 - `resized` at line 824 through 868: `void P1TabBar::resized()`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `paint` at line 870 through 875: `void P1TabBar::paint(juce::Graphics& g)`
   Draws the component.
 - `P1Scope` at line 877 through 880: `P1Scope::P1Scope()`
@@ -3942,7 +3942,7 @@ paths in depth.
 - `setMacroFeedback` at line 1771 through 1781: `void P1LevelSlider::setMacroFeedback(bool targeted, bool hasEffective, double effective)`
   Writes the macro feedback.
 - `resized` at line 1783 through 1786: `void P1LevelSlider::resized()`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `paint` at line 1788 through 1853: `void P1LevelSlider::paint(juce::Graphics& g)`
   Draws the component.
 - `mouseDown` at line 1855 through 1858: `void P1LevelSlider::mouseDown(const juce::MouseEvent& event)`
@@ -3954,7 +3954,7 @@ paths in depth.
 - `P1VolumeSlider` at line 1878 through 1892: `P1VolumeSlider::P1VolumeSlider(APVTS& state, const juce::String& paramID) : state_(state), paramID_(paramID)`
   Returns the p 1 volume slider value.
 - `resized` at line 1894 through 1897: `void P1VolumeSlider::resized()`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `paint` at line 1899 through 1928: `void P1VolumeSlider::paint(juce::Graphics& g)`
   Draws the component.
 - `mouseDown` at line 1930 through 1933: `void P1VolumeSlider::mouseDown(const juce::MouseEvent& event)`
@@ -3968,7 +3968,7 @@ paths in depth.
 - `paint` at line 1966 through 1970: `void P1Card::paint(juce::Graphics& g)`
   Draws the component.
 - `resized` at line 1972 through 1982: `void P1Card::resized()`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `setHeaderTrailingWidth` at line 1984 through 1988: `void P1Card::setHeaderTrailingWidth(int width)`
   Writes the header trailing width.
 - `headerTrailingBounds` at line 1990 through 1994: `juce::Rectangle<int> P1Card::headerTrailingBounds() const`
@@ -3998,7 +3998,7 @@ paths in depth.
 - `paint` at line 2107 through 2124: `void P1Dialog::paint(juce::Graphics& g)`
   Draws the component.
 - `resized` at line 2126 through 2168: `void P1Dialog::resized()`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `mouseUp` at line 2170 through 2180: `void P1Dialog::mouseUp(const juce::MouseEvent& event)`
   Handles a mouse interaction.
 - `drawAlgorithmGraph` at line 2182 through 2348: `void drawAlgorithmGraph(juce::Graphics& g, juce::Rectangle<float> area, int algorithm, uint8_t ringMask, uint8_t directMask)`
@@ -4027,7 +4027,7 @@ paths in depth.
 - `setMacroFeedback` at line 68 through 69: `void setMacroFeedback(bool targeted, bool hasEffective, double effective) override`
   Writes the macro feedback.
 - `resized` at line 70 through 70: `void resized() override`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `paint` at line 71 through 71: `void paint(juce::Graphics& g) override`
   Draws the component.
 - `keyPressed` at line 85 through 90: `bool keyPressed(const juce::KeyPress& key) override`
@@ -4055,17 +4055,17 @@ paths in depth.
 - `P1Choice` at line 153 through 153: `P1Choice() = default`
   Constructs the object.
 - `resized` at line 160 through 160: `void resized() override`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `updateFromNormalized` at line 163 through 163: `void updateFromNormalized(float normalized)`
   Updates the from normalized.
 - `setLabels` at line 174 through 174: `void setLabels(const juce::StringArray& labels)`
   Writes the labels.
 - `setActive` at line 175 through 175: `void setActive(int index)`
-  Writes the active.
+  Sets the active flag.
 - `setCompact` at line 176 through 176: `void setCompact(bool compact)`
-  Writes the compact.
+  Sets the compact flag.
 - `resized` at line 177 through 177: `void resized() override`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `paint` at line 178 through 178: `void paint(juce::Graphics& g) override`
   Draws the component.
 - `paintButton` at line 185 through 185: `void paintButton(juce::Graphics& g, bool highlighted, bool down) override`
@@ -4123,7 +4123,7 @@ paths in depth.
 - `tick` at line 324 through 324: `void tick()`
   Repaint only when the drawn parameter state changed.
 - `resized` at line 338 through 338: `void resized() override`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `paint` at line 339 through 339: `void paint(juce::Graphics& g) override`
   Draws the component.
 - `mouseDown` at line 340 through 340: `void mouseDown(const juce::MouseEvent& event) override`
@@ -4137,7 +4137,7 @@ paths in depth.
 - `setFromMouse` at line 347 through 347: `void setFromMouse(const juce::MouseEvent& event)`
   Writes the from mouse.
 - `resized` at line 369 through 369: `void resized() override`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `paint` at line 370 through 370: `void paint(juce::Graphics& g) override`
   Draws the component.
 - `mouseDown` at line 371 through 371: `void mouseDown(const juce::MouseEvent& event) override`
@@ -4149,7 +4149,7 @@ paths in depth.
 - `paint` at line 388 through 388: `void paint(juce::Graphics& g) override`
   Draws the component.
 - `resized` at line 389 through 389: `void resized() override`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `setHeaderTrailingWidth` at line 391 through 391: `void setHeaderTrailingWidth(int width)`
   Writes the header trailing width.
 - `headerTrailingBounds` at line 392 through 392: `juce::Rectangle<int> headerTrailingBounds() const`
@@ -4175,7 +4175,7 @@ paths in depth.
 - `paint` at line 432 through 432: `void paint(juce::Graphics& g) override`
   Draws the component.
 - `resized` at line 433 through 433: `void resized() override`
-  Scales the fixed design canvas into the host window.
+  Lays out the child components.
 - `mouseUp` at line 434 through 434: `void mouseUp(const juce::MouseEvent& event) override`
   Handles a mouse interaction.
 
@@ -4206,53 +4206,53 @@ paths in depth.
   Tests whether the the global scope.
 - `class_scope` at line 190 through 196: `def class_scope(node, src: bytes)`
   Returns the class scope value.
-- `collect_c_family` at line 199 through 403: `def collect_c_family(path: Path)`
+- `collect_c_family` at line 199 through 410: `def collect_c_family(path: Path)`
   Returns the collect c family value.
 - `add_function` at line 217 through 254: `def add_function(node)`
   Adds the function.
-- `add_type` at line 256 through 294: `def add_type(node)`
+- `add_type` at line 256 through 301: `def add_type(node)`
   Adds the type.
-- `walk` at line 296 through 400: `def walk(node)`
+- `walk` at line 303 through 407: `def walk(node)`
   Returns the walk value.
-- `collect_python` at line 406 through 486: `def collect_python(path: Path)`
+- `collect_python` at line 413 through 493: `def collect_python(path: Path)`
   Returns the collect python value.
-- `docstring` at line 416 through 426: `def docstring(node)`
+- `docstring` at line 423 through 433: `def docstring(node)`
   Returns the docstring value.
-- `walk` at line 428 through 483: `def walk(node)`
+- `walk` at line 435 through 490: `def walk(node)`
   Returns the walk value.
-- `source_files` at line 489 through 497: `def source_files(include_dev: bool)`
+- `source_files` at line 496 through 504: `def source_files(include_dev: bool)`
   Returns the source files value.
-- `md_escape` at line 500 through 501: `def md_escape(value: str)`
+- `md_escape` at line 507 through 508: `def md_escape(value: str)`
   Returns the md escape value.
-- `file_summary` at line 504 through 562: `def file_summary(path: Path)`
+- `file_summary` at line 511 through 569: `def file_summary(path: Path)`
   The first prose sentence of the file's leading comment or heading.
-- `write_files` at line 616 through 677: `def write_files(paths: list[Path], out: Path)`
+- `write_files` at line 623 through 684: `def write_files(paths: list[Path], out: Path)`
   Writes the files.
-- `write_types` at line 680 through 719: `def write_types(types: list[Type], out: Path)`
+- `write_types` at line 687 through 745: `def write_types(types: list[Type], out: Path)`
   Writes the types.
-- `split_words` at line 873 through 878: `def split_words(name: str)`
+- `split_words` at line 899 through 904: `def split_words(name: str)`
   Splits a camelCase or snake_case identifier into lower-case words.
-- `inner_comment` at line 881 through 916: `def inner_comment(f: Function, lines: list[str])`
+- `inner_comment` at line 907 through 942: `def inner_comment(f: Function, lines: list[str])`
   The prose comment at the top of the function body, as one sentence.
-- `describe_function` at line 919 through 1171: `def describe_function(f: Function, lines: list[str])`
+- `describe_function` at line 945 through 1214: `def describe_function(f: Function, lines: list[str])`
   Returns the describe function value.
-- `write_functions` at line 1174 through 1229: `def write_functions(functions: list[Function], out: Path)`
+- `write_functions` at line 1217 through 1274: `def write_functions(functions: list[Function], out: Path)`
   Writes the functions.
-- `write_symbols` at line 1232 through 1253: `def write_symbols(symbols: list[Symbol], out: Path)`
+- `write_symbols` at line 1277 through 1298: `def write_symbols(symbols: list[Symbol], out: Path)`
   Writes the symbols.
-- `state_fields` at line 1256 through 1268: `def state_fields()`
+- `state_fields` at line 1301 through 1313: `def state_fields()`
   Returns the state fields value.
-- `write_state` at line 1271 through 1283: `def write_state(fields: list[tuple[str, str]], out: Path)`
+- `write_state` at line 1316 through 1328: `def write_state(fields: list[tuple[str, str]], out: Path)`
   Writes the state.
-- `write_parameters` at line 1286 through 1311: `def write_parameters(out: Path)`
+- `write_parameters` at line 1331 through 1356: `def write_parameters(out: Path)`
   Writes the parameters.
-- `render_walk` at line 1314 through 1394: `def render_walk()`
+- `render_walk` at line 1359 through 1439: `def render_walk()`
   Renders the walk.
-- `write_nodes` at line 1397 through 1427: `def write_nodes(out: Path)`
+- `write_nodes` at line 1442 through 1472: `def write_nodes(out: Path)`
   Writes the nodes.
-- `write_tests` at line 1430 through 1470: `def write_tests(out: Path)`
+- `write_tests` at line 1475 through 1515: `def write_tests(out: Path)`
   Writes the tests.
-- `main` at line 1473 through 1506: `def main()`
+- `main` at line 1518 through 1551: `def main()`
   Runs the test or tool entry point.
 
 ### `tools/gen_math_tables.py`

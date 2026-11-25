@@ -47,9 +47,9 @@ ring_.assign(ringSize_ * 2, 0);
 ```
 
 Each ring slot holds a stereo `int32_t` pair. The `+128` is the kernel history.
-The ring is a power-of-two-free modulo buffer, so the code uses `% ringSize_`
-rather than a mask. That is fine because the ring is large and the modulo is
-not the hot inner loop's only work.
+The ring size is not rounded to a power of two, so the code uses `% ringSize_`
+rather than a mask. That is fine because the ring is large and the modulo is not
+the hot inner loop's only work.
 
 `coreGenerated_` counts the core frames written into the ring. `outputIndex_`
 counts the host frames pulled out. The ratio is `48000 / hostRate`. At 44.1 kHz

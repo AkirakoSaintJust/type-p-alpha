@@ -279,7 +279,14 @@ def collect_c_family(path: Path) -> tuple[list[Function], list[Type], list[Symbo
                 elif child.type == "enumerator":
                     fields.append(clean_signature(text(child, src)))
                 elif child.type in ("function_definition", "function_declarator"):
-                    methods.append(clean_signature(text(child, src)))
+                    body_node = child.child_by_field_name("body")
+                    if body_node is not None:
+                        raw = src[child.start_byte : body_node.start_byte].decode(
+                            "utf-8", "replace"
+                        )
+                    else:
+                        raw = text(child, src)
+                    methods.append(clean_signature(raw))
         types.append(
             Type(
                 path=rel,
@@ -707,14 +714,33 @@ def write_types(types: list[Type], out: Path) -> None:
             lines.append("")
             lines.append("Fields and enumerators:")
             lines.append("")
-            for field_text in t.fields:
+            shown_fields = t.fields[:40]
+            for field_text in shown_fields:
+                if len(field_text) > 200:
+                    field_text = field_text[:197] + "..."
                 lines.append(f"- `{md_escape(field_text)}`")
+            hidden = len(t.fields) - len(shown_fields)
+            if hidden > 0:
+                if t.name == "type_p_alpha_state":
+                    lines.append(
+                        f"- ... and {hidden} more, listed one per row in `state-fields.md`."
+                    )
+                else:
+                    lines.append(f"- ... and {hidden} more fields.")
         if t.methods:
             lines.append("")
             lines.append("Methods:")
             lines.append("")
-            for method in t.methods:
+            shown_methods = t.methods[:60]
+            for method in shown_methods:
+                if len(method) > 200:
+                    method = method[:197] + "..."
                 lines.append(f"- `{md_escape(method)}`")
+            hidden = len(t.methods) - len(shown_methods)
+            if hidden > 0:
+                lines.append(
+                    f"- ... and {hidden} more, listed in `functions.md`."
+                )
         lines.append("")
     out.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
@@ -922,6 +948,10 @@ def describe_function(
     if f.description:
         return f.description
     name = f.name
+    if name == "resized":
+        if f.scope == "PluginEditor":
+            return "Scales the fixed design canvas into the host window."
+        return "Lays out the child components."
     if name in CORE_FUNCTIONS:
         return CORE_FUNCTIONS[name]
     scope = f.scope
@@ -1077,6 +1107,19 @@ def describe_function(
     if name.startswith("refresh"):
         rest = split_words(name[7:])
         return f"Refreshes the {rest} display." if rest else "Refreshes the display."
+    flags = {
+        "active",
+        "compact",
+        "selected",
+        "visible",
+        "enabled",
+        "muted",
+        "open",
+        "closed",
+        "bipolar",
+    }
+    if name.startswith("set") and name[3:].lower() in flags:
+        return f"Sets the {name[3:].lower()} flag."
     verb_prefixes = (
         ("get", "Reads"),
         ("set", "Writes"),
@@ -1202,8 +1245,10 @@ def write_functions(functions: list[Function], out: Path) -> None:
     for f in ordered:
         source_lines = cache[f.path]
         description = describe_function(f, source_lines, known)
-        if description and not description.endswith((".", ")", "`")):
-            description += "."
+        if description:
+            description = description[0].upper() + description[1:]
+            if not description.endswith((".", ")", "`")):
+                description += "."
         signature = f.signature
         if len(signature) > 180:
             signature = signature[:177] + "..."
