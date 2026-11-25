@@ -67,10 +67,11 @@ Their own documentation and licences stay with those sources.
 
 The reference pages use `path:line` locations. The line is the first line of the
 declaration or definition. The signature is the declaration text with the body
-removed. A description is the comment immediately above the declaration, or a
-short purpose derived from the declaration when the source has no comment.
-Trivial accessors and JUCE overrides are summarised by that derived purpose. The
-hand-written chapters cover the core functions and the actual call path.
+removed. A description is the comment immediately above the declaration, the
+comment at the top of the body, or a short purpose derived from the name, the
+scope and the return type. Trivial accessors and JUCE overrides are summarised
+by that derived purpose. The hand-written chapters cover the core functions and
+the actual call path.
 
 A symbol that appears in a header and in a source file appears twice when the
 declaration and the definition are both visible. That is deliberate. The header

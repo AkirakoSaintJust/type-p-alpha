@@ -1,9 +1,9 @@
 # Function and method index
 
 Every function definition and declaration found in the tracked C, C++ and
-Python sources. The description is the comment immediately above the
-declaration, or a short purpose derived from the declaration when the
-function has no leading comment. The hand-written chapters explain the core
+Python sources. A description is the comment above the declaration, the
+comment at the top of the body, or a short purpose derived from the name,
+the scope and the return type. The hand-written chapters explain the core
 paths in depth.
 
 | Function | Scope | File:Line | Signature | Description |
@@ -233,6 +233,14 @@ paths in depth.
 | `tick` | FeedbackEnvelopeCard | `plugin/juce/Pages.h:349` | `void tick()` | Refreshes the live display state. |
 | `LfoCard` | LfoCard | `plugin/juce/Pages.h:361` | `LfoCard(PluginEditor& editor, juce::String title, juce::String rateID, juce::String depthID, juce::String waveID, juce::String modeID, juce::String rateFadeID, juce::String dept...` | Constructs the object. |
 | `resized` | LfoCard | `plugin/juce/Pages.h:392` | `void resized() override` | Lays out the child components. |
+| `makePatchPage` |  | `plugin/juce/Pages.h:419` | `std::unique_ptr<PageBase> makePatchPage(PluginEditor& editor)` | Creates the patch page. |
+| `makeMacrosPage` |  | `plugin/juce/Pages.h:420` | `std::unique_ptr<PageBase> makeMacrosPage(PluginEditor& editor)` | Creates the macros page. |
+| `makeOperatorsPage` |  | `plugin/juce/Pages.h:421` | `std::unique_ptr<PageBase> makeOperatorsPage(PluginEditor& editor)` | Creates the operators page. |
+| `makeFxModPage` |  | `plugin/juce/Pages.h:422` | `std::unique_ptr<PageBase> makeFxModPage(PluginEditor& editor)` | Creates the FX mod page. |
+| `makeOperatorLfosPage` |  | `plugin/juce/Pages.h:423` | `std::unique_ptr<PageBase> makeOperatorLfosPage(PluginEditor& editor)` | Creates the operator LFOs page. |
+| `makePhaseMapPage` |  | `plugin/juce/Pages.h:424` | `std::unique_ptr<PageBase> makePhaseMapPage(PluginEditor& editor)` | Creates the phase map page. |
+| `makeOperatorSpectraPage` |  | `plugin/juce/Pages.h:425` | `std::unique_ptr<PageBase> makeOperatorSpectraPage(PluginEditor& editor, bool a)` | Creates the operator spectra page. |
+| `makeOperatorSpectraModPage` |  | `plugin/juce/Pages.h:426` | `std::unique_ptr<PageBase> makeOperatorSpectraModPage(PluginEditor& editor)` | Creates the operator spectra mod page. |
 | `FilterCard` | FilterCard | `plugin/juce/PagesFxMod.cpp:14` | `FilterCard(PluginEditor& editor, juce::String title, juce::String cutoffID, juce::String resID, juce::String typeID, juce::String onID, std::function<void()> onToPart = {}, juce...` | Constructs the object. |
 | `resized` | FilterCard | `plugin/juce/PagesFxMod.cpp:34` | `void resized() override` | Lays out the child components. |
 | `paint` | FilterCard | `plugin/juce/PagesFxMod.cpp:47` | `void paint(juce::Graphics& g) override` | Draws the component. |
@@ -1086,7 +1094,8 @@ paths in depth.
 | `macroRange` |  | `plugin/ui/ParamIDs.h:415` | `inline juce::String macroRange(int index, int destination)` | Returns the macro range value. |
 | `waveNames` |  | `plugin/ui/ParamIDs.h:420` | `inline juce::StringArray waveNames()` | Returns the wave names value. |
 | `lfoWaveNames` |  | `plugin/ui/ParamIDs.h:427` | `inline juce::StringArray lfoWaveNames()` | Returns the LFO wave names value. |
-| `analyseWaveTable` |  | `plugin/ui/SpectrumAnalysis.cpp:16` | `std::array<double, 64> analyseWaveTable(int wave, int firstHarmonic)` | Analyses the wave table. |
+| `analyseWaveTable` |  | `plugin/ui/SpectrumAnalysis.cpp:16` | `std::array<double, 64> analyseWaveTable(int wave, int firstHarmonic)` | Sixty-four harmonic magnitudes of one mip-0 wave table, normalised to 0..99. `firstHarmonic` is the 1-based harmonic of the first bar. Wave 14 has no table and returns zeros. |
+| `analyseWaveTable` |  | `plugin/ui/SpectrumAnalysis.h:11` | `std::array<double, 64> analyseWaveTable(int wave, int firstHarmonic = 1)` | Sixty-four harmonic magnitudes of one mip-0 wave table, normalised to 0..99. `firstHarmonic` is the 1-based harmonic of the first bar. Wave 14 has no table and returns zeros. |
 | `makeTypeface` |  | `plugin/ui/Theme.cpp:11` | `juce::Typeface::Ptr makeTypeface(const void* data, int size)` | Creates the typeface. |
 | `colour` |  | `plugin/ui/Theme.cpp:18` | `juce::Colour colour(std::uint32_t argb)` | Returns the colour value. |
 | `uiTypeface` |  | `plugin/ui/Theme.cpp:23` | `juce::Typeface::Ptr uiTypeface()` | Returns the UI typeface value. |
@@ -1095,7 +1104,7 @@ paths in depth.
 | `uiFont` |  | `plugin/ui/Theme.cpp:46` | `juce::Font uiFont(float height)` | Returns the UI font value. |
 | `displayFont` |  | `plugin/ui/Theme.cpp:51` | `juce::Font displayFont(float height)` | Returns the display font value. |
 | `brandFont` |  | `plugin/ui/Theme.cpp:56` | `juce::Font brandFont(float height)` | Returns the brand font value. |
-| `drawBoldText` |  | `plugin/ui/Theme.cpp:61` | `void drawBoldText(juce::Graphics& g, const juce::Font& font, const juce::String& text, juce::Rectangle<float> area, float extraWeight)` | Draws the bold text. |
+| `drawBoldText` |  | `plugin/ui/Theme.cpp:61` | `void drawBoldText(juce::Graphics& g, const juce::Font& font, const juce::String& text, juce::Rectangle<float> area, float extraWeight)` | Zen Dots has one weight, so the R boxes widen the outline to read bold. |
 | `textWidth` |  | `plugin/ui/Theme.cpp:77` | `float textWidth(const juce::Font& font, const juce::String& text)` | Returns the text width value. |
 | `drawSectionTitle` |  | `plugin/ui/Theme.cpp:86` | `void drawSectionTitle(juce::Graphics& g, juce::Rectangle<int> area, const juce::String& title)` | Draws the section title. |
 | `P1LookAndFeel` |  | `plugin/ui/Theme.cpp:97` | `P1LookAndFeel::P1LookAndFeel()` | Returns the p 1 look and feel value. |
@@ -1105,6 +1114,16 @@ paths in depth.
 | `drawPopupMenuItem` |  | `plugin/ui/Theme.cpp:148` | `void P1LookAndFeel::drawPopupMenuItem( juce::Graphics& g, const juce::Rectangle<int>& area, bool isSeparator, bool isActive, bool isHighlighted, bool isTicked, bool, const juce:...` | Draws the popup menu item. |
 | `drawScrollbar` |  | `plugin/ui/Theme.cpp:174` | `void P1LookAndFeel::drawScrollbar(juce::Graphics& g, juce::ScrollBar&, int, int, int width, int height, bool isScrollbarVertical, int thumbStartPosition, int thumbSize, bool, bool)` | Draws the scrollbar. |
 | `drawRotarySlider` |  | `plugin/ui/Theme.cpp:187` | `void KnobLookAndFeel::drawRotarySlider(juce::Graphics& g, int x, int y, int width, int height, float sliderPos, float rotaryStartAngle, float rotaryEndAngle, juce::Slider& slider)` | Draws the rotary slider. |
+| `colour` |  | `plugin/ui/Theme.h:12` | `juce::Colour colour(std::uint32_t argb)` | Returns the colour value. |
+| `uiTypeface` |  | `plugin/ui/Theme.h:14` | `juce::Typeface::Ptr uiTypeface()` | Returns the UI typeface value. |
+| `displayTypeface` |  | `plugin/ui/Theme.h:15` | `juce::Typeface::Ptr displayTypeface()` | Returns the display typeface value. |
+| `brandTypeface` |  | `plugin/ui/Theme.h:16` | `juce::Typeface::Ptr brandTypeface()` | The provisional wordmark's alpha takes the bold cut, so it has real * weight rather than a second draw at an offset. |
+| `uiFont` |  | `plugin/ui/Theme.h:18` | `juce::Font uiFont(float height)` | Returns the UI font value. |
+| `displayFont` |  | `plugin/ui/Theme.h:19` | `juce::Font displayFont(float height)` | Returns the display font value. |
+| `brandFont` |  | `plugin/ui/Theme.h:20` | `juce::Font brandFont(float height)` | Returns the brand font value. |
+| `textWidth` |  | `plugin/ui/Theme.h:21` | `float textWidth(const juce::Font& font, const juce::String& text)` | Returns the text width value. |
+| `drawBoldText` |  | `plugin/ui/Theme.h:24` | `void drawBoldText(juce::Graphics& g, const juce::Font& font, const juce::String& text, juce::Rectangle<float> area, float extraWeight)` | Zen Dots has one weight, so the R boxes widen the outline to read bold. |
+| `drawSectionTitle` |  | `plugin/ui/Theme.h:28` | `void drawSectionTitle(juce::Graphics& g, juce::Rectangle<int> area, const juce::String& title)` | Draws the section title. |
 | `drawComboBox` | P1LookAndFeel | `plugin/ui/Theme.h:35` | `void drawComboBox(juce::Graphics& g, int width, int height, bool isButtonDown, int buttonX, int buttonY, int buttonW, int buttonH, juce::ComboBox& box) override` | Draws the combo box. |
 | `positionComboBoxText` | P1LookAndFeel | `plugin/ui/Theme.h:38` | `void positionComboBoxText(juce::ComboBox& box, juce::Label& label) override` | Runs the position combo box text step for the surrounding code. |
 | `drawPopupMenuBackground` | P1LookAndFeel | `plugin/ui/Theme.h:39` | `void drawPopupMenuBackground(juce::Graphics& g, int width, int height) override` | Draws the popup menu background. |
@@ -1118,10 +1137,10 @@ paths in depth.
 | `notePair` |  | `plugin/ui/Widgets.cpp:67` | `juce::String notePair(int note)` | Returns the note pair value. |
 | `percentage` |  | `plugin/ui/Widgets.cpp:74` | `juce::String percentage(const P1ParamSpec& spec, double value, bool inverse)` | Returns the percentage value. |
 | `findSpec` |  | `plugin/ui/Widgets.cpp:88` | `const P1ParamSpec* findSpec(const juce::String& id)` | Finds the spec. |
-| `volumeText` |  | `plugin/ui/Widgets.cpp:97` | `juce::String volumeText(int position)` | Returns the volume text value. |
+| `volumeText` |  | `plugin/ui/Widgets.cpp:97` | `juce::String volumeText(int position)` | The master volume fader position as dB text, and back. The law is in VolumeLaw.h, which the processor and the header slider share. |
 | `volumePositionFromText` |  | `plugin/ui/Widgets.cpp:106` | `int volumePositionFromText(const juce::String& text)` | Returns the volume position from text value. |
 | `formatParamValue` |  | `plugin/ui/Widgets.cpp:121` | `juce::String formatParamValue(const P1ParamSpec& spec, double value)` | Formats the param value. |
-| `formatParamValuePlain` |  | `plugin/ui/Widgets.cpp:222` | `juce::String formatParamValuePlain(const P1ParamSpec& spec, double value)` | Formats the param value plain. |
+| `formatParamValuePlain` |  | `plugin/ui/Widgets.cpp:222` | `juce::String formatParamValuePlain(const P1ParamSpec& spec, double value)` | The same value without its unit, for the effective value beside a stored one. |
 | `parseParamValue` |  | `plugin/ui/Widgets.cpp:237` | `double parseParamValue(const P1ParamSpec& spec, const juce::String& text)` | Parses the param value. |
 | `ParamValueLabel` |  | `plugin/ui/Widgets.cpp:338` | `ParamValueLabel::ParamValueLabel() : storedColour_(juce::Colours::white), effectiveColour_(juce::Colours::white)` | Returns the param value label value. |
 | `setStoredColour` |  | `plugin/ui/Widgets.cpp:343` | `void ParamValueLabel::setStoredColour(juce::Colour colour)` | Writes the stored colour. |
@@ -1221,6 +1240,12 @@ paths in depth.
 | `resized` |  | `plugin/ui/Widgets.cpp:2126` | `void P1Dialog::resized()` | Lays out the child components. |
 | `mouseUp` |  | `plugin/ui/Widgets.cpp:2170` | `void P1Dialog::mouseUp(const juce::MouseEvent& event)` | Handles a mouse interaction. |
 | `drawAlgorithmGraph` |  | `plugin/ui/Widgets.cpp:2182` | `void drawAlgorithmGraph(juce::Graphics& g, juce::Rectangle<float> area, int algorithm, uint8_t ringMask, uint8_t directMask)` | Draws the algorithm graph. |
+| `findSpec` |  | `plugin/ui/Widgets.h:21` | `const P1ParamSpec* findSpec(const juce::String& id)` | Finds the spec. |
+| `formatParamValue` |  | `plugin/ui/Widgets.h:22` | `juce::String formatParamValue(const P1ParamSpec& spec, double value)` | Formats the param value. |
+| `formatParamValuePlain` |  | `plugin/ui/Widgets.h:24` | `juce::String formatParamValuePlain(const P1ParamSpec& spec, double value)` | The same value without its unit, for the effective value beside a stored one. |
+| `parseParamValue` |  | `plugin/ui/Widgets.h:25` | `double parseParamValue(const P1ParamSpec& spec, const juce::String& text)` | Parses the param value. |
+| `volumeText` |  | `plugin/ui/Widgets.h:29` | `juce::String volumeText(int position)` | The master volume fader position as dB text, and back. The law is in VolumeLaw.h, which the processor and the header slider share. |
+| `volumePositionFromText` |  | `plugin/ui/Widgets.h:30` | `int volumePositionFromText(const juce::String& text)` | Returns the volume position from text value. |
 | `~MacroFeedbackTarget` | MacroFeedbackTarget | `plugin/ui/Widgets.h:37` | `virtual ~MacroFeedbackTarget() = default` | Destroys the object. |
 | `macroParamIndex` | MacroFeedbackTarget | `plugin/ui/Widgets.h:38` | `virtual int macroParamIndex() const = 0` | Returns the manifest index used for macro feedback. |
 | `setMacroFeedback` | MacroFeedbackTarget | `plugin/ui/Widgets.h:39` | `virtual void setMacroFeedback(bool targeted, bool hasEffective, double effective) = 0` | Writes the macro feedback. |
@@ -1307,6 +1332,7 @@ paths in depth.
 | `paint` | P1Dialog | `plugin/ui/Widgets.h:432` | `void paint(juce::Graphics& g) override` | Draws the component. |
 | `resized` | P1Dialog | `plugin/ui/Widgets.h:433` | `void resized() override` | Lays out the child components. |
 | `mouseUp` | P1Dialog | `plugin/ui/Widgets.h:434` | `void mouseUp(const juce::MouseEvent& event) override` | Handles a mouse interaction. |
+| `drawAlgorithmGraph` |  | `plugin/ui/Widgets.h:447` | `void drawAlgorithmGraph(juce::Graphics& g, juce::Rectangle<float> area, int algorithm, uint8_t ringMask = 0, uint8_t directMask = 0)` | Draws the algorithm graph. |
 | `load` |  | `tools/audit_modules.py:23` | `def load(path: Path)` | Returns the load value. |
 | `module_spec` |  | `tools/audit_modules.py:27` | `def module_spec(kind: str)` | Returns the module spec value. |
 | `target_node` |  | `tools/audit_modules.py:35` | `def target_node(value: object)` | Returns the target node value. |
@@ -1317,31 +1343,31 @@ paths in depth.
 | `clean_signature` |  | `tools/gen_code_docs.py:153` | `def clean_signature(value: str)` | Returns the clean signature value. |
 | `parser_for` |  | `tools/gen_code_docs.py:159` | `def parser_for(path: Path)` | Parses the r for. |
 | `is_global_scope` |  | `tools/gen_code_docs.py:167` | `def is_global_scope(node)` | Tests whether the the global scope. |
-| `class_scope` |  | `tools/gen_code_docs.py:190` | `def class_scope(node, src: bytes)` | Returns the class scope value. |
-| `collect_c_family` |  | `tools/gen_code_docs.py:199` | `def collect_c_family(path: Path)` | Returns the collect c family value. |
-| `add_function` |  | `tools/gen_code_docs.py:217` | `def add_function(node)` | Adds the function. |
-| `add_type` |  | `tools/gen_code_docs.py:256` | `def add_type(node)` | Adds the type. |
-| `walk` |  | `tools/gen_code_docs.py:303` | `def walk(node)` | Returns the walk value. |
-| `collect_python` |  | `tools/gen_code_docs.py:413` | `def collect_python(path: Path)` | Returns the collect python value. |
-| `docstring` |  | `tools/gen_code_docs.py:423` | `def docstring(node)` | Returns the docstring value. |
-| `walk` |  | `tools/gen_code_docs.py:435` | `def walk(node)` | Returns the walk value. |
-| `source_files` |  | `tools/gen_code_docs.py:496` | `def source_files(include_dev: bool)` | Returns the source files value. |
-| `md_escape` |  | `tools/gen_code_docs.py:507` | `def md_escape(value: str)` | Returns the md escape value. |
-| `file_summary` |  | `tools/gen_code_docs.py:511` | `def file_summary(path: Path)` | The first prose sentence of the file's leading comment or heading. |
-| `write_files` |  | `tools/gen_code_docs.py:623` | `def write_files(paths: list[Path], out: Path)` | Writes the files. |
-| `write_types` |  | `tools/gen_code_docs.py:687` | `def write_types(types: list[Type], out: Path)` | Writes the types. |
-| `split_words` |  | `tools/gen_code_docs.py:899` | `def split_words(name: str)` | Splits a camelCase or snake_case identifier into lower-case words. |
-| `inner_comment` |  | `tools/gen_code_docs.py:907` | `def inner_comment(f: Function, lines: list[str])` | The prose comment at the top of the function body, as one sentence. |
-| `describe_function` |  | `tools/gen_code_docs.py:945` | `def describe_function(f: Function, lines: list[str])` | Returns the describe function value. |
-| `write_functions` |  | `tools/gen_code_docs.py:1217` | `def write_functions(functions: list[Function], out: Path)` | Writes the functions. |
-| `write_symbols` |  | `tools/gen_code_docs.py:1277` | `def write_symbols(symbols: list[Symbol], out: Path)` | Writes the symbols. |
-| `state_fields` |  | `tools/gen_code_docs.py:1301` | `def state_fields()` | Returns the state fields value. |
-| `write_state` |  | `tools/gen_code_docs.py:1316` | `def write_state(fields: list[tuple[str, str]], out: Path)` | Writes the state. |
-| `write_parameters` |  | `tools/gen_code_docs.py:1331` | `def write_parameters(out: Path)` | Writes the parameters. |
-| `render_walk` |  | `tools/gen_code_docs.py:1359` | `def render_walk()` | Renders the walk. |
-| `write_nodes` |  | `tools/gen_code_docs.py:1442` | `def write_nodes(out: Path)` | Writes the nodes. |
-| `write_tests` |  | `tools/gen_code_docs.py:1475` | `def write_tests(out: Path)` | Writes the tests. |
-| `main` |  | `tools/gen_code_docs.py:1518` | `def main()` | Runs the test or tool entry point. |
+| `class_scope` |  | `tools/gen_code_docs.py:197` | `def class_scope(node, src: bytes)` | Returns the class scope value. |
+| `collect_c_family` |  | `tools/gen_code_docs.py:206` | `def collect_c_family(path: Path)` | Returns the collect c family value. |
+| `add_function` |  | `tools/gen_code_docs.py:224` | `def add_function(node)` | Adds the function. |
+| `add_type` |  | `tools/gen_code_docs.py:263` | `def add_type(node)` | Adds the type. |
+| `walk` |  | `tools/gen_code_docs.py:310` | `def walk(node)` | Returns the walk value. |
+| `collect_python` |  | `tools/gen_code_docs.py:420` | `def collect_python(path: Path)` | Returns the collect python value. |
+| `docstring` |  | `tools/gen_code_docs.py:430` | `def docstring(node)` | Returns the docstring value. |
+| `walk` |  | `tools/gen_code_docs.py:442` | `def walk(node)` | Returns the walk value. |
+| `source_files` |  | `tools/gen_code_docs.py:503` | `def source_files(include_dev: bool)` | Returns the source files value. |
+| `md_escape` |  | `tools/gen_code_docs.py:514` | `def md_escape(value: str)` | Returns the md escape value. |
+| `file_summary` |  | `tools/gen_code_docs.py:518` | `def file_summary(path: Path)` | The first prose sentence of the file's leading comment or heading. |
+| `write_files` |  | `tools/gen_code_docs.py:630` | `def write_files(paths: list[Path], out: Path)` | Writes the files. |
+| `write_types` |  | `tools/gen_code_docs.py:694` | `def write_types(types: list[Type], out: Path)` | Writes the types. |
+| `split_words` |  | `tools/gen_code_docs.py:906` | `def split_words(name: str)` | Splits a camelCase or snake_case identifier into lower-case words. |
+| `inner_comment` |  | `tools/gen_code_docs.py:914` | `def inner_comment(f: Function, lines: list[str])` | The prose comment at the top of the function body, as one sentence. |
+| `describe_function` |  | `tools/gen_code_docs.py:952` | `def describe_function(f: Function, lines: list[str])` | Returns the describe function value. |
+| `write_functions` |  | `tools/gen_code_docs.py:1224` | `def write_functions(functions: list[Function], out: Path)` | Writes the functions. |
+| `write_symbols` |  | `tools/gen_code_docs.py:1284` | `def write_symbols(symbols: list[Symbol], out: Path)` | Writes the symbols. |
+| `state_fields` |  | `tools/gen_code_docs.py:1309` | `def state_fields()` | Returns the state fields value. |
+| `write_state` |  | `tools/gen_code_docs.py:1324` | `def write_state(fields: list[tuple[str, str]], out: Path)` | Writes the state. |
+| `write_parameters` |  | `tools/gen_code_docs.py:1339` | `def write_parameters(out: Path)` | Writes the parameters. |
+| `render_walk` |  | `tools/gen_code_docs.py:1367` | `def render_walk()` | Renders the walk. |
+| `write_nodes` |  | `tools/gen_code_docs.py:1450` | `def write_nodes(out: Path)` | Writes the nodes. |
+| `write_tests` |  | `tools/gen_code_docs.py:1483` | `def write_tests(out: Path)` | Writes the tests. |
+| `main` |  | `tools/gen_code_docs.py:1526` | `def main()` | Runs the test or tool entry point. |
 | `q15` |  | `tools/gen_math_tables.py:40` | `def q15(x: float)` | Returns the q 15 value. |
 | `q16` |  | `tools/gen_math_tables.py:45` | `def q16(x: float)` | Returns the q 16 value. |
 | `c_array` |  | `tools/gen_math_tables.py:50` | `def c_array(ctype: str, name: str, values: list[int], width: int)` | Returns the c array value. |
@@ -1877,6 +1903,22 @@ paths in depth.
   Constructs the object.
 - `resized` at line 392 through 407: `void resized() override`
   Lays out the child components.
+- `makePatchPage` at line 419 through 419: `std::unique_ptr<PageBase> makePatchPage(PluginEditor& editor)`
+  Creates the patch page.
+- `makeMacrosPage` at line 420 through 420: `std::unique_ptr<PageBase> makeMacrosPage(PluginEditor& editor)`
+  Creates the macros page.
+- `makeOperatorsPage` at line 421 through 421: `std::unique_ptr<PageBase> makeOperatorsPage(PluginEditor& editor)`
+  Creates the operators page.
+- `makeFxModPage` at line 422 through 422: `std::unique_ptr<PageBase> makeFxModPage(PluginEditor& editor)`
+  Creates the FX mod page.
+- `makeOperatorLfosPage` at line 423 through 423: `std::unique_ptr<PageBase> makeOperatorLfosPage(PluginEditor& editor)`
+  Creates the operator LFOs page.
+- `makePhaseMapPage` at line 424 through 424: `std::unique_ptr<PageBase> makePhaseMapPage(PluginEditor& editor)`
+  Creates the phase map page.
+- `makeOperatorSpectraPage` at line 425 through 425: `std::unique_ptr<PageBase> makeOperatorSpectraPage(PluginEditor& editor, bool a)`
+  Creates the operator spectra page.
+- `makeOperatorSpectraModPage` at line 426 through 426: `std::unique_ptr<PageBase> makeOperatorSpectraModPage(PluginEditor& editor)`
+  Creates the operator spectra mod page.
 
 ### `plugin/juce/PagesFxMod.cpp`
 
@@ -3725,7 +3767,12 @@ paths in depth.
 ### `plugin/ui/SpectrumAnalysis.cpp`
 
 - `analyseWaveTable` at line 16 through 42: `std::array<double, 64> analyseWaveTable(int wave, int firstHarmonic)`
-  Analyses the wave table.
+  Sixty-four harmonic magnitudes of one mip-0 wave table, normalised to 0..99. `firstHarmonic` is the 1-based harmonic of the first bar. Wave 14 has no table and returns zeros.
+
+### `plugin/ui/SpectrumAnalysis.h`
+
+- `analyseWaveTable` at line 11 through 11: `std::array<double, 64> analyseWaveTable(int wave, int firstHarmonic = 1)`
+  Sixty-four harmonic magnitudes of one mip-0 wave table, normalised to 0..99. `firstHarmonic` is the 1-based harmonic of the first bar. Wave 14 has no table and returns zeros.
 
 ### `plugin/ui/Theme.cpp`
 
@@ -3746,7 +3793,7 @@ paths in depth.
 - `brandFont` at line 56 through 59: `juce::Font brandFont(float height)`
   Returns the brand font value.
 - `drawBoldText` at line 61 through 75: `void drawBoldText(juce::Graphics& g, const juce::Font& font, const juce::String& text, juce::Rectangle<float> area, float extraWeight)`
-  Draws the bold text.
+  Zen Dots has one weight, so the R boxes widen the outline to read bold.
 - `textWidth` at line 77 through 84: `float textWidth(const juce::Font& font, const juce::String& text)`
   Returns the text width value.
 - `drawSectionTitle` at line 86 through 95: `void drawSectionTitle(juce::Graphics& g, juce::Rectangle<int> area, const juce::String& title)`
@@ -3768,6 +3815,26 @@ paths in depth.
 
 ### `plugin/ui/Theme.h`
 
+- `colour` at line 12 through 12: `juce::Colour colour(std::uint32_t argb)`
+  Returns the colour value.
+- `uiTypeface` at line 14 through 14: `juce::Typeface::Ptr uiTypeface()`
+  Returns the UI typeface value.
+- `displayTypeface` at line 15 through 15: `juce::Typeface::Ptr displayTypeface()`
+  Returns the display typeface value.
+- `brandTypeface` at line 16 through 16: `juce::Typeface::Ptr brandTypeface()`
+  The provisional wordmark's alpha takes the bold cut, so it has real * weight rather than a second draw at an offset.
+- `uiFont` at line 18 through 18: `juce::Font uiFont(float height)`
+  Returns the UI font value.
+- `displayFont` at line 19 through 19: `juce::Font displayFont(float height)`
+  Returns the display font value.
+- `brandFont` at line 20 through 20: `juce::Font brandFont(float height)`
+  Returns the brand font value.
+- `textWidth` at line 21 through 21: `float textWidth(const juce::Font& font, const juce::String& text)`
+  Returns the text width value.
+- `drawBoldText` at line 24 through 26: `void drawBoldText(juce::Graphics& g, const juce::Font& font, const juce::String& text, juce::Rectangle<float> area, float extraWeight)`
+  Zen Dots has one weight, so the R boxes widen the outline to read bold.
+- `drawSectionTitle` at line 28 through 29: `void drawSectionTitle(juce::Graphics& g, juce::Rectangle<int> area, const juce::String& title)`
+  Draws the section title.
 - `drawComboBox` at line 35 through 37: `void drawComboBox(juce::Graphics& g, int width, int height, bool isButtonDown, int buttonX, int buttonY, int buttonW, int buttonH, juce::ComboBox& box) override`
   Draws the combo box.
 - `positionComboBoxText` at line 38 through 38: `void positionComboBoxText(juce::ComboBox& box, juce::Label& label) override`
@@ -3798,13 +3865,13 @@ paths in depth.
 - `findSpec` at line 88 through 95: `const P1ParamSpec* findSpec(const juce::String& id)`
   Finds the spec.
 - `volumeText` at line 97 through 104: `juce::String volumeText(int position)`
-  Returns the volume text value.
+  The master volume fader position as dB text, and back. The law is in VolumeLaw.h, which the processor and the header slider share.
 - `volumePositionFromText` at line 106 through 119: `int volumePositionFromText(const juce::String& text)`
   Returns the volume position from text value.
 - `formatParamValue` at line 121 through 220: `juce::String formatParamValue(const P1ParamSpec& spec, double value)`
   Formats the param value.
 - `formatParamValuePlain` at line 222 through 235: `juce::String formatParamValuePlain(const P1ParamSpec& spec, double value)`
-  Formats the param value plain.
+  The same value without its unit, for the effective value beside a stored one.
 - `parseParamValue` at line 237 through 336: `double parseParamValue(const P1ParamSpec& spec, const juce::String& text)`
   Parses the param value.
 - `ParamValueLabel` at line 338 through 341: `ParamValueLabel::ParamValueLabel() : storedColour_(juce::Colours::white), effectiveColour_(juce::Colours::white)`
@@ -4006,6 +4073,18 @@ paths in depth.
 
 ### `plugin/ui/Widgets.h`
 
+- `findSpec` at line 21 through 21: `const P1ParamSpec* findSpec(const juce::String& id)`
+  Finds the spec.
+- `formatParamValue` at line 22 through 22: `juce::String formatParamValue(const P1ParamSpec& spec, double value)`
+  Formats the param value.
+- `formatParamValuePlain` at line 24 through 24: `juce::String formatParamValuePlain(const P1ParamSpec& spec, double value)`
+  The same value without its unit, for the effective value beside a stored one.
+- `parseParamValue` at line 25 through 25: `double parseParamValue(const P1ParamSpec& spec, const juce::String& text)`
+  Parses the param value.
+- `volumeText` at line 29 through 29: `juce::String volumeText(int position)`
+  The master volume fader position as dB text, and back. The law is in VolumeLaw.h, which the processor and the header slider share.
+- `volumePositionFromText` at line 30 through 30: `int volumePositionFromText(const juce::String& text)`
+  Returns the volume position from text value.
 - `~MacroFeedbackTarget` at line 37 through 37: `virtual ~MacroFeedbackTarget() = default`
   Destroys the object.
 - `macroParamIndex` at line 38 through 38: `virtual int macroParamIndex() const = 0`
@@ -4178,6 +4257,8 @@ paths in depth.
   Lays out the child components.
 - `mouseUp` at line 434 through 434: `void mouseUp(const juce::MouseEvent& event) override`
   Handles a mouse interaction.
+- `drawAlgorithmGraph` at line 447 through 449: `void drawAlgorithmGraph(juce::Graphics& g, juce::Rectangle<float> area, int algorithm, uint8_t ringMask = 0, uint8_t directMask = 0)`
+  Draws the algorithm graph.
 
 ### `tools/audit_modules.py`
 
@@ -4202,57 +4283,57 @@ paths in depth.
   Returns the clean signature value.
 - `parser_for` at line 159 through 164: `def parser_for(path: Path)`
   Parses the r for.
-- `is_global_scope` at line 167 through 187: `def is_global_scope(node)`
+- `is_global_scope` at line 167 through 194: `def is_global_scope(node)`
   Tests whether the the global scope.
-- `class_scope` at line 190 through 196: `def class_scope(node, src: bytes)`
+- `class_scope` at line 197 through 203: `def class_scope(node, src: bytes)`
   Returns the class scope value.
-- `collect_c_family` at line 199 through 410: `def collect_c_family(path: Path)`
+- `collect_c_family` at line 206 through 417: `def collect_c_family(path: Path)`
   Returns the collect c family value.
-- `add_function` at line 217 through 254: `def add_function(node)`
+- `add_function` at line 224 through 261: `def add_function(node)`
   Adds the function.
-- `add_type` at line 256 through 301: `def add_type(node)`
+- `add_type` at line 263 through 308: `def add_type(node)`
   Adds the type.
-- `walk` at line 303 through 407: `def walk(node)`
+- `walk` at line 310 through 414: `def walk(node)`
   Returns the walk value.
-- `collect_python` at line 413 through 493: `def collect_python(path: Path)`
+- `collect_python` at line 420 through 500: `def collect_python(path: Path)`
   Returns the collect python value.
-- `docstring` at line 423 through 433: `def docstring(node)`
+- `docstring` at line 430 through 440: `def docstring(node)`
   Returns the docstring value.
-- `walk` at line 435 through 490: `def walk(node)`
+- `walk` at line 442 through 497: `def walk(node)`
   Returns the walk value.
-- `source_files` at line 496 through 504: `def source_files(include_dev: bool)`
+- `source_files` at line 503 through 511: `def source_files(include_dev: bool)`
   Returns the source files value.
-- `md_escape` at line 507 through 508: `def md_escape(value: str)`
+- `md_escape` at line 514 through 515: `def md_escape(value: str)`
   Returns the md escape value.
-- `file_summary` at line 511 through 569: `def file_summary(path: Path)`
+- `file_summary` at line 518 through 576: `def file_summary(path: Path)`
   The first prose sentence of the file's leading comment or heading.
-- `write_files` at line 623 through 684: `def write_files(paths: list[Path], out: Path)`
+- `write_files` at line 630 through 691: `def write_files(paths: list[Path], out: Path)`
   Writes the files.
-- `write_types` at line 687 through 745: `def write_types(types: list[Type], out: Path)`
+- `write_types` at line 694 through 752: `def write_types(types: list[Type], out: Path)`
   Writes the types.
-- `split_words` at line 899 through 904: `def split_words(name: str)`
+- `split_words` at line 906 through 911: `def split_words(name: str)`
   Splits a camelCase or snake_case identifier into lower-case words.
-- `inner_comment` at line 907 through 942: `def inner_comment(f: Function, lines: list[str])`
+- `inner_comment` at line 914 through 949: `def inner_comment(f: Function, lines: list[str])`
   The prose comment at the top of the function body, as one sentence.
-- `describe_function` at line 945 through 1214: `def describe_function(f: Function, lines: list[str])`
+- `describe_function` at line 952 through 1221: `def describe_function(f: Function, lines: list[str])`
   Returns the describe function value.
-- `write_functions` at line 1217 through 1274: `def write_functions(functions: list[Function], out: Path)`
+- `write_functions` at line 1224 through 1281: `def write_functions(functions: list[Function], out: Path)`
   Writes the functions.
-- `write_symbols` at line 1277 through 1298: `def write_symbols(symbols: list[Symbol], out: Path)`
+- `write_symbols` at line 1284 through 1306: `def write_symbols(symbols: list[Symbol], out: Path)`
   Writes the symbols.
-- `state_fields` at line 1301 through 1313: `def state_fields()`
+- `state_fields` at line 1309 through 1321: `def state_fields()`
   Returns the state fields value.
-- `write_state` at line 1316 through 1328: `def write_state(fields: list[tuple[str, str]], out: Path)`
+- `write_state` at line 1324 through 1336: `def write_state(fields: list[tuple[str, str]], out: Path)`
   Writes the state.
-- `write_parameters` at line 1331 through 1356: `def write_parameters(out: Path)`
+- `write_parameters` at line 1339 through 1364: `def write_parameters(out: Path)`
   Writes the parameters.
-- `render_walk` at line 1359 through 1439: `def render_walk()`
+- `render_walk` at line 1367 through 1447: `def render_walk()`
   Renders the walk.
-- `write_nodes` at line 1442 through 1472: `def write_nodes(out: Path)`
+- `write_nodes` at line 1450 through 1480: `def write_nodes(out: Path)`
   Writes the nodes.
-- `write_tests` at line 1475 through 1515: `def write_tests(out: Path)`
+- `write_tests` at line 1483 through 1523: `def write_tests(out: Path)`
   Writes the tests.
-- `main` at line 1518 through 1551: `def main()`
+- `main` at line 1526 through 1559: `def main()`
   Runs the test or tool entry point.
 
 ### `tools/gen_math_tables.py`

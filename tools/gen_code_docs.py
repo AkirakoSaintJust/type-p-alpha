@@ -173,11 +173,18 @@ def is_global_scope(node) -> bool:
             "linkage_specification",
         ):
             return True
+        if parent.type == "declaration_list":
+            # A namespace body is global scope. A class, struct or union body is
+            # not, and it has the same node type.
+            owner = parent.parent
+            if owner is not None and owner.type == "namespace_definition":
+                parent = owner.parent
+                continue
+            return False
         if parent.type in (
             "class_specifier",
             "struct_specifier",
             "union_specifier",
-            "declaration_list",
             "field_declaration_list",
             "function_definition",
             "compound_statement",
@@ -342,7 +349,7 @@ def collect_c_family(path: Path) -> tuple[list[Function], list[Type], list[Symbo
                             name=name,
                             kind="macro",
                             value=clean_signature(text(node, src)),
-                            description="",
+                            description=clean_comment(lines, first),
                         )
                     )
         elif t == "declaration" and is_global_scope(node):
@@ -1219,9 +1226,9 @@ def write_functions(functions: list[Function], out: Path) -> None:
         "# Function and method index",
         "",
         "Every function definition and declaration found in the tracked C, C++ and",
-        "Python sources. The description is the comment immediately above the",
-        "declaration, or a short purpose derived from the declaration when the",
-        "function has no leading comment. The hand-written chapters explain the core",
+        "Python sources. A description is the comment above the declaration, the",
+        "comment at the top of the body, or a short purpose derived from the name,",
+        "the scope and the return type. The hand-written chapters explain the core",
         "paths in depth.",
         "",
         "| Function | Scope | File:Line | Signature | Description |",
@@ -1280,7 +1287,8 @@ def write_symbols(symbols: list[Symbol], out: Path) -> None:
         "",
         "Every macro, global variable, alias, using declaration and Python module",
         "constant found in the tracked sources. Generated state aliases are omitted",
-        "because the state field index covers the same names.",
+        "because the state field index covers the same names. The value column is the",
+        "definition. An empty description means the declaration has no leading comment.",
         "",
         "| Symbol | Kind | File:Line | Value | Description |",
         "| --- | --- | --- | --- | --- |",

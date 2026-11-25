@@ -93,7 +93,7 @@ Every tracked source and build file, with its line count and role.
 | `plugin/ui/Widgets.cpp` | 2350 | C++ | panel widget painting, parameter binding and edit gestures |
 | `plugin/ui/Widgets.h` | 451 | C/C++ header | panel widget declarations: cards, knobs, toggles, bars and scopes |
 | `tools/audit_modules.py` | 135 | Python | wavetable and maths table generators |
-| `tools/gen_code_docs.py` | 1555 | Python | wavetable and maths table generators |
+| `tools/gen_code_docs.py` | 1563 | Python | wavetable and maths table generators |
 | `tools/gen_math_tables.py` | 172 | Python | wavetable and maths table generators |
 | `tools/gen_wavetable.py` | 241 | Python | wavetable and maths table generators |
 | `windows/bench-isa.ps1` | 86 | PowerShell | Windows build and benchmark scripts |

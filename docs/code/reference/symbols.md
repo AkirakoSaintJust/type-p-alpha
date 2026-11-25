@@ -2,7 +2,8 @@
 
 Every macro, global variable, alias, using declaration and Python module
 constant found in the tracked sources. Generated state aliases are omitted
-because the state field index covers the same names.
+because the state field index covers the same names. The value column is the
+definition. An empty description means the declaration has no leading comment.
 
 | Symbol | Kind | File:Line | Value | Description |
 | --- | --- | --- | --- | --- |
@@ -284,13 +285,13 @@ because the state field index covers the same names.
 | `pan_env_trig` | macro | `engine/gen/type_p_alpha_dsp.c:7540` | `#define pan_env_trig (S->pan_env_trig)` |  |
 | `P1_STATE_PTR` | macro | `engine/gen/type_p_alpha_dsp.c:7543` | `#define P1_STATE_PTR` |  |
 | `type_p_alpha_state` | global | `engine/gen/type_p_alpha_dsp.c:7545` | `static P1_STATE_PTR type_p_alpha_state` |  |
-| `P1_PE_WORDS` | macro | `engine/gen/type_p_alpha_dsp.c:8047` | `#define P1_PE_WORDS 64u` |  |
+| `P1_PE_WORDS` | macro | `engine/gen/type_p_alpha_dsp.c:8047` | `#define P1_PE_WORDS 64u` | Per-part signed phase envelope. The pool is one per operator, indexed by the part; the first active voice advances it once per control block. A trigger on any voice of the part restarts the attack. The levels are absolute percent of the breakpoint field. |
 | `P1_PE_STAGE` | macro | `engine/gen/type_p_alpha_dsp.c:8048` | `#define P1_PE_STAGE 0u` |  |
 | `P1_PE_LEVEL` | macro | `engine/gen/type_p_alpha_dsp.c:8049` | `#define P1_PE_LEVEL 1u` |  |
 | `P1_PE_LASTB` | macro | `engine/gen/type_p_alpha_dsp.c:8050` | `#define P1_PE_LASTB 2u` |  |
 | `P1_PE_SEEDED` | macro | `engine/gen/type_p_alpha_dsp.c:8051` | `#define P1_PE_SEEDED 3u` |  |
 | `P1_PE_HADGATE` | macro | `engine/gen/type_p_alpha_dsp.c:8052` | `#define P1_PE_HADGATE 4u` |  |
-| `P1_PL_WORDS` | macro | `engine/gen/type_p_alpha_dsp.c:8177` | `#define P1_PL_WORDS 64u` |  |
+| `P1_PL_WORDS` | macro | `engine/gen/type_p_alpha_dsp.c:8177` | `#define P1_PL_WORDS 64u` | Per-part phase LFO. The pool is one per operator, indexed by the part. The first active voice on a part advances it once per control block and every voice reads the held value. The LFO free-runs, so a note does not reset its phase. The output is percent of the breakpoint field. |
 | `P1_PL_PHASE` | macro | `engine/gen/type_p_alpha_dsp.c:8178` | `#define P1_PL_PHASE 0u` |  |
 | `P1_PL_BASE` | macro | `engine/gen/type_p_alpha_dsp.c:8179` | `#define P1_PL_BASE 1u` |  |
 | `P1_PL_RATE_LEVEL` | macro | `engine/gen/type_p_alpha_dsp.c:8180` | `#define P1_PL_RATE_LEVEL 2u` |  |
@@ -302,13 +303,13 @@ because the state field index covers the same names.
 | `P1_PL_SEEDED` | macro | `engine/gen/type_p_alpha_dsp.c:8186` | `#define P1_PL_SEEDED 8u` |  |
 | `P1_PL_RAND` | macro | `engine/gen/type_p_alpha_dsp.c:8187` | `#define P1_PL_RAND 9u` |  |
 | `P1_PL_HOLD` | macro | `engine/gen/type_p_alpha_dsp.c:8188` | `#define P1_PL_HOLD 10u` |  |
-| `P1_PE_WORDS` | macro | `engine/gen/type_p_alpha_dsp.c:8744` | `#define P1_PE_WORDS 64u` |  |
+| `P1_PE_WORDS` | macro | `engine/gen/type_p_alpha_dsp.c:8744` | `#define P1_PE_WORDS 64u` | Per-part signed phase envelope. The pool is one per operator, indexed by the part; the first active voice advances it once per control block. A trigger on any voice of the part restarts the attack. The levels are absolute percent of the breakpoint field. |
 | `P1_PE_STAGE` | macro | `engine/gen/type_p_alpha_dsp.c:8745` | `#define P1_PE_STAGE 0u` |  |
 | `P1_PE_LEVEL` | macro | `engine/gen/type_p_alpha_dsp.c:8746` | `#define P1_PE_LEVEL 1u` |  |
 | `P1_PE_LASTB` | macro | `engine/gen/type_p_alpha_dsp.c:8747` | `#define P1_PE_LASTB 2u` |  |
 | `P1_PE_SEEDED` | macro | `engine/gen/type_p_alpha_dsp.c:8748` | `#define P1_PE_SEEDED 3u` |  |
 | `P1_PE_HADGATE` | macro | `engine/gen/type_p_alpha_dsp.c:8749` | `#define P1_PE_HADGATE 4u` |  |
-| `P1_PL_WORDS` | macro | `engine/gen/type_p_alpha_dsp.c:8874` | `#define P1_PL_WORDS 64u` |  |
+| `P1_PL_WORDS` | macro | `engine/gen/type_p_alpha_dsp.c:8874` | `#define P1_PL_WORDS 64u` | Per-part phase LFO. The pool is one per operator, indexed by the part. The first active voice on a part advances it once per control block and every voice reads the held value. The LFO free-runs, so a note does not reset its phase. The output is percent of the breakpoint field. |
 | `P1_PL_PHASE` | macro | `engine/gen/type_p_alpha_dsp.c:8875` | `#define P1_PL_PHASE 0u` |  |
 | `P1_PL_BASE` | macro | `engine/gen/type_p_alpha_dsp.c:8876` | `#define P1_PL_BASE 1u` |  |
 | `P1_PL_RATE_LEVEL` | macro | `engine/gen/type_p_alpha_dsp.c:8877` | `#define P1_PL_RATE_LEVEL 2u` |  |
@@ -320,13 +321,13 @@ because the state field index covers the same names.
 | `P1_PL_SEEDED` | macro | `engine/gen/type_p_alpha_dsp.c:8883` | `#define P1_PL_SEEDED 8u` |  |
 | `P1_PL_RAND` | macro | `engine/gen/type_p_alpha_dsp.c:8884` | `#define P1_PL_RAND 9u` |  |
 | `P1_PL_HOLD` | macro | `engine/gen/type_p_alpha_dsp.c:8885` | `#define P1_PL_HOLD 10u` |  |
-| `P1_PE_WORDS` | macro | `engine/gen/type_p_alpha_dsp.c:9441` | `#define P1_PE_WORDS 64u` |  |
+| `P1_PE_WORDS` | macro | `engine/gen/type_p_alpha_dsp.c:9441` | `#define P1_PE_WORDS 64u` | Per-part signed phase envelope. The pool is one per operator, indexed by the part; the first active voice advances it once per control block. A trigger on any voice of the part restarts the attack. The levels are absolute percent of the breakpoint field. |
 | `P1_PE_STAGE` | macro | `engine/gen/type_p_alpha_dsp.c:9442` | `#define P1_PE_STAGE 0u` |  |
 | `P1_PE_LEVEL` | macro | `engine/gen/type_p_alpha_dsp.c:9443` | `#define P1_PE_LEVEL 1u` |  |
 | `P1_PE_LASTB` | macro | `engine/gen/type_p_alpha_dsp.c:9444` | `#define P1_PE_LASTB 2u` |  |
 | `P1_PE_SEEDED` | macro | `engine/gen/type_p_alpha_dsp.c:9445` | `#define P1_PE_SEEDED 3u` |  |
 | `P1_PE_HADGATE` | macro | `engine/gen/type_p_alpha_dsp.c:9446` | `#define P1_PE_HADGATE 4u` |  |
-| `P1_PL_WORDS` | macro | `engine/gen/type_p_alpha_dsp.c:9571` | `#define P1_PL_WORDS 64u` |  |
+| `P1_PL_WORDS` | macro | `engine/gen/type_p_alpha_dsp.c:9571` | `#define P1_PL_WORDS 64u` | Per-part phase LFO. The pool is one per operator, indexed by the part. The first active voice on a part advances it once per control block and every voice reads the held value. The LFO free-runs, so a note does not reset its phase. The output is percent of the breakpoint field. |
 | `P1_PL_PHASE` | macro | `engine/gen/type_p_alpha_dsp.c:9572` | `#define P1_PL_PHASE 0u` |  |
 | `P1_PL_BASE` | macro | `engine/gen/type_p_alpha_dsp.c:9573` | `#define P1_PL_BASE 1u` |  |
 | `P1_PL_RATE_LEVEL` | macro | `engine/gen/type_p_alpha_dsp.c:9574` | `#define P1_PL_RATE_LEVEL 2u` |  |
@@ -338,13 +339,13 @@ because the state field index covers the same names.
 | `P1_PL_SEEDED` | macro | `engine/gen/type_p_alpha_dsp.c:9580` | `#define P1_PL_SEEDED 8u` |  |
 | `P1_PL_RAND` | macro | `engine/gen/type_p_alpha_dsp.c:9581` | `#define P1_PL_RAND 9u` |  |
 | `P1_PL_HOLD` | macro | `engine/gen/type_p_alpha_dsp.c:9582` | `#define P1_PL_HOLD 10u` |  |
-| `P1_PE_WORDS` | macro | `engine/gen/type_p_alpha_dsp.c:10138` | `#define P1_PE_WORDS 64u` |  |
+| `P1_PE_WORDS` | macro | `engine/gen/type_p_alpha_dsp.c:10138` | `#define P1_PE_WORDS 64u` | Per-part signed phase envelope. The pool is one per operator, indexed by the part; the first active voice advances it once per control block. A trigger on any voice of the part restarts the attack. The levels are absolute percent of the breakpoint field. |
 | `P1_PE_STAGE` | macro | `engine/gen/type_p_alpha_dsp.c:10139` | `#define P1_PE_STAGE 0u` |  |
 | `P1_PE_LEVEL` | macro | `engine/gen/type_p_alpha_dsp.c:10140` | `#define P1_PE_LEVEL 1u` |  |
 | `P1_PE_LASTB` | macro | `engine/gen/type_p_alpha_dsp.c:10141` | `#define P1_PE_LASTB 2u` |  |
 | `P1_PE_SEEDED` | macro | `engine/gen/type_p_alpha_dsp.c:10142` | `#define P1_PE_SEEDED 3u` |  |
 | `P1_PE_HADGATE` | macro | `engine/gen/type_p_alpha_dsp.c:10143` | `#define P1_PE_HADGATE 4u` |  |
-| `P1_PL_WORDS` | macro | `engine/gen/type_p_alpha_dsp.c:10268` | `#define P1_PL_WORDS 64u` |  |
+| `P1_PL_WORDS` | macro | `engine/gen/type_p_alpha_dsp.c:10268` | `#define P1_PL_WORDS 64u` | Per-part phase LFO. The pool is one per operator, indexed by the part. The first active voice on a part advances it once per control block and every voice reads the held value. The LFO free-runs, so a note does not reset its phase. The output is percent of the breakpoint field. |
 | `P1_PL_PHASE` | macro | `engine/gen/type_p_alpha_dsp.c:10269` | `#define P1_PL_PHASE 0u` |  |
 | `P1_PL_BASE` | macro | `engine/gen/type_p_alpha_dsp.c:10270` | `#define P1_PL_BASE 1u` |  |
 | `P1_PL_RATE_LEVEL` | macro | `engine/gen/type_p_alpha_dsp.c:10271` | `#define P1_PL_RATE_LEVEL 2u` |  |
@@ -356,15 +357,15 @@ because the state field index covers the same names.
 | `P1_PL_SEEDED` | macro | `engine/gen/type_p_alpha_dsp.c:10277` | `#define P1_PL_SEEDED 8u` |  |
 | `P1_PL_RAND` | macro | `engine/gen/type_p_alpha_dsp.c:10278` | `#define P1_PL_RAND 9u` |  |
 | `P1_PL_HOLD` | macro | `engine/gen/type_p_alpha_dsp.c:10279` | `#define P1_PL_HOLD 10u` |  |
-| `P1_PM_NX` | macro | `engine/gen/type_p_alpha_dsp.c:11435` | `#define P1_PM_NX 0u /* 33 x uint32: natural input boundaries 0..4096 */` |  |
-| `P1_PM_NSLOPE` | macro | `engine/gen/type_p_alpha_dsp.c:11436` | `#define P1_PM_NSLOPE 33u /* 32 x uint32: natural slopes, Q16 */` |  |
-| `P1_PM_NFLIP` | macro | `engine/gen/type_p_alpha_dsp.c:11437` | `#define P1_PM_NFLIP 65u /* 32 x uint32: natural segment orientation */` |  |
-| `P1_PM_ORDER` | macro | `engine/gen/type_p_alpha_dsp.c:11438` | `#define P1_PM_ORDER 97u /* 32 x uint32: one-based y-span order */` |  |
-| `P1_PM_PY0` | macro | `engine/gen/type_p_alpha_dsp.c:11439` | `#define P1_PM_PY0 129u /* 32 x uint32: composed y at the input boundary */` |  |
-| `P1_PM_PSLOPE` | macro | `engine/gen/type_p_alpha_dsp.c:11440` | `#define P1_PM_PSLOPE 161u /* 32 x uint32: composed slope, Q16 */` |  |
-| `P1_PM_SEG` | macro | `engine/gen/type_p_alpha_dsp.c:11441` | `#define P1_PM_SEG 193u /* 1024 x uint32: 4 packed segment indices per word */` |  |
-| `P1_PM_F` | macro | `engine/gen/type_p_alpha_dsp.c:11442` | `#define P1_PM_F 1217u /* 1024 x uint32: F in 10-bit units (0..1024) */` |  |
-| `P1_PM_LASTB` | macro | `engine/gen/type_p_alpha_dsp.c:11443` | `#define P1_PM_LASTB 2241u` |  |
+| `P1_PM_NX` | macro | `engine/gen/type_p_alpha_dsp.c:11435` | `#define P1_PM_NX 0u /* 33 x uint32: natural input boundaries 0..4096 */` | The pool starts at 2,560 words per part. The optional direct-read table is appended per part, so P1_PM_WORDS is defined after the table mode below. |
+| `P1_PM_NSLOPE` | macro | `engine/gen/type_p_alpha_dsp.c:11436` | `#define P1_PM_NSLOPE 33u /* 32 x uint32: natural slopes, Q16 */` | #define P1_PM_NX 0u          /* 33 x uint32: natural input boundaries 0..4096 |
+| `P1_PM_NFLIP` | macro | `engine/gen/type_p_alpha_dsp.c:11437` | `#define P1_PM_NFLIP 65u /* 32 x uint32: natural segment orientation */` | #define P1_PM_NSLOPE 33u     /* 32 x uint32: natural slopes, Q16 |
+| `P1_PM_ORDER` | macro | `engine/gen/type_p_alpha_dsp.c:11438` | `#define P1_PM_ORDER 97u /* 32 x uint32: one-based y-span order */` | #define P1_PM_NFLIP 65u      /* 32 x uint32: natural segment orientation |
+| `P1_PM_PY0` | macro | `engine/gen/type_p_alpha_dsp.c:11439` | `#define P1_PM_PY0 129u /* 32 x uint32: composed y at the input boundary */` | #define P1_PM_ORDER 97u      /* 32 x uint32: one-based y-span order |
+| `P1_PM_PSLOPE` | macro | `engine/gen/type_p_alpha_dsp.c:11440` | `#define P1_PM_PSLOPE 161u /* 32 x uint32: composed slope, Q16 */` | #define P1_PM_PY0 129u       /* 32 x uint32: composed y at the input boundary |
+| `P1_PM_SEG` | macro | `engine/gen/type_p_alpha_dsp.c:11441` | `#define P1_PM_SEG 193u /* 1024 x uint32: 4 packed segment indices per word */` | #define P1_PM_PSLOPE 161u    /* 32 x uint32: composed slope, Q16 |
+| `P1_PM_F` | macro | `engine/gen/type_p_alpha_dsp.c:11442` | `#define P1_PM_F 1217u /* 1024 x uint32: F in 10-bit units (0..1024) */` | #define P1_PM_SEG 193u       /* 1024 x uint32: 4 packed segment indices per word |
+| `P1_PM_LASTB` | macro | `engine/gen/type_p_alpha_dsp.c:11443` | `#define P1_PM_LASTB 2241u` | #define P1_PM_F 1217u        /* 1024 x uint32: F in 10-bit units (0..1024) |
 | `P1_PM_SEED` | macro | `engine/gen/type_p_alpha_dsp.c:11444` | `#define P1_PM_SEED 2242u` |  |
 | `P1_PM_SEEDED` | macro | `engine/gen/type_p_alpha_dsp.c:11445` | `#define P1_PM_SEEDED 2243u` |  |
 | `P1_PM_BP` | macro | `engine/gen/type_p_alpha_dsp.c:11446` | `#define P1_PM_BP 2244u` |  |
@@ -373,10 +374,10 @@ because the state field index covers the same names.
 | `P1_PM_FACC` | macro | `engine/gen/type_p_alpha_dsp.c:11449` | `#define P1_PM_FACC 2247u` |  |
 | `P1_PM_RACC` | macro | `engine/gen/type_p_alpha_dsp.c:11450` | `#define P1_PM_RACC 2248u` |  |
 | `P1_PM_NY` | macro | `engine/gen/type_p_alpha_dsp.c:11451` | `#define P1_PM_NY 2249u /* 33 x uint32: snapped y boundaries 0..4096 */` |  |
-| `P1_PM_MASK` | macro | `engine/gen/type_p_alpha_dsp.c:11452` | `#define P1_PM_MASK 2282u /* 128 x uint32: 4096 protected-point bits */` |  |
-| `P1_PM_MASKID` | macro | `engine/gen/type_p_alpha_dsp.c:11453` | `#define P1_PM_MASKID 2410u` |  |
+| `P1_PM_MASK` | macro | `engine/gen/type_p_alpha_dsp.c:11452` | `#define P1_PM_MASK 2282u /* 128 x uint32: 4096 protected-point bits */` | #define P1_PM_NY 2249u       /* 33 x uint32: snapped y boundaries 0..4096 |
+| `P1_PM_MASKID` | macro | `engine/gen/type_p_alpha_dsp.c:11453` | `#define P1_PM_MASKID 2410u` | #define P1_PM_MASK 2282u     /* 128 x uint32: 4096 protected-point bits |
 | `P1_PM_LOCK` | macro | `engine/gen/type_p_alpha_dsp.c:11454` | `#define P1_PM_LOCK 2411u /* bit j = y span j is locked */` |  |
-| `P1_PM_ACTIVE` | macro | `engine/gen/type_p_alpha_dsp.c:11455` | `#define P1_PM_ACTIVE 2412u` |  |
+| `P1_PM_ACTIVE` | macro | `engine/gen/type_p_alpha_dsp.c:11455` | `#define P1_PM_ACTIVE 2412u` | #define P1_PM_LOCK 2411u     /* bit j = y span j is locked |
 | `P1_PM_LASTWAVE` | macro | `engine/gen/type_p_alpha_dsp.c:11456` | `#define P1_PM_LASTWAVE 2413u` |  |
 | `P1_PM_LASTON` | macro | `engine/gen/type_p_alpha_dsp.c:11457` | `#define P1_PM_LASTON 2414u` |  |
 | `P1_PHASE_READ` | macro | `engine/gen/type_p_alpha_dsp.c:11463` | `#define P1_PHASE_READ 0` |  |
@@ -430,19 +431,19 @@ because the state field index covers the same names.
 | `P1_PHASE_MAP_F` | macro | `engine/gen/type_p_alpha_dsp.c:11668` | `#define P1_PHASE_MAP_F(pm, xb) do { \ uint32_t xb12 = (uint32_t)(((xb) * 4096u + 500u) / 1000u); \ if (xb12 < 1u) xb1...` |  |
 | `P1_PHASE_MAP_NEXT` | macro | `engine/gen/type_p_alpha_dsp.c:11684` | `#define P1_PHASE_MAP_NEXT(pm) \ ((pm)[P1_PM_SEED] ^= (pm)[P1_PM_SEED] << 13, \ (pm)[P1_PM_SEED] ^= (pm)[P1_PM_SEED] >...` |  |
 | `P1_PHASE_MAP_Y` | macro | `engine/gen/type_p_alpha_dsp.c:11690` | `#define P1_PHASE_MAP_Y(pm, x, m, y) do { \ uint32_t yx = (x); \ uint32_t yq = (pm)[P1_PM_F + (yx >> 2)] << 2; \ if (y...` |  |
-| `P1_PHASE_MAP_YQ` | macro | `engine/gen/type_p_alpha_dsp.c:11703` | `#define P1_PHASE_MAP_YQ(pm, q, m, y) do { \ uint32_t yq = (q); \ if (yq > 4095u) yq = 4095u; \ uint32_t ysh = (yq & 3...` |  |
+| `P1_PHASE_MAP_YQ` | macro | `engine/gen/type_p_alpha_dsp.c:11703` | `#define P1_PHASE_MAP_YQ(pm, q, m, y) do { \ uint32_t yq = (q); \ if (yq > 4095u) yq = 4095u; \ uint32_t ysh = (yq & 3...` | The post-F segment map y(q). It does not depend on the F breakpoint. |
 | `P1_PHASE_TABLE` | macro | `engine/gen/type_p_alpha_dsp.c:11715` | `#define P1_PHASE_TABLE(pm, m) do { \ uint16_t *pt = (uint16_t *)(void *)((pm) + P1_PM_TABLE); \ for (uint32_t ti = 0u...` |  |
 | `P1_PHASE_TABLE` | macro | `engine/gen/type_p_alpha_dsp.c:11729` | `#define P1_PHASE_TABLE(pm, m) do { \ uint16_t *pt = (uint16_t *)(void *)((pm) + P1_PM_TABLE); \ for (uint32_t ti = 0u...` |  |
 | `P1_PHASE_TABLE` | macro | `engine/gen/type_p_alpha_dsp.c:11743` | `#define P1_PHASE_TABLE(pm, m) do { } while (0)` |  |
-| `P1_PM_NX` | macro | `engine/gen/type_p_alpha_dsp.c:12231` | `#define P1_PM_NX 0u /* 33 x uint32: natural input boundaries 0..4096 */` |  |
-| `P1_PM_NSLOPE` | macro | `engine/gen/type_p_alpha_dsp.c:12232` | `#define P1_PM_NSLOPE 33u /* 32 x uint32: natural slopes, Q16 */` |  |
-| `P1_PM_NFLIP` | macro | `engine/gen/type_p_alpha_dsp.c:12233` | `#define P1_PM_NFLIP 65u /* 32 x uint32: natural segment orientation */` |  |
-| `P1_PM_ORDER` | macro | `engine/gen/type_p_alpha_dsp.c:12234` | `#define P1_PM_ORDER 97u /* 32 x uint32: one-based y-span order */` |  |
-| `P1_PM_PY0` | macro | `engine/gen/type_p_alpha_dsp.c:12235` | `#define P1_PM_PY0 129u /* 32 x uint32: composed y at the input boundary */` |  |
-| `P1_PM_PSLOPE` | macro | `engine/gen/type_p_alpha_dsp.c:12236` | `#define P1_PM_PSLOPE 161u /* 32 x uint32: composed slope, Q16 */` |  |
-| `P1_PM_SEG` | macro | `engine/gen/type_p_alpha_dsp.c:12237` | `#define P1_PM_SEG 193u /* 1024 x uint32: 4 packed segment indices per word */` |  |
-| `P1_PM_F` | macro | `engine/gen/type_p_alpha_dsp.c:12238` | `#define P1_PM_F 1217u /* 1024 x uint32: F in 10-bit units (0..1024) */` |  |
-| `P1_PM_LASTB` | macro | `engine/gen/type_p_alpha_dsp.c:12239` | `#define P1_PM_LASTB 2241u` |  |
+| `P1_PM_NX` | macro | `engine/gen/type_p_alpha_dsp.c:12231` | `#define P1_PM_NX 0u /* 33 x uint32: natural input boundaries 0..4096 */` | The pool starts at 2,560 words per part. The optional direct-read table is appended per part, so P1_PM_WORDS is defined after the table mode below. |
+| `P1_PM_NSLOPE` | macro | `engine/gen/type_p_alpha_dsp.c:12232` | `#define P1_PM_NSLOPE 33u /* 32 x uint32: natural slopes, Q16 */` | #define P1_PM_NX 0u          /* 33 x uint32: natural input boundaries 0..4096 |
+| `P1_PM_NFLIP` | macro | `engine/gen/type_p_alpha_dsp.c:12233` | `#define P1_PM_NFLIP 65u /* 32 x uint32: natural segment orientation */` | #define P1_PM_NSLOPE 33u     /* 32 x uint32: natural slopes, Q16 |
+| `P1_PM_ORDER` | macro | `engine/gen/type_p_alpha_dsp.c:12234` | `#define P1_PM_ORDER 97u /* 32 x uint32: one-based y-span order */` | #define P1_PM_NFLIP 65u      /* 32 x uint32: natural segment orientation |
+| `P1_PM_PY0` | macro | `engine/gen/type_p_alpha_dsp.c:12235` | `#define P1_PM_PY0 129u /* 32 x uint32: composed y at the input boundary */` | #define P1_PM_ORDER 97u      /* 32 x uint32: one-based y-span order |
+| `P1_PM_PSLOPE` | macro | `engine/gen/type_p_alpha_dsp.c:12236` | `#define P1_PM_PSLOPE 161u /* 32 x uint32: composed slope, Q16 */` | #define P1_PM_PY0 129u       /* 32 x uint32: composed y at the input boundary |
+| `P1_PM_SEG` | macro | `engine/gen/type_p_alpha_dsp.c:12237` | `#define P1_PM_SEG 193u /* 1024 x uint32: 4 packed segment indices per word */` | #define P1_PM_PSLOPE 161u    /* 32 x uint32: composed slope, Q16 |
+| `P1_PM_F` | macro | `engine/gen/type_p_alpha_dsp.c:12238` | `#define P1_PM_F 1217u /* 1024 x uint32: F in 10-bit units (0..1024) */` | #define P1_PM_SEG 193u       /* 1024 x uint32: 4 packed segment indices per word |
+| `P1_PM_LASTB` | macro | `engine/gen/type_p_alpha_dsp.c:12239` | `#define P1_PM_LASTB 2241u` | #define P1_PM_F 1217u        /* 1024 x uint32: F in 10-bit units (0..1024) |
 | `P1_PM_SEED` | macro | `engine/gen/type_p_alpha_dsp.c:12240` | `#define P1_PM_SEED 2242u` |  |
 | `P1_PM_SEEDED` | macro | `engine/gen/type_p_alpha_dsp.c:12241` | `#define P1_PM_SEEDED 2243u` |  |
 | `P1_PM_BP` | macro | `engine/gen/type_p_alpha_dsp.c:12242` | `#define P1_PM_BP 2244u` |  |
@@ -451,10 +452,10 @@ because the state field index covers the same names.
 | `P1_PM_FACC` | macro | `engine/gen/type_p_alpha_dsp.c:12245` | `#define P1_PM_FACC 2247u` |  |
 | `P1_PM_RACC` | macro | `engine/gen/type_p_alpha_dsp.c:12246` | `#define P1_PM_RACC 2248u` |  |
 | `P1_PM_NY` | macro | `engine/gen/type_p_alpha_dsp.c:12247` | `#define P1_PM_NY 2249u /* 33 x uint32: snapped y boundaries 0..4096 */` |  |
-| `P1_PM_MASK` | macro | `engine/gen/type_p_alpha_dsp.c:12248` | `#define P1_PM_MASK 2282u /* 128 x uint32: 4096 protected-point bits */` |  |
-| `P1_PM_MASKID` | macro | `engine/gen/type_p_alpha_dsp.c:12249` | `#define P1_PM_MASKID 2410u` |  |
+| `P1_PM_MASK` | macro | `engine/gen/type_p_alpha_dsp.c:12248` | `#define P1_PM_MASK 2282u /* 128 x uint32: 4096 protected-point bits */` | #define P1_PM_NY 2249u       /* 33 x uint32: snapped y boundaries 0..4096 |
+| `P1_PM_MASKID` | macro | `engine/gen/type_p_alpha_dsp.c:12249` | `#define P1_PM_MASKID 2410u` | #define P1_PM_MASK 2282u     /* 128 x uint32: 4096 protected-point bits |
 | `P1_PM_LOCK` | macro | `engine/gen/type_p_alpha_dsp.c:12250` | `#define P1_PM_LOCK 2411u /* bit j = y span j is locked */` |  |
-| `P1_PM_ACTIVE` | macro | `engine/gen/type_p_alpha_dsp.c:12251` | `#define P1_PM_ACTIVE 2412u` |  |
+| `P1_PM_ACTIVE` | macro | `engine/gen/type_p_alpha_dsp.c:12251` | `#define P1_PM_ACTIVE 2412u` | #define P1_PM_LOCK 2411u     /* bit j = y span j is locked |
 | `P1_PM_LASTWAVE` | macro | `engine/gen/type_p_alpha_dsp.c:12252` | `#define P1_PM_LASTWAVE 2413u` |  |
 | `P1_PM_LASTON` | macro | `engine/gen/type_p_alpha_dsp.c:12253` | `#define P1_PM_LASTON 2414u` |  |
 | `P1_PHASE_READ` | macro | `engine/gen/type_p_alpha_dsp.c:12259` | `#define P1_PHASE_READ 0` |  |
@@ -508,19 +509,19 @@ because the state field index covers the same names.
 | `P1_PHASE_MAP_F` | macro | `engine/gen/type_p_alpha_dsp.c:12464` | `#define P1_PHASE_MAP_F(pm, xb) do { \ uint32_t xb12 = (uint32_t)(((xb) * 4096u + 500u) / 1000u); \ if (xb12 < 1u) xb1...` |  |
 | `P1_PHASE_MAP_NEXT` | macro | `engine/gen/type_p_alpha_dsp.c:12480` | `#define P1_PHASE_MAP_NEXT(pm) \ ((pm)[P1_PM_SEED] ^= (pm)[P1_PM_SEED] << 13, \ (pm)[P1_PM_SEED] ^= (pm)[P1_PM_SEED] >...` |  |
 | `P1_PHASE_MAP_Y` | macro | `engine/gen/type_p_alpha_dsp.c:12486` | `#define P1_PHASE_MAP_Y(pm, x, m, y) do { \ uint32_t yx = (x); \ uint32_t yq = (pm)[P1_PM_F + (yx >> 2)] << 2; \ if (y...` |  |
-| `P1_PHASE_MAP_YQ` | macro | `engine/gen/type_p_alpha_dsp.c:12499` | `#define P1_PHASE_MAP_YQ(pm, q, m, y) do { \ uint32_t yq = (q); \ if (yq > 4095u) yq = 4095u; \ uint32_t ysh = (yq & 3...` |  |
+| `P1_PHASE_MAP_YQ` | macro | `engine/gen/type_p_alpha_dsp.c:12499` | `#define P1_PHASE_MAP_YQ(pm, q, m, y) do { \ uint32_t yq = (q); \ if (yq > 4095u) yq = 4095u; \ uint32_t ysh = (yq & 3...` | The post-F segment map y(q). It does not depend on the F breakpoint. |
 | `P1_PHASE_TABLE` | macro | `engine/gen/type_p_alpha_dsp.c:12511` | `#define P1_PHASE_TABLE(pm, m) do { \ uint16_t *pt = (uint16_t *)(void *)((pm) + P1_PM_TABLE); \ for (uint32_t ti = 0u...` |  |
 | `P1_PHASE_TABLE` | macro | `engine/gen/type_p_alpha_dsp.c:12525` | `#define P1_PHASE_TABLE(pm, m) do { \ uint16_t *pt = (uint16_t *)(void *)((pm) + P1_PM_TABLE); \ for (uint32_t ti = 0u...` |  |
 | `P1_PHASE_TABLE` | macro | `engine/gen/type_p_alpha_dsp.c:12539` | `#define P1_PHASE_TABLE(pm, m) do { } while (0)` |  |
-| `P1_PM_NX` | macro | `engine/gen/type_p_alpha_dsp.c:13027` | `#define P1_PM_NX 0u /* 33 x uint32: natural input boundaries 0..4096 */` |  |
-| `P1_PM_NSLOPE` | macro | `engine/gen/type_p_alpha_dsp.c:13028` | `#define P1_PM_NSLOPE 33u /* 32 x uint32: natural slopes, Q16 */` |  |
-| `P1_PM_NFLIP` | macro | `engine/gen/type_p_alpha_dsp.c:13029` | `#define P1_PM_NFLIP 65u /* 32 x uint32: natural segment orientation */` |  |
-| `P1_PM_ORDER` | macro | `engine/gen/type_p_alpha_dsp.c:13030` | `#define P1_PM_ORDER 97u /* 32 x uint32: one-based y-span order */` |  |
-| `P1_PM_PY0` | macro | `engine/gen/type_p_alpha_dsp.c:13031` | `#define P1_PM_PY0 129u /* 32 x uint32: composed y at the input boundary */` |  |
-| `P1_PM_PSLOPE` | macro | `engine/gen/type_p_alpha_dsp.c:13032` | `#define P1_PM_PSLOPE 161u /* 32 x uint32: composed slope, Q16 */` |  |
-| `P1_PM_SEG` | macro | `engine/gen/type_p_alpha_dsp.c:13033` | `#define P1_PM_SEG 193u /* 1024 x uint32: 4 packed segment indices per word */` |  |
-| `P1_PM_F` | macro | `engine/gen/type_p_alpha_dsp.c:13034` | `#define P1_PM_F 1217u /* 1024 x uint32: F in 10-bit units (0..1024) */` |  |
-| `P1_PM_LASTB` | macro | `engine/gen/type_p_alpha_dsp.c:13035` | `#define P1_PM_LASTB 2241u` |  |
+| `P1_PM_NX` | macro | `engine/gen/type_p_alpha_dsp.c:13027` | `#define P1_PM_NX 0u /* 33 x uint32: natural input boundaries 0..4096 */` | The pool starts at 2,560 words per part. The optional direct-read table is appended per part, so P1_PM_WORDS is defined after the table mode below. |
+| `P1_PM_NSLOPE` | macro | `engine/gen/type_p_alpha_dsp.c:13028` | `#define P1_PM_NSLOPE 33u /* 32 x uint32: natural slopes, Q16 */` | #define P1_PM_NX 0u          /* 33 x uint32: natural input boundaries 0..4096 |
+| `P1_PM_NFLIP` | macro | `engine/gen/type_p_alpha_dsp.c:13029` | `#define P1_PM_NFLIP 65u /* 32 x uint32: natural segment orientation */` | #define P1_PM_NSLOPE 33u     /* 32 x uint32: natural slopes, Q16 |
+| `P1_PM_ORDER` | macro | `engine/gen/type_p_alpha_dsp.c:13030` | `#define P1_PM_ORDER 97u /* 32 x uint32: one-based y-span order */` | #define P1_PM_NFLIP 65u      /* 32 x uint32: natural segment orientation |
+| `P1_PM_PY0` | macro | `engine/gen/type_p_alpha_dsp.c:13031` | `#define P1_PM_PY0 129u /* 32 x uint32: composed y at the input boundary */` | #define P1_PM_ORDER 97u      /* 32 x uint32: one-based y-span order |
+| `P1_PM_PSLOPE` | macro | `engine/gen/type_p_alpha_dsp.c:13032` | `#define P1_PM_PSLOPE 161u /* 32 x uint32: composed slope, Q16 */` | #define P1_PM_PY0 129u       /* 32 x uint32: composed y at the input boundary |
+| `P1_PM_SEG` | macro | `engine/gen/type_p_alpha_dsp.c:13033` | `#define P1_PM_SEG 193u /* 1024 x uint32: 4 packed segment indices per word */` | #define P1_PM_PSLOPE 161u    /* 32 x uint32: composed slope, Q16 |
+| `P1_PM_F` | macro | `engine/gen/type_p_alpha_dsp.c:13034` | `#define P1_PM_F 1217u /* 1024 x uint32: F in 10-bit units (0..1024) */` | #define P1_PM_SEG 193u       /* 1024 x uint32: 4 packed segment indices per word |
+| `P1_PM_LASTB` | macro | `engine/gen/type_p_alpha_dsp.c:13035` | `#define P1_PM_LASTB 2241u` | #define P1_PM_F 1217u        /* 1024 x uint32: F in 10-bit units (0..1024) |
 | `P1_PM_SEED` | macro | `engine/gen/type_p_alpha_dsp.c:13036` | `#define P1_PM_SEED 2242u` |  |
 | `P1_PM_SEEDED` | macro | `engine/gen/type_p_alpha_dsp.c:13037` | `#define P1_PM_SEEDED 2243u` |  |
 | `P1_PM_BP` | macro | `engine/gen/type_p_alpha_dsp.c:13038` | `#define P1_PM_BP 2244u` |  |
@@ -529,10 +530,10 @@ because the state field index covers the same names.
 | `P1_PM_FACC` | macro | `engine/gen/type_p_alpha_dsp.c:13041` | `#define P1_PM_FACC 2247u` |  |
 | `P1_PM_RACC` | macro | `engine/gen/type_p_alpha_dsp.c:13042` | `#define P1_PM_RACC 2248u` |  |
 | `P1_PM_NY` | macro | `engine/gen/type_p_alpha_dsp.c:13043` | `#define P1_PM_NY 2249u /* 33 x uint32: snapped y boundaries 0..4096 */` |  |
-| `P1_PM_MASK` | macro | `engine/gen/type_p_alpha_dsp.c:13044` | `#define P1_PM_MASK 2282u /* 128 x uint32: 4096 protected-point bits */` |  |
-| `P1_PM_MASKID` | macro | `engine/gen/type_p_alpha_dsp.c:13045` | `#define P1_PM_MASKID 2410u` |  |
+| `P1_PM_MASK` | macro | `engine/gen/type_p_alpha_dsp.c:13044` | `#define P1_PM_MASK 2282u /* 128 x uint32: 4096 protected-point bits */` | #define P1_PM_NY 2249u       /* 33 x uint32: snapped y boundaries 0..4096 |
+| `P1_PM_MASKID` | macro | `engine/gen/type_p_alpha_dsp.c:13045` | `#define P1_PM_MASKID 2410u` | #define P1_PM_MASK 2282u     /* 128 x uint32: 4096 protected-point bits |
 | `P1_PM_LOCK` | macro | `engine/gen/type_p_alpha_dsp.c:13046` | `#define P1_PM_LOCK 2411u /* bit j = y span j is locked */` |  |
-| `P1_PM_ACTIVE` | macro | `engine/gen/type_p_alpha_dsp.c:13047` | `#define P1_PM_ACTIVE 2412u` |  |
+| `P1_PM_ACTIVE` | macro | `engine/gen/type_p_alpha_dsp.c:13047` | `#define P1_PM_ACTIVE 2412u` | #define P1_PM_LOCK 2411u     /* bit j = y span j is locked |
 | `P1_PM_LASTWAVE` | macro | `engine/gen/type_p_alpha_dsp.c:13048` | `#define P1_PM_LASTWAVE 2413u` |  |
 | `P1_PM_LASTON` | macro | `engine/gen/type_p_alpha_dsp.c:13049` | `#define P1_PM_LASTON 2414u` |  |
 | `P1_PHASE_READ` | macro | `engine/gen/type_p_alpha_dsp.c:13055` | `#define P1_PHASE_READ 0` |  |
@@ -586,19 +587,19 @@ because the state field index covers the same names.
 | `P1_PHASE_MAP_F` | macro | `engine/gen/type_p_alpha_dsp.c:13260` | `#define P1_PHASE_MAP_F(pm, xb) do { \ uint32_t xb12 = (uint32_t)(((xb) * 4096u + 500u) / 1000u); \ if (xb12 < 1u) xb1...` |  |
 | `P1_PHASE_MAP_NEXT` | macro | `engine/gen/type_p_alpha_dsp.c:13276` | `#define P1_PHASE_MAP_NEXT(pm) \ ((pm)[P1_PM_SEED] ^= (pm)[P1_PM_SEED] << 13, \ (pm)[P1_PM_SEED] ^= (pm)[P1_PM_SEED] >...` |  |
 | `P1_PHASE_MAP_Y` | macro | `engine/gen/type_p_alpha_dsp.c:13282` | `#define P1_PHASE_MAP_Y(pm, x, m, y) do { \ uint32_t yx = (x); \ uint32_t yq = (pm)[P1_PM_F + (yx >> 2)] << 2; \ if (y...` |  |
-| `P1_PHASE_MAP_YQ` | macro | `engine/gen/type_p_alpha_dsp.c:13295` | `#define P1_PHASE_MAP_YQ(pm, q, m, y) do { \ uint32_t yq = (q); \ if (yq > 4095u) yq = 4095u; \ uint32_t ysh = (yq & 3...` |  |
+| `P1_PHASE_MAP_YQ` | macro | `engine/gen/type_p_alpha_dsp.c:13295` | `#define P1_PHASE_MAP_YQ(pm, q, m, y) do { \ uint32_t yq = (q); \ if (yq > 4095u) yq = 4095u; \ uint32_t ysh = (yq & 3...` | The post-F segment map y(q). It does not depend on the F breakpoint. |
 | `P1_PHASE_TABLE` | macro | `engine/gen/type_p_alpha_dsp.c:13307` | `#define P1_PHASE_TABLE(pm, m) do { \ uint16_t *pt = (uint16_t *)(void *)((pm) + P1_PM_TABLE); \ for (uint32_t ti = 0u...` |  |
 | `P1_PHASE_TABLE` | macro | `engine/gen/type_p_alpha_dsp.c:13321` | `#define P1_PHASE_TABLE(pm, m) do { \ uint16_t *pt = (uint16_t *)(void *)((pm) + P1_PM_TABLE); \ for (uint32_t ti = 0u...` |  |
 | `P1_PHASE_TABLE` | macro | `engine/gen/type_p_alpha_dsp.c:13335` | `#define P1_PHASE_TABLE(pm, m) do { } while (0)` |  |
-| `P1_PM_NX` | macro | `engine/gen/type_p_alpha_dsp.c:13823` | `#define P1_PM_NX 0u /* 33 x uint32: natural input boundaries 0..4096 */` |  |
-| `P1_PM_NSLOPE` | macro | `engine/gen/type_p_alpha_dsp.c:13824` | `#define P1_PM_NSLOPE 33u /* 32 x uint32: natural slopes, Q16 */` |  |
-| `P1_PM_NFLIP` | macro | `engine/gen/type_p_alpha_dsp.c:13825` | `#define P1_PM_NFLIP 65u /* 32 x uint32: natural segment orientation */` |  |
-| `P1_PM_ORDER` | macro | `engine/gen/type_p_alpha_dsp.c:13826` | `#define P1_PM_ORDER 97u /* 32 x uint32: one-based y-span order */` |  |
-| `P1_PM_PY0` | macro | `engine/gen/type_p_alpha_dsp.c:13827` | `#define P1_PM_PY0 129u /* 32 x uint32: composed y at the input boundary */` |  |
-| `P1_PM_PSLOPE` | macro | `engine/gen/type_p_alpha_dsp.c:13828` | `#define P1_PM_PSLOPE 161u /* 32 x uint32: composed slope, Q16 */` |  |
-| `P1_PM_SEG` | macro | `engine/gen/type_p_alpha_dsp.c:13829` | `#define P1_PM_SEG 193u /* 1024 x uint32: 4 packed segment indices per word */` |  |
-| `P1_PM_F` | macro | `engine/gen/type_p_alpha_dsp.c:13830` | `#define P1_PM_F 1217u /* 1024 x uint32: F in 10-bit units (0..1024) */` |  |
-| `P1_PM_LASTB` | macro | `engine/gen/type_p_alpha_dsp.c:13831` | `#define P1_PM_LASTB 2241u` |  |
+| `P1_PM_NX` | macro | `engine/gen/type_p_alpha_dsp.c:13823` | `#define P1_PM_NX 0u /* 33 x uint32: natural input boundaries 0..4096 */` | The pool starts at 2,560 words per part. The optional direct-read table is appended per part, so P1_PM_WORDS is defined after the table mode below. |
+| `P1_PM_NSLOPE` | macro | `engine/gen/type_p_alpha_dsp.c:13824` | `#define P1_PM_NSLOPE 33u /* 32 x uint32: natural slopes, Q16 */` | #define P1_PM_NX 0u          /* 33 x uint32: natural input boundaries 0..4096 |
+| `P1_PM_NFLIP` | macro | `engine/gen/type_p_alpha_dsp.c:13825` | `#define P1_PM_NFLIP 65u /* 32 x uint32: natural segment orientation */` | #define P1_PM_NSLOPE 33u     /* 32 x uint32: natural slopes, Q16 |
+| `P1_PM_ORDER` | macro | `engine/gen/type_p_alpha_dsp.c:13826` | `#define P1_PM_ORDER 97u /* 32 x uint32: one-based y-span order */` | #define P1_PM_NFLIP 65u      /* 32 x uint32: natural segment orientation |
+| `P1_PM_PY0` | macro | `engine/gen/type_p_alpha_dsp.c:13827` | `#define P1_PM_PY0 129u /* 32 x uint32: composed y at the input boundary */` | #define P1_PM_ORDER 97u      /* 32 x uint32: one-based y-span order |
+| `P1_PM_PSLOPE` | macro | `engine/gen/type_p_alpha_dsp.c:13828` | `#define P1_PM_PSLOPE 161u /* 32 x uint32: composed slope, Q16 */` | #define P1_PM_PY0 129u       /* 32 x uint32: composed y at the input boundary |
+| `P1_PM_SEG` | macro | `engine/gen/type_p_alpha_dsp.c:13829` | `#define P1_PM_SEG 193u /* 1024 x uint32: 4 packed segment indices per word */` | #define P1_PM_PSLOPE 161u    /* 32 x uint32: composed slope, Q16 |
+| `P1_PM_F` | macro | `engine/gen/type_p_alpha_dsp.c:13830` | `#define P1_PM_F 1217u /* 1024 x uint32: F in 10-bit units (0..1024) */` | #define P1_PM_SEG 193u       /* 1024 x uint32: 4 packed segment indices per word |
+| `P1_PM_LASTB` | macro | `engine/gen/type_p_alpha_dsp.c:13831` | `#define P1_PM_LASTB 2241u` | #define P1_PM_F 1217u        /* 1024 x uint32: F in 10-bit units (0..1024) |
 | `P1_PM_SEED` | macro | `engine/gen/type_p_alpha_dsp.c:13832` | `#define P1_PM_SEED 2242u` |  |
 | `P1_PM_SEEDED` | macro | `engine/gen/type_p_alpha_dsp.c:13833` | `#define P1_PM_SEEDED 2243u` |  |
 | `P1_PM_BP` | macro | `engine/gen/type_p_alpha_dsp.c:13834` | `#define P1_PM_BP 2244u` |  |
@@ -607,10 +608,10 @@ because the state field index covers the same names.
 | `P1_PM_FACC` | macro | `engine/gen/type_p_alpha_dsp.c:13837` | `#define P1_PM_FACC 2247u` |  |
 | `P1_PM_RACC` | macro | `engine/gen/type_p_alpha_dsp.c:13838` | `#define P1_PM_RACC 2248u` |  |
 | `P1_PM_NY` | macro | `engine/gen/type_p_alpha_dsp.c:13839` | `#define P1_PM_NY 2249u /* 33 x uint32: snapped y boundaries 0..4096 */` |  |
-| `P1_PM_MASK` | macro | `engine/gen/type_p_alpha_dsp.c:13840` | `#define P1_PM_MASK 2282u /* 128 x uint32: 4096 protected-point bits */` |  |
-| `P1_PM_MASKID` | macro | `engine/gen/type_p_alpha_dsp.c:13841` | `#define P1_PM_MASKID 2410u` |  |
+| `P1_PM_MASK` | macro | `engine/gen/type_p_alpha_dsp.c:13840` | `#define P1_PM_MASK 2282u /* 128 x uint32: 4096 protected-point bits */` | #define P1_PM_NY 2249u       /* 33 x uint32: snapped y boundaries 0..4096 |
+| `P1_PM_MASKID` | macro | `engine/gen/type_p_alpha_dsp.c:13841` | `#define P1_PM_MASKID 2410u` | #define P1_PM_MASK 2282u     /* 128 x uint32: 4096 protected-point bits |
 | `P1_PM_LOCK` | macro | `engine/gen/type_p_alpha_dsp.c:13842` | `#define P1_PM_LOCK 2411u /* bit j = y span j is locked */` |  |
-| `P1_PM_ACTIVE` | macro | `engine/gen/type_p_alpha_dsp.c:13843` | `#define P1_PM_ACTIVE 2412u` |  |
+| `P1_PM_ACTIVE` | macro | `engine/gen/type_p_alpha_dsp.c:13843` | `#define P1_PM_ACTIVE 2412u` | #define P1_PM_LOCK 2411u     /* bit j = y span j is locked |
 | `P1_PM_LASTWAVE` | macro | `engine/gen/type_p_alpha_dsp.c:13844` | `#define P1_PM_LASTWAVE 2413u` |  |
 | `P1_PM_LASTON` | macro | `engine/gen/type_p_alpha_dsp.c:13845` | `#define P1_PM_LASTON 2414u` |  |
 | `P1_PHASE_READ` | macro | `engine/gen/type_p_alpha_dsp.c:13851` | `#define P1_PHASE_READ 0` |  |
@@ -664,14 +665,14 @@ because the state field index covers the same names.
 | `P1_PHASE_MAP_F` | macro | `engine/gen/type_p_alpha_dsp.c:14056` | `#define P1_PHASE_MAP_F(pm, xb) do { \ uint32_t xb12 = (uint32_t)(((xb) * 4096u + 500u) / 1000u); \ if (xb12 < 1u) xb1...` |  |
 | `P1_PHASE_MAP_NEXT` | macro | `engine/gen/type_p_alpha_dsp.c:14072` | `#define P1_PHASE_MAP_NEXT(pm) \ ((pm)[P1_PM_SEED] ^= (pm)[P1_PM_SEED] << 13, \ (pm)[P1_PM_SEED] ^= (pm)[P1_PM_SEED] >...` |  |
 | `P1_PHASE_MAP_Y` | macro | `engine/gen/type_p_alpha_dsp.c:14078` | `#define P1_PHASE_MAP_Y(pm, x, m, y) do { \ uint32_t yx = (x); \ uint32_t yq = (pm)[P1_PM_F + (yx >> 2)] << 2; \ if (y...` |  |
-| `P1_PHASE_MAP_YQ` | macro | `engine/gen/type_p_alpha_dsp.c:14091` | `#define P1_PHASE_MAP_YQ(pm, q, m, y) do { \ uint32_t yq = (q); \ if (yq > 4095u) yq = 4095u; \ uint32_t ysh = (yq & 3...` |  |
+| `P1_PHASE_MAP_YQ` | macro | `engine/gen/type_p_alpha_dsp.c:14091` | `#define P1_PHASE_MAP_YQ(pm, q, m, y) do { \ uint32_t yq = (q); \ if (yq > 4095u) yq = 4095u; \ uint32_t ysh = (yq & 3...` | The post-F segment map y(q). It does not depend on the F breakpoint. |
 | `P1_PHASE_TABLE` | macro | `engine/gen/type_p_alpha_dsp.c:14103` | `#define P1_PHASE_TABLE(pm, m) do { \ uint16_t *pt = (uint16_t *)(void *)((pm) + P1_PM_TABLE); \ for (uint32_t ti = 0u...` |  |
 | `P1_PHASE_TABLE` | macro | `engine/gen/type_p_alpha_dsp.c:14117` | `#define P1_PHASE_TABLE(pm, m) do { \ uint16_t *pt = (uint16_t *)(void *)((pm) + P1_PM_TABLE); \ for (uint32_t ti = 0u...` |  |
 | `P1_PHASE_TABLE` | macro | `engine/gen/type_p_alpha_dsp.c:14131` | `#define P1_PHASE_TABLE(pm, m) do { } while (0)` |  |
 | `p1_wave_harmonics` | global | `engine/gen/wave_harmonics.h:10` | `static const uint8_t p1_wave_harmonics[14][16] = { { 99, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, { 99, 0, 20, 0...` |  |
 | `p1_wave` | global | `engine/gen/wavetable.h:15` | `static const int16_t p1_wave[47104] = { 0, 201, 402, 603, 804, 1005, 1206, 1407, 1608, 1809, 2009, 2210, 2411, 2611, ...` |  |
 | `p1_wave_base` | global | `engine/gen/wavetable.h:2962` | `static const uint8_t p1_wave_base[14] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 19, 28, 37, }` |  |
-| `P1_MATH_INLINE` | macro | `engine/hal/p1_math.h:17` | `#define P1_MATH_INLINE static inline __attribute__((always_inline))` |  |
+| `P1_MATH_INLINE` | macro | `engine/hal/p1_math.h:17` | `#define P1_MATH_INLINE static inline __attribute__((always_inline))` | These helpers belong in the hot loop, so they are always inline. The plugin host inlines them at the call site. |
 | `p1_fft_alloc` | macro | `engine/hal/p1_math.h:361` | `#define p1_fft_alloc(nfft, inverse, mem, lenmem) kiss_fft_alloc(nfft, inverse, mem, lenmem)` |  |
 | `p1_fft` | macro | `engine/hal/p1_math.h:362` | `#define p1_fft(cfg, in, out) kiss_fft(cfg, in, out)` |  |
 | `p1_fft_free` | macro | `engine/hal/p1_math.h:363` | `#define p1_fft_free kiss_fft_free` |  |
@@ -695,14 +696,14 @@ because the state field index covers the same names.
 | `PART_BANK_SLOT` | macro | `engine/runtime/presets.c:240` | `#define PART_BANK_SLOT 0u /* the part bank starts at flash slot 0, the multi bank follows */` |  |
 | `PRESET_NAME_LEN` | macro | `engine/runtime/presets.h:14` | `#define PRESET_NAME_LEN 33u` |  |
 | `PRESET_VERSION` | macro | `engine/runtime/presets.h:15` | `#define PRESET_VERSION 19u` |  |
-| `PRESET_CUTOFF_LAW_VERSION` | macro | `engine/runtime/presets.h:18` | `#define PRESET_CUTOFF_LAW_VERSION 7u` |  |
+| `PRESET_CUTOFF_LAW_VERSION` | macro | `engine/runtime/presets.h:18` | `#define PRESET_CUTOFF_LAW_VERSION 7u` | The version that introduced the current cutoff law. A record older than this needs `cutoffOldToNew`. Version 7 and later already carry the new position. |
 | `PRESET_EMPTY` | macro | `engine/runtime/presets.h:19` | `#define PRESET_EMPTY 0xFFu` |  |
-| `PRESET_PART_SLOTS` | macro | `engine/runtime/presets.h:25` | `#define PRESET_PART_SLOTS 128u` |  |
+| `PRESET_PART_SLOTS` | macro | `engine/runtime/presets.h:25` | `#define PRESET_PART_SLOTS 128u` | The logical slot counts: 128 single-part slots + 64 multi-patch slots. Each bank is a contiguous byte array chunked across storage slots (a record never straddles a slot boundary). `PRESET_SLOT_MAX` is the storage slot byte ceiling, mirrored here so the host build can compile presets.c. The part record is sized from the part parameter count, and the multi record fits all 64 slots in one. |
 | `PRESET_MULTI_SLOTS` | macro | `engine/runtime/presets.h:26` | `#define PRESET_MULTI_SLOTS 64u` |  |
 | `PRESET_SLOT_MAX` | macro | `engine/runtime/presets.h:27` | `#define PRESET_SLOT_MAX 16372u` |  |
-| `SYNTH_PARAM_MAX` | macro | `engine/runtime/presets.h:31` | `#define SYNTH_PARAM_MAX 256u` |  |
+| `SYNTH_PARAM_MAX` | macro | `engine/runtime/presets.h:31` | `#define SYNTH_PARAM_MAX 256u` | The per-part timbre param cap: the preset apply buffers are sized to this, so a synth's `SYNTH_N_PARAMS` must stay under it. |
 | `PP_RECORD` | macro | `engine/runtime/presets.h:33` | `#define PP_RECORD(N) (1u + PRESET_NAME_LEN + (N) * 4u + 4u)` |  |
-| `PRESET_MACRO_COUNT` | macro | `engine/runtime/presets.h:37` | `#define PRESET_MACRO_COUNT 6u` |  |
+| `PRESET_MACRO_COUNT` | macro | `engine/runtime/presets.h:37` | `#define PRESET_MACRO_COUNT 6u` | The six patch macros: 54 int32 values and six name fields, appended to the multi record. The old record size stays available so a library written before the macro block still loads. |
 | `PRESET_MACRO_PARAMS` | macro | `engine/runtime/presets.h:38` | `#define PRESET_MACRO_PARAMS 54u` |  |
 | `PRESET_MACRO_BYTES` | macro | `engine/runtime/presets.h:39` | `#define PRESET_MACRO_BYTES (PRESET_MACRO_PARAMS * 4u + PRESET_MACRO_COUNT * PRESET_NAME_LEN)` |  |
 | `MP_RECORD` | macro | `engine/runtime/presets.h:40` | `#define MP_RECORD(P) (1u + PRESET_NAME_LEN + (P) + (P) * 5u * 4u + PRESET_MACRO_BYTES + 4u)` |  |
@@ -743,17 +744,231 @@ because the state field index covers the same names.
 | `ENVELOPE` | module constant | `manual/figures.py:11` | `ENVELOPE = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 260" role="img" aria-labelledby="amp-title"> <...` |  |
 | `figures` | module constant | `manual/figures.py:39` | `figures = out / "figures"` |  |
 | `source` | module constant | `manual/figures.py:42` | `source = SHOTS / name` |  |
+| `kPmWords` | global | `plugin/engine/Engine.cpp:15` | `constexpr uint32_t kPmWords = phase_map::kWords` | The phase_map pool layout. These offsets are the node's layout. The pool stride comes from the shared header so a read-table build keeps the parts apart. |
+| `kPmNx` | global | `plugin/engine/Engine.cpp:16` | `constexpr uint32_t kPmNx = 0u` |  |
+| `kPmNflip` | global | `plugin/engine/Engine.cpp:17` | `constexpr uint32_t kPmNflip = 65u` |  |
+| `kPmOrder` | global | `plugin/engine/Engine.cpp:18` | `constexpr uint32_t kPmOrder = 97u` |  |
+| `kPmPy0` | global | `plugin/engine/Engine.cpp:19` | `constexpr uint32_t kPmPy0 = 129u` |  |
+| `kPmPslope` | global | `plugin/engine/Engine.cpp:20` | `constexpr uint32_t kPmPslope = 161u` |  |
+| `kPmSeg` | global | `plugin/engine/Engine.cpp:21` | `constexpr uint32_t kPmSeg = 193u` |  |
+| `kPmF` | global | `plugin/engine/Engine.cpp:22` | `constexpr uint32_t kPmF = 1217u` |  |
+| `kPmSeed` | global | `plugin/engine/Engine.cpp:23` | `constexpr uint32_t kPmSeed = 2242u` |  |
+| `kPmSeeded` | global | `plugin/engine/Engine.cpp:24` | `constexpr uint32_t kPmSeeded = 2243u` |  |
+| `kPmBp` | global | `plugin/engine/Engine.cpp:25` | `constexpr uint32_t kPmBp = 2244u` |  |
+| `kPmLastSegs` | global | `plugin/engine/Engine.cpp:26` | `constexpr uint32_t kPmLastSegs = 2245u` |  |
+| `kPmNy` | global | `plugin/engine/Engine.cpp:27` | `constexpr uint32_t kPmNy = 2249u` |  |
+| `kPmMask` | global | `plugin/engine/Engine.cpp:28` | `constexpr uint32_t kPmMask = 2282u` |  |
+| `kPmLock` | global | `plugin/engine/Engine.cpp:29` | `constexpr uint32_t kPmLock = 2411u` |  |
+| `kPmActive` | global | `plugin/engine/Engine.cpp:30` | `constexpr uint32_t kPmActive = 2412u` |  |
+| `current` | global | `plugin/engine/MidiBridge.cpp:8` | `thread_local p1::Engine* current = nullptr` |  |
 | `P1_PHASE_READ` | macro | `plugin/engine/PhaseMapLayout.h:26` | `#define P1_PHASE_READ 0` |  |
+| `kBaseWords` | global | `plugin/engine/PhaseMapLayout.h:31` | `constexpr uint32_t kBaseWords = 2560u` |  |
+| `kTable` | global | `plugin/engine/PhaseMapLayout.h:32` | `constexpr uint32_t kTable = kBaseWords` | constexpr uint32_t kBaseWords = 2560u; /* the geometry, F, SEG and clocks |
+| `kTableN` | global | `plugin/engine/PhaseMapLayout.h:35` | `constexpr uint32_t kTableN = 4096u` |  |
+| `kTableStep` | global | `plugin/engine/PhaseMapLayout.h:36` | `constexpr uint32_t kTableStep = 1u` |  |
+| `kTableExtra` | global | `plugin/engine/PhaseMapLayout.h:37` | `constexpr uint32_t kTableExtra = 0u` |  |
+| `kTableN` | global | `plugin/engine/PhaseMapLayout.h:39` | `constexpr uint32_t kTableN = 512u` |  |
+| `kTableStep` | global | `plugin/engine/PhaseMapLayout.h:40` | `constexpr uint32_t kTableStep = 8u` |  |
+| `kTableExtra` | global | `plugin/engine/PhaseMapLayout.h:41` | `constexpr uint32_t kTableExtra = 0u` |  |
+| `kTableN` | global | `plugin/engine/PhaseMapLayout.h:43` | `constexpr uint32_t kTableN = 512u` |  |
+| `kTableStep` | global | `plugin/engine/PhaseMapLayout.h:44` | `constexpr uint32_t kTableStep = 8u` |  |
+| `kTableExtra` | global | `plugin/engine/PhaseMapLayout.h:45` | `constexpr uint32_t kTableExtra = 1u` |  |
+| `kTableN` | global | `plugin/engine/PhaseMapLayout.h:47` | `constexpr uint32_t kTableN = 1024u` |  |
+| `kTableStep` | global | `plugin/engine/PhaseMapLayout.h:48` | `constexpr uint32_t kTableStep = 4u` |  |
+| `kTableExtra` | global | `plugin/engine/PhaseMapLayout.h:49` | `constexpr uint32_t kTableExtra = 1u` |  |
+| `kTableN` | global | `plugin/engine/PhaseMapLayout.h:51` | `constexpr uint32_t kTableN = 256u` |  |
+| `kTableStep` | global | `plugin/engine/PhaseMapLayout.h:52` | `constexpr uint32_t kTableStep = 16u` |  |
+| `kTableExtra` | global | `plugin/engine/PhaseMapLayout.h:53` | `constexpr uint32_t kTableExtra = 0u` |  |
+| `kTableN` | global | `plugin/engine/PhaseMapLayout.h:55` | `constexpr uint32_t kTableN = 256u` |  |
+| `kTableStep` | global | `plugin/engine/PhaseMapLayout.h:56` | `constexpr uint32_t kTableStep = 16u` |  |
+| `kTableExtra` | global | `plugin/engine/PhaseMapLayout.h:57` | `constexpr uint32_t kTableExtra = 1u` |  |
+| `kTableN` | global | `plugin/engine/PhaseMapLayout.h:59` | `constexpr uint32_t kTableN = 256u` |  |
+| `kTableStep` | global | `plugin/engine/PhaseMapLayout.h:60` | `constexpr uint32_t kTableStep = 16u` |  |
+| `kTableExtra` | global | `plugin/engine/PhaseMapLayout.h:61` | `constexpr uint32_t kTableExtra = 0u` |  |
+| `kTableN` | global | `plugin/engine/PhaseMapLayout.h:63` | `constexpr uint32_t kTableN = 256u` |  |
+| `kTableStep` | global | `plugin/engine/PhaseMapLayout.h:64` | `constexpr uint32_t kTableStep = 16u` |  |
+| `kTableExtra` | global | `plugin/engine/PhaseMapLayout.h:65` | `constexpr uint32_t kTableExtra = 1u` |  |
+| `kTableN` | global | `plugin/engine/PhaseMapLayout.h:67` | `constexpr uint32_t kTableN = 512u` |  |
+| `kTableStep` | global | `plugin/engine/PhaseMapLayout.h:68` | `constexpr uint32_t kTableStep = 8u` |  |
+| `kTableExtra` | global | `plugin/engine/PhaseMapLayout.h:69` | `constexpr uint32_t kTableExtra = 1u` |  |
+| `kTableN` | global | `plugin/engine/PhaseMapLayout.h:71` | `constexpr uint32_t kTableN = 1024u` |  |
+| `kTableStep` | global | `plugin/engine/PhaseMapLayout.h:72` | `constexpr uint32_t kTableStep = 4u` |  |
+| `kTableExtra` | global | `plugin/engine/PhaseMapLayout.h:73` | `constexpr uint32_t kTableExtra = 1u` |  |
+| `kTableN` | global | `plugin/engine/PhaseMapLayout.h:75` | `constexpr uint32_t kTableN = 1024u` |  |
+| `kTableStep` | global | `plugin/engine/PhaseMapLayout.h:76` | `constexpr uint32_t kTableStep = 4u` |  |
+| `kTableExtra` | global | `plugin/engine/PhaseMapLayout.h:77` | `constexpr uint32_t kTableExtra = 1u` |  |
+| `kTableN` | global | `plugin/engine/PhaseMapLayout.h:79` | `constexpr uint32_t kTableN = 0u` |  |
+| `kTableStep` | global | `plugin/engine/PhaseMapLayout.h:80` | `constexpr uint32_t kTableStep = 1u` |  |
+| `kTableExtra` | global | `plugin/engine/PhaseMapLayout.h:81` | `constexpr uint32_t kTableExtra = 0u` |  |
+| `kQDomain` | global | `plugin/engine/PhaseMapLayout.h:84` | `constexpr bool kQDomain = P1_PHASE_READ >= 7` |  |
+| `kTableWords` | global | `plugin/engine/PhaseMapLayout.h:87` | `constexpr uint32_t kTableWords = (kTableN + kTableExtra + 1u) / 2u` | 16-bit entries, two per pool word, plus the interpolation tail. |
+| `kWords` | global | `plugin/engine/PhaseMapLayout.h:88` | `constexpr uint32_t kWords = kTable + kTableWords` |  |
+| `kPi` | global | `plugin/engine/RateBridge.cpp:12` | `constexpr double kPi = 3.14159265358979323846` |  |
 | `CoreTapCallback` | alias | `plugin/engine/RateBridge.hpp:17` | `using CoreTapCallback = void (*)(void* context, Engine& engine, int frames)` |  |
+| `kSpectrumGroupCount` | global | `plugin/juce/PagesSpectral.cpp:43` | `constexpr int kSpectrumGroupCount = 14` |  |
+| `kSpectrumGroupNames` | global | `plugin/juce/PagesSpectral.cpp:44` | `const char* const kSpectrumGroupNames[kSpectrumGroupCount] = { "all", "odd", "even", "octave (P8)", "harmonic third (...` |  |
+| `kSpectrumGroupLabels` | global | `plugin/juce/PagesSpectral.cpp:51` | `const char* const kSpectrumGroupLabels[kSpectrumGroupCount] = { "all", "odd", "even", "octave P8", "third P5", "fifth...` |  |
+| `kSpectrumMaskNames` | global | `plugin/juce/PagesSpectral.cpp:55` | `const char* const kSpectrumMaskNames[3] = {"live", "dead", "both"}` |  |
+| `kWidth` | global | `plugin/juce/PluginEditor.cpp:14` | `constexpr int kWidth = 1240` |  |
+| `kHeight` | global | `plugin/juce/PluginEditor.cpp:15` | `constexpr int kHeight = 985` |  |
 | `p1` | alias | `plugin/juce/PluginEditor.cpp:397` | `using namespace p1` |  |
 | `ui` | alias | `plugin/juce/PluginEditor.cpp:398` | `using namespace p1::ui` |  |
+| `kCoreRate` | global | `plugin/juce/PluginProcessor.cpp:20` | `constexpr double kCoreRate = 48000.0` |  |
+| `kControlBlock` | global | `plugin/juce/PluginProcessor.cpp:21` | `constexpr int kControlBlock = 32` |  |
+| `kStateVersion` | global | `plugin/juce/PluginProcessor.cpp:22` | `constexpr int kStateVersion = 15` |  |
+| `kCutoffLawStateVersion` | global | `plugin/juce/PluginProcessor.cpp:25` | `constexpr int kCutoffLawStateVersion = 5` | The state version whose cutoff values already use the current law. A later version bump must not run the cutoff conversion again. |
+| `kUiPageLayout` | global | `plugin/juce/PluginProcessor.cpp:27` | `constexpr int kUiPageLayout = 5` | Layout 5 inserts the macros page at 1, so every later page moves up one. |
+| `kPhaseMapPageLayout` | global | `plugin/juce/PluginProcessor.cpp:29` | `constexpr int kPhaseMapPageLayout = 4` | Layout 4 inserted op phasemap at 4, which moved the three spectral pages. |
+| `kIntToFloat` | global | `plugin/juce/PluginProcessor.cpp:30` | `constexpr float kIntToFloat = 1.0f / 32768.0f` |  |
+| `kInsertionStateVersion` | global | `plugin/juce/PluginProcessor.cpp:34` | `constexpr int kInsertionStateVersion = 15` | The state version that inserted the half square and the two algorithms. A later version bump must not shift the stored values again. |
 | `processBlock` | alias | `plugin/juce/PluginProcessor.h:57` | `using juce::AudioProcessor::processBlock` |  |
+| `kVolumePositions` | global | `plugin/juce/VolumeLaw.h:14` | `inline constexpr int kVolumePositions = 1000` | The master volume fader. The host parameter is the fader position rather than a gain, so the law lives here and the processor and the header slider read the same numbers. Position 0 is silent, positions 1 to 750 rise logarithmically through 60 dB to unity at 750, and positions 751 to 1000 accelerate in dB to +12 dB. Above unity the curve is quadratic, so the gain rises ever faster. |
+| `kVolumeUnity` | global | `plugin/juce/VolumeLaw.h:15` | `inline constexpr int kVolumeUnity = 750` |  |
+| `kVolumeFloorDb` | global | `plugin/juce/VolumeLaw.h:16` | `inline constexpr double kVolumeFloorDb = -60.0` |  |
+| `kVolumeCeilingDb` | global | `plugin/juce/VolumeLaw.h:17` | `inline constexpr double kVolumeCeilingDb = 12.0` |  |
+| `kVolumeParamID` | global | `plugin/juce/VolumeLaw.h:21` | `inline constexpr const char* kVolumeParamID = "output_volume"` | The host parameter id. It sits outside the manifest because the volume trims the plugin output rather than a patch or a part. |
+| `kCutoffPositionMax` | global | `plugin/preset/CutoffLaw.h:15` | `inline constexpr int32_t kCutoffPositionMax = 55296` |  |
+| `kCutoffMinHz` | global | `plugin/preset/CutoffLaw.h:16` | `inline constexpr double kCutoffMinHz = 3.5` |  |
+| `kCutoffOctaves` | global | `plugin/preset/CutoffLaw.h:17` | `inline constexpr double kCutoffOctaves = 12.0` |  |
+| `kCutoffPi` | global | `plugin/preset/CutoffLaw.h:18` | `inline constexpr double kCutoffPi = 3.14159265358979323846` |  |
+| `kPhaseParamsPerPart` | global | `plugin/preset/PresetStore.cpp:19` | `constexpr int kPhaseParamsPerPart = 116` | The version 16 phase block: 29 parameters for each of the four operators. |
+| `kRingmodParamsPerPart` | global | `plugin/preset/PresetStore.cpp:23` | `constexpr int kRingmodParamsPerPart = 10` | The version 17 ringmod block: three pair on/off, three pair levels and four direct carrier gates. |
+| `kKeyFollowParamsPerPart` | global | `plugin/preset/PresetStore.cpp:28` | `constexpr int kKeyFollowParamsPerPart = 3` | The version 18 key-follow block: the breakpoint and the key/velocity on/off switches are part parameters now. They are appended after every earlier part parameter, so old records only gain three default slots at the end. |
+| `kOffsetEnvelopeBlocks` | global | `plugin/preset/PresetStore.cpp:32` | `constexpr int kOffsetEnvelopeBlocks = 5` | The five envelope blocks that gained a slot in version 13: one pitch and one feedback envelope for each operator. |
+| `kFilterEnvelopeGrow` | global | `plugin/preset/PresetStore.cpp:39` | `constexpr int kFilterEnvelopeGrow = 2` | The five absolute envelope blocks that changed for version 14: the filter envelope and one spectral envelope for each operator. The spectral blocks grew from seven rates and levels to ten, netting two slots after the separate depth was removed. The filter block grew from eight to ten in the following step and kept its version byte. |
+| `kSpecEnvelopeGrow` | global | `plugin/preset/PresetStore.cpp:40` | `constexpr int kSpecEnvelopeGrow = 2` |  |
+| `kVersion13SpecDepthToBlock` | global | `plugin/preset/PresetStore.cpp:43` | `constexpr int kVersion13SpecDepthToBlock = 46` | In the version 13 layout the spectral depth sits 46 slots before the r1 of its rate block. Version 14 moved the depth into the block as `on`. |
+| `kRate` | global | `plugin/tests/additive_bench.cpp:24` | `constexpr int kRate = 48000` |  |
+| `kVoices` | global | `plugin/tests/additive_bench.cpp:25` | `constexpr int kVoices = 24` |  |
+| `kOperators` | global | `plugin/tests/additive_bench.cpp:26` | `constexpr int kOperators = 4` |  |
+| `kParts` | global | `plugin/tests/additive_bench.cpp:27` | `constexpr int kParts = 2` |  |
+| `kTables` | global | `plugin/tests/additive_bench.cpp:28` | `constexpr int kTables = kOperators * kParts` |  |
+| `kPi` | global | `plugin/tests/additive_bench.cpp:29` | `constexpr double kPi = 3.14159265358979323846` |  |
 | `p1_additive_morph_start` | global | `plugin/tests/additive_engine_bench.cpp:19` | `int32_t p1_additive_morph_start` |  |
 | `p1_additive_morph_step` | global | `plugin/tests/additive_engine_bench.cpp:20` | `int32_t p1_additive_morph_step` |  |
 | `p1_additive_morph_now` | global | `plugin/tests/additive_engine_bench.cpp:21` | `int32_t p1_additive_morph_now` |  |
+| `kRate` | global | `plugin/tests/additive_engine_bench.cpp:25` | `constexpr int kRate = 48000` |  |
+| `kVoices` | global | `plugin/tests/additive_engine_bench.cpp:26` | `constexpr int kVoices = 24` |  |
 | `Section` | alias | `plugin/tests/editor_snapshot.cpp:679` | `using Section = PluginEditor::OperatorSection` |  |
+| `failures` | global | `plugin/tests/engine_parity.cpp:25` | `int failures = 0` |  |
 | `kEngineNoteOn` | global | `plugin/tests/engine_render_reference.h:8` | `inline constexpr std::int32_t kEngineNoteOn[512] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...` |  |
 | `kEngineRelease` | global | `plugin/tests/engine_render_reference.h:54` | `inline constexpr std::int32_t kEngineRelease[512] = { -277, -277, -269, -269, -255, -255, -249, -249, -235, -235, -22...` |  |
+| `kPi` | global | `plugin/tests/feedback_bipolar.cpp:17` | `constexpr double kPi = 3.14159265358979323846` |  |
+| `kSampleRate` | global | `plugin/tests/feedback_bipolar.cpp:18` | `constexpr double kSampleRate = 48000.0` |  |
+| `kFundamental` | global | `plugin/tests/feedback_bipolar.cpp:19` | `constexpr double kFundamental = 261.6255653005986` |  |
+| `kSamples` | global | `plugin/tests/feedback_bipolar.cpp:20` | `constexpr int kSamples = 16384` | constexpr double kFundamental = 261.6255653005986; /* note 60 |
+| `kWindowStart` | global | `plugin/tests/feedback_bipolar.cpp:21` | `constexpr int kWindowStart = 8192` |  |
+| `kWindow` | global | `plugin/tests/feedback_bipolar.cpp:22` | `constexpr int kWindow = 8192` |  |
+| `failures` | global | `plugin/tests/feedback_bipolar.cpp:24` | `int failures = 0` |  |
+| `kPi` | global | `plugin/tests/feedback_envelope.cpp:18` | `constexpr double kPi = 3.14159265358979323846` |  |
+| `kSampleRate` | global | `plugin/tests/feedback_envelope.cpp:19` | `constexpr double kSampleRate = 48000.0` |  |
+| `kFundamental` | global | `plugin/tests/feedback_envelope.cpp:20` | `constexpr double kFundamental = 261.6255653005986` |  |
+| `kSamples` | global | `plugin/tests/feedback_envelope.cpp:21` | `constexpr int kSamples = 16384` | constexpr double kFundamental = 261.6255653005986; /* note 60 |
+| `kWindow` | global | `plugin/tests/feedback_envelope.cpp:22` | `constexpr int kWindow = 2048` |  |
+| `failures` | global | `plugin/tests/feedback_envelope.cpp:24` | `int failures = 0` |  |
+| `kBlock` | global | `plugin/tests/filter_envelope.cpp:15` | `constexpr int kBlock = 32` |  |
+| `kTarget` | global | `plugin/tests/filter_envelope.cpp:16` | `constexpr int32_t kTarget = 99 * 256` |  |
+| `failures` | global | `plugin/tests/filter_envelope.cpp:18` | `int failures = 0` |  |
+| `failures` | global | `plugin/tests/filter_law.cpp:12` | `int failures = 0` |  |
+| `kFull` | global | `plugin/tests/lfo_fades.cpp:18` | `constexpr uint32_t kFull = 0x80000000u` |  |
+| `kVoices` | global | `plugin/tests/lfo_fades.cpp:19` | `constexpr int kVoices = 24` |  |
+| `kTickFrames` | global | `plugin/tests/lfo_fades.cpp:20` | `constexpr int kTickFrames = 32` |  |
+| `kMaxTicks` | global | `plugin/tests/lfo_fades.cpp:21` | `constexpr int kMaxTicks = 60000` |  |
+| `kTicks1` | global | `plugin/tests/lfo_fades.cpp:23` | `constexpr int kTicks1 = 50298` | The envelope table's 99 percent times at 48 kHz, in control ticks. |
+| `kTicks50` | global | `plugin/tests/lfo_fades.cpp:24` | `constexpr int kTicks50 = 3210` |  |
+| `kTicks70` | global | `plugin/tests/lfo_fades.cpp:25` | `constexpr int kTicks70 = 727` |  |
+| `kTicks90` | global | `plugin/tests/lfo_fades.cpp:26` | `constexpr int kTicks90 = 79` |  |
+| `kTicks98` | global | `plugin/tests/lfo_fades.cpp:27` | `constexpr int kTicks98 = 12` |  |
+| `failures` | global | `plugin/tests/lfo_fades.cpp:29` | `int failures = 0` |  |
+| `kSamples` | global | `plugin/tests/operator_lfos.cpp:14` | `constexpr int kSamples = 16384` |  |
+| `failures` | global | `plugin/tests/operator_lfos.cpp:15` | `int failures = 0` |  |
+| `kVoices` | global | `plugin/tests/phase_map.cpp:22` | `constexpr int kVoices = 24` |  |
+| `kTickFrames` | global | `plugin/tests/phase_map.cpp:23` | `constexpr int kTickFrames = 32` |  |
+| `kWords` | global | `plugin/tests/phase_map.cpp:27` | `constexpr uint32_t kWords = p1::phase_map::kWords` | The phase_map pool layout, mirrored from the node. The stride follows the compiled read table. |
+| `kNx` | global | `plugin/tests/phase_map.cpp:28` | `constexpr uint32_t kNx = 0u` |  |
+| `kNslope` | global | `plugin/tests/phase_map.cpp:29` | `constexpr uint32_t kNslope = 33u` |  |
+| `kNflip` | global | `plugin/tests/phase_map.cpp:30` | `constexpr uint32_t kNflip = 65u` |  |
+| `kOrder` | global | `plugin/tests/phase_map.cpp:31` | `constexpr uint32_t kOrder = 97u` |  |
+| `kNy` | global | `plugin/tests/phase_map.cpp:32` | `constexpr uint32_t kNy = 2249u` |  |
+| `kMask` | global | `plugin/tests/phase_map.cpp:33` | `constexpr uint32_t kMask = 2282u` |  |
+| `kLock` | global | `plugin/tests/phase_map.cpp:34` | `constexpr uint32_t kLock = 2411u` |  |
+| `kActive` | global | `plugin/tests/phase_map.cpp:35` | `constexpr uint32_t kActive = 2412u` |  |
+| `kBp` | global | `plugin/tests/phase_map.cpp:36` | `constexpr uint32_t kBp = 2244u` |  |
+| `kLastSegs` | global | `plugin/tests/phase_map.cpp:37` | `constexpr uint32_t kLastSegs = 2245u` |  |
+| `kDacc` | global | `plugin/tests/phase_map.cpp:38` | `constexpr uint32_t kDacc = 2246u` |  |
+| `kFacc` | global | `plugin/tests/phase_map.cpp:39` | `constexpr uint32_t kFacc = 2247u` |  |
+| `kRacc` | global | `plugin/tests/phase_map.cpp:40` | `constexpr uint32_t kRacc = 2248u` |  |
+| `kF` | global | `plugin/tests/phase_map.cpp:41` | `constexpr uint32_t kF = 1217u` |  |
+| `kPlRateLevel` | global | `plugin/tests/phase_map.cpp:44` | `constexpr uint32_t kPlRateLevel = 2u` | The phase_lfo and phase_env pools. |
+| `kPlDepthLevel` | global | `plugin/tests/phase_map.cpp:45` | `constexpr uint32_t kPlDepthLevel = 3u` |  |
+| `kPlValue` | global | `plugin/tests/phase_map.cpp:46` | `constexpr uint32_t kPlValue = 6u` |  |
+| `kPeStage` | global | `plugin/tests/phase_map.cpp:47` | `constexpr uint32_t kPeStage = 0u` |  |
+| `kPeLevel` | global | `plugin/tests/phase_map.cpp:48` | `constexpr uint32_t kPeLevel = 1u` |  |
+| `failures` | global | `plugin/tests/phase_map.cpp:50` | `int failures = 0` |  |
+| `kRate` | global | `plugin/tests/phase_map_perceptual.cpp:31` | `constexpr uint32_t kRate = 48000u` |  |
+| `kTick` | global | `plugin/tests/phase_map_perceptual.cpp:32` | `constexpr int kTick = 32` |  |
+| `kBase` | global | `plugin/tests/phase_map_perceptual.cpp:33` | `constexpr uint32_t kBase = p1::phase_map::kBaseWords` |  |
+| `kNx` | global | `plugin/tests/phase_map_perceptual.cpp:36` | `constexpr uint32_t kNx = 0u` | The phase_map pool offsets, mirrored from the node. |
+| `kNslope` | global | `plugin/tests/phase_map_perceptual.cpp:37` | `constexpr uint32_t kNslope = 33u` |  |
+| `kNflip` | global | `plugin/tests/phase_map_perceptual.cpp:38` | `constexpr uint32_t kNflip = 65u` |  |
+| `kOrder` | global | `plugin/tests/phase_map_perceptual.cpp:39` | `constexpr uint32_t kOrder = 97u` |  |
+| `kPy0` | global | `plugin/tests/phase_map_perceptual.cpp:40` | `constexpr uint32_t kPy0 = 129u` |  |
+| `kPslope` | global | `plugin/tests/phase_map_perceptual.cpp:41` | `constexpr uint32_t kPslope = 161u` |  |
+| `kSeg` | global | `plugin/tests/phase_map_perceptual.cpp:42` | `constexpr uint32_t kSeg = 193u` |  |
+| `kF` | global | `plugin/tests/phase_map_perceptual.cpp:43` | `constexpr uint32_t kF = 1217u` |  |
+| `kBp` | global | `plugin/tests/phase_map_perceptual.cpp:44` | `constexpr uint32_t kBp = 2244u` |  |
+| `kLastSegs` | global | `plugin/tests/phase_map_perceptual.cpp:45` | `constexpr uint32_t kLastSegs = 2245u` |  |
+| `kDacc` | global | `plugin/tests/phase_map_perceptual.cpp:46` | `constexpr uint32_t kDacc = 2246u` |  |
+| `kFacc` | global | `plugin/tests/phase_map_perceptual.cpp:47` | `constexpr uint32_t kFacc = 2247u` |  |
+| `kRacc` | global | `plugin/tests/phase_map_perceptual.cpp:48` | `constexpr uint32_t kRacc = 2248u` |  |
+| `kSeed` | global | `plugin/tests/phase_map_perceptual.cpp:49` | `constexpr uint32_t kSeed = 2242u` |  |
+| `kSeeded` | global | `plugin/tests/phase_map_perceptual.cpp:50` | `constexpr uint32_t kSeeded = 2243u` |  |
+| `kActive` | global | `plugin/tests/phase_map_perceptual.cpp:51` | `constexpr uint32_t kActive = 2412u` |  |
+| `kLastB` | global | `plugin/tests/phase_map_perceptual.cpp:52` | `constexpr uint32_t kLastB = 2241u` |  |
+| `kPi` | global | `plugin/tests/phase_map_perceptual_compare.cpp:29` | `constexpr double kPi = 3.14159265358979323846` |  |
+| `kN` | global | `plugin/tests/phase_map_perceptual_compare.cpp:30` | `constexpr int kN = 4096` |  |
+| `kHop` | global | `plugin/tests/phase_map_perceptual_compare.cpp:31` | `constexpr int kHop = 1024` | constexpr int kN = 4096;         /* spectral frame |
+| `kEnvBlock` | global | `plugin/tests/phase_map_perceptual_compare.cpp:32` | `constexpr int kEnvBlock = 240` |  |
+| `kLsdMax` | global | `plugin/tests/phase_map_perceptual_compare.cpp:36` | `constexpr double kLsdMax = 0.50` | The perceptual gate. The spectral and envelope limits are the contract limits. The null depth is a sanity floor, not a substitute for them. |
+| `kLsdP95` | global | `plugin/tests/phase_map_perceptual_compare.cpp:37` | `constexpr double kLsdP95 = 0.25` |  |
+| `kBandMax` | global | `plugin/tests/phase_map_perceptual_compare.cpp:38` | `constexpr double kBandMax = 0.50` |  |
+| `kCentroidPct` | global | `plugin/tests/phase_map_perceptual_compare.cpp:39` | `constexpr double kCentroidPct = 2.0` |  |
+| `kRolloffPct` | global | `plugin/tests/phase_map_perceptual_compare.cpp:40` | `constexpr double kRolloffPct = 2.0` |  |
+| `kFlatness` | global | `plugin/tests/phase_map_perceptual_compare.cpp:41` | `constexpr double kFlatness = 0.02` |  |
+| `kEnvMax` | global | `plugin/tests/phase_map_perceptual_compare.cpp:42` | `constexpr double kEnvMax = 0.50` |  |
+| `kEnvP95` | global | `plugin/tests/phase_map_perceptual_compare.cpp:43` | `constexpr double kEnvP95 = 0.25` |  |
+| `kHarmMax` | global | `plugin/tests/phase_map_perceptual_compare.cpp:44` | `constexpr double kHarmMax = 0.50` |  |
+| `kAliasDelta` | global | `plugin/tests/phase_map_perceptual_compare.cpp:45` | `constexpr double kAliasDelta = 0.50` |  |
+| `kAttackMs` | global | `plugin/tests/phase_map_perceptual_compare.cpp:46` | `constexpr double kAttackMs = 1.0` |  |
+| `kReleaseMs` | global | `plugin/tests/phase_map_perceptual_compare.cpp:47` | `constexpr double kReleaseMs = 1.0` |  |
+| `kNullDb` | global | `plugin/tests/phase_map_perceptual_compare.cpp:48` | `constexpr double kNullDb = -40.0` |  |
+| `kRmsDeltaDb` | global | `plugin/tests/phase_map_perceptual_compare.cpp:49` | `constexpr double kRmsDeltaDb = 0.10` |  |
+| `kPeakDeltaDb` | global | `plugin/tests/phase_map_perceptual_compare.cpp:50` | `constexpr double kPeakDeltaDb = 0.10` |  |
+| `kBlock` | global | `plugin/tests/pitch_envelope.cpp:15` | `constexpr int kBlock = 32` |  |
+| `kBlocks` | global | `plugin/tests/pitch_envelope.cpp:16` | `constexpr int kBlocks = 512` |  |
+| `failures` | global | `plugin/tests/pitch_envelope.cpp:18` | `int failures = 0` |  |
+| `kFrames` | global | `plugin/tests/plugin_smoke.cpp:28` | `constexpr int kFrames = 256` |  |
+| `failures` | global | `plugin/tests/plugin_smoke.cpp:30` | `int failures = 0` |  |
+| `kFrames` | global | `plugin/tests/plugin_stability.cpp:17` | `constexpr int kFrames = 256` |  |
+| `failures` | global | `plugin/tests/plugin_stability.cpp:18` | `int failures = 0` |  |
+| `failures` | global | `plugin/tests/preset_smoke.cpp:23` | `int failures = 0` |  |
+| `kCoreRate` | global | `plugin/tests/rate_bridge_test.cpp:14` | `constexpr double kCoreRate = 48000.0` |  |
+| `kPi` | global | `plugin/tests/rate_bridge_test.cpp:15` | `constexpr double kPi = 3.14159265358979323846` |  |
+| `kAmplitude` | global | `plugin/tests/rate_bridge_test.cpp:16` | `constexpr double kAmplitude = 16000.0` |  |
+| `kRate` | global | `plugin/tests/spectral.cpp:18` | `constexpr double kRate = 48000.0` |  |
+| `kPi` | global | `plugin/tests/spectral.cpp:19` | `constexpr double kPi = 3.14159265358979323846` |  |
+| `kFrames` | global | `plugin/tests/spectral.cpp:20` | `constexpr int kFrames = 44100` |  |
+| `kWindow` | global | `plugin/tests/spectral.cpp:21` | `constexpr int kWindow = 4096` |  |
+| `kF0` | global | `plugin/tests/spectral.cpp:22` | `constexpr double kF0 = 261.6255653005986` |  |
+| `kRate` | global | `plugin/tests/spectral_bench.cpp:21` | `constexpr int kRate = 48000` |  |
+| `kControlBlock` | global | `plugin/tests/spectral_bench.cpp:22` | `constexpr int kControlBlock = 32` |  |
+| `kWidth` | global | `plugin/tests/ui_frame_bench.cpp:20` | `constexpr int kWidth = 330` |  |
+| `kHeight` | global | `plugin/tests/ui_frame_bench.cpp:21` | `constexpr int kHeight = 50` |  |
+| `kFrames` | global | `plugin/tests/ui_frame_bench.cpp:22` | `constexpr int kFrames = 2000` |  |
+| `kVoices` | global | `plugin/tests/voice_alloc.cpp:12` | `constexpr int kVoices = 24` |  |
+| `failures` | global | `plugin/tests/voice_alloc.cpp:14` | `int failures = 0` |  |
+| `kFnvOffset` | global | `plugin/tests/wavetable.cpp:14` | `constexpr uint64_t kFnvOffset = 0xcbf29ce484222325ull` |  |
+| `kFnvPrime` | global | `plugin/tests/wavetable.cpp:15` | `constexpr uint64_t kFnvPrime = 0x100000001b3ull` |  |
 | `_HERE` | module constant | `plugin/tools/additive_prototype.py:19` | `_HERE = Path(__file__).resolve().parent` |  |
 | `_LEVELS` | module constant | `plugin/tools/additive_prototype.py:20` | `_LEVELS = 9` |  |
 | `_SIZE` | module constant | `plugin/tools/additive_prototype.py:21` | `_SIZE = 1024` |  |
@@ -927,6 +1142,8 @@ because the state field index covers the same names.
 | `changed` | module constant | `plugin/tools/snapshot_check.py:160` | `changed: list[str] = []` |  |
 | `problems` | module constant | `plugin/tools/snapshot_check.py:161` | `problems: list[str] = []` |  |
 | `written` | module constant | `plugin/tools/snapshot_check.py:183` | `written = _diff_images(args.actual, args.golden, args.diff, changed)` |  |
+| `kPi` | global | `plugin/ui/SpectrumAnalysis.cpp:12` | `constexpr double kPi = 3.14159265358979323846` |  |
+| `waveNames` | global | `plugin/ui/Widgets.cpp:23` | `const char* const waveNames[15] = { "sine", "triangle", "half sine", "half tri", "2x sine", "2x tri", "2x half sine",...` |  |
 | `APVTS` | alias | `plugin/ui/Widgets.h:19` | `using APVTS = juce::AudioProcessorValueTreeState` |  |
 | `ROOT` | module constant | `tools/audit_modules.py:15` | `ROOT = Path(__file__).resolve().parents[1]` |  |
 | `MODULES` | module constant | `tools/audit_modules.py:16` | `MODULES = ROOT / ".dev" / "modules"` |  |
@@ -979,231 +1196,233 @@ because the state field index covers the same names.
 | `value` | module constant | `tools/gen_code_docs.py:154` | `value = re.sub(r"\s+", " ", value).strip()` |  |
 | `value` | module constant | `tools/gen_code_docs.py:155` | `value = re.sub(r"\s*\{\s*$", "", value).strip()` |  |
 | `parent` | module constant | `tools/gen_code_docs.py:168` | `parent = node.parent` |  |
-| `parent` | module constant | `tools/gen_code_docs.py:186` | `parent = parent.parent` |  |
-| `parent` | module constant | `tools/gen_code_docs.py:191` | `parent = node.parent` |  |
-| `parent` | module constant | `tools/gen_code_docs.py:195` | `parent = parent.parent` |  |
-| `raw` | module constant | `tools/gen_code_docs.py:200` | `raw = path.read_text(encoding="utf-8", errors="replace")` |  |
-| `lines` | module constant | `tools/gen_code_docs.py:201` | `lines = raw.splitlines()` |  |
-| `src` | module constant | `tools/gen_code_docs.py:202` | `src = raw.encode("utf-8")` |  |
-| `tree` | module constant | `tools/gen_code_docs.py:203` | `tree = parser_for(path).parse(src)` |  |
-| `rel` | module constant | `tools/gen_code_docs.py:204` | `rel = str(path.relative_to(ROOT)).replace("\\", "/")` |  |
-| `functions` | module constant | `tools/gen_code_docs.py:205` | `functions: list[Function] = []` |  |
-| `types` | module constant | `tools/gen_code_docs.py:206` | `types: list[Type] = []` |  |
-| `symbols` | module constant | `tools/gen_code_docs.py:207` | `symbols: list[Symbol] = []` |  |
-| `seen_functions` | module constant | `tools/gen_code_docs.py:209` | `seen_functions: set[tuple[str, int, str]] = set()` |  |
-| `seen_types` | module constant | `tools/gen_code_docs.py:210` | `seen_types: set[tuple[str, int, str]] = set()` |  |
-| `seen_symbols` | module constant | `tools/gen_code_docs.py:211` | `seen_symbols: set[tuple[str, int, str]] = set()` |  |
-| `control_names` | module constant | `tools/gen_code_docs.py:212` | `control_names = { "if", "for", "while", "switch", "return", "sizeof", "static_assert", "alignas", "decltype", "catch"...` |  |
-| `declarator` | module constant | `tools/gen_code_docs.py:218` | `declarator = node.child_by_field_name("declarator")` |  |
-| `name` | module constant | `tools/gen_code_docs.py:219` | `name = name_of(declarator, src)` |  |
-| `body` | module constant | `tools/gen_code_docs.py:222` | `body = node.child_by_field_name("body")` |  |
-| `first` | module constant | `tools/gen_code_docs.py:223` | `first = node.start_point[0] + 1` |  |
-| `last` | module constant | `tools/gen_code_docs.py:224` | `last = node.end_point[0] + 1` |  |
-| `signature` | module constant | `tools/gen_code_docs.py:226` | `signature = clean_signature(text(node, src)[: body.start_byte - node.start_byte])` |  |
-| `signature` | module constant | `tools/gen_code_docs.py:228` | `signature = clean_signature(text(node, src).rstrip(";"))` |  |
-| `key` | module constant | `tools/gen_code_docs.py:229` | `key = (rel, first, name)` |  |
-| `params` | module constant | `tools/gen_code_docs.py:233` | `params: list[str] = []` |  |
-| `scope` | module constant | `tools/gen_code_docs.py:240` | `scope = class_scope(node, src)` |  |
-| `description` | module constant | `tools/gen_code_docs.py:241` | `description = clean_comment(lines, first)` |  |
-| `kind` | module constant | `tools/gen_code_docs.py:257` | `kind = { "class_specifier": "class", "struct_specifier": "struct", "union_specifier": "union", "enum_specifier": "enu...` |  |
-| `name` | module constant | `tools/gen_code_docs.py:263` | `name = name_of(node.child_by_field_name("name"), src)` |  |
-| `first` | module constant | `tools/gen_code_docs.py:266` | `first = node.start_point[0] + 1` |  |
-| `key` | module constant | `tools/gen_code_docs.py:267` | `key = (rel, first, name)` |  |
-| `body` | module constant | `tools/gen_code_docs.py:271` | `body = node.child_by_field_name("body")` |  |
-| `kind_label` | module constant | `tools/gen_code_docs.py:272` | `kind_label = kind if body is not None else f"{kind} forward declaration"` |  |
-| `fields` | module constant | `tools/gen_code_docs.py:273` | `fields: list[str] = []` |  |
-| `methods` | module constant | `tools/gen_code_docs.py:274` | `methods: list[str] = []` |  |
-| `body_node` | module constant | `tools/gen_code_docs.py:282` | `body_node = child.child_by_field_name("body")` |  |
-| `raw` | module constant | `tools/gen_code_docs.py:284` | `raw = src[child.start_byte : body_node.start_byte].decode( "utf-8", "replace" )` |  |
-| `raw` | module constant | `tools/gen_code_docs.py:288` | `raw = text(child, src)` |  |
-| `t` | module constant | `tools/gen_code_docs.py:304` | `t = node.type` |  |
-| `alias` | module constant | `tools/gen_code_docs.py:310` | `alias = name_of(node.child_by_field_name("declarator"), src)` |  |
-| `underlying` | module constant | `tools/gen_code_docs.py:311` | `underlying = node.child_by_field_name("type")` |  |
-| `first` | module constant | `tools/gen_code_docs.py:313` | `first = node.start_point[0] + 1` |  |
-| `key` | module constant | `tools/gen_code_docs.py:314` | `key = (rel, first, alias)` |  |
-| `name_node` | module constant | `tools/gen_code_docs.py:331` | `name_node = node.child_by_field_name("name")` |  |
-| `name` | module constant | `tools/gen_code_docs.py:332` | `name = text(name_node, src) if name_node is not None else ""` |  |
-| `first` | module constant | `tools/gen_code_docs.py:334` | `first = node.start_point[0] + 1` |  |
-| `key` | module constant | `tools/gen_code_docs.py:335` | `key = (rel, first, name)` |  |
-| `declarator` | module constant | `tools/gen_code_docs.py:349` | `declarator = node.child_by_field_name("declarator")` |  |
-| `is_function` | module constant | `tools/gen_code_docs.py:350` | `is_function = declarator is not None and ( declarator.type == "function_declarator" or "function_declarator" in {c.ty...` |  |
-| `name` | module constant | `tools/gen_code_docs.py:359` | `name = name_of(child.child_by_field_name("declarator"), src)` |  |
-| `name` | module constant | `tools/gen_code_docs.py:361` | `name = name_of(child, src)` |  |
-| `first` | module constant | `tools/gen_code_docs.py:366` | `first = node.start_point[0] + 1` |  |
-| `key` | module constant | `tools/gen_code_docs.py:367` | `key = (rel, first, name)` |  |
-| `declarator` | module constant | `tools/gen_code_docs.py:382` | `declarator = node.child_by_field_name("declarator")` |  |
-| `is_function` | module constant | `tools/gen_code_docs.py:383` | `is_function = declarator is not None and ( declarator.type == "function_declarator" or "function_declarator" in {c.ty...` |  |
-| `name` | module constant | `tools/gen_code_docs.py:390` | `name = name_of(node, src)` |  |
-| `first` | module constant | `tools/gen_code_docs.py:392` | `first = node.start_point[0] + 1` |  |
-| `key` | module constant | `tools/gen_code_docs.py:393` | `key = (rel, first, name)` |  |
-| `raw` | module constant | `tools/gen_code_docs.py:414` | `raw = path.read_text(encoding="utf-8", errors="replace")` |  |
-| `lines` | module constant | `tools/gen_code_docs.py:415` | `lines = raw.splitlines()` |  |
-| `src` | module constant | `tools/gen_code_docs.py:416` | `src = raw.encode("utf-8")` |  |
-| `tree` | module constant | `tools/gen_code_docs.py:417` | `tree = parser_for(path).parse(src)` |  |
-| `rel` | module constant | `tools/gen_code_docs.py:418` | `rel = str(path.relative_to(ROOT)).replace("\\", "/")` |  |
-| `functions` | module constant | `tools/gen_code_docs.py:419` | `functions: list[Function] = []` |  |
-| `types` | module constant | `tools/gen_code_docs.py:420` | `types: list[Type] = []` |  |
-| `symbols` | module constant | `tools/gen_code_docs.py:421` | `symbols: list[Symbol] = []` |  |
-| `body` | module constant | `tools/gen_code_docs.py:424` | `body = node.child_by_field_name("body")` |  |
-| `first` | module constant | `tools/gen_code_docs.py:429` | `first = child.children[0]` |  |
-| `value` | module constant | `tools/gen_code_docs.py:431` | `value = text(first, src).strip("\"'")` |  |
-| `name` | module constant | `tools/gen_code_docs.py:437` | `name = name_of(node.child_by_field_name("name"), src)` |  |
-| `params` | module constant | `tools/gen_code_docs.py:439` | `params: list[str] = []` |  |
-| `parameters` | module constant | `tools/gen_code_docs.py:440` | `parameters = node.child_by_field_name("parameters")` |  |
-| `name` | module constant | `tools/gen_code_docs.py:459` | `name = name_of(node.child_by_field_name("name"), src)` |  |
-| `left` | module constant | `tools/gen_code_docs.py:477` | `left = child.child_by_field_name("left")` |  |
-| `files` | module constant | `tools/gen_code_docs.py:497` | `files: list[Path] = []` |  |
-| `path` | module constant | `tools/gen_code_docs.py:501` | `path = Path(base, name)` |  |
-| `raw` | module constant | `tools/gen_code_docs.py:514` | `raw = path.read_text(encoding="utf-8", errors="replace")` |  |
-| `lines` | module constant | `tools/gen_code_docs.py:517` | `lines = raw.splitlines()` |  |
-| `chunks` | module constant | `tools/gen_code_docs.py:523` | `chunks: list[str] = []` |  |
-| `inside` | module constant | `tools/gen_code_docs.py:524` | `inside = False` |  |
-| `saw_code` | module constant | `tools/gen_code_docs.py:525` | `saw_code = False` |  |
-| `stripped` | module constant | `tools/gen_code_docs.py:527` | `stripped = line.strip()` |  |
-| `body` | module constant | `tools/gen_code_docs.py:534` | `body = re.sub(r"^/\*+", "", stripped)` |  |
-| `inside` | module constant | `tools/gen_code_docs.py:539` | `inside = True` |  |
-| `saw_code` | module constant | `tools/gen_code_docs.py:547` | `saw_code = True` |  |
-| `inside` | module constant | `tools/gen_code_docs.py:551` | `inside = False` |  |
-| `cleaned` | module constant | `tools/gen_code_docs.py:556` | `cleaned = [chunk.strip() for chunk in chunks if chunk.strip()]` |  |
-| `text` | module constant | `tools/gen_code_docs.py:559` | `text = " ".join(cleaned)` |  |
-| `text` | module constant | `tools/gen_code_docs.py:560` | `text = re.sub(r"SPDX-License-Identifier:\s*\S+", " ", text)` |  |
-| `text` | module constant | `tools/gen_code_docs.py:561` | `text = re.sub(r"Copyright\s*\(C\)[^.]*\.?", " ", text)` |  |
-| `text` | module constant | `tools/gen_code_docs.py:562` | `text = re.sub(r"GENERATED by [^,]*,\s*do not edit[^.]*\.", " ", text, flags=re.I)` |  |
-| `text` | module constant | `tools/gen_code_docs.py:563` | `text = re.sub(r"GENERATED by [^.]*\.", " ", text, flags=re.I)` |  |
-| `text` | module constant | `tools/gen_code_docs.py:564` | `text = re.sub(r"\s+", " ", text).strip()` |  |
-| `sentence` | module constant | `tools/gen_code_docs.py:566` | `sentence = sentence.strip().rstrip(".")` |  |
-| `FILE_ROLES` | module constant | `tools/gen_code_docs.py:572` | `FILE_ROLES = { "engine/gen/dsp.h": "generated state struct, parameter table, slot table and engine API", "engine/gen/...` |  |
-| `lines` | module constant | `tools/gen_code_docs.py:624` | `lines = [ "# File index", "", "Every tracked source and build file, with its line count and role.", "", "\| File \| Lin...` |  |
-| `roles` | module constant | `tools/gen_code_docs.py:632` | `roles = [ ("engine/hal/", "fixed-point DSP, tables and spectral bank"), ("engine/runtime/", "preset records and the M...` |  |
-| `rel` | module constant | `tools/gen_code_docs.py:652` | `rel = str(path.relative_to(ROOT)).replace("\\", "/")` |  |
-| `count` | module constant | `tools/gen_code_docs.py:654` | `count = len(path.read_text(encoding="utf-8", errors="replace").splitlines())` |  |
-| `count` | module constant | `tools/gen_code_docs.py:656` | `count = 0` |  |
-| `lang` | module constant | `tools/gen_code_docs.py:657` | `lang = { ".c": "C", ".h": "C/C++ header", ".hpp": "C++ header", ".cpp": "C++", ".py": "Python", ".ps1": "PowerShell",...` |  |
-| `lang` | module constant | `tools/gen_code_docs.py:672` | `lang = "CMake"` |  |
-| `role` | module constant | `tools/gen_code_docs.py:673` | `role = "project source"` |  |
-| `role` | module constant | `tools/gen_code_docs.py:676` | `role = value` |  |
-| `summary` | module constant | `tools/gen_code_docs.py:678` | `summary = file_summary(path)` |  |
-| `role` | module constant | `tools/gen_code_docs.py:680` | `role = FILE_ROLES[rel]` |  |
-| `role` | module constant | `tools/gen_code_docs.py:682` | `role = summary` |  |
-| `lines` | module constant | `tools/gen_code_docs.py:688` | `lines = [ "# Type, class, struct, union and enum index", "", "Every type definition found in the tracked C, C++ and P...` |  |
-| `description` | module constant | `tools/gen_code_docs.py:699` | `description = t.description or CORE_TYPES.get(t.name, "")` |  |
+| `owner` | module constant | `tools/gen_code_docs.py:179` | `owner = parent.parent` |  |
+| `parent` | module constant | `tools/gen_code_docs.py:181` | `parent = owner.parent` |  |
+| `parent` | module constant | `tools/gen_code_docs.py:193` | `parent = parent.parent` |  |
+| `parent` | module constant | `tools/gen_code_docs.py:198` | `parent = node.parent` |  |
+| `parent` | module constant | `tools/gen_code_docs.py:202` | `parent = parent.parent` |  |
+| `raw` | module constant | `tools/gen_code_docs.py:207` | `raw = path.read_text(encoding="utf-8", errors="replace")` |  |
+| `lines` | module constant | `tools/gen_code_docs.py:208` | `lines = raw.splitlines()` |  |
+| `src` | module constant | `tools/gen_code_docs.py:209` | `src = raw.encode("utf-8")` |  |
+| `tree` | module constant | `tools/gen_code_docs.py:210` | `tree = parser_for(path).parse(src)` |  |
+| `rel` | module constant | `tools/gen_code_docs.py:211` | `rel = str(path.relative_to(ROOT)).replace("\\", "/")` |  |
+| `functions` | module constant | `tools/gen_code_docs.py:212` | `functions: list[Function] = []` |  |
+| `types` | module constant | `tools/gen_code_docs.py:213` | `types: list[Type] = []` |  |
+| `symbols` | module constant | `tools/gen_code_docs.py:214` | `symbols: list[Symbol] = []` |  |
+| `seen_functions` | module constant | `tools/gen_code_docs.py:216` | `seen_functions: set[tuple[str, int, str]] = set()` |  |
+| `seen_types` | module constant | `tools/gen_code_docs.py:217` | `seen_types: set[tuple[str, int, str]] = set()` |  |
+| `seen_symbols` | module constant | `tools/gen_code_docs.py:218` | `seen_symbols: set[tuple[str, int, str]] = set()` |  |
+| `control_names` | module constant | `tools/gen_code_docs.py:219` | `control_names = { "if", "for", "while", "switch", "return", "sizeof", "static_assert", "alignas", "decltype", "catch"...` |  |
+| `declarator` | module constant | `tools/gen_code_docs.py:225` | `declarator = node.child_by_field_name("declarator")` |  |
+| `name` | module constant | `tools/gen_code_docs.py:226` | `name = name_of(declarator, src)` |  |
+| `body` | module constant | `tools/gen_code_docs.py:229` | `body = node.child_by_field_name("body")` |  |
+| `first` | module constant | `tools/gen_code_docs.py:230` | `first = node.start_point[0] + 1` |  |
+| `last` | module constant | `tools/gen_code_docs.py:231` | `last = node.end_point[0] + 1` |  |
+| `signature` | module constant | `tools/gen_code_docs.py:233` | `signature = clean_signature(text(node, src)[: body.start_byte - node.start_byte])` |  |
+| `signature` | module constant | `tools/gen_code_docs.py:235` | `signature = clean_signature(text(node, src).rstrip(";"))` |  |
+| `key` | module constant | `tools/gen_code_docs.py:236` | `key = (rel, first, name)` |  |
+| `params` | module constant | `tools/gen_code_docs.py:240` | `params: list[str] = []` |  |
+| `scope` | module constant | `tools/gen_code_docs.py:247` | `scope = class_scope(node, src)` |  |
+| `description` | module constant | `tools/gen_code_docs.py:248` | `description = clean_comment(lines, first)` |  |
+| `kind` | module constant | `tools/gen_code_docs.py:264` | `kind = { "class_specifier": "class", "struct_specifier": "struct", "union_specifier": "union", "enum_specifier": "enu...` |  |
+| `name` | module constant | `tools/gen_code_docs.py:270` | `name = name_of(node.child_by_field_name("name"), src)` |  |
+| `first` | module constant | `tools/gen_code_docs.py:273` | `first = node.start_point[0] + 1` |  |
+| `key` | module constant | `tools/gen_code_docs.py:274` | `key = (rel, first, name)` |  |
+| `body` | module constant | `tools/gen_code_docs.py:278` | `body = node.child_by_field_name("body")` |  |
+| `kind_label` | module constant | `tools/gen_code_docs.py:279` | `kind_label = kind if body is not None else f"{kind} forward declaration"` |  |
+| `fields` | module constant | `tools/gen_code_docs.py:280` | `fields: list[str] = []` |  |
+| `methods` | module constant | `tools/gen_code_docs.py:281` | `methods: list[str] = []` |  |
+| `body_node` | module constant | `tools/gen_code_docs.py:289` | `body_node = child.child_by_field_name("body")` |  |
+| `raw` | module constant | `tools/gen_code_docs.py:291` | `raw = src[child.start_byte : body_node.start_byte].decode( "utf-8", "replace" )` |  |
+| `raw` | module constant | `tools/gen_code_docs.py:295` | `raw = text(child, src)` |  |
+| `t` | module constant | `tools/gen_code_docs.py:311` | `t = node.type` |  |
+| `alias` | module constant | `tools/gen_code_docs.py:317` | `alias = name_of(node.child_by_field_name("declarator"), src)` |  |
+| `underlying` | module constant | `tools/gen_code_docs.py:318` | `underlying = node.child_by_field_name("type")` |  |
+| `first` | module constant | `tools/gen_code_docs.py:320` | `first = node.start_point[0] + 1` |  |
+| `key` | module constant | `tools/gen_code_docs.py:321` | `key = (rel, first, alias)` |  |
+| `name_node` | module constant | `tools/gen_code_docs.py:338` | `name_node = node.child_by_field_name("name")` |  |
+| `name` | module constant | `tools/gen_code_docs.py:339` | `name = text(name_node, src) if name_node is not None else ""` |  |
+| `first` | module constant | `tools/gen_code_docs.py:341` | `first = node.start_point[0] + 1` |  |
+| `key` | module constant | `tools/gen_code_docs.py:342` | `key = (rel, first, name)` |  |
+| `declarator` | module constant | `tools/gen_code_docs.py:356` | `declarator = node.child_by_field_name("declarator")` |  |
+| `is_function` | module constant | `tools/gen_code_docs.py:357` | `is_function = declarator is not None and ( declarator.type == "function_declarator" or "function_declarator" in {c.ty...` |  |
+| `name` | module constant | `tools/gen_code_docs.py:366` | `name = name_of(child.child_by_field_name("declarator"), src)` |  |
+| `name` | module constant | `tools/gen_code_docs.py:368` | `name = name_of(child, src)` |  |
+| `first` | module constant | `tools/gen_code_docs.py:373` | `first = node.start_point[0] + 1` |  |
+| `key` | module constant | `tools/gen_code_docs.py:374` | `key = (rel, first, name)` |  |
+| `declarator` | module constant | `tools/gen_code_docs.py:389` | `declarator = node.child_by_field_name("declarator")` |  |
+| `is_function` | module constant | `tools/gen_code_docs.py:390` | `is_function = declarator is not None and ( declarator.type == "function_declarator" or "function_declarator" in {c.ty...` |  |
+| `name` | module constant | `tools/gen_code_docs.py:397` | `name = name_of(node, src)` |  |
+| `first` | module constant | `tools/gen_code_docs.py:399` | `first = node.start_point[0] + 1` |  |
+| `key` | module constant | `tools/gen_code_docs.py:400` | `key = (rel, first, name)` |  |
+| `raw` | module constant | `tools/gen_code_docs.py:421` | `raw = path.read_text(encoding="utf-8", errors="replace")` |  |
+| `lines` | module constant | `tools/gen_code_docs.py:422` | `lines = raw.splitlines()` |  |
+| `src` | module constant | `tools/gen_code_docs.py:423` | `src = raw.encode("utf-8")` |  |
+| `tree` | module constant | `tools/gen_code_docs.py:424` | `tree = parser_for(path).parse(src)` |  |
+| `rel` | module constant | `tools/gen_code_docs.py:425` | `rel = str(path.relative_to(ROOT)).replace("\\", "/")` |  |
+| `functions` | module constant | `tools/gen_code_docs.py:426` | `functions: list[Function] = []` |  |
+| `types` | module constant | `tools/gen_code_docs.py:427` | `types: list[Type] = []` |  |
+| `symbols` | module constant | `tools/gen_code_docs.py:428` | `symbols: list[Symbol] = []` |  |
+| `body` | module constant | `tools/gen_code_docs.py:431` | `body = node.child_by_field_name("body")` |  |
+| `first` | module constant | `tools/gen_code_docs.py:436` | `first = child.children[0]` |  |
+| `value` | module constant | `tools/gen_code_docs.py:438` | `value = text(first, src).strip("\"'")` |  |
+| `name` | module constant | `tools/gen_code_docs.py:444` | `name = name_of(node.child_by_field_name("name"), src)` |  |
+| `params` | module constant | `tools/gen_code_docs.py:446` | `params: list[str] = []` |  |
+| `parameters` | module constant | `tools/gen_code_docs.py:447` | `parameters = node.child_by_field_name("parameters")` |  |
+| `name` | module constant | `tools/gen_code_docs.py:466` | `name = name_of(node.child_by_field_name("name"), src)` |  |
+| `left` | module constant | `tools/gen_code_docs.py:484` | `left = child.child_by_field_name("left")` |  |
+| `files` | module constant | `tools/gen_code_docs.py:504` | `files: list[Path] = []` |  |
+| `path` | module constant | `tools/gen_code_docs.py:508` | `path = Path(base, name)` |  |
+| `raw` | module constant | `tools/gen_code_docs.py:521` | `raw = path.read_text(encoding="utf-8", errors="replace")` |  |
+| `lines` | module constant | `tools/gen_code_docs.py:524` | `lines = raw.splitlines()` |  |
+| `chunks` | module constant | `tools/gen_code_docs.py:530` | `chunks: list[str] = []` |  |
+| `inside` | module constant | `tools/gen_code_docs.py:531` | `inside = False` |  |
+| `saw_code` | module constant | `tools/gen_code_docs.py:532` | `saw_code = False` |  |
+| `stripped` | module constant | `tools/gen_code_docs.py:534` | `stripped = line.strip()` |  |
+| `body` | module constant | `tools/gen_code_docs.py:541` | `body = re.sub(r"^/\*+", "", stripped)` |  |
+| `inside` | module constant | `tools/gen_code_docs.py:546` | `inside = True` |  |
+| `saw_code` | module constant | `tools/gen_code_docs.py:554` | `saw_code = True` |  |
+| `inside` | module constant | `tools/gen_code_docs.py:558` | `inside = False` |  |
+| `cleaned` | module constant | `tools/gen_code_docs.py:563` | `cleaned = [chunk.strip() for chunk in chunks if chunk.strip()]` |  |
+| `text` | module constant | `tools/gen_code_docs.py:566` | `text = " ".join(cleaned)` |  |
+| `text` | module constant | `tools/gen_code_docs.py:567` | `text = re.sub(r"SPDX-License-Identifier:\s*\S+", " ", text)` |  |
+| `text` | module constant | `tools/gen_code_docs.py:568` | `text = re.sub(r"Copyright\s*\(C\)[^.]*\.?", " ", text)` |  |
+| `text` | module constant | `tools/gen_code_docs.py:569` | `text = re.sub(r"GENERATED by [^,]*,\s*do not edit[^.]*\.", " ", text, flags=re.I)` |  |
+| `text` | module constant | `tools/gen_code_docs.py:570` | `text = re.sub(r"GENERATED by [^.]*\.", " ", text, flags=re.I)` |  |
+| `text` | module constant | `tools/gen_code_docs.py:571` | `text = re.sub(r"\s+", " ", text).strip()` |  |
+| `sentence` | module constant | `tools/gen_code_docs.py:573` | `sentence = sentence.strip().rstrip(".")` |  |
+| `FILE_ROLES` | module constant | `tools/gen_code_docs.py:579` | `FILE_ROLES = { "engine/gen/dsp.h": "generated state struct, parameter table, slot table and engine API", "engine/gen/...` |  |
+| `lines` | module constant | `tools/gen_code_docs.py:631` | `lines = [ "# File index", "", "Every tracked source and build file, with its line count and role.", "", "\| File \| Lin...` |  |
+| `roles` | module constant | `tools/gen_code_docs.py:639` | `roles = [ ("engine/hal/", "fixed-point DSP, tables and spectral bank"), ("engine/runtime/", "preset records and the M...` |  |
+| `rel` | module constant | `tools/gen_code_docs.py:659` | `rel = str(path.relative_to(ROOT)).replace("\\", "/")` |  |
+| `count` | module constant | `tools/gen_code_docs.py:661` | `count = len(path.read_text(encoding="utf-8", errors="replace").splitlines())` |  |
+| `count` | module constant | `tools/gen_code_docs.py:663` | `count = 0` |  |
+| `lang` | module constant | `tools/gen_code_docs.py:664` | `lang = { ".c": "C", ".h": "C/C++ header", ".hpp": "C++ header", ".cpp": "C++", ".py": "Python", ".ps1": "PowerShell",...` |  |
+| `lang` | module constant | `tools/gen_code_docs.py:679` | `lang = "CMake"` |  |
+| `role` | module constant | `tools/gen_code_docs.py:680` | `role = "project source"` |  |
+| `role` | module constant | `tools/gen_code_docs.py:683` | `role = value` |  |
+| `summary` | module constant | `tools/gen_code_docs.py:685` | `summary = file_summary(path)` |  |
+| `role` | module constant | `tools/gen_code_docs.py:687` | `role = FILE_ROLES[rel]` |  |
+| `role` | module constant | `tools/gen_code_docs.py:689` | `role = summary` |  |
+| `lines` | module constant | `tools/gen_code_docs.py:695` | `lines = [ "# Type, class, struct, union and enum index", "", "Every type definition found in the tracked C, C++ and P...` |  |
 | `description` | module constant | `tools/gen_code_docs.py:706` | `description = t.description or CORE_TYPES.get(t.name, "")` |  |
-| `shown_fields` | module constant | `tools/gen_code_docs.py:717` | `shown_fields = t.fields[:40]` |  |
-| `field_text` | module constant | `tools/gen_code_docs.py:720` | `field_text = field_text[:197] + "..."` |  |
-| `hidden` | module constant | `tools/gen_code_docs.py:722` | `hidden = len(t.fields) - len(shown_fields)` |  |
-| `shown_methods` | module constant | `tools/gen_code_docs.py:734` | `shown_methods = t.methods[:60]` |  |
-| `method` | module constant | `tools/gen_code_docs.py:737` | `method = method[:197] + "..."` |  |
-| `hidden` | module constant | `tools/gen_code_docs.py:739` | `hidden = len(t.methods) - len(shown_methods)` |  |
-| `CORE_FUNCTIONS` | module constant | `tools/gen_code_docs.py:748` | `CORE_FUNCTIONS = { "PluginEditor": "Builds the editor, the header, the toolbar, the tabs and the first page, then sta...` |  |
-| `CORE_TYPES` | module constant | `tools/gen_code_docs.py:846` | `CORE_TYPES = { "type_p_alpha_state": "The generated engine state. One instance per plugin instance.", "P1ParamSpec": ...` |  |
-| `ACRONYMS` | module constant | `tools/gen_code_docs.py:871` | `ACRONYMS = { "pcm": "PCM", "midi": "MIDI", "ui": "UI", "dsp": "DSP", "crc": "CRC", "id": "id", "ids": "ids", "cpu": "...` |  |
-| `name` | module constant | `tools/gen_code_docs.py:901` | `name = re.sub(r"^[~_]*(?:p1_\|type_p_alpha_)?", "", name)` |  |
-| `pieces` | module constant | `tools/gen_code_docs.py:902` | `pieces = re.findall(r"[A-Z]+(?=[A-Z][a-z])\|[A-Z]?[a-z]+\|[A-Z]+\|\d+[a-z]*", name)` |  |
-| `out` | module constant | `tools/gen_code_docs.py:903` | `out = [ACRONYMS.get(p.lower(), p.lower()) for p in pieces if p]` |  |
-| `end` | module constant | `tools/gen_code_docs.py:909` | `end = min(f.end_line, len(lines))` |  |
-| `i` | module constant | `tools/gen_code_docs.py:910` | `i = f.line - 1` |  |
-| `stripped` | module constant | `tools/gen_code_docs.py:915` | `stripped = lines[i].strip()` |  |
-| `block` | module constant | `tools/gen_code_docs.py:920` | `block = []` |  |
-| `text` | module constant | `tools/gen_code_docs.py:924` | `text = " ".join(block)` |  |
-| `block` | module constant | `tools/gen_code_docs.py:926` | `block = [stripped]` |  |
-| `text` | module constant | `tools/gen_code_docs.py:930` | `text = " ".join(block)` |  |
-| `text` | module constant | `tools/gen_code_docs.py:931` | `text = re.sub(r"/\*+\|\*/", " ", text)` |  |
-| `text` | module constant | `tools/gen_code_docs.py:932` | `text = re.sub(r"^\*+\s?", "", text.strip())` |  |
-| `text` | module constant | `tools/gen_code_docs.py:935` | `text = re.sub(r"\s+", " ", text).strip()` |  |
-| `match` | module constant | `tools/gen_code_docs.py:936` | `match = re.match(r"([A-Z][^.]*\.)", text)` |  |
-| `sentence` | module constant | `tools/gen_code_docs.py:938` | `sentence = match.group(1).strip()` |  |
-| `name` | module constant | `tools/gen_code_docs.py:950` | `name = f.name` |  |
-| `scope` | module constant | `tools/gen_code_docs.py:957` | `scope = f.scope` |  |
-| `roles` | module constant | `tools/gen_code_docs.py:965` | `roles = { "note_to_inc": "Converts a MIDI note to a Q32 phase increment.", "type_p_alpha_param_slot": "Maps a manifes...` |  |
-| `body` | module constant | `tools/gen_code_docs.py:1017` | `body = " ".join(lines[f.line - 1 : f.end_line])` |  |
-| `match` | module constant | `tools/gen_code_docs.py:1018` | `match = re.search(r"withPart\(\"([^\"]+)\"", body)` |  |
-| `match` | module constant | `tools/gen_code_docs.py:1021` | `match = re.search(r"opBase\(op,\s*\"([^\"]+)\"", body)` |  |
-| `words` | module constant | `tools/gen_code_docs.py:1042` | `words = split_words(name)` |  |
-| `rest` | module constant | `tools/gen_code_docs.py:1047` | `rest = split_words(name[5:])` |  |
-| `rest` | module constant | `tools/gen_code_docs.py:1050` | `rest = split_words(name[7:])` |  |
-| `rest` | module constant | `tools/gen_code_docs.py:1059` | `rest = split_words(name[4:])` |  |
-| `rest` | module constant | `tools/gen_code_docs.py:1062` | `rest = split_words(name[5:])` |  |
-| `overrides` | module constant | `tools/gen_code_docs.py:1079` | `overrides = { "paintButton": "Draws the button in its normal, highlighted and down states.", "paintListBoxItem": "Dra...` |  |
-| `rest` | module constant | `tools/gen_code_docs.py:1105` | `rest = split_words(name[5:] if name.startswith("paint") else name[4:])` |  |
-| `rest` | module constant | `tools/gen_code_docs.py:1108` | `rest = split_words(name[7:])` |  |
-| `flags` | module constant | `tools/gen_code_docs.py:1110` | `flags = { "active", "compact", "selected", "visible", "enabled", "muted", "open", "closed", "bipolar", }` |  |
-| `verb_prefixes` | module constant | `tools/gen_code_docs.py:1123` | `verb_prefixes = ( ("get", "Reads"), ("set", "Writes"), ("is", "Tests whether the"), ("has", "Tests whether the"), ("c...` |  |
-| `rest` | module constant | `tools/gen_code_docs.py:1192` | `rest = split_words(name[len(prefix):])` |  |
-| `roles` | module constant | `tools/gen_code_docs.py:1196` | `roles = { "midi_get": "The host hook that pops one raw MIDI message.", "synth_midi_feed": "Applies one MIDI message, ...` |  |
-| `comment` | module constant | `tools/gen_code_docs.py:1205` | `comment = inner_comment(f, lines)` |  |
-| `head` | module constant | `tools/gen_code_docs.py:1208` | `head = f.signature.split("(")[0]` |  |
-| `returns` | module constant | `tools/gen_code_docs.py:1209` | `returns = head.replace(name, "").strip()` |  |
-| `lines` | module constant | `tools/gen_code_docs.py:1218` | `lines = [ "# Function and method index", "", "Every function definition and declaration found in the tracked C, C++ a...` |  |
-| `cache` | module constant | `tools/gen_code_docs.py:1230` | `cache: dict[str, list[str]] = {}` |  |
-| `known` | module constant | `tools/gen_code_docs.py:1231` | `known: dict[tuple[str, str], str] = {}` |  |
-| `ordered` | module constant | `tools/gen_code_docs.py:1232` | `ordered = sorted(functions, key=lambda x: (x.path, x.line, x.name))` |  |
-| `source_lines` | module constant | `tools/gen_code_docs.py:1234` | `source_lines = cache.setdefault( f.path, (ROOT / f.path).read_text(encoding="utf-8", errors="replace").splitlines(), )` |  |
-| `strong` | module constant | `tools/gen_code_docs.py:1238` | `strong = f.description or inner_comment(f, source_lines)` |  |
-| `source_lines` | module constant | `tools/gen_code_docs.py:1246` | `source_lines = cache[f.path]` |  |
-| `description` | module constant | `tools/gen_code_docs.py:1247` | `description = describe_function(f, source_lines, known)` |  |
-| `description` | module constant | `tools/gen_code_docs.py:1249` | `description = description[0].upper() + description[1:]` |  |
-| `signature` | module constant | `tools/gen_code_docs.py:1252` | `signature = f.signature` |  |
-| `signature` | module constant | `tools/gen_code_docs.py:1254` | `signature = signature[:177] + "..."` |  |
-| `current` | module constant | `tools/gen_code_docs.py:1261` | `current = ""` |  |
-| `current` | module constant | `tools/gen_code_docs.py:1264` | `current = f.path` |  |
-| `source_lines` | module constant | `tools/gen_code_docs.py:1270` | `source_lines = cache[f.path]` |  |
-| `description` | module constant | `tools/gen_code_docs.py:1271` | `description = describe_function(f, source_lines, known)` |  |
-| `lines` | module constant | `tools/gen_code_docs.py:1278` | `lines = [ "# Macro, global, alias and constant index", "", "Every macro, global variable, alias, using declaration an...` |  |
-| `value` | module constant | `tools/gen_code_docs.py:1291` | `value = s.value` |  |
-| `value` | module constant | `tools/gen_code_docs.py:1293` | `value = value[:117] + "..."` |  |
-| `path` | module constant | `tools/gen_code_docs.py:1302` | `path = ROOT / "engine" / "gen" / "dsp.h"` |  |
-| `raw` | module constant | `tools/gen_code_docs.py:1303` | `raw = path.read_text(encoding="utf-8")` |  |
-| `start` | module constant | `tools/gen_code_docs.py:1304` | `start = raw.find("typedef struct type_p_alpha_state {")` |  |
-| `end` | module constant | `tools/gen_code_docs.py:1305` | `end = raw.find("} type_p_alpha_state;", start)` |  |
-| `body` | module constant | `tools/gen_code_docs.py:1306` | `body = raw[start:end]` |  |
-| `out` | module constant | `tools/gen_code_docs.py:1307` | `out: list[tuple[str, str]] = []` |  |
-| `line` | module constant | `tools/gen_code_docs.py:1309` | `line = line.strip()` |  |
-| `m` | module constant | `tools/gen_code_docs.py:1310` | `m = re.match(r"^(.+?)\s+([A-Za-z_]\w*)(\[[^\]]+\])?;$", line)` |  |
-| `lines` | module constant | `tools/gen_code_docs.py:1317` | `lines = [ "# `type_p_alpha_state` field index", "", "Every field of the generated engine state, in declaration order....` |  |
-| `data` | module constant | `tools/gen_code_docs.py:1332` | `data = json.loads((ROOT / "engine" / "gen" / "params.json").read_text(encoding="utf-8"))` |  |
-| `params` | module constant | `tools/gen_code_docs.py:1333` | `params = data["params"]` |  |
-| `lines` | module constant | `tools/gen_code_docs.py:1334` | `lines = [ "# Parameter index", "", "Every manifest parameter. The part block has 994 values, mirrored for", "`.p0` an...` |  |
-| `name` | module constant | `tools/gen_code_docs.py:1346` | `name = str(p["name"])` |  |
-| `automatable` | module constant | `tools/gen_code_docs.py:1349` | `automatable = "yes" if p.get("automatable") else "no"` |  |
-| `modulatable` | module constant | `tools/gen_code_docs.py:1350` | `modulatable = "yes" if p.get("modulatable") else "no"` |  |
-| `path` | module constant | `tools/gen_code_docs.py:1360` | `path = ROOT / "engine" / "gen" / "type_p_alpha_dsp.c"` |  |
-| `lines` | module constant | `tools/gen_code_docs.py:1363` | `lines = path.read_text(encoding="utf-8").splitlines()` |  |
-| `out` | module constant | `tools/gen_code_docs.py:1364` | `out = [ "# Generated render walk", "", "The generated engine is one translation unit with a parameter table, a", "sta...` |  |
-| `functions` | module constant | `tools/gen_code_docs.py:1379` | `functions = [ ("type_p_alpha_dsp_state_init", "initialise the state and apply the init table"), ("type_p_alpha_render...` |  |
-| `start` | module constant | `tools/gen_code_docs.py:1407` | `start = next(i for i, l in enumerate(lines) if "type_p_alpha_render_voices_block" in l)` |  |
-| `end` | module constant | `tools/gen_code_docs.py:1408` | `end = next(i for i, l in enumerate(lines) if "type_p_alpha_render_post_block" in l)` |  |
-| `comments` | module constant | `tools/gen_code_docs.py:1409` | `comments: list[tuple[int, str]] = []` |  |
-| `i` | module constant | `tools/gen_code_docs.py:1410` | `i = start` |  |
-| `line` | module constant | `tools/gen_code_docs.py:1412` | `line = lines[i]` |  |
-| `s` | module constant | `tools/gen_code_docs.py:1414` | `s = line.index("/*")` |  |
-| `j` | module constant | `tools/gen_code_docs.py:1415` | `j = i` |  |
-| `buf` | module constant | `tools/gen_code_docs.py:1416` | `buf: list[str] = []` |  |
-| `l` | module constant | `tools/gen_code_docs.py:1418` | `l = lines[j]` |  |
-| `begin` | module constant | `tools/gen_code_docs.py:1419` | `begin = s + 2 if j == i else 0` |  |
-| `k` | module constant | `tools/gen_code_docs.py:1420` | `k = l.find("*/", begin)` |  |
-| `txt` | module constant | `tools/gen_code_docs.py:1426` | `txt = " ".join(x.strip() for x in buf if x.strip())` |  |
-| `i` | module constant | `tools/gen_code_docs.py:1429` | `i = j` |  |
-| `seen` | module constant | `tools/gen_code_docs.py:1431` | `seen: set[str] = set()` |  |
-| `counts` | module constant | `tools/gen_code_docs.py:1433` | `counts = Counter(t for _, t in comments)` |  |
-| `nodes_dir` | module constant | `tools/gen_code_docs.py:1443` | `nodes_dir = ROOT / ".dev" / "modules"` |  |
-| `lines` | module constant | `tools/gen_code_docs.py:1446` | `lines = [ "# Generator node catalogue", "", "The local `.dev` tree is the generator library and is not part of the pu...` |  |
-| `data` | module constant | `tools/gen_code_docs.py:1458` | `data = json.loads(path.read_text(encoding="utf-8"))` |  |
-| `ins` | module constant | `tools/gen_code_docs.py:1459` | `ins = ", ".join(data.get("ins", {}).keys())` |  |
-| `outs` | module constant | `tools/gen_code_docs.py:1460` | `outs = ", ".join(data.get("outs", {}).keys())` |  |
-| `data` | module constant | `tools/gen_code_docs.py:1467` | `data = json.loads(path.read_text(encoding="utf-8"))` |  |
-| `exe_sources` | module constant | `tools/gen_code_docs.py:1476` | `exe_sources: dict[str, str] = {}` |  |
-| `cmake` | module constant | `tools/gen_code_docs.py:1477` | `cmake = (ROOT / "plugin" / "CMakeLists.txt").read_text(encoding="utf-8")` |  |
-| `juce` | module constant | `tools/gen_code_docs.py:1481` | `juce = (ROOT / "plugin" / "juce" / "CMakeLists.txt").read_text(encoding="utf-8")` |  |
-| `manual` | module constant | `tools/gen_code_docs.py:1485` | `manual = { "linux_daws": "plugin/tests/linux_daws.sh", "plugin_smoke": "plugin/tests/plugin_smoke.cpp", "plugin_stabi...` |  |
-| `tests` | module constant | `tools/gen_code_docs.py:1492` | `tests: list[tuple[str, str, str]] = []` |  |
-| `lines` | module constant | `tools/gen_code_docs.py:1502` | `lines = [ "# Test index", "", "The CTest targets and their source files. The hand-written build chapter", "explains w...` |  |
-| `source` | module constant | `tools/gen_code_docs.py:1513` | `source = "plugin/" + source` |  |
-| `parser` | module constant | `tools/gen_code_docs.py:1519` | `parser = argparse.ArgumentParser()` |  |
-| `args` | module constant | `tools/gen_code_docs.py:1521` | `args = parser.parse_args()` |  |
-| `paths` | module constant | `tools/gen_code_docs.py:1523` | `paths = source_files(args.include_dev)` |  |
-| `functions` | module constant | `tools/gen_code_docs.py:1524` | `functions: list[Function] = []` |  |
-| `types` | module constant | `tools/gen_code_docs.py:1525` | `types: list[Type] = []` |  |
-| `symbols` | module constant | `tools/gen_code_docs.py:1526` | `symbols: list[Symbol] = []` |  |
+| `description` | module constant | `tools/gen_code_docs.py:713` | `description = t.description or CORE_TYPES.get(t.name, "")` |  |
+| `shown_fields` | module constant | `tools/gen_code_docs.py:724` | `shown_fields = t.fields[:40]` |  |
+| `field_text` | module constant | `tools/gen_code_docs.py:727` | `field_text = field_text[:197] + "..."` |  |
+| `hidden` | module constant | `tools/gen_code_docs.py:729` | `hidden = len(t.fields) - len(shown_fields)` |  |
+| `shown_methods` | module constant | `tools/gen_code_docs.py:741` | `shown_methods = t.methods[:60]` |  |
+| `method` | module constant | `tools/gen_code_docs.py:744` | `method = method[:197] + "..."` |  |
+| `hidden` | module constant | `tools/gen_code_docs.py:746` | `hidden = len(t.methods) - len(shown_methods)` |  |
+| `CORE_FUNCTIONS` | module constant | `tools/gen_code_docs.py:755` | `CORE_FUNCTIONS = { "PluginEditor": "Builds the editor, the header, the toolbar, the tabs and the first page, then sta...` |  |
+| `CORE_TYPES` | module constant | `tools/gen_code_docs.py:853` | `CORE_TYPES = { "type_p_alpha_state": "The generated engine state. One instance per plugin instance.", "P1ParamSpec": ...` |  |
+| `ACRONYMS` | module constant | `tools/gen_code_docs.py:878` | `ACRONYMS = { "pcm": "PCM", "midi": "MIDI", "ui": "UI", "dsp": "DSP", "crc": "CRC", "id": "id", "ids": "ids", "cpu": "...` |  |
+| `name` | module constant | `tools/gen_code_docs.py:908` | `name = re.sub(r"^[~_]*(?:p1_\|type_p_alpha_)?", "", name)` |  |
+| `pieces` | module constant | `tools/gen_code_docs.py:909` | `pieces = re.findall(r"[A-Z]+(?=[A-Z][a-z])\|[A-Z]?[a-z]+\|[A-Z]+\|\d+[a-z]*", name)` |  |
+| `out` | module constant | `tools/gen_code_docs.py:910` | `out = [ACRONYMS.get(p.lower(), p.lower()) for p in pieces if p]` |  |
+| `end` | module constant | `tools/gen_code_docs.py:916` | `end = min(f.end_line, len(lines))` |  |
+| `i` | module constant | `tools/gen_code_docs.py:917` | `i = f.line - 1` |  |
+| `stripped` | module constant | `tools/gen_code_docs.py:922` | `stripped = lines[i].strip()` |  |
+| `block` | module constant | `tools/gen_code_docs.py:927` | `block = []` |  |
+| `text` | module constant | `tools/gen_code_docs.py:931` | `text = " ".join(block)` |  |
+| `block` | module constant | `tools/gen_code_docs.py:933` | `block = [stripped]` |  |
+| `text` | module constant | `tools/gen_code_docs.py:937` | `text = " ".join(block)` |  |
+| `text` | module constant | `tools/gen_code_docs.py:938` | `text = re.sub(r"/\*+\|\*/", " ", text)` |  |
+| `text` | module constant | `tools/gen_code_docs.py:939` | `text = re.sub(r"^\*+\s?", "", text.strip())` |  |
+| `text` | module constant | `tools/gen_code_docs.py:942` | `text = re.sub(r"\s+", " ", text).strip()` |  |
+| `match` | module constant | `tools/gen_code_docs.py:943` | `match = re.match(r"([A-Z][^.]*\.)", text)` |  |
+| `sentence` | module constant | `tools/gen_code_docs.py:945` | `sentence = match.group(1).strip()` |  |
+| `name` | module constant | `tools/gen_code_docs.py:957` | `name = f.name` |  |
+| `scope` | module constant | `tools/gen_code_docs.py:964` | `scope = f.scope` |  |
+| `roles` | module constant | `tools/gen_code_docs.py:972` | `roles = { "note_to_inc": "Converts a MIDI note to a Q32 phase increment.", "type_p_alpha_param_slot": "Maps a manifes...` |  |
+| `body` | module constant | `tools/gen_code_docs.py:1024` | `body = " ".join(lines[f.line - 1 : f.end_line])` |  |
+| `match` | module constant | `tools/gen_code_docs.py:1025` | `match = re.search(r"withPart\(\"([^\"]+)\"", body)` |  |
+| `match` | module constant | `tools/gen_code_docs.py:1028` | `match = re.search(r"opBase\(op,\s*\"([^\"]+)\"", body)` |  |
+| `words` | module constant | `tools/gen_code_docs.py:1049` | `words = split_words(name)` |  |
+| `rest` | module constant | `tools/gen_code_docs.py:1054` | `rest = split_words(name[5:])` |  |
+| `rest` | module constant | `tools/gen_code_docs.py:1057` | `rest = split_words(name[7:])` |  |
+| `rest` | module constant | `tools/gen_code_docs.py:1066` | `rest = split_words(name[4:])` |  |
+| `rest` | module constant | `tools/gen_code_docs.py:1069` | `rest = split_words(name[5:])` |  |
+| `overrides` | module constant | `tools/gen_code_docs.py:1086` | `overrides = { "paintButton": "Draws the button in its normal, highlighted and down states.", "paintListBoxItem": "Dra...` |  |
+| `rest` | module constant | `tools/gen_code_docs.py:1112` | `rest = split_words(name[5:] if name.startswith("paint") else name[4:])` |  |
+| `rest` | module constant | `tools/gen_code_docs.py:1115` | `rest = split_words(name[7:])` |  |
+| `flags` | module constant | `tools/gen_code_docs.py:1117` | `flags = { "active", "compact", "selected", "visible", "enabled", "muted", "open", "closed", "bipolar", }` |  |
+| `verb_prefixes` | module constant | `tools/gen_code_docs.py:1130` | `verb_prefixes = ( ("get", "Reads"), ("set", "Writes"), ("is", "Tests whether the"), ("has", "Tests whether the"), ("c...` |  |
+| `rest` | module constant | `tools/gen_code_docs.py:1199` | `rest = split_words(name[len(prefix):])` |  |
+| `roles` | module constant | `tools/gen_code_docs.py:1203` | `roles = { "midi_get": "The host hook that pops one raw MIDI message.", "synth_midi_feed": "Applies one MIDI message, ...` |  |
+| `comment` | module constant | `tools/gen_code_docs.py:1212` | `comment = inner_comment(f, lines)` |  |
+| `head` | module constant | `tools/gen_code_docs.py:1215` | `head = f.signature.split("(")[0]` |  |
+| `returns` | module constant | `tools/gen_code_docs.py:1216` | `returns = head.replace(name, "").strip()` |  |
+| `lines` | module constant | `tools/gen_code_docs.py:1225` | `lines = [ "# Function and method index", "", "Every function definition and declaration found in the tracked C, C++ a...` |  |
+| `cache` | module constant | `tools/gen_code_docs.py:1237` | `cache: dict[str, list[str]] = {}` |  |
+| `known` | module constant | `tools/gen_code_docs.py:1238` | `known: dict[tuple[str, str], str] = {}` |  |
+| `ordered` | module constant | `tools/gen_code_docs.py:1239` | `ordered = sorted(functions, key=lambda x: (x.path, x.line, x.name))` |  |
+| `source_lines` | module constant | `tools/gen_code_docs.py:1241` | `source_lines = cache.setdefault( f.path, (ROOT / f.path).read_text(encoding="utf-8", errors="replace").splitlines(), )` |  |
+| `strong` | module constant | `tools/gen_code_docs.py:1245` | `strong = f.description or inner_comment(f, source_lines)` |  |
+| `source_lines` | module constant | `tools/gen_code_docs.py:1253` | `source_lines = cache[f.path]` |  |
+| `description` | module constant | `tools/gen_code_docs.py:1254` | `description = describe_function(f, source_lines, known)` |  |
+| `description` | module constant | `tools/gen_code_docs.py:1256` | `description = description[0].upper() + description[1:]` |  |
+| `signature` | module constant | `tools/gen_code_docs.py:1259` | `signature = f.signature` |  |
+| `signature` | module constant | `tools/gen_code_docs.py:1261` | `signature = signature[:177] + "..."` |  |
+| `current` | module constant | `tools/gen_code_docs.py:1268` | `current = ""` |  |
+| `current` | module constant | `tools/gen_code_docs.py:1271` | `current = f.path` |  |
+| `source_lines` | module constant | `tools/gen_code_docs.py:1277` | `source_lines = cache[f.path]` |  |
+| `description` | module constant | `tools/gen_code_docs.py:1278` | `description = describe_function(f, source_lines, known)` |  |
+| `lines` | module constant | `tools/gen_code_docs.py:1285` | `lines = [ "# Macro, global, alias and constant index", "", "Every macro, global variable, alias, using declaration an...` |  |
+| `value` | module constant | `tools/gen_code_docs.py:1299` | `value = s.value` |  |
+| `value` | module constant | `tools/gen_code_docs.py:1301` | `value = value[:117] + "..."` |  |
+| `path` | module constant | `tools/gen_code_docs.py:1310` | `path = ROOT / "engine" / "gen" / "dsp.h"` |  |
+| `raw` | module constant | `tools/gen_code_docs.py:1311` | `raw = path.read_text(encoding="utf-8")` |  |
+| `start` | module constant | `tools/gen_code_docs.py:1312` | `start = raw.find("typedef struct type_p_alpha_state {")` |  |
+| `end` | module constant | `tools/gen_code_docs.py:1313` | `end = raw.find("} type_p_alpha_state;", start)` |  |
+| `body` | module constant | `tools/gen_code_docs.py:1314` | `body = raw[start:end]` |  |
+| `out` | module constant | `tools/gen_code_docs.py:1315` | `out: list[tuple[str, str]] = []` |  |
+| `line` | module constant | `tools/gen_code_docs.py:1317` | `line = line.strip()` |  |
+| `m` | module constant | `tools/gen_code_docs.py:1318` | `m = re.match(r"^(.+?)\s+([A-Za-z_]\w*)(\[[^\]]+\])?;$", line)` |  |
+| `lines` | module constant | `tools/gen_code_docs.py:1325` | `lines = [ "# `type_p_alpha_state` field index", "", "Every field of the generated engine state, in declaration order....` |  |
+| `data` | module constant | `tools/gen_code_docs.py:1340` | `data = json.loads((ROOT / "engine" / "gen" / "params.json").read_text(encoding="utf-8"))` |  |
+| `params` | module constant | `tools/gen_code_docs.py:1341` | `params = data["params"]` |  |
+| `lines` | module constant | `tools/gen_code_docs.py:1342` | `lines = [ "# Parameter index", "", "Every manifest parameter. The part block has 994 values, mirrored for", "`.p0` an...` |  |
+| `name` | module constant | `tools/gen_code_docs.py:1354` | `name = str(p["name"])` |  |
+| `automatable` | module constant | `tools/gen_code_docs.py:1357` | `automatable = "yes" if p.get("automatable") else "no"` |  |
+| `modulatable` | module constant | `tools/gen_code_docs.py:1358` | `modulatable = "yes" if p.get("modulatable") else "no"` |  |
+| `path` | module constant | `tools/gen_code_docs.py:1368` | `path = ROOT / "engine" / "gen" / "type_p_alpha_dsp.c"` |  |
+| `lines` | module constant | `tools/gen_code_docs.py:1371` | `lines = path.read_text(encoding="utf-8").splitlines()` |  |
+| `out` | module constant | `tools/gen_code_docs.py:1372` | `out = [ "# Generated render walk", "", "The generated engine is one translation unit with a parameter table, a", "sta...` |  |
+| `functions` | module constant | `tools/gen_code_docs.py:1387` | `functions = [ ("type_p_alpha_dsp_state_init", "initialise the state and apply the init table"), ("type_p_alpha_render...` |  |
+| `start` | module constant | `tools/gen_code_docs.py:1415` | `start = next(i for i, l in enumerate(lines) if "type_p_alpha_render_voices_block" in l)` |  |
+| `end` | module constant | `tools/gen_code_docs.py:1416` | `end = next(i for i, l in enumerate(lines) if "type_p_alpha_render_post_block" in l)` |  |
+| `comments` | module constant | `tools/gen_code_docs.py:1417` | `comments: list[tuple[int, str]] = []` |  |
+| `i` | module constant | `tools/gen_code_docs.py:1418` | `i = start` |  |
+| `line` | module constant | `tools/gen_code_docs.py:1420` | `line = lines[i]` |  |
+| `s` | module constant | `tools/gen_code_docs.py:1422` | `s = line.index("/*")` |  |
+| `j` | module constant | `tools/gen_code_docs.py:1423` | `j = i` |  |
+| `buf` | module constant | `tools/gen_code_docs.py:1424` | `buf: list[str] = []` |  |
+| `l` | module constant | `tools/gen_code_docs.py:1426` | `l = lines[j]` |  |
+| `begin` | module constant | `tools/gen_code_docs.py:1427` | `begin = s + 2 if j == i else 0` |  |
+| `k` | module constant | `tools/gen_code_docs.py:1428` | `k = l.find("*/", begin)` |  |
+| `txt` | module constant | `tools/gen_code_docs.py:1434` | `txt = " ".join(x.strip() for x in buf if x.strip())` |  |
+| `i` | module constant | `tools/gen_code_docs.py:1437` | `i = j` |  |
+| `seen` | module constant | `tools/gen_code_docs.py:1439` | `seen: set[str] = set()` |  |
+| `counts` | module constant | `tools/gen_code_docs.py:1441` | `counts = Counter(t for _, t in comments)` |  |
+| `nodes_dir` | module constant | `tools/gen_code_docs.py:1451` | `nodes_dir = ROOT / ".dev" / "modules"` |  |
+| `lines` | module constant | `tools/gen_code_docs.py:1454` | `lines = [ "# Generator node catalogue", "", "The local `.dev` tree is the generator library and is not part of the pu...` |  |
+| `data` | module constant | `tools/gen_code_docs.py:1466` | `data = json.loads(path.read_text(encoding="utf-8"))` |  |
+| `ins` | module constant | `tools/gen_code_docs.py:1467` | `ins = ", ".join(data.get("ins", {}).keys())` |  |
+| `outs` | module constant | `tools/gen_code_docs.py:1468` | `outs = ", ".join(data.get("outs", {}).keys())` |  |
+| `data` | module constant | `tools/gen_code_docs.py:1475` | `data = json.loads(path.read_text(encoding="utf-8"))` |  |
+| `exe_sources` | module constant | `tools/gen_code_docs.py:1484` | `exe_sources: dict[str, str] = {}` |  |
+| `cmake` | module constant | `tools/gen_code_docs.py:1485` | `cmake = (ROOT / "plugin" / "CMakeLists.txt").read_text(encoding="utf-8")` |  |
+| `juce` | module constant | `tools/gen_code_docs.py:1489` | `juce = (ROOT / "plugin" / "juce" / "CMakeLists.txt").read_text(encoding="utf-8")` |  |
+| `manual` | module constant | `tools/gen_code_docs.py:1493` | `manual = { "linux_daws": "plugin/tests/linux_daws.sh", "plugin_smoke": "plugin/tests/plugin_smoke.cpp", "plugin_stabi...` |  |
+| `tests` | module constant | `tools/gen_code_docs.py:1500` | `tests: list[tuple[str, str, str]] = []` |  |
+| `lines` | module constant | `tools/gen_code_docs.py:1510` | `lines = [ "# Test index", "", "The CTest targets and their source files. The hand-written build chapter", "explains w...` |  |
+| `source` | module constant | `tools/gen_code_docs.py:1521` | `source = "plugin/" + source` |  |
+| `parser` | module constant | `tools/gen_code_docs.py:1527` | `parser = argparse.ArgumentParser()` |  |
+| `args` | module constant | `tools/gen_code_docs.py:1529` | `args = parser.parse_args()` |  |
+| `paths` | module constant | `tools/gen_code_docs.py:1531` | `paths = source_files(args.include_dev)` |  |
+| `functions` | module constant | `tools/gen_code_docs.py:1532` | `functions: list[Function] = []` |  |
+| `types` | module constant | `tools/gen_code_docs.py:1533` | `types: list[Type] = []` |  |
+| `symbols` | module constant | `tools/gen_code_docs.py:1534` | `symbols: list[Symbol] = []` |  |
 | `ROOT` | module constant | `tools/gen_math_tables.py:21` | `ROOT = Path(__file__).resolve().parents[1]` |  |
 | `OUT` | module constant | `tools/gen_math_tables.py:22` | `OUT = ROOT / "engine" / "gen" / "math_tables.h"` |  |
 | `OLD_RATE` | module constant | `tools/gen_math_tables.py:23` | `OLD_RATE = 44100.0` |  |
