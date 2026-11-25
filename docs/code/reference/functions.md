@@ -944,45 +944,45 @@ paths in depth.
 | `checkHarmonics` |  | `plugin/tests/wavetable.cpp:41` | `bool checkHarmonics()` | Checks the harmonics result. |
 | `checkSamples` |  | `plugin/tests/wavetable.cpp:74` | `bool checkSamples()` | Checks the samples result. |
 | `main` |  | `plugin/tests/wavetable.cpp:123` | `int main()` | Runs the test or tool entry point. |
-| `_recipe` |  | `plugin/tools/additive_prototype.py:25` | `def _recipe(harmonics: int, tilt: float, formant: int, peak: float)` | Returns the recipe value. |
-| `_table` |  | `plugin/tools/additive_prototype.py:39` | `def _table(amps: list[float], level: int)` | Returns the table value. |
-| `_emit` |  | `plugin/tools/additive_prototype.py:51` | `def _emit(name: str, table: list[int])` | Returns the emit value. |
-| `_header` |  | `plugin/tools/additive_prototype.py:60` | `def _header()` | Returns the header value. |
-| `_patch` |  | `plugin/tools/additive_prototype.py:113` | `def _patch(source: str)` | Returns the patch value. |
-| `replace` |  | `plugin/tools/additive_prototype.py:120` | `def replace(match: re.Match[str])` | Returns the replace value. |
+| `_recipe` |  | `plugin/tools/additive_prototype.py:25` | `def _recipe(harmonics: int, tilt: float, formant: int, peak: float)` | Implements the recipe helper. |
+| `_table` |  | `plugin/tools/additive_prototype.py:39` | `def _table(amps: list[float], level: int)` | Implements the table helper. |
+| `_emit` |  | `plugin/tools/additive_prototype.py:51` | `def _emit(name: str, table: list[int])` | Implements the emit helper. |
+| `_header` |  | `plugin/tools/additive_prototype.py:60` | `def _header()` | Implements the header helper. |
+| `_patch` |  | `plugin/tools/additive_prototype.py:113` | `def _patch(source: str)` | Implements the patch helper. |
+| `replace` |  | `plugin/tools/additive_prototype.py:120` | `def replace(match: re.Match[str])` | Implements the replace helper. |
 | `main` |  | `plugin/tools/additive_prototype.py:157` | `def main()` | Runs the test or tool entry point. |
-| `_read_wav` |  | `plugin/tools/feedback_figures.py:41` | `def _read_wav(path: Path)` | Returns the read WAV value. |
-| `_chunk` |  | `plugin/tools/feedback_figures.py:50` | `def _chunk(tag: bytes, data: bytes)` | Returns the chunk value. |
-| `_write_png` |  | `plugin/tools/feedback_figures.py:59` | `def _write_png(path: Path, width: int, height: int, rows: list[bytearray])` | Returns the write png value. |
-| `_pixel` |  | `plugin/tools/feedback_figures.py:71` | `def _pixel(row: bytearray, x: int, y: int, colour: tuple[int, int, int])` | Returns the pixel value. |
-| `_panel` |  | `plugin/tools/feedback_figures.py:79` | `def _panel(samples: list[int])` | Returns the panel value. |
+| `_read_wav` |  | `plugin/tools/feedback_figures.py:41` | `def _read_wav(path: Path)` | Implements the read WAV helper. |
+| `_chunk` |  | `plugin/tools/feedback_figures.py:50` | `def _chunk(tag: bytes, data: bytes)` | Implements the chunk helper. |
+| `_write_png` |  | `plugin/tools/feedback_figures.py:59` | `def _write_png(path: Path, width: int, height: int, rows: list[bytearray])` | Implements the write png helper. |
+| `_pixel` |  | `plugin/tools/feedback_figures.py:71` | `def _pixel(row: bytearray, x: int, y: int, colour: tuple[int, int, int])` | Implements the pixel helper. |
+| `_panel` |  | `plugin/tools/feedback_figures.py:79` | `def _panel(samples: list[int])` | Implements the panel helper. |
 | `main` |  | `plugin/tools/feedback_figures.py:105` | `def main()` | Runs the test or tool entry point. |
 | `op_env_rates` |  | `plugin/tools/gen_macro_targets.py:20` | `def op_env_rates(op: int)` | The amp, feedback, morph and phase rate names for one operator. |
-| `c_string` |  | `plugin/tools/gen_macro_targets.py:92` | `def c_string(value: str)` | Returns the c string value. |
+| `c_string` |  | `plugin/tools/gen_macro_targets.py:92` | `def c_string(value: str)` | Implements the c string helper. |
 | `is_ring_param` |  | `plugin/tools/gen_macro_targets.py:96` | `def is_ring_param(name: str)` | Tests whether the the ring param. |
 | `reorder_ring` |  | `plugin/tools/gen_macro_targets.py:102` | `def reorder_ring(params: list[dict[str, Any]])` | Move the ringmod part rows to the end of each part group. |
-| `move` |  | `plugin/tools/gen_macro_targets.py:123` | `def move(group: list[dict[str, Any]])` | Returns the move value. |
+| `move` |  | `plugin/tools/gen_macro_targets.py:123` | `def move(group: list[dict[str, Any]])` | Implements the move helper. |
 | `load_carriers` |  | `plugin/tools/gen_macro_targets.py:134` | `def load_carriers(tables_path: Path)` | Read the carrier masks from the generated routing table. |
 | `union_members` |  | `plugin/tools/gen_macro_targets.py:150` | `def union_members(entry: dict[str, Any], part_suffix: str)` | Every member any algorithm can select, with its operator index. |
 | `main` |  | `plugin/tools/gen_macro_targets.py:169` | `def main()` | Runs the test or tool entry point. |
-| `display_name` |  | `plugin/tools/gen_params.py:43` | `def display_name(name: str)` | Returns the display name value. |
+| `display_name` |  | `plugin/tools/gen_params.py:43` | `def display_name(name: str)` | Implements the display name helper. |
 | `is_ring_param` |  | `plugin/tools/gen_params.py:52` | `def is_ring_param(name: str)` | Tests whether the the ring param. |
 | `reorder_ring` |  | `plugin/tools/gen_params.py:58` | `def reorder_ring(params: list[ParamDoc])` | Move the ringmod part rows to the end of each part group. |
-| `move` |  | `plugin/tools/gen_params.py:81` | `def move(group: list[ParamDoc])` | Returns the move value. |
+| `move` |  | `plugin/tools/gen_params.py:81` | `def move(group: list[ParamDoc])` | Implements the move helper. |
 | `reorder_key` |  | `plugin/tools/gen_params.py:92` | `def reorder_key(params: list[ParamDoc])` | Move the key-follow part rows to the end of each part group. |
 | `is_key` |  | `plugin/tools/gen_params.py:101` | `def is_key(name: str)` | Tests whether the the key. |
-| `move` |  | `plugin/tools/gen_params.py:119` | `def move(group: list[ParamDoc])` | Returns the move value. |
-| `c_string` |  | `plugin/tools/gen_params.py:130` | `def c_string(value: str)` | Returns the c string value. |
+| `move` |  | `plugin/tools/gen_params.py:119` | `def move(group: list[ParamDoc])` | Implements the move helper. |
+| `c_string` |  | `plugin/tools/gen_params.py:130` | `def c_string(value: str)` | Implements the c string helper. |
 | `main` |  | `plugin/tools/gen_params.py:134` | `def main()` | Runs the test or tool entry point. |
-| `_argb` |  | `plugin/tools/gen_tokens.py:24` | `def _argb(hex_colour: str)` | Returns the argb value. |
+| `_argb` |  | `plugin/tools/gen_tokens.py:24` | `def _argb(hex_colour: str)` | Implements the argb helper. |
 | `main` |  | `plugin/tools/gen_tokens.py:31` | `def main()` | Runs the test or tool entry point. |
 | `_display` |  | `plugin/tools/ratio.py:26` | `def _display(value: int)` | The 2-decimal readout and the ideal it was rounded from. |
 | `ratio_detents` |  | `plugin/tools/ratio.py:33` | `def ratio_detents(lo: int, hi: int)` | The sorted Q16 ratio detents in [lo, hi]. Two series that meet inside the. |
-| `_sha256` |  | `plugin/tools/snapshot_check.py:29` | `def _sha256(path: Path)` | Returns the sha 256 value. |
+| `_sha256` |  | `plugin/tools/snapshot_check.py:29` | `def _sha256(path: Path)` | Implements the sha 256 helper. |
 | `_png_size` |  | `plugin/tools/snapshot_check.py:37` | `def _png_size(path: Path)` | Read the IHDR width and height from a PNG without decoding it. |
-| `_images` |  | `plugin/tools/snapshot_check.py:47` | `def _images(directory: Path)` | Returns the images value. |
-| `_load_manifest` |  | `plugin/tools/snapshot_check.py:53` | `def _load_manifest(golden: Path)` | Returns the load manifest value. |
-| `_write_manifest` |  | `plugin/tools/snapshot_check.py:64` | `def _write_manifest(golden: Path, images: dict[str, Path])` | Returns the write manifest value. |
+| `_images` |  | `plugin/tools/snapshot_check.py:47` | `def _images(directory: Path)` | Implements the images helper. |
+| `_load_manifest` |  | `plugin/tools/snapshot_check.py:53` | `def _load_manifest(golden: Path)` | Implements the load manifest helper. |
+| `_write_manifest` |  | `plugin/tools/snapshot_check.py:64` | `def _write_manifest(golden: Path, images: dict[str, Path])` | Implements the write manifest helper. |
 | `_diff_images` |  | `plugin/tools/snapshot_check.py:79` | `def _diff_images(actual: Path, golden: Path, out: Path, names: list[str])` | Write review images for changed snapshots when Pillow is installed. |
 | `main` |  | `plugin/tools/snapshot_check.py:117` | `def main()` | Runs the test or tool entry point. |
 | `partSuffix` |  | `plugin/ui/ParamIDs.h:10` | `inline juce::String partSuffix(int part)` | Returns the `.pN` suffix for a part index. |
@@ -1333,62 +1333,62 @@ paths in depth.
 | `resized` | P1Dialog | `plugin/ui/Widgets.h:433` | `void resized() override` | Lays out the child components. |
 | `mouseUp` | P1Dialog | `plugin/ui/Widgets.h:434` | `void mouseUp(const juce::MouseEvent& event) override` | Handles a mouse interaction. |
 | `drawAlgorithmGraph` |  | `plugin/ui/Widgets.h:447` | `void drawAlgorithmGraph(juce::Graphics& g, juce::Rectangle<float> area, int algorithm, uint8_t ringMask = 0, uint8_t directMask = 0)` | Draws the algorithm graph. |
-| `load` |  | `tools/audit_modules.py:23` | `def load(path: Path)` | Returns the load value. |
-| `module_spec` |  | `tools/audit_modules.py:27` | `def module_spec(kind: str)` | Returns the module spec value. |
-| `target_node` |  | `tools/audit_modules.py:35` | `def target_node(value: object)` | Returns the target node value. |
+| `load` |  | `tools/audit_modules.py:23` | `def load(path: Path)` | Implements the load helper. |
+| `module_spec` |  | `tools/audit_modules.py:27` | `def module_spec(kind: str)` | Implements the module spec helper. |
+| `target_node` |  | `tools/audit_modules.py:35` | `def target_node(value: object)` | Implements the target node helper. |
 | `main` |  | `tools/audit_modules.py:41` | `def main()` | Runs the test or tool entry point. |
-| `text` |  | `tools/gen_code_docs.py:89` | `def text(node, src: bytes)` | Returns the text value. |
+| `text` |  | `tools/gen_code_docs.py:89` | `def text(node, src: bytes)` | Implements the text helper. |
 | `name_of` |  | `tools/gen_code_docs.py:93` | `def name_of(node, src: bytes)` | The last declarator name, resolving qualified names and pointers. |
 | `clean_comment` |  | `tools/gen_code_docs.py:122` | `def clean_comment(lines: list[str], start_line: int)` | The comment block immediately above `start_line`, collapsed to prose. |
-| `clean_signature` |  | `tools/gen_code_docs.py:153` | `def clean_signature(value: str)` | Returns the clean signature value. |
+| `clean_signature` |  | `tools/gen_code_docs.py:153` | `def clean_signature(value: str)` | Implements the clean signature helper. |
 | `parser_for` |  | `tools/gen_code_docs.py:159` | `def parser_for(path: Path)` | Parses the r for. |
 | `is_global_scope` |  | `tools/gen_code_docs.py:167` | `def is_global_scope(node)` | Tests whether the the global scope. |
-| `class_scope` |  | `tools/gen_code_docs.py:197` | `def class_scope(node, src: bytes)` | Returns the class scope value. |
-| `collect_c_family` |  | `tools/gen_code_docs.py:206` | `def collect_c_family(path: Path)` | Returns the collect c family value. |
+| `class_scope` |  | `tools/gen_code_docs.py:197` | `def class_scope(node, src: bytes)` | Implements the class scope helper. |
+| `collect_c_family` |  | `tools/gen_code_docs.py:206` | `def collect_c_family(path: Path)` | Implements the collect c family helper. |
 | `add_function` |  | `tools/gen_code_docs.py:224` | `def add_function(node)` | Adds the function. |
 | `add_type` |  | `tools/gen_code_docs.py:263` | `def add_type(node)` | Adds the type. |
-| `walk` |  | `tools/gen_code_docs.py:310` | `def walk(node)` | Returns the walk value. |
-| `collect_python` |  | `tools/gen_code_docs.py:420` | `def collect_python(path: Path)` | Returns the collect python value. |
-| `docstring` |  | `tools/gen_code_docs.py:430` | `def docstring(node)` | Returns the docstring value. |
-| `walk` |  | `tools/gen_code_docs.py:442` | `def walk(node)` | Returns the walk value. |
-| `source_files` |  | `tools/gen_code_docs.py:503` | `def source_files(include_dev: bool)` | Returns the source files value. |
-| `md_escape` |  | `tools/gen_code_docs.py:514` | `def md_escape(value: str)` | Returns the md escape value. |
-| `file_summary` |  | `tools/gen_code_docs.py:518` | `def file_summary(path: Path)` | The first prose sentence of the file's leading comment or heading. |
-| `write_files` |  | `tools/gen_code_docs.py:630` | `def write_files(paths: list[Path], out: Path)` | Writes the files. |
-| `write_types` |  | `tools/gen_code_docs.py:694` | `def write_types(types: list[Type], out: Path)` | Writes the types. |
-| `split_words` |  | `tools/gen_code_docs.py:906` | `def split_words(name: str)` | Splits a camelCase or snake_case identifier into lower-case words. |
-| `inner_comment` |  | `tools/gen_code_docs.py:914` | `def inner_comment(f: Function, lines: list[str])` | The prose comment at the top of the function body, as one sentence. |
-| `describe_function` |  | `tools/gen_code_docs.py:952` | `def describe_function(f: Function, lines: list[str])` | Returns the describe function value. |
-| `write_functions` |  | `tools/gen_code_docs.py:1224` | `def write_functions(functions: list[Function], out: Path)` | Writes the functions. |
-| `write_symbols` |  | `tools/gen_code_docs.py:1284` | `def write_symbols(symbols: list[Symbol], out: Path)` | Writes the symbols. |
-| `state_fields` |  | `tools/gen_code_docs.py:1309` | `def state_fields()` | Returns the state fields value. |
-| `write_state` |  | `tools/gen_code_docs.py:1324` | `def write_state(fields: list[tuple[str, str]], out: Path)` | Writes the state. |
-| `write_parameters` |  | `tools/gen_code_docs.py:1339` | `def write_parameters(out: Path)` | Writes the parameters. |
-| `render_walk` |  | `tools/gen_code_docs.py:1367` | `def render_walk()` | Renders the walk. |
-| `write_nodes` |  | `tools/gen_code_docs.py:1450` | `def write_nodes(out: Path)` | Writes the nodes. |
-| `write_tests` |  | `tools/gen_code_docs.py:1483` | `def write_tests(out: Path)` | Writes the tests. |
-| `main` |  | `tools/gen_code_docs.py:1526` | `def main()` | Runs the test or tool entry point. |
-| `q15` |  | `tools/gen_math_tables.py:40` | `def q15(x: float)` | Returns the q 15 value. |
-| `q16` |  | `tools/gen_math_tables.py:45` | `def q16(x: float)` | Returns the q 16 value. |
-| `c_array` |  | `tools/gen_math_tables.py:50` | `def c_array(ctype: str, name: str, values: list[int], width: int)` | Returns the c array value. |
-| `rate_base` |  | `tools/gen_math_tables.py:64` | `def rate_base()` | Returns the rate base value. |
-| `rate_r3_base` |  | `tools/gen_math_tables.py:71` | `def rate_r3_base()` | Returns the rate r 3 base value. |
+| `walk` |  | `tools/gen_code_docs.py:310` | `def walk(node)` | Implements the walk helper. |
+| `collect_python` |  | `tools/gen_code_docs.py:420` | `def collect_python(path: Path)` | Implements the collect python helper. |
+| `docstring` |  | `tools/gen_code_docs.py:430` | `def docstring(node)` | Implements the docstring helper. |
+| `walk` |  | `tools/gen_code_docs.py:442` | `def walk(node)` | Implements the walk helper. |
+| `source_files` |  | `tools/gen_code_docs.py:506` | `def source_files(include_dev: bool)` | Implements the source files helper. |
+| `md_escape` |  | `tools/gen_code_docs.py:517` | `def md_escape(value: str)` | Implements the md escape helper. |
+| `file_summary` |  | `tools/gen_code_docs.py:521` | `def file_summary(path: Path)` | The first prose sentence of the file's leading comment or heading. |
+| `write_files` |  | `tools/gen_code_docs.py:633` | `def write_files(paths: list[Path], out: Path)` | Writes the files. |
+| `write_types` |  | `tools/gen_code_docs.py:697` | `def write_types(types: list[Type], out: Path)` | Writes the types. |
+| `split_words` |  | `tools/gen_code_docs.py:909` | `def split_words(name: str)` | Splits a camelCase or snake_case identifier into lower-case words. |
+| `inner_comment` |  | `tools/gen_code_docs.py:917` | `def inner_comment(f: Function, lines: list[str])` | The prose comment at the top of the function body, as one sentence. |
+| `describe_function` |  | `tools/gen_code_docs.py:955` | `def describe_function(f: Function, lines: list[str])` | Implements the describe function helper. |
+| `write_functions` |  | `tools/gen_code_docs.py:1229` | `def write_functions(functions: list[Function], out: Path)` | Writes the functions. |
+| `write_symbols` |  | `tools/gen_code_docs.py:1289` | `def write_symbols(symbols: list[Symbol], out: Path)` | Writes the symbols. |
+| `state_fields` |  | `tools/gen_code_docs.py:1314` | `def state_fields()` | Implements the state fields helper. |
+| `write_state` |  | `tools/gen_code_docs.py:1329` | `def write_state(fields: list[tuple[str, str]], out: Path)` | Writes the state. |
+| `write_parameters` |  | `tools/gen_code_docs.py:1344` | `def write_parameters(out: Path)` | Writes the parameters. |
+| `render_walk` |  | `tools/gen_code_docs.py:1372` | `def render_walk()` | Renders the walk. |
+| `write_nodes` |  | `tools/gen_code_docs.py:1455` | `def write_nodes(out: Path)` | Writes the nodes. |
+| `write_tests` |  | `tools/gen_code_docs.py:1488` | `def write_tests(out: Path)` | Writes the tests. |
+| `main` |  | `tools/gen_code_docs.py:1531` | `def main()` | Runs the test or tool entry point. |
+| `q15` |  | `tools/gen_math_tables.py:40` | `def q15(x: float)` | Implements the q 15 helper. |
+| `q16` |  | `tools/gen_math_tables.py:45` | `def q16(x: float)` | Implements the q 16 helper. |
+| `c_array` |  | `tools/gen_math_tables.py:50` | `def c_array(ctype: str, name: str, values: list[int], width: int)` | Implements the c array helper. |
+| `rate_base` |  | `tools/gen_math_tables.py:64` | `def rate_base()` | Implements the rate base helper. |
+| `rate_r3_base` |  | `tools/gen_math_tables.py:71` | `def rate_r3_base()` | Implements the rate r 3 base helper. |
 | `keep_time` |  | `tools/gen_math_tables.py:78` | `def keep_time(coefficient: int, old_rate: float, new_rate: float)` | Transform a Q16 per-block coefficient to the new block period. |
 | `filter_g_q16` |  | `tools/gen_math_tables.py:85` | `def filter_g_q16(rate: float)` | The per-stage VCF coefficient at each log cutoff position. |
-| `build` |  | `tools/gen_math_tables.py:96` | `def build(rate: float)` | Returns the build value. |
-| `render` |  | `tools/gen_math_tables.py:126` | `def render(rate: float)` | Returns the render value. |
+| `build` |  | `tools/gen_math_tables.py:96` | `def build(rate: float)` | Implements the build helper. |
+| `render` |  | `tools/gen_math_tables.py:126` | `def render(rate: float)` | Implements the render helper. |
 | `main` |  | `tools/gen_math_tables.py:161` | `def main()` | Runs the test or tool entry point. |
-| `q15` |  | `tools/gen_wavetable.py:38` | `def q15(x: float)` | Returns the q 15 value. |
+| `q15` |  | `tools/gen_wavetable.py:38` | `def q15(x: float)` | Implements the q 15 helper. |
 | `clamp15` |  | `tools/gen_wavetable.py:43` | `def clamp15(x: float)` | Round an already-Q15 value and clamp it into [-32768, 32767]. |
-| `sin_q15` |  | `tools/gen_wavetable.py:53` | `def sin_q15(phase: int)` | Returns the sin q 15 value. |
-| `q15_mul` |  | `tools/gen_wavetable.py:60` | `def q15_mul(a: int, b: int)` | Returns the q 15 mul value. |
+| `sin_q15` |  | `tools/gen_wavetable.py:53` | `def sin_q15(phase: int)` | Implements the sin q 15 helper. |
+| `q15_mul` |  | `tools/gen_wavetable.py:60` | `def q15_mul(a: int, b: int)` | Implements the q 15 mul helper. |
 | `sin_wave` |  | `tools/gen_wavetable.py:64` | `def sin_wave(phase: int, ws: int)` | The naive shape as a pure function of the top 10 phase bits. |
 | `band_limited` |  | `tools/gen_wavetable.py:107` | `def band_limited(ws: int, harm: int)` | The band-limited Q15 table for waveform `ws`, harmonics 1..harm. |
-| `c_array` |  | `tools/gen_wavetable.py:134` | `def c_array(name: str, ctype: str, values: list[int])` | Returns the c array value. |
-| `build` |  | `tools/gen_wavetable.py:148` | `def build()` | Returns the build value. |
-| `harmonics` |  | `tools/gen_wavetable.py:162` | `def harmonics(wave: list[int], base: list[int])` | Returns the harmonics value. |
+| `c_array` |  | `tools/gen_wavetable.py:134` | `def c_array(name: str, ctype: str, values: list[int])` | Implements the c array helper. |
+| `build` |  | `tools/gen_wavetable.py:148` | `def build()` | Implements the build helper. |
+| `harmonics` |  | `tools/gen_wavetable.py:162` | `def harmonics(wave: list[int], base: list[int])` | Implements the harmonics helper. |
 | `render_harmonics` |  | `tools/gen_wavetable.py:181` | `def render_harmonics(rows: list[list[int]])` | Renders the harmonics. |
-| `render` |  | `tools/gen_wavetable.py:200` | `def render(wave: list[int], base: list[int])` | Returns the render value. |
+| `render` |  | `tools/gen_wavetable.py:200` | `def render(wave: list[int], base: list[int])` | Implements the render helper. |
 | `main` |  | `tools/gen_wavetable.py:223` | `def main()` | Runs the test or tool entry point. |
 
 ## Details by file
@@ -3443,32 +3443,32 @@ paths in depth.
 ### `plugin/tools/additive_prototype.py`
 
 - `_recipe` at line 25 through 36: `def _recipe(harmonics: int, tilt: float, formant: int, peak: float)`
-  Returns the recipe value.
+  Implements the recipe helper.
 - `_table` at line 39 through 48: `def _table(amps: list[float], level: int)`
-  Returns the table value.
+  Implements the table helper.
 - `_emit` at line 51 through 57: `def _emit(name: str, table: list[int])`
-  Returns the emit value.
+  Implements the emit helper.
 - `_header` at line 60 through 110: `def _header()`
-  Returns the header value.
+  Implements the header helper.
 - `_patch` at line 113 through 154: `def _patch(source: str)`
-  Returns the patch value.
+  Implements the patch helper.
 - `replace` at line 120 through 128: `def replace(match: re.Match[str])`
-  Returns the replace value.
+  Implements the replace helper.
 - `main` at line 157 through 170: `def main()`
   Runs the test or tool entry point.
 
 ### `plugin/tools/feedback_figures.py`
 
 - `_read_wav` at line 41 through 47: `def _read_wav(path: Path)`
-  Returns the read WAV value.
+  Implements the read WAV helper.
 - `_chunk` at line 50 through 56: `def _chunk(tag: bytes, data: bytes)`
-  Returns the chunk value.
+  Implements the chunk helper.
 - `_write_png` at line 59 through 68: `def _write_png(path: Path, width: int, height: int, rows: list[bytearray])`
-  Returns the write png value.
+  Implements the write png helper.
 - `_pixel` at line 71 through 76: `def _pixel(row: bytearray, x: int, y: int, colour: tuple[int, int, int])`
-  Returns the pixel value.
+  Implements the pixel helper.
 - `_panel` at line 79 through 102: `def _panel(samples: list[int])`
-  Returns the panel value.
+  Implements the panel helper.
 - `main` at line 105 through 120: `def main()`
   Runs the test or tool entry point.
 
@@ -3477,13 +3477,13 @@ paths in depth.
 - `op_env_rates` at line 20 through 56: `def op_env_rates(op: int)`
   The amp, feedback, morph and phase rate names for one operator.
 - `c_string` at line 92 through 93: `def c_string(value: str)`
-  Returns the c string value.
+  Implements the c string helper.
 - `is_ring_param` at line 96 through 99: `def is_ring_param(name: str)`
   Tests whether the the ring param.
 - `reorder_ring` at line 102 through 131: `def reorder_ring(params: list[dict[str, Any]])`
   Move the ringmod part rows to the end of each part group.
 - `move` at line 123 through 125: `def move(group: list[dict[str, Any]])`
-  Returns the move value.
+  Implements the move helper.
 - `load_carriers` at line 134 through 147: `def load_carriers(tables_path: Path)`
   Read the carrier masks from the generated routing table.
 - `union_members` at line 150 through 166: `def union_members(entry: dict[str, Any], part_suffix: str)`
@@ -3494,28 +3494,28 @@ paths in depth.
 ### `plugin/tools/gen_params.py`
 
 - `display_name` at line 43 through 49: `def display_name(name: str)`
-  Returns the display name value.
+  Implements the display name helper.
 - `is_ring_param` at line 52 through 55: `def is_ring_param(name: str)`
   Tests whether the the ring param.
 - `reorder_ring` at line 58 through 89: `def reorder_ring(params: list[ParamDoc])`
   Move the ringmod part rows to the end of each part group.
 - `move` at line 81 through 83: `def move(group: list[ParamDoc])`
-  Returns the move value.
+  Implements the move helper.
 - `reorder_key` at line 92 through 127: `def reorder_key(params: list[ParamDoc])`
   Move the key-follow part rows to the end of each part group.
 - `is_key` at line 101 through 102: `def is_key(name: str)`
   Tests whether the the key.
 - `move` at line 119 through 121: `def move(group: list[ParamDoc])`
-  Returns the move value.
+  Implements the move helper.
 - `c_string` at line 130 through 131: `def c_string(value: str)`
-  Returns the c string value.
+  Implements the c string helper.
 - `main` at line 134 through 246: `def main()`
   Runs the test or tool entry point.
 
 ### `plugin/tools/gen_tokens.py`
 
 - `_argb` at line 24 through 28: `def _argb(hex_colour: str)`
-  Returns the argb value.
+  Implements the argb helper.
 - `main` at line 31 through 90: `def main()`
   Runs the test or tool entry point.
 
@@ -3529,15 +3529,15 @@ paths in depth.
 ### `plugin/tools/snapshot_check.py`
 
 - `_sha256` at line 29 through 34: `def _sha256(path: Path)`
-  Returns the sha 256 value.
+  Implements the sha 256 helper.
 - `_png_size` at line 37 through 44: `def _png_size(path: Path)`
   Read the IHDR width and height from a PNG without decoding it.
 - `_images` at line 47 through 50: `def _images(directory: Path)`
-  Returns the images value.
+  Implements the images helper.
 - `_load_manifest` at line 53 through 61: `def _load_manifest(golden: Path)`
-  Returns the load manifest value.
+  Implements the load manifest helper.
 - `_write_manifest` at line 64 through 76: `def _write_manifest(golden: Path, images: dict[str, Path])`
-  Returns the write manifest value.
+  Implements the write manifest helper.
 - `_diff_images` at line 79 through 114: `def _diff_images(actual: Path, golden: Path, out: Path, names: list[str])`
   Write review images for changed snapshots when Pillow is installed.
 - `main` at line 117 through 203: `def main()`
@@ -4263,125 +4263,125 @@ paths in depth.
 ### `tools/audit_modules.py`
 
 - `load` at line 23 through 24: `def load(path: Path)`
-  Returns the load value.
+  Implements the load helper.
 - `module_spec` at line 27 through 32: `def module_spec(kind: str)`
-  Returns the module spec value.
+  Implements the module spec helper.
 - `target_node` at line 35 through 38: `def target_node(value: object)`
-  Returns the target node value.
+  Implements the target node helper.
 - `main` at line 41 through 131: `def main()`
   Runs the test or tool entry point.
 
 ### `tools/gen_code_docs.py`
 
 - `text` at line 89 through 90: `def text(node, src: bytes)`
-  Returns the text value.
+  Implements the text helper.
 - `name_of` at line 93 through 119: `def name_of(node, src: bytes)`
   The last declarator name, resolving qualified names and pointers.
 - `clean_comment` at line 122 through 150: `def clean_comment(lines: list[str], start_line: int)`
   The comment block immediately above `start_line`, collapsed to prose.
 - `clean_signature` at line 153 through 156: `def clean_signature(value: str)`
-  Returns the clean signature value.
+  Implements the clean signature helper.
 - `parser_for` at line 159 through 164: `def parser_for(path: Path)`
   Parses the r for.
 - `is_global_scope` at line 167 through 194: `def is_global_scope(node)`
   Tests whether the the global scope.
 - `class_scope` at line 197 through 203: `def class_scope(node, src: bytes)`
-  Returns the class scope value.
+  Implements the class scope helper.
 - `collect_c_family` at line 206 through 417: `def collect_c_family(path: Path)`
-  Returns the collect c family value.
+  Implements the collect c family helper.
 - `add_function` at line 224 through 261: `def add_function(node)`
   Adds the function.
 - `add_type` at line 263 through 308: `def add_type(node)`
   Adds the type.
 - `walk` at line 310 through 414: `def walk(node)`
-  Returns the walk value.
-- `collect_python` at line 420 through 500: `def collect_python(path: Path)`
-  Returns the collect python value.
+  Implements the walk helper.
+- `collect_python` at line 420 through 503: `def collect_python(path: Path)`
+  Implements the collect python helper.
 - `docstring` at line 430 through 440: `def docstring(node)`
-  Returns the docstring value.
-- `walk` at line 442 through 497: `def walk(node)`
-  Returns the walk value.
-- `source_files` at line 503 through 511: `def source_files(include_dev: bool)`
-  Returns the source files value.
-- `md_escape` at line 514 through 515: `def md_escape(value: str)`
-  Returns the md escape value.
-- `file_summary` at line 518 through 576: `def file_summary(path: Path)`
+  Implements the docstring helper.
+- `walk` at line 442 through 500: `def walk(node)`
+  Implements the walk helper.
+- `source_files` at line 506 through 514: `def source_files(include_dev: bool)`
+  Implements the source files helper.
+- `md_escape` at line 517 through 518: `def md_escape(value: str)`
+  Implements the md escape helper.
+- `file_summary` at line 521 through 579: `def file_summary(path: Path)`
   The first prose sentence of the file's leading comment or heading.
-- `write_files` at line 630 through 691: `def write_files(paths: list[Path], out: Path)`
+- `write_files` at line 633 through 694: `def write_files(paths: list[Path], out: Path)`
   Writes the files.
-- `write_types` at line 694 through 752: `def write_types(types: list[Type], out: Path)`
+- `write_types` at line 697 through 755: `def write_types(types: list[Type], out: Path)`
   Writes the types.
-- `split_words` at line 906 through 911: `def split_words(name: str)`
+- `split_words` at line 909 through 914: `def split_words(name: str)`
   Splits a camelCase or snake_case identifier into lower-case words.
-- `inner_comment` at line 914 through 949: `def inner_comment(f: Function, lines: list[str])`
+- `inner_comment` at line 917 through 952: `def inner_comment(f: Function, lines: list[str])`
   The prose comment at the top of the function body, as one sentence.
-- `describe_function` at line 952 through 1221: `def describe_function(f: Function, lines: list[str])`
-  Returns the describe function value.
-- `write_functions` at line 1224 through 1281: `def write_functions(functions: list[Function], out: Path)`
+- `describe_function` at line 955 through 1226: `def describe_function(f: Function, lines: list[str])`
+  Implements the describe function helper.
+- `write_functions` at line 1229 through 1286: `def write_functions(functions: list[Function], out: Path)`
   Writes the functions.
-- `write_symbols` at line 1284 through 1306: `def write_symbols(symbols: list[Symbol], out: Path)`
+- `write_symbols` at line 1289 through 1311: `def write_symbols(symbols: list[Symbol], out: Path)`
   Writes the symbols.
-- `state_fields` at line 1309 through 1321: `def state_fields()`
-  Returns the state fields value.
-- `write_state` at line 1324 through 1336: `def write_state(fields: list[tuple[str, str]], out: Path)`
+- `state_fields` at line 1314 through 1326: `def state_fields()`
+  Implements the state fields helper.
+- `write_state` at line 1329 through 1341: `def write_state(fields: list[tuple[str, str]], out: Path)`
   Writes the state.
-- `write_parameters` at line 1339 through 1364: `def write_parameters(out: Path)`
+- `write_parameters` at line 1344 through 1369: `def write_parameters(out: Path)`
   Writes the parameters.
-- `render_walk` at line 1367 through 1447: `def render_walk()`
+- `render_walk` at line 1372 through 1452: `def render_walk()`
   Renders the walk.
-- `write_nodes` at line 1450 through 1480: `def write_nodes(out: Path)`
+- `write_nodes` at line 1455 through 1485: `def write_nodes(out: Path)`
   Writes the nodes.
-- `write_tests` at line 1483 through 1523: `def write_tests(out: Path)`
+- `write_tests` at line 1488 through 1528: `def write_tests(out: Path)`
   Writes the tests.
-- `main` at line 1526 through 1559: `def main()`
+- `main` at line 1531 through 1564: `def main()`
   Runs the test or tool entry point.
 
 ### `tools/gen_math_tables.py`
 
 - `q15` at line 40 through 42: `def q15(x: float)`
-  Returns the q 15 value.
+  Implements the q 15 helper.
 - `q16` at line 45 through 47: `def q16(x: float)`
-  Returns the q 16 value.
+  Implements the q 16 helper.
 - `c_array` at line 50 through 61: `def c_array(ctype: str, name: str, values: list[int], width: int)`
-  Returns the c array value.
+  Implements the c array helper.
 - `rate_base` at line 64 through 68: `def rate_base()`
-  Returns the rate base value.
+  Implements the rate base helper.
 - `rate_r3_base` at line 71 through 75: `def rate_r3_base()`
-  Returns the rate r 3 base value.
+  Implements the rate r 3 base helper.
 - `keep_time` at line 78 through 82: `def keep_time(coefficient: int, old_rate: float, new_rate: float)`
   Transform a Q16 per-block coefficient to the new block period.
 - `filter_g_q16` at line 85 through 93: `def filter_g_q16(rate: float)`
   The per-stage VCF coefficient at each log cutoff position.
 - `build` at line 96 through 123: `def build(rate: float)`
-  Returns the build value.
+  Implements the build helper.
 - `render` at line 126 through 158: `def render(rate: float)`
-  Returns the render value.
+  Implements the render helper.
 - `main` at line 161 through 168: `def main()`
   Runs the test or tool entry point.
 
 ### `tools/gen_wavetable.py`
 
 - `q15` at line 38 through 40: `def q15(x: float)`
-  Returns the q 15 value.
+  Implements the q 15 helper.
 - `clamp15` at line 43 through 46: `def clamp15(x: float)`
   Round an already-Q15 value and clamp it into [-32768, 32767].
 - `sin_q15` at line 53 through 57: `def sin_q15(phase: int)`
-  Returns the sin q 15 value.
+  Implements the sin q 15 helper.
 - `q15_mul` at line 60 through 61: `def q15_mul(a: int, b: int)`
-  Returns the q 15 mul value.
+  Implements the q 15 mul helper.
 - `sin_wave` at line 64 through 104: `def sin_wave(phase: int, ws: int)`
   The naive shape as a pure function of the top 10 phase bits.
 - `band_limited` at line 107 through 131: `def band_limited(ws: int, harm: int)`
   The band-limited Q15 table for waveform `ws`, harmonics 1..harm.
 - `c_array` at line 134 through 145: `def c_array(name: str, ctype: str, values: list[int])`
-  Returns the c array value.
+  Implements the c array helper.
 - `build` at line 148 through 159: `def build()`
-  Returns the build value.
+  Implements the build helper.
 - `harmonics` at line 162 through 178: `def harmonics(wave: list[int], base: list[int])`
-  Returns the harmonics value.
+  Implements the harmonics helper.
 - `render_harmonics` at line 181 through 197: `def render_harmonics(rows: list[list[int]])`
   Renders the harmonics.
 - `render` at line 200 through 220: `def render(wave: list[int], base: list[int])`
-  Returns the render value.
+  Implements the render helper.
 - `main` at line 223 through 237: `def main()`
   Runs the test or tool entry point.

@@ -439,7 +439,7 @@ def collect_python(path: Path) -> tuple[list[Function], list[Type], list[Symbol]
                     return value.splitlines()[0].strip()
         return ""
 
-    def walk(node, scope: str = "") -> None:
+    def walk(node, scope: str = "", in_function: bool = False) -> None:
         if node.type == "function_definition":
             name = name_of(node.child_by_field_name("name"), src)
             if name:
@@ -462,6 +462,9 @@ def collect_python(path: Path) -> tuple[list[Function], list[Type], list[Symbol]
                         kind="function",
                     )
                 )
+            for child in node.children:
+                walk(child, scope, True)
+            return
         elif node.type == "class_definition":
             name = name_of(node.child_by_field_name("name"), src)
             if name:
@@ -476,9 +479,9 @@ def collect_python(path: Path) -> tuple[list[Function], list[Type], list[Symbol]
                     )
                 )
                 for child in node.children:
-                    walk(child, name)
+                    walk(child, name, in_function)
                 return
-        elif node.type == "expression_statement" and scope == "":
+        elif node.type == "expression_statement" and scope == "" and not in_function:
             for child in node.children:
                 if child.type == "assignment":
                     left = child.child_by_field_name("left")
@@ -494,7 +497,7 @@ def collect_python(path: Path) -> tuple[list[Function], list[Type], list[Symbol]
                             )
                         )
         for child in node.children:
-            walk(child, scope)
+            walk(child, scope, in_function)
 
     walk(tree.root_node)
     return functions, types, symbols
@@ -1212,6 +1215,8 @@ def describe_function(
     comment = inner_comment(f, lines)
     if comment:
         return comment
+    if f.signature.startswith("def "):
+        return f"Implements the {words} helper."
     head = f.signature.split("(")[0]
     returns = head.replace(name, "").strip()
     if "bool" in returns:
