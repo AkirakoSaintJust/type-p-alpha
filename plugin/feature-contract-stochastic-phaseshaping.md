@@ -680,7 +680,7 @@ render, and the aliasing limit is recorded below.
 | Other evidence | Result |
 | --- | --- |
 | `preset_smoke` | old versions load through the current version 19 remap; the part block is 994 values |
-| snapshots | 33 PNGs and the manifest; the two phase pages and the fx/mod pages are in the set |
+| snapshots | 31 PNGs and the manifest; the two phase pages are new |
 | manifest | 2,053 parameters and a 994-value part block |
 | suite | 18/18 on Linux and 17/17 on Windows; the feature run also passed macOS, TSan and CodeQL |
 

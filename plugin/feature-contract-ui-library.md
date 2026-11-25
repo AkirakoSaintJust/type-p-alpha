@@ -90,7 +90,7 @@
 - **Target package check:** the Linux build and the Windows build both link the editor,
   the smoke tests and the stability test.
 - **Host timing and platform check:** the full Linux `ctest` suite passes, and the
-  Linux snapshot diff passes with 33 images.
+  Linux snapshot diff passes with 31 images.
 - **Tolerance/metric:** the snapshot diff is exact, the name field stores 32
   characters, and the current `P1LIB3` library loads with the same names and
   parameters.
