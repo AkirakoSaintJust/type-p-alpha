@@ -13,10 +13,12 @@ The reasons for abandoning Type P.fm1 are that I've decided to disengage from th
 - The usual output level, frequency ratio and detune controls.
 - Bipolar phase modulation feedback, with a dedicated LFO and envelope.
 - A set of 14 waveforms: the full OPL3 and OPZ/TX81z/DX11/V50 set, plus `rect tri` and `half square`, with the tables generated from formulas rather than copied from the chips.
-- An amplitude LFO over a warm-up, a surge and two decay stages, with four modes.
+- An amplitude LFO over an amplitude envelope with attack warm-up, attack surge, two decay stages, a release stage, and four modes (sustain off, sustain after decay2, and two loop modes).
 - A pitch LFO for evolving PM timbres.
 - An additive spectral mode with two 64-harmonic tables, an LFO and envelope for morphing between them, and spectral controls inspired by the Kawai K5.
 - A rate fade and a depth fade on every LFO, so a tremolo, vibrato or morph can arrive after the note starts.
+- Phaseshaping for PWM and phase distortion.
+- Stochastic phaseshaping inspired by Xenakis.
 
 Parts contain:
 
@@ -26,6 +28,7 @@ Parts contain:
 - Key scaling and velocity sensitivity for a lot of params.
 - Detune and transposition.
 - One stereo panning parameter with a panning envelope.
+- One ring modulator/amplitude modulator for each pair of carriers.
 
 Parts can be stacked, assigned to different MIDI channels or split into keyboard zones, and each has a delay stage so they can be sequential in time. The pitch bend range is per part, 0 to 24 semitones, and defaults to 2.
 
