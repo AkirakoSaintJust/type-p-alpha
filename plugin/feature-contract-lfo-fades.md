@@ -94,7 +94,7 @@ are off, the phase keeps its free run and the render stays bit-exact.
 ## Synchronisation and separation
 
 Both knobs use the same time table. Setting them to the same value ends both
-fades on the same tick; setting different values puts the shorter fade first and
+fades on the same tick. Setting different values puts the shorter fade first and
 leaves the separation in the difference. The two values sit under their knobs,
 so the player reads the two times directly.
 
@@ -114,17 +114,17 @@ The operator cards keep the four knobs in one row with the wave select and
   the fades off and the current render. The pairs sit inside the part block, so
   the record grows by 34 values per part and the migration maps each old index to
   its new index, inserting 0 at the 34 new positions. The record-size append is
-  not enough; the version 14 map follows the version 13 map's pattern.
+  not enough. The version 14 map follows the version 13 map's pattern.
 - **Checks:** `preset_smoke` loads version 10, 12 and 13 records and checks the
   part and absolute envelope expansion before the fade insertion.
 
 ## Engine
 
-- **Node:** `modules/nodes/lfo` gains `rate_fade` and `depth_fade` parameters, a
+- **Node:** `.dev/modules/nodes/lfo` gains `rate_fade` and `depth_fade` parameters, a
   `trigger` event input defaulting to `voice_trig[v]`, two Q31 levels and two Q31
   steps. The first step is loaded on the trigger.
-- **Wiring:** `modules/macros/fm_op` maps the trem, feedback and detune pairs;
-  the `osc` spectral LFO maps its pair; `synth/patch.json` maps the part pitch
+- **Wiring:** `.dev/modules/macros/fm_op` maps the trem, feedback and detune pairs;
+  the `osc` spectral LFO maps its pair. `synth/patch.json` maps the part pitch
   pair.
 - **CPU:** one add, one compare and two Q31-to-Q16 multiplies per LFO per control
   tick, plus the existing phase and depth work.
@@ -132,24 +132,24 @@ The operator cards keep the four knobs in one row with the wave select and
   (four operators across four families, plus its part's pitch LFO), so 272 bytes
   per voice and 6,528 bytes across 24 voices. The 34 pairs cover all four
   operators and both parts.
-- **Timing:** the two steps are block-derived; the two levels move per control
+- **Timing:** the two steps are block-derived. The two levels move per control
   tick. The trigger block is not lost.
 
 ## Editor
 
 - `LfoCard` and `PitchLfoCard` gain a row with the two knobs, labelled `rate
   fade` and `depth fade`.
-- The operator LFO cards are 113 px, with rate, depth, `rate fade` and
+- Operator LFO cards: 113 px, with rate, depth, `rate fade` and
   `depth fade` as four knobs in one row, and the wave select and `bipolar`
   below. The 12 px gaps and the 240 px scope and spectro carry the breathing
   space. The pitch LFO card keeps its own 36 px layout and its wave view.
-- The spectral morph LFO card uses the compact 106 px row described above.
-- The knobs show `off` at 0 and the rate at 1 to 99; 99 is instant.
-- The section copy and paste lists include both fade parameters for the
+- Spectral morph LFO card: the compact 106 px row described above.
+- Knobs: `off` at 0 and the rate at 1 to 99. 99 is instant.
+- Section copy and paste: lists include both fade parameters for the
   amplitude, feedback, detune and spectral LFOs.
-- The op lfos page no longer repeats the oscillator. The oscillator is on
-  the op envs page; the op lfos page carries the three LFO cards.
-- The card heights and the page grids are re-measured, and the snapshot goldens
+- Op lfos page: no longer repeats the oscillator. The oscillator is on
+  the op envs page. The op lfos page carries the three LFO cards.
+- Card heights and page grids are re-measured, and the snapshot goldens
   are regenerated deliberately.
 
 ## Verification
@@ -161,9 +161,9 @@ The operator cards keep the four knobs in one row with the wave select and
   computed tick.
 - **Depth fade:** the modulation depth rises linearly and reaches the target on
   the computed tick, and a negative depth keeps its sign.
-- **Synchronisation:** equal values end on the same tick; a shorter second value
+- **Synchronisation:** equal values end on the same tick. A shorter second value
   ends earlier by the computed difference.
-- **Phase reset:** a fade-on note resets the phase; a fade-off note keeps the
+- **Phase reset:** a fade-on note resets the phase. A fade-off note keeps the
   free run.
 - **Pitch and spectral:** the part pitch LFO and one operator spectral LFO are
   checked as well as the operator LFOs.
@@ -205,15 +205,15 @@ off.
 ## Limits
 
 - The fade is linear, whilst the envelope stages use a one-pole. The end times
-  match the envelope's 99 percent time; the curves do not.
+  match the envelope's 99 percent time. The curves do not.
 - The rate fade starts at 0 Hz, so the first cycle stretches. A patch that wants
   the LFO at its target speed from the first tick leaves the fade off.
 - The 0, 1 and 2 values share the same table time, because the envelope rate
   table does.
 - The fade is per note. A held legato note that retriggers the trigger restarts
-  the fade; a note without a new trigger does not.
+  the fade. A note without a new trigger does not.
 - The time is carried by the value under each knob. The shared table decides the
-  order; the numbers carry the separation.
+  order. The numbers carry the separation.
 
 ## Risks and fallback
 
@@ -226,4 +226,4 @@ off.
   compact 106 px row. If a card still clips, take the height from the empty tail
   of the neighbour card rather than shrinking the value text.
 - **Rollback:** remove the two parameters and the trigger input, and restore the
-  current `lfo` node; the presets load with the fades off either way.
+  current `lfo` node. The presets load with the fades off either way.

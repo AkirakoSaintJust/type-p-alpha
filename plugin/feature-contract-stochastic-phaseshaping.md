@@ -16,7 +16,7 @@
   2026-11-22 and the post-F table on 2026-11-24.
 - **Disposition:** shipped at 1×. The engine nodes, the 232 phase parameters, the
   editor page, the preset migration and the engine test are in the tree. The
-  shipped read is `P1_PHASE_READ=11`, the exact 1024-entry post-F table; it is
+  shipped read is `P1_PHASE_READ=11`, the exact 1024-entry post-F table. It is
   bit-exact against the F/segment read. The 2× read, the half-band decimator and
   the 16-sample alignment delay are not built. The measured cost and the join
   aliasing are recorded in the Evidence and Limits sections below.
@@ -24,10 +24,10 @@
 > **Current state (2026-11-25).** The manifest is 2,053 parameters with a
 > 994-value part block and preset version 19. The phase-map read is mode 11, the
 > exact 1024-entry post-F table. The earlier phase-map slice below records the
-> original 1× F/segment read and the v16 migration; the **post-F direct table**
+> original 1× F/segment read and the v16 migration. The **post-F direct table**
 > section near the end is the current read. Current minima on the 24-voice,
 > four-operator bench: static 66.1 ms against 81.5 ms baseline, worst 78.4 ms
-> against 83.5 ms; on the modern AVX2 build, static 67.6 ms against 77.3 ms and
+> against 83.5 ms. On the modern AVX2 build, static 67.6 ms against 77.3 ms and
 > worst 74.8 ms against 91.2 ms. The 2× path is still not built.
 
 ## Player outcome
@@ -155,7 +155,7 @@ read = table((y << 20) + (fm << 20))
 ```
 
 `F` and `G` are evaluated per sample, per operator, after the accumulator and
-before the FM offset. The order matters: the map sees the accumulated phase
+before the FM offset. The order changes the result: the map sees the accumulated phase
 before the FM and feedback sum, so a modulator cannot change the shape of the
 map it is feeding. The FM and feedback offsets are therefore not warped by the
 map. The mapped path is used for every wave, including the additive bank's
@@ -325,7 +325,7 @@ join changes one at a time, which is audible as an event rather than a new map.
 4. Swap `order[i]` and `order[j]`.
 
 With fewer than two active segments the event does nothing. `jump = 1` is the
-adjacent swap; a jump past the last position reflects back, so the
+adjacent swap. A jump past the last position reflects back, so the
 last-to-first wrap is gone. Larger values widen the swap
 without returning to a full permutation. A swap is discontinuous at the join,
 which is the inharmonicity, and the display draws it as a pink dashed vertical.
@@ -351,7 +351,7 @@ The envelope is the feedback envelope's shape:
 - `on`, three rates `r1..r3` 0..99, defaults 80, 60, 50;
 - three signed levels `l1..l3` -100..100, defaults 0;
 - release rate `rel` 0..99, default 80, and release level `rl` -100..100,
-  default 0;
+  default 0.
 - mode 0..3, default 1, with the signed `mod_env` semantics.
 
 The levels are absolute per-mille of the breakpoint field, so level 100 covers
@@ -389,7 +389,7 @@ with the rest.
 
 The per-target amounts are per part and operator. The key/velocity enables and the
 key-follow breakpoint are part parameters (`key_sens_on.pN`, `vel_sens_on.pN` and
-`breakpoint.pN`); changing them on one part does not move the other. The shared
+`breakpoint.pN`). Changing them on one part does not move the other. The shared
 macro target enum is unchanged.
 
 The velocity factor had an inert `p1_vel_scale`, because a divisor of 3,276,700
@@ -412,9 +412,9 @@ The measured 1× worst case before the post-F table was 2.01× the phase-off
 baseline: 24 voices, four operators on, 32 segments, the maximum event rates, both
 modulation sources, wave 14 and 1,000 blocks. The post-F table removes the
 per-sample segment lookup, so the current worst case is about 1.5× the baseline
-(the minimum of interleaved runs; the static map falls from 81.5 to 66.1 ms and
+(the minimum of interleaved runs. The static map falls from 81.5 to 66.1 ms and
 the worst from 83.5 to 78.4 ms in the baseline build). The 1.6× figure was the
-budget for the 2× design; the current 1× path leaves almost no room under it, so
+budget for the 2× design. The current 1× path leaves almost no room under it, so
 the 2× path is not built.
 
 The joins are step discontinuities, and the reason is that the table is
@@ -427,16 +427,16 @@ stays a future option if a listening test asks for it.
 
 The per-sample read is `q = F[x >> 2] << 2`, then the segment lookup and the
 segment interpolation. `q` is always a multiple of four, so a 1024-entry table
-indexed by `q >> 2` replaces the segment lookup exactly; the 4095 clamp uses one
+indexed by `q >> 2` replaces the segment lookup exactly. The 4095 clamp uses one
 tail entry, read with `pt[(q + 3) >> 2]`. The table depends on the segment
 layout, not on `F`, so a breakpoint sweep (the knob, the LFO, the envelope, key
 and velocity follow) does not rebuild it. It is rebuilt on segment, mask, drift,
 flip and reorder changes.
 
 The perceptual battery (`plugin/tests/phase_map_perceptual.cpp` and
-`phase_map_perceptual_compare.cpp`) renders 133 pre-seeded scenarios: waves 0,
-11, 12 and 13, notes 24–96, breakpoints 1–999, 1–32 segments, drift, flips and
-reorder at 2–20 Hz, the phase LFO at 0–20 Hz, the phase envelope, the wave-13
+`phase_map_perceptual_compare.cpp`) renders 140 pre-seeded scenarios: waves 0,
+11, 12, 13 and 14, notes 24–96, breakpoints 1–999, 1–32 segments, drift, flips and
+reorder at 2–20 Hz, the phase LFO at 0–20 Hz, the phase envelope, the wave-14
 morph and an automated morph sweep, note releases and chords. Each scenario
 starts from `Engine::reset()`, so the seed is the fixed `0x9E3779B9 + part*4`
 and the event sequence is reproducible across builds. The comparator first
@@ -453,25 +453,25 @@ The results are unambiguous:
 - the exact 4096-entry input-phase table (mode 1) is sample-identical;
 - the 1024-entry post-F table with interpolation (mode 10) is sample-identical,
   because its step is the 4-phase `q` grid and the interpolation fraction is
-  always zero;
+  always zero.
 - the 1024-entry post-F direct read (mode 11) is sample-identical and drops the
-  interpolation arithmetic;
+  interpolation arithmetic.
 - the 256/512 post-F tables (modes 7–9) fail. A reorder puts the intended step
-  between two table samples; the 512 linear read smears it by up to 900 phase
+  between two table samples. The 512 linear read smears it by up to 900 phase
   LSB (−25 dB null, 3.3 dB LSD at the 20 Hz reorder), which is the join itself,
-  not a stale table;
+  not a stale table.
 - the input-phase tables (modes 2–6) fail even earlier: at `bp = 1` the F knee
   compresses the input, and a 1024 linear table misses by up to 1795 LSB.
 
-Mode 11 is therefore the shipped read. It is bit-exact on all 133 scenarios and
+Mode 11 is therefore the shipped read. It is bit-exact on all 140 scenarios and
 all 17 engine tests. On the 24-voice, four-operator phase-map bench the static
 map falls from 81.5 to 66.1 ms and the worst case from 83.5 to 78.4 ms (minimum
-of six interleaved runs); on the modern AVX2 build the static figure falls from
+of six interleaved runs). On the modern AVX2 build the static figure falls from
 77.3 to 67.6 ms and the worst case from 91.2 to 74.8 ms (four runs). The table
 is 1025 `int16` per part. The phase-map state field is sized on its own
 (`18432 int16` for the two parts and the 4096 reference), and the oscillator,
 LFO, envelope and delay pools return to `10880 int16`. `P1_PHASE_READ` defaults
-to 11; modes 0 and 1 remain the current and exact references and 2–10 the
+to 11. Modes 0 and 1 remain the current and exact references and 2–10 the
 rejected candidates.
 
 
@@ -494,7 +494,7 @@ The strip has nine labels:
 `buildUi`, `buildPage`, `showTab` and the processor's `getUiPage`/`setUiPage`
 use the nine-page range. `kUiPageLayout` is 5. `buildPage` case 5 is the phase
 page, and cases 6, 7 and 8 call the three spectra pages. The stored `uiPage`
-migration for layout 3 and older keeps pages 0..3, maps 4→5, 5→6 and 6→7; layout 5
+migration for layout 3 and older keeps pages 0..3, maps 4→5, 5→6 and 6→7. Layout 5
 inserts `macros` at 1 and moves every later page up one. The phase-map layout
 constant is 4.
 
@@ -511,7 +511,7 @@ The page is one row of four 294 px columns, the same rhythm as `op lfos`:
 
 The rows are separated by 8 px, the column padding is 8 px, and the measured
 total is 669 px. The oscillator strip uses the operator copy and paste in the
-header; it has no separate oscillator copy and paste. If JUCE finds a clip, the
+header. It has no separate oscillator copy and paste. If JUCE finds a clip, the
 map loses pixels before the value text does.
 
 ### Controls
@@ -542,7 +542,7 @@ drag. It draws:
 - the fixed y boundaries as faint horizontal rules;
 - `F` as a faint `lineStrong` polyline;
 - the breakpoint as a pink vertical at the folded `xb`, and the phase dot as a
-  white 2 px dot at the newest voice;
+  white 2 px dot at the newest voice.
 - the caption `bp 0.500 · π`, the active and requested segment counts, and the
   locked count when it is above zero.
 
@@ -550,7 +550,7 @@ The snapshot is published per operator per part through three buffers with an at
 handoff, the same three-buffer pattern the scope and morph taps use. The writer owns
 one buffer, the reader owns another, and the middle index carries a new-data bit, so
 the writer never writes the buffer the UI is copying. The audio thread publishes on
-each core chunk; the UI timer samples the latest snapshot when it paints. The audio
+each core chunk. The UI timer samples the latest snapshot when it paints. The audio
 thread writes only the fixed snapshot: no allocation, lock or file access. The UI
 timer reads the latest snapshot and draws. It does not read engine internals.
 When `phase on` is off, the plot draws the neutral parameter geometry, not the
@@ -594,7 +594,7 @@ the audio change and were re-accepted in the same pass.
 ## Persistence
 
 > **This section records the phase-map slice (version 16).** The current preset
-> version is 18 and the current manifest/part counts are 2,053/994; see the
+> version is 19 and the current manifest/part counts are 2,053/994. See the
 > current-state box at the top. The counts and version below are the values at
 > this slice, kept as history.
 
@@ -680,15 +680,15 @@ render, and the aliasing limit is recorded below.
 | Other evidence | Result |
 | --- | --- |
 | `preset_smoke` | old versions load through the current version 19 remap; the part block is 994 values |
-| snapshots | 31 PNGs and the manifest; the two phase pages are new |
+| snapshots | 33 PNGs and the manifest; the two phase pages and the fx/mod pages are in the set |
 | manifest | 2,053 parameters and a 994-value part block |
-| suite | 17/17 local; the feature run passed Linux, Windows, macOS, TSan and CodeQL |
+| suite | 18/18 on Linux and 17/17 on Windows; the feature run also passed macOS, TSan and CodeQL |
 
 ### Existing checks
 
 - `engine_parity`: the phase-off reference is unchanged and the new parameter
   defaults do not move existing renders.
-- `preset_smoke`: versions 13, 14 and 15 load with the phase block appended; the
+- `preset_smoke`: versions 13, 14 and 15 load with the phase block appended. The
   current part count is 994 and the defaults are in place.
 - `editor_snapshot`: the copy/paste checks, the two new goldens and the follow
   target count changing from 15 to 19.
@@ -698,16 +698,16 @@ render, and the aliasing limit is recorded below.
 
 ### Gates and failure criteria
 
-- **CPU:** baseline 24 voices, four operators, phase off, 48 kHz; worst case 24
+- **CPU:** baseline 24 voices, four operators, phase off, 48 kHz. Worst case 24
   voices, four operators all on, 32 segments, the maximum event rates, 100% flip
   and reorder, both modulation sources, wave 14. Render 1,000 blocks and divide
-  by the baseline. The current read is about **1.5×** with the post-F table; the
+  by the baseline. The current read is about **1.5×** with the post-F table. The
   static map is 66.1 ms against 81.5 ms in the baseline build. The 1.6× gate was
-  the budget for the 2× design; the current 1× leaves almost no room, and the 2×
+  the budget for the 2× design. The current 1× leaves almost no room, and the 2×
   path is not shipped. The ratio is recorded rather than rounded down.
 - **Aliasing:** the 2× read and the half-band filter are not built, so the
   20.5–24 kHz fold-back is **unmeasured**. The joins are step discontinuities and
-  the feature does not claim a clean spectrum.
+  the feature does not promise a clean spectrum.
 - **Timing:** a mapped carrier and an unmapped modulator stay aligned at 1×
   because there is one read and no filter delay. The 16-sample alignment problem
   belongs to the unbuilt 2× path.
@@ -742,32 +742,32 @@ render, and the aliasing limit is recorded below.
 - **CPU.** The 2× path plus the filter was the original risk. The current 1× path
   measures about 1.5× the phase-off baseline, close to the 1.6× budget for 2×, so
   the 2× branch is not built. The per-sample read is now one F lookup and one
-  post-F table lookup; the table is rebuilt only on a segment, mask, drift, flip
+  post-F table lookup. The table is rebuilt only on a segment, mask, drift, flip
   or reorder change, not on a breakpoint sweep.
 - **Timing.** At 1× there is one read and no filter delay, so a mapped carrier
   and an unmapped modulator stay aligned. A future 2× path would need the
   per-voice alignment delay described in the 1× section above.
 - **Locks.** The full lab rule is in the node: the fixed waves build a mask from
   their mip-0 table, and wave 14 interpolates the a and b masks at the base
-  morph. A voice's live morph is not in the mask; that is the recorded limit.
+  morph. A voice's live morph is not in the mask. That is the recorded limit.
 - **Clicks.** Reorder jumps are intentional and no crossfade was added. If a
-  listening test asks for one, add a short crossfade at the join and re-measure;
-  the contract would then record the ramp.
+  listening test asks for one, add a short crossfade at the join and re-measure.
+  The contract would then record the ramp.
 - **Display.** If the 30 Hz snapshot reads as a stutter, raise the UI timer or
-  interpolate the dot; do not move the map computation to the UI thread.
+  interpolate the dot. Do not move the map computation to the UI thread.
 - **Migration.** The 116 values are appended, but the existing fade insertion
   uses the current target count. Set `v15Count` and `v14Count` as above and test
-  v15 before v14/v13; otherwise the fade slots land in the wrong place.
+  v15 before v14/v13. Otherwise the fade slots land in the wrong place.
 - **Rollback.** Remove the tab and the 232 phase parameters. A rollback after the
-  current version must keep preset version 19 and add a removal migration; do not
+  current version must keep preset version 19 and add a removal migration. Do not
   return the version byte to 15.
 
 ## Files
 
 - **Engine and generation:** `engine/gen/params.json`, `dsp.h`,
-  `type_p_alpha_dsp.c`, `tables.c`, `cc_map.h`, `engine/hal/p1_math.h`;
+  `type_p_alpha_dsp.c`, `tables.c`, `cc_map.h`, `engine/hal/p1_math.h`.
   `.dev/modules/nodes/phase_map/`, `phase_add/`, `phasor/` and
-  `macros/fm_op/macro.json`; `_frontend.py` for the macro fan-out.
+  `macros/fm_op/macro.json`. `_frontend.py` for the macro fan-out.
 - **Plugin and state:** `plugin/ui/ParamIDs.h`, `plugin/ui/Widgets.h/.cpp`,
   `plugin/juce/PluginProcessor.h/.cpp`, `plugin/juce/PluginEditor.h/.cpp`,
   `plugin/preset/PresetStore.hpp/.cpp`, `plugin/engine/PhaseMapLayout.h`.

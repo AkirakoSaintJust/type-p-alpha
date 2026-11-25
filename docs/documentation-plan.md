@@ -2,7 +2,7 @@
 
 Status: draft, 2026-11-20. This is the design note for the player manual and the
 developer document. The contracts in `plugin/` stay as the reference and the
-implementation evidence; the two documents stand on their own.
+implementation evidence. The two documents stand on their own.
 
 ## Registers
 
@@ -47,7 +47,7 @@ the patch cards are designed as figures rather than dropped in as screenshots.
 
 The reader needs the exact workings and has to be able to join the project. The
 document is a complete onboarding path, not a contract digest. The contracts are
-linked as evidence at the end of a section; the section stands alone.
+linked as evidence at the end of a section. The section stands alone.
 
 1. **Front matter.** The version line: commit, manifest count, `PRESET_VERSION`,
    state version. Who the document is for.
@@ -79,7 +79,7 @@ linked as evidence at the end of a section; the section stands alone.
 ## Visual system
 
 - **Display.** Zen Dots, and the vector wordmark once it exists. The manual cover
-  can use the wordmark at a large size; the panel header keeps the 30px mark.
+  can use the wordmark at a large size. The panel header keeps the 30px mark.
 - **Body.** Libre Franklin as the pilot choice. A low-contrast grotesque with an
   industrial and editorial lineage, a real text cut and a readable italic. It
   works at 17px on screen and 10.5pt on paper. Overpass is the screen alternative
@@ -103,17 +103,17 @@ linked as evidence at the end of a section; the section stands alone.
 
 ## Pipeline
 
-- Chapters live in `manual/chapters/` as Markdown. `manual/manifest.json` carries
+- Chapters are in `manual/chapters/` as Markdown. `manual/manifest.json` carries
   the order and the titles.
 - `manual/build.py` renders the chapters to HTML with the screen theme, and to a
   print HTML with the print theme. It calls a headless browser for the PDF.
-- The outputs go to `build/manual/`: `index.html`, `print.html`, `manual.pdf` and
+- Outputs: `build/manual/` holds `index.html`, `print.html`, `manual.pdf` and
   the figures. `build/` is git-ignored. The PDF is attached to the release.
-- The screen HTML is part of the project site. The PDF is a download.
-- The pilot uses Google Fonts so the pipeline is easy to test. The production
+- Screen HTML is part of the project site, and the PDF is a download.
+- Pilot builds use Google Fonts so the pipeline is easy to test. The production
   build self-hosts the OFL files, and the colophon and the site carry the
   notices.
-- The print PDF from Chromium does not support `@page` margin boxes, so the pilot
+- Chromium's print PDF does not support `@page` margin boxes, so the pilot
   has no running page numbers. The final pipeline can use WeasyPrint or a
   paged-media step for margin boxes, or accept a fixed footer.
 
@@ -131,9 +131,9 @@ document is stale. The prose is hand-written.
 
 ## Content rules
 
-Every claim carries a number, a patch or a link. No catchphrases, no stock
-photography, no gradients, no testimonials, no email gate and no fake urgency. The
-limitations sit next to the claims. The voice is the README's: first person,
+Every factual statement carries a number, a patch or a link. No catchphrases, no
+stock photography, no gradients, no testimonials, no email gate and no fake urgency.
+The limitations sit next to the statements. The voice is the README's: first person,
 concrete, British, with the hesitations kept.
 
 ## Pilot

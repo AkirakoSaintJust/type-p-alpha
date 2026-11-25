@@ -4,7 +4,7 @@
  * from protected points, locked spans never flip or move, the order stays a
  * permutation, drift keeps its bounds, the modulation sources move the
  * breakpoint, the envelope follows the part mode, and the two parts keep
- * separate maps. The 2x read is not built; the CPU figure here is the 1x one. */
+ * separate maps. The 2x read is not built. The CPU figure here is the 1x one. */
 #include <algorithm>
 #include <chrono>
 #include <cmath>
@@ -508,7 +508,7 @@ int main()
             }
             if (first >= 0 && second >= 0) {
                 /* jump 1 is an adjacent swap. The old wrap moved the last
-                 * position to the first; the reflected jump must not. */
+                 * position to the first. The reflected jump must not. */
                 if (std::abs(first - second) != 1)
                     local = false;
             }
@@ -696,7 +696,7 @@ int main()
               "fade 99 reaches full on the first tick");
     }
 
-    /* Poly retriggers on every note; mono keeps the phrase. */
+    /* Poly retriggers on every note. Mono keeps the phrase. */
     {
         p1::Engine engine;
         engine.reset();
@@ -772,7 +772,7 @@ int main()
         check(p0[2242] != p1[2242], "the two parts seed different PRNGs");
     }
 
-    /* Wave 13 builds a protected mask from a and b and the base morph. */
+    /* Wave 14 builds a protected mask from a and b and the base morph. */
     {
         p1::Engine engine;
         engine.reset();

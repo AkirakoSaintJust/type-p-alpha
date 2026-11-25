@@ -12,8 +12,8 @@
   feedback, filter, spectral and pan modulation envelopes are on the new stages,
   with their UI cards, graphs and the version 14 migration. The product targets are
   VST3, CLAP and standalone through JUCE. The CI plugin validators on Linux, Windows
-  and macOS are the evidence. The CI does not run the DAW matrix; the
-`linux_daws` test is available locally.
+  and macOS are the evidence. The CI does not run the DAW matrix. The
+  `linux_daws` test is available locally.
 
 ## Operator amplitude envelope
 
@@ -34,7 +34,7 @@ Both attack rates off means the attack is instant to full level.
 
 Modes:
 
-- **Sustain off:** the release starts at the end of decay2; a note-off earlier
+- **Sustain off:** the release starts at the end of decay2. A note-off earlier
   starts it at once.
 - **Sustain on:** hold the decay2 level until note-off, then release. Ignored when
   the decay2 level is 0, which behaves like sustain off.
@@ -147,16 +147,16 @@ The filter envelope's levels are 0..99 on the panel. The engine scales them by
 256 internally and divides the output back before the cutoff, because the
 one-pole enforces a minimum step of one unit. Without the scale, every slow
 rate finished in about 66 ms. The parameter values and the preset block are
-unchanged; the scale is an input on the `fenv` instance rather than a parameter,
+unchanged. The scale is an input on the `fenv` instance rather than a parameter,
 so the part record keeps its 981 parameters and the historical counts in
 `migratePartBank` still line up. (The current part block is 994 and preset version
-18 after the later slices.) `filter_envelope` checks that the
+19 after the later slices.) `filter_envelope` checks that the
 slowest rate is still moving after 100 blocks, that it has not snapped to the
 target after 1,000, that a fast rate is well advanced, and that 99 is instant.
 
 ## Limits and open work
 
-- The CI does not run the DAW matrix; the `linux_daws` test is available locally. The
+- The CI does not run the DAW matrix. The `linux_daws` test is available locally. The
   plugin validators are the automated evidence.
 
 ## Safe experiment and stop criterion

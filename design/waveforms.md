@@ -49,7 +49,7 @@ half held at zero: `1` for the first half cycle and `0` for the second. It joins
 pulse, square and saw as a nine-level band-limited mip set, so its harmonics stop
 below Nyquist as the note rises. The shape has a DC term by construction, like the
 rectified shapes and the pulse, and the analysis drops it. It sounds like a square
-with the even harmonics suppressed and a hollow, reedy edge.
+with a stronger fundamental, a weaker upper odd series, and a hollow, reedy edge.
 
 ## Rect tri
 
@@ -58,24 +58,24 @@ with the even harmonics suppressed and a hollow, reedy edge.
 point and folds positive. The table is Q15, 1024 samples, peak normalised, with the
 same phase convention as `rect sine`. It is a single table at value 9. The shape
 carries h2 and the higher even harmonics, so it sounds an octave above the phase
-rate with a soft edge. The pulse, square and saw at 10 to 12 keep the nine-level
-band-limited mip sets.
+rate with a soft edge. The pulse, half square, square and saw at 10 to 13 keep the
+nine-level band-limited mip sets.
 
 ## The generator
 
 The old generator is `firmware/tools/gen_wavetable.py` in the umetate history before
 the FM-1 scrub. The new one is `tools/gen_wavetable.py` in this repository. It keeps
-the quarter-sine table and the exact `sin_wave` formulas for the twelve current
-waves, adds the rectified triangle at 9 and the half square at 11, shifts the three
-band-limited waves, and writes `engine/gen/wavetable.h`.
+the quarter-sine table and the exact `sin_wave` formulas for the waves that came
+before, adds the rectified triangle at 9 and the half square at 11, shifts the
+band-limited waves to make room, and writes `engine/gen/wavetable.h`.
 
 The new table is 47,104 samples: ten single tables (0 to 9) and four nine-level
 mip sets (10 to 13), which places the band-limited pulse, half square, square and
 saw after the rectified triangle while the first ten tables keep their original
 order, so the current sine, triangle, half and rectified shapes render with the
 same samples and the new shapes are the only added tables. The base array is 14
-entries. The current twelve tables keep their samples, apart from the base offsets,
-and a test compares the old and new arrays before the new header is accepted.
+entries. The existing waves keep their samples, apart from the base offsets, and a
+test compares the old and new arrays before the new header is accepted.
 
 It is a host tool, and I'd like to keep it that way. The moment it needs a device
 tree or a firmware header, the waveform list stops being portable.

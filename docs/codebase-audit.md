@@ -9,7 +9,7 @@ rather keep it short enough that I actually read it.
 
 The engine is integer C and runs at 48 kHz. The plugin, the standalone app and the
 web build all wrap the same generated state, which is the whole reason the parity
-tests matter: if a wrapper and the core disagree, I want to know before a release
+tests run before a release: if a wrapper and the core disagree, I want to know then
 rather than after a bug report. The FM-1 tree stays in its archive tag and is out of
 scope, so anything that only makes sense for the old device belongs in that history.
 
@@ -60,7 +60,7 @@ a second implementation in a node.
 `engine/runtime/presets.h` and `presets.c` own the record layout, and the format is
 deliberately boring because it has to survive a decade of saves. A record is a
 version byte, a 33-byte name field, the body and a CRC-32, and an empty slot is
-`0xFF`. The current version is 17, the part record holds 991 values, the multi
+`0xFF`. The current version is 19, the part record holds 994 values, the multi
 record carries the macro block, and the library magic is `P1LIB3`. A part or patch
 name holds 32 characters. If you change the layout, bump the version and write the
 migration in the same commit, because the CRC will not save you from a mismatched
@@ -139,8 +139,8 @@ change should happen, so a raw colour in a page is a bug rather than a style cho
 
 `plugin/ui/Widgets.h` and `Widgets.cpp` hold the shared controls and the bridge
 between the APVTS integers and the panel readouts. `formatParamValue` and
-`parseParamValue` are the pair that matters, because the host text, the panel values
-and the typed values all pass through them. A one-way formatter is easy, and the
+`parseParamValue` carry the round trip, because the host text, the panel values and
+the typed values all pass through them. A one-way formatter is easy, and the
 round trip is where the CLAP validator finds you, so the pair belongs together in the
 same file.
 
@@ -197,7 +197,7 @@ one-line functions and let the compiler catch the misspelt id.
 | `spectral.cpp` | Check the additive spectrum, morph, morph envelope and morph LFO. |
 | `spectral_bench.cpp` | Measure the spectral table generation and the engine block cost. |
 | `rate_bridge_test.cpp` | Check the resampler latency and spectral behaviour. |
-| `preset_smoke.cpp` | Check the current record, the 32-character name, the `P1LIB3` library and the old part and multi records, including the version 17 to 18 key-follow append. |
+| `preset_smoke.cpp` | Check the current record, the 32-character name, the `P1LIB3` library and the old part and multi records, including the version 17 to 18 key-follow append and the 18 to 19 value remap. |
 | `plugin_smoke.cpp` | Check state restore, the global library, automation, the 48 kHz bridge and a chord. |
 | `plugin_stability.cpp` | Stress every parameter, polyphony, MIDI storms and truncated state. |
 | `editor_snapshot.cpp` | Render the pages, dialogs, long name, section paste and half-size frame. |
@@ -245,7 +245,7 @@ version 19.
 The 2026-10 cleanup removed the FM-1 migration maps, the old 146, 160 and 179 part
 layouts, the 16-byte name reader, the `P1LIB1` loader and the duplicated list and
 card header machinery. The tree then had one part layout, one multi layout and one
-`P1LIB2` magic; the library magic is `P1LIB3` now, and a pre-`P1LIB2` library is not
+`P1LIB2` magic. The library magic is `P1LIB3` now, and a pre-`P1LIB2` library is not
 read by the plugin. The removed
 symbols and the old tests are in git history, which is the right place for a list
 that no longer describes the current tree. I wrote the removed table once, read it

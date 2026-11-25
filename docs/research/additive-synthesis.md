@@ -158,8 +158,8 @@ how the player edits it and how much of it reaches the host.
 ### Raw harmonic levels
 
 One host parameter per harmonic gives exact control, so sixteen levels per
-operator is 64 per part and 128 in the manifest, and 32 levels is 256. The
-current part block is 228 parameters and the manifest is 470, so the raw form
+operator is 64 per part and 128 in the manifest, and 32 levels is 256. At that
+study the part block was 228 parameters and the manifest was 470, so the raw form
 grows them to 356 and 598 for 16 levels, or 484 and 726 for 32, and the part
 record grows by 256 or 512 bytes.
 
@@ -433,7 +433,7 @@ show every eighth harmonic.
 I'd recommend 64 harmonics with 256-sample tables and seven mips as the default,
 because it keeps polyphony and the edit latency and leaves the worst-case
 generation under the control block, at the cost of harmonic 128 in the 65-128
-range. If that harmonic matters, use 512-sample tables and spread the generation,
+range. If you need that harmonic, use 512-sample tables and spread the generation,
 or keep the two ranges and accept the silent top harmonic.
 
 ## Remaining experiments

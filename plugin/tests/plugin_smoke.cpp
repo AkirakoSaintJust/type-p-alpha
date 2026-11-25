@@ -275,7 +275,7 @@ int main()
     }
     {
         /* A mono host must hear both sides of the pan. The 48 kHz path writes the
-         * engine's two channels directly; the bridge path needs a real second
+         * engine's two channels directly. The bridge path needs a real second
          * pointer rather than aliasing the mono buffer. */
         const auto renderPan = [](double rate, int pan, int channels) {
             auto instance = std::make_unique<TypePAlphaAudioProcessor>();
@@ -956,7 +956,7 @@ int main()
 
     {
         /* The phase display reads a published copy, not engine state. A fresh
-         * processor has no map; a held note with phase.on builds one and the
+         * processor has no map. A held note with phase.on builds one and the
          * newest voice supplies the live dot. */
         auto phase = std::make_unique<TypePAlphaAudioProcessor>();
         phase->setRateAndBufferSizeDetails(48000.0, kFrames);

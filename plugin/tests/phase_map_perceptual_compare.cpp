@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: GPL-3.0-only */
 /* Compare two phase_map perceptual dumps. The reference is the current F/SEG
- * read (mode 0); each candidate is a direct-read table. The comparator first
+ * read (mode 0). Each candidate is a direct-read table. The comparator first
  * requires the map geometry and the stochastic timeline to be identical, and
  * the exact 4096 table (mode 1) to be sample-identical. It then measures, per
  * scenario:
@@ -11,7 +11,7 @@
  *   - 5 ms RMS and peak envelopes, attack and release times
  *   - global RMS, peak and a null-depth figure
  *
- * The gates are the ones in the phase-map contract; a candidate that misses
+ * The gates are the ones in the phase-map contract. A candidate that misses
  * any of them fails. The output lists the worst scenario for each metric so a
  * failure is easy to trace. */
 #include <algorithm>
@@ -32,7 +32,7 @@ constexpr int kHop = 1024;
 constexpr int kEnvBlock = 240;   /* 5 ms at 48 kHz */
 
 /* The perceptual gate. The spectral and envelope limits are the contract
- * limits; the null depth is a sanity floor, not a substitute for them. */
+ * limits. The null depth is a sanity floor, not a substitute for them. */
 constexpr double kLsdMax = 0.50;
 constexpr double kLsdP95 = 0.25;
 constexpr double kBandMax = 0.50;
@@ -578,7 +578,7 @@ Metrics compareScenario(const Scenario& s, const std::vector<int32_t>& ref,
         m.flatness = std::max(m.flatness, std::abs(cf.flatness - rf.flatness));
     }
 
-    /* The LSD pass. Re-run the spectra with the same frame grid; the frame
+    /* The LSD pass. Re-run the spectra with the same frame grid. The frame
      * powers are cheap compared with the FFT and this keeps the first pass
      * focused on the summary. */
     {

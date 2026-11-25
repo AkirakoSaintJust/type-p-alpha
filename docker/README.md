@@ -16,7 +16,7 @@ why neither one builds in a container.
 | macOS arm native | `macos-15` | AppleClang | arm64 |
 
 The modern variants are `-DP1_MODERN=ON` (or `windows/build.ps1 -Modern`). The
-baseline remains SSE2/NEON; there is no AVX1 tier and no runtime dispatch.
+baseline remains SSE2/NEON. There is no AVX1 tier and no runtime dispatch.
 
 ## Linux
 
@@ -158,5 +158,5 @@ configuration.
 CI runs ThreadSanitizer over `engine_parity`, `preset_smoke` and `rate_bridge`,
 then AddressSanitizer and UndefinedBehaviorSanitizer over the full test set. The
 editor snapshot runs with LeakSanitizer off because JUCE keeps its global
-allocations until process exit; the memory and undefined-behaviour checks still
+allocations until process exit. The memory and undefined-behaviour checks still
 run for it.

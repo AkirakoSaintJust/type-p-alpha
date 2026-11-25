@@ -13,7 +13,7 @@
  *   9  the 512-linear post-F table
  *  10  the 1024-linear post-F table
  *  11  the 1024-entry exact post-F table (q is 4-phase quantised)
- * Modes 1-6 are indexed by input phase; modes 7-11 are indexed by the post-F
+ * Modes 1-6 are indexed by input phase. Modes 7-11 are indexed by the post-F
  * q, so they follow a compressed breakpoint instead of undersampling it.
  * The node derives the same values from the same switch. P1_PM_WORDS_EXPECTED
  * is set by CMake so a mismatch fails the build instead of silently reading

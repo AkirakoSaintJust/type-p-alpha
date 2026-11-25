@@ -103,7 +103,7 @@ public:
     void setMacroName(int index, const juce::String& name);
     double macroEffectiveValue(int index) const;
     /* What a macro destination does to one parameter right now. The stored value
-     * stays in the parameter; `effective` is the raw value the engine receives,
+     * stays in the parameter. The `effective` value is the raw value the engine receives,
      * which differs whenever a macro with a range deviates from its knob. */
     struct MacroFeedback {
         bool targeted = false;

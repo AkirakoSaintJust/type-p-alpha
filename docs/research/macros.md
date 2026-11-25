@@ -88,7 +88,7 @@ difference the manual names: the macro knob has to be turned to produce a value.
 knob can be moved by hand, by another source such as an LFO, by DAW automation or by a
 MIDI mapping, so a macro can itself be modulated.
 
-The destination bound lives in the matrix rather than in the destination. A row carries
+The destination bound is in the matrix rather than in the destination. A row carries
 the source, a `bipolar` switch, a `stereo` switch, a `morph` curve, an amount and a
 destination, and a click on the row opens a remap curve for the route. Clicking the row
 number replaces it with an X and bypasses the route, so a macro can reach any parameter,
@@ -159,7 +159,7 @@ somewhere to sit without a ninth tab.
 A direct macro needs five parameters, which are the value, the destination, `left`,
 `right` and the curve, whilst a matrix-style route needs two per route, destination
 and signed amount, plus one value per macro. The table below puts the totals against
-the current manifest.
+the manifest at this study.
 
 | Shape | Parameters | Manifest total |
 | --- | --- | --- |
@@ -172,8 +172,8 @@ the current manifest.
 At this study the part record was 981 values, so 25 more is a small change to the record and a
 version 17 migration, whilst the 85-value layered form is a different proposition and
 would be the largest single addition to the part block since the spectra. (The
-current record is 994 and preset version 18, and version 18 later appended the three
-key-follow rows.)
+current record is 994 and preset version 19, and version 18 later appended the
+three key-follow rows.)
 
 ## Recommendation
 

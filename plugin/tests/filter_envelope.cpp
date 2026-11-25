@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: GPL-3.0-only */
 /* Filter envelope rate response: the slow settings must stay slow. The
- * envelope's levels are 0..99, so the engine scales them internally by 256;
- * without that scale the one-pole's one-unit minimum step made every rate
+ * envelope's levels are 0..99, so the engine scales them internally by 256.
+ * Without that scale the one-pole's one-unit minimum step made every rate
  * finish in about 66 ms. */
 #include <cstdint>
 #include <cstdio>

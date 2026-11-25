@@ -40,10 +40,11 @@ the per-operator split, the three LFO families and their evidence.
 - **Platform/API/HAL changes:** none, because the engine stays integer C and every new
   node is a control-rate body of an existing shape.
 - **Persistence/version impact:** the per-operator split moved the envelope and LFO
-  parameters into each operator. The current manifest is 1,744 parameters, the part
-  block is 865, and the preset chain maps older records onto the current block, so a
+  parameters into each operator. At this slice the manifest was 1,744 parameters and
+  the part block was 865. The current totals are 2,053 parameters and a 994-value
+  part block. The preset chain maps older records onto the current block, so a
   pre-change library loads with defaults for the added tail. The fade pairs add an
-  index map inside the block; see the fade contract.
+  index map inside the block. See the fade contract.
 - **MIDI/clock impact:** none, since the new parameters are host-automatable and stay
   out of the default CC map.
 
@@ -114,7 +115,7 @@ outputs 0 whilst a flat envelope outputs 0, so the existing render stays exact.
   `mod_env` states replace one shared state per voice, and each operator adds three
   LFO states, so the per-operator split grows the voice state by 42 `int32_t`
   fields, 4,032 bytes at 24 voices. The fade levels and steps add four `uint32_t`
-  per LFO instance; the fade contract records that state.
+  per LFO instance. The fade contract records that state.
 - **Overflow/overload policy:** the feedback LFO is Q15 and the feedback level is
   clamped to 0..32767, the detune LFO is Q15 and the pitch sum is clamped, and the
   existing peak-bound tests cover the extremes.
@@ -123,8 +124,8 @@ outputs 0 whilst a flat envelope outputs 0, so the existing render stays exact.
 
 ## Files and interfaces
 
-- **Engine:** `modules/nodes/fb_tap/node.json` and `node.c`,
-  `modules/macros/fm_op/macro.json`, `synth/patch.json`, and the regenerated
+- **Engine:** `.dev/modules/nodes/fb_tap/node.json` and `node.c`,
+  `.dev/modules/macros/fm_op/macro.json`, `synth/patch.json`, and the regenerated
   `engine/gen/*`.
 - **Editor:** `plugin/ui/ParamIDs.h`, `plugin/juce/Pages.h`,
   `plugin/juce/PagesOperators.cpp`, `plugin/juce/PluginEditor.cpp`,

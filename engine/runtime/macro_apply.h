@@ -5,7 +5,7 @@
 
 #include "macro_target_ids.h"
 
-/* The carrier masks live in the generated routing table. The engine compiles it as
+/* The carrier masks are in the generated routing table. The engine compiles it as
  * C, so the C++ tests need the C linkage. */
 #ifdef __cplusplus
 extern "C" {

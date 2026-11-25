@@ -896,7 +896,7 @@ int main(int argc, char** argv)
                 parameter->setValueNotifyingHost(
                     parameter->convertTo0to1(value));
         };
-        p1editor->applyAlgorithm(7);
+        p1editor->applyAlgorithm(9);
         setRing("ring1_on.p0", 1.0f);
         setRing("ring1_level.p0", 60.0f);
         fill();
@@ -904,9 +904,9 @@ int main(int argc, char** argv)
                  *editor,
                  directory.getChildFile("editor-part-params-ringmod.png")) &&
              ok;
-        /* Algorithm 5 has a middle carrier in both pairs. Both pairs on must
+        /* Algorithm 6 has a middle carrier in both pairs. Both pairs on must
          * still draw one direct arrow from that carrier in the header. */
-        p1editor->applyAlgorithm(5);
+        p1editor->applyAlgorithm(6);
         setRing("ring2_on.p0", 1.0f);
         fill();
         ok = saveSnapshot(

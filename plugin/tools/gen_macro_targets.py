@@ -240,7 +240,7 @@ def main() -> int:
     )
 
     # The operator LFOs are per voice, except the phase LFO, which holds one
-    # state per part. The engine owns the per-voice rates; the phase LFO rate
+    # state per part. The engine owns the per-voice rates. The phase LFO rate
     # stays in the part-level layer.
     lfo_rate_ids = sorted(
         {
@@ -254,7 +254,7 @@ def main() -> int:
         }
     )
 
-    # The LFO depths are per voice for the operator LFOs; the phase LFO depth
+    # The LFO depths are per voice for the operator LFOs. The phase LFO depth
     # stays part-level with its rate.
     lfo_depth_ids = sorted(
         {

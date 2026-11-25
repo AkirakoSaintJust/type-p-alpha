@@ -26,7 +26,7 @@ Further research:
   operator spectra, table generation and control-rate costs.
 - [Stochastic phase shaping](stochastic-phaseshaping.md): the Phase Transfer
   Lab's breakpoint, drifting segments, flips and reordering, which shipped as the
-  per-operator phase map at 1× with the exact 1024-entry post-F table; the 2× path
+  per-operator phase map at 1× with the exact 1024-entry post-F table. The 2× path
   was not built.
 - [Macros in the Prophecy, Vital and Pigments](macros.md): the five performance
   knobs with a destination window and curve, the two modulation-source designs,
@@ -87,7 +87,7 @@ magnitude, so the feedback amount is no longer static for the note.
 
 ## Negative feedback
 
-The term covers three different things, and the difference matters here.
+The term covers three different things, and the three meanings behave differently.
 
 In an amplifier, negative feedback subtracts a fraction of the output from the
 input, which lowers the gain and the distortion, and the residual distortion is

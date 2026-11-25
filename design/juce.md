@@ -141,7 +141,7 @@ Every page fills the same height:
   paste and mute in the header. The phase LFO uses the compact 22 px row. The
   phase card puts 4 px between its two knob rows and the phase envelope puts
   2 px between its rows. The map is a read-only
-  `P1PhaseMap` fed by the 30 Hz `PhaseMapSnapshot`; it draws the composed segments,
+  `P1PhaseMap` fed by the 30 Hz `PhaseMapSnapshot`. It draws the composed segments,
   the locks, the order jumps, the faint `F`, the breakpoint and the phase dot.
   When `on` is off, the map draws the neutral parameter geometry and the live
   dot disappears.
@@ -173,7 +173,7 @@ The current layout has nine tabs: patch settings at 0, macros at 1, part params 
 the processor remaps the stored `uiPage` when an old state restores. A four-tab
 state maps 1 to 2, 2 to 3 and 3 to 1. A six-tab state maps the mod page from 5 to
 6. A seven-tab state maps 4 to 5, 5 to 6 and 6 to 7. Layout 5 inserts `macros` at
-1 and moves every later page up one; the phase-map insertion layout is 4. The
+1 and moves every later page up one. The phase-map insertion layout is 4. The
 `uiPageLayout` property is now 5.
 
 ## Header
@@ -265,7 +265,7 @@ down, written to the members the group and mask select, and the release leaves t
 result in place, so repeated gestures never compound the same curve. Tilt up is the
 reverse tilt, with the highs louder and the lows quieter, and tilt down is the
 normal tilt, with the lows louder and the highs quieter. The
-`load spectrum template...` button opens the thirteen wave names and writes that
+`load spectrum template...` button opens the fourteen wave names and writes that
 analysis into the row without changing the waveform.
 
 The spectrum card is the most complicated control in the panel, and the selection
@@ -279,8 +279,8 @@ so a rate of 99 has no horizontal run and reads as vertical whatever its target
 level, whilst the usual settings still fill the graph.
 
 The wave select lists the fourteen names in `waveforms.md` in stored order.
-`rect tri` is value 9, `pulse`, `square` and `saw` are 10 to 12, and `spectrum` is
-13. The `wave` display reads the stored value.
+`rect tri` is value 9, `pulse`, `half square`, `square` and `saw` are 10 to 13,
+and `spectrum` is 14. The `wave` display reads the stored value.
 
 List dialogs fill the dialog body with 24px slot rows. Use a thin scrollbar, and
 keep names at the preset record limit of 32 characters. The multi-patch library
@@ -310,15 +310,15 @@ written by the audio thread, with no allocation, locks or file access on the aud
 thread, and the visualisers are optional, so they must degrade to a flat line when
 the host disables them.
 
-The timer is change-gated. Each phase-map view hashes the snapshot it would draw;
-the envelope views hash their rates, levels, mode and start values; the scope and
-spectrogram setters compare the incoming buffer; the wave preview and spectrum
+The timer is change-gated. Each phase-map view hashes the snapshot it would draw.
+The envelope views hash their rates, levels, mode and start values. The scope and
+spectrogram setters compare the incoming buffer. The wave preview and spectrum
 display hash their parameters. A static or silent widget skips the repaint, and a
 changing phase map still repaints at most at the 30 Hz timer rate, never at the
 220 Hz stochastic event rate. `p1_ui_frame_bench` records the current frame cost:
 scope ~190-200 µs, spectrogram ~17 µs, full phase page ~11.5 ms and spectra page
-~4.1 ms. The full-page cost is knob and text rasterisation, not a vector loop;
-the modern AVX2 build is not faster there. A whole-page image cache is not used
+~4.1 ms. The full-page cost is knob and text rasterisation, not a vector loop.
+The modern AVX2 build is not faster there. A whole-page image cache is not used
 because every knob drag or live update would invalidate it.
 
 ## Parameters
@@ -368,8 +368,8 @@ the input and the core rate untouched.
 
 ## Open items
 
-- The brand font licence is no longer a blocker. The wordmark is all Zen Dots, and
+- Brand font licence: no longer a blocker. The wordmark is all Zen Dots, and
   Digital Desolation Plus is not used or bundled.
-- The macOS DAW matrix needs a Mac with two hosts before it can run.
-- The in-plugin 64 multi and 128 part banks are in. SysEx import is not part
+- macOS DAW matrix: needs a Mac with two hosts before it can run.
+- In-plugin 64 multi and 128 part banks: in. SysEx import is not part
   of this product.

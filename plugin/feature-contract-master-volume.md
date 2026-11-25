@@ -37,13 +37,13 @@
   library, because a master volume belongs to the instance rather than the patch,
   and the manifest stays at 1,976 parameters with a part block of 981. (The
   current totals are 2,053 parameters and a 994-value part block, preset version
-  18; 1,976/981 are the master-volume slice.)
+  19. 1,976/981 are the master-volume slice.)
 - **MIDI/clock impact:** none. The fader is a host parameter with no CC mapping.
 
 ## Parameter and event semantics
 
 - `output_volume` is 0 to 1000, default 750, with the `volume` display form, and the
-  law is in [`../juce/VolumeLaw.h`](../juce/VolumeLaw.h). Position 0 gives a gain of
+  law is in [`juce/VolumeLaw.h`](juce/VolumeLaw.h). Position 0 gives a gain of
   0, positions 1 to 750 give `-60 * (750 - p) / 750` dB, and positions 751 to 1000
   give `12 * ((p - 750) / 250)^2` dB. At 750 the dB value is 0.0 rather than a
   negative zero, so the text reads `0.0 dB`.

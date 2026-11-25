@@ -116,11 +116,11 @@ flip when the sum crosses zero.
 
 ## Files and interfaces
 
-- `modules/nodes/fb_tap/node.json` and `node.c`, for the signed level and the
+- `.dev/modules/nodes/fb_tap/node.json` and `node.c`, for the signed level and the
   absolute-value path.
-- `modules/nodes/mod_env/node.json`, for the signed feedback envelope.
-- `modules/nodes/lfo/node.json`, for the feedback LFO.
-- `modules/macros/fm_op/macro.json`, for the per-operator wiring.
+- `.dev/modules/nodes/mod_env/node.json`, for the signed feedback envelope.
+- `.dev/modules/nodes/lfo/node.json`, for the feedback LFO.
+- `.dev/modules/macros/fm_op/macro.json`, for the per-operator wiring.
 - `synth/patch.json`, for the ranges, the display and the init values.
 - `engine/gen/*`, regenerated.
 - `plugin/preset/part_migration.h` and `PresetStore.hpp`, for the older records.
@@ -135,11 +135,11 @@ and no malloc, float, file access or display enters the audio path.
 
 ## Editor control map
 
-- The operator card carries the bipolar feedback knob with the `pct_bip` display.
-- The op envs page carries the feedback envelope card: the on switch in the
+- Operator card: the bipolar feedback knob with the `pct_bip` display.
+- Op envs page: the feedback envelope card, with the on switch in the
   header, the graph, three rates and signed levels, the release rate and level,
   and the mode.
-- The op lfos page carries the feedback LFO card: rate, depth, wave, mode,
+- Op lfos page: the feedback LFO card, with rate, depth, wave, mode,
   the rate and depth fades and their shared graph.
 
 ## Verification

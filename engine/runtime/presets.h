@@ -14,7 +14,7 @@
 #define PRESET_NAME_LEN 33u
 #define PRESET_VERSION 19u
 /* The version that introduced the current cutoff law. A record older than this
- * needs `cutoffOldToNew`; v7 and later already carry the new position. */
+ * needs `cutoffOldToNew`. Version 7 and later already carry the new position. */
 #define PRESET_CUTOFF_LAW_VERSION 7u
 #define PRESET_EMPTY 0xFFu
 /* The logical slot counts: 128 single-part slots + 64 multi-patch slots. Each bank is

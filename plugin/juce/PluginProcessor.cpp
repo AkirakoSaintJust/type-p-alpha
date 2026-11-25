@@ -817,7 +817,7 @@ void TypePAlphaAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
          * bridge is about to render the tick it belongs to. At 96 and 192 kHz a
          * block generates fewer core frames than host frames, so an event can
          * fall in a tick that the next block renders. Those wait in
-         * `scheduled_`; this block applies any that are still there first. */
+         * `scheduled_`. This block applies any that are still there first. */
         chunkNotes_.reset();
         if (nextScheduled_ < scheduled_.size())
             feedScheduled(std::numeric_limits<int64_t>::max());
@@ -959,7 +959,7 @@ LibrarySaveResult TypePAlphaAudioProcessor::saveLibrary()
     /* The read-merge-write must be one transaction across processes, or a save
      * from the standalone and one from the DAW can each read the same revision
      * and the second replaces the first's slot. The wait is unbounded because the
-     * transaction is short and the OS releases the lock if a holder dies; JUCE's
+     * transaction is short and the OS releases the lock if a holder dies. JUCE's
      * POSIX path reports a timed-out attempt as success, so a finite timeout
      * would not give the exclusion this needs. A POSIX fcntl lock is per process,
      * so the process-wide lock comes first for two plugin instances in one host. */

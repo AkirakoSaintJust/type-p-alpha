@@ -8170,7 +8170,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                 op4_phase_env_cv_x[v] = op4_phase_env_on[voice_part[v]] ? (int32_t)pm[P1_PE_LEVEL] : 0;
             }
         }
-        /* Per-part phase LFO. The pool is one per operator, indexed by the part; the
+        /* Per-part phase LFO. The pool is one per operator, indexed by the part. The
            first active voice on a part advances it once per control block and every
            voice reads the held value. The LFO free-runs, so a note does not reset its
            phase. The output is percent of the breakpoint field. */
@@ -8867,7 +8867,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                 op3_phase_env_cv_x[v] = op3_phase_env_on[voice_part[v]] ? (int32_t)pm[P1_PE_LEVEL] : 0;
             }
         }
-        /* Per-part phase LFO. The pool is one per operator, indexed by the part; the
+        /* Per-part phase LFO. The pool is one per operator, indexed by the part. The
            first active voice on a part advances it once per control block and every
            voice reads the held value. The LFO free-runs, so a note does not reset its
            phase. The output is percent of the breakpoint field. */
@@ -9564,7 +9564,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                 op2_phase_env_cv_x[v] = op2_phase_env_on[voice_part[v]] ? (int32_t)pm[P1_PE_LEVEL] : 0;
             }
         }
-        /* Per-part phase LFO. The pool is one per operator, indexed by the part; the
+        /* Per-part phase LFO. The pool is one per operator, indexed by the part. The
            first active voice on a part advances it once per control block and every
            voice reads the held value. The LFO free-runs, so a note does not reset its
            phase. The output is percent of the breakpoint field. */
@@ -10261,7 +10261,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                 op1_phase_env_cv_x[v] = op1_phase_env_on[voice_part[v]] ? (int32_t)pm[P1_PE_LEVEL] : 0;
             }
         }
-        /* Per-part phase LFO. The pool is one per operator, indexed by the part; the
+        /* Per-part phase LFO. The pool is one per operator, indexed by the part. The
            first active voice on a part advances it once per control block and every
            voice reads the held value. The LFO free-runs, so a note does not reset its
            phase. The output is percent of the breakpoint field. */
@@ -12078,7 +12078,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                 int32_t yi = y0 + (((y1 - y0) * (int32_t)fr) >> 2);
                 op4_phase_phase_x = (uint32_t)yi << 20;
             #elif P1_PHASE_READ == 11
-                /* q is a multiple of four; the only other value is the 4095 clamp. */
+                /* q is a multiple of four. The only other value is the 4095 clamp. */
                 uint32_t y = pt[(q + 3u) >> 2];
                 op4_phase_phase_x = y << 20;
             #endif
@@ -12163,7 +12163,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                sample and the previous one. The two-sample average is the OPM's
                `(o + Inp_last) >> Fl`; its zero at Nyquist damps the one-sample loop at the top
                of the band. The state stores the previous shaped sample. The body is inlined
-               four times into the same voice scope, so the intermediate lives in the state.
+               four times into the same voice scope, so the intermediate is in the state.
                While the tap is gated the state holds its last value, so the first samples after
                turning feedback up fade in from the previous setting. */
             int32_t op4_fb_audio_x = 0;
@@ -12874,7 +12874,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                 int32_t yi = y0 + (((y1 - y0) * (int32_t)fr) >> 2);
                 op3_phase_phase_x = (uint32_t)yi << 20;
             #elif P1_PHASE_READ == 11
-                /* q is a multiple of four; the only other value is the 4095 clamp. */
+                /* q is a multiple of four. The only other value is the 4095 clamp. */
                 uint32_t y = pt[(q + 3u) >> 2];
                 op3_phase_phase_x = y << 20;
             #endif
@@ -12959,7 +12959,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                sample and the previous one. The two-sample average is the OPM's
                `(o + Inp_last) >> Fl`; its zero at Nyquist damps the one-sample loop at the top
                of the band. The state stores the previous shaped sample. The body is inlined
-               four times into the same voice scope, so the intermediate lives in the state.
+               four times into the same voice scope, so the intermediate is in the state.
                While the tap is gated the state holds its last value, so the first samples after
                turning feedback up fade in from the previous setting. */
             int32_t op3_fb_audio_x = 0;
@@ -13670,7 +13670,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                 int32_t yi = y0 + (((y1 - y0) * (int32_t)fr) >> 2);
                 op2_phase_phase_x = (uint32_t)yi << 20;
             #elif P1_PHASE_READ == 11
-                /* q is a multiple of four; the only other value is the 4095 clamp. */
+                /* q is a multiple of four. The only other value is the 4095 clamp. */
                 uint32_t y = pt[(q + 3u) >> 2];
                 op2_phase_phase_x = y << 20;
             #endif
@@ -13755,7 +13755,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                sample and the previous one. The two-sample average is the OPM's
                `(o + Inp_last) >> Fl`; its zero at Nyquist damps the one-sample loop at the top
                of the band. The state stores the previous shaped sample. The body is inlined
-               four times into the same voice scope, so the intermediate lives in the state.
+               four times into the same voice scope, so the intermediate is in the state.
                While the tap is gated the state holds its last value, so the first samples after
                turning feedback up fade in from the previous setting. */
             int32_t op2_fb_audio_x = 0;
@@ -14466,7 +14466,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                 int32_t yi = y0 + (((y1 - y0) * (int32_t)fr) >> 2);
                 op1_phase_phase_x = (uint32_t)yi << 20;
             #elif P1_PHASE_READ == 11
-                /* q is a multiple of four; the only other value is the 4095 clamp. */
+                /* q is a multiple of four. The only other value is the 4095 clamp. */
                 uint32_t y = pt[(q + 3u) >> 2];
                 op1_phase_phase_x = y << 20;
             #endif
@@ -14551,7 +14551,7 @@ P1_DSP_API void type_p_alpha_render_voices_block(int32_t *bus, int32_t *bus_r, i
                sample and the previous one. The two-sample average is the OPM's
                `(o + Inp_last) >> Fl`; its zero at Nyquist damps the one-sample loop at the top
                of the band. The state stores the previous shaped sample. The body is inlined
-               four times into the same voice scope, so the intermediate lives in the state.
+               four times into the same voice scope, so the intermediate is in the state.
                While the tap is gated the state holds its last value, so the first samples after
                turning feedback up fade in from the previous setting. */
             int32_t op1_fb_audio_x = 0;

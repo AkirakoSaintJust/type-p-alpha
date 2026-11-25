@@ -16,7 +16,7 @@
 > **Current state (2026-11-25).** The manifest is now 2,053 parameters with a
 > 994-value part block and preset version 19. The 1,614/800 counts and the
 > version 7/state 5 notes below are the 48 kHz/filter-law slice and remain
-> historical; the later ringmod, phase-map, macro, key-follow and half-square
+> historical. The later ringmod, phase-map, macro, key-follow and half-square
 > slices moved the totals.
 
 ## Player outcome
@@ -184,17 +184,17 @@ float, file access or display enters the audio path.
   the bridge takes a second scratch pointer, so neither aliases the mono buffer.
 - **Target package check:** the VST3, CLAP and standalone targets build, and the
   editor snapshot test passes against the current goldens.
-- **Host timing and platform check:** the Windows clang-cl/lld build passes all 12
-  CTest entries, and the Linux build passes all 13, including the golden diff. The
-  Linux DAW matrix is not run in this tree, because it belongs to the Linux
-  container.
+- **Host timing and platform check:** the Windows clang-cl/lld build passed all 12
+  CTest entries at this slice. The Linux build passed all 13, including the golden
+  diff. The Linux DAW matrix is not run in this tree, because it belongs to the
+  Linux container.
 - **Sanitizer vector:** the Linux clang build with
-  `-DP1_SANITIZERS=address,undefined` in `build/linux-amd64-clang-sanitize` passes
-  all 13 CTest entries with leak detection on and `halt_on_error` set. The first run
-  found a signed overflow in the MIDI CC scaling in `engine/runtime/synth_midi.c`,
-  where `(max - min) * value` overflowed for the 20,000,000-unit rate range, and the
-  scale now multiplies in 64 bits. I'd rather fix the multiply than narrow the
-  range, since the range is part of the parameter.
+  `-DP1_SANITIZERS=address,undefined` in `build/linux-amd64-clang-sanitize` passed
+  all 13 CTest entries at this slice with leak detection on and `halt_on_error`
+  set. The first run found a signed overflow in the MIDI CC scaling in
+  `engine/runtime/synth_midi.c`, where `(max - min) * value` overflowed for the
+  20,000,000-unit rate range, and the scale now multiplies in 64 bits. I'd rather
+  fix the multiply than narrow the range, since the range is part of the parameter.
 - **Evidence artefact:** this contract, the regenerated 48 kHz reference, and the
   measured rate table in `rate_bridge_test`. The feedback research notes keep their
   44.1 kHz measurements as the historical evidence for that rate.

@@ -28,7 +28,7 @@ JUCE 9.0.5 and the pinned `clap-juce-extensions` commit, and the artefacts are
 under `build/plugin/juce/type_p_alpha_artefacts/Release/`.
 
 `-DP1_MODERN=ON` selects the AVX2 / arm-tuned build. The phase-map read is selected
-by `P1_PHASE_READ`; the default `11` is the exact 1024-entry post-F table, and `0`
+by `P1_PHASE_READ`. The default `11` is the exact 1024-entry post-F table, and `0`
 keeps the F/segment reference. `windows/build.ps1 -Modern` wraps the Windows modern
 build.
 
@@ -52,10 +52,10 @@ you go digging.
 - `phase_map` checks the per-operator map: the off path, `F`, the reflective fold,
   the locks, flips, reorder, drift, the LFO and envelope, per-part key and velocity
   follow, the trigger rule, the two parts, wave 14's spectral mask and the CPU
-  ratio. The map runs at 1×; the 2× read is not built. The shipped read is the
+  ratio. The map runs at 1×. The 2× read is not built. The shipped read is the
   exact 1024-entry post-F table.
 - `phase_map_perceptual` and `phase_map_perceptual_compare` are the pre-seeded
-  perceptual harness: 133 scenarios, per-frame spectral, band, harmonic, alias,
+  perceptual harness: 140 scenarios, per-frame spectral, band, harmonic, alias,
   envelope and attack/release metrics. They are manual/CI comparison tools rather
   than CTest gates.
 - `preset_smoke` checks the preset records, including the version 17 -> 18 append,
@@ -65,7 +65,7 @@ you go digging.
 - `plugin_editor_snapshot` renders every page, and `plugin_editor_snapshot_diff`
   compares the goldens.
 - `p1_ui_frame_bench` is the live editor frame benchmark (scope, spectrogram,
-  phase page, spectra page, phase-page component tree); it is built but not a
+  phase page, spectra page, phase-page component tree). It is built but not a
   timing gate.
 - `linux_daws` loads the VST3 and CLAP builds in Ardour and Carla.
   Use `ctest -E linux_daws` where those hosts are absent.
@@ -98,8 +98,8 @@ python3 plugin/tools/snapshot_check.py --update \
 
 ## Release
 
-The `.github/workflows/release.yml` builds the Linux and Windows artefacts on a
-tag and attaches the VST3, CLAP, standalone and source packages, and each package
-carries the `licences/` folder. The modern AVX2 Windows package is currently built
-with `windows/build.ps1 -Modern` and validated in CI; `release.yml` still attaches
-the baseline Windows package. Read `../LICENSING.md` before publishing.
+The `.github/workflows/release.yml` builds the Linux, Windows and macOS artefacts
+on a tag and attaches the VST3, CLAP, standalone and source packages, and each
+package carries the `licences/` folder. The modern AVX2 Windows package is built
+with `windows/build.ps1 -Modern`, and the workflow also attaches the modern
+universal macOS package. Read `../LICENSING.md` before publishing.

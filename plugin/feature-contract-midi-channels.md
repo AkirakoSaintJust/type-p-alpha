@@ -46,7 +46,7 @@
 - A note-on routes by the part channel and key zone. A note-off now routes by the
   part channel as well, so a part only releases voices it started.
 - Sustain is a per-channel flag with a per-channel deferred-note table. CC 123
-  releases the notes and the pedal on its own channel; the global panic still
+  releases the notes and the pedal on its own channel. The global panic still
   stops every part.
 - The plugin's same-chunk note tracking keys on channel and pitch, so a note-on on
   one channel does not hold a same-pitch release on another. The plugin defers the
@@ -76,8 +76,8 @@
 ## Limits
 
 - **The controller map is global.** A controller message sets the mapped parameter
-  whatever channel it arrives on. Notes, pedal, CC 123 and bend are channel-aware;
-  the mapped controllers are not.
+  whatever channel it arrives on. Notes, pedal, CC 123 and bend are channel-aware.
+  The mapped controllers are not.
 - **The wheel updates on the control tick.** A 32-sample step at 48 kHz is fast
   enough to hear as a glide, and it is not sample-accurate.
 - **A part on omni (`-1`) receives every channel.** An omni note-off releases every

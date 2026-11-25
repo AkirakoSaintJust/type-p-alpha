@@ -44,5 +44,5 @@ SHA-256.
 
 The gate needs a baseline that travels with the code, because a hash alone would
 tell you that something changed without telling you what changed. The PNGs are
-small (about 560 KB for the current set), and they give the reviewer a visual
-history in git.
+small for images (about 3.2 MB for the current set), and they give the reviewer a
+visual history in git.

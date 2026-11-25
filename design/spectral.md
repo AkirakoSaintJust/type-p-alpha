@@ -1,6 +1,6 @@
 # Spectral oscillators
 
-The engine carries thirteen waveform tables per operator. This feature adds a
+The engine carries fourteen waveform tables per operator. This feature adds a
 second oscillator mode: 64 harmonic levels per spectrum, two spectra per
 operator, and a morph between them. The mode is optional. It is off by default, so a patch
 that does not enable it renders through the existing waveform path without a
@@ -128,7 +128,7 @@ not vary per voice.
 ## Loading a spectrum template
 
 Each row has a `load spectrum template...` button beside its range select. The
-button opens the thirteen wave names, and choosing one analyses that wave's
+button opens the fourteen wave names, and choosing one analyses that wave's
 1024-sample mip-0 table into 64 harmonic magnitudes, drops the DC term, scales the
 largest harmonic to 99, and writes the result into that row's levels. A and b carry
 their own buttons, so either spectrum can start from a wave. The analysis is a
@@ -385,7 +385,7 @@ read path is cheap because the tables are shared across the voices, and the
 generation cost only appears when a level changes, which is exactly when the player
 expects a small pause.
 
-When `opN_waveform` is 13, the oscillator reads the additive bank. Values 0 to 12
+When `opN_waveform` is 14, the oscillator reads the additive bank. Values 0 to 13
 read the wave table, and the additive bank is not generated.
 
 ## Existing patches

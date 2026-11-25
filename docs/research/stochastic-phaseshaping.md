@@ -1,7 +1,7 @@
 # Stochastic phase shaping
 
 Status: written 2026-11-21, shipped note 2026-11-22. The Phase Transfer Lab was
-a browser instrument I built to answer the first line of research in the
+a browser instrument I made to answer the first line of research in the
 [README](../../README.md): where the breakpoint of a phase-distortion transfer
 function should sit, and whether phase distortion and phase modulation can share
 one phase map without extra machinery. It answered the first half in my own
@@ -16,7 +16,7 @@ evidence and the limits are in
 This note keeps the lab story and the questions it left open. The current state
 is the short section below.
 
-## What shipped
+## The shipped path
 
 The map sits per operator and per part, so four operators × two parts give eight
 instances shared by the voices on a part. It warps the operator's own accumulator
@@ -26,8 +26,8 @@ the map.
 - A 12-bit phase grid, a 1024-entry one-breakpoint `F`, and `G` with 1 to 32
   linear segments. The product caps the lab's 256 at 32, because the control tick
   and the pool layout stop being cheap above that.
-- A protected mask on every wave. The 13 fixed waves use their mip-0 table and
-  wave 13 interpolates the a and b masks at the base morph. A span that touches a
+- A protected mask on every wave. The 14 fixed waves use their mip-0 table and
+  wave 14 interpolates the a and b masks at the base morph. A span that touches a
   protected point is locked, so it never flips and never moves in a reorder.
 - Drift, flips and local reflected swaps on the control tick. The local swap
   replaced the lab's full permutation because it can respect the locks.
@@ -42,7 +42,7 @@ the map.
   unmeasured and is recorded as a limit.
 - 40 checks in `plugin/tests/phase_map.cpp`, including a bit-exact off path, the
   fold, locks, flips, reorder, drift, both modulation sources, key and velocity
-  follow, the trigger rule, the two parts, wave 13 and the CPU ratio.
+  follow, the trigger rule, the two parts, wave 14 and the CPU ratio.
 
 The range change is not cosmetic. At 20,000,000 raw the stochastic clocks fire
 almost every control block, which is why the measured worst case rose from 1.76×
@@ -60,7 +60,7 @@ piecewise-linear maps before it reaches a table:
 
 `F` is a single breakpoint that warps the phase. `G` cuts the warped phase into
 segments whose slopes wander, whose direction can flip, and whose order can
-change while the note sounds. The table is one of 13 single-cycle waves, so the
+change while the note sounds. The table is one of 14 single-cycle waves, so the
 oscillator never changes shape. Only the way the phase walks through it does.
 The lab was a browser instrument rather than a plugin, so I could change the
 table, the map and the stochastic rates whilst a note was sounding, and that is
@@ -239,17 +239,17 @@ a contract. Still, it is the note I have.
 
 The shipped map now reads through the exact 1024-entry post-F table
 (`P1_PHASE_READ=11`). `q = F[x >> 2] << 2` is always a multiple of four, so the
-table replaces the per-sample segment lookup exactly; the 4095 clamp uses one
-tail entry. It is bit-exact against the F/segment read on the 133-scenario
+table replaces the per-sample segment lookup exactly. The 4095 clamp uses one
+tail entry. It is bit-exact against the F/segment read on the 140-scenario
 pre-seeded perceptual battery and on the full engine suite.
 
 The table depends on the segment layout, not on `F`, so a breakpoint sweep (the
 knob, LFO, envelope, key/velocity follow) does not rebuild it. On the 24-voice,
 four-operator bench the static map falls from 81.5 to 66.1 ms and the worst case
-from 83.5 to 78.4 ms in the baseline build; the modern AVX2 build falls from 77.3
+from 83.5 to 78.4 ms in the baseline build. The modern AVX2 build falls from 77.3
 to 67.6 ms static and 91.2 to 74.8 ms worst (minimum of interleaved runs). The
 2.01×/40-check figures above are the original lab/1× F/segment slice, kept as
-history. The key follow/velocity enables and the breakpoint are per part now; the
+history. The key follow/velocity enables and the breakpoint are per part now. The
 per-target amounts were already per part.
 
 ## Sources

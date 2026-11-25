@@ -26,7 +26,7 @@
   window and spring controls, and choose `spectrum` in the wave select.
   The `op spectra mod` page carries the spectrum display, the morph, the morph
   envelope and the morph LFO.
-- **Sound and behaviour:** the wave select is the mode, so values 0 to 12 read the
+- **Sound and behaviour:** the wave select is the mode, so values 0 to 13 read the
   wave table and value 14 (`spectrum`) reads the additive bank, and the mode is saved.
   Because the wave select is the mode, choosing `spectrum` after an edit restores the
   stored pair, choosing any other wave keeps the pair for the next selection, and a
@@ -109,12 +109,12 @@ sample = ((1 - m) * tableA + m * tableB) >> 15;
 The envelope is an absolute 0..99 position: it starts at the morph knob, moves through
 its levels, and holds, loops or releases by mode. The envelope and LFO run per voice,
 the a and b tables are per part, and each spectrum has its own 64-harmonic range. The
-wave values are the mode: 13 reads the additive bank, and 0 to 12 read the wave table.
+wave values are the mode: 14 reads the additive bank, and 0 to 13 read the wave table.
 
 The editor writes a template into the chosen row only, 64 parameters at a time, and
 selecting a wave keeps the stored spectra, so the editor does not write the waveform
 when a template loads. The morph envelope switch or a morph LFO depth edit that ends
-away from zero writes the waveform as 13, so the modulation has something to move.
+away from zero writes the waveform as 14, so the modulation has something to move.
 
 ## Bounds and resources
 
@@ -153,8 +153,8 @@ away from zero writes the waveform as 13, so the modulation has something to mov
 
 - **Engine:** `tools/gen_wavetable.py`, `tools/audit_modules.py`,
   `engine/gen/wavetable.h`, `engine/gen/wave_harmonics.h`, `engine/hal/spectral.h`,
-  `synth/patch.json`, `modules/nodes/osc/node.json` and `node.c`,
-  `modules/macros/fm_op/macro.json` (local generator modules), `engine/gen/*` and
+  `synth/patch.json`, `.dev/modules/nodes/osc/node.json` and `node.c`,
+  `.dev/modules/macros/fm_op/macro.json` (local generator modules), `engine/gen/*` and
   `engine/runtime/presets.c`.
 - **Editor:** `plugin/ui/ParamIDs.h`, `plugin/ui/Widgets.h`,
   `plugin/ui/Widgets.cpp`, `plugin/ui/SpectrumAnalysis.cpp`,
@@ -203,13 +203,13 @@ away from zero writes the waveform as 13, so the modulation has something to mov
 
 ### Staged evidence
 
-1. **Wave list and rect tri:** in for waveform 0 to 12. The two headers, the `osc`
+1. **Wave list and rect tri:** in for waveform 0 to 12 at this stage. The two headers, the `osc`
    node limits, the waveform range, the wave names, the preset version and the
-   wavetable test are in. The Windows `ctest` run was 11 of 11 at this stage; the
-   current suite passes 17/17, and the table test confirms the current waves byte
-   for byte.
+   wavetable test are in. The Windows `ctest` run was 11 of 11 at this stage. The
+   suite now passes 18/18 on Linux and 17/17 on Windows, and the table test
+   confirms the current waves byte for byte.
 2. **Spectral engine:** in. The 64 levels per spectrum and the two range controls per
-   operator, the bank, the spectrum mode 13, the morph, the envelope and the LFO are
+   operator, the bank, the spectrum mode 13 at this stage, the morph, the envelope and the LFO are
    in. The 256-sample table reads with a 24-bit phase fraction, and the first pass used
    the 1024-sample shift and played the table four times too high. The Windows
    `ctest` run is 12 of 12. The cold commit and the crossfade direction are in, so a
@@ -269,12 +269,13 @@ construction rather than by a threaded test, and the contract records that limit
   rectified shapes lose DC, and the transform drops phase.
 - **Safe experiment and stop criterion:** the wave table and the analysis table are
   verified against the current header before the engine changes, and if the table
-  comparison fails, the header swap stops and the old 12-wave header stays.
+  comparison fails, the header swap stops and the pre-spectral 12-wave header stays.
 - **Smaller alternative:** ship the wave list with rect tri and no spectral oscillator
   if the table bank cannot meet the CPU or memory bound, which keeps every stored
   waveform honest, leaves the two pages out of the release, and avoids shipping a mode
   that would play the default table when the additive bank is not there. No silent
   fallback.
 - **Rollback:** restore `engine/gen/wavetable.h`, `synth/patch.json`, the `osc` node
-  and `PRESET_VERSION`, then regenerate, and the stored wave values return to the 0..11
-  layout. The spectral parameters and pages are removed as one change.
+  and `PRESET_VERSION`, then regenerate, and the stored wave values return to the
+  0..11 layout at this slice. The spectral parameters and pages are removed as one
+  change.

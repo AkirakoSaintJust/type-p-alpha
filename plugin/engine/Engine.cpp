@@ -9,7 +9,7 @@
 namespace p1 {
 namespace {
 
-/* The phase_map pool layout. These offsets are the node's layout; the pool
+/* The phase_map pool layout. These offsets are the node's layout. The pool
  * stride comes from the shared header so a read-table build keeps the parts
  * apart. */
 constexpr uint32_t kPmWords = phase_map::kWords;

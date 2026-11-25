@@ -39,7 +39,7 @@
   accepts the `P1LIB2` layout only at this slice, since the 146, 160 and 179 layouts and the
   16-byte `P1LIB1` name field are removed. Each part and multi record grows by 17
   bytes, so a library made before `P1LIB2` needs conversion outside the plugin.
-  (The current record is version 19 and the library magic is `P1LIB3`; this is the
+  (The current record is version 19 and the library magic is `P1LIB3`. This is the
   UI-library slice.)
 - **MIDI/clock impact:** none.
 
@@ -90,7 +90,7 @@
 - **Target package check:** the Linux build and the Windows build both link the editor,
   the smoke tests and the stability test.
 - **Host timing and platform check:** the full Linux `ctest` suite passes, and the
-  Linux snapshot diff passes with 31 images.
+  Linux snapshot diff passes with 33 images.
 - **Tolerance/metric:** the snapshot diff is exact, the name field stores 32
   characters, and the current `P1LIB3` library loads with the same names and
   parameters.

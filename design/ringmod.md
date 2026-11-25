@@ -66,15 +66,16 @@ engine keeps the values at the route node, whilst the plugin spec moves those ro
 to the end of each part group, so the part record appends them without shifting the
 existing indices. The part record grew from 981 to 991 values, ten more for one
 part, so the preset version took a new step and old part records gain the defaults
-at the end. (The current part record is 994 and preset version 19; 991 and version
-17 are the ringmod-slice values, version 18 later appended the three key-follow
-rows, and version 19 remapped the algorithm and waveform values.) A version 16 part record ends at the phase block, which means the loader
-can append the ten ringmod defaults after it without touching any existing value,
-whilst a record from before the phase block gains both blocks in order. The
+at the end. (The current part record is 994 and preset version 19. The 991 and
+version 17 values are the ringmod slice, version 18 later appended the three
+key-follow rows, and version 19 remapped the algorithm and waveform values.) A
+version 16 part record ends at the phase block, which means the loader can append
+the ten ringmod defaults after it without touching any existing value, whilst a
+record from before the phase block gains both blocks in order. The
 library loader and the part bank import run the same migration, so an older shared
 part bank is not rejected on import. A library written before the macro block still
 loads, because the multi record check accepts the old record and the macro values
-start empty. The macro block and the project state keep their sizes; a missing new
+start empty. The macro block and the project state keep their sizes. A missing new
 parameter in a project state takes its default.
 
 ## The card
@@ -102,19 +103,19 @@ single control per carrier, never one per pair, so a carrier that feeds two pair
 still has one direct gate. A middle carrier appears in two graphs because the chain
 is consecutive, but its direct toggle appears once in the original row, which is the
 rule that keeps the dry signal from being counted twice. The direct row is active
-while any active pair is on; when every active pair is off, the row dims to 0.35 and
+while any active pair is on. When every active pair is off, the row dims to 0.35 and
 its values are ignored. The dry term is added once.
 
 The algorithm decides the rows and the carrier toggles. A one-carrier algorithm
 draws the title and `no ringmod` and no controls. Two carriers draw one pair and
-two direct toggles; three draw two pairs and three toggles; four draw all three
-pairs and four toggles. A hidden row keeps its values. Switching the algorithm back
-restores them.
+two direct toggles. Three carriers draw two pairs and three toggles. Four carriers
+draw all three pairs and four toggles. A hidden row keeps its values. Switching the
+algorithm back restores them.
 
 ## Header
 
 The header algorithm graph carries the same R. While a pair is on, the pair's two
-carrier arrows become the R input arrows and one purple output; the other carriers
+carrier arrows become the R input arrows and one purple output. The other carriers
 keep their direct arrows. A carrier in an active pair whose original output is on
 gets a long purple tap beside the R, level with the R's output, so the graph shows
 that the carrier is still heard. The tap is drawn once per carrier, so a middle
@@ -129,7 +130,7 @@ same bold Zen Dots face as the card, scaled to the graph's 20 by 14 box.
 The ring pairs are off, so the card opens in the bypass state and the patch sounds
 as it did before the feature. The direct toggles are on, and their row is dimmed
 while every active pair is off. Turning a pair on adds its product and makes the
-direct row active; turning a carrier's direct output off removes only that direct
+direct row active. Turning a carrier's direct output off removes only that direct
 term and leaves its ring products in place. A pair at level 0 is silent even while
 it is on.
 
@@ -147,7 +148,7 @@ it is on.
 - The steady RMS of the ring-only output at level 99 is within 0.6 to 1.6 of the
   direct pair. The 64 times makeup gives the raw product the same ballpark as the
   direct signals.
-- An old version 16 part record expands with the ring defaults; `preset_smoke`
+- An old version 16 part record expands with the ring defaults. `preset_smoke`
   keeps the version 16 count check at 981 and the ringmod-slice count at 991.
   (The current part block is 994 and preset version 19.) The direct part bank
   import and the library path both load the old record and gain the ring

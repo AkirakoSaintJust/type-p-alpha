@@ -174,7 +174,7 @@ juce::String formatParamValue(const P1ParamSpec& spec, double value)
     }
     if (display == "fade") {
         /* The fade is a rate: 1 is the slowest, 99 is the fastest. Show the
-         * rate itself so the value rises with the dial; the two-line graph
+         * rate itself so the value rises with the dial. The two-line graph
          * carries the time view. */
         const int rate = juce::jlimit(0, 99, v);
         if (rate <= 0)
@@ -2297,7 +2297,7 @@ void drawAlgorithmGraph(juce::Graphics& g, juce::Rectangle<float> area, int algo
                 anyRing ? (directMask & (1u << i)) != 0 : true;
             if (heard) {
                 /* A ringed carrier that still feeds the original output gets a
-                 * long tap beside the R; a carrier outside the ring keeps the
+                 * long tap beside the R. A carrier outside the ring keeps the
                  * short arrow below its box. */
                 const float tip = ringed[i] ? y + oph + 32.0f : y + oph + 12.0f;
                 const auto start = point(x + opw * 0.5f, y + oph + 1.0f);

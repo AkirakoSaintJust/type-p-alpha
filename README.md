@@ -102,7 +102,7 @@ ctest --test-dir build --output-on-failure
 ```
 
 Add `-DP1_MODERN=ON` for the AVX2 / arm-tuned build. The phase-map read is
-selected by `P1_PHASE_READ`; the default `11` is the exact 1024-entry post-F
+selected by `P1_PHASE_READ`. The default `11` is the exact 1024-entry post-F
 table, and `0` keeps the F/segment reference.
 
 On Debian or Ubuntu, install the toolchain and the build packages first:
@@ -126,7 +126,7 @@ docker/build.sh linux/amd64
 
 The compiler is clang on every platform, so the Windows script uses clang-cl with
 lld-link and macOS uses AppleClang. The modern Windows package is
-`Type-P.alpha-windows-x86_64-avx2.zip`; the baseline package is
+`Type-P.alpha-windows-x86_64-avx2.zip`. The baseline package is
 `Type-P.alpha-windows-x86_64.zip`, and the release also attaches the modern
 universal macOS package `Type-P.alpha-macos-universal-modern.zip`. See
 [`docker/README.md`](docker/README.md) for more info on the platform matrix,
@@ -142,7 +142,7 @@ The tests cover engine parity, the rate bridge, preset storage, processor
 smoke test, stability pass, editor snapshots, the phase-map perceptual battery,
 and the Linux DAW matrix. The `linux_daws` test needs Ardour, Carla, JACK and Xvfb.
 Use `ctest -E linux_daws` when those hosts are not installed. `p1_ui_frame_bench`
-is a manual frame benchmark for the live editor; it is built but not a timing gate.
+is a manual frame benchmark for the live editor. It is built but not a timing gate.
 
 ## Code map
 
@@ -155,9 +155,9 @@ language, its references and the panel rules are at
 
 The release packages contain the VST3 and CLAP plugins, the standalone app, and the licences. Copy
 the VST3 or CLAP into your plugin folder, or just run the standalone app. The
-modern AVX2 Windows package is built with `windows/build.ps1 -Modern`; the current
-release workflow attaches the baseline Windows package, and the modern macOS
-universal is built and validated in CI.
+modern AVX2 Windows package is built with `windows/build.ps1 -Modern`. The release
+workflow attaches the baseline and modern Windows packages, and the modern macOS
+universal.
 
 ## Licensing
 

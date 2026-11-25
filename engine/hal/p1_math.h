@@ -125,7 +125,7 @@ P1_MATH_INLINE int32_t p1_ease_in(int32_t start, int32_t target,
 /* The linear step for an LFO's rate or depth fade, in Q31 per control tick.
  * The 1..99 values use the envelope rate table's 99 percent time, so a fade
  * value and an envelope rate value mean the same duration. 0 is off and 99 is
- * instant; the level runs 0 to 2^31, and the 31-bit fraction keeps the ramp on
+ * instant. The level runs 0 to 2^31, and the 31-bit fraction keeps the ramp on
  * the table time for the slow settings as well as the fast ones. */
 P1_MATH_INLINE uint32_t p1_fade_step(int32_t rate)
 {
@@ -286,7 +286,7 @@ P1_MATH_INLINE int32_t p1_route4(const int16_t *w, int32_t a, int32_t b, int32_t
 
 /* The VCF's per-stage coefficient from the log cutoff position. The 257-entry
  * table is the exact 48 kHz one-pole transform at every 1/256 of the 12-octave
- * range; linear interpolation between entries keeps the error below a cent. The
+ * range. Linear interpolation between entries keeps the error below a cent. The
  * top entry is clamped at 55296, the highest coefficient the feedback loop takes
  * without a parasitic oscillation. */
 P1_MATH_INLINE int32_t p1_filter_coeff_q16(int32_t pos)

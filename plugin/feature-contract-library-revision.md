@@ -47,7 +47,7 @@
   macro-only edit counts as an edit and a conflicting macro is a conflict.
 - The read, merge and write run under one process-wide lock and one interprocess
   lock, so two plugin instances and the standalone cannot both read revision N and
-  then replace each other's slot. A save waits for the lock; if the operating
+  then replace each other's slot. A save waits for the lock. If the operating
   system cannot grant it, the editor reports that the save did not run.
 - A conflict does not block the other slots. The non-conflicting changes are still
   written, and the editor reports the first conflict by bank, slot and name.
@@ -66,7 +66,7 @@
   instance reports the slot both changed`, `the conflicting slot keeps the disk
   version`, the v2 load as revision 0, and the old-record-size expansion.
 - The save transaction holds a named interprocess lock from the disk read to the
-  atomic replace. The in-process two-store tests cover the merge; the lock covers
+  atomic replace. The in-process two-store tests cover the merge. The lock covers
   the same transaction across processes, and a busy lock is reported to the editor.
 - `plugin_smoke` passes `a project load does not overwrite the shared library` and
   `the reader's own slot still reaches the library`, with a second processor over

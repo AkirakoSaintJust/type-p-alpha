@@ -4,7 +4,7 @@
  * The per-operator additive bank. The bank holds two 64-harmonic spectra
  * for each part, seven mip levels of 256 signed 16-bit samples, plus one shadow
  * spectrum for the 10 ms crossfade. The oscillator reads the a and b tables and
- * blends them with the per-voice morph; the bank is regenerated at the control
+ * blends them with the per-voice morph. The bank is regenerated at the control
  * rate when a level changes.
  *
  * The oscillator marks each part as read on every sample. When a part has not
@@ -241,9 +241,9 @@ static inline void p1_spectral_tick(
 }
 
 /* The table is 256 samples, so the phase fraction is 24 bits. The 1024-sample
- * wave table uses 22 bits; using that shift here plays the table four times too
+ * wave table uses 22 bits. Using that shift here plays the table four times too
  * high. The mip is the phasor's nine-level selector. Mips 0 to 2 keep all 64
- * harmonics; mips 3 to 8 carry 32, 16, 8, 4, 2 and 1. */
+ * harmonics. Mips 3 to 8 carry 32, 16, 8, 4, 2 and 1. */
 static inline int32_t p1_spectral_lerp(const int16_t *table, uint32_t phase)
 {
     const uint32_t index = phase >> 24;

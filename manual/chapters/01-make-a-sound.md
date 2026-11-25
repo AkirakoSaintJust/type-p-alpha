@@ -18,7 +18,7 @@ Each operator card carries the same controls:
 - **level** sets how much of the operator reaches the output.
 - **ratio** multiplies the note frequency. 1.00 is the note, 2.00 is an octave,
   3.00 is an octave and a fifth.
-- **waveform** chooses one of the thirteen single-cycle tables, plus the spectrum
+- **waveform** chooses one of the fourteen single-cycle tables, plus the spectrum
   mode.
 - **feedback** feeds the operator back into itself.
 - **detune** moves the operator in cents.
@@ -83,8 +83,9 @@ operator modulates another one.
 
 Change operator 1's waveform to **triangle**. The sine's round top gains a few odd
 harmonics and the tone softens. I'd try **rect sine** and **half sine** next. The
-thirteen tables cover the OPL3 and OPZ families, plus `rect tri`, and the last
-entry is the additive spectrum mode, which the spectral chapters cover.
+fourteen tables cover the OPL3 and OPZ families, plus `rect tri` and `half
+square`, and the last entry is the additive spectrum mode, which the spectral
+chapters cover.
 
 The waveform control is a block-rate parameter, so it changes at the next control
 block rather than the next sample. That's fast enough to feel immediate, and slow

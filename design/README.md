@@ -396,7 +396,7 @@ the freehand editor. The four bands fit under the strip without a scroll.
 The bars preview a spring curve from the levels at the start of the drag, and the
 release leaves the result in place.
 
-The template button opens the thirteen wave names and writes that wave's analysis
+The template button opens the fourteen wave names and writes that wave's analysis
 into the row. It does not touch the waveform, so the stored levels wait for
 `spectrum` in the wave select, a spectrum paste, or the morph envelope switch or a
 morph LFO depth moved away from zero. A and b each carry their own button, so either spectrum can start from a
@@ -444,9 +444,9 @@ headers, and the operator header copies and pastes the whole operator.
 
 When `on` is off, the plot shows the neutral parameter geometry rather than the
 last live map, so the switch and a patch load both reset the display.
-The map is per part and shared by the voices, so a new note can reshape a held one;
-the caption shows the actual active count when a lock lowers it. The read is 1×,
-with the exact 1024-entry post-F table; the joins' aliasing stays a recorded limit
+The map is per part and shared by the voices, so a new note can reshape a held one.
+The caption shows the actual active count when a lock lowers it. The read is 1×,
+with the exact 1024-entry post-F table. The joins' aliasing stays a recorded limit
 rather than a drawn quality.
 
 ### Dialogs
@@ -454,7 +454,7 @@ rather than a drawn quality.
 Patch browser and part slot lists are vertical scrollers with a thin scrollbar,
 where rows show the slot number, the name, and the state, and selected rows use a
 purple border and text. Confirmations use the same dialog frame. The algorithm
-picker is a wide dialog with eight routing tiles, and each tile centres its graph in
+picker is a wide dialog with ten routing tiles, and each tile centres its graph in
 the figure area and keeps `alg n` on its own line below, with enough tile height
 that the graph cannot clip or touch the caption.
 

@@ -193,8 +193,8 @@ int main()
     }
 
     /* These are the 48 kHz capture. At 44.1 kHz the positive half measured
-     * A3/A1 0.132 with hf between 700 and 1000; the rate change moves the
-     * chaotic feedback orbit, and the family claims below are what the test
+     * A3/A1 0.132 with hf between 700 and 1000. The rate change moves the
+     * chaotic feedback orbit, and the family thresholds below are what the test
      * guards. */
     check(std::abs(ratio(positive[1], 3, 1) - 0.090) < 0.02 &&
               positive[1].hf > 480.0 && positive[1].hf < 620.0,

@@ -168,7 +168,7 @@ BlockResult runEngineChanges(int blocks, int parts)
 }
 
 /* A 64-harmonic spectrum with seven mips (64, 32, 16, 8, 4, 2, 1). This is the
- * production layout; the bench keeps a local copy so the 512-sample comparison
+ * production layout. The bench keeps a local copy so the 512-sample comparison
  * does not depend on the engine build. */
 void generateWide(int16_t *out, const int32_t *levels, int first, int size,
                   int shift)

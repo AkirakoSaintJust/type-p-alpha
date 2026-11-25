@@ -19,7 +19,7 @@
   the pair level and adds it to the direct carrier sum. The part filter and its
   envelope shape both. A carrier in two pairs is still heard directly once. A pair at
   level 0 adds nothing even while it is on. A one-carrier algorithm has no pair and
-  no ringmod controls. The direct gates apply only while an active pair is on; when
+  no ringmod controls. The direct gates apply only while an active pair is on. When
   every active pair is off, the part is exactly the pre-feature carrier sum. The
   header algorithm graph adds the R on every active pair, so the ring is visible
   from every tab.
@@ -47,8 +47,8 @@ the plugin spec and at the route node in the engine.
 
 The part record grows from 981 to 991 values. A version 16 record gains the ten
 defaults at the end, and a record from before the phase block gains the phase and
-ringmod blocks in order. (The current part block is 994 and preset version 19;
-version 18 later appended the three key-follow rows, and version 19 remapped the
+ringmod blocks in order. (The current part block is 994 and preset version 19.
+Version 18 later appended the three key-follow rows, and version 19 remapped the
 algorithm and waveform values.) The macro block, the multi
 record and the project state
 keep their sizes. A library saved before the macro block also loads, because the
@@ -88,9 +88,9 @@ from its box to the right edge, past the R. The
 `R` is set in Zen Dots with a widened outline, because the family ships one weight. The
 level knob dims to 0.35 while the
 pair is off. The original row is an `original`
-caption and one `opN` toggle per current carrier; the track shows the state. The row
+caption and one `opN` toggle per current carrier. The track shows the state. The row
 is active while any active pair is on, and dims to 0.35 with every active pair off.
-The card follows the algorithm on the next tick; a hidden pair keeps its parameter
+The card follows the algorithm on the next tick. A hidden pair keeps its parameter
 values and returns when its algorithm comes back. One carrier shows `no ringmod`
 and no controls. The header algorithm graph carries the R too: an active pair's two
 direct arrows become the R inputs and one purple output, and the header reads the
@@ -110,10 +110,10 @@ wordmark's alpha now uses the Unbounded Bold cut, so its weight matches.
   direct pair`. The last one compares the steady RMS of the ring-only output with the
   direct pair and expects the ring within 0.6 to 1.6 of it.
 - `preset_smoke` keeps `the part record has the ringmod block` at 991 and the old
-  version 16 record expands with the ring defaults; the part record round-trips. The
+  version 16 record expands with the ring defaults. The part record round-trips. The
   direct part bank import and the library loader both load a version 16 bank and
   gain the ring defaults. A library with a version 16 part bank and a pre-macro
-  multi bank loads, keeps both parts, and gains the ring defaults; that shape matches
+  multi bank loads, keeps both parts, and gains the ring defaults. That shape matches
   the shipped library. The import path reports a file it cannot read, so a rejected
   library no longer does nothing in silence.
 - The snapshots add `editor-part-params-ringmod.png` with four carriers, three pairs,
@@ -143,7 +143,7 @@ wordmark's alpha now uses the Unbounded Bold cut, so its weight matches.
   new parameter set and a new migration.
 - The ringmod sits in the carrier mix, before the part filter. A post-filter ringmod
   is a different signal path.
-- The ten parameters are part controls. They are not macro destinations; adding them
+- The ten parameters are part controls. They are not macro destinations. Adding them
   to the macro table would add rows and part-record references.
 - The one-carrier algorithms ignore `carN_out`, because the card has no control for
   the single carrier. The value stays in the record for a later algorithm.

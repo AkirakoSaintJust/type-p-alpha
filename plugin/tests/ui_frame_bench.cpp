@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: GPL-3.0-only */
 /* The live display widgets at their real size. The header updates the scope and
- * the spectrogram at 30 Hz; this benchmark paints each one into an image and
+ * the spectrogram at 30 Hz. This benchmark paints each one into an image and
  * reports the cost of a frame. It is a console app, not a ctest, because the
  * absolute time depends on the host. */
 #include <array>

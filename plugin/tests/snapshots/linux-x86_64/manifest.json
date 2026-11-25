@@ -2,7 +2,7 @@
   "images": {
     "editor-algorithm.png": {
       "height": 985,
-      "sha256": "195e0878941fe39512fd716b3bcee2204426ac9b5d2ec45f02595410a2a5bd95",
+      "sha256": "8e5a79a995cf6cef9de976aef7dc16b26c4f4095aeec6f66ffedb38477efb620",
       "width": 1240
     },
     "editor-confirm.png": {
@@ -15,14 +15,24 @@
       "sha256": "9387914ed653e2a3807828cebea296207f61a524ec3c7af693c4793b8884fc99",
       "width": 1240
     },
+    "editor-fxmod-loops.png": {
+      "height": 985,
+      "sha256": "c4b64a39b34f215872a5d916c18b0987cfd9c1daf30bb023a4abce70e3ac7b0a",
+      "width": 1240
+    },
+    "editor-fxmod.png": {
+      "height": 985,
+      "sha256": "6bd379588becc1b719452195af14631c66ef6233092a17e168fac4e3a95bf971",
+      "width": 1240
+    },
     "editor-half.png": {
       "height": 493,
-      "sha256": "2efe52c1ce5c6d91a518f183bd4c91d7fbe89fbb58cda279b59bc4e16124f778",
+      "sha256": "5038446248a849a287e460ae507ae07f17a07c802ff6450c559f1deae5d6dfa3",
       "width": 620
     },
     "editor-long-name.png": {
       "height": 985,
-      "sha256": "08145d932ac8cab533f2f5c06adc197acc1cb9997933d205894963b5e97fed9a",
+      "sha256": "f401f9ca4884d3fdd6f3f06fef4cb764918b4551ed171654fe42f90d4e5f3385",
       "width": 1240
     },
     "editor-macros-live.png": {
@@ -112,12 +122,12 @@
     },
     "editor-part-params-ringmod-mid.png": {
       "height": 985,
-      "sha256": "f48a3ea792bc6c7ab1ebac8f4e2c3528e8d5798475ba4cb288e013c070f5a02e",
+      "sha256": "d1c535f70d33b2e2cd78a5836b76c56413d1bcde5ab025aff711588ff772d9c9",
       "width": 1240
     },
     "editor-part-params-ringmod.png": {
       "height": 985,
-      "sha256": "c49c00727c2294d86aeb1df261ba9d4109789fe3bdab84424f1e80128e43b531",
+      "sha256": "b975ed79309d54944a5970d303202136e411195de18a6ec84845e2bc1ca05cfa",
       "width": 1240
     },
     "editor-part-params.png": {
@@ -127,7 +137,7 @@
     },
     "editor-part2.png": {
       "height": 985,
-      "sha256": "c3733c06159570fc699e60c047092ac486ffe9e960c067af478c6361df46a759",
+      "sha256": "5d3c294c2772f5fffbfd7b50d74270165d7b660109dc50abd266a1f0d9e62cb8",
       "width": 1240
     },
     "editor-patch.png": {

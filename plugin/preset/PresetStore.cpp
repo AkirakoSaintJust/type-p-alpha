@@ -34,7 +34,7 @@ constexpr int kOffsetEnvelopeBlocks = 5;
 /* The five absolute envelope blocks that changed for version 14: the filter
  * envelope and one spectral envelope for each operator. The spectral blocks
  * grew from seven rates and levels to ten, netting two slots after the separate
- * depth was removed; the filter block grew from eight to ten in the following
+ * depth was removed. The filter block grew from eight to ten in the following
  * step and kept its version byte. */
 constexpr int kFilterEnvelopeGrow = 2;
 constexpr int kSpecEnvelopeGrow = 2;

@@ -40,8 +40,8 @@
   engine's global zone, and the offsets are computed in the existing control block.
 - **Persistence/version impact:** the six values and the 48 config values are global
   manifest parameters, so this feature does not change the part record. The
-  current part block is 994 (981 at this slice; version 18 later appended the three
-  key-follow rows). The multi record gains 54
+  current part block is 994 (981 at this slice, and version 18 later appended the
+  three key-follow rows). The multi record gains 54
   ints and six 32-character names, which is about 414 extra bytes per record, and the
   loader accepts the old multi size because the library header carries the multi
   bank size. The six values are saved in the APVTS state as well, like the routing
@@ -86,7 +86,7 @@
   member returns to its stored value whenever the macro returns to 0.
 - Two macros on one destination sum their offsets before the clamp. The macro at 0
   contributes 0, so the patch's stored values are the reference.
-- The six names live in the multi record as fixed 32-byte fields. An empty name
+- The six names are stored in the multi record as fixed 32-byte fields. An empty name
   draws `macro n`, so a patch only stores a name when the player renames it.
 - The panel draws a targeted parameter as its stored value in pink with the effective
   value beside it in smaller green type, and as purple while a macro has a non-zero
@@ -135,7 +135,7 @@ Run on the parameter layer, the multi record, the target table and the offset la
   target and a macro at 0, and each matches the engine reference bit for bit. The same
   targets with the velocity source move the render, so their offsets reach the engine.
   A carrier level target also moves the render. The LFO rate pair sets the tremolo
-  depth; the at-rest render matches the no-macro render bit for bit and a velocity of
+  depth. The at-rest render matches the no-macro render bit for bit and a velocity of
   100 moves it. A spectrum-mode morph pair checks the morph path the same way.
 - `plugin_smoke` checks the generated engine rate sets: the envelope set takes the
   amplitude, feedback and spectral envelope rates and leaves the phase envelope rates

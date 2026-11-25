@@ -314,7 +314,7 @@ Transfer transferError(const uint32_t* pm, int mode)
     return t;
 }
 
-/* The post-F map y(q) is piecewise linear; a table in q does not inherit the
+/* The post-F map y(q) is piecewise linear. A table in q does not inherit the
  * F compression at extreme breakpoints. This is the audit for that variant. */
 uint32_t exactYq(const uint32_t* pm, uint32_t q)
 {
@@ -768,7 +768,7 @@ int main(int argc, char** argv)
                     lastHash[part] = h;
                 }
                 /* Audit the transfer error at the first rebuild and then
-                 * sparsely through a moving map; the final state is audited
+                 * sparsely through a moving map. The final state is audited
                  * after the render. */
                 if (changed && (events[part] == 1 || (events[part] % 64) == 0)) {
                     for (int mode = 1; mode <= 6; ++mode) {

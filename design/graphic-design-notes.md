@@ -34,11 +34,11 @@ be a lost 1970s artifact.
 
 Scale and construction:
 
-- The panel mark is 30px with a solid 4px shadow in `brandShadow`.
-- The brand line sits 12px below it.
-- The shadow and the caps make the mark read larger than 30px. That is the
+- Panel mark: 30px with a solid 4px shadow in `brandShadow`.
+- Brand line: 12px below it.
+- Shadow and caps make the mark read larger than 30px. That is the
   optical size I want in the header.
-- The wordmark is the first material to draw, and the manual, the posters and the
+- Wordmark: the first material to draw, and the manual, the posters and the
   web graphics follow it.
 
 ## Type

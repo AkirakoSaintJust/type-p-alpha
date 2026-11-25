@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: GPL-3.0-only */
 /* Feedback envelope: each operator's internal fbenv node adds a signed offset to
- * that operator's signed feedback level. A flat envelope is bit-exact; positive
+ * that operator's signed feedback level. A flat envelope is bit-exact. Positive
  * levels open the positive feedback family, and negative levels reduce the level
  * and cross into the negative family when the sum goes below zero. */
 #include <array>
