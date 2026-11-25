@@ -10,7 +10,13 @@ why neither one builds in a container.
 | Linux x86_64 | `docker/build.sh linux/amd64` | clang + lld | x86_64 |
 | Linux aarch64 | `docker/build.sh linux/arm64`, or `ubuntu-24.04-arm` | clang + lld | aarch64 |
 | Windows x86_64 | `windows/build.ps1` | clang-cl + lld-link | x86_64 |
-| macOS | `macos-14` | AppleClang | universal `arm64` and `x86_64` |
+| Windows x86_64 modern | `windows/build.ps1 -Modern` | clang-cl + lld-link | x86_64, `/arch:AVX2` |
+| macOS baseline | `macos-15-intel` | AppleClang | universal `arm64` and `x86_64` |
+| macOS modern | `macos-15-intel`, `macos-modern` job | AppleClang | universal, arm64 `-mcpu=apple-m1` + x86_64 `-march=x86-64-v3` |
+| macOS arm native | `macos-15` | AppleClang | arm64 |
+
+The modern variants are `-DP1_MODERN=ON` (or `windows/build.ps1 -Modern`). The
+baseline remains SSE2/NEON; there is no AVX1 tier and no runtime dispatch.
 
 ## Linux
 
@@ -76,6 +82,7 @@ required. The LLVM tools provide clang-cl and lld-link.
 
 ```powershell
 .\windows\build.ps1
+.\windows\build.ps1 -Modern
 .\windows\build.ps1 -Linker msvc
 .\windows\build.ps1 -Sanitizers address
 ```
@@ -83,10 +90,13 @@ required. The LLVM tools provide clang-cl and lld-link.
 The script imports the Visual Studio environment with `vswhere` and `vcvars64`,
 then finds clang-cl in the Visual Studio LLVM, the LLVM install, or on PATH. The
 default linker is lld-link, and if that fails, `-Linker msvc` tells the script to
-switch the linker flag and the `CMAKE_LINKER` to `link.exe`.
+switch the linker flag and the `CMAKE_LINKER` to `link.exe`. `-Modern` adds
+`P1_MODERN=ON` and builds into `build/windows-clangcl-lld-modern` with
+`/arch:AVX2`.
 
 The build directories are `build/windows-clangcl-lld` or
-`build/windows-clangcl-msvc`, inside the repository, and the snapshot diff isn't
+`build/windows-clangcl-msvc` (or the `-modern` variants), inside the repository,
+and the snapshot diff isn't
 registered on Windows: the render still writes images, but I'd keep the gate on
 Linux only, because that is where the goldens are pinned. The MSYS2 GCC and the
 MSYS2 `clang64` toolchain use the Windows GNU ABI, so keep MSYS2 for the shell and
@@ -94,8 +104,8 @@ the Unix tools and build the release with clang-cl and the MSVC ABI.
 
 ## macOS
 
-Docker can't build macOS binaries, so the release workflow uses `macos-14` and
-AppleClang and produces a universal VST3 and CLAP:
+Docker can't build macOS binaries, so the CI uses `macos-15-intel` with
+AppleClang to produce a universal VST3 and CLAP:
 
 ```sh
 cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release \
@@ -107,6 +117,12 @@ cmake --build build
 The `lipo -info` check on the VST3 and CLAP binaries must report both `arm64` and
 `x86_64`. The macOS job runs the portable tests and skips the snapshot tests and
 the Linux DAW matrix.
+
+The modern universal job builds the two slices separately with `P1_MODERN=ON`
+(arm64 `-mcpu=apple-m1`, x86_64 `-march=x86-64-v3`), runs the x86_64 tests, joins
+the VST3, CLAP and standalone with `lipo`, checks that each binary reports both
+architectures, and validates the x86_64 slice with pluginval and the CLAP
+validator. The `macos-arm` job runs the arm-native tests on `macos-15`.
 
 ## Clang tooling
 

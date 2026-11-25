@@ -167,13 +167,14 @@ Every page fills the same height:
   puts rate, depth, `rate fade` and `depth fade` in one row of 22 px dials, with the
   wave select and `bipolar` switch below.
 
-The current layout has eight tabs: patch settings at 0, part params at 1, op
-envs at 2, op lfos at 3, op phasemap at 4, op spectra a at 5, op spectra b
-at 6 and op spectra mod at 7. The page order changes with each layout addition,
-so the processor remaps the stored `uiPage` when an old state restores. A four-tab
+The current layout has nine tabs: patch settings at 0, macros at 1, part params at
+2, op envs at 3, op lfos at 4, op phasemap at 5, op spectra a at 6, op spectra b at
+7 and op spectra mod at 8. The page order changes with each layout addition, so
+the processor remaps the stored `uiPage` when an old state restores. A four-tab
 state maps 1 to 2, 2 to 3 and 3 to 1. A six-tab state maps the mod page from 5 to
-6. A seven-tab state maps 4 to 5, 5 to 6 and 6 to 7. The `uiPageLayout` property
-is now 4.
+6. A seven-tab state maps 4 to 5, 5 to 6 and 6 to 7. Layout 5 inserts `macros` at
+1 and moves every later page up one; the phase-map insertion layout is 4. The
+`uiPageLayout` property is now 5.
 
 ## Header
 
@@ -309,6 +310,17 @@ written by the audio thread, with no allocation, locks or file access on the aud
 thread, and the visualisers are optional, so they must degrade to a flat line when
 the host disables them.
 
+The timer is change-gated. Each phase-map view hashes the snapshot it would draw;
+the envelope views hash their rates, levels, mode and start values; the scope and
+spectrogram setters compare the incoming buffer; the wave preview and spectrum
+display hash their parameters. A static or silent widget skips the repaint, and a
+changing phase map still repaints at most at the 30 Hz timer rate, never at the
+220 Hz stochastic event rate. `p1_ui_frame_bench` records the current frame cost:
+scope ~190-200 µs, spectrogram ~17 µs, full phase page ~11.5 ms and spectra page
+~4.1 ms. The full-page cost is knob and text rasterisation, not a vector loop;
+the modern AVX2 build is not faster there. A whole-page image cache is not used
+because every knob drag or live update would invalidate it.
+
 ## Parameters
 
 `synth/patch.json` is the only reference. The plugin exposes the same
@@ -321,8 +333,9 @@ order.
 - op envs: four sets of oscillator, amplitude envelope, feedback envelope and
   the three LFO parameters.
 - op phasemap: per operator, the phase map's nine knobs and `on`, the phase LFO's
-  six values and the signed envelope's ten values. The page is the fourth tab, and
-  the map view reads the per-part snapshot rather than the parameters.
+  six values and the signed envelope's ten values. The page is page 5, after
+  `op lfos`, and the map view reads the per-part snapshot rather than the
+  parameters.
 - op spectra a and op spectra b: per operator, the 64 a levels, the 64 b levels,
   the two ranges, the morph value, the morph envelope and the morph LFO. The
   waveform parameter grows to 0 to 13, with `spectrum` at 13.

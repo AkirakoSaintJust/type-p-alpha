@@ -64,7 +64,7 @@ linked as evidence at the end of a section; the section stands alone.
 6. **The DSP families.** Operators, envelopes, LFOs, feedback, filter, spectral,
    pan and pitch. Signal path, math, state, timing, edge cases, and the test that
    proves each.
-7. **The formats.** `P1LIB2`, the state blob, the version chain, the CC map.
+7. **The formats.** `P1LIB3`, the state blob, the version chain, the CC map.
 8. **The test ladder and CI.** What each test proves, how to run it locally,
    which layer covers it, and which layers are blocked.
 9. **The design language and the UI gate.** The tokens, the fixed canvas, the

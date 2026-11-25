@@ -35,7 +35,9 @@
 - **Persistence/version impact:** none. The parameter is stored in the plugin state
   by the APVTS, and it stays out of the part record, the multi record and the
   library, because a master volume belongs to the instance rather than the patch,
-  and the manifest stays at 1,976 parameters with a part block of 981.
+  and the manifest stays at 1,976 parameters with a part block of 981. (The
+  current totals are 2,053 parameters and a 994-value part block, preset version
+  18; 1,976/981 are the master-volume slice.)
 - **MIDI/clock impact:** none. The fader is a host parameter with no CC mapping.
 
 ## Parameter and event semantics

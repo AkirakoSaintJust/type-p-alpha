@@ -126,8 +126,13 @@ them on, and Vital and Pigments spend the equivalent effort on the route list.
 
 ## The Type P.alpha parameter set
 
-The current manifest is 1,976 host parameters: 981 per part, 10 routing parameters for
-level, delay, channel, keyzone low and high, and 4 globals. Every row is marked
+> **Note (2026-11-25):** at this study the manifest was 1,976 host parameters
+> (981 per part) and preset version 16. The current values are 2,053 parameters,
+> 994 per part and preset version 18.
+
+At this study the manifest was 1,976 host parameters: 981 per part, 10 routing parameters for
+level, delay, channel, keyzone low and high, and 4 globals. (See the note above for
+the current totals.) Every row is marked
 non-modulatable, and the engine's LFOs and envelopes are wired to their destinations
 in the patch rather than through a route table, so a macro layer here has no matrix to
 plug into and would have to be the kind that writes values.
@@ -164,9 +169,11 @@ the current manifest.
 | 5 direct macros with 4 hardware-style sets | 85 per part | 2,146 |
 | 4 macros with 8 routes each, patch scope | 68 global | 2,044 |
 
-The current part record is 981 values, so 25 more is a small change to the record and a
+At this study the part record was 981 values, so 25 more is a small change to the record and a
 version 17 migration, whilst the 85-value layered form is a different proposition and
-would be the largest single addition to the part block since the spectra.
+would be the largest single addition to the part block since the spectra. (The
+current record is 994 and preset version 18, and version 18 later appended the three
+key-follow rows.)
 
 ## Recommendation
 

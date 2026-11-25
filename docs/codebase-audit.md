@@ -186,15 +186,25 @@ one-line functions and let the compiler catch the misspelt id.
 | --- | --- |
 | `engine_parity.cpp` | Compare the generated engine with the independent reference and check the filter output gate. |
 | `filter_law.cpp` | Check the cutoff table, the resonance onset, the input knee and the SH-101 passband. |
+| `filter_envelope.cpp` | Check the filter envelope rate resolution from the slowest setting to instant. |
 | `feedback_envelope.cpp` | Check the per-operator envelope family, the flat path, the partial negative level and the peak bound. |
 | `feedback_bipolar.cpp` | Check the positive path, the rectified negative half, the signed envelope level and the peak bound. |
 | `operator_lfos.cpp` | Check the feedback and detune LFOs at depth 0, above 0 and with a negative depth. |
+| `pitch_envelope.cpp` | Check the pitch envelope rates, levels and release. |
+| `lfo_fades.cpp` | Check the LFO rate and depth fades and the shared time scale. |
 | `voice_alloc.cpp` | Check the chord, scale, part channel and voice recycling cases. |
+| `wavetable.cpp` | Check the waveform bank, the mip selection and the spectral morph read. |
+| `spectral.cpp` | Check the additive spectrum, morph, morph envelope and morph LFO. |
+| `spectral_bench.cpp` | Measure the spectral table generation and the engine block cost. |
 | `rate_bridge_test.cpp` | Check the resampler latency and spectral behaviour. |
-| `preset_smoke.cpp` | Check the current record, the 32-character name, the `P1LIB3` library and the old part and multi records. |
+| `preset_smoke.cpp` | Check the current record, the 32-character name, the `P1LIB3` library and the old part and multi records, including the version 17 to 18 key-follow append. |
 | `plugin_smoke.cpp` | Check state restore, the global library, automation, the 48 kHz bridge and a chord. |
 | `plugin_stability.cpp` | Stress every parameter, polyphony, MIDI storms and truncated state. |
 | `editor_snapshot.cpp` | Render the pages, dialogs, long name, section paste and half-size frame. |
+| `phase_map.cpp` | Check the phase map, the per-part key/velocity follow and the exact post-F table. |
+| `phase_map_perceptual.cpp` | Render the pre-seeded perceptual battery. |
+| `phase_map_perceptual_compare.cpp` | Compare two perceptual dumps with the spectral, band, harmonic, alias and envelope gate. |
+| `ui_frame_bench.cpp` | Measure the live scope, spectrogram, phase page and spectra page. |
 | `engine_render_reference.h` | The independent render used by `engine_parity`. |
 
 `additive_bench.cpp` and `additive_engine_bench.cpp` are audition tools, not ctest
@@ -205,6 +215,7 @@ gates.
 | Tool | Job |
 | --- | --- |
 | `gen_params.py` | Generate `Params.h` from `params.json` and the ratio detents. |
+| `gen_macro_targets.py` | Generate `MacroTargets.h` and the macro target id map from the manifest. |
 | `ratio.py` | Compute the shared ratio detents. |
 | `gen_tokens.py` | Generate `UiTokens.h` from `tokens.json`. |
 | `snapshot_check.py` | Compare or accept the editor snapshot goldens. |
@@ -225,7 +236,9 @@ The feature contracts describe the current features. Each one carries the curren
 semantics, the measured evidence and a short research-progress note for the layers
 it replaced. The research pages in `docs/research/` carry the measurements of the
 discarded experiments. If a contract and this page disagree, the code and the
-current contract win, and the research page keeps the old number as history.
+current contract win, and the research page keeps the old number as history. The
+current manifest is 2,053 parameters with a 994-value part block and preset
+version 18.
 
 ## History
 

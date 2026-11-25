@@ -13,20 +13,30 @@
   [`../docs/research/stochastic-phaseshaping.md`](../docs/research/stochastic-phaseshaping.md).
   This contract carries the measured evidence.
 - **Owner / date:** P1Onken, 2026-11-21, with implementation evidence on
-  2026-11-22.
-- **Disposition:** shipped at 1×. The engine nodes, the 232 parameters, the
-  editor page, the preset migration and the engine test are in the tree. The 2×
-  read, the half-band decimator and the 16-sample alignment delay are not built.
-  The measured 1× cost and the join aliasing are recorded in the Evidence and
-  Limits sections below.
+  2026-11-22 and the post-F table on 2026-11-24.
+- **Disposition:** shipped at 1×. The engine nodes, the 232 phase parameters, the
+  editor page, the preset migration and the engine test are in the tree. The
+  shipped read is `P1_PHASE_READ=11`, the exact 1024-entry post-F table; it is
+  bit-exact against the F/segment read. The 2× read, the half-band decimator and
+  the 16-sample alignment delay are not built. The measured cost and the join
+  aliasing are recorded in the Evidence and Limits sections below.
+
+> **Current state (2026-11-25).** The manifest is 2,053 parameters with a
+> 994-value part block and preset version 18. The phase-map read is mode 11, the
+> exact 1024-entry post-F table. The earlier phase-map slice below records the
+> original 1× F/segment read and the v16 migration; the **post-F direct table**
+> section near the end is the current read. Current minima on the 24-voice,
+> four-operator bench: static 66.1 ms against 81.5 ms baseline, worst 78.4 ms
+> against 83.5 ms; on the modern AVX2 build, static 67.6 ms against 77.3 ms and
+> worst 74.8 ms against 91.2 ms. The 2× path is still not built.
 
 ## Player outcome
 
-- **New player action:** open `op phasemap`, the fifth tab after `op lfos`.
-  The active part's four operators sit in four columns. Each column has a live
-  composed transfer plot, a `phase` card with nine knobs and an `on` switch, a
-  `phase lfo` card with the shared rate and depth fades, and a signed `phase env`
-  card. `copy` and `paste` work per card and for the whole operator.
+- **New player action:** open `op phasemap` (after `op lfos`). The active part's
+  four operators sit in four columns. Each column has a live composed transfer
+  plot, a `phase` card with nine knobs and an `on` switch, a `phase lfo` card with
+  the shared rate and depth fades, and a signed `phase env` card. `copy` and
+  `paste` work per card and for the whole operator.
 - **Sound and behaviour:** the map reshapes the operator's own phase, then the
   FM and feedback offsets are added. A low breakpoint gives a sweepable
   phase-distortion character. Flipping segments adds hard knees and odd
@@ -35,7 +45,8 @@
   system move the breakpoint.
 - **Off behaviour:** `phase on` off uses the current accumulator-add-read path.
   The map does not run, its LUTs are not read, and the render is bit-exact
-  against the phase-off reference. The shipped read is 1×.
+  against the phase-off reference. The shipped read is 1×, using the exact
+  1024-entry post-F table.
 - **Failure mode:** the off path moves by one sample, the fold wraps to the other
   edge or freezes, a locked segment flips or moves, a follow amount is inert or
   scaled wrong, the map leaks between operators or parts, the four columns clip
@@ -376,6 +387,11 @@ the same one the level and feedback follows already use. `followTargets()` grows
 from 15 to 19 entries, and the follow cards' `wipe all` clears the new amounts
 with the rest.
 
+The per-target amounts are per part and operator. The key/velocity enables and the
+key-follow breakpoint are part parameters (`key_sens_on.pN`, `vel_sens_on.pN` and
+`breakpoint.pN`); changing them on one part does not move the other. The shared
+macro target enum is unchanged.
+
 The velocity factor had an inert `p1_vel_scale`, because a divisor of 3,276,700
 made every velocity follow 32,767 times too small. The corrected
 `amount * vel / 100` returns Q15, and the phase, level, feedback and envelope
@@ -392,11 +408,14 @@ to bring each pair back to 48 kHz, and a delay on the unmapped operators inside
 the same voice so the carrier and the modulator stay aligned, which is a second
 engine path rather than a flag on the existing one.
 
-The measured 1× worst case is 2.01× the phase-off baseline: 24 voices, four
-operators on, 32 segments, the maximum event rates, both modulation sources,
-wave 13 and 1,000 blocks. The 1.6× figure was the budget for the 2× design. The
-1× path already costs more than that, so the 2× design is not viable on this
-evidence and is not shipped.
+The measured 1× worst case before the post-F table was 2.01× the phase-off
+baseline: 24 voices, four operators on, 32 segments, the maximum event rates, both
+modulation sources, wave 13 and 1,000 blocks. The post-F table removes the
+per-sample segment lookup, so the current worst case is about 1.5× the baseline
+(the minimum of interleaved runs; the static map falls from 81.5 to 66.1 ms and
+the worst from 83.5 to 78.4 ms in the baseline build). The 1.6× figure was the
+budget for the 2× design; the current 1× path leaves almost no room under it, so
+the 2× path is not built.
 
 The joins are step discontinuities, and the reason is that the table is
 band-limited whilst the map is not, so the 20.5–24 kHz fold-back is unmeasured
@@ -460,22 +479,24 @@ rejected candidates.
 
 ### Tab and page
 
-The strip has eight labels:
+The strip has nine labels:
 
 0. `patch settings`
-1. `part params`
-2. `op envs`
-3. `op lfos`
-4. `op phasemap` (new)
-5. `op spectra a`
-6. `op spectra b`
-7. `op spectra mod`
+1. `macros`
+2. `part params`
+3. `op envs`
+4. `op lfos`
+5. `op phasemap`
+6. `op spectra a`
+7. `op spectra b`
+8. `op spectra mod`
 
 `buildUi`, `buildPage`, `showTab` and the processor's `getUiPage`/`setUiPage`
-use the eight-page range. `kUiPageLayout` is 4. `buildPage` case 4 is the new
-page, and cases 5, 6 and 7 call the three spectra pages. The stored `uiPage`
-migration for layout 3 and older keeps pages 0..3, maps 4→5, 5→6 and 6→7. The
-existing six-tab remap runs first.
+use the nine-page range. `kUiPageLayout` is 5. `buildPage` case 5 is the phase
+page, and cases 6, 7 and 8 call the three spectra pages. The stored `uiPage`
+migration for layout 3 and older keeps pages 0..3, maps 4→5, 5→6 and 6→7; layout 5
+inserts `macros` at 1 and moves every later page up one. The phase-map layout
+constant is 4.
 
 The page is one row of four 294 px columns, the same rhythm as `op lfos`:
 
@@ -572,6 +593,11 @@ the audio change and were re-accepted in the same pass.
 
 ## Persistence
 
+> **This section records the phase-map slice (version 16).** The current preset
+> version is 18 and the current manifest/part counts are 2,053/994; see the
+> current-state box at the top. The counts and version below are the values at
+> this slice, kept as history.
+
 The manifest moves from 1,744 to 1,976 parameters, and the part block moves from
 865 to 981. The two parts account for 1,962, and the 14 global parameters bring
 the total to 1,976.
@@ -597,10 +623,12 @@ the total to 1,976.
   only the filter, fade and phase steps. Older records (v10, v12, v13) still load.
   The new phase values default to phase off, env on and the neutral geometry, so
   an old record renders the current render.
-- `preset_smoke` pins `kP1PartParamCount` at 981, because the chain derives every
-  historical count from it. It loads version 10, 12, 13, 14a and 14 records and
-  checks the operator, pan, offset, filter, spectral, fade and phase blocks. The
-  version 10, 12 and 13 records are written at their real historical indices.
+- `preset_smoke` pins the current `kP1PartParamCount` at 994, because the chain
+  derives every historical count from it. At this slice it was 981. It loads
+  version 10, 12, 13, 14a and 14 records and checks the operator, pan, offset,
+  filter, spectral, fade and phase blocks, and the current test also checks the
+  version 17 to 18 key-follow append. The version 10, 12 and 13 records are
+  written at their real historical indices.
 - Every `PresetStore` that reads an old bank configures the same envelope,
   offset, absolute, fade and operator indices. The temporary disk store in
   `saveLibrary` did not, so an old record was migrated with `-1` bases and
@@ -613,9 +641,10 @@ the total to 1,976.
 
 ## Evidence
 
-The measured state on 2026-11-22. `plugin/tests/phase_map.cpp`, registered as
-`phase_map`, runs 43 checks in one process and prints the fold range, the lock
-counts, the drift slopes, the follow positions and the CPU ratio.
+The measured state on 2026-11-22, with the current totals updated on 2026-11-25.
+`plugin/tests/phase_map.cpp`, registered as `phase_map`, runs the phase_map checks
+in one process and prints the fold range, the lock counts, the drift slopes, the
+follow positions and the CPU ratio.
 
 | Check | What it renders or reads | Result |
 | --- | --- | --- |
@@ -637,7 +666,7 @@ counts, the drift slopes, the follow positions and the CPU ratio.
 | parts | part 0 and part 1 | separate breakpoints, counts and seeds |
 | wave 13 | a/b spectra and base morph | mask non-empty and unchanged by segment count |
 | render | 48,000 frames | finite and not silent |
-| CPU | 24 voices, four operators, worst case | 2.01× the phase-off baseline |
+| CPU | 24 voices, four operators, worst case | about 1.5× the phase-off baseline; static 66.1 vs 81.5 ms |
 
 The velocity row is measured after the `p1_vel_scale` fix. The old divisor made
 the Q15 factor 32,767 times too small, so every velocity follow, including the
@@ -650,9 +679,9 @@ render, and the aliasing limit is recorded below.
 
 | Other evidence | Result |
 | --- | --- |
-| `preset_smoke` | versions 13, 14 and 15 load at 981 values |
-| snapshots | 24 PNGs and the manifest; the two phase pages are new |
-| manifest | 1,976 parameters and a 981-value part block |
+| `preset_smoke` | old versions load through the current version 18 append; the part block is 994 values |
+| snapshots | 31 PNGs and the manifest; the two phase pages are new |
+| manifest | 2,053 parameters and a 994-value part block |
 | suite | 17/17 local; the feature run passed Linux, Windows, macOS, TSan and CodeQL |
 
 ### Existing checks
@@ -660,7 +689,7 @@ render, and the aliasing limit is recorded below.
 - `engine_parity`: the phase-off reference is unchanged and the new parameter
   defaults do not move existing renders.
 - `preset_smoke`: versions 13, 14 and 15 load with the phase block appended; the
-  part count is 981 and the defaults are in place.
+  current part count is 994 and the defaults are in place.
 - `editor_snapshot`: the copy/paste checks, the two new goldens and the follow
   target count changing from 15 to 19.
 - `plugin_smoke`, `rate_bridge`, `lfo_fades`, `spectral_bench`: unchanged, run
@@ -672,9 +701,10 @@ render, and the aliasing limit is recorded below.
 - **CPU:** baseline 24 voices, four operators, phase off, 48 kHz; worst case 24
   voices, four operators all on, 32 segments, the maximum event rates, 100% flip
   and reorder, both modulation sources, wave 13. Render 1,000 blocks and divide
-  by the baseline. The measured 1× ratio is **2.01×**. The 1.6× gate was the
-  budget for the 2× design; the 1× map does not meet it, and the 2× path is not
-  shipped. The ratio is recorded rather than rounded down.
+  by the baseline. The current read is about **1.5×** with the post-F table; the
+  static map is 66.1 ms against 81.5 ms in the baseline build. The 1.6× gate was
+  the budget for the 2× design; the current 1× leaves almost no room, and the 2×
+  path is not shipped. The ratio is recorded rather than rounded down.
 - **Aliasing:** the 2× read and the half-band filter are not built, so the
   20.5–24 kHz fold-back is **unmeasured**. The joins are step discontinuities and
   the feature does not claim a clean spectrum.
@@ -688,7 +718,7 @@ render, and the aliasing limit is recorded below.
 
 - **The read is 1×, not 2×.** The 2× map read, the half-band decimator and the
   16-sample alignment delay are not built. The join aliasing is unmeasured, and
-  the CPU cost is 2.01× the phase-off baseline.
+  the current 1× cost is about 1.5× the phase-off baseline.
 - **No join ramp.** A reorder jump is a step discontinuity and is heard as the
   intended inharmonic event. A short crossfade remains a future option.
 - **The map is per part.** A new note can reshape held notes in poly mode. The
@@ -709,11 +739,11 @@ render, and the aliasing limit is recorded below.
 
 ## Risks and fallback
 
-- **CPU.** The 2× path plus the filter was the original risk. The 1× path measures
-  2.01× the phase-off baseline, above the 1.6× target for 2×, so the 2× branch is
-  not built. If the 1× cost needs to fall, the map's per-block rebuild is the
-  first place to look; the per-sample read is one F lookup, one segment lookup
-  and two multiplies.
+- **CPU.** The 2× path plus the filter was the original risk. The current 1× path
+  measures about 1.5× the phase-off baseline, close to the 1.6× budget for 2×, so
+  the 2× branch is not built. The per-sample read is now one F lookup and one
+  post-F table lookup; the table is rebuilt only on a segment, mask, drift, flip
+  or reorder change, not on a breakpoint sweep.
 - **Timing.** At 1× there is one read and no filter delay, so a mapped carrier
   and an unmapped modulator stay aligned. A future 2× path would need the
   per-voice alignment delay described in the 1× section above.
@@ -728,8 +758,9 @@ render, and the aliasing limit is recorded below.
 - **Migration.** The 116 values are appended, but the existing fade insertion
   uses the current target count. Set `v15Count` and `v14Count` as above and test
   v15 before v14/v13; otherwise the fade slots land in the wrong place.
-- **Rollback.** Remove the tab and the 232 parameters. A pre-release rollback can
-  return `PRESET_VERSION` to 15; a shipped v16 record must keep the version.
+- **Rollback.** Remove the tab and the 232 phase parameters. A rollback after the
+  current version must keep preset version 18 and add a removal migration; do not
+  return the version byte to 15.
 
 ## Files
 
@@ -739,10 +770,12 @@ render, and the aliasing limit is recorded below.
   `macros/fm_op/macro.json`; `_frontend.py` for the macro fan-out.
 - **Plugin and state:** `plugin/ui/ParamIDs.h`, `plugin/ui/Widgets.h/.cpp`,
   `plugin/juce/PluginProcessor.h/.cpp`, `plugin/juce/PluginEditor.h/.cpp`,
-  `plugin/preset/PresetStore.hpp/.cpp`.
+  `plugin/preset/PresetStore.hpp/.cpp`, `plugin/engine/PhaseMapLayout.h`.
 - **Editor:** `plugin/juce/Pages.h`, `plugin/juce/PagesPhase.cpp` (new),
   `plugin/juce/CMakeLists.txt`.
-- **Tests:** `plugin/tests/phase_map.cpp` (new), `engine_parity.cpp`,
+- **Tests:** `plugin/tests/phase_map.cpp` (new),
+  `plugin/tests/phase_map_perceptual.cpp`,
+  `plugin/tests/phase_map_perceptual_compare.cpp`, `engine_parity.cpp`,
   `preset_smoke.cpp`, `editor_snapshot.cpp`, `plugin/tests/snapshots/linux-x86_64/`.
 - **Docs:** this contract, `design/mockup.html`, `design/README.md`,
   `design/juce.md`, `docs/research/stochastic-phaseshaping.md`,

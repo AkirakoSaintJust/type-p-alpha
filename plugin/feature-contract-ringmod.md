@@ -47,7 +47,9 @@ the plugin spec and at the route node in the engine.
 
 The part record grows from 981 to 991 values. A version 16 record gains the ten
 defaults at the end, and a record from before the phase block gains the phase and
-ringmod blocks in order. The macro block, the multi record and the project state
+ringmod blocks in order. (The current part block is 994 and preset version 18;
+version 18 later appended the three key-follow rows.) The macro block, the multi
+record and the project state
 keep their sizes. A library saved before the macro block also loads, because the
 multi record check accepts the old record and the macro values start empty.
 

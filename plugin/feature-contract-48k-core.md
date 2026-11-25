@@ -13,6 +13,12 @@
   two apart here, since the rate change is measured against the engine render and
   the UI pass is measured against the goldens.
 
+> **Current state (2026-11-25).** The manifest is now 2,053 parameters with a
+> 994-value part block and preset version 18. The 1,614/800 counts and the
+> version 7/state 5 notes below are the 48 kHz/filter-law slice and remain
+> historical; the later ringmod, phase-map, macro and key-follow slices moved the
+> totals.
+
 ## Player outcome
 
 - **New player action:** none of the controls move, because the rate change is

@@ -36,9 +36,11 @@
   helpers.
 - **Persistence/version impact:** the name field grows from 16 to 33 bytes,
   `PRESET_VERSION` becomes 2 and the library magic becomes `P1LIB2`, and the reader
-  accepts the current `P1LIB2` layout only, since the 146, 160 and 179 layouts and the
+  accepts the `P1LIB2` layout only at this slice, since the 146, 160 and 179 layouts and the
   16-byte `P1LIB1` name field are removed. Each part and multi record grows by 17
   bytes, so a library made before `P1LIB2` needs conversion outside the plugin.
+  (The current record is version 18 and the library magic is `P1LIB3`; this is the
+  UI-library slice.)
 - **MIDI/clock impact:** none.
 
 ## Parameter and event semantics
@@ -83,14 +85,14 @@
 ## Verification
 
 - **Host vector(s):** `preset_smoke` covers the 32-character round trip and the current
-  `P1LIB2` library, `plugin_smoke` covers the state and the global library, and
-  `p1_stability` is unchanged.
+  `P1LIB3` library (the `P1LIB2` file still loads as revision 0), `plugin_smoke`
+  covers the state and the global library, and `p1_stability` is unchanged.
 - **Target package check:** the Linux build and the Windows build both link the editor,
   the smoke tests and the stability test.
-- **Host timing and platform check:** Linux `ctest` passes 11 of 11, and the Linux
-  snapshot diff passes with 13 images.
+- **Host timing and platform check:** the full Linux `ctest` suite passes, and the
+  Linux snapshot diff passes with 31 images.
 - **Tolerance/metric:** the snapshot diff is exact, the name field stores 32
-  characters, and the current `P1LIB2` library loads with the same names and
+  characters, and the current `P1LIB3` library loads with the same names and
   parameters.
 - **Evidence artefact:** the Linux snapshots `editor-single-parts.png`,
   `editor-long-name.png`, `editor-operators.png`, `editor-patch.png`,
@@ -99,7 +101,7 @@
 
 ## Risks and fallback
 
-- **Assumptions/open research:** the current `P1LIB2` format is the only one the plugin
+- **Assumptions/open research:** the current `P1LIB3` format is the only one the plugin
   reads, so a pre-`P1LIB2` library needs conversion outside the plugin, and the macOS
   DAW pass and the manual belong to separate platform work.
 - **Safe experiment and stop criterion:** if a `P1LIB2` library fails to load, or a

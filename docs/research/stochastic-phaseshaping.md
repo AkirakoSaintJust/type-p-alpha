@@ -235,6 +235,23 @@ a contract. Still, it is the note I have.
 - **A band-limited version:** not built. The 1× join aliasing is the current
   limit, so the extreme settings are judged with that limitation in place.
 
+## Postscript (2026-11-25)
+
+The shipped map now reads through the exact 1024-entry post-F table
+(`P1_PHASE_READ=11`). `q = F[x >> 2] << 2` is always a multiple of four, so the
+table replaces the per-sample segment lookup exactly; the 4095 clamp uses one
+tail entry. It is bit-exact against the F/segment read on the 133-scenario
+pre-seeded perceptual battery and on the full engine suite.
+
+The table depends on the segment layout, not on `F`, so a breakpoint sweep (the
+knob, LFO, envelope, key/velocity follow) does not rebuild it. On the 24-voice,
+four-operator bench the static map falls from 81.5 to 66.1 ms and the worst case
+from 83.5 to 78.4 ms in the baseline build; the modern AVX2 build falls from 77.3
+to 67.6 ms static and 91.2 to 74.8 ms worst (minimum of interleaved runs). The
+2.01×/40-check figures above are the original lab/1× F/segment slice, kept as
+history. The key follow/velocity enables and the breakpoint are per part now; the
+per-target amounts were already per part.
+
 ## Sources
 
 1. Casio CZ phase distortion, the patent and the encyclopaedia entries.

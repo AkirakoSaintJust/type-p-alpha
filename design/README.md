@@ -446,7 +446,8 @@ When `on` is off, the plot shows the neutral parameter geometry rather than the
 last live map, so the switch and a patch load both reset the display.
 The map is per part and shared by the voices, so a new note can reshape a held one;
 the caption shows the actual active count when a lock lowers it. The read is 1×,
-so the joins' aliasing stays a recorded limit rather than a drawn quality.
+with the exact 1024-entry post-F table; the joins' aliasing stays a recorded limit
+rather than a drawn quality.
 
 ### Dialogs
 

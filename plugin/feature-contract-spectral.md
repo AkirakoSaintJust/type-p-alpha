@@ -66,7 +66,9 @@
   1,536 bytes, and the plugin's `uiPage` needs the `part params` remap and the split
   remap for the mod page, keyed on `uiPageLayout` 3. The later envelope family moved
   the totals to 1,676 manifest parameters and an 831 part block, and the LFO fade
-  family to 1,744 and 865.
+  family to 1,744 and 865. (The current totals are 2,053 manifest parameters and a
+  994-value part block, preset version 18, after the phase-map, ringmod, macro and
+  key-follow slices.)
 - **MIDI/clock impact:** none, since the new parameters are host-automatable and stay
   out of the default CC map. The spectrum mode is the waveform parameter, so a host
   can automate the mode.
@@ -202,8 +204,9 @@ away from zero writes the waveform as 13, so the modulation has something to mov
 
 1. **Wave list and rect tri:** in for waveform 0 to 12. The two headers, the `osc`
    node limits, the waveform range, the wave names, the preset version and the
-   wavetable test are in. The Windows `ctest` run is 11 of 11, and the table test
-   confirms the current waves byte for byte.
+   wavetable test are in. The Windows `ctest` run was 11 of 11 at this stage; the
+   current suite passes 17/17, and the table test confirms the current waves byte
+   for byte.
 2. **Spectral engine:** in. The 64 levels per spectrum and the two range controls per
    operator, the bank, the spectrum mode 13, the morph, the envelope and the LFO are
    in. The 256-sample table reads with a 24-bit phase fraction, and the first pass used

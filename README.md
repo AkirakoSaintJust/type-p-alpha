@@ -54,7 +54,7 @@ Results so far seem to be fit for intent. I've been able to easily make rudiment
 6. Per-part stereo panning.
 7. Library synchronisation across running instances.
 8. Rate and depth fades on every LFO, with the envelope rate table's time scale and a two-line graph.
-9. Per-operator stochastic phaseshaping, with a live composed map, zero-crossing locks, drift, flips, a local reorder, and a dedicated LFO and signed envelope on the `op phasemap` tab (see [the stochastic phaseshaping contract](plugin/feature-contract-stochastic-phaseshaping.md)). The read is 1×. The 2× half-band was designed but not built, because the 1× path measured 2.01× the phase-off baseline and the aliasing would need a fresh CPU budget.
+9. Per-operator stochastic phaseshaping, with a live composed map, zero-crossing locks, drift, flips, a local reorder, and a dedicated LFO and signed envelope on the `op phasemap` tab (see [the stochastic phaseshaping contract](plugin/feature-contract-stochastic-phaseshaping.md)). The shipped read runs at 1× and uses the exact 1024-entry post-F table (`P1_PHASE_READ=11`), which is bit-exact against the F/segment read. The 2× half-band was designed but not built: the current 1× worst case is about 1.5× the phase-off baseline, and the aliasing would need a fresh CPU budget.
 10. Six macros with relative CC, wheel and velocity sources, per-voice operator levels, feedbacks, morphs, envelope rates and LFO rates and depths, and a macros page (see [the macro contract](plugin/feature-contract-macros.md)). The per-voice breakpoints and pan note policy are still to come.
 11. Ring modulation between consecutive carriers, with three pairs, a per-pair level and one original-output gate per carrier (see [the ringmod contract](plugin/feature-contract-ringmod.md)).
 
@@ -88,7 +88,8 @@ References:
 
 The build fetches JUCE 9.0.5 and the pinned `clap-juce-extensions` commit at
 configure time. It also needs CMake 3.22, Ninja, clang, and the platform JUCE
-dependencies.
+dependencies. The current manifest is 2,053 parameters (994 per part) and the
+preset record is version 18.
 
 ```sh
 cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release \
@@ -99,6 +100,10 @@ cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release \
 cmake --build build
 ctest --test-dir build --output-on-failure
 ```
+
+Add `-DP1_MODERN=ON` for the AVX2 / arm-tuned build. The phase-map read is
+selected by `P1_PHASE_READ`; the default `11` is the exact 1024-entry post-F
+table, and `0` keeps the F/segment reference.
 
 On Debian or Ubuntu, install the toolchain and the build packages first:
 
@@ -116,10 +121,13 @@ docker/build.sh linux/amd64
 
 ```powershell
 .\windows\build.ps1
+.\windows\build.ps1 -Modern
 ```
 
 The compiler is clang on every platform, so the Windows script uses clang-cl with
-lld-link and macOS uses AppleClang. See [`docker/README.md`](docker/README.md) for
+lld-link and macOS uses AppleClang. The modern Windows package is
+`Type-P.alpha-windows-x86_64-avx2.zip`; the baseline package is
+`Type-P.alpha-windows-x86_64.zip`. See [`docker/README.md`](docker/README.md) for
 more info on the platform matrix, sanitizer build and clang tooling.
 
 The plugin compiles into `build/plugin/juce/type_p_alpha_artefacts/Release/`:
@@ -129,8 +137,10 @@ The plugin compiles into `build/plugin/juce/type_p_alpha_artefacts/Release/`:
 - `Standalone/Type P.alpha`
 
 The tests cover engine parity, the rate bridge, preset storage, processor
-smoke test, stability pass, editor snapshots, and the Linux DAW matrix. The
-`linux_daws` test needs Ardour, Carla, JACK and Xvfb. Use `ctest -E linux_daws` when those hosts are not installed.
+smoke test, stability pass, editor snapshots, the phase-map perceptual battery,
+and the Linux DAW matrix. The `linux_daws` test needs Ardour, Carla, JACK and Xvfb.
+Use `ctest -E linux_daws` when those hosts are not installed. `p1_ui_frame_bench`
+is a manual frame benchmark for the live editor; it is built but not a timing gate.
 
 ## Code map
 
@@ -142,7 +152,10 @@ language, its references and the panel rules are at
 ## Installation
 
 The release packages contain the VST3 and CLAP plugins, the standalone app, and the licences. Copy
-the VST3 or CLAP into your plugin folder, or just run the standalone app.
+the VST3 or CLAP into your plugin folder, or just run the standalone app. The
+modern AVX2 Windows package is built with `windows/build.ps1 -Modern`; the current
+release workflow attaches the baseline Windows package, and the modern macOS
+universal is built and validated in CI.
 
 ## Licensing
 
@@ -154,9 +167,11 @@ in `licences/`.
 
 ## Status
 
-The plugin passes pluginval at strictness 5 on Linux x86_64, with the editor open
-and the audio, state and automation checks included. The CLAP validator reports no
-failures and one warning, because its random-state test loads garbage without crashing. The Linux suite runs in CTest, and the Windows clang-cl and macOS universal
-VST3, CLAP and standalone builds pass in CI. The Linux DAW matrix runs when Ardour, Carla and
-JACK are installed, but the macOS DAW validation is still untested, pending
-access to an actual Mac.
+The plugin passes pluginval at strictness 5 on Linux x86_64 and Windows x86_64,
+with the editor open and the audio, state and automation checks included. The CLAP
+validator reports no failures and one warning, because its random-state test loads
+garbage without crashing. The Linux suite runs in CTest, and the Windows clang-cl,
+macOS universal, macOS arm and arm64 Linux builds pass in CI. The modern macOS
+universal package is built and validated by the macOS-modern job. The Linux DAW
+matrix runs when Ardour, Carla and JACK are installed, but the macOS DAW validation
+is still untested, pending access to an actual Mac.

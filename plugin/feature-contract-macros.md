@@ -39,7 +39,9 @@
 - **Platform/API/HAL changes:** none. The macro values and config stay in the
   engine's global zone, and the offsets are computed in the existing control block.
 - **Persistence/version impact:** the six values and the 48 config values are global
-  manifest parameters, so the part record stays at 981. The multi record gains 54
+  manifest parameters, so this feature does not change the part record. The
+  current part block is 994 (981 at this slice; version 18 later appended the three
+  key-follow rows). The multi record gains 54
   ints and six 32-character names, which is about 414 extra bytes per record, and the
   loader accepts the old multi size because the library header carries the multi
   bank size. The six values are saved in the APVTS state as well, like the routing
