@@ -1337,37 +1337,37 @@ paths in depth.
 | `module_spec` |  | `tools/audit_modules.py:27` | `def module_spec(kind: str)` | Implements the module spec helper. |
 | `target_node` |  | `tools/audit_modules.py:35` | `def target_node(value: object)` | Implements the target node helper. |
 | `main` |  | `tools/audit_modules.py:41` | `def main()` | Runs the test or tool entry point. |
-| `text` |  | `tools/gen_code_docs.py:89` | `def text(node, src: bytes)` | Implements the text helper. |
-| `name_of` |  | `tools/gen_code_docs.py:93` | `def name_of(node, src: bytes)` | The last declarator name, resolving qualified names and pointers. |
-| `clean_comment` |  | `tools/gen_code_docs.py:122` | `def clean_comment(lines: list[str], start_line: int)` | The comment block immediately above `start_line`, collapsed to prose. |
-| `clean_signature` |  | `tools/gen_code_docs.py:153` | `def clean_signature(value: str)` | Implements the clean signature helper. |
-| `parser_for` |  | `tools/gen_code_docs.py:159` | `def parser_for(path: Path)` | Parses the r for. |
-| `is_global_scope` |  | `tools/gen_code_docs.py:167` | `def is_global_scope(node)` | Tests whether the the global scope. |
-| `class_scope` |  | `tools/gen_code_docs.py:197` | `def class_scope(node, src: bytes)` | Implements the class scope helper. |
-| `collect_c_family` |  | `tools/gen_code_docs.py:206` | `def collect_c_family(path: Path)` | Implements the collect c family helper. |
-| `add_function` |  | `tools/gen_code_docs.py:224` | `def add_function(node)` | Adds the function. |
-| `add_type` |  | `tools/gen_code_docs.py:263` | `def add_type(node)` | Adds the type. |
-| `walk` |  | `tools/gen_code_docs.py:310` | `def walk(node)` | Implements the walk helper. |
-| `collect_python` |  | `tools/gen_code_docs.py:420` | `def collect_python(path: Path)` | Implements the collect python helper. |
-| `docstring` |  | `tools/gen_code_docs.py:430` | `def docstring(node)` | Implements the docstring helper. |
-| `walk` |  | `tools/gen_code_docs.py:442` | `def walk(node)` | Implements the walk helper. |
-| `source_files` |  | `tools/gen_code_docs.py:506` | `def source_files(include_dev: bool)` | Implements the source files helper. |
-| `md_escape` |  | `tools/gen_code_docs.py:517` | `def md_escape(value: str)` | Implements the md escape helper. |
-| `file_summary` |  | `tools/gen_code_docs.py:521` | `def file_summary(path: Path)` | The first prose sentence of the file's leading comment or heading. |
-| `write_files` |  | `tools/gen_code_docs.py:633` | `def write_files(paths: list[Path], out: Path)` | Writes the files. |
-| `write_types` |  | `tools/gen_code_docs.py:697` | `def write_types(types: list[Type], out: Path)` | Writes the types. |
-| `split_words` |  | `tools/gen_code_docs.py:909` | `def split_words(name: str)` | Splits a camelCase or snake_case identifier into lower-case words. |
-| `inner_comment` |  | `tools/gen_code_docs.py:917` | `def inner_comment(f: Function, lines: list[str])` | The prose comment at the top of the function body, as one sentence. |
-| `describe_function` |  | `tools/gen_code_docs.py:955` | `def describe_function(f: Function, lines: list[str])` | Implements the describe function helper. |
-| `write_functions` |  | `tools/gen_code_docs.py:1229` | `def write_functions(functions: list[Function], out: Path)` | Writes the functions. |
-| `write_symbols` |  | `tools/gen_code_docs.py:1289` | `def write_symbols(symbols: list[Symbol], out: Path)` | Writes the symbols. |
-| `state_fields` |  | `tools/gen_code_docs.py:1314` | `def state_fields()` | Implements the state fields helper. |
-| `write_state` |  | `tools/gen_code_docs.py:1329` | `def write_state(fields: list[tuple[str, str]], out: Path)` | Writes the state. |
-| `write_parameters` |  | `tools/gen_code_docs.py:1344` | `def write_parameters(out: Path)` | Writes the parameters. |
-| `render_walk` |  | `tools/gen_code_docs.py:1372` | `def render_walk()` | Renders the walk. |
-| `write_nodes` |  | `tools/gen_code_docs.py:1455` | `def write_nodes(out: Path)` | Writes the nodes. |
-| `write_tests` |  | `tools/gen_code_docs.py:1488` | `def write_tests(out: Path)` | Writes the tests. |
-| `main` |  | `tools/gen_code_docs.py:1531` | `def main()` | Runs the test or tool entry point. |
+| `text` |  | `tools/gen_code_docs.py:86` | `def text(node, src: bytes)` | Implements the text helper. |
+| `name_of` |  | `tools/gen_code_docs.py:90` | `def name_of(node, src: bytes)` | The last declarator name, resolving qualified names and pointers. |
+| `clean_comment` |  | `tools/gen_code_docs.py:119` | `def clean_comment(lines: list[str], start_line: int)` | The comment block immediately above `start_line`, collapsed to prose. |
+| `clean_signature` |  | `tools/gen_code_docs.py:150` | `def clean_signature(value: str)` | Implements the clean signature helper. |
+| `parser_for` |  | `tools/gen_code_docs.py:156` | `def parser_for(path: Path)` | Parses the r for. |
+| `is_global_scope` |  | `tools/gen_code_docs.py:164` | `def is_global_scope(node)` | Tests whether the the global scope. |
+| `class_scope` |  | `tools/gen_code_docs.py:194` | `def class_scope(node, src: bytes)` | Implements the class scope helper. |
+| `collect_c_family` |  | `tools/gen_code_docs.py:203` | `def collect_c_family(path: Path)` | Implements the collect c family helper. |
+| `add_function` |  | `tools/gen_code_docs.py:221` | `def add_function(node)` | Adds the function. |
+| `add_type` |  | `tools/gen_code_docs.py:260` | `def add_type(node)` | Adds the type. |
+| `walk` |  | `tools/gen_code_docs.py:307` | `def walk(node)` | Implements the walk helper. |
+| `collect_python` |  | `tools/gen_code_docs.py:417` | `def collect_python(path: Path)` | Implements the collect python helper. |
+| `docstring` |  | `tools/gen_code_docs.py:427` | `def docstring(node)` | Implements the docstring helper. |
+| `walk` |  | `tools/gen_code_docs.py:439` | `def walk(node)` | Implements the walk helper. |
+| `source_files` |  | `tools/gen_code_docs.py:503` | `def source_files(include_dev: bool)` | The tracked source and CMake files, from the git index. |
+| `md_escape` |  | `tools/gen_code_docs.py:526` | `def md_escape(value: str)` | Implements the md escape helper. |
+| `file_summary` |  | `tools/gen_code_docs.py:530` | `def file_summary(path: Path)` | The first prose sentence of the file's leading comment or heading. |
+| `write_files` |  | `tools/gen_code_docs.py:642` | `def write_files(paths: list[Path], out: Path)` | Writes the files. |
+| `write_types` |  | `tools/gen_code_docs.py:707` | `def write_types(types: list[Type], out: Path)` | Writes the types. |
+| `split_words` |  | `tools/gen_code_docs.py:919` | `def split_words(name: str)` | Splits a camelCase or snake_case identifier into lower-case words. |
+| `inner_comment` |  | `tools/gen_code_docs.py:927` | `def inner_comment(f: Function, lines: list[str])` | The prose comment at the top of the function body, as one sentence. |
+| `describe_function` |  | `tools/gen_code_docs.py:965` | `def describe_function(f: Function, lines: list[str])` | Implements the describe function helper. |
+| `write_functions` |  | `tools/gen_code_docs.py:1239` | `def write_functions(functions: list[Function], out: Path)` | Writes the functions. |
+| `write_symbols` |  | `tools/gen_code_docs.py:1299` | `def write_symbols(symbols: list[Symbol], out: Path)` | Writes the symbols. |
+| `state_fields` |  | `tools/gen_code_docs.py:1324` | `def state_fields()` | Implements the state fields helper. |
+| `write_state` |  | `tools/gen_code_docs.py:1339` | `def write_state(fields: list[tuple[str, str]], out: Path)` | Writes the state. |
+| `write_parameters` |  | `tools/gen_code_docs.py:1354` | `def write_parameters(out: Path)` | Writes the parameters. |
+| `render_walk` |  | `tools/gen_code_docs.py:1382` | `def render_walk()` | Renders the walk. |
+| `write_nodes` |  | `tools/gen_code_docs.py:1465` | `def write_nodes(out: Path)` | Writes the nodes. |
+| `write_tests` |  | `tools/gen_code_docs.py:1498` | `def write_tests(out: Path)` | Writes the tests. |
+| `main` |  | `tools/gen_code_docs.py:1541` | `def main()` | Runs the test or tool entry point. |
 | `q15` |  | `tools/gen_math_tables.py:40` | `def q15(x: float)` | Implements the q 15 helper. |
 | `q16` |  | `tools/gen_math_tables.py:45` | `def q16(x: float)` | Implements the q 16 helper. |
 | `c_array` |  | `tools/gen_math_tables.py:50` | `def c_array(ctype: str, name: str, values: list[int], width: int)` | Implements the c array helper. |
@@ -4273,67 +4273,67 @@ paths in depth.
 
 ### `tools/gen_code_docs.py`
 
-- `text` at line 89 through 90: `def text(node, src: bytes)`
+- `text` at line 86 through 87: `def text(node, src: bytes)`
   Implements the text helper.
-- `name_of` at line 93 through 119: `def name_of(node, src: bytes)`
+- `name_of` at line 90 through 116: `def name_of(node, src: bytes)`
   The last declarator name, resolving qualified names and pointers.
-- `clean_comment` at line 122 through 150: `def clean_comment(lines: list[str], start_line: int)`
+- `clean_comment` at line 119 through 147: `def clean_comment(lines: list[str], start_line: int)`
   The comment block immediately above `start_line`, collapsed to prose.
-- `clean_signature` at line 153 through 156: `def clean_signature(value: str)`
+- `clean_signature` at line 150 through 153: `def clean_signature(value: str)`
   Implements the clean signature helper.
-- `parser_for` at line 159 through 164: `def parser_for(path: Path)`
+- `parser_for` at line 156 through 161: `def parser_for(path: Path)`
   Parses the r for.
-- `is_global_scope` at line 167 through 194: `def is_global_scope(node)`
+- `is_global_scope` at line 164 through 191: `def is_global_scope(node)`
   Tests whether the the global scope.
-- `class_scope` at line 197 through 203: `def class_scope(node, src: bytes)`
+- `class_scope` at line 194 through 200: `def class_scope(node, src: bytes)`
   Implements the class scope helper.
-- `collect_c_family` at line 206 through 417: `def collect_c_family(path: Path)`
+- `collect_c_family` at line 203 through 414: `def collect_c_family(path: Path)`
   Implements the collect c family helper.
-- `add_function` at line 224 through 261: `def add_function(node)`
+- `add_function` at line 221 through 258: `def add_function(node)`
   Adds the function.
-- `add_type` at line 263 through 308: `def add_type(node)`
+- `add_type` at line 260 through 305: `def add_type(node)`
   Adds the type.
-- `walk` at line 310 through 414: `def walk(node)`
+- `walk` at line 307 through 411: `def walk(node)`
   Implements the walk helper.
-- `collect_python` at line 420 through 503: `def collect_python(path: Path)`
+- `collect_python` at line 417 through 500: `def collect_python(path: Path)`
   Implements the collect python helper.
-- `docstring` at line 430 through 440: `def docstring(node)`
+- `docstring` at line 427 through 437: `def docstring(node)`
   Implements the docstring helper.
-- `walk` at line 442 through 500: `def walk(node)`
+- `walk` at line 439 through 497: `def walk(node)`
   Implements the walk helper.
-- `source_files` at line 506 through 514: `def source_files(include_dev: bool)`
-  Implements the source files helper.
-- `md_escape` at line 517 through 518: `def md_escape(value: str)`
+- `source_files` at line 503 through 523: `def source_files(include_dev: bool)`
+  The tracked source and CMake files, from the git index.
+- `md_escape` at line 526 through 527: `def md_escape(value: str)`
   Implements the md escape helper.
-- `file_summary` at line 521 through 579: `def file_summary(path: Path)`
+- `file_summary` at line 530 through 588: `def file_summary(path: Path)`
   The first prose sentence of the file's leading comment or heading.
-- `write_files` at line 633 through 694: `def write_files(paths: list[Path], out: Path)`
+- `write_files` at line 642 through 704: `def write_files(paths: list[Path], out: Path)`
   Writes the files.
-- `write_types` at line 697 through 755: `def write_types(types: list[Type], out: Path)`
+- `write_types` at line 707 through 765: `def write_types(types: list[Type], out: Path)`
   Writes the types.
-- `split_words` at line 909 through 914: `def split_words(name: str)`
+- `split_words` at line 919 through 924: `def split_words(name: str)`
   Splits a camelCase or snake_case identifier into lower-case words.
-- `inner_comment` at line 917 through 952: `def inner_comment(f: Function, lines: list[str])`
+- `inner_comment` at line 927 through 962: `def inner_comment(f: Function, lines: list[str])`
   The prose comment at the top of the function body, as one sentence.
-- `describe_function` at line 955 through 1226: `def describe_function(f: Function, lines: list[str])`
+- `describe_function` at line 965 through 1236: `def describe_function(f: Function, lines: list[str])`
   Implements the describe function helper.
-- `write_functions` at line 1229 through 1286: `def write_functions(functions: list[Function], out: Path)`
+- `write_functions` at line 1239 through 1296: `def write_functions(functions: list[Function], out: Path)`
   Writes the functions.
-- `write_symbols` at line 1289 through 1311: `def write_symbols(symbols: list[Symbol], out: Path)`
+- `write_symbols` at line 1299 through 1321: `def write_symbols(symbols: list[Symbol], out: Path)`
   Writes the symbols.
-- `state_fields` at line 1314 through 1326: `def state_fields()`
+- `state_fields` at line 1324 through 1336: `def state_fields()`
   Implements the state fields helper.
-- `write_state` at line 1329 through 1341: `def write_state(fields: list[tuple[str, str]], out: Path)`
+- `write_state` at line 1339 through 1351: `def write_state(fields: list[tuple[str, str]], out: Path)`
   Writes the state.
-- `write_parameters` at line 1344 through 1369: `def write_parameters(out: Path)`
+- `write_parameters` at line 1354 through 1379: `def write_parameters(out: Path)`
   Writes the parameters.
-- `render_walk` at line 1372 through 1452: `def render_walk()`
+- `render_walk` at line 1382 through 1462: `def render_walk()`
   Renders the walk.
-- `write_nodes` at line 1455 through 1485: `def write_nodes(out: Path)`
+- `write_nodes` at line 1465 through 1495: `def write_nodes(out: Path)`
   Writes the nodes.
-- `write_tests` at line 1488 through 1528: `def write_tests(out: Path)`
+- `write_tests` at line 1498 through 1538: `def write_tests(out: Path)`
   Writes the tests.
-- `main` at line 1531 through 1564: `def main()`
+- `main` at line 1541 through 1574: `def main()`
   Runs the test or tool entry point.
 
 ### `tools/gen_math_tables.py`

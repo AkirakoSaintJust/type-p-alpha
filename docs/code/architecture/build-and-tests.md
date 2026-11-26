@@ -56,6 +56,18 @@ ctest --test-dir build --output-on-failure
 .\windows\build.ps1 -Modern
 ```
 
+The wrapper imports the Visual Studio environment and finds Ninja, clang-cl and
+lld even when the shell has none of them on `PATH`.
+
+### Visual Studio Code
+
+`.vscode/settings.json` gives CMake Tools its own `build-vscode` tree, so a
+container or command-line `build` cache never blocks a local configure.
+`.vscode/cmake-kits.json` adds a clang-cl kit whose `environmentSetupScript` is
+`windows/cmake-env.cmd`; that script imports the Visual Studio environment and
+adds the Ninja directory. Pick that kit once, and CMake Tools configures without
+touching the canonical build directories.
+
 On Linux the container wrapper is
 
 ```sh

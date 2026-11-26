@@ -141,9 +141,9 @@ field index in `state-fields.md`.
 | `P1Card` | class | `plugin/ui/Widgets.h:384` | 10 | The shared card frame and header. |
 | `P1AlgorithmBlock` | class | `plugin/ui/Widgets.h:403` | 14 |  |
 | `P1Dialog` | class | `plugin/ui/Widgets.h:426` | 11 |  |
-| `Function` | class | `tools/gen_code_docs.py:55` | 0 |  |
-| `Type` | class | `tools/gen_code_docs.py:68` | 0 |  |
-| `Symbol` | class | `tools/gen_code_docs.py:80` | 0 |  |
+| `Function` | class | `tools/gen_code_docs.py:52` | 0 |  |
+| `Type` | class | `tools/gen_code_docs.py:65` | 0 |  |
+| `Symbol` | class | `tools/gen_code_docs.py:77` | 0 |  |
 
 ## Details
 
@@ -2473,13 +2473,13 @@ Fields and enumerators:
 
 ### `Function`
 
-`class` at `tools/gen_code_docs.py:55` through line 64.
+`class` at `tools/gen_code_docs.py:52` through line 61.
 
 ### `Type`
 
-`class` at `tools/gen_code_docs.py:68` through line 76.
+`class` at `tools/gen_code_docs.py:65` through line 73.
 
 ### `Symbol`
 
-`class` at `tools/gen_code_docs.py:80` through line 86.
+`class` at `tools/gen_code_docs.py:77` through line 83.
 

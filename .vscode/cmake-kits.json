@@ -1,0 +1,10 @@
+[
+  {
+    "name": "Clang-cl x64 with the Visual Studio environment",
+    "compilers": {
+      "C": "C:/Program Files/LLVM/bin/clang-cl.exe",
+      "CXX": "C:/Program Files/LLVM/bin/clang-cl.exe"
+    },
+    "environmentSetupScript": "${workspaceFolder}\\windows\\cmake-env.cmd"
+  }
+]

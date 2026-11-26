@@ -18,8 +18,8 @@ from __future__ import annotations
 
 import argparse
 import json
-import os
 import re
+import subprocess
 from collections import Counter, defaultdict
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -27,10 +27,7 @@ from typing import Iterable
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "docs" / "code" / "reference"
-EXCLUDE = re.compile(
-    r"\\(build|_deps|\.git|publish|third-party-licenses|__pycache__|\.dev)(\\|$)"
-)
-SOURCE_EXT = {".c", ".h", ".hpp", ".cpp", ".py", ".ps1", ".sh", ".cmake"}
+SOURCE_EXT = {".c", ".h", ".hpp", ".cpp", ".py", ".ps1", ".sh", ".cmd", ".cmake"}
 TEXT_EXT = SOURCE_EXT | {".json", ".md", ".txt", ".yml", ".yaml"}
 
 try:
@@ -504,13 +501,25 @@ def collect_python(path: Path) -> tuple[list[Function], list[Type], list[Symbol]
 
 
 def source_files(include_dev: bool) -> list[Path]:
+    """The tracked source and CMake files, from the git index.
+
+    The reference describes the tracked tree, so it reads `git ls-files` rather
+    than walking the working copy. A local build directory, a container cache or
+    a fetched dependency can then never appear in the index. Stage a new source
+    file before regenerating.
+    """
+    result = subprocess.run(
+        ["git", "-C", str(ROOT), "ls-files", "-z"],
+        check=True,
+        capture_output=True,
+    )
     files: list[Path] = []
-    for base, dirs, names in os.walk(ROOT):
-        dirs[:] = [d for d in dirs if not EXCLUDE.search(os.path.join(base, d) + "\\")]
-        for name in names:
-            path = Path(base, name)
-            if path.suffix.lower() in SOURCE_EXT or name == "CMakeLists.txt":
-                files.append(path)
+    for name in result.stdout.decode("utf-8", "replace").split("\0"):
+        if not name:
+            continue
+        path = ROOT / name
+        if path.suffix.lower() in SOURCE_EXT or path.name == "CMakeLists.txt":
+            files.append(path)
     return sorted(files)
 
 
@@ -671,6 +680,7 @@ def write_files(paths: list[Path], out: Path) -> None:
             ".cpp": "C++",
             ".py": "Python",
             ".ps1": "PowerShell",
+            ".cmd": "batch",
             ".sh": "shell",
             ".cmake": "CMake",
             ".json": "JSON",
