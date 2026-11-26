@@ -179,19 +179,19 @@ paths in depth.
 | `reset` |  | `plugin/engine/RateBridge.cpp:73` | `void RateBridge::reset()` | Clears the resampler ring and counters. |
 | `pushCore` |  | `plugin/engine/RateBridge.cpp:80` | `void RateBridge::pushCore(const int32_t* interleaved, int frames)` | Writes interleaved core frames into the ring. |
 | `pull` |  | `plugin/engine/RateBridge.cpp:92` | `void RateBridge::pull(float* left, float* right, int frames)` | Reads host frames through the polyphase kernel. |
-| `renderChunk` |  | `plugin/engine/RateBridge.cpp:127` | `void RateBridge::renderChunk(Engine& engine, int frames, CoreTapCallback onCore, void* context)` | Renders the chunk. |
-| `process` |  | `plugin/engine/RateBridge.cpp:138` | `void RateBridge::process(Engine& engine, float* left, float* right, int frames, CoreTapCallback onCore, void* context)` | Renders core chunks and pulls the host-rate output. |
-| `latencySamples` |  | `plugin/engine/RateBridge.cpp:150` | `int RateBridge::latencySamples() const` | Returns the bridge group delay in host samples. |
-| `hasCore` |  | `plugin/engine/RateBridge.cpp:156` | `bool RateBridge::hasCore(int hostFrames) const` | Reports whether a host block will render at least one core chunk. |
+| `renderChunk` |  | `plugin/engine/RateBridge.cpp:135` | `void RateBridge::renderChunk(Engine& engine, int frames, CoreTapCallback onCore, void* context)` | Renders the chunk. |
+| `process` |  | `plugin/engine/RateBridge.cpp:146` | `void RateBridge::process(Engine& engine, float* left, float* right, int frames, CoreTapCallback onCore, void* context)` | Renders core chunks and pulls the host-rate output. |
+| `latencySamples` |  | `plugin/engine/RateBridge.cpp:158` | `int RateBridge::latencySamples() const` | Returns the bridge group delay in host samples. |
+| `hasCore` |  | `plugin/engine/RateBridge.cpp:164` | `bool RateBridge::hasCore(int hostFrames) const` | Reports whether a host block will render at least one core chunk. |
 | `prepare` | RateBridge | `plugin/engine/RateBridge.hpp:19` | `void prepare(double hostRate, int maxBlock)` | Builds the resampler kernel and ring for the host rate. |
 | `reset` | RateBridge | `plugin/engine/RateBridge.hpp:20` | `void reset()` | Clears the resampler ring and counters. |
 | `process` | RateBridge | `plugin/engine/RateBridge.hpp:24` | `void process(Engine& engine, float* left, float* right, int frames, CoreTapCallback onCore = nullptr, void* context = nullptr)` | The engine path: render core chunks, then pull host frames. The callback runs after each core chunk, before the tap state is overwritten. |
 | `pushCore` | RateBridge | `plugin/engine/RateBridge.hpp:29` | `void pushCore(const int32_t* interleaved, int frames)` | Test and offline path that pushes interleaved int32 core frames and pulls host frames. The ring keeps the history the 128-tap kernel needs. |
-| `pull` | RateBridge | `plugin/engine/RateBridge.hpp:30` | `void pull(float* left, float* right, int frames)` | Reads host frames through the polyphase kernel. |
-| `latencySamples` | RateBridge | `plugin/engine/RateBridge.hpp:32` | `int latencySamples() const` | Returns the bridge group delay in host samples. |
-| `ratio` | RateBridge | `plugin/engine/RateBridge.hpp:33` | `double ratio() const` | Returns the ratio value. |
-| `hasCore` | RateBridge | `plugin/engine/RateBridge.hpp:37` | `bool hasCore(int hostFrames) const` | True when a `process` call of `hostFrames` will render at least one core chunk, so the caller can feed the first chunk's events before it runs. |
-| `renderChunk` | RateBridge | `plugin/engine/RateBridge.hpp:43` | `void renderChunk(Engine& engine, int frames, CoreTapCallback onCore, void* context)` | Renders the chunk. |
+| `pull` | RateBridge | `plugin/engine/RateBridge.hpp:32` | `void pull(float* left, float* right, int frames)` | Reads host frames through the kernel. A null `right` folds the pair to mono in `left`. |
+| `latencySamples` | RateBridge | `plugin/engine/RateBridge.hpp:34` | `int latencySamples() const` | Returns the bridge group delay in host samples. |
+| `ratio` | RateBridge | `plugin/engine/RateBridge.hpp:35` | `double ratio() const` | Returns the ratio value. |
+| `hasCore` | RateBridge | `plugin/engine/RateBridge.hpp:39` | `bool hasCore(int hostFrames) const` | True when a `process` call of `hostFrames` will render at least one core chunk, so the caller can feed the first chunk's events before it runs. |
+| `renderChunk` | RateBridge | `plugin/engine/RateBridge.hpp:45` | `void renderChunk(Engine& engine, int frames, CoreTapCallback onCore, void* context)` | Renders the chunk. |
 | `reset` | ChunkNoteSet | `plugin/juce/ChunkNoteSet.h:17` | `void reset()` | Clears the resampler ring and counters. |
 | `noteOn` | ChunkNoteSet | `plugin/juce/ChunkNoteSet.h:19` | `void noteOn(int channel, int note)` | Runs the note on step for the surrounding code. |
 | `held` | ChunkNoteSet | `plugin/juce/ChunkNoteSet.h:26` | `bool held(int channel, int note) const` | Tests the held condition. |
@@ -557,30 +557,30 @@ paths in depth.
 | `TypePAlphaAudioProcessor` |  | `plugin/juce/PluginProcessor.cpp:317` | `TypePAlphaAudioProcessor::TypePAlphaAudioProcessor() : AudioProcessor(BusesProperties().withOutput( "Output", juce::AudioChannelSet::stereo(), true)), midi_(engine_), apvts_(*th...` | Constructs the processor, the engine interface, the MIDI bridge, the APVTS and the library. |
 | `createLayout` |  | `plugin/juce/PluginProcessor.cpp:372` | `juce::AudioProcessorValueTreeState::ParameterLayout TypePAlphaAudioProcessor::createLayout()` | Creates the layout. |
 | `prepareToPlay` |  | `plugin/juce/PluginProcessor.cpp:446` | `void TypePAlphaAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)` | Resets the engine, sizes the rate bridge and buffers, and syncs the parameters. |
-| `releaseResources` |  | `plugin/juce/PluginProcessor.cpp:479` | `void TypePAlphaAudioProcessor::releaseResources()` | Releases every engine voice. |
-| `isBusesLayoutSupported` |  | `plugin/juce/PluginProcessor.cpp:484` | `bool TypePAlphaAudioProcessor::isBusesLayoutSupported(const BusesLayout& layouts) const` | Accepts a disabled input and a mono or stereo output. |
-| `syncParams` |  | `plugin/juce/PluginProcessor.cpp:493` | `void TypePAlphaAudioProcessor::syncParams()` | Writes the changed APVTS values to the engine. |
-| `syncMacros` |  | `plugin/juce/PluginProcessor.cpp:514` | `void TypePAlphaAudioProcessor::syncMacros()` | Resolves the six macros to destination offsets and writes the effective values. |
-| `feedMessage` |  | `plugin/juce/PluginProcessor.cpp:620` | `void TypePAlphaAudioProcessor::feedMessage(p1::MidiBridge& midi, const juce::MidiMessage& message)` | Feeds the message. |
-| `renderCore` |  | `plugin/juce/PluginProcessor.cpp:627` | `void TypePAlphaAudioProcessor::renderCore(int32_t* out, int frames)` | Renders one core chunk through the engine interface. |
-| `pushTapScopes` |  | `plugin/juce/PluginProcessor.cpp:632` | `void TypePAlphaAudioProcessor::pushTapScopes(p1::Engine& engine, int frames)` | Copies the ten engine tap buffers into the scope rings. |
-| `publishMorph` |  | `plugin/juce/PluginProcessor.cpp:647` | `void TypePAlphaAudioProcessor::publishMorph(p1::Engine& engine)` | Publishes the eight live spectral morphs. |
-| `publishPhaseMaps` |  | `plugin/juce/PluginProcessor.cpp:655` | `void TypePAlphaAudioProcessor::publishPhaseMaps(p1::Engine& engine)` | Publishes the eight phase-map snapshots through the three-buffer handoff. |
-| `feedScheduled` |  | `plugin/juce/PluginProcessor.cpp:673` | `void TypePAlphaAudioProcessor::feedScheduled(int64_t limit)` | Feeds the scheduled MIDI events whose core frame is before the limit. |
-| `flushDeferred` |  | `plugin/juce/PluginProcessor.cpp:698` | `void TypePAlphaAudioProcessor::flushDeferred()` | Feeds the note-offs that waited for the chunk to render. |
-| `coreChunk` |  | `plugin/juce/PluginProcessor.cpp:705` | `void TypePAlphaAudioProcessor::coreChunk(void* context, p1::Engine& engine, int frames)` | Runs the per-core-chunk MIDI, tap and snapshot work. |
-| `processBlock` |  | `plugin/juce/PluginProcessor.cpp:718` | `void TypePAlphaAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midi)` | Runs the host block through the 48 kHz core path or the rate bridge. |
-| `phaseMap` |  | `plugin/juce/PluginProcessor.cpp:890` | `bool TypePAlphaAudioProcessor::phaseMap(int op, int part, p1::PhaseMapSnapshot& out) const` | Reads the current phase-map snapshot for the editor. |
-| `specMorph` |  | `plugin/juce/PluginProcessor.cpp:905` | `double TypePAlphaAudioProcessor::specMorph(int op, int part) const` | Reads the live spectral morph for the editor. |
-| `libraryFile` |  | `plugin/juce/PluginProcessor.cpp:915` | `juce::File TypePAlphaAudioProcessor::libraryFile() const` | Returns the shared library path. |
-| `resetPhaseMaps` |  | `plugin/juce/PluginProcessor.cpp:926` | `void TypePAlphaAudioProcessor::resetPhaseMaps()` | Clears the phase-map, LFO and envelope pools. |
-| `ensureLibraryLoaded` |  | `plugin/juce/PluginProcessor.cpp:931` | `void TypePAlphaAudioProcessor::ensureLibraryLoaded()` | Loads the shared library once. |
-| `saveLibrary` |  | `plugin/juce/PluginProcessor.cpp:953` | `LibrarySaveResult TypePAlphaAudioProcessor::saveLibrary()` | Runs the locked read-merge-write of the shared library. |
-| `~LockRelease` | LockRelease | `plugin/juce/PluginProcessor.cpp:975` | `~LockRelease()` | Destroys the object. |
-| `createEditor` |  | `plugin/juce/PluginProcessor.cpp:1030` | `juce::AudioProcessorEditor* TypePAlphaAudioProcessor::createEditor()` | Creates the plugin editor. |
-| `getStateInformation` |  | `plugin/juce/PluginProcessor.cpp:1036` | `void TypePAlphaAudioProcessor::getStateInformation(juce::MemoryBlock& destData)` | Serialises the APVTS, names, UI state, routing and library snapshot. |
-| `setStateInformation` |  | `plugin/juce/PluginProcessor.cpp:1069` | `void TypePAlphaAudioProcessor::setStateInformation(const void* data, int sizeInBytes)` | Restores the project state and migrates older versions. |
-| `createPluginFilter` |  | `plugin/juce/PluginProcessor.cpp:1163` | `juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()` | Creates the plugin filter. |
+| `releaseResources` |  | `plugin/juce/PluginProcessor.cpp:478` | `void TypePAlphaAudioProcessor::releaseResources()` | Releases every engine voice. |
+| `isBusesLayoutSupported` |  | `plugin/juce/PluginProcessor.cpp:483` | `bool TypePAlphaAudioProcessor::isBusesLayoutSupported(const BusesLayout& layouts) const` | Accepts a disabled input and a mono or stereo output. |
+| `syncParams` |  | `plugin/juce/PluginProcessor.cpp:492` | `void TypePAlphaAudioProcessor::syncParams()` | Writes the changed APVTS values to the engine. |
+| `syncMacros` |  | `plugin/juce/PluginProcessor.cpp:513` | `void TypePAlphaAudioProcessor::syncMacros()` | Resolves the six macros to destination offsets and writes the effective values. |
+| `feedMessage` |  | `plugin/juce/PluginProcessor.cpp:619` | `void TypePAlphaAudioProcessor::feedMessage(p1::MidiBridge& midi, const juce::MidiMessage& message)` | Feeds the message. |
+| `renderCore` |  | `plugin/juce/PluginProcessor.cpp:626` | `void TypePAlphaAudioProcessor::renderCore(int32_t* out, int frames)` | Renders one core chunk through the engine interface. |
+| `pushTapScopes` |  | `plugin/juce/PluginProcessor.cpp:631` | `void TypePAlphaAudioProcessor::pushTapScopes(p1::Engine& engine, int frames)` | Copies the ten engine tap buffers into the scope rings. |
+| `publishMorph` |  | `plugin/juce/PluginProcessor.cpp:646` | `void TypePAlphaAudioProcessor::publishMorph(p1::Engine& engine)` | Publishes the eight live spectral morphs. |
+| `publishPhaseMaps` |  | `plugin/juce/PluginProcessor.cpp:654` | `void TypePAlphaAudioProcessor::publishPhaseMaps(p1::Engine& engine)` | Publishes the eight phase-map snapshots through the three-buffer handoff. |
+| `feedScheduled` |  | `plugin/juce/PluginProcessor.cpp:672` | `void TypePAlphaAudioProcessor::feedScheduled(int64_t limit)` | Feeds the scheduled MIDI events whose core frame is before the limit. |
+| `flushDeferred` |  | `plugin/juce/PluginProcessor.cpp:697` | `void TypePAlphaAudioProcessor::flushDeferred()` | Feeds the note-offs that waited for the chunk to render. |
+| `coreChunk` |  | `plugin/juce/PluginProcessor.cpp:704` | `void TypePAlphaAudioProcessor::coreChunk(void* context, p1::Engine& engine, int frames)` | Runs the per-core-chunk MIDI, tap and snapshot work. |
+| `processBlock` |  | `plugin/juce/PluginProcessor.cpp:717` | `void TypePAlphaAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midi)` | Runs the host block through the 48 kHz core path or the rate bridge. |
+| `phaseMap` |  | `plugin/juce/PluginProcessor.cpp:884` | `bool TypePAlphaAudioProcessor::phaseMap(int op, int part, p1::PhaseMapSnapshot& out) const` | Reads the current phase-map snapshot for the editor. |
+| `specMorph` |  | `plugin/juce/PluginProcessor.cpp:899` | `double TypePAlphaAudioProcessor::specMorph(int op, int part) const` | Reads the live spectral morph for the editor. |
+| `libraryFile` |  | `plugin/juce/PluginProcessor.cpp:909` | `juce::File TypePAlphaAudioProcessor::libraryFile() const` | Returns the shared library path. |
+| `resetPhaseMaps` |  | `plugin/juce/PluginProcessor.cpp:920` | `void TypePAlphaAudioProcessor::resetPhaseMaps()` | Clears the phase-map, LFO and envelope pools. |
+| `ensureLibraryLoaded` |  | `plugin/juce/PluginProcessor.cpp:925` | `void TypePAlphaAudioProcessor::ensureLibraryLoaded()` | Loads the shared library once. |
+| `saveLibrary` |  | `plugin/juce/PluginProcessor.cpp:947` | `LibrarySaveResult TypePAlphaAudioProcessor::saveLibrary()` | Runs the locked read-merge-write of the shared library. |
+| `~LockRelease` | LockRelease | `plugin/juce/PluginProcessor.cpp:969` | `~LockRelease()` | Destroys the object. |
+| `createEditor` |  | `plugin/juce/PluginProcessor.cpp:1024` | `juce::AudioProcessorEditor* TypePAlphaAudioProcessor::createEditor()` | Creates the plugin editor. |
+| `getStateInformation` |  | `plugin/juce/PluginProcessor.cpp:1030` | `void TypePAlphaAudioProcessor::getStateInformation(juce::MemoryBlock& destData)` | Serialises the APVTS, names, UI state, routing and library snapshot. |
+| `setStateInformation` |  | `plugin/juce/PluginProcessor.cpp:1063` | `void TypePAlphaAudioProcessor::setStateInformation(const void* data, int sizeInBytes)` | Restores the project state and migrates older versions. |
+| `createPluginFilter` |  | `plugin/juce/PluginProcessor.cpp:1157` | `juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()` | Creates the plugin filter. |
 | `push` | ScopeRing | `plugin/juce/PluginProcessor.h:25` | `void push(const float* data, int count)` | Runs the push step for the surrounding code. |
 | `read` | ScopeRing | `plugin/juce/PluginProcessor.h:26` | `void read(float* destination, int count)` | Runs the read step for the surrounding code. |
 | `~TypePAlphaAudioProcessor` | TypePAlphaAudioProcessor | `plugin/juce/PluginProcessor.h:52` | `~TypePAlphaAudioProcessor() override = default` | Destroys the object. |
@@ -753,8 +753,8 @@ paths in depth.
 | `tableError` |  | `plugin/tests/additive_bench.cpp:408` | `double tableError(const WaveTable& table, int mip, bool linear, double fundamental, const std::vector<int16_t>& amps, int limit)` | Returns the table error value. |
 | `qualityExtras` |  | `plugin/tests/additive_bench.cpp:443` | `void qualityExtras()` | Runs the quality extras step for the surrounding code. |
 | `oscillatorSeconds` |  | `plugin/tests/additive_bench.cpp:479` | `double oscillatorSeconds(bool additive)` | Returns the oscillator seconds value. |
-| `auditionOscillator` |  | `plugin/tests/additive_bench.cpp:533` | `void auditionOscillator(const std::string& path)` | Runs the audition oscillator step for the surrounding code. |
-| `main` |  | `plugin/tests/additive_bench.cpp:594` | `int main(int argc, char** argv)` | Runs the test or tool entry point. |
+| `auditionOscillator` |  | `plugin/tests/additive_bench.cpp:534` | `void auditionOscillator(const std::string& path)` | Runs the audition oscillator step for the surrounding code. |
+| `main` |  | `plugin/tests/additive_bench.cpp:595` | `int main(int argc, char** argv)` | Runs the test or tool entry point. |
 | `secondsSince` |  | `plugin/tests/additive_engine_bench.cpp:28` | `double secondsSince(std::chrono::steady_clock::time_point start)` | Returns the seconds since value. |
 | `setEngineParam` |  | `plugin/tests/additive_engine_bench.cpp:34` | `bool setEngineParam(p1::Engine& engine, const char* id, int32_t value)` | Writes the engine param. |
 | `writeWav` |  | `plugin/tests/additive_engine_bench.cpp:45` | `void writeWav(const std::string& path, const std::vector<int32_t>& samples)` | Writes the WAV capture. |
@@ -1778,15 +1778,15 @@ paths in depth.
   Clears the resampler ring and counters.
 - `pushCore` at line 80 through 90: `void RateBridge::pushCore(const int32_t* interleaved, int frames)`
   Writes interleaved core frames into the ring.
-- `pull` at line 92 through 125: `void RateBridge::pull(float* left, float* right, int frames)`
+- `pull` at line 92 through 133: `void RateBridge::pull(float* left, float* right, int frames)`
   Reads host frames through the polyphase kernel.
-- `renderChunk` at line 127 through 136: `void RateBridge::renderChunk(Engine& engine, int frames, CoreTapCallback onCore, void* context)`
+- `renderChunk` at line 135 through 144: `void RateBridge::renderChunk(Engine& engine, int frames, CoreTapCallback onCore, void* context)`
   Renders the chunk.
-- `process` at line 138 through 148: `void RateBridge::process(Engine& engine, float* left, float* right, int frames, CoreTapCallback onCore, void* context)`
+- `process` at line 146 through 156: `void RateBridge::process(Engine& engine, float* left, float* right, int frames, CoreTapCallback onCore, void* context)`
   Renders core chunks and pulls the host-rate output.
-- `latencySamples` at line 150 through 154: `int RateBridge::latencySamples() const`
+- `latencySamples` at line 158 through 162: `int RateBridge::latencySamples() const`
   Returns the bridge group delay in host samples.
-- `hasCore` at line 156 through 163: `bool RateBridge::hasCore(int hostFrames) const`
+- `hasCore` at line 164 through 171: `bool RateBridge::hasCore(int hostFrames) const`
   Reports whether a host block will render at least one core chunk.
 
 ### `plugin/engine/RateBridge.hpp`
@@ -1799,15 +1799,15 @@ paths in depth.
   The engine path: render core chunks, then pull host frames. The callback runs after each core chunk, before the tap state is overwritten.
 - `pushCore` at line 29 through 29: `void pushCore(const int32_t* interleaved, int frames)`
   Test and offline path that pushes interleaved int32 core frames and pulls host frames. The ring keeps the history the 128-tap kernel needs.
-- `pull` at line 30 through 30: `void pull(float* left, float* right, int frames)`
-  Reads host frames through the polyphase kernel.
-- `latencySamples` at line 32 through 32: `int latencySamples() const`
+- `pull` at line 32 through 32: `void pull(float* left, float* right, int frames)`
+  Reads host frames through the kernel. A null `right` folds the pair to mono in `left`.
+- `latencySamples` at line 34 through 34: `int latencySamples() const`
   Returns the bridge group delay in host samples.
-- `ratio` at line 33 through 33: `double ratio() const`
+- `ratio` at line 35 through 35: `double ratio() const`
   Returns the ratio value.
-- `hasCore` at line 37 through 37: `bool hasCore(int hostFrames) const`
+- `hasCore` at line 39 through 39: `bool hasCore(int hostFrames) const`
   True when a `process` call of `hostFrames` will render at least one core chunk, so the caller can feed the first chunk's events before it runs.
-- `renderChunk` at line 43 through 44: `void renderChunk(Engine& engine, int frames, CoreTapCallback onCore, void* context)`
+- `renderChunk` at line 45 through 46: `void renderChunk(Engine& engine, int frames, CoreTapCallback onCore, void* context)`
   Renders the chunk.
 
 ### `plugin/juce/ChunkNoteSet.h`
@@ -2573,55 +2573,55 @@ paths in depth.
   Constructs the processor, the engine interface, the MIDI bridge, the APVTS and the library.
 - `createLayout` at line 372 through 444: `juce::AudioProcessorValueTreeState::ParameterLayout TypePAlphaAudioProcessor::createLayout()`
   Creates the layout.
-- `prepareToPlay` at line 446 through 477: `void TypePAlphaAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)`
+- `prepareToPlay` at line 446 through 476: `void TypePAlphaAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)`
   Resets the engine, sizes the rate bridge and buffers, and syncs the parameters.
-- `releaseResources` at line 479 through 482: `void TypePAlphaAudioProcessor::releaseResources()`
+- `releaseResources` at line 478 through 481: `void TypePAlphaAudioProcessor::releaseResources()`
   Releases every engine voice.
-- `isBusesLayoutSupported` at line 484 through 491: `bool TypePAlphaAudioProcessor::isBusesLayoutSupported(const BusesLayout& layouts) const`
+- `isBusesLayoutSupported` at line 483 through 490: `bool TypePAlphaAudioProcessor::isBusesLayoutSupported(const BusesLayout& layouts) const`
   Accepts a disabled input and a mono or stereo output.
-- `syncParams` at line 493 through 512: `void TypePAlphaAudioProcessor::syncParams()`
+- `syncParams` at line 492 through 511: `void TypePAlphaAudioProcessor::syncParams()`
   Writes the changed APVTS values to the engine.
-- `syncMacros` at line 514 through 618: `void TypePAlphaAudioProcessor::syncMacros()`
+- `syncMacros` at line 513 through 617: `void TypePAlphaAudioProcessor::syncMacros()`
   Resolves the six macros to destination offsets and writes the effective values.
-- `feedMessage` at line 620 through 625: `void TypePAlphaAudioProcessor::feedMessage(p1::MidiBridge& midi, const juce::MidiMessage& message)`
+- `feedMessage` at line 619 through 624: `void TypePAlphaAudioProcessor::feedMessage(p1::MidiBridge& midi, const juce::MidiMessage& message)`
   Feeds the message.
-- `renderCore` at line 627 through 630: `void TypePAlphaAudioProcessor::renderCore(int32_t* out, int frames)`
+- `renderCore` at line 626 through 629: `void TypePAlphaAudioProcessor::renderCore(int32_t* out, int frames)`
   Renders one core chunk through the engine interface.
-- `pushTapScopes` at line 632 through 645: `void TypePAlphaAudioProcessor::pushTapScopes(p1::Engine& engine, int frames)`
+- `pushTapScopes` at line 631 through 644: `void TypePAlphaAudioProcessor::pushTapScopes(p1::Engine& engine, int frames)`
   Copies the ten engine tap buffers into the scope rings.
-- `publishMorph` at line 647 through 653: `void TypePAlphaAudioProcessor::publishMorph(p1::Engine& engine)`
+- `publishMorph` at line 646 through 652: `void TypePAlphaAudioProcessor::publishMorph(p1::Engine& engine)`
   Publishes the eight live spectral morphs.
-- `publishPhaseMaps` at line 655 through 671: `void TypePAlphaAudioProcessor::publishPhaseMaps(p1::Engine& engine)`
+- `publishPhaseMaps` at line 654 through 670: `void TypePAlphaAudioProcessor::publishPhaseMaps(p1::Engine& engine)`
   Publishes the eight phase-map snapshots through the three-buffer handoff.
-- `feedScheduled` at line 673 through 696: `void TypePAlphaAudioProcessor::feedScheduled(int64_t limit)`
+- `feedScheduled` at line 672 through 695: `void TypePAlphaAudioProcessor::feedScheduled(int64_t limit)`
   Feeds the scheduled MIDI events whose core frame is before the limit.
-- `flushDeferred` at line 698 through 703: `void TypePAlphaAudioProcessor::flushDeferred()`
+- `flushDeferred` at line 697 through 702: `void TypePAlphaAudioProcessor::flushDeferred()`
   Feeds the note-offs that waited for the chunk to render.
-- `coreChunk` at line 705 through 716: `void TypePAlphaAudioProcessor::coreChunk(void* context, p1::Engine& engine, int frames)`
+- `coreChunk` at line 704 through 715: `void TypePAlphaAudioProcessor::coreChunk(void* context, p1::Engine& engine, int frames)`
   Runs the per-core-chunk MIDI, tap and snapshot work.
-- `processBlock` at line 718 through 888: `void TypePAlphaAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midi)`
+- `processBlock` at line 717 through 882: `void TypePAlphaAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midi)`
   Runs the host block through the 48 kHz core path or the rate bridge.
-- `phaseMap` at line 890 through 903: `bool TypePAlphaAudioProcessor::phaseMap(int op, int part, p1::PhaseMapSnapshot& out) const`
+- `phaseMap` at line 884 through 897: `bool TypePAlphaAudioProcessor::phaseMap(int op, int part, p1::PhaseMapSnapshot& out) const`
   Reads the current phase-map snapshot for the editor.
-- `specMorph` at line 905 through 913: `double TypePAlphaAudioProcessor::specMorph(int op, int part) const`
+- `specMorph` at line 899 through 907: `double TypePAlphaAudioProcessor::specMorph(int op, int part) const`
   Reads the live spectral morph for the editor.
-- `libraryFile` at line 915 through 924: `juce::File TypePAlphaAudioProcessor::libraryFile() const`
+- `libraryFile` at line 909 through 918: `juce::File TypePAlphaAudioProcessor::libraryFile() const`
   Returns the shared library path.
-- `resetPhaseMaps` at line 926 through 929: `void TypePAlphaAudioProcessor::resetPhaseMaps()`
+- `resetPhaseMaps` at line 920 through 923: `void TypePAlphaAudioProcessor::resetPhaseMaps()`
   Clears the phase-map, LFO and envelope pools.
-- `ensureLibraryLoaded` at line 931 through 951: `void TypePAlphaAudioProcessor::ensureLibraryLoaded()`
+- `ensureLibraryLoaded` at line 925 through 945: `void TypePAlphaAudioProcessor::ensureLibraryLoaded()`
   Loads the shared library once.
-- `saveLibrary` at line 953 through 1028: `LibrarySaveResult TypePAlphaAudioProcessor::saveLibrary()`
+- `saveLibrary` at line 947 through 1022: `LibrarySaveResult TypePAlphaAudioProcessor::saveLibrary()`
   Runs the locked read-merge-write of the shared library.
-- `~LockRelease` at line 975 through 975: `~LockRelease()`
+- `~LockRelease` at line 969 through 969: `~LockRelease()`
   Destroys the object.
-- `createEditor` at line 1030 through 1034: `juce::AudioProcessorEditor* TypePAlphaAudioProcessor::createEditor()`
+- `createEditor` at line 1024 through 1028: `juce::AudioProcessorEditor* TypePAlphaAudioProcessor::createEditor()`
   Creates the plugin editor.
-- `getStateInformation` at line 1036 through 1067: `void TypePAlphaAudioProcessor::getStateInformation(juce::MemoryBlock& destData)`
+- `getStateInformation` at line 1030 through 1061: `void TypePAlphaAudioProcessor::getStateInformation(juce::MemoryBlock& destData)`
   Serialises the APVTS, names, UI state, routing and library snapshot.
-- `setStateInformation` at line 1069 through 1161: `void TypePAlphaAudioProcessor::setStateInformation(const void* data, int sizeInBytes)`
+- `setStateInformation` at line 1063 through 1155: `void TypePAlphaAudioProcessor::setStateInformation(const void* data, int sizeInBytes)`
   Restores the project state and migrates older versions.
-- `createPluginFilter` at line 1163 through 1166: `juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()`
+- `createPluginFilter` at line 1157 through 1160: `juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()`
   Creates the plugin filter.
 
 ### `plugin/juce/PluginProcessor.h`
@@ -2989,11 +2989,11 @@ paths in depth.
   Returns the table error value.
 - `qualityExtras` at line 443 through 477: `void qualityExtras()`
   Runs the quality extras step for the surrounding code.
-- `oscillatorSeconds` at line 479 through 531: `double oscillatorSeconds(bool additive)`
+- `oscillatorSeconds` at line 479 through 532: `double oscillatorSeconds(bool additive)`
   Returns the oscillator seconds value.
-- `auditionOscillator` at line 533 through 590: `void auditionOscillator(const std::string& path)`
+- `auditionOscillator` at line 534 through 591: `void auditionOscillator(const std::string& path)`
   Runs the audition oscillator step for the surrounding code.
-- `main` at line 594 through 666: `int main(int argc, char** argv)`
+- `main` at line 595 through 667: `int main(int argc, char** argv)`
   Runs the test or tool entry point.
 
 ### `plugin/tests/additive_engine_bench.cpp`
@@ -3348,7 +3348,7 @@ paths in depth.
   Returns the image frequencies value.
 - `check` at line 120 through 124: `bool check(bool condition, const char* what)`
   Records a test assertion.
-- `main` at line 128 through 192: `int main()`
+- `main` at line 128 through 221: `int main()`
   Runs the test or tool entry point.
 
 ### `plugin/tests/spectral.cpp`

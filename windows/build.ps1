@@ -43,6 +43,24 @@ if (-not $clang) {
 $clangDir = Split-Path -Parent $clang
 $env:PATH = "$clangDir;$env:PATH"
 
+# Ninja ships with the Visual Studio CMake tools, but its directory is not on
+# PATH in every shell. Add it rather than failing with "spawn ninja ENOENT".
+if (-not (Get-Command ninja -ErrorAction SilentlyContinue)) {
+    $vswhere = Join-Path ${env:ProgramFiles(x86)} "Microsoft Visual Studio\Installer\vswhere.exe"
+    $vsRoot = & $vswhere -latest -products * `
+        -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 `
+        -property installationPath
+    if ($vsRoot) {
+        $ninjaDir = Join-Path $vsRoot "Common7\IDE\CommonExtensions\Microsoft\CMake\Ninja"
+        if (Test-Path (Join-Path $ninjaDir "ninja.exe")) {
+            $env:PATH = "$ninjaDir;$env:PATH"
+        }
+    }
+}
+if (-not (Get-Command ninja -ErrorAction SilentlyContinue)) {
+    throw "ninja not found. Install Ninja or the Visual Studio CMake tools."
+}
+
 $linkerName = if ($Linker -eq "lld") { "lld-link.exe" } else { "link.exe" }
 $linkerPath = (Get-Command $linkerName -ErrorAction SilentlyContinue).Source
 if (-not $linkerPath) { $linkerPath = Join-Path $clangDir $linkerName }

@@ -450,7 +450,6 @@ void TypePAlphaAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBl
     midi_.reset();
     rateBridge_.reset();
     directBuffer_.assign(static_cast<std::size_t>(kControlBlock) * 2u, 0);
-    monoFold_.assign(static_cast<std::size_t>(std::max(1, samplesPerBlock)), 0.0f);
     scheduled_.clear();
     scheduled_.reserve(static_cast<std::size_t>(std::max(1, samplesPerBlock)) * 2u + 16u);
     deferredOffs_.clear();
@@ -852,18 +851,13 @@ void TypePAlphaAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
         syncMacros();
         float* left = buffer.getWritePointer(0);
         const bool mono = channels == 1;
-        if (mono && monoFold_.size() < static_cast<std::size_t>(frames))
-            monoFold_.resize(static_cast<std::size_t>(frames));
-        /* The bridge writes two channels, so a mono host takes the second one in
-         * a scratch buffer and folds it down after the pull. */
-        float* right = mono ? monoFold_.data() : buffer.getWritePointer(1);
+        /* The bridge writes two channels, or folds the pair when `right` is
+         * null. A mono host therefore needs no scratch buffer and no resize on
+         * the audio thread. */
+        float* right = mono ? nullptr : buffer.getWritePointer(1);
         if (rateBridge_.hasCore(frames))
             feedScheduled(static_cast<int64_t>(coreFrames_) + kControlBlock);
         rateBridge_.process(engine_, left, right, frames, &coreChunk, this);
-        if (mono) {
-            for (int i = 0; i < frames; ++i)
-                left[i] = (left[i] + right[i]) * 0.5f;
-        }
         outputScope_.push(left, frames);
         publishMorph(engine_);
         publishPhaseMaps(engine_);

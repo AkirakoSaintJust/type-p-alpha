@@ -31,8 +31,8 @@ Every tracked source and build file, with its line count and role.
 | `plugin/engine/MidiBridge.cpp` | 77 | C++ | MIDI bridge implementation and the engine callback table |
 | `plugin/engine/MidiBridge.hpp` | 26 | C++ header | MIDI bridge interface between the host queue and the engine |
 | `plugin/engine/PhaseMapLayout.h` | 95 | C/C++ header | phase-map pool layout shared by the engine snapshot and tests |
-| `plugin/engine/RateBridge.cpp` | 165 | C++ | resampler kernel, ring, pull path and latency |
-| `plugin/engine/RateBridge.hpp` | 55 | C++ header | output-only 128-tap polyphase resampler from 48 kHz to the host rate |
+| `plugin/engine/RateBridge.cpp` | 173 | C++ | resampler kernel, ring, pull path and latency |
+| `plugin/engine/RateBridge.hpp` | 57 | C++ header | output-only 128-tap polyphase resampler from 48 kHz to the host rate |
 | `plugin/juce/ChunkNoteSet.h` | 37 | C/C++ header | notes started in the current control chunk, keyed by channel and pitch |
 | `plugin/juce/CMakeLists.txt` | 208 | CMake | JUCE host, editor, pages and processor |
 | `plugin/juce/MacroLaw.h` | 61 | C/C++ header | macro source and destination laws and the target table view |
@@ -45,15 +45,15 @@ Every tracked source and build file, with its line count and role.
 | `plugin/juce/PagesSpectral.cpp` | 998 | C++ | spectral a/b editors, spectral modulation page and displays |
 | `plugin/juce/PluginEditor.cpp` | 1810 | C++ | JUCE editor, header, toolbar, dialogs and page switching |
 | `plugin/juce/PluginEditor.h` | 147 | C/C++ header | JUCE editor declaration and page state |
-| `plugin/juce/PluginProcessor.cpp` | 1166 | C++ | JUCE processor, block path, MIDI scheduling, parameter sync and library save |
-| `plugin/juce/PluginProcessor.h` | 193 | C/C++ header | JUCE processor declaration, scope rings and snapshot buffers |
+| `plugin/juce/PluginProcessor.cpp` | 1160 | C++ | JUCE processor, block path, MIDI scheduling, parameter sync and library save |
+| `plugin/juce/PluginProcessor.h` | 192 | C/C++ header | JUCE processor declaration, scope rings and snapshot buffers |
 | `plugin/juce/VolumeLaw.h` | 60 | C/C++ header | master volume fader law and dB text |
 | `plugin/preset/CutoffLaw.h` | 55 | C/C++ header | cutoff position law and the old-to-new conversion |
 | `plugin/preset/part_defaults.h` | 21 | C/C++ header | factory defaults for one part |
 | `plugin/preset/presets_host.c` | 38 | C | host stubs for the preset record layer |
 | `plugin/preset/PresetStore.cpp` | 1138 | C++ | library store, record migrations, merge and file I/O |
 | `plugin/preset/PresetStore.hpp` | 225 | C++ header | in-memory part and multi library with migrations and merge |
-| `plugin/tests/additive_bench.cpp` | 666 | C++ | Headless additive table experiment |
+| `plugin/tests/additive_bench.cpp` | 667 | C++ | Headless additive table experiment |
 | `plugin/tests/additive_engine_bench.cpp` | 155 | C++ | Headless additive engine prototype: the real voice graph with the additive oscillator and the per-voice envelope morph |
 | `plugin/tests/editor_snapshot.cpp` | 933 | C++ | Milestone 3: render the designed editor to PNG for visual review |
 | `plugin/tests/engine_parity.cpp` | 491 | C++ | Milestone 1: the engine render reference and the state, filter and MIDI isolation checks |
@@ -72,7 +72,7 @@ Every tracked source and build file, with its line count and role.
 | `plugin/tests/plugin_smoke.cpp` | 1104 | C++ | Milestone 2 to 6: the JUCE processor smoke, state and parameter test, which needs no DAW |
 | `plugin/tests/plugin_stability.cpp` | 256 | C++ | Stability and edge-case sweep for the JUCE processor, which needs no DAW |
 | `plugin/tests/preset_smoke.cpp` | 1008 | C++ | engine, host, preset, UI and audio tests |
-| `plugin/tests/rate_bridge_test.cpp` | 192 | C++ | Milestone 5: measure the 128-tap polyphase rate bridge |
+| `plugin/tests/rate_bridge_test.cpp` | 221 | C++ | Milestone 5: measure the 128-tap polyphase rate bridge |
 | `plugin/tests/spectral.cpp` | 384 | C++ | The additive path: the spectrum waveform, the a/b morph, the morph envelope and the morph LFO |
 | `plugin/tests/spectral_bench.cpp` | 265 | C++ | Measures the additive table regeneration and the control tick |
 | `plugin/tests/ui_frame_bench.cpp` | 186 | C++ | engine, host, preset, UI and audio tests |
@@ -97,4 +97,4 @@ Every tracked source and build file, with its line count and role.
 | `tools/gen_math_tables.py` | 172 | Python | wavetable and maths table generators |
 | `tools/gen_wavetable.py` | 241 | Python | wavetable and maths table generators |
 | `windows/bench-isa.ps1` | 86 | PowerShell | Windows build and benchmark scripts |
-| `windows/build.ps1` | 91 | PowerShell | Windows build and benchmark scripts |
+| `windows/build.ps1` | 109 | PowerShell | Windows build and benchmark scripts |

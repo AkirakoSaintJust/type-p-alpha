@@ -27,6 +27,8 @@ public:
     /* Test and offline path that pushes interleaved int32 core frames and pulls
      * host frames. The ring keeps the history the 128-tap kernel needs. */
     void pushCore(const int32_t* interleaved, int frames);
+    /* Reads host frames through the kernel. A null `right` folds the pair to
+     * mono in `left`. */
     void pull(float* left, float* right, int frames);
 
     int latencySamples() const;

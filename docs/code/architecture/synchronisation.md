@@ -205,9 +205,9 @@ value is drawn beside it. The UI never writes the effective value back.
 
 `processBlock` begins with `juce::ScopedNoDenormals`, so a decaying tail does not
 hit denormal arithmetic. The audio path uses no locks, no file access, no
-allocation in the steady state and no JUCE component calls. The only JUCE call
-that can allocate is the `monoFold_` resize when the host changes the block size
-without a new `prepareToPlay`. The vector is normally sized in `prepareToPlay`.
+allocation in the steady state and no JUCE component calls. A mono host is folded
+inside the resampler pull, so the processor keeps no scratch buffer and never
+resizes one on the audio thread.
 
 The editor timer runs at 30 Hz. It reads the scope rings and the phase-map
 snapshot, updates the visible page and repaints. A slow frame skips visual data

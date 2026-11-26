@@ -187,6 +187,35 @@ int main()
     }
     ok = check(blocksOk, "every 32 to 1024 frame block renders") && ok;
 
+    /* A mono host passes a null right channel. The pull must fold the pair at
+     * 0.5, the same as the direct path, without a scratch buffer. */
+    bool monoOk = true;
+    for (double rate : rates) {
+        p1::RateBridge stereo;
+        p1::RateBridge mono;
+        stereo.prepare(rate, 256);
+        mono.prepare(rate, 256);
+        for (int block = 0; block < 8; ++block) {
+            int32_t chunk[64] = {};
+            for (int i = 0; i < 32; ++i) {
+                chunk[i * 2] = 12000 - (block * 32 + i) * 3;
+                chunk[i * 2 + 1] = -4000 + (block * 32 + i) * 2;
+            }
+            stereo.pushCore(chunk, 32);
+            mono.pushCore(chunk, 32);
+        }
+        std::array<float, 128> left{};
+        std::array<float, 128> right{};
+        std::array<float, 128> folded{};
+        stereo.pull(left.data(), right.data(), 128);
+        mono.pull(folded.data(), nullptr, 128);
+        for (std::size_t i = 0; i < folded.size(); ++i) {
+            const float expected = (left[i] + right[i]) * 0.5f;
+            monoOk = monoOk && std::abs(folded[i] - expected) <= 1.0e-7f;
+        }
+    }
+    ok = check(monoOk, "a null right channel folds the pair to mono") && ok;
+
     std::printf("rate: %s\n", ok ? "passed" : "FAILED");
     return ok ? 0 : 1;
 }

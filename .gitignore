@@ -1,4 +1,5 @@
 build/
+build-vscode/
 publish/
 .dev/
 __pycache__/

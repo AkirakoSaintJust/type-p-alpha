@@ -486,9 +486,10 @@ double oscillatorSeconds(bool additive)
     const auto bright = buildWaveTable(kHarmonics, kSize,
                                        recipe(kHarmonics, 0.7, 6, 1.2));
     const int levels = mipLevels(kHarmonics);
-    std::array<uint32_t, 80> phase{};
-    std::array<uint32_t, 80> step{};
-    std::array<int, 80> mip{};
+    constexpr int kOperatorVoices = kVoices * kOperators;
+    std::array<uint32_t, kOperatorVoices> phase{};
+    std::array<uint32_t, kOperatorVoices> step{};
+    std::array<int, kOperatorVoices> mip{};
     for (int voice = 0; voice < kVoices; ++voice) {
         const double fundamental =
             440.0 * std::pow(2.0, (48.0 + voice * 2.0 - 69.0) / 12.0);

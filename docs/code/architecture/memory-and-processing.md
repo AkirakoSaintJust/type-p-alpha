@@ -348,7 +348,6 @@ in the constructor and in `prepareToPlay`:
 - `Engine` allocates the 492,900-byte state once.
 - `RateBridge::prepare` resizes the ring and the 128 by 1,024 kernel.
 - `directBuffer_` is 32 stereo frames.
-- `monoFold_` is the host block size.
 - `scheduled_` reserves twice the host block size plus 16.
 - `deferredOffs_` reserves 64.
 - `ScopeRing` has a fixed 2,048-float ring and a fixed scratch array.

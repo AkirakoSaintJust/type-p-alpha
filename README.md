@@ -6,6 +6,8 @@ _Type P_, where _P_ stands for _phase_, is the name for the general project of d
 
 The reasons for abandoning Type P.fm1 are that I've decided to disengage from the custom firmware community for highly personal and slightly political reasons, and that being free from the FM1's limited screen, controls and CPU power allows for a kind of research into synthesis techniques that I really want to try.
 
+**Beta 1 is on the [releases page](https://github.com/AkirakoSaintJust/type-p-alpha/releases/tag/v0.1.0-beta.1)** as Windows x86_64 and Linux x86_64/aarch64 VST3 and CLAP builds.
+
 ## Current synth architecture
 
 **Type P.α** has 24 voices split across two four-operator parts. Each operator contains:
@@ -40,7 +42,7 @@ I've also tried to make sound design easier by restraining components to a relat
 
 Phase modulation indices are calibrated to be similar to Yamaha's OPN, OPM, OPL and OPZ families, rather than the softer sound of synths like the DX7, DX9 and Reface DX. Feedback scales with the operator's amplitude, as in Yamaha's traditional DX synths and unlike the Reface DX, but like the Reface DX's feedback, it is bipolar and the negative (or more accurately, rectified) half adds odd harmonics when applied to a sine wave. Feedback also has an LFO and envelope per operator, which I think is a powerful addition. I'm well chuffed with how it works but I wonder whether having a feedback envelope would make more sense with Reface DX-style amplitude-independent feedback? Anyway, for more details, see the [operator feedback](plugin/feature-contract-feedback.md) and [operator LFOs](plugin/feature-contract-operator-lfos.md) contracts, and the [the feedback research study](docs/research/README.md).
 
-Results so far seem to be fit for intent. I've been able to easily make rudimentary additive patches that sound a bit like the PPG sounds Tangerine Dream used circa Exit, additive brass, woodwinds and strings; and pseudo-PWM pads and leads by pairing saw operators with sine operators at 20-35% feedback, which gives them a ramp waveform. Conversion of OPM patches to Type P ranges produces spectrally similar results to the originals, and I reckon they are easy to edit. Nobody else has played or heard it yet, and I haven't designed a test.
+Results so far seem to be fit for intent. I've been able to easily make rudimentary additive patches that sound a bit like the PPG sounds Tangerine Dream used circa Exit, additive brass, woodwinds and strings; and pseudo-PWM pads and leads by pairing saw operators with sine operators at 20-35% feedback, which gives them a ramp waveform. Conversion of OPM patches to Type P ranges produces spectrally similar results to the originals, and I reckon they are easy to edit. Nobody else had played or heard it before the first public beta, and I haven't designed a listening test.
 
 ## Potential things I'm considering
 
@@ -58,7 +60,7 @@ Results so far seem to be fit for intent. I've been able to easily make rudiment
 7. Library synchronisation across running instances.
 8. Rate and depth fades on every LFO, with the envelope rate table's time scale and a two-line graph.
 9. Per-operator stochastic phaseshaping, with a live composed map, zero-crossing locks, drift, flips, a local reorder, and a dedicated LFO and signed envelope on the `op phasemap` tab (see [the stochastic phaseshaping contract](plugin/feature-contract-stochastic-phaseshaping.md)). The shipped read runs at 1× and uses the exact 1024-entry post-F table (`P1_PHASE_READ=11`), which is bit-exact against the F/segment read. The 2× half-band was designed but not built: the current 1× worst case is about 1.5× the phase-off baseline, and the aliasing would need a fresh CPU budget.
-10. Six macros with relative CC, wheel and velocity sources, per-voice operator levels, feedbacks, morphs, envelope rates and LFO rates and depths, and a macros page (see [the macro contract](plugin/feature-contract-macros.md)). The per-voice breakpoints and pan note policy are still to come.
+10. Six macros with relative CC, wheel and velocity sources, per-voice operator levels, feedbacks, morphs, envelope rates and LFO rates and depths, and a macros page (see [the macro contract](plugin/feature-contract-macros.md)). The per-voice breakpoints and pan note policy are planned after the first beta.
 11. Ring modulation between consecutive carriers, with three pairs, a per-pair level and one original-output gate per carrier (see [the ringmod contract](plugin/feature-contract-ringmod.md)).
 
 ## Empyrical stuff I'd like to try

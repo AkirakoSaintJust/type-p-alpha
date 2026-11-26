@@ -161,7 +161,6 @@ private:
     std::atomic<float>* outputVolume_ = nullptr;
     float volumeGain_ = 1.0f;
     std::vector<int32_t> directBuffer_;
-    std::vector<float> monoFold_;
     std::atomic<bool> paramsDirty_{false};
     double hostRate_ = 48000.0;
 

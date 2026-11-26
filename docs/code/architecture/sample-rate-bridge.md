@@ -167,14 +167,23 @@ no extra colour.
 
 ## Mono hosts
 
-The bridge always writes two channels. A mono host gets the right channel in
-`monoFold_`, then the processor folds the pair:
+`RateBridge::pull` accepts a null right channel and folds the pair itself:
 
 ```cpp
-left[i] = (left[i] + right[i]) * 0.5f;
+const float lv = l * scale;
+const float rv = r * scale;
+if (right != nullptr) {
+    left[i] = lv;
+    right[i] = rv;
+} else {
+    left[i] = (lv + rv) * 0.5f;
+}
 ```
 
-A hard-panned part is 6 dB down in mono, and a centred part keeps its level.
+A hard-panned part is 6 dB down in mono, and a centred part keeps its level. The
+fold happens per frame during the pull, so a mono host needs no scratch buffer
+and no allocation on the audio thread. The direct 48 kHz path applies the same
+fold while it converts the core buffer.
 
 ## Tests and evidence
 

@@ -91,7 +91,7 @@ void RateBridge::pushCore(const int32_t* interleaved, int frames)
 
 void RateBridge::pull(float* left, float* right, int frames)
 {
-    if (left == nullptr || right == nullptr || frames <= 0)
+    if (left == nullptr || frames <= 0)
         return;
     if (ringSize_ <= 0 || kernel_.empty()) {
         std::fill(left, left + frames, 0.0f);
@@ -118,8 +118,16 @@ void RateBridge::pull(float* left, float* right, int frames)
             l += static_cast<float>(ring_[offset]) * weights[tap];
             r += static_cast<float>(ring_[offset + 1]) * weights[tap];
         }
-        left[i] = l * scale;
-        right[i] = r * scale;
+        const float lv = l * scale;
+        const float rv = r * scale;
+        if (right != nullptr) {
+            left[i] = lv;
+            right[i] = rv;
+        } else {
+            /* A mono host takes the folded pair, so a centred part keeps its
+             * level and a hard-panned part sits 6 dB down. */
+            left[i] = (lv + rv) * 0.5f;
+        }
         ++outputIndex_;
     }
 }

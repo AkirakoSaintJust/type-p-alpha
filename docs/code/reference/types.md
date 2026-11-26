@@ -80,10 +80,10 @@ field index in `state-fields.md`.
 | `PluginEditor` | class | `plugin/juce/PluginEditor.h:34` | 72 | The JUCE editor for the whole panel. |
 | `PartFxSection` | enum | `plugin/juce/PluginEditor.h:36` | 7 |  |
 | `OperatorSection` | enum | `plugin/juce/PluginEditor.h:46` | 13 |  |
-| `LockRelease` | struct | `plugin/juce/PluginProcessor.cpp:973` | 1 |  |
+| `LockRelease` | struct | `plugin/juce/PluginProcessor.cpp:967` | 1 |  |
 | `ScopeRing` | class | `plugin/juce/PluginProcessor.h:22` | 6 | The single-producer/single-consumer scope ring. |
 | `LibrarySaveResult` | struct | `plugin/juce/PluginProcessor.h:39` | 7 | The outcome of a library save. A conflict means another instance wrote the slot first, so the disk version stayed and the local edit is still only in memory. `unreadable` means the file exists but could not be parsed, so nothing was written over it. |
-| `TypePAlphaAudioProcessor` | class | `plugin/juce/PluginProcessor.h:49` | 81 | The JUCE audio processor and the host-facing plugin object. |
+| `TypePAlphaAudioProcessor` | class | `plugin/juce/PluginProcessor.h:49` | 80 | The JUCE audio processor and the host-facing plugin object. |
 | `MacroFeedback` | struct | `plugin/juce/PluginProcessor.h:108` | 3 | What a macro destination does to one parameter right now. The stored value stays in the parameter. The `effective` value is the raw value the engine receives, which differs whenever a macro with a range deviates from its knob. |
 | `ScheduledEvent` | struct | `plugin/juce/PluginProcessor.h:135` | 2 |  |
 | `SpecBlock` | struct | `plugin/preset/PresetStore.cpp:723` | 3 | The spectral blocks: version 14 target, version 13 rates base and the separate version 13 depth. |
@@ -294,7 +294,7 @@ The C++ interface over one generated engine state.
 
 ### `RateBridge`
 
-`class` at `plugin/engine/RateBridge.hpp:15` through line 53.
+`class` at `plugin/engine/RateBridge.hpp:15` through line 55.
 
 Output-only 128-tap Kaiser-windowed sinc polyphase resampler. The core runs at 48 kHz, whilst the bridge converts to the host rate, and at 48 kHz the processor bypasses it so the core output stays bit-exact there.
 
@@ -1486,7 +1486,7 @@ Fields and enumerators:
 
 ### `LockRelease`
 
-`struct` at `plugin/juce/PluginProcessor.cpp:973` through line 976.
+`struct` at `plugin/juce/PluginProcessor.cpp:967` through line 970.
 
 Fields and enumerators:
 
@@ -1529,7 +1529,7 @@ Fields and enumerators:
 
 ### `TypePAlphaAudioProcessor`
 
-`class` at `plugin/juce/PluginProcessor.h:49` through line 193.
+`class` at `plugin/juce/PluginProcessor.h:49` through line 192.
 
 The JUCE audio processor and the host-facing plugin object.
 
@@ -1575,7 +1575,7 @@ Fields and enumerators:
 - `juce::AudioProcessorValueTreeState apvts_;`
 - `std::array<int32_t, kP1ParamCount> lastParams_{};`
 - `std::array<std::atomic<float>*, kP1ParamCount> paramValues_{};`
-- ... and 41 more fields.
+- ... and 40 more fields.
 
 Methods:
 
