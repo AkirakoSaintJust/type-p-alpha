@@ -8,7 +8,12 @@ The reasons for abandoning Type P.fm1 are that I've decided to disengage from th
 
 **Beta 1 is on the [releases page](https://github.com/AkirakoSaintJust/type-p-alpha/releases/tag/v0.1.0-beta.1)** as Windows x86_64 and Linux x86_64/aarch64 VST3 and CLAP builds, plus experimental macOS universal AU and CLAP builds.
 
-The macOS packages are experimental: P1Onken does not have a Mac, so they are built and checked by CI but have not been played in a host.
+Nobody at P1Onken has a Mac, so macOS the packages are built and checked by CI but haven't been played in a host. I can't promise they'll run at all.
+In case your macOS DAW doesn't scan the plugin, try copying the path to it and running
+```terminal
+xattr -rd com.apple.quarantine the-path-to-the-plugin
+```
+where `the-path-to-the-plugin` is (at the risk of sounding redundant lol) the path to the plugin.
 
 ## Current synth architecture
 
