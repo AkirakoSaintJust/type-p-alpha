@@ -34,7 +34,7 @@ Every tracked source and build file, with its line count and role.
 | `plugin/engine/RateBridge.cpp` | 173 | C++ | resampler kernel, ring, pull path and latency |
 | `plugin/engine/RateBridge.hpp` | 57 | C++ header | output-only 128-tap polyphase resampler from 48 kHz to the host rate |
 | `plugin/juce/ChunkNoteSet.h` | 37 | C/C++ header | notes started in the current control chunk, keyed by channel and pitch |
-| `plugin/juce/CMakeLists.txt` | 208 | CMake | JUCE host, editor, pages and processor |
+| `plugin/juce/CMakeLists.txt` | 212 | CMake | JUCE host, editor, pages and processor |
 | `plugin/juce/MacroLaw.h` | 61 | C/C++ header | macro source and destination laws and the target table view |
 | `plugin/juce/Pages.cpp` | 275 | C++ | patch settings page, part cards and voice mode |
 | `plugin/juce/Pages.h` | 428 | C/C++ header | shared page base, card frame and page factory declarations |

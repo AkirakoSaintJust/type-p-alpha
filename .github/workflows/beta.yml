@@ -193,8 +193,129 @@ jobs:
           name: windows-x86_64-clap
           path: "Type-P.alpha-${{ inputs.version }}-windows-x86_64-avx2-clap.zip"
 
+  macos-universal:
+    runs-on: macos-15-intel
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v7
+      - name: Configure arm64
+        run: >
+          cmake -S . -B build-arm -G Ninja -DCMAKE_BUILD_TYPE=Release
+          -DCMAKE_OSX_ARCHITECTURES=arm64
+          -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0
+          -DP1_MODERN=ON
+      - name: Build arm64
+        run: cmake --build build-arm
+      - name: Configure x86_64
+        run: >
+          cmake -S . -B build-x86 -G Ninja -DCMAKE_BUILD_TYPE=Release
+          -DCMAKE_OSX_ARCHITECTURES=x86_64
+          -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0
+          -DP1_MODERN=ON
+      - name: Build x86_64
+        run: cmake --build build-x86
+      - name: Test x86_64
+        run: >
+          ctest --test-dir build-x86 --output-on-failure
+          -E "linux_daws|plugin_editor_snapshot|plugin_editor_snapshot_diff"
+      - name: Join the universal AU and CLAP
+        run: |
+          set -e
+          x=build-x86/plugin/juce/type_p_alpha_artefacts/Release
+          a=build-arm/plugin/juce/type_p_alpha_artefacts/Release
+          dist=dist-macos
+          rm -rf "$dist"
+          mkdir -p "$dist"
+          cp -R "$x/AU/Type P.alpha.component" "$dist/"
+          cp -R "$x/CLAP/Type P.alpha.clap" "$dist/"
+          lipo -create \
+            "$x/AU/Type P.alpha.component/Contents/MacOS/Type P.alpha" \
+            "$a/AU/Type P.alpha.component/Contents/MacOS/Type P.alpha" \
+            -output "$dist/Type P.alpha.component/Contents/MacOS/Type P.alpha"
+          lipo -create \
+            "$x/CLAP/Type P.alpha.clap/Contents/MacOS/Type P.alpha" \
+            "$a/CLAP/Type P.alpha.clap/Contents/MacOS/Type P.alpha" \
+            -output "$dist/Type P.alpha.clap/Contents/MacOS/Type P.alpha"
+          for f in \
+            "$dist/Type P.alpha.component/Contents/MacOS/Type P.alpha" \
+            "$dist/Type P.alpha.clap/Contents/MacOS/Type P.alpha"; do
+            archs=$(lipo -archs "$f")
+            echo "$f: $archs"
+            case "$archs" in
+              *arm64*x86_64*|*x86_64*arm64*) ;;
+              *) echo "beta: $f is not universal"; exit 1 ;;
+            esac
+          done
+      - name: Validate the AU
+        run: |
+          set -e
+          mkdir -p "$HOME/Library/Audio/Plug-Ins/Components"
+          rm -rf "$HOME/Library/Audio/Plug-Ins/Components/Type P.alpha.component"
+          cp -R "dist-macos/Type P.alpha.component" \
+            "$HOME/Library/Audio/Plug-Ins/Components/"
+          killall -9 AudioComponentRegistrar 2>/dev/null || true
+          sleep 2
+          auval -v aumu Tpal P1on
+      - name: Package
+        run: |
+          set -eu
+          version="${{ inputs.version }}"
+
+          for format in au clap; do
+            stage="stage-macos-$format"
+            rm -rf "$stage"
+            mkdir -p "$stage/licences"
+            cp LICENSE LICENSING.md "$stage/"
+            cp third-party-licenses/*.txt "$stage/licences/"
+          done
+          cp -R "dist-macos/Type P.alpha.component" stage-macos-au/
+          cp -R "dist-macos/Type P.alpha.clap" stage-macos-clap/
+
+          cat > stage-macos-au/INSTALL.txt <<'EOF'
+          Type P.alpha, macOS universal, AU
+
+          Experimental build. P1Onken does not have a Mac, so this package is
+          built and checked by CI but has not been tested in a host.
+
+          Copy "Type P.alpha.component" into:
+            ~/Library/Audio/Plug-Ins/Components/
+
+          The build is unsigned and not notarised. If macOS blocks it, run:
+            xattr -dr com.apple.quarantine "~/Library/Audio/Plug-Ins/Components/Type P.alpha.component"
+
+          The binary is universal: arm64 and x86_64 (x86-64-v3, AVX2).
+          EOF
+
+          cat > stage-macos-clap/INSTALL.txt <<'EOF'
+          Type P.alpha, macOS universal, CLAP
+
+          Experimental build. P1Onken does not have a Mac, so this package is
+          built and checked by CI but has not been tested in a host.
+
+          Copy "Type P.alpha.clap" into:
+            ~/Library/Audio/Plug-Ins/CLAP/
+
+          The build is unsigned and not notarised. If macOS blocks it, run:
+            xattr -dr com.apple.quarantine "~/Library/Audio/Plug-Ins/CLAP/Type P.alpha.clap"
+
+          The binary is universal: arm64 and x86_64 (x86-64-v3, AVX2).
+          EOF
+
+          (cd stage-macos-au &&
+            zip -qry "../Type-P.alpha-${version}-macos-universal-au.zip" .)
+          (cd stage-macos-clap &&
+            zip -qry "../Type-P.alpha-${version}-macos-universal-clap.zip" .)
+      - uses: actions/upload-artifact@v7
+        with:
+          name: macos-universal-au
+          path: "Type-P.alpha-${{ inputs.version }}-macos-universal-au.zip"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: macos-universal-clap
+          path: "Type-P.alpha-${{ inputs.version }}-macos-universal-clap.zip"
+
   release:
-    needs: [linux-x86_64, linux-aarch64, windows-x86_64]
+    needs: [linux-x86_64, linux-aarch64, windows-x86_64, macos-universal]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -202,6 +323,19 @@ jobs:
         with:
           path: artifacts
           merge-multiple: true
+      - name: Point the tag at this build
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: v${{ inputs.version }}
+        run: |
+          set -eu
+          if gh api "repos/${GITHUB_REPOSITORY}/git/ref/tags/${TAG}" >/dev/null 2>&1; then
+            gh api -X PATCH "repos/${GITHUB_REPOSITORY}/git/refs/tags/${TAG}" \
+              -f sha="${GITHUB_SHA}" -F force=true >/dev/null
+            echo "moved ${TAG} to ${GITHUB_SHA}"
+          else
+            echo "${TAG} does not exist yet; the release action creates it"
+          fi
       - name: Source archive and checksums
         env:
           VERSION: ${{ inputs.version }}
@@ -236,6 +370,7 @@ jobs:
             | Windows x86_64 | VST3, CLAP | AVX2 |
             | Linux x86_64 | VST3, CLAP | AVX2 |
             | Linux aarch64 | VST3, CLAP | ARMv8 |
+            | macOS universal | AU, CLAP | arm64 + Intel AVX2, experimental |
 
             Each zip contains the plugin, `INSTALL.txt`, `LICENSE`,
             `LICENSING.md` and the third-party licence texts.
@@ -248,8 +383,28 @@ jobs:
               `C:\Program Files\Common Files\CLAP`.
             - **Linux VST3:** copy `Type P.alpha.vst3` into `~/.vst3/`.
             - **Linux CLAP:** copy `Type P.alpha.clap` into `~/.clap/`.
+            - **macOS AU:** copy `Type P.alpha.component` into
+              `~/Library/Audio/Plug-Ins/Components/`.
+            - **macOS CLAP:** copy `Type P.alpha.clap` into
+              `~/Library/Audio/Plug-Ins/CLAP/`.
 
             Rescan the plugins in your host after copying.
+
+            ## macOS is experimental
+
+            **P1Onken does not have access to a Mac.** The macOS packages are
+            built and checked by CI on GitHub's macOS runners, but nobody here has
+            opened them in a DAW or played a note with them. Treat them as an
+            experiment, not as a supported build.
+
+            - The builds are unsigned and not notarised. macOS will quarantine
+              them. If your host does not see the plugin, clear the attribute:
+              `xattr -dr com.apple.quarantine <path>`.
+            - The AU is universal: arm64 and x86_64. The x86_64 slice is built
+              with the x86-64-v3 instruction set (AVX2).
+            - The AU passes `auval` in CI. That proves the component loads, not
+              that it behaves in a particular host.
+            - Please report what happens, broken or working.
 
             ## Notes
 
@@ -258,7 +413,6 @@ jobs:
             - The Linux packages are built inside the project's Debian trixie
               container. A distribution older than that can miss the C library
               symbols.
-            - There is no macOS build in this beta.
             - `SHA256SUMS.txt` covers every asset in this release.
             - The source archive is attached as well.
 

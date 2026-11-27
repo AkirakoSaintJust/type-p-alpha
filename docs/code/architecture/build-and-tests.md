@@ -8,7 +8,7 @@ clone because the generated files are checked in.
 
 The root `CMakeLists.txt` adds `plugin/`. `plugin/CMakeLists.txt` compiles the
 engine as C and the tests as C++. `plugin/juce/CMakeLists.txt` adds the JUCE
-targets: VST3, CLAP and standalone. The generated headers are written into the
+targets: VST3, CLAP and standalone, plus AU on macOS. The generated headers are written into the
 build directory:
 
 | Generated file | Generator | Consumer |

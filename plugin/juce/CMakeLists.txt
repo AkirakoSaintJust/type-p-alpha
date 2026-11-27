@@ -79,13 +79,17 @@ target_compile_definitions(p1_editor PUBLIC ${P1_JUCE_DEFINITIONS})
 add_dependencies(p1_editor p1_params p1_tokens p1_macro_targets)
 
 if(NOT P1_SANITIZERS)
+set(P1_PLUGIN_FORMATS VST3 Standalone)
+if(APPLE)
+    list(APPEND P1_PLUGIN_FORMATS AU)
+endif()
 juce_add_plugin(${P1_PLUGIN_TARGET}
     COMPANY_NAME "P1Onken"
     BUNDLE_ID "${P1_BUNDLE_ID}"
     PLUGIN_MANUFACTURER_CODE ${P1_MANUFACTURER_CODE}
     PLUGIN_CODE ${P1_PLUGIN_CODE}
     PRODUCT_NAME "${P1_PRODUCT_NAME}"
-    FORMATS VST3 Standalone
+    FORMATS ${P1_PLUGIN_FORMATS}
     IS_SYNTH TRUE
     NEEDS_MIDI_INPUT TRUE
     NEEDS_MIDI_OUTPUT FALSE

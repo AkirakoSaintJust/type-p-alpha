@@ -6,7 +6,9 @@ _Type P_, where _P_ stands for _phase_, is the name for the general project of d
 
 The reasons for abandoning Type P.fm1 are that I've decided to disengage from the custom firmware community for highly personal and slightly political reasons, and that being free from the FM1's limited screen, controls and CPU power allows for a kind of research into synthesis techniques that I really want to try.
 
-**Beta 1 is on the [releases page](https://github.com/AkirakoSaintJust/type-p-alpha/releases/tag/v0.1.0-beta.1)** as Windows x86_64 and Linux x86_64/aarch64 VST3 and CLAP builds.
+**Beta 1 is on the [releases page](https://github.com/AkirakoSaintJust/type-p-alpha/releases/tag/v0.1.0-beta.1)** as Windows x86_64 and Linux x86_64/aarch64 VST3 and CLAP builds, plus experimental macOS universal AU and CLAP builds.
+
+The macOS packages are experimental: P1Onken does not have a Mac, so they are built and checked by CI but have not been played in a host.
 
 ## Current synth architecture
 
